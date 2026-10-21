@@ -8,7 +8,9 @@ GitHub Pages 배포 워크플로와 정적 사이트 구성을 준비했습니�
 
 저장소 소유자가 한 번 [Settings → Pages](https://github.com/hundol047/HYUNDAI/settings/pages)에서 **Build and deployment → Source → GitHub Actions**를 선택해야 합니다. 이후 main 푸시 또는 [Publish CabinOS ONE demo](https://github.com/hundol047/HYUNDAI/actions/workflows/pages.yml)의 Run workflow로 배포합니다. Actions의 `deploy` 성공 후 표시되는 URL을 확인하세요.
 
-이 환경은 `api.github.com`과 `hundol047.github.io`에 대한 네트워크 접근이 허용되지 않아 Pages 설정 변경과 공개 URL 확인을 완료하지 못했습니다. 필요한 도메인 추가는 클라우드 환경 설정 초안에 저장했지만, 초안 저장은 실행 환경 적용이나 사이트 배포를 의미하지 않습니다.
+환경 재시작 후 GitHub API 조회와 공개 주소 접근은 가능해졌습니다. 저장소 조회에서 `has_pages=false`를 확인했고, 공개 주소는 HTTP 404입니다. Pages 생성 API는 연동 앱 권한 제한으로 `403 Resource not accessible by integration`을 반환했습니다. 저장소 소유자가 위 설정에서 Pages를 활성화해야 합니다.
+
+[최신 원격 웹 검사](https://github.com/hundol047/HYUNDAI/actions/runs/39638061596)에서 사이트 빌드와 브라우저 기능 검사는 통과했으며, `configure-pages` 단계에서 Pages 미활성화로 HTTP 404가 발생했습니다. 필요한 도메인과 재사용 시작 절차는 클라우드 환경 설정 초안에 저장했습니다. 초안 저장은 사이트 배포를 의미하지 않습니다.
 
 GitHub Pages는 이 작업 환경의 서버 종료와 관계없이 유지되며 24시간 만료를 설정하지 않았습니다. 실제 가용 시간은 GitHub 서비스와 저장소 설정에 따릅니다.
 
