@@ -48,8 +48,10 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 한국어 TTS/STT는 실제 Android API 어댑터를 제공하지만 해당 언어팩/인식 서비스가 있는 실제 기기에서의 음성 품질·서비스 동작은 미검증입니다. 앱 테스트의 한국어 명령 라우팅은 로컬 엔진을 검증합니다.
 
-Pleos 공식 문서/SDK 접근은 프록시 403으로 차단되어 실차 SDK, 실제 충전/위험/경로/POI 데이터 및 공모전 실차 호환성은 **미검증·미연동**입니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. [GitHub Actions Android 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39636898536)에서도 JVM/Android 테스트·JVM/JS 빌드·Debug/Release 빌드·Lint가 통과했습니다. 해당 실행의 소스는 `c5e9acad55301c4e924f7fa62a75a9da6c758f43`입니다. 웹 배포 워크플로는 별도 결과이며 공개 URL 성공과 구분합니다.
+초기에는 Pleos 공식 문서 접근이 프록시 403으로 차단됐지만, 환경 재시작 후 공식 개발·SDK 문서를 확인했습니다. 문서 확인과 최소 환경 대조를 완료했으며, 실차 SDK 어댑터·실제 충전/위험/경로/POI 데이터 및 Pleos 환경 실행 호환성은 **미검증·미연동**입니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. [GitHub Actions Android 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39636898536)에서도 JVM/Android 테스트·JVM/JS 빌드·Debug/Release 빌드·Lint가 통과했습니다. 해당 실행의 소스는 `c5e9acad55301c4e924f7fa62a75a9da6c758f43`입니다. 웹 배포 워크플로는 별도 결과이며 공개 URL 성공과 구분합니다.
 
 ## 실행 영상과 재점검
 
 [최종 MP4](video/CabinOS_ONE_demo.mp4)는 실제 Chromium 조작을 CDP로 녹화하고 한국어 자막을 넣었습니다. 그림을 이어 붙인 모형 영상이 아닙니다. 초안 영상에서 할 일 버튼 제출 실패를 확인했고 관련 폼 처리, 주행 상태 문구, 한 번 조작하는 위험 안내와 연결 미확인 화면을 수정한 뒤 다시 촬영했습니다. [영상 검토 내역](VIDEO_REVIEW.md)에 근거와 수정 사항을 기록했습니다. 영상의 Android 화면은 실제 Compose 렌더링을 보여주는 갤러리이며 APK의 실기기 실행 영상은 아닙니다.
+
+최신 소스 `a970ea57679e18692ca71c6b8a613b59301c8638`의 [Android 원격 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39638061704)도 성공했습니다. [웹 원격 실행](https://github.com/hundol047/HYUNDAI/actions/runs/39638061596)은 사이트 빌드·브라우저 검사까지 성공했으며, Pages 미활성화에 따른 설정 오류로 배포가 중단됐습니다. 환경 재시작 후 Pages 생성도 시도했지만 GitHub 연동 앱의 API 권한 제한으로 HTTP 403이 반환됐습니다.

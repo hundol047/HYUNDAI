@@ -1,19 +1,23 @@
 # SDK 및 권한 확인 보고서
 
-공식 문서 확인을 시도한 주소:
+2026-10-21 환경 재시작 후 다음 공식 문서를 HTTP 200으로 확인했습니다. 초기 작업 당시의 프록시 403 문제와 현재 상태를 구분합니다. 문서 확인이 앱의 SDK 연동 완료를 의미하지는 않습니다.
 
-- https://document.pleos.ai/
-- https://pleos.ai/
-- https://appdevchallenge.auto-hmg.io/guide/development
-- 제출 안내 https://appdevchallenge.auto-hmg.io/guide/submission (이전 대화에서 접근 시도)
+- [공모전 제출 안내](https://appdevchallenge.auto-hmg.io/guide/submission)
+- [공모전 개발 환경](https://appdevchallenge.auto-hmg.io/guide/development)
+- [Pleos Connect Emulator 설치](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator)
+- [프로젝트 생성 및 SDK 사용 신청](https://document.pleos.ai/docs/pleos-only/create-my-project)
+- [SDK Overview](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/)
+- [Vehicle SDK Introduction](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/intro)
 
-현재 클라우드 네트워크 프록시가 모두 403을 반환했습니다. 따라서 Pleos SDK의 저장소 주소·버전·신호·권한·메서드를 확인했다고 주장하지 않습니다. 비공개 SDK를 임의로 생성하거나 Android의 일반 API를 Pleos API로 표기하지 않았습니다. 공모전 호환성·제출 요건 검증은 완료되지 않았습니다.
+확인된 요구사항은 minSdk API 28 이상, Gradle 8.0 이상, Java/Kotlin입니다. 현재 앱의 minSdk 29·Gradle 8.11.1은 이 최소 요구사항을 충족합니다. 공식 에뮬레이터 가이드는 Pleos Connect Emulator 2.1.0/API 34, Vehicle 소개는 SDK 2.3.2·Vehicle Service 2.3.21 기준입니다. 현재 앱을 해당 Pleos 환경에서 실행 검증한 것은 아닙니다.
+
+공식 절차는 Playground 가입과 프로젝트 생성을 안내합니다. Vehicle State·NaviHelper는 신청 없이 사용 가능한 상태, FusedLocation·TextToSpeech·SpeechToText·Vehicle Control은 준비 중으로 안내됩니다. 권한·지원 여부는 실제 프로젝트와 최신 공식 안내에서 확인해야 합니다. 이 작업에서는 계정 생성·약관 동의·프로젝트 등록을 수행하지 않았으며, 비공개 자격 증명을 만들거나 추측하지 않았습니다.
 
 | 기능 | 구현 | 실제/데모 및 제약 |
 |---|---|---|
 | 차량 속도·P 기어 | VehicleDataProvider, SimulationVehicleProvider | 명시적인 데모 데이터. 실차 모드는 미연결/UNKNOWN |
 | 충전 상태·잔여 시간 | ChargingProvider | 데모 추정치 또는 사용자 대기 시간 입력 |
-| Pleos Vehicle SDK | 추상화 인터페이스 | 미연동. 공식 SDK 확인 필요 |
+| Pleos Vehicle SDK | 추상화 인터페이스 | 공식 문서 확인, 앱 어댑터 미연동 |
 | Pleos FusedLocation | LocationProvider | Pleos 미연동. Android LocationManager 어댑터 제공 |
 | Pleos NaviHelper | NavigationProvider | Pleos 미연동. 실차 소스·권한·60초 이내 실제 위치일 때만 일반 지도 앱 intent 지원 |
 | 경로·위험 이벤트·주변 장소 | 로컬 저장소, 점수·시간 계산 | 전부 시뮬레이션. 실제 도로 검출/영업시간 정보 아님 |

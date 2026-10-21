@@ -33,3 +33,15 @@ source scripts/env.sh
 - Private 저장소라면 심사용 계정 초대와 권한 확인은 계정 소유자가 진행.
 
 파일 형식 충족과 실차 SDK 기능 충족은 별개입니다. 현재 지원 범위는 SDK_CAPABILITIES.md, LIMITATIONS.md 및 VALIDATION.md를 함께 확인하세요.
+
+## 공식 접수 안내 확인 (2026-10-21)
+
+[공식 제출 안내](https://appdevchallenge.auto-hmg.io/guide/submission)를 직접 확인했습니다. 접수 기간은 **2026-10-21~2026-11-15**, 접수 방식은 **이메일**입니다. 필수 서류는 [접수양식·개인정보 수집·이용 동의서 DOCX](https://appdevchallenge.auto-hmg.io/downloads/contest-application-consent.docx)이며, 대표자와 팀원 전원의 동의·서명·날짜가 필요합니다.
+
+- 접수 이메일: `appdevchallenge@hyundai-partners.com`
+- 제목: `[차량용 앱 개발 공모전] 퓨처랩스_대표자명`
+- 팀 참가 시 대표자가 팀원 전원을 CC하여 제출합니다.
+- 시연 영상·저장소·APK는 1차 접수에서 선택 제출·가산점 항목입니다. 영상은 목업·프로토타입·화면 녹화를 인정합니다. 현재 영상은 브라우저 프로토타입 실행 녹화로 표기합니다.
+- 2차 PT 대상 팀은 PT 전까지 실제 동작 가능한 앱 개발을 완료해야 합니다.
+
+이 작업은 소스·APK·영상을 준비한 것이며, 개인 동의서 작성·서명이나 접수 이메일 발송은 수행하지 않았습니다.
