@@ -1,0 +1,133 @@
+package io.cabinos.one.ui
+
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.automirrored.outlined.VolumeUp
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import io.cabinos.core.*
+import java.text.SimpleDateFormat
+import java.util.*
+
+@Composable fun ActiveSessionPanel(s:AppState,vm:CabinViewModel) {
+    val session=s.session ?: return
+    val tasks by vm.tasks.collectAsStateWithLifecycle()
+    val preset by vm.audioPreset.collectAsStateWithLifecycle()
+    var taskText by remember { mutableStateOf("") }
+    val color=when(session.kind){SessionKind.FOCUS->Blue;SessionKind.RELAX->Mint;SessionKind.AUDIO->Purple}
+    Row(Modifier.fillMaxWidth().heightIn(min=275.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
+        Box(Modifier.weight(.58f).height(280.dp).clip(RoundedCornerShape(20.dp)).border(1.dp,color.copy(alpha=.45f),RoundedCornerShape(20.dp))) {
+            MountainScene(Modifier.fillMaxSize())
+            Column(Modifier.fillMaxSize().padding(22.dp)) {
+                Row {Pill("${session.kind.label} 모드",color);Spacer(Modifier.weight(1f));Text(if(session.status==SessionStatus.PAUSED)"일시정지됨" else "나를 위한 시간",fontSize=11.sp,color=White)}
+                Row(Modifier.weight(1f).fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(25.dp)) {
+                    Box(Modifier.size(150.dp),contentAlignment=Alignment.Center) {
+                        CircularProgressIndicator(progress={session.remainingSeconds.toFloat()/session.durationSeconds.coerceAtLeast(1)},color=color,trackColor=White.copy(alpha=.12f),strokeWidth=4.dp,modifier=Modifier.fillMaxSize())
+                        Column(horizontalAlignment=Alignment.CenterHorizontally) {
+                            Text(timeText(session.remainingSeconds),fontSize=34.sp,color=White,fontWeight=FontWeight.Light)
+                            Spacer(Modifier.height(6.dp));Text(if(session.kind==SessionKind.RELAX) {if((s.nowMs/4000)%2==0L)"천천히 들이쉬세요" else "편안하게 내쉬세요"} else "지금, 이 순간에 집중",fontSize=11.sp,color=White.copy(alpha=.7f))
+                        }
+                    }
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                        Text(if(session.kind==SessionKind.RELAX)"잠시, 쉬어가도 괜찮아요." else if(session.kind==SessionKind.FOCUS)"당신만의 몰입을 시작하세요." else "좋은 소리로 채우는 시간.",color=White,fontSize=17.sp,fontWeight=FontWeight.Medium)
+                        Text("출발 준비 ${s.preferences.departureBufferMinutes}분 전 자동 종료\n남은 일정에 맞춰 시간을 조정해요.",color=White.copy(alpha=.65f),fontSize=11.sp)
+                        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                            ActionButton(if(session.status==SessionStatus.RUNNING)"일시정지" else "계속",{vm.engine.pauseOrResume()},color=color,enabled=session.status==SessionStatus.RUNNING || s.schedule.availableSeconds>0,icon=if(session.status==SessionStatus.RUNNING)Icons.Outlined.Pause else Icons.Outlined.PlayArrow)
+                            ActionButton("종료",{vm.engine.endSession()},color=White)
+                        }
+                    }
+                }
+                Row(horizontalArrangement=Arrangement.spacedBy(7.dp)) {
+                    listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
+                        FilterChip(selected=preset==name,onClick={vm.toggleAudio(name)},label={Text(name,fontSize=10.sp)},leadingIcon={Icon(if(preset==name)Icons.AutoMirrored.Outlined.VolumeUp else Icons.Outlined.MusicNote,null,Modifier.size(14.dp))},modifier=Modifier.height(34.dp),colors=FilterChipDefaults.filterChipColors(selectedContainerColor=color.copy(alpha=.25f),selectedLabelColor=White))
+                    }
+                }
+            }
+        }
+        SurfacePanel(Modifier.weight(.42f).height(280.dp)) {
+            if(session.kind==SessionKind.FOCUS) {
+                Row {SectionLabel("나의 할 일",color=Blue);Spacer(Modifier.weight(1f));Text("${tasks.count{it.done}} / ${tasks.size}",color=Muted,fontSize=11.sp)}
+                Spacer(Modifier.height(10.dp))
+                Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+                    OutlinedTextField(value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
+                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
+                }
+                Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
+                    if(tasks.isEmpty()) Text("작은 목표 하나를 적어보세요.\n완료한 일은 다음에도 기억해요.",fontSize=12.sp,color=Muted,modifier=Modifier.padding(top=20.dp))
+                    tasks.forEach { task ->Row(verticalAlignment=Alignment.CenterVertically) {
+                        Checkbox(checked=task.done,onCheckedChange={vm.toggleTask(task)},colors=CheckboxDefaults.colors(checkedColor=Blue))
+                        Text(task.text,color=if(task.done)Muted else White,fontSize=12.sp,modifier=Modifier.weight(1f))
+                        IconButton(onClick={vm.deleteTask(task)}){Icon(Icons.Outlined.Close,"할 일 삭제",tint=Muted,modifier=Modifier.size(15.dp))}
+                    } }
+                }
+            } else {
+                SectionLabel("출발까지의 시간",color=color)
+                Spacer(Modifier.height(16.dp));Text(timeText(s.schedule.waitingSeconds),fontSize=38.sp,fontWeight=FontWeight.Light,color=White)
+                Spacer(Modifier.height(12.dp));Text("${s.schedule.availableSeconds/60}분 뒤 활동 정리",color=Mint,fontSize=13.sp)
+                Spacer(Modifier.height(12.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
+                Text(if(session.kind==SessionKind.RELAX)"4초 들숨, 4초 날숨\n편안한 호흡으로 다음 여정을 준비하세요." else "기기에서 생성하는 배경 소리입니다.\n실제 스트리밍·차량 오디오 제어는 연결되지 않았습니다.",fontSize=12.sp,color=Muted)
+                Spacer(Modifier.weight(1f));Text("StopSense와 시간 동기화 중",fontSize=10.sp,color=color)
+            }
+        }
+    }
+}
+
+@Composable fun HistoryScreen(s:AppState) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Text("나를 위한 시간의 기록",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
+        Text("이 기기에만 보관하는 집중·휴식·오디오 세션",color=Muted,fontSize=12.sp)
+        Row(horizontalArrangement=Arrangement.spacedBy(14.dp)) {
+            SessionKind.entries.forEach { kind ->SurfacePanel(Modifier.weight(1f)) {
+                Text("${kind.label} 누적",fontSize=12.sp,color=Muted)
+                Spacer(Modifier.height(12.dp));Text("${s.history.filter{it.kind==kind}.sumOf{(it.durationSeconds-it.remainingSeconds).coerceAtLeast(0)}/60}분",fontSize=30.sp,color=if(kind==SessionKind.FOCUS)Blue else if(kind==SessionKind.RELAX)Mint else Purple)
+            } }
+        }
+        if(s.history.isEmpty()) SurfacePanel(Modifier.fillMaxWidth()) {Icon(Icons.Outlined.History,null,tint=Muted);Spacer(Modifier.height(12.dp));Text("아직 완료한 세션이 없어요.",color=White);Text("첫 세션을 시작하면 이곳에 기록됩니다.",color=Muted,fontSize=12.sp)}
+        s.history.forEach { session ->SurfacePanel(Modifier.fillMaxWidth()) {
+            Row(verticalAlignment=Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {Text("${session.kind.label} 세션",color=White,fontSize=16.sp);Spacer(Modifier.height(5.dp));Text(SimpleDateFormat("M월 d일 HH:mm",Locale.KOREA).format(Date(session.startedAtMs)),color=Muted,fontSize=11.sp)}
+                Text("${(session.durationSeconds-session.remainingSeconds).coerceAtLeast(0)/60}분 진행",color=Mint,fontSize=15.sp)
+                Spacer(Modifier.width(20.dp));Pill(if(session.status==SessionStatus.COMPLETED)"완료" else "중단",if(session.status==SessionStatus.COMPLETED)Mint else Amber)
+            }
+        } }
+    }
+}
+@Composable fun SettingsScreen(s:AppState,vm:CabinViewModel) {
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Text("당신에게 맞춘 CabinOS",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
+        Text("개인 설정은 이 기기에 저장됩니다.",color=Muted,fontSize=12.sp)
+        Row(horizontalArrangement=Arrangement.spacedBy(16.dp)) {
+            SurfacePanel(Modifier.weight(1f)) {
+                SectionLabel("시간 프리셋",color=Blue);Spacer(Modifier.height(16.dp))
+                SettingStepper("기본 집중 시간",s.preferences.focusMinutes,listOf(15,25,45)){vm.preferences(s.preferences.copy(focusMinutes=it))}
+                SettingStepper("기본 휴식 시간",s.preferences.relaxMinutes,listOf(10,15,30)){vm.preferences(s.preferences.copy(relaxMinutes=it))}
+                SettingStepper("출발 준비 여유",s.preferences.departureBufferMinutes,listOf(3,5,10)){vm.preferences(s.preferences.copy(departureBufferMinutes=it))}
+            }
+            SurfacePanel(Modifier.weight(1f)) {
+                SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("한국어 음성 안내",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
+                Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)
+            }
+        }
+        SurfacePanel(Modifier.fillMaxWidth()) {
+            SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))
+            Text("차량 상태 · 충전: 시뮬레이션 제공\nPleos Vehicle · FusedLocation · NaviHelper: 공식 문서 접근 제한으로 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
+        }
+    }
+}
+@Composable private fun SettingStepper(label:String,value:Int,options:List<Int>,onSelect:(Int)->Unit) {
+    Column {Text(label,color=White,fontSize=13.sp);Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){ options.forEach { n ->FilterChip(selected=value==n,onClick={onSelect(n)},label={Text("${n}분",fontSize=12.sp)}) } };Spacer(Modifier.height(12.dp))}
+}

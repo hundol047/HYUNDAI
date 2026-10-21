@@ -1,2 +1,98 @@
-# HYUNDAI
-현대자동차 두번째 공모전
+# CabinOS ONE
+
+**차량의 상황을 이해하고, 이동의 모든 순간을 연결하다.**
+
+**팀명: 퓨처랩스** · 차량의 주행·정차 상황에 맞춰 위험 안내, 대기 시간 활용, 집중·휴식을 연결하는 통합 차량용 앱.
+
+**제출 APK:** [`apk/퓨처랩스_CabinOS_ONE_release.apk`](apk/퓨처랩스_CabinOS_ONE_release.apk)
+
+**저장소:** https://github.com/hundol047/HYUNDAI
+
+**제출 안내:** [팀명·APK·서명·Private 저장소 확인](docs/SUBMISSION_KO.md)
+
+위 APK는 최적화한 Release 변형을 전용 팀 릴리스 인증서로 서명한 설치 파일입니다. 차량/경로/충전 데이터는 데모라는 점을 아래 지원 범위와 함께 확인해 주세요.
+
+현대자동차그룹 차량 앱 개발 공모전을 위한 Kotlin Android 앱입니다. EchoRoad·StopSense·CabinOS를 하나의 `UnifiedVehicleContextEngine`으로 통합했습니다. 모든 기본 UI·명령·음성 안내는 한국어입니다.
+
+> 현재 버전은 **실행 가능한 Android 데모 앱**입니다. 차량 상태·충전·경로·주변 장소는 시뮬레이션이며 화면에 표시됩니다. Pleos 공식 문서가 현재 환경에서 403으로 차단되어 Pleos SDK·실차 신호·실제 위험 데이터와는 아직 연동하지 않았습니다. 공모전 제출 요건과 실차 호환성 검증은 별도 필요합니다.
+
+## 구현된 기능
+
+- **EchoRoad:** 주행/신호 대기 자동 활성화, 경로 위험 점수·중복/만료/방향 필터, 알림 쿨다운, 한국어 TTS 어댑터, 주행 중 복잡한 조작 제한.
+- **StopSense + CabinOS:** 안전한 P 상태 확인 후 두 서비스를 동시에 활성화. 충전/수동 대기 시간, 복귀·출발 준비 여유 계산, 예시 주변 활동 추천, 공유 출발 계획 기반 집중·휴식·오디오 세션.
+- **CabinOS:** 타이머, 할 일 추가/완료/삭제, 호흡 안내, 로컬 생성 배경 소리, 일시정지·계속·종료, 세션 이력·통계, 프리셋 저장.
+- **중앙 안전 엔진:** 신호 대기에서는 정차 기능을 열지 않음. 주행·신호 손실 시 세션 일시정지. 알 수 없는 상태에서 기능 제한. 음성 명령으로 안전 규칙을 우회할 수 없음.
+- **시뮬레이터:** 주행·신호 대기·주차·충전·충전 시간 변경·출발 준비·SDK 연결 손실·위치 거부·오프라인·위험 주입·전체 통합 시나리오.
+- **로컬 어시스턴트:** 한국어 명령 라우팅, 기기 STT/TTS, 서비스가 없을 때 명령 버튼, 정차 중 텍스트 입력. API 키나 클라우드 AI 없이 핵심 동작.
+- **Room:** 사용자 설정·활성 세션 체크포인트·할 일·세션 이력. 재실행 시 세션은 안전하게 일시정지 상태로 복원.
+
+## 개발 환경 및 빌드
+
+JDK 21, Android SDK Platform 35, Build Tools 35.0.0이 필요합니다. Gradle 8.11.1 Wrapper와 배포 SHA-256 검증이 포함되어 있습니다. Android Studio에서 이 디렉터리를 열고 SDK를 설치해도 됩니다.
+
+```bash
+# 일반 개발 환경
+export ANDROID_HOME=/path/to/android-sdk
+./gradlew :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug
+```
+
+이 클라우드 환경에는 `/workspace/toolchains`에 검증된 도구를 설치했습니다.
+
+```bash
+cd /workspace/HYUNDAI
+source scripts/env.sh
+./scripts/build.sh
+# 실행 중인 Android 기기 또는 에뮬레이터가 있을 때
+./scripts/install-demo.sh
+```
+
+기존 체크아웃에서 작업하세요. 각 클라우드 작업은 이미 격리되므로 별도 Git worktree를 만들 필요가 없습니다. 현재 머신의 설치 도구·캐시는 저장소 밖에 있으며, 독립적인 새 머신은 Android Studio/SDK Manager로 같은 버전의 도구를 설치해야 합니다.
+
+네트워크 프록시를 사용하는 머신에서는 Gradle 사용자 설정에 Java HTTP/HTTPS 프록시가 필요할 수 있습니다. 시스템에서 제공하는 인증·신뢰 저장소를 사용하고 인증서 검증을 끄지 마세요. 프록시 주소나 비밀 값은 저장소에 저장하지 않습니다.
+
+빌드 산출물:
+
+- `app/build/outputs/apk/debug/app-debug.apk`: 개발 인증서로 서명된 설치 가능한 데모.
+- `app/build/outputs/apk/release/app-release-unsigned.apk`: 릴리스 빌드, 서명 전.
+- `artifacts/`: 빌드/패키징 스크립트로 복사한 결과물. APK는 Git에 포함하지 않습니다.
+
+제출용 APK는 `./scripts/package-submission.sh`로 생성합니다. `apk/퓨처랩스_CabinOS_ONE_release.apk`와 `apk/SHA256SUMS`를 저장소에 함께 포함합니다. 전용 서명키는 저장소 밖에 보관하며 GitHub에 올리지 않습니다. 키 백업과 재빌드 절차는 [제출 안내](docs/SUBMISSION_KO.md)를 참고하세요. 개발 인증서로 서명하는 별도 데모 유틸리티의 결과는 제출용 APK와 구분합니다.
+
+## 실행 및 검증
+
+- 앱 실행 후 약 2초 동안 주차 상태를 확인하고 충전 대시보드를 표시합니다.
+- 왼쪽 **데모**에서 차량 상태를 선택하거나 **전체 시나리오 실행**을 누르세요.
+- **주행 → 신호 대기 → 주차/충전 → 집중/휴식 → 출발 준비 → 주행**에 따라 화면이 자동 전환됩니다.
+- 마이크 버튼은 마이크 권한을 요청합니다. 한국어 TTS 언어팩과 음성 인식 서비스가 없는 에뮬레이터에서는 화면/명령 버튼으로 사용하세요. 음성 서비스 동작은 기기 구성에 따라 달라집니다.
+- **실차 연결**은 미지원 상태를 보여주며 주차 기능을 잠급니다. 실차 연결 성공을 모사하지 않습니다.
+
+```bash
+./gradlew :core:test                 # 도메인 안전·시간·위험·통합 테스트
+./gradlew :app:testDebugUnitTest     # Compose 전환 + 실제 Room 저장/복원 (Robolectric)
+./gradlew :app:lintDebug             # Android 정적 검사
+python3 scripts/device_smoke.py      # 실행 중인 Android 장치의 실제 UI 검증
+```
+
+실제 실행 결과와 제한은 [검증 보고서](docs/VALIDATION.md)를 확인하세요. CI 워크플로는 추가했지만 원격 GitHub Actions 실행은 이 작업에서 수행하지 않았습니다.
+
+## 구조 및 제출 자료
+
+| 경로 | 내용 |
+|---|---|
+| `core/` | 순수 Kotlin 상태 엔진·안전 규칙·위험 점수·추천·공유 타이머·단위/통합 테스트 |
+| `app/` | Compose UI·MVVM·Hilt·Room·Android 음성/위치/오디오 어댑터 |
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 구조·상태 전환·동시성·복원 설계 |
+| [SDK_CAPABILITIES.md](docs/SDK_CAPABILITIES.md) | SDK 확인 상태·권한·실제/데모 구분 |
+| [DEMO_KO.md](docs/DEMO_KO.md) | 한국어 공모전 시연 순서 |
+| [LIMITATIONS.md](docs/LIMITATIONS.md) | 미구현·실차 검증·배포 제한 |
+| [VALIDATION.md](docs/VALIDATION.md) | 이번 작업에서 실행한 검사 결과 |
+
+## 실제 UI 렌더링
+
+아래 이미지는 앱의 Compose UI를 Robolectric 네이티브 그래픽 모드(API 29, 1280×800)에서 렌더링한 결과입니다. 실차/에뮬레이터 캡처로 표기하지 않습니다.
+
+![통합 정차 대시보드](docs/screenshots/parked.png)
+![집중 세션과 공유 출발 일정](docs/screenshots/focus.png)
+![EchoRoad 주행 화면](docs/screenshots/driving.png)
+
+공식 공모전: https://appdevchallenge.auto-hmg.io/guide/submission
