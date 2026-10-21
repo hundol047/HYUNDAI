@@ -12,3 +12,5 @@ artifacts/
 *.pem
 *.key
 .signing/
+
+*.idsig
