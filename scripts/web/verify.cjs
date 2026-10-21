@@ -2,7 +2,7 @@ const {chromium}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/web-qa');fs.mkdirSync(out,{recursive:true});
 (async()=>{
- const browser=await chromium.launch({executablePath:process.env.CABIN_CHROME||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],env:{...process.env,XDG_CACHE_HOME:'/workspace/.cache'}});
+ const browser=await chromium.launch({executablePath:process.env.CABIN_CHROME||['/usr/bin/chromium','/usr/bin/google-chrome'].find(x=>fs.existsSync(x)),headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],env:{...process.env,XDG_CACHE_HOME:'/workspace/.cache'}});
  const page=await browser.newPage({viewport:{width:1440,height:1120}}),results=[],errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  const url=process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/';
@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/web-qa'
  async function fresh(){await page.goto(url);await page.waitForFunction(()=>window.cabinDemo?.state.parked)}
  async function vehicle(name){await page.locator(`#scenarios [data-vehicle="${name}"]`).click()}
  async function parked(){await vehicle('주차');await page.waitForFunction(()=>window.cabinDemo.state.parked)}
- async function test(name,body){try{await body();results.push({name,result:'passed'});console.log('PASS',name)}catch(e){results.push({name,result:'failed',error:e.message});throw e}}
+ async function test(name,body){try{await body();results.push({name,result:'passed'});console.log('PASS',name)}catch(e){const video=await page.evaluate(()=>{const v=document.querySelector('video');return v?{ready:v.readyState,error:v.error?.message,duration:v.duration,currentTime:v.currentTime,codec:v.canPlayType('video/mp4; codecs="avc1.640028"')}:null}).catch(()=>null);results.push({name,result:'failed',error:e.message,video});const details=(e.message+' '+JSON.stringify(video)).replace(/%/g,'%25').replace(/\r/g,'%0D').replace(/\n/g,'%0A');console.error(`::error title=${name}::${details}`);throw e}}
  try {
   await fresh();
   await test('unified parked dashboard and shared Kotlin engine',async()=>{assert.equal((await state()).source,'SIMULATION');assert.equal(await page.locator('[data-start]').count(),3);assert.match(await page.locator('.active-systems').textContent(),/StopSense/)});

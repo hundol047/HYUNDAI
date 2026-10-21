@@ -48,7 +48,7 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 한국어 TTS/STT는 실제 Android API 어댑터를 제공하지만 해당 언어팩/인식 서비스가 있는 실제 기기에서의 음성 품질·서비스 동작은 미검증입니다. 앱 테스트의 한국어 명령 라우팅은 로컬 엔진을 검증합니다.
 
-Pleos 공식 문서/SDK 접근은 프록시 403으로 차단되어 실차 SDK, 실제 충전/위험/경로/POI 데이터 및 공모전 실차 호환성은 **미검증·미연동**입니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. GitHub Actions 워크플로는 작성했으며 원격 CI 성공 여부는 로컬 테스트 결과와 별개입니다.
+Pleos 공식 문서/SDK 접근은 프록시 403으로 차단되어 실차 SDK, 실제 충전/위험/경로/POI 데이터 및 공모전 실차 호환성은 **미검증·미연동**입니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. [GitHub Actions Android 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39636898536)에서도 JVM/Android 테스트·JVM/JS 빌드·Debug/Release 빌드·Lint가 통과했습니다. 해당 실행의 소스는 `c5e9acad55301c4e924f7fa62a75a9da6c758f43`입니다. 웹 배포 워크플로는 별도 결과이며 공개 URL 성공과 구분합니다.
 
 ## 실행 영상과 재점검
 

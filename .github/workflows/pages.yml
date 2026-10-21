@@ -25,8 +25,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: ./scripts/build-web.sh
       - run: npm ci --prefix scripts/web --no-audit --no-fund
-      - run: cd scripts/web && npx playwright install --with-deps chromium
+      - run: /usr/bin/google-chrome --version
       - name: Verify browser behavior and release download
+        env:
+          CABIN_CHROME: /usr/bin/google-chrome
         run: |
           python3 scripts/serve-web.py --directory build/site > /tmp/cabinos-preview.log 2>&1 &
           cabin_server_pid=$!

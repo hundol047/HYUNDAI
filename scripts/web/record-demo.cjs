@@ -6,7 +6,7 @@ let runningBrowser;
 const out=path.join(root,draft?'artifacts/video-review/draft':'artifacts/video-review/final');
 fs.mkdirSync(out,{recursive:true});
 (async()=>{
- const browser=await chromium.launch({executablePath:process.env.CABIN_CHROME||(fs.existsSync('/usr/bin/chromium')?'/usr/bin/chromium':undefined),headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],env:{...process.env,XDG_CACHE_HOME:process.env.XDG_CACHE_HOME||'/workspace/.cache'}});
+ const browser=await chromium.launch({executablePath:process.env.CABIN_CHROME||['/usr/bin/chromium','/usr/bin/google-chrome'].find(x=>fs.existsSync(x)),headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],env:{...process.env,XDG_CACHE_HOME:process.env.XDG_CACHE_HOME||'/workspace/.cache'}});
  runningBrowser=browser;
  const page=await browser.newPage({viewport:{width:1600,height:1100},deviceScaleFactor:1});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
