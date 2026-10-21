@@ -4,17 +4,23 @@ permissions:
   contents: read
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
-      - uses: android-actions/setup-android@v3
-      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      # ubuntu-24.04 already includes the Android SDK and accepted SDK licenses.
+      - name: Install pinned Android platform and build tools
+        run: |
+          test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug --console=plain
+      - run: ./gradlew :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug --console=plain
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -22,6 +28,6 @@ jobs:
           path: |
             app/build/outputs/apk/
             app/build/reports/lint-results-debug.html
-            core/build/reports/tests/test/
+            core/build/reports/tests/jvmTest/
             app/build/reports/tests/testDebugUnitTest/
             app/build/screenshots/

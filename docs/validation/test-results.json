@@ -1,11 +1,11 @@
 [
   {
     "name": "io.cabinos.core.ContextEngineTest",
-    "tests": "34",
+    "tests": "37",
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-21T15:19:38"
+    "timestamp": "2026-10-21T16:09:39"
   },
   {
     "name": "io.cabinos.core.IntelligenceTest",
@@ -13,7 +13,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-21T15:19:39"
+    "timestamp": "2026-10-21T16:09:40"
   },
   {
     "name": "io.cabinos.one.ApplicationTest",
@@ -21,6 +21,22 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-21T15:37:55"
+    "timestamp": "2026-10-21T16:38:16"
+  },
+  {
+    "name": "io.cabinos.one.platform.PlatformTest",
+    "tests": "7",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "timestamp": "2026-10-21T16:38:35"
+  },
+  {
+    "name": "io.cabinos.one.platform.StorageTest",
+    "tests": "2",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "timestamp": "2026-10-21T16:38:41"
   }
 ]

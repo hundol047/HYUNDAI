@@ -20,14 +20,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
 /** Test telemetry only. No hardware command is sent by this adapter. */
-class SimulationVehicleProvider : VehicleDataProvider, ChargingProvider {
+class SimulationVehicleProvider(private val preferences: RuntimePreferences? = null) : VehicleDataProvider, ChargingProvider {
     private val mutable=MutableStateFlow(VehicleSample(gear=Gear.PARK,parkingReliable=true,charging=true,chargeRemainingSeconds=2400,timestampMs=System.currentTimeMillis()))
     override val samples=mutable.asStateFlow()
     private val remaining=MutableStateFlow<Long?>(2400)
     override val remainingSeconds=remaining.asStateFlow()
     var realMode=false; private set
     var selected="충전"; private set
+    init { select(preferences?.scenario ?: "충전") }
     fun select(scenario:String) {
+        if (scenario !in listOf("주행","신호 대기","주차","충전","충전 15분","출발 준비","SDK 끊김","실차 연결")) { select("충전"); return }
+        preferences?.scenario = scenario
         selected=scenario; realMode=scenario=="실차 연결"
         val old=mutable.value
         mutable.value=when(scenario) {
@@ -37,7 +40,7 @@ class SimulationVehicleProvider : VehicleDataProvider, ChargingProvider {
             "충전" -> old.copy(speedKph=0.0,gear=Gear.PARK,charging=true,chargeRemainingSeconds=2400,connected=true,parkingReliable=true,source=DataSource.SIMULATION)
             "충전 15분" -> old.copy(speedKph=0.0,gear=Gear.PARK,charging=true,chargeRemainingSeconds=900,connected=true,parkingReliable=true,source=DataSource.SIMULATION)
             "출발 준비" -> old.copy(speedKph=0.0,gear=Gear.PARK,charging=true,chargeRemainingSeconds=300,connected=true,parkingReliable=true,source=DataSource.SIMULATION)
-            "SDK 끊김" -> old.copy(connected=false)
+            "SDK 끊김" -> old.copy(connected=false,source=DataSource.SIMULATION)
             "실차 연결" -> VehicleSample(timestampMs=System.currentTimeMillis(),connected=false,source=DataSource.VEHICLE)
             else -> old
         }.copy(timestampMs=System.currentTimeMillis())
@@ -68,6 +71,8 @@ class AndroidNavigationProvider(private val context:Context, private val locatio
     override val route=MutableStateFlow(Route(id="unavailable")).asStateFlow()
     override fun resumeNavigation():Boolean {
         val l=location.lastLocation ?: return false
+        if (System.currentTimeMillis()-l.time !in 0..60_000) return false
+        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED) return false
         val intent=Intent(Intent.ACTION_VIEW,Uri.parse("geo:${l.latitude},${l.longitude}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return try { context.startActivity(intent);true } catch (_:Exception) { false }
     }
@@ -107,5 +112,6 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         recognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR")
             .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM).putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true))
     }
-    override fun close() { recognizer?.destroy();tts?.stop();tts?.shutdown() }
+    fun cancelListening() { recognizer?.cancel();recognizer?.destroy();recognizer=null;pending=null;tts?.stop() }
+    override fun close() { cancelListening();tts?.shutdown() }
 }

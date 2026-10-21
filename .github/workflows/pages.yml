@@ -1,0 +1,48 @@
+name: Publish CabinOS ONE demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+      - uses: gradle/actions/setup-gradle@v4
+      - run: ./scripts/build-web.sh
+      - run: npm ci --prefix scripts/web --no-audit --no-fund
+      - run: cd scripts/web && npx playwright install --with-deps chromium
+      - name: Verify browser behavior and release download
+        run: |
+          python3 scripts/serve-web.py --directory build/site > /tmp/cabinos-preview.log 2>&1 &
+          cabin_server_pid=$!
+          trap 'kill "$cabin_server_pid"' EXIT
+          node scripts/web/verify.cjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/site
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

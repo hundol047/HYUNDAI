@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "name": "unified parked dashboard and shared Kotlin engine",
+      "result": "passed"
+    },
+    {
+      "name": "driving removes parked controls and rejects injected unsafe commands",
+      "result": "passed"
+    },
+    {
+      "name": "one tap hazard response does not open a driving dialog",
+      "result": "passed"
+    },
+    {
+      "name": "traffic stop at zero speed keeps safety restrictions",
+      "result": "passed"
+    },
+    {
+      "name": "parking must debounce before both services activate",
+      "result": "passed"
+    },
+    {
+      "name": "task submit buttons and Enter work without losing entered text",
+      "result": "passed"
+    },
+    {
+      "name": "charging updates shorten the same active session",
+      "result": "passed"
+    },
+    {
+      "name": "pause freezes session but keeps departure countdown active",
+      "result": "passed"
+    },
+    {
+      "name": "assistant text submission and motion while dialog is open obey restrictions",
+      "result": "passed"
+    },
+    {
+      "name": "settings form applies preferences through the shared engine",
+      "result": "passed"
+    },
+    {
+      "name": "unavailable real source never fabricates a parked vehicle",
+      "result": "passed"
+    },
+    {
+      "name": "offline browser keeps local sessions and shared countdown running",
+      "result": "passed"
+    },
+    {
+      "name": "actual Android gallery and downloadable APK are reachable",
+      "result": "passed"
+    },
+    {
+      "name": "execution video is playable and seeks correctly",
+      "result": "passed"
+    },
+    {
+      "name": "mobile portrait has no horizontal overflow",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

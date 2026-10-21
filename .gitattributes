@@ -5,3 +5,5 @@ gradlew text eol=lf
 *.apk binary
 *.jar binary
 *.png binary
+*.mp4 binary
+*.jpg binary

@@ -46,6 +46,9 @@ class ContextEngineTest {
     @Test fun sampleGapRequiresDebounceEvenWithoutIntermediateTick() { park();now+=6000;send();assertFalse(engine.state.value.parkedAllowed);now+=1600;send();assertTrue(engine.state.value.parkedAllowed) }
     @Test fun sourceChangeRequiresFreshParkingConfirmation() { park();engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now,source=DataSource.VEHICLE));assertFalse(engine.state.value.parkedAllowed) }
     @Test fun outOfOrderSamplesFailClosed() { park();engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now-100));assertEquals(VehicleContext.UNKNOWN,engine.state.value.context) }
+    @Test fun invalidatedTelemetryPausesSessionUntilFreshParkingConfirmation() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,25);engine.invalidateTelemetry();assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status);assertFalse(engine.state.value.parkedAllowed);send();assertFalse(engine.state.value.parkedAllowed) }
+    @Test fun dataDeletionClearsPersonalStateAndDeadline() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,25);assertTrue(engine.clearPersonalData());assertNull(engine.state.value.session);assertTrue(engine.state.value.history.isEmpty());assertNull(engine.state.value.schedule.departureAtMs);assertEquals(Preferences(),engine.state.value.preferences) }
+    @Test fun dataDeletionCannotBypassMotionRestriction() { send(Gear.DRIVE,50.0);assertFalse(engine.clearPersonalData());assertTrue(engine.state.value.echoRoadActive) }
     @Test fun completeIntegratedScenario() {
         send(Gear.DRIVE,80.0);assertTrue(engine.state.value.events.any{it.name=="RoadHazardDetected"})
         send(Gear.DRIVE,0.0);assertFalse(engine.state.value.parkedAllowed)

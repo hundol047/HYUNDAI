@@ -50,7 +50,7 @@ import java.util.*
                 }
                 Row(horizontalArrangement=Arrangement.spacedBy(7.dp)) {
                     listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
-                        FilterChip(selected=preset==name,onClick={vm.toggleAudio(name)},label={Text(name,fontSize=10.sp)},leadingIcon={Icon(if(preset==name)Icons.AutoMirrored.Outlined.VolumeUp else Icons.Outlined.MusicNote,null,Modifier.size(14.dp))},modifier=Modifier.height(34.dp),colors=FilterChipDefaults.filterChipColors(selectedContainerColor=color.copy(alpha=.25f),selectedLabelColor=White))
+                        FilterChip(enabled=session.status==SessionStatus.RUNNING,selected=preset==name,onClick={vm.toggleAudio(name)},label={Text(name,fontSize=10.sp)},leadingIcon={Icon(if(preset==name)Icons.AutoMirrored.Outlined.VolumeUp else Icons.Outlined.MusicNote,null,Modifier.size(14.dp))},modifier=Modifier.heightIn(min=48.dp),colors=FilterChipDefaults.filterChipColors(selectedContainerColor=color.copy(alpha=.25f),selectedLabelColor=White))
                     }
                 }
             }
@@ -103,7 +103,14 @@ import java.util.*
         } }
     }
 }
-@Composable fun SettingsScreen(s:AppState,vm:CabinViewModel) {
+@Composable fun SettingsScreen(s:AppState,vm:CabinViewModel,onNotifications:()->Unit) {
+    var confirmDeletion by remember { mutableStateOf(false) }
+    val storage by vm.storageStatus.collectAsStateWithLifecycle()
+    if(confirmDeletion) AlertDialog(onDismissRequest={confirmDeletion=false},
+        title={Text("개인 데이터를 삭제할까요?")},
+        text={Text("할 일, 세션 기록, 개인 설정, 출발 계획을 삭제합니다. 진행 중인 세션도 종료됩니다. 차량 데이터 모드 선택은 유지합니다.")},
+        confirmButton={TextButton(onClick={confirmDeletion=false;vm.clearPersonalData()}){Text("삭제",color=Red)}},
+        dismissButton={TextButton(onClick={confirmDeletion=false}){Text("취소")}})
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Text("당신에게 맞춘 CabinOS",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
         Text("개인 설정은 이 기기에 저장됩니다.",color=Muted,fontSize=12.sp)
@@ -121,6 +128,18 @@ import java.util.*
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
                 Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)
             }
+        }
+        SurfacePanel(Modifier.fillMaxWidth()) {
+            SectionLabel("알림과 데이터 관리",color=Blue)
+            Spacer(Modifier.height(12.dp))
+            Text(if(vm.notificationsAllowed()) "출발 준비 알림 허용됨" else "알림 권한 또는 시스템 알림 설정을 확인해 주세요.",fontSize=13.sp,color=White)
+            Text("저장한 출발 계획을 시스템 알림으로 안내합니다. 절전 상태에 따라 늦어질 수 있으며, 재부팅·강제 중지 후에는 다시 앱을 열어 주세요.",fontSize=11.sp,color=Muted)
+            Spacer(Modifier.height(10.dp))
+            Row(horizontalArrangement=Arrangement.spacedBy(10.dp)) {
+                ActionButton("알림 권한 확인",onNotifications,color=Blue)
+                ActionButton("개인 데이터 삭제",{confirmDeletion=true},color=Red)
+            }
+            storage?.let { Text(it,fontSize=12.sp,color=Amber,modifier=Modifier.padding(top=12.dp)) }
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
             SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))

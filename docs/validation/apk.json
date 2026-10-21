@@ -1,11 +1,13 @@
 {
   "path": "apk/퓨처랩스_CabinOS_ONE_release.apk",
-  "bytes": 2277806,
-  "sha256": "0909f062dabd518a3c0759d81344baaf9e840603075d29a70a24dbe85f0f0470",
+  "bytes": 2294246,
+  "sha256": "704ffd0eb6dacae7baffa0a3dcbb4b7877754e34aea1a180e60b5be6d58f3f7c",
   "variant": "release",
   "debuggable": false,
   "minSdk": 29,
   "targetSdk": 35,
   "certificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
-  "signing": "dedicated local team release key; not uploaded"
+  "signing": "dedicated local team release key; not uploaded",
+  "versionName": "0.2.0",
+  "versionCode": 2
 }

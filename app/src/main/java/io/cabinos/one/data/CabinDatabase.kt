@@ -31,11 +31,19 @@ interface CabinDao {
     @Query("SELECT * FROM tasks ORDER BY rowid DESC") fun tasks(): Flow<List<TaskRecord>>
     @Upsert suspend fun saveTask(record:TaskRecord)
     @Query("DELETE FROM tasks WHERE id=:id") suspend fun deleteTask(id:String)
+    @Query("DELETE FROM sessions WHERE id NOT IN (SELECT id FROM sessions WHERE status IN ('COMPLETED','INTERRUPTED') ORDER BY started DESC LIMIT 100) AND (:activeId IS NULL OR id != :activeId)")
+    suspend fun pruneSessions(activeId: String?)
+    @Query("DELETE FROM tasks") suspend fun clearTasks()
+    @Query("DELETE FROM sessions") suspend fun clearSessions()
+    @Query("DELETE FROM preferences") suspend fun clearPreferences()
+    @Query("DELETE FROM checkpoint") suspend fun clearCheckpoint()
+    @Transaction suspend fun clearPersonalData() { clearTasks(); clearSessions(); clearPreferences(); clearCheckpoint() }
     @Transaction suspend fun saveState(state:AppState) {
         savePreferences(PreferenceRecord.from(state.preferences))
         state.session?.let { saveSession(SessionRecord.from(it)) }
         state.history.forEach { saveSession(SessionRecord.from(it)) }
         saveCheckpoint(CheckpointRecord(activeSessionId=state.session?.id,departure=state.schedule.departureAtMs))
+        pruneSessions(state.session?.id)
     }
 }
 @Database(entities=[PreferenceRecord::class,SessionRecord::class,CheckpointRecord::class,TaskRecord::class],version=1,exportSchema=true)

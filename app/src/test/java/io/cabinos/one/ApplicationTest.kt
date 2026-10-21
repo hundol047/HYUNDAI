@@ -55,10 +55,25 @@ class ApplicationTest {
         compose.runOnIdle { vm.start(SessionKind.FOCUS,25) }
         compose.onNodeWithText("나의 할 일").performScrollTo().assertIsDisplayed()
         capture("focus")
+        compose.runOnIdle { vm.setForeground(false) }
+        assertFalse(vm.state.value.parkedAllowed)
+        assertEquals(SessionStatus.PAUSED,vm.state.value.session!!.status)
+        compose.runOnIdle { vm.setForeground(true) }
+        assertFalse(vm.state.value.parkedAllowed)
+        Thread.sleep(1600)
+        compose.runOnIdle { vm.engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=System.currentTimeMillis())) }
+        assertTrue(vm.state.value.parkedAllowed)
+        assertEquals(SessionStatus.PAUSED,vm.state.value.session!!.status)
+        compose.runOnIdle { vm.engine.pauseOrResume() }
+        assertEquals(SessionStatus.RUNNING,vm.state.value.session!!.status)
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
         assertEquals(SessionStatus.PAUSED,vm.state.value.session!!.status)
         capture("driving")
+        compose.runOnIdle { vm.selectScenario("실차 연결") }
+        compose.onNodeWithText("차량 상태를 확인할 수 없습니다.").assertIsDisplayed()
+        compose.onNodeWithText("판교IC · 데모 경로").assertDoesNotExist()
+        assertFalse(vm.state.value.parkedAllowed)
     }
     private fun capture(name:String) {
         val output=File("build/screenshots/$name.png")

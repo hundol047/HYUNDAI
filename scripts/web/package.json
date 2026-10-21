@@ -1,0 +1,12 @@
+{
+  "name": "cabinos-web-validation",
+  "private": true,
+  "version": "0.2.0",
+  "scripts": {
+    "test": "node verify.cjs",
+    "record": "node record-demo.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

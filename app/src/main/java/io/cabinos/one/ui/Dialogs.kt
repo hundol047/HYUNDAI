@@ -49,7 +49,7 @@ import io.cabinos.core.*
         }
     }
 }
-@Composable fun SimulatorDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit) {
+@Composable fun SimulatorDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onLocation:()->Unit) {
     val selected by vm.scenario.collectAsStateWithLifecycle()
     val running by vm.demoRunning.collectAsStateWithLifecycle()
     Dialog(onDismissRequest=onClose,properties=DialogProperties(usePlatformDefaultWidth=false)) {
@@ -69,6 +69,10 @@ import io.cabinos.core.*
                     ActionButton("집중 시작",{vm.start(SessionKind.FOCUS,25)},Modifier.weight(1f),Blue,s.parkedAllowed)
                     ActionButton("휴식 시작",{vm.start(SessionKind.RELAX,15)},Modifier.weight(1f),Mint,s.parkedAllowed)
                     ActionButton(if(running)"시나리오 중지" else "전체 시나리오 실행",{vm.runDemo()},Modifier.weight(2f),Amber)
+                }
+                if(selected=="실차 연결") {
+                    Text("Pleos 차량 신호는 미연결입니다. 위치 권한을 허용해도 주차 기능은 열리지 않습니다.",fontSize=11.sp,color=Amber)
+                    ActionButton("실제 위치 권한 허용",onLocation,Modifier.fillMaxWidth(),Blue)
                 }
                 Text("P 상태가 1.5초 이상 확인되어야 정차 기능이 활성화됩니다. 신호 대기는 D 기어를 유지합니다. 전체 시나리오는 창을 닫아도 계속됩니다.",fontSize=11.sp,color=Muted)
                 HorizontalDivider(color=Line)

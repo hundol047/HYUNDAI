@@ -8,6 +8,10 @@
 
 **저장소:** https://github.com/hundol047/HYUNDAI
 
+**실행 영상:** [CabinOS ONE 데모 MP4](docs/video/CabinOS_ONE_demo.mp4) · [영상 점검 후 수정 내역](docs/VIDEO_REVIEW.md)
+
+**브라우저 체험:** [배포 안내와 접속 상태](docs/WEB_DEMO.md) — 같은 페이지에서 인터랙티브 데모·Android UI·APK 다운로드 제공.
+
 **제출 안내:** [팀명·APK·서명·Private 저장소 확인](docs/SUBMISSION_KO.md)
 
 위 APK는 최적화한 Release 변형을 전용 팀 릴리스 인증서로 서명한 설치 파일입니다. 차량/경로/충전 데이터는 데모라는 점을 아래 지원 범위와 함께 확인해 주세요.
@@ -26,7 +30,11 @@
 - **로컬 어시스턴트:** 한국어 명령 라우팅, 기기 STT/TTS, 서비스가 없을 때 명령 버튼, 정차 중 텍스트 입력. API 키나 클라우드 AI 없이 핵심 동작.
 - **Room:** 사용자 설정·활성 세션 체크포인트·할 일·세션 이력. 재실행 시 세션은 안전하게 일시정지 상태로 복원.
 
+시스템 출발 준비 알림, 데이터 삭제, 최근 이력 보관, 화면 이탈 시 세션 중지, 선택한 차량 데이터 모드 복원도 제공합니다. 알림은 기기 절전 정책으로 늦어질 수 있습니다.
+
 ## 개발 환경 및 빌드
+
+브라우저 빌드에는 Node.js 22와 npm도 필요합니다. Kotlin Multiplatform의 JVM/JS가 같은 상태 엔진을 컴파일합니다.
 
 JDK 21, Android SDK Platform 35, Build Tools 35.0.0이 필요합니다. Gradle 8.11.1 Wrapper와 배포 SHA-256 검증이 포함되어 있습니다. Android Studio에서 이 디렉터리를 열고 SDK를 설치해도 됩니다.
 
@@ -60,10 +68,10 @@ source scripts/env.sh
 
 ## 실행 및 검증
 
-- 앱 실행 후 약 2초 동안 주차 상태를 확인하고 충전 대시보드를 표시합니다.
+- 첫 실행은 약 2초 동안 주차 상태를 확인한 후 충전 대시보드를 표시합니다. 이후에는 선택했던 소스를 복원하고 차량 상태를 새로 확인합니다.
 - 왼쪽 **데모**에서 차량 상태를 선택하거나 **전체 시나리오 실행**을 누르세요.
 - **주행 → 신호 대기 → 주차/충전 → 집중/휴식 → 출발 준비 → 주행**에 따라 화면이 자동 전환됩니다.
-- 마이크 버튼은 마이크 권한을 요청합니다. 한국어 TTS 언어팩과 음성 인식 서비스가 없는 에뮬레이터에서는 화면/명령 버튼으로 사용하세요. 음성 서비스 동작은 기기 구성에 따라 달라집니다.
+- 마이크 권한은 정차 중 요청합니다. 주행 중에는 새 권한 창을 열지 않으며, 이미 허용한 마이크로 짧은 명령을 사용할 수 있습니다. 한국어 TTS 언어팩과 음성 인식 서비스가 없는 에뮬레이터에서는 화면/명령 버튼으로 사용하세요. 음성 서비스 동작은 기기 구성에 따라 달라집니다.
 - **실차 연결**은 미지원 상태를 보여주며 주차 기능을 잠급니다. 실차 연결 성공을 모사하지 않습니다.
 
 ```bash
@@ -73,13 +81,13 @@ source scripts/env.sh
 python3 scripts/device_smoke.py      # 실행 중인 Android 장치의 실제 UI 검증
 ```
 
-실제 실행 결과와 제한은 [검증 보고서](docs/VALIDATION.md)를 확인하세요. CI 워크플로는 추가했지만 원격 GitHub Actions 실행은 이 작업에서 수행하지 않았습니다.
+실제 실행 결과와 제한은 [검증 보고서](docs/VALIDATION.md)를 확인하세요. 로컬 통과와 원격 GitHub Actions 결과는 구분해 기록합니다. 공개 페이지 배포 준비·상태는 [웹 데모 안내](docs/WEB_DEMO.md)를 참고하세요.
 
 ## 구조 및 제출 자료
 
 | 경로 | 내용 |
 |---|---|
-| `core/` | 순수 Kotlin 상태 엔진·안전 규칙·위험 점수·추천·공유 타이머·단위/통합 테스트 |
+| `core/` | JVM/JS 공유 Kotlin 상태 엔진·안전 규칙·위험 점수·추천·공유 타이머·단위/통합 테스트 |
 | `app/` | Compose UI·MVVM·Hilt·Room·Android 음성/위치/오디오 어댑터 |
 | [ARCHITECTURE.md](docs/ARCHITECTURE.md) | 구조·상태 전환·동시성·복원 설계 |
 | [SDK_CAPABILITIES.md](docs/SDK_CAPABILITIES.md) | SDK 확인 상태·권한·실제/데모 구분 |
@@ -94,5 +102,20 @@ python3 scripts/device_smoke.py      # 실행 중인 Android 장치의 실제 UI
 ![통합 정차 대시보드](docs/screenshots/parked.png)
 ![집중 세션과 공유 출발 일정](docs/screenshots/focus.png)
 ![EchoRoad 주행 화면](docs/screenshots/driving.png)
+
+## 웹 데모와 영상 재현
+
+```bash
+./scripts/build-web.sh
+# 내부 점검용 서버; 공개 링크는 GitHub Pages 배포를 사용합니다.
+python3 scripts/serve-web.py --directory build/site
+# 브라우저 검사·촬영 도구 (Chromium과 FFmpeg 필요)
+npm ci --prefix scripts/web
+# 시스템 Chromium이 없으면 cd scripts/web && npx playwright install chromium
+node scripts/web/verify.cjs
+node scripts/web/record-demo.cjs
+```
+
+영상은 실제 브라우저 조작을 녹화했습니다. 웹·Android가 같은 Kotlin 엔진을 사용하지만 실차 연동과 APK 실기기 실행 검증은 남아 있습니다.
 
 공식 공모전: https://appdevchallenge.auto-hmg.io/guide/submission

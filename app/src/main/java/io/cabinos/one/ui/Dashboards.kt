@@ -151,6 +151,20 @@ import kotlin.math.min
             }
             Pill(UnifiedVehicleContextEngine.contextLabel(s.context),if(s.context==VehicleContext.UNKNOWN)Amber else Blue)
         }
+        if(s.context==VehicleContext.UNKNOWN) {
+            SurfacePanel(Modifier.fillMaxWidth().weight(1f),accent=Amber.copy(alpha=.5f)) {
+                Spacer(Modifier.weight(1f))
+                Icon(Icons.Outlined.SensorsOff,null,tint=Amber,modifier=Modifier.size(48.dp))
+                Spacer(Modifier.height(20.dp))
+                Text("차량 상태를 확인할 수 없습니다.",color=White,fontSize=24.sp)
+                Spacer(Modifier.height(12.dp))
+                Text("현재 속도와 기어, 경로를 표시할 수 없어 정차용 조작을 제한합니다.",color=Muted,fontSize=15.sp)
+                Spacer(Modifier.height(10.dp))
+                Text(if(s.sample?.source==DataSource.VEHICLE) "이 버전은 Pleos 실차 SDK와 연결되지 않습니다." else "차량 신호가 복구되면 안전 상태를 다시 확인합니다.",color=Amber,fontSize=13.sp)
+                Spacer(Modifier.weight(1f))
+            }
+            return@Column
+        }
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
             Box(Modifier.weight(.66f).fillMaxHeight().clip(RoundedCornerShape(20.dp)).border(1.dp,Line,RoundedCornerShape(20.dp))) {
                 RouteScene(Modifier.fillMaxSize())
@@ -163,7 +177,7 @@ import kotlin.math.min
                 }
                 Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().background(Brush.verticalGradient(listOf(androidx.compose.ui.graphics.Color.Transparent,Night))).padding(20.dp)) {
                     Text(if(s.locationAvailable)"시뮬레이션 경로 · 실제 길 안내 아님" else "위치 사용 불가 · 경로 위험 안내 중단",color=if(s.locationAvailable)Muted else Amber,fontSize=11.sp)
-                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton("지도 앱",onNavigation,color=Blue,icon=Icons.Outlined.Navigation)}
+                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton(if(s.sample?.source==DataSource.VEHICLE && s.locationAvailable) "지도 앱" else "지도 미연동",onNavigation,color=Blue,enabled=s.sample?.source==DataSource.VEHICLE && s.locationAvailable,icon=Icons.Outlined.Navigation)}
                 }
             }
             Column(Modifier.weight(.34f).fillMaxHeight(),verticalArrangement=Arrangement.spacedBy(12.dp)) {
@@ -172,13 +186,14 @@ import kotlin.math.min
                     SurfacePanel(Modifier.fillMaxWidth(),accent=if(index==0) Red.copy(alpha=.6f) else Line) {
                         Row(verticalAlignment=Alignment.CenterVertically) {
                             Icon(Icons.Outlined.WarningAmber,null,tint=if(index==0)Red else Amber,modifier=Modifier.size(24.dp));Spacer(Modifier.width(10.dp))
-                            Column(Modifier.weight(1f)) {Text(h.hazard.kind,color=White,fontSize=14.sp,fontWeight=FontWeight.Medium);Spacer(Modifier.height(4.dp));Text("전방 ${"%.1f".format(h.distanceMeters/1000)} km · 신뢰도 ${(h.hazard.confidence*100).toInt()}%",fontSize=11.sp,color=Muted)}
+                            Column(Modifier.weight(1f)) {Text(h.hazard.kind,color=White,fontSize=18.sp,fontWeight=FontWeight.Medium);Spacer(Modifier.height(4.dp));Text("전방 ${"%.1f".format(h.distanceMeters/1000)} km · 신뢰도 ${(h.hazard.confidence*100).toInt()}%",fontSize=14.sp,color=Muted)}
                         }
                     }
                 }
                 if(s.hazards.isEmpty()) SurfacePanel {Text(if(!s.locationAvailable)"위치 확인이 필요합니다" else "확인된 위험 정보 없음",color=Muted,fontSize=14.sp)}
                 Spacer(Modifier.weight(1f))
                 Text("주행 중에는 집중·휴식·활동 추천을 제한합니다. 신호 대기 중에도 주행 안전 모드를 유지합니다.",fontSize=11.sp,color=Muted)
+                Text(s.message,color=Muted,fontSize=12.sp,maxLines=3)
                 ActionButton("위험 정보 듣기",onVoice,Modifier.fillMaxWidth(),Blue,icon=Icons.Outlined.MicNone)
             }
         }

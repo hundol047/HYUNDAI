@@ -21,10 +21,12 @@ object AppModule {
         val hazards=DemoRoadHazardRepository().apply { seed(System.currentTimeMillis()) }
         return UnifiedVehicleContextEngine(hazards=hazards)
     }
-    @Provides @Singleton fun simulator()=SimulationVehicleProvider()
+    @Provides @Singleton fun runtimePreferences(@ApplicationContext context:Context)=RuntimePreferences(context)
+    @Provides @Singleton fun simulator(preferences:RuntimePreferences)=SimulationVehicleProvider(preferences)
+    @Provides @Singleton fun reminders(@ApplicationContext context:Context)=DepartureReminders(context)
     @Provides @Singleton fun speech(@ApplicationContext context:Context)=AndroidSpeechProvider(context)
     @Provides @Singleton fun location(@ApplicationContext context:Context)=AndroidLocationProvider(context)
     @Provides @Singleton fun navigation(@ApplicationContext context:Context,location:AndroidLocationProvider)=AndroidNavigationProvider(context,location)
     @Provides @Singleton fun sessions(dao:CabinDao):CabinSessionRepository=RoomCabinSessionRepository(dao)
-    @Provides @Singleton fun audio()=AmbientAudio()
+    @Provides @Singleton fun audio(@ApplicationContext context:Context)=AmbientAudio(context)
 }

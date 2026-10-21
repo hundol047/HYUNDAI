@@ -2,14 +2,13 @@ package io.cabinos.core
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import java.util.UUID
 import kotlin.math.min
 
 /** One source of truth for vehicle safety, both parked services, and every departure/session timer.
  * All mutations must run on the same dispatcher (Android Main in the app).
  */
 class UnifiedVehicleContextEngine(
-    private val clock: () -> Long = System::currentTimeMillis,
+    private val clock: () -> Long = ::platformNowMillis,
     private val hazards: RoadHazardRepository = DemoRoadHazardRepository(),
     private val recommendations: ActivityRecommendationRepository = DemoActivityRepository(),
     private val decision: ContextDecisionEngine = SafetyDecisionEngine(),
@@ -104,7 +103,7 @@ class UnifiedVehicleContextEngine(
             departureAnnounced = true; event("DepartureApproaching", "출발 준비 시간입니다. 진행 중인 활동을 정리해 주세요.")
         }
         if (mutable.value.echoRoadActive && alertGate.take(ranked.firstOrNull(), now)) {
-            val h = ranked.first(); event("RoadHazardDetected", "전방 ${"%.1f".format(java.util.Locale.KOREA, h.distanceMeters / 1000)}킬로미터 구간에 ${h.hazard.kind} 정보가 있습니다. 시뮬레이션 안내입니다.")
+            val h = ranked.first(); event("RoadHazardDetected", "전방 ${kotlin.math.round(h.distanceMeters / 100) / 10}킬로미터 구간에 ${h.hazard.kind} 정보가 있습니다. 시뮬레이션 안내입니다.")
         }
     }
 
@@ -127,7 +126,7 @@ class UnifiedVehicleContextEngine(
         val duration = min(minutes.coerceIn(1,120) * 60L, state.value.schedule.availableSeconds)
         if (duration < 60) { event("SessionRejected", "출발까지 여유 시간이 부족합니다. 대기 시간을 먼저 설정해 주세요."); return false }
         archiveActive()
-        val session = CabinSession(UUID.randomUUID().toString(), kind, clock(), duration, duration)
+        val session = CabinSession(randomEventId(), kind, clock(), duration, duration)
         mutable.value = mutable.value.copy(session = session)
         sessionDeadlineMs = clock() + duration * 1000
         event("${kind.name}SessionStarted", "${duration / 60}분 ${kind.label} 세션을 시작합니다."); tick(); return true
@@ -173,7 +172,7 @@ class UnifiedVehicleContextEngine(
     fun injectHazard() {
         if (state.value.sample?.source != DataSource.SIMULATION) return
         val now = clock()
-        hazards.add(RoadHazard(UUID.randomUUID().toString(), "도로 장애물", state.value.route.id,
+        hazards.add(RoadHazard(randomEventId(), "도로 장애물", state.value.route.id,
             state.value.route.progressMeters + 800, state.value.route.heading, 1.0, .96, 3, now, now + 600_000))
         event("SimulatedHazardInjected", "시뮬레이션 위험 이벤트를 추가했습니다."); tick()
     }
@@ -193,6 +192,21 @@ class UnifiedVehicleContextEngine(
             else -> "위험 구간, 충전 시간, 집중·휴식 세션을 물어보세요."
         }
         event("AssistantResponse", response); return response
+    }
+    fun invalidateTelemetry(reason: String = "차량 연결을 다시 확인합니다.") {
+        parkCandidateAt = null
+        mutable.value = state.value.copy(sample = state.value.sample?.copy(connected = false))
+        tick()
+        event("TelemetryInvalidated", reason)
+    }
+    fun clearPersonalData(): Boolean {
+        if (!parkedNow()) return reject()
+        departureAtMs = null; manualDepartureAtMs = null; lastChargeEstimate = null
+        sessionDeadlineMs = null; returnSeconds = 0; departureAnnounced = false; scheduleLabel = "시간 미설정"
+        mutable.value = state.value.copy(preferences = Preferences(), session = null, history = emptyList(), events = emptyList())
+        tick()
+        event("PersonalDataCleared", "할 일·세션 기록·개인 설정을 삭제했습니다.")
+        return true
     }
     private fun parkedNow(): Boolean { tick(); return state.value.parkedAllowed }
     private fun reject(): Boolean { event("SafetyRestricted", "안전한 주차가 확인되어야 사용할 수 있습니다."); return false }

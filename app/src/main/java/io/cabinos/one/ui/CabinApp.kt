@@ -12,6 +12,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import android.content.pm.PackageManager
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.compose.*
 import io.cabinos.core.*
 import java.text.SimpleDateFormat
@@ -26,12 +32,31 @@ import java.util.*
 
 @Composable fun CabinApp(vm:CabinViewModel=hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val lifecycle=LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle,vm) {
+        val observer=LifecycleEventObserver { _,event ->
+            if(event==Lifecycle.Event.ON_START) vm.setForeground(true)
+            if(event==Lifecycle.Event.ON_STOP) vm.setForeground(false)
+        }
+        lifecycle.addObserver(observer)
+        vm.setForeground(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
+        onDispose { lifecycle.removeObserver(observer);vm.setForeground(false) }
+    }
+    val context=LocalContext.current
+    val view=LocalView.current
+    DisposableEffect(view,s.parkedAllowed,s.session?.status) {
+        view.keepScreenOn=s.parkedAllowed && s.session?.status==SessionStatus.RUNNING
+        onDispose { view.keepScreenOn=false }
+    }
     val nav=rememberNavController()
     val entry by nav.currentBackStackEntryAsState()
     val route=entry?.destination?.route ?: "dashboard"
     var assistantOpen by remember { mutableStateOf(false) }
     var simulatorOpen by remember { mutableStateOf(false) }
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
+    val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
+    val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
+    val requestNotifications:()->Unit = { if(android.os.Build.VERSION.SDK_INT>=33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.refreshNotifications() }
     LaunchedEffect(s.parkedAllowed) { if(!s.parkedAllowed && route!="dashboard") nav.navigate("dashboard") {popUpTo("dashboard"){inclusive=true}} }
     CabinTheme {
         Row(Modifier.fillMaxSize().background(Brush.linearGradient(listOf(Night,androidx.compose.ui.graphics.Color(0xFF0B1720),Night)))) {
@@ -39,22 +64,25 @@ import java.util.*
             Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=24.dp)) {
                 BrandHeader(s)
                 Box(Modifier.weight(1f)) {
-                    if(!s.parkedAllowed) DrivingDashboard(s,onVoice={assistantOpen=true},onNavigation={vm.navigation();assistantOpen=true})
-                    else ParkedNavigation(nav,vm)
+                    if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={vm.navigation();assistantOpen=true})
+                    else ParkedNavigation(nav,vm,requestNotifications)
                 }
                 BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true})
             }
         }
-        if(assistantOpen) AssistantDialog(s,vm,onClose={assistantOpen=false},onMicrophone={microphone.launch(Manifest.permission.RECORD_AUDIO)})
-        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false})
+        if(assistantOpen) AssistantDialog(s,vm,onClose={assistantOpen=false},onMicrophone={
+            if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED || !s.parkedAllowed) vm.listen()
+            else microphone.launch(Manifest.permission.RECORD_AUDIO)
+        })
+        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))})
     }
 }
-@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel) {
+@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit) {
     // Collect live timing inside destinations so a tick never rebuilds the navigation graph.
     NavHost(navController=nav,startDestination="dashboard") {
         composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();ParkedDashboard(s,vm) }
         composable("history") { val s by vm.state.collectAsStateWithLifecycle();HistoryScreen(s) }
-        composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm) }
+        composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
     }
 }
 @Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit) {
