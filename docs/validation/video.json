@@ -10,15 +10,15 @@
     }
   ],
   "format": {
-    "duration": "96.750000",
-    "size": "11401752"
+    "duration": "97.125000",
+    "size": "11266162"
   },
   "path": "docs/video/CabinOS_ONE_demo.mp4",
-  "sha256": "9f630803a040068361ba0d4b39be8af08109a470509a7a5e00681c9cb4883092",
+  "sha256": "867fc7c9837a18530ce07258ba009d98b8d5ecdcdfa69463bae8ef3f480d3abe",
   "capture": {
     "type": "actual Chromium browser screencast; live OSM tiles/Nominatim/OSRM responses; explicitly labeled synthetic GPS only; native gallery is offline Compose, not physical device or road footage",
-    "frames": 505,
-    "seconds": 85.655,
+    "frames": 481,
+    "seconds": 87.067,
     "errors": []
   }
 }

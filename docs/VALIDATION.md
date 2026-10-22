@@ -84,3 +84,5 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 - **실행 검사 안정화:** Room 응답을 기다리는 Robolectric 검사에서 MainLooper의 대기 콜백을 명시적으로 진행시켰습니다. 20초 대기와 기존 안전·저장/UI 단언을 유지하며, 실제 앱의 동작이나 검사를 생략하지 않았습니다.
 
 직접 재현: `python3 scripts/check-navigation-live.py --all-regions`, `node scripts/web/verify-navigation-live.cjs`. 클라우드 Chromium에서 프록시 CA 신뢰가 필요하면 `scripts/prepare-browser-trust.sh`를 사용합니다. 작업 폴더 밖의 NSS 저장소 쓰기 권한이 필요할 수 있습니다. 기존 인증서/키를 교체하거나 TLS 검증을 해제하지 않습니다. 환경 상태 API는 network.state=unknown이어서 환경 전체 게시 완료는 주장하지 않습니다.
+
+현재 v0.5.0 Android 소스 `a0a0e48ee4ab11cdd993551dcbccce6416abe07d`의 [원격 테스트·Debug/Release 빌드·Lint](https://github.com/hundol047/HYUNDAI/actions/runs/39739092859)가 통과했습니다. 이후 웹 상단 시계를 ETA와 동일한 기기 시간대로 보정하고, America/New_York 시간대에서 내비게이션 브라우저 검사 13개를 다시 통과했습니다. APK 내용은 이 웹 시간대 수정으로 바뀌지 않습니다.
