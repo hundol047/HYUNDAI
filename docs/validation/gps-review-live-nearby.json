@@ -1,0 +1,7 @@
+{
+  "result": "unavailable",
+  "reason": "HTTP Error 502: Bad Gateway",
+  "type": "one actual bounded Overpass query for public Pangyo coordinates, not physical GPS or all-business coverage",
+  "observedAt": "2026-10-22T15:11:21.091418+00:00",
+  "elapsedMs": 943.3
+}

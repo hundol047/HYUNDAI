@@ -22,7 +22,7 @@
 | EchoRoad 내비게이션 | Nominatim · OSRM · Android GPS · 공통 NavigationTracker | 국가 제한 없는 목적지 검색/자동차 경로/회전 안내/재탐색 구현. 서울·파리·뉴욕·도쿄 실서버와 서울 브라우저 연결 확인. 실기기·실도로 미검증. [범위](NAVIGATION_KO.md) |
 | Pleos NaviHelper | 기존 NavigationProvider | Pleos 미연동. 별도 프레임워크 GPS 내비게이션은 위 행 참조 |
 | 위험 이벤트·주행 데모 경로 | 로컬 저장소, 점수·시간 계산 | 시뮬레이션. 실제 도로 검출 아님. GPS 내비게이션에는 예시 위험을 표시하지 않음 |
-| 정차용 주변 지도·장소 | osmdroid/Leaflet + OSM 타일 + Overpass | 실제 서비스 연결 어댑터. 클라우드 실서버 접속 미검증, 초기 목록은 예시. 도보 추정·영업 여부 미확인 |
+| 정차용 주변 지도·장소 | osmdroid/Leaflet + OSM 타일 + Overpass | 실제 서비스 연결 어댑터. OSM 타일 실제 연결 확인, Overpass 최신 재확인 HTTP 502. 초기 목록은 예시. 도보 추정·영업 여부 미확인 |
 | 한국어 TTS | android.speech.tts.TextToSpeech | 실제 플랫폼 어댑터. 기기 엔진/한국어 언어팩 필요 |
 | 한국어 STT | android.speech.SpeechRecognizer | 실제 플랫폼 어댑터. 권한과 인식 서비스 필요. 미지원 시 명령 버튼 사용 |
 | 위치 | android.location.LocationManager | 권한 부족 시 실패 처리. 데모 위치 거부 토글과 실제 권한은 별개 |
@@ -38,3 +38,6 @@ Android 권한은 `INTERNET`, `ACCESS_NETWORK_STATE`, `RECORD_AUDIO`, `ACCESS_CO
 
 
 0.7.0의 가게명·지점·주소 검색, 제공되는 전화/등록 영업시간, 20km·더 보기·지도 핀, 실제 표본/오류와 선택적 카카오 서버 범위는 [가게 검색 안내](PLACE_SEARCH_KO.md)에 있습니다. 모든 도로/가게를 보장하지 않으며 카카오 실서버는 키 미등록으로 미검증입니다. Google Maps는 외부 검색 링크이며 Google Places API 연동은 아닙니다.
+
+
+0.9.0 GPS 상태/재연결과 실제 제공자 연결·미검증 항목은 [GPS 재점검](GPS_REVIEW_KO.md)에 별도 기록합니다.

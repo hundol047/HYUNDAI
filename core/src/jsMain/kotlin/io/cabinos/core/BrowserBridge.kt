@@ -19,10 +19,11 @@ private var lastNavFixTimestamp=Long.MIN_VALUE
 private var navFix:NavFix?=null
 private var navRevision=0
 private var navSafetyHeld=false
-private var stationarySince:Long?=null
+private val stationary=StationaryEvidence()
 private fun navSnapshot():String {
     val g=navigator.state
     return JSON.stringify(json("active" to g.active,"tracking" to g.tracking,"arrived" to g.arrived,"hasRoute" to (g.route!=null),
+        "gpsReady" to (navFix?.let {navigator.usable(it)} ?: false),"gpsAgeSeconds" to navFix?.let {((platformNowMillis()-it.timestampMs)/1000).coerceAtLeast(0).toDouble()},"gpsAccuracy" to navFix?.accuracy,
         "originAccessMeters" to (g.route?.let {r->navFix?.let {NavigationGeometry.distance(it.point,r.points.first())}} ?: 0.0),
         "originReady" to (g.route?.let {r->navFix?.let {navigator.usable(it)&&NavigationGeometry.distance(it.point,r.points.first())<=kotlin.math.max(45.0,it.accuracy*2)}} ?: false),
         "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
@@ -115,14 +116,9 @@ fun main() {
         if(platformNowMillis()-f.timestampMs in 0..10_000)lastNavFixTimestamp=f.timestampMs
         if(navigator.usable(f)) {
             navFix=f
-            if(f.speedMps?.let {it>=2}==true){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
-            if(navSafetyHeld&&!navigator.state.active) {
-                if(f.speedMps?.let {it in 0.0..0.5}==true) {
-                    if(stationarySince==null)stationarySince=platformNowMillis()
-                    if(platformNowMillis()-(stationarySince ?: platformNowMillis())>=5000){navSafetyHeld=false;engine.setNavigationLock(false)}
-                } else stationarySince=null
-            }
-        }else navFix=null
+            if(f.speedMps?.let {it>=2}==true){navSafetyHeld=true;stationary.reset();engine.setNavigationLock(true)}
+            if(navSafetyHeld&&!navigator.state.active&&stationary.accept(f,platformNowMillis())){navSafetyHeld=false;stationary.reset();engine.setNavigationLock(false)}
+        }else {navFix=null;stationary.reset()}
         navigator.update(f);navSnapshot()
     }
     bridge.navPreview={raw:String,name:String,lat:Double,lon:Double ->
@@ -141,15 +137,16 @@ fun main() {
     bridge.navStart={accessConfirmed:Boolean ->
         val f=navFix
         val started=engine.state.value.parkedAllowed&&f!=null&&((navigator.state.route?.destinationAccessMeters ?: 0.0)<=100||accessConfirmed==true)&&navigator.start(f)
-        if(started){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
+        if(started){navSafetyHeld=true;stationary.reset();engine.setNavigationLock(true)}
         started
     }
     bridge.navReroute={navigator.takeReroute()}
-    bridge.navBackground={navFix=null;navigator.suspendTracking()}
-    bridge.navStop={navigator.stop();navRevision++;if(!navSafetyHeld){navFix=null;engine.setNavigationLock(false)}}
+    bridge.navBackground={navFix=null;stationary.reset();navigator.suspendTracking()}
+    bridge.navStop={navigator.stop();stationary.reset();navRevision++;if(!navSafetyHeld){navFix=null;engine.setNavigationLock(false)}}
     bridge.tick={
         appearanceRestored=true
         navigator.tick()
+        if(navFix?.let {!navigator.usable(it)}==true){navFix=null;stationary.reset()}
         sample=sample.copy(timestampMs=platformNowMillis())
         engine.acceptVehicle(sample)
         snapshot()
@@ -179,7 +176,7 @@ fun main() {
     bridge.location={ enabled:Boolean -> engine.setConnectivity(location=enabled) }
     bridge.route={ alternate:Boolean -> engine.updateRoute(Route(if(alternate)"demo-detour" else "demo-pangyo")) }
     bridge.preferences={ focus:Int,relax:Int,buffer:Int -> engine.updatePreferences(engine.state.value.preferences.copy(focusMinutes=focus,relaxMinutes=relax,departureBufferMinutes=buffer)) }
-    bridge.clear={ if(engine.clearPersonalData()){appearance=AppearanceSettings();navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationarySince=null;engine.setNavigationLock(false)} }
+    bridge.clear={ if(engine.clearPersonalData()){appearance=AppearanceSettings();navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationary.reset();engine.setNavigationLock(false)} }
     bridge.background={ engine.invalidateTelemetry("브라우저를 벗어나 세션을 일시정지했습니다.") }
     window.asDynamic().CabinOS=bridge
     select("충전")

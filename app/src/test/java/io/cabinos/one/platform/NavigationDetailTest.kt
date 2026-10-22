@@ -65,7 +65,7 @@ class NavigationDetailTest {
     @Test fun freshGpsDoesNotEraseRouteErrors() {
         Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute=error("검사용 경로 오류")}).use {f->
             f.nav.locate();f.gps();f.nav.plan(destination);f.idle();assertEquals("검사용 경로 오류",f.nav.state.value.notice)
-            f.advance(20);f.gps();assertEquals("검사용 경로 오류",f.nav.state.value.notice);assertTrue(f.nav.state.value.gpsNotice.contains("GPS 위치 확인"))
+            f.advance(20);f.gps();assertEquals("검사용 경로 오류",f.nav.state.value.notice);assertTrue(f.nav.state.value.gpsNotice.contains("GPS 확인"))
         }
     }
     @Test fun cancelledSearchCannotPublishLateResultsOverANewSelection() {
@@ -93,7 +93,127 @@ class NavigationDetailTest {
             f.nav.locate();f.gps(speed=10f);assertFalse(f.engine.state.value.parkedAllowed)
             f.advance(20);val stationaryAt=f.now;f.gps()
             f.advance(6000);f.gps(at=stationaryAt);f.park();assertFalse(f.engine.state.value.parkedAllowed)
-            f.advance(20);f.gps();f.park();f.now+=1600;f.park();assertTrue(f.engine.state.value.parkedAllowed)
+            f.advance(20);f.gps();f.park();assertFalse(f.engine.state.value.parkedAllowed)
+            repeat(5){f.advance(1000);f.gps();f.park()}
+            f.now+=1600;f.park();assertTrue(f.engine.state.value.parkedAllowed)
         }
     }
+    @Test fun stationaryFrameworkUpdatesKeepGpsFreshAfterTwelveSeconds() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate()
+            repeat(13){
+                if(it>0)f.advance(1000)
+                shadowOf(f.manager).simulateLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {latitude=origin.latitude;longitude=origin.longitude;accuracy=5f;speed=0f;time=f.now;elapsedRealtimeNanos=SystemClock.elapsedRealtimeNanos()})
+                f.idle();f.park();f.nav.tick()
+                assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+                assertEquals(0L,f.nav.state.value.gpsAgeSeconds)
+            }
+            f.nav.plan(destination);f.idle();assertTrue(f.nav.state.value.originReady)
+        }
+    }
+    @Test fun reconnectRegistersANewListenerAndIgnoresRetiredCallbacks() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            val old=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            f.nav.locate();assertEquals(GpsConnection.WAITING,f.nav.state.value.gpsConnection)
+            val listeners=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER)
+            assertEquals(1,listeners.size);assertNotSame(old,listeners.first())
+            f.advance(20);old.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {latitude=0.0;longitude=0.0;accuracy=5f;time=f.now})
+            assertEquals(GpsConnection.WAITING,f.nav.state.value.gpsConnection)
+            f.gps();assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun noFirstFixTimesOutAndCanBeReconnected() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();repeat(16){f.advance(1000);f.park();f.nav.tick()}
+            assertEquals(GpsConnection.STALE,f.nav.state.value.gpsConnection);assertFalse(f.nav.state.value.originReady)
+            f.nav.locate();assertEquals(GpsConnection.WAITING,f.nav.state.value.gpsConnection)
+            f.gps();assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun permissionRevocationClearsFixAndGrantingItAllowsANewSubscription() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            shadowOf(f.context as Application).denyPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            f.nav.tick();assertEquals(GpsConnection.DENIED,f.nav.state.value.gpsConnection)
+            assertNull(f.nav.state.value.gpsAccuracy);assertTrue(shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).isEmpty())
+            f.nav.locate();assertEquals(GpsConnection.DENIED,f.nav.state.value.gpsConnection)
+            shadowOf(f.context as Application).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            f.nav.locate();f.advance(20);f.gps();assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun disabledProviderCanBeEnabledAndResubscribed() {
+        Fixture(NavigationService()).use {f->
+            shadowOf(f.manager).setProviderEnabled(LocationManager.GPS_PROVIDER,false)
+            shadowOf(f.manager).setProviderEnabled(LocationManager.NETWORK_PROVIDER,false)
+            f.nav.locate();assertEquals(GpsConnection.DISABLED,f.nav.state.value.gpsConnection)
+            shadowOf(f.manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+            f.nav.locate();f.gps();assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun settingsIntentsAreRealAndBlockedAfterMovement() {
+        Fixture(NavigationService()).use {f->
+            val app=shadowOf(f.context as Application)
+            f.nav.openLocationSettings();assertEquals(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS,app.nextStartedActivity.action)
+            f.nav.openLocationSettings(true);val intent=app.nextStartedActivity
+            assertEquals(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,intent.action)
+            assertEquals("package:${f.context.packageName}",intent.data.toString())
+            f.nav.locate();f.gps(speed=10f);f.nav.openLocationSettings();assertNull(app.nextStartedActivity)
+        }
+    }
+    @Test fun backgroundTimeCannotCountAsStationaryEvidence() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps(speed=10f)
+            repeat(3){f.advance(1000);f.gps()}
+            f.nav.setForeground(false);f.advance(6000);f.nav.setForeground(true);f.gps();f.park()
+            assertFalse(f.engine.state.value.parkedAllowed)
+            repeat(5){f.advance(1000);f.gps();f.park()}
+            f.now+=1600;f.park();assertTrue(f.engine.state.value.parkedAllowed)
+        }
+    }
+    @Test fun staleGpsIsReportedAndFreshFixRecoversWithoutAFakePosition() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.plan(destination);f.idle()
+            f.advance(10_001);f.nav.tick();assertEquals(GpsConnection.STALE,f.nav.state.value.gpsConnection);assertFalse(f.nav.state.value.originReady)
+            f.gps();assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection);assertTrue(f.nav.state.value.originReady)
+        }
+    }
+
+    @Test fun recoveredGpsRepeatsCurrentGuidanceThroughTheAndroidTtsApi() {
+        org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            f.nav.locate();f.gps();f.nav.plan(destination);f.idle();f.nav.start()
+            assertTrue(f.nav.state.value.guidance.tracking);val count=tts.spokenTextList.size;assertTrue(count>0)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderDisabled(LocationManager.GPS_PROVIDER);assertFalse(f.nav.state.value.guidance.tracking)
+            f.advance(1000);f.gps();assertTrue(f.nav.state.value.guidance.tracking)
+            assertTrue(tts.spokenTextList.size>count)
+        }
+    }
+
+    @Test fun coarseNetworkFixDoesNotInterruptFreshGpsButPoorGpsStillStopsReadiness() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.plan(destination);f.idle();assertTrue(f.nav.state.value.originReady)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            f.advance(1000);listener.onLocationChanged(Location(LocationManager.NETWORK_PROVIDER).apply {latitude=origin.latitude;longitude=origin.longitude;accuracy=200f;time=f.now})
+            assertTrue(f.nav.state.value.originReady);assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            f.advance(1000);f.gps(accuracy=200f);assertFalse(f.nav.state.value.originReady);assertEquals(GpsConnection.POOR,f.nav.state.value.gpsConnection)
+        }
+    }
+
+    @Test fun staleInactiveGpsDoesNotCancelAnAssistantUtteranceEveryTick() {
+        org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
+        Fixture(NavigationService()).use {f->
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            f.nav.locate();repeat(16){f.advance(1000);f.park();f.nav.tick()}
+            assertEquals(GpsConnection.STALE,f.nav.state.value.gpsConnection)
+            f.speech.speak("검사용 어시스턴트 응답");assertFalse(tts.isStopped)
+            repeat(3){f.advance(1000);f.park();f.nav.tick()}
+            assertFalse(tts.isStopped);assertEquals("검사용 어시스턴트 응답",tts.lastSpokenText)
+        }
+    }
+
 }

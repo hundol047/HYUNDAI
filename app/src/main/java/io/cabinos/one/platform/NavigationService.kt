@@ -40,7 +40,7 @@ open class NavigationService {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
         try {
             c.connectTimeout=12_000;c.readTimeout=20_000;c.instanceFollowRedirects=false
-            c.setRequestProperty("User-Agent","CabinOS_ONE/0.8.0 (+https://github.com/hundol047/HYUNDAI)")
+            c.setRequestProperty("User-Agent","CabinOS_ONE/0.9.0 (+https://github.com/hundol047/HYUNDAI)")
             if(accessToken.isNotEmpty())c.setRequestProperty("Authorization","Bearer $accessToken")
             c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language","ko,en")
             check(c.responseCode==200) {if(c.responseCode==429)"서비스 요청 한도를 넘었습니다. 잠시 후 재시도하세요." else if(url.contains("/route/v1/driving/")&&c.responseCode in listOf(400,404,422))"경로 요청을 처리하지 못했습니다 (${c.responseCode}). 좌표·도로 연결·서버 주소를 확인하세요." else "내비게이션 서버 연결 실패 (${c.responseCode})"}
@@ -101,7 +101,9 @@ open class NavigationService {
     }
 }
 
-data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.")
+enum class GpsConnection { OFF, WAITING, READY, POOR, STALE, DENIED, DISABLED }
+
+data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val gpsAgeSeconds:Long?=null)
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
@@ -110,34 +112,35 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private val scope=CoroutineScope(SupervisorJob()+Dispatchers.Main.immediate)
     private val manager=context.getSystemService(LocationManager::class.java)
     private var job:Job?=null;private var generation=0;private var foreground=true;private var listening=false
-    private var safetyHeld=false;private var stationarySince:Long?=null
+    private var safetyHeld=false;private val stationary=StationaryEvidence()
     private var lastQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
     private var lastFixTimestamp=Long.MIN_VALUE;private var resumeLocation=false
-    private var fix:NavFix?=null;private var spoken="";private var rerouteFailures=0
-    private val listener=object:LocationListener {
+    private var locationGeneration=0;private var requestedAt:Long?=null;private var receivedAt:Long?=null
+    private var listener:LocationListener?=null
+    private var fix:NavFix?=null;private var fixProvider:String?=null;private var spoken="";private var rerouteFailures=0
+    private fun listenerFor(epoch:Int)=object:LocationListener {
         override fun onLocationChanged(location:Location) {
-            if(!foreground||!listening)return
+            if(epoch!=locationGeneration||!foreground||!listening)return
             val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null,if(location.hasBearing())location.bearing.toDouble() else null)
+            // A coarse Wi-Fi/cell update must not interrupt a fresh precise GPS
+            // stream. A poor GPS update itself still invalidates readiness.
+            if(location.provider==LocationManager.NETWORK_PROVIDER&&fixProvider==LocationManager.GPS_PROVIDER&&fix?.let {tracker.usable(it)&&clock()-it.timestampMs<=3000&&f.accuracy>=it.accuracy}==true)return
             if(f.timestampMs<=lastFixTimestamp)return
             if(clock()-f.timestampMs in 0..10_000)lastFixTimestamp=f.timestampMs
-            if(!tracker.usable(f)){fix=null;tracker.update(f);speech.stopSpeaking();publish();mutable.value=mutable.value.copy(gpsNotice="위치가 부정확하거나 오래됐습니다. 정확한 GPS를 기다려 주세요.");return}
-            fix=f
-            mutable.value=mutable.value.copy(gpsNotice="GPS 위치 확인 · 정확도 약 ${f.accuracy.toInt()}m")
-            if(f.speedMps?.let {it>=2}==true){safetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
-            if(safetyHeld&&!tracker.state.active) {
-                if(f.speedMps?.let {it in 0.0..0.5}==true) {
-                    if(stationarySince==null)stationarySince=clock()
-                    if(clock()-(stationarySince ?: clock())>=5000){safetyHeld=false;engine.setNavigationLock(false)}
-                } else stationarySince=null
-            }
-            if(tracker.state.active){tracker.update(f);publish();guide();reroute()}
-            else publish()
+            receivedAt=clock()
+            if(!tracker.usable(f)){invalidateGps(GpsConnection.POOR,"위치가 부정확하거나 오래됐습니다. 정확한 GPS를 기다려 주세요.");return}
+            fix=f;fixProvider=location.provider
+            mutable.value=mutable.value.copy(gpsConnection=GpsConnection.READY,gpsNotice="${if(location.provider==LocationManager.GPS_PROVIDER)"GPS" else "네트워크 위치"} 확인 · 정확도 약 ${f.accuracy.toInt()}m")
+            if(f.speedMps?.let {it>=2}==true){safetyHeld=true;stationary.reset();engine.setNavigationLock(true)}
+            if(safetyHeld&&!tracker.state.active&&stationary.accept(f,clock())){safetyHeld=false;stationary.reset();engine.setNavigationLock(false)}
+            if(tracker.state.active){tracker.update(f);publish();guide();reroute()}else publish()
         }
-        override fun onProviderDisabled(provider:String){fix=null;tracker.suspendTracking();speech.stopSpeaking();publish();mutable.value=mutable.value.copy(gpsNotice="위치 서비스를 확인해 주세요. GPS 안내 일시중지")}
+        override fun onProviderDisabled(provider:String){if(epoch==locationGeneration&&foreground&&listening)invalidateGps(GpsConnection.DISABLED,"위치 제공자가 중지됐습니다. 위치 설정 또는 GPS 다시 연결을 확인해 주세요.")}
     }
+    private fun invalidateGps(status:GpsConnection,message:String){val ownVoice=tracker.state.tracking||spoken.isNotEmpty();fix=null;fixProvider=null;stationary.reset();tracker.suspendTracking();if(ownVoice)speech.stopSpeaking();spoken="";mutable.value=mutable.value.copy(gpsConnection=status,gpsNotice=message);publish()}
     private fun publish(){
         val r=tracker.state.route;val f=fix;val gap=if(r!=null&&f!=null)NavigationGeometry.distance(f.point,r.points.first()) else 0.0
-        mutable.value=mutable.value.copy(guidance=tracker.state,originAccessMeters=gap,originReady=r!=null&&f!=null&&tracker.usable(f)&&gap<=kotlin.math.max(45.0,f.accuracy*2))
+        mutable.value=mutable.value.copy(guidance=tracker.state,originAccessMeters=gap,originReady=r!=null&&f!=null&&tracker.usable(f)&&gap<=kotlin.math.max(45.0,f.accuracy*2),gpsAccuracy=f?.accuracy,gpsAgeSeconds=f?.let {((clock()-it.timestampMs)/1000).coerceAtLeast(0)})
     }
     private fun cancelRequest(){generation++;job?.cancel();service.cancel();mutable.value=mutable.value.copy(busy=false)}
     private fun request(block:suspend (()->Boolean)->Unit) {
@@ -149,15 +152,18 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     }
     fun canPlan()=foreground&&engine.state.value.parkedAllowed&&!tracker.state.active
     fun locate() {
-        if(!canPlan()&&!tracker.state.active&&!safetyHeld)return
-        if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){mutable.value=mutable.value.copy(gpsNotice="정확한 위치 권한이 필요합니다. 대략적 위치로는 주행 안내를 시작하지 않습니다.");return}
-        if(listening)return
+        if(!foreground||(!canPlan()&&!tracker.state.active&&!safetyHeld))return
+        stopLocation();requestedAt=null;receivedAt=null
+        invalidateGps(GpsConnection.WAITING,"GPS 수신 중 · 야외에서 정확한 위치를 기다려 주세요.")
+        if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){invalidateGps(GpsConnection.DENIED,"정확한 위치 권한이 필요합니다. 앱 권한 설정에서 정확한 위치를 허용해 주세요.");return}
         try {
             val providers=manager.getProviders(true).filter {it==LocationManager.GPS_PROVIDER||it==LocationManager.NETWORK_PROVIDER}
-            if(providers.isEmpty()){mutable.value=mutable.value.copy(gpsNotice="기기 위치 서비스를 켜 주세요.");return}
-            providers.forEach {manager.requestLocationUpdates(it,1000L,1f,listener,Looper.getMainLooper())};listening=true
-            mutable.value=mutable.value.copy(gpsNotice="GPS 수신 중 · 야외에서 정확한 위치를 기다려 주세요.")
-        } catch(_:SecurityException){mutable.value=mutable.value.copy(gpsNotice="위치 권한을 확인해 주세요.")}
+            if(!manager.isLocationEnabled||providers.isEmpty()){invalidateGps(GpsConnection.DISABLED,"기기 위치 서비스를 켜 주세요.");return}
+            val current=listenerFor(++locationGeneration);listener=current;listening=true;requestedAt=clock()
+            // Receive fresh fixes even when the parked vehicle does not move.
+            providers.forEach {manager.requestLocationUpdates(it,1000L,0f,current,Looper.getMainLooper())}
+        } catch(_:SecurityException){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한을 확인해 주세요.")}
+          catch(_:IllegalArgumentException){stopLocation();invalidateGps(GpsConnection.DISABLED,"위치 제공자를 사용할 수 없습니다. 위치 설정을 확인해 주세요.")}
     }
     fun search(query:String,nearby:Boolean=false,more:Boolean=false) {
         if(!canPlan()||!engine.state.value.networkAvailable)return
@@ -188,15 +194,15 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     }
     fun start(accessConfirmed:Boolean=false) {
         if(!canPlan()||mutable.value.busy)return
-        if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){fix=null;publish();mutable.value=mutable.value.copy(gpsNotice="정확한 위치 권한을 확인해 주세요.");return}
+        if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){stopLocation();invalidateGps(GpsConnection.DENIED,"정확한 위치 권한을 확인해 주세요.");return}
         if((tracker.state.route?.destinationAccessMeters ?: 0.0)>100&&!accessConfirmed){mutable.value=mutable.value.copy(notice="차량 접근 지점과 목적지의 차이를 먼저 확인해 주세요.");return}
         val f=fix
         if(f==null||!tracker.start(f)){mutable.value=mutable.value.copy(notice="출발 위치의 정확한 GPS가 필요합니다. 이동했다면 경로를 다시 계산하세요.");return}
-        cancelRequest();safetyHeld=true;stationarySince=null;engine.setNavigationLock(true);publish();spoken="";rerouteFailures=0;guide()
+        cancelRequest();safetyHeld=true;stationary.reset();engine.setNavigationLock(true);publish();spoken="";rerouteFailures=0;guide()
     }
     private fun guide() {
         val g=tracker.state
-        if(!g.tracking||g.offRoute||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();return}
+        if(!g.tracking||g.offRoute||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();spoken="";return}
         val band=when{g.arrived->"arrived";g.turnMeters<60->"now";g.turnMeters<300->"soon";else->"ahead"}
         val key="${g.nextInstruction}|$band"
         if(key!=spoken){spoken=key;speech.speak(if(g.arrived)g.nextInstruction else "${g.turnMeters.toInt()}미터 앞, ${g.nextInstruction}")}
@@ -209,14 +215,28 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             catch(e:Exception){if(e !is CancellationException)rerouteFailures++;throw e}
         }
     }
-    fun tick(){val wasTracking=tracker.state.tracking;tracker.tick();if(wasTracking&&!tracker.state.tracking)speech.stopSpeaking();publish();resumeLocationIfReady();if(tracker.state.active)reroute()}
-    fun configure(search:String,route:String,accessToken:String=""){if(canPlan()){cancelRequest();service.configure(search,route,accessToken);tracker.stop();mutable.value=NavigationUi(notice="검색 서버 설정을 적용했습니다. 가게를 다시 검색하세요.")}}
+    fun tick(){
+        val wasTracking=tracker.state.tracking;tracker.tick()
+        if(wasTracking&&!tracker.state.tracking){speech.stopSpeaking();spoken=""}
+        if(listening){
+            if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한이 해제됐습니다. 앱 권한 설정을 확인해 주세요.")}
+            else if(mutable.value.gpsConnection!=GpsConnection.STALE&&(fix?.let {!tracker.usable(it)}==true||fix==null&&receivedAt?.let {clock()-it>10_000}==true||fix==null&&receivedAt==null&&requestedAt?.let {clock()-it>=15_000}==true))invalidateGps(GpsConnection.STALE,"GPS 응답이 오래됐습니다. 다시 연결하거나 위치 설정을 확인해 주세요.")
+        }
+        publish();resumeLocationIfReady();if(tracker.state.active)reroute()
+    }
+    fun configure(search:String,route:String,accessToken:String=""){if(canPlan()){cancelRequest();service.configure(search,route,accessToken);tracker.stop();mutable.value=mutable.value.copy(guidance=tracker.state,places=emptyList(),selectedPlace=null,hasMore=false,originReady=false,notice="검색 서버 설정을 적용했습니다. 가게를 다시 검색하세요.")}}
     fun cancelPending(){if(canPlan()&&mutable.value.busy){cancelRequest();mutable.value=mutable.value.copy(notice="요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")}}
     fun retry(){rerouteFailures=0;reroute()}
-    fun stop(){cancelRequest();speech.stopSpeaking();tracker.stop();if(!safetyHeld){engine.setNavigationLock(false);fix=null;stopLocation()};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
-    private fun stopLocation(){runCatching {manager.removeUpdates(listener)};listening=false}
-    fun setForeground(active:Boolean){foreground=active;if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();fix=null;tracker.suspendTracking();speech.stopSpeaking();publish();mutable.value=mutable.value.copy(gpsNotice="화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
+    fun stop(){cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
+    private fun stopLocation(){locationGeneration++;listener?.let {runCatching {manager.removeUpdates(it)}};listener=null;listening=false}
+    fun setForeground(active:Boolean){foreground=active;if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
     private fun resumeLocationIfReady(){if(foreground&&resumeLocation&&(canPlan()||tracker.state.active||safetyHeld)){resumeLocation=false;locate()}}
+    fun openLocationSettings(appPermissions:Boolean=false){
+        if(!canPlan())return
+        val intent=if(appPermissions)android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:${context.packageName}")) else android.content.Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        resumeLocation=true
+        runCatching {context.startActivity(intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {resumeLocation=false;mutable.value=mutable.value.copy(gpsNotice="설정 화면을 열 수 없습니다. 기기 설정에서 위치·앱 권한을 확인해 주세요.")}
+    }
     fun clearSelection(){if(canPlan()){cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=null,notice="선택한 장소를 지웠습니다.")}}
     fun openPlaceWebsite(place:NavPlace) {
         if(!canPlan()||place.website.isBlank())return

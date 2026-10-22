@@ -69,7 +69,7 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
   await test('100000-point route remains responsive and keeps the stop control stable during GPS updates',async()=>{assert.equal(movement.tracking,true);assert.equal(movement.stopButtonPreserved,true);assert.ok(metrics.moving.p95Ms<100,`GPS + render p95 ${metrics.moving.p95Ms.toFixed(1)}ms exceeds 100ms`)});
   await test('screen changes release map ResizeObservers',async()=>{
    // Release the navigation safety latch only through explicit demo P reconfirmation.
-   await page.evaluate(()=>{CabinOS.navStop();CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1)});await page.waitForTimeout(5100);await page.evaluate(()=>{CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1);CabinOS.vehicle('주차');cabinDemo.render()});
+   await page.evaluate(()=>{CabinOS.navStop();CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1)});for(let i=0;i<6;i++){await page.waitForTimeout(1000);await page.evaluate(()=>CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1))}await page.evaluate(()=>{CabinOS.vehicle('주차');cabinDemo.render()});await page.waitForFunction(()=>cabinDemo.state.parked);
    for(let i=0;i<8;i++){await page.locator('aside [data-page="navigation"]').click();await page.locator('aside [data-page="home"]').click()}
    assert.equal(await page.evaluate(()=>qaActiveObservers),0);
   });

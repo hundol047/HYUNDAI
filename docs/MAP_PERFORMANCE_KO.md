@@ -78,3 +78,6 @@ node scripts/web/verify-navigation-live.cjs
 
 
 0.8.0의 요청 취소·최신 GPS로 재계산·복귀/오류 문구 보완과 초기 경로 처리 개선은 [세부 재점검](DETAIL_REVIEW_KO.md)에 기록했습니다. 기존 0.6/0.7 성능 관측은 해당 버전의 과거 근거입니다.
+
+
+0.9.0의 GPS 연결/정차 갱신/복구/권한 안내와 현재 기능 판정·실기기 한계는 [GPS 재점검](GPS_REVIEW_KO.md)을 기준으로 확인하세요.

@@ -1,0 +1,66 @@
+{
+  "type": "actual Chromium geolocation API/lifecycle execution with synthetic provider callbacks and clock; not physical GPS or road validation",
+  "results": [
+    {
+      "name": "a stationary source keeps fresh GPS and start readiness over twelve seconds",
+      "result": "passed"
+    },
+    {
+      "name": "manual reconnect replaces an existing watcher and rejects its retired callback",
+      "result": "passed"
+    },
+    {
+      "name": "no initial location becomes a visible timeout and supports retry",
+      "result": "passed"
+    },
+    {
+      "name": "synchronous permission denial cleans up the returned watcher and can recover",
+      "result": "passed"
+    },
+    {
+      "name": "a geolocation SecurityError produces help without an uncaught exception",
+      "result": "passed"
+    },
+    {
+      "name": "a transient location error retains its watcher and recovers automatically",
+      "result": "passed"
+    },
+    {
+      "name": "a location timeout pauses guidance but a fresh callback resumes it",
+      "result": "passed"
+    },
+    {
+      "name": "stale GPS no longer displays a healthy connection or enables start",
+      "result": "passed"
+    },
+    {
+      "name": "poor accuracy shows actionable help and cannot begin guidance",
+      "result": "passed"
+    },
+    {
+      "name": "a signal gap cannot count as five stationary seconds",
+      "result": "passed"
+    },
+    {
+      "name": "GPS recovery reissues current voice guidance through the speech dispatcher",
+      "result": "passed"
+    },
+    {
+      "name": "motion recovery never opens a new geolocation permission prompt",
+      "result": "passed"
+    },
+    {
+      "name": "inactive GPS updates do not cancel an assistant utterance",
+      "result": "passed"
+    },
+    {
+      "name": "personal data reset retires GPS and does not silently restart it",
+      "result": "passed"
+    },
+    {
+      "name": "GPS recovery help fits a mobile screen",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

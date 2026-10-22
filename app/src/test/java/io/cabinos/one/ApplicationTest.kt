@@ -106,7 +106,11 @@ class ApplicationTest {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         val points=listOf(NavPoint(48.85,2.35),NavPoint(48.86,2.35),NavPoint(48.87,2.36))
         val route=NavigationGeometry.route(NavPlace("Paris · 검사용 목적지",points.last()),points,3000.0,600.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"turn","left","Rue du Louvre"),NavManeuver(points[2],"arrive")))
-        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(parkedAllowed=true),NavigationUi(busy=true,notice="검사용 지연 응답 · 실제 네트워크 검사 아님",gpsNotice="검사용 GPS 수신 대기"),vm.liveNavigation,{})}}}
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(parkedAllowed=true,networkAvailable=false),NavigationUi(gpsConnection=io.cabinos.one.platform.GpsConnection.DENIED,gpsNotice="검사용 권한 거부 · 실기기 GPS 수신 아님"),vm.liveNavigation,{})}}}
+        compose.onNodeWithText("위치 설정").assertIsDisplayed()
+        compose.onNodeWithText("앱 권한 설정").assertIsDisplayed()
+        capture("gps-permission")
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(parkedAllowed=true,networkAvailable=false),NavigationUi(busy=true,notice="검사용 지연 응답 · 실제 네트워크 검사 아님",gpsNotice="검사용 GPS 수신 대기"),vm.liveNavigation,{})}}}
         compose.onNodeWithText("요청 취소").assertIsDisplayed()
         compose.onNodeWithText("검사용 GPS 수신 대기").assertIsDisplayed()
         capture("navigation-pending")

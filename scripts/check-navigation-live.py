@@ -2,9 +2,9 @@
 """Explicit small live provider smoke check. Never substitutes synthetic responses."""
 import argparse,datetime,hashlib,json,time,urllib.request,urllib.parse
 from pathlib import Path
-parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');parser.add_argument('--output',default='docs/validation/live-navigation-results.json');args=parser.parse_args()
 artifact_dir=Path('artifacts/navigation-live');artifact_dir.mkdir(parents=True,exist_ok=True)
-headers={'User-Agent':'CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
+headers={'User-Agent':'CabinOS_ONE/0.9.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
 rows=[];blocked=False
 regions=[('Seoul Station South Korea',(126.9723,37.5547),(126.9779,37.5665)),('Paris France',(2.3522,48.8566),(2.2945,48.8584)),('New York USA',(-73.9857,40.7484),(-73.9851,40.7580)),('Tokyo Station Japan',(139.7671,35.6812),(139.7700,35.6900)),('Sao Paulo Brazil',(-46.6333,-23.5505),(-46.6559,-23.5614)),('Cape Town South Africa',(18.4241,-33.9249),(18.4174,-33.9065)),('Sydney Australia',(151.2060,-33.8730),(151.2153,-33.8568))]
 def check(name,url,validate):
@@ -39,5 +39,5 @@ for name,start,end in regions if args.all_regions else regions[:1]:
  if blocked:break
  time.sleep(1.5)
 report={'type':'actual external provider requests; no fixtures or alternate proxy routes','timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'results':rows,'physicalDeviceGps':'not tested','realRoadDriving':'not tested'}
-Path('docs/validation').mkdir(parents=True,exist_ok=True);Path('docs/validation/live-navigation-results.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+Path(args.output).parent.mkdir(parents=True,exist_ok=True);Path(args.output).write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 raise SystemExit(2 if blocked else 1 if any(r['result']!='passed' for r in rows) else 0)

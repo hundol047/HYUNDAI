@@ -43,7 +43,12 @@ import java.util.Locale
             if(canPlan)TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}
         }
         Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
-        Text(ui.gpsNotice,color=Muted,fontSize=11.sp)
+        Text(ui.gpsNotice+if(ui.gpsAgeSeconds!=null)" · ${ui.gpsAgeSeconds}초 전 수신" else "",color=if(ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Amber else Muted,fontSize=11.sp)
+        if(canPlan&&ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
+            TextButton(onClick={nav.locate()}){Text("GPS 다시 연결",color=Blue)}
+            TextButton(onClick={nav.openLocationSettings()}){Text("위치 설정",color=Blue)}
+            TextButton(onClick={nav.openLocationSettings(true)}){Text("앱 권한 설정",color=Blue)}
+        }
         if(canPlan) {
             Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
@@ -118,7 +123,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
-        userAgentValue="CabinOS_ONE/0.8.0 (+https://github.com/hundol047/HYUNDAI)"
+        userAgentValue="CabinOS_ONE/0.9.0 (+https://github.com/hundol047/HYUNDAI)"
         osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
     };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
     val renderer=remember(map){NavigationMapRenderer(map)}
