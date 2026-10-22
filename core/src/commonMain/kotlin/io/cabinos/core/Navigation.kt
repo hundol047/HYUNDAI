@@ -47,17 +47,25 @@ object NavigationGeometry {
         require(destination.point.valid()&&destination.name.isNotBlank())
         require(points.size in 2..150_000&&points.all {it.valid()})
         require(distance.isFinite()&&distance>0&&distance<=30_000_000&&duration.isFinite()&&duration>0&&duration<10_000_000)
-        val cumulative=mutableListOf(0.0)
-        points.zipWithNext().forEach {(a,b)->cumulative.add(cumulative.last()+NavigationGeometry.distance(a,b))}
+        val cumulative=ArrayList<Double>(points.size).apply {add(0.0)}
+        for(i in 1 until points.size)cumulative.add(cumulative.last()+NavigationGeometry.distance(points[i-1],points[i]))
         require(cumulative.last()>1&&NavigationGeometry.distance(points.last(),destination.point)<=1000) {"목적지 근처까지 연결되는 자동차 도로가 없습니다."}
         require(maneuvers.size in 1..10_000)
+        // Only maneuver anchors need an index. A long road can have 100,000
+        // geometry points but just a handful of turns; avoid a map/list per point.
+        val anchors=maneuvers.mapTo(HashSet()){it.point}
         val pointIndices=HashMap<NavPoint,MutableList<Int>>()
-        points.forEachIndexed { i,p->pointIndices.getOrPut(p){mutableListOf()}.add(i) }
+        points.forEachIndexed { i,p->if(p in anchors)pointIndices.getOrPut(p){mutableListOf()}.add(i) }
         var cursor=0
         var fallbackBudget=2_000_000
         val steps=maneuvers.map { m ->
             require(m.point.valid())
-            val exact=pointIndices[m.point]?.firstOrNull {it>=cursor}
+            val indices=pointIndices[m.point]
+            val exact=indices?.let {list->
+                var low=0;var high=list.size
+                while(low<high){val mid=(low+high) ushr 1;if(list[mid]<cursor)low=mid+1 else high=mid}
+                list.getOrNull(low)
+            }
             var best=exact ?: cursor;var gap=if(exact!=null)0.0 else Double.POSITIVE_INFINITY
             if(exact==null)for(i in cursor..points.lastIndex) {
                 require(fallbackBudget-->0) {"복잡한 경로입니다. 더 짧은 구간으로 나누어 검색하세요."}

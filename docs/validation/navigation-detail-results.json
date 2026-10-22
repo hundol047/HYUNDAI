@@ -1,0 +1,57 @@
+{
+  "type": "deterministic Chromium controls/lifecycle/GPS/request checks; synthetic providers and location, not device or live service verification",
+  "results": [
+    {
+      "name": "editing a pending search cancels it and late results cannot replace the new query",
+      "result": "passed"
+    },
+    {
+      "name": "explicit cancellation frees controls promptly and leaves no old result",
+      "result": "passed"
+    },
+    {
+      "name": "changing nearby scope while waiting invalidates the old response",
+      "result": "passed"
+    },
+    {
+      "name": "regular GPS updates preserve route errors in their separate status region",
+      "result": "passed"
+    },
+    {
+      "name": "poor GPS immediately disables start and an older good fix cannot restore it",
+      "result": "passed"
+    },
+    {
+      "name": "replan uses the latest real GPS input instead of the old route origin",
+      "result": "passed"
+    },
+    {
+      "name": "map coordinate transfer cannot mutate the navigation engine road",
+      "result": "passed"
+    },
+    {
+      "name": "duplicate stationary fixes cannot release the motion safety latch",
+      "result": "passed"
+    },
+    {
+      "name": "backgrounding retires the old GPS callback and resumes a fresh subscription",
+      "result": "passed"
+    },
+    {
+      "name": "a GPS-free selected pin can be cleared without erasing the search list",
+      "result": "passed"
+    },
+    {
+      "name": "pending controls and GPS status fit a narrow mobile viewport",
+      "result": "passed"
+    },
+    {
+      "name": "a provider timeout reports the timeout and releases the pending controls",
+      "result": "passed"
+    }
+  ],
+  "timings": {
+    "cancelControlsAvailableMs": 44.25431200000003
+  },
+  "pageErrors": []
+}

@@ -106,8 +106,12 @@ class ApplicationTest {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         val points=listOf(NavPoint(48.85,2.35),NavPoint(48.86,2.35),NavPoint(48.87,2.36))
         val route=NavigationGeometry.route(NavPlace("Paris · 검사용 목적지",points.last()),points,3000.0,600.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"turn","left","Rue du Louvre"),NavManeuver(points[2],"arrive")))
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(parkedAllowed=true),NavigationUi(busy=true,notice="검사용 지연 응답 · 실제 네트워크 검사 아님",gpsNotice="검사용 GPS 수신 대기"),vm.liveNavigation,{})}}}
+        compose.onNodeWithText("요청 취소").assertIsDisplayed()
+        compose.onNodeWithText("검사용 GPS 수신 대기").assertIsDisplayed()
+        capture("navigation-pending")
         val tracker=NavigationTracker();tracker.preview(route);tracker.start(NavFix(points[0],5.0,System.currentTimeMillis(),0.0))
-        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님"),vm.liveNavigation,{})}}}
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님",gpsNotice="검사용 합성 GPS · 정확도 5m · 실기기 수신 아님"),vm.liveNavigation,{})}}}
         compose.onNodeWithText("EchoRoad · 글로벌 내비게이션").assertIsDisplayed()
         compose.onNodeWithText("좌회전 · Rue du Louvre").assertIsDisplayed()
         compose.onNodeWithText("안내 종료·경로 지우기").assertIsDisplayed()

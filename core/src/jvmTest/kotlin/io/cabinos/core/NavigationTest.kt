@@ -23,6 +23,17 @@ class NavigationTest {
         val r=NavigationGeometry.route(NavPlace("장거리",points.last()),points,23000.0,2000.0,maneuvers)
         assertEquals(1001,r.steps.size);assertTrue(r.steps.zipWithNext().all {(a,b)->a.atMeters<=b.atMeters})
     }
+    @Test fun sparseTurnAnchorsKeepTheRightOccurrenceAfterALoop() {
+        val a=NavPoint(48.85,2.35);val b=NavPoint(48.86,2.35);val c=NavPoint(48.86,2.36);val end=NavPoint(48.87,2.36)
+        val p=listOf(a,b,a,c,b,end)
+        val r=NavigationGeometry.route(NavPlace("loop",end),p,7000.0,900.0,listOf(NavManeuver(a,"depart"),NavManeuver(c,"turn","right"),NavManeuver(b,"turn","left"),NavManeuver(end,"arrive")))
+        assertEquals(listOf(0.0,r.cumulative[3],r.cumulative[4],r.cumulative[5]),r.steps.map {it.atMeters})
+    }
+    @Test fun slightlyOffsetTurnAnchorsStillUseTheNearestForwardRoadPoint() {
+        val p=listOf(NavPoint(48.85,2.35),NavPoint(48.86,2.35),NavPoint(48.87,2.36))
+        val r=NavigationGeometry.route(NavPlace("offset",p.last()),p,3000.0,600.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(NavPoint(48.860001,2.35),"turn","right"),NavManeuver(p.last(),"arrive")))
+        assertEquals(r.cumulative[1],r.steps[1].atMeters,0.0)
+    }
     @Test fun boundedProjectionFindsTheMiddleOfASparseLongSegment() {
         val points=listOf(NavPoint(0.0,0.0),NavPoint(0.0,1.0))
         val r=NavigationGeometry.route(NavPlace("long segment",points.last()),points,111195.0,6000.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"arrive")))

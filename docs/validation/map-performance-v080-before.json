@@ -1,0 +1,131 @@
+{
+  "type": "two pre-change Chromium runs on v0.7.0; only parse/initial-render timings are usable; moving metrics invalid because fresh parking was not reconfirmed after slow initial rendering",
+  "sourceCommit": "cc6e7bac2bcaf5bdee29a2ebb7caacf6a49214a1",
+  "movingComparisonValid": false,
+  "runs": [
+    {
+      "type": "headless Chromium deterministic map/GPS stress workload; synthetic 100000-point route, fixture GPS, aborted tile requests; not device FPS or live network latency",
+      "timestamp": "2026-10-22T13:10:01.054Z",
+      "baseline": true,
+      "metrics": {
+        "points": 100000,
+        "parseAndInitialRenderMs": 1435.3999999910593,
+        "cpuThrottleRate": 4,
+        "idle": {
+          "recenterCalls": 0,
+          "guidanceChildListMutations": 0,
+          "stopButtonPreserved": true
+        },
+        "moving": {
+          "fixes": 120,
+          "p50Ms": 2.9000000059604645,
+          "p95Ms": 3.9000000059604645,
+          "maxMs": 4.5,
+          "rafIntervalP95Ms": 17.5,
+          "recenterCalls": 0,
+          "stopButtonPreserved": true,
+          "tracking": false
+        }
+      },
+      "checks": [
+        {
+          "name": "nearby zoom buttons, mouse wheel and drag pan work while parked",
+          "result": "passed"
+        },
+        {
+          "name": "chosen nearby zoom and center survive timer updates and resize",
+          "result": "passed"
+        },
+        {
+          "name": "navigation zoom and pan survive updates without changing route coordinates",
+          "result": "passed"
+        },
+        {
+          "name": "preview zoom is preserved and guidance starts with driving controls locked",
+          "result": "failed",
+          "error": "Expected values to be strictly equal:\n\nfalse !== true\n"
+        },
+        {
+          "name": "idle navigation preserves controls and does not repeatedly recenter map",
+          "result": "passed"
+        },
+        {
+          "name": "100000-point route remains responsive and keeps the stop control stable during GPS updates",
+          "result": "failed",
+          "error": "Expected values to be strictly equal:\n\nfalse !== true\n"
+        },
+        {
+          "name": "screen changes release map ResizeObservers",
+          "result": "passed"
+        },
+        {
+          "name": "two finger pinch zooms in and out on nearby and navigation touch maps",
+          "result": "passed"
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "type": "headless Chromium deterministic map/GPS stress workload; synthetic 100000-point route, fixture GPS, aborted tile requests; not device FPS or live network latency",
+      "timestamp": "2026-10-22T13:12:21.475Z",
+      "baseline": true,
+      "metrics": {
+        "points": 100000,
+        "parseAndInitialRenderMs": 1008.7999999970198,
+        "cpuThrottleRate": 4,
+        "idle": {
+          "recenterCalls": 0,
+          "guidanceChildListMutations": 0,
+          "stopButtonPreserved": true
+        },
+        "moving": {
+          "fixes": 120,
+          "p50Ms": 2.7999999970197678,
+          "p95Ms": 4,
+          "maxMs": 4.800000011920929,
+          "rafIntervalP95Ms": 17.5,
+          "recenterCalls": 0,
+          "stopButtonPreserved": true,
+          "tracking": false
+        }
+      },
+      "checks": [
+        {
+          "name": "nearby zoom buttons, mouse wheel and drag pan work while parked",
+          "result": "passed"
+        },
+        {
+          "name": "chosen nearby zoom and center survive timer updates and resize",
+          "result": "passed"
+        },
+        {
+          "name": "navigation zoom and pan survive updates without changing route coordinates",
+          "result": "passed"
+        },
+        {
+          "name": "preview zoom is preserved and guidance starts with driving controls locked",
+          "result": "failed",
+          "error": "{\"ok\":false,\"nav\":{\"active\":false,\"tracking\":false,\"arrived\":false,\"hasRoute\":true,\"originAccessMeters\":0,\"originReady\":true,\"destinationAccessMeters\":0,\"revision\":1,\"destination\":\"Large route stress fixture\",\"remainingMeters\":18000,\"remainingSeconds\":1200,\"instruction\":\"\uacbd\ub85c\ub97c \ub530\ub77c \ucd9c\ubc1c\",\"turnSymbol\":\"\u2191\",\"turnMeters\":0,\"offRoute\":false,\"status\":\"\uc790\ub3d9\ucc28 \uacbd\ub85c \ubbf8\ub9ac\ubcf4\uae30 \u00b7 \uc2e4\uc2dc\uac04 \uad50\ud1b5 \ubbf8\ubc18\uc601\",\"safetyHeld\":false,\"fix\":{\"latitude\":37.5547,\"longitude\":126.9723,\"accuracy\":5,\"timestamp\":1792674725491}},\"parked\":false,\"now\":1792674725492}\n\nfalse !== true\n"
+        },
+        {
+          "name": "idle navigation preserves controls and does not repeatedly recenter map",
+          "result": "passed"
+        },
+        {
+          "name": "100000-point route remains responsive and keeps the stop control stable during GPS updates",
+          "result": "failed",
+          "error": "Expected values to be strictly equal:\n\nfalse !== true\n"
+        },
+        {
+          "name": "screen changes release map ResizeObservers",
+          "result": "passed"
+        },
+        {
+          "name": "two finger pinch zooms in and out on nearby and navigation touch maps",
+          "result": "passed"
+        }
+      ],
+      "pageErrors": []
+    }
+  ]
+}

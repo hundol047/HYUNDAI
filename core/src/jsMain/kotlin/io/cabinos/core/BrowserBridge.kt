@@ -15,6 +15,7 @@ private fun appearanceSnapshot():String {
         "colors" to json("background" to AppearanceCatalog.format(p.background),"panel" to AppearanceCatalog.format(p.panel),"line" to AppearanceCatalog.format(p.line),"accent" to AppearanceCatalog.format(p.accent),"text" to AppearanceCatalog.format(p.text),"muted" to AppearanceCatalog.format(p.muted))))
 }
 private val navigator=NavigationTracker()
+private var lastNavFixTimestamp=Long.MIN_VALUE
 private var navFix:NavFix?=null
 private var navRevision=0
 private var navSafetyHeld=false
@@ -106,8 +107,12 @@ fun main() {
     }
     bridge.navClearPreview={if(engine.state.value.parkedAllowed&&!navigator.state.active){navigator.stop();navRevision++;true}else false}
     bridge.navGeometry={JSON.stringify(navigator.state.route?.points?.map {arrayOf(it.latitude,it.longitude)}?.toTypedArray())}
-    bridge.navFix={lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double,bearing:Double ->
+    // A defensive display copy avoids serializing/parsing the full road again.
+    bridge.navGeometryPoints={navigator.state.route?.points?.map {arrayOf(it.latitude,it.longitude)}?.toTypedArray()}
+    bridge.navFix=location@{lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double,bearing:Double ->
         val f=NavFix(NavPoint(lat,lon),accuracy,timestamp.toLong(),if(speed.isFinite()&&speed>=0)speed else null,if(bearing.isFinite()&&bearing>=0)bearing else null)
+        if(f.timestampMs<=lastNavFixTimestamp)return@location navSnapshot()
+        if(platformNowMillis()-f.timestampMs in 0..10_000)lastNavFixTimestamp=f.timestampMs
         if(navigator.usable(f)) {
             navFix=f
             if(f.speedMps?.let {it>=2}==true){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
@@ -117,7 +122,7 @@ fun main() {
                     if(platformNowMillis()-(stationarySince ?: platformNowMillis())>=5000){navSafetyHeld=false;engine.setNavigationLock(false)}
                 } else stationarySince=null
             }
-        }
+        }else navFix=null
         navigator.update(f);navSnapshot()
     }
     bridge.navPreview={raw:String,name:String,lat:Double,lon:Double ->

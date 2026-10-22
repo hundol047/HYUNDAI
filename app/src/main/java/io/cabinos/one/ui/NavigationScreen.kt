@@ -43,18 +43,20 @@ import java.util.Locale
             if(canPlan)TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}
         }
         Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
+        Text(ui.gpsNotice,color=Muted,fontSize=11.sp)
         if(canPlan) {
             Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
                 ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
                 ActionButton("내 위치 사용",onLocate,color=Mint,enabled=!ui.busy)
+                if(ui.busy)ActionButton("요청 취소",{nav.cancelPending()},color=Amber)
             }
             Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
             Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace) }
             Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                if(ui.busy)LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint)
+                if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEach { place ->
                     SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){nav.plan(place)},accent=Blue) {
                         Text(place.name,color=White,fontSize=15.sp)
@@ -87,11 +89,13 @@ import java.util.Locale
                         Spacer(Modifier.height(9.dp))
                         if(canPlan&&!ui.originReady)Text(if(ui.originAccessMeters>45)"출발 GPS와 연결도로 시작점이 약 ${navDistance(ui.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다." else "출발 위치의 정확하고 최신인 GPS를 확인해 주세요.",color=Amber,fontSize=11.sp)
                         if(canPlan)ActionButton("안내 시작",{nav.start(accessConfirmed)},Modifier.fillMaxWidth(),Mint,!ui.busy&&ui.originReady&&(r.destinationAccessMeters<=100||accessConfirmed))
+                        if(canPlan)ActionButton("현재 위치로 경로 다시 계산",{nav.plan(r.destination)},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
                         ActionButton("안내 종료·경로 지우기",{nav.stop()},Modifier.fillMaxWidth(),Muted)
                         if(g.active&&!g.tracking)ActionButton("GPS 다시 연결",{nav.locate()},Modifier.fillMaxWidth(),Blue)
                         if(g.offRoute)ActionButton("재탐색 재시도",{nav.retry()},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
                     }
                 }
+                if(canPlan&&g.route==null&&ui.selectedPlace!=null)TextButton(onClick={nav.clearSelection()}){Text("선택 지우기",color=Blue)}
                 if(g.route==null)Text("Seoul, Paris, New York, 東京 등\n국가 제한 없이 검색합니다.\n\n현재 위치는 정확한 기기 GPS를 사용합니다. 좌표·목적지는 저장하지 않습니다.",color=Muted,fontSize=13.sp)
                 Text(ui.notice,color=Muted,fontSize=11.sp)
                 if(!s.networkAvailable)Text("오프라인 · 새 지도·검색·재탐색 불가. 받아 둔 경로와 GPS 안내만 유지합니다.",color=Amber,fontSize=12.sp)
@@ -114,7 +118,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
-        userAgentValue="CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)"
+        userAgentValue="CabinOS_ONE/0.8.0 (+https://github.com/hundol047/HYUNDAI)"
         osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
     };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
     val renderer=remember(map){NavigationMapRenderer(map)}

@@ -46,7 +46,10 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
   });
   await test('preview zoom is preserved and guidance starts with driving controls locked',async()=>{
    await page.evaluate(()=>qaMaps['navigation-map'].setZoom(10,{animate:false}));await page.waitForTimeout(100);await page.evaluate(()=>cabinDemo.render());assert.equal(await page.evaluate(()=>qaMaps['navigation-map'].getZoom()),10);
-   assert.equal(await page.evaluate(()=>{CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1);return CabinOS.navStart(false)}),true);await page.evaluate(()=>cabinDemo.render());assert.equal(await page.locator('#navigation-map .leaflet-control-zoom').count(),0);assert.equal(await page.evaluate(()=>qaMaps['navigation-map'].dragging.enabled()),false);
+   // A heavy route/zoom can expire the simulated vehicle sample. Wait for
+   // normal P debounce again; GPS alone must never restore parking trust.
+   await page.waitForFunction(()=>window.cabinDemo.state.parked);
+   const start=await page.evaluate(()=>{CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1);const ok=CabinOS.navStart(false);return {ok,nav:JSON.parse(CabinOS.navState()),parked:cabinDemo.state.parked,now:Date.now()}});assert.equal(start.ok,true,JSON.stringify(start));await page.evaluate(()=>cabinDemo.render());assert.equal(await page.locator('#navigation-map .leaflet-control-zoom').count(),0);assert.equal(await page.evaluate(()=>qaMaps['navigation-map'].dragging.enabled()),false);
   });
   const idle=await page.evaluate(async()=>{
    qaMapCounts.center=0;let mutations=0;const target=document.querySelector('#nav-guidance'),stop=target.querySelector('[data-nav="stop"]');const observer=new MutationObserver(x=>mutations+=x.filter(r=>r.type==='childList').length);observer.observe(target,{childList:true,subtree:true});

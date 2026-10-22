@@ -1,13 +1,13 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.7.0`.
+팀 **퓨처랩스** · CabinOS ONE `0.8.0`.
 
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **83개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **32개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **85개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **37개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 4건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3) |
@@ -15,7 +15,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **115개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·가게 검색 12개·지도 조작/성능 8개, 총 67개가 통과했습니다.** Python 선택적 검색 서버는 별도 [9개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **122개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·가게 검색 12개·조작/수명/지연 12개·지도 조작/성능 8개, 총 79개가 통과했습니다.** Python 선택적 검색 서버는 별도 [9개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 
@@ -35,6 +35,7 @@ node scripts/web/verify-map.cjs
 node scripts/web/verify-navigation.cjs
 node scripts/web/verify-appearance.cjs
 node scripts/web/verify-place-search.cjs
+node scripts/web/verify-navigation-detail.cjs
 node scripts/web/verify-map-performance.cjs
 python3 -m unittest discover -s server -v
 node scripts/web/record-demo.cjs
@@ -103,3 +104,9 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 선택적 Python 서버는 인증·CORS·캐시 만료·오류 비노출·고정 공급자 호스트·카카오 페이지 경계를 검사했습니다. 서버의 실제 공개 HTTPS 배포, 상용 계정 등록과 키 발급은 포함하지 않습니다. 과거 0.5.0 영상은 현재 0.7.0 가게 기능을 촬영한 것이 아닙니다.
 
 0.7.0 최종 지도 부하 재검사도 8개 통과했습니다. CPU 4배 감속·10만 지점 경로에서 초기 파싱/표시 약 1.30초, 120개 GPS 갱신의 p95 약 11.6ms, 최대 25.5ms입니다. [현재 결과](validation/map-performance-v070.json). 0.6.0의 전후 비교 기록을 덮어쓰지 않았습니다. 이 수치는 실제 Android 기기 FPS가 아닙니다.
+
+## 0.8.0 조작·수명·오류·속도 재검토
+
+[문제별 수정 보고서](DETAIL_REVIEW_KO.md)에 요청 취소/늦은 응답, GPS 품질·시각 순서, 화면 복귀, 오류 문구 유지와 시간 초과, 재계산/선택 지우기를 정리했습니다. 공유 경로의 점별 인덱스와 브라우저 JSON 왕복 복사를 줄였습니다. 같은 CPU 4배 부하에서 10만 지점 초기 표시가 수정 전 1.01–1.44초(2회)에서 약 0.57초(1회)로 줄었고, 안내 중 GPS 처리·갱신 p95는 8.3ms였습니다. 작은 합성 표본이며 Android 실기기 FPS나 외부 서버 지연 결과가 아닙니다. 수정 전 GPS 갱신 표본은 차량 P 재확인 미완료로 무효라 비교에서 제외했습니다.
+
+새 세부 브라우저 12개와 Android 5개, 공유 회전점 2개를 기존 검사에 추가했습니다. Android 검사는 일관된 주입 시계를 사용하고, 공급자의 최소 시간/이동 필터가 중복/역순 입력을 숨기지 않도록 등록된 프레임워크 콜백에 검사 위치를 전달합니다. 기존 LocationManager 실제 시뮬레이션 검사는 유지합니다. [세부 결과](validation/navigation-detail-results.json), [성능 결과](validation/map-performance-v080.json).
