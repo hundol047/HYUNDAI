@@ -46,6 +46,10 @@
       "result": "passed"
     },
     {
+      "name": "distant building access is disclosed and requires parked confirmation",
+      "result": "passed"
+    },
+    {
       "name": "navigation layout fits mobile screen",
       "result": "passed"
     }

@@ -89,6 +89,7 @@ import org.osmdroid.views.overlay.*
 }
 
 @Composable private fun OpenStreetMap(s:AppState,selected:String?,onSelect:(String)->Unit,onReady:(MapView)->Unit) {
+    val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current
     val owner=LocalLifecycleOwner.current
     val map=remember {
@@ -115,6 +116,7 @@ import org.osmdroid.views.overlay.*
         onDispose {owner.lifecycle.removeObserver(observer);map.onPause();map.onDetach()}
     }
     AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={ view ->
+        applyMapAppearance(view,appearance,palette)
         view.setUseDataConnection(s.networkAvailable&&s.locationAvailable&&s.parkedAllowed)
         if(previousOrigin!=s.activityOrigin) {view.controller.setCenter(GeoPoint(s.activityOrigin.latitude,s.activityOrigin.longitude));previousOrigin=s.activityOrigin}
         val next="${s.nearbyRevision}|$selected|${s.activities.map {it.activity.id to it.feasible}}"

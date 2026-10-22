@@ -7,6 +7,13 @@ private val hazardRepository = DemoRoadHazardRepository().apply { seed(platformN
 private val engine = UnifiedVehicleContextEngine(hazards = hazardRepository)
 private var sample = VehicleSample(gear=Gear.PARK,parkingReliable=true,charging=true,chargeRemainingSeconds=2400,timestampMs=platformNowMillis())
 private var scenario = "충전"
+private var appearance=AppearanceSettings()
+private var appearanceRestored=false
+private fun appearanceSnapshot():String {
+    val p=AppearanceCatalog.palette(appearance)
+    return JSON.stringify(json("preset" to appearance.preset,"accent" to appearance.accent,"brightness" to appearance.brightness,"nightMap" to appearance.nightMap,
+        "colors" to json("background" to AppearanceCatalog.format(p.background),"panel" to AppearanceCatalog.format(p.panel),"line" to AppearanceCatalog.format(p.line),"accent" to AppearanceCatalog.format(p.accent),"text" to AppearanceCatalog.format(p.text),"muted" to AppearanceCatalog.format(p.muted))))
+}
 private val navigator=NavigationTracker()
 private var navFix:NavFix?=null
 private var navRevision=0
@@ -15,9 +22,9 @@ private var stationarySince:Long?=null
 private fun navSnapshot():String {
     val g=navigator.state
     return JSON.stringify(json("active" to g.active,"tracking" to g.tracking,"arrived" to g.arrived,"hasRoute" to (g.route!=null),
-        "revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
-        "instruction" to g.nextInstruction,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
-        "fix" to navFix?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
+        "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
+        "instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
+        "fix" to (if(g.active)g.fix else navFix)?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
 }
 private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingRoute {
     val json=JSON.parse<dynamic>(raw)
@@ -72,10 +79,16 @@ private fun snapshot(): String {
 fun main() {
     val bridge=js("({})")
     bridge.state={ snapshot() }
+    bridge.appearance={appearanceSnapshot()}
+    bridge.setAppearance={preset:String,accent:String,brightness:String,night:Boolean ->
+        if(engine.state.value.parkedAllowed){appearance=AppearanceCatalog.normalize(AppearanceSettings(preset,accent,brightness,night));true}else false
+    }
+    // Restore visual preferences only: this never establishes parked/vehicle trust.
+    bridge.restoreAppearance={preset:String,accent:String,brightness:String,night:Boolean -> if(!appearanceRestored){appearanceRestored=true;appearance=AppearanceCatalog.normalize(AppearanceSettings(preset,accent,brightness,night))}}
     bridge.navState={navSnapshot()}
     bridge.navGeometry={JSON.stringify(navigator.state.route?.points?.map {arrayOf(it.latitude,it.longitude)}?.toTypedArray())}
-    bridge.navFix={lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double ->
-        val f=NavFix(NavPoint(lat,lon),accuracy,timestamp.toLong(),if(speed.isFinite()&&speed>=0)speed else null)
+    bridge.navFix={lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double,bearing:Double ->
+        val f=NavFix(NavPoint(lat,lon),accuracy,timestamp.toLong(),if(speed.isFinite()&&speed>=0)speed else null,if(bearing.isFinite()&&bearing>=0)bearing else null)
         if(navigator.usable(f)) {
             navFix=f
             if(f.speedMps?.let {it>=2}==true){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
@@ -100,9 +113,9 @@ fun main() {
     bridge.navReplace={raw:String ->
         try {val d=navigator.state.route!!.destination;val r=parseNavRoute(raw,d.name,d.point.latitude,d.point.longitude);val ok=navigator.replaceRoute(r);if(ok)navRevision++;ok}catch(_:Exception){false}
     }
-    bridge.navStart={
+    bridge.navStart={accessConfirmed:Boolean ->
         val f=navFix
-        val started=engine.state.value.parkedAllowed&&f!=null&&navigator.start(f)
+        val started=engine.state.value.parkedAllowed&&f!=null&&((navigator.state.route?.destinationAccessMeters ?: 0.0)<=100||accessConfirmed==true)&&navigator.start(f)
         if(started){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
         started
     }
@@ -110,6 +123,7 @@ fun main() {
     bridge.navBackground={navFix=null;navigator.suspendTracking()}
     bridge.navStop={navigator.stop();navRevision++;if(!navSafetyHeld){navFix=null;engine.setNavigationLock(false)}}
     bridge.tick={
+        appearanceRestored=true
         navigator.tick()
         sample=sample.copy(timestampMs=platformNowMillis())
         engine.acceptVehicle(sample)
@@ -140,7 +154,7 @@ fun main() {
     bridge.location={ enabled:Boolean -> engine.setConnectivity(location=enabled) }
     bridge.route={ alternate:Boolean -> engine.updateRoute(Route(if(alternate)"demo-detour" else "demo-pangyo")) }
     bridge.preferences={ focus:Int,relax:Int,buffer:Int -> engine.updatePreferences(engine.state.value.preferences.copy(focusMinutes=focus,relaxMinutes=relax,departureBufferMinutes=buffer)) }
-    bridge.clear={ if(engine.clearPersonalData()){navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationarySince=null;engine.setNavigationLock(false)} }
+    bridge.clear={ if(engine.clearPersonalData()){appearance=AppearanceSettings();navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationarySince=null;engine.setNavigationLock(false)} }
     bridge.background={ engine.invalidateTelemetry("브라우저를 벗어나 세션을 일시정지했습니다.") }
     window.asDynamic().CabinOS=bridge
     select("충전")

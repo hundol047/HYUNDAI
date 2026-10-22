@@ -103,7 +103,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private var fix:NavFix?=null;private var spoken="";private var rerouteFailures=0
     private val listener=object:LocationListener {
         override fun onLocationChanged(location:Location) {
-            val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null)
+            val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null,if(location.hasBearing())location.bearing.toDouble() else null)
             if(!tracker.usable(f)){if(tracker.state.active){tracker.update(f);speech.stopSpeaking();publish()};return}
             fix=f
             if(f.speedMps?.let {it>=2}==true){safetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
@@ -123,7 +123,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private fun request(block:suspend ()->Unit) {
         cancelRequest();val id=generation;mutable.value=mutable.value.copy(busy=true)
         job=scope.launch {
-            try {block()} catch(e:Exception){if(e is CancellationException)throw e;if(id==generation)mutable.value=mutable.value.copy(notice=e.message ?: "연결할 수 없습니다. 네트워크를 확인해 주세요.")}
+            try {block()} catch(e:Exception){if(e is CancellationException)throw e;if(id==generation)mutable.value=mutable.value.copy(notice=when(e){is java.net.SocketTimeoutException->"서버 응답 시간이 지났습니다. 연결 상태를 확인해 주세요.";is java.io.IOException->"내비게이션 서버에 연결하지 못했습니다. 네트워크·서비스 주소를 확인해 주세요.";is org.json.JSONException->"경로 서버의 응답 형식을 확인할 수 없습니다.";else->e.message ?: "연결할 수 없습니다. 네트워크를 확인해 주세요."})}
             finally {if(id==generation)mutable.value=mutable.value.copy(busy=false)}
         }
     }
@@ -154,9 +154,10 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(notice="먼저 내 위치를 사용해 정확한 GPS 위치를 받아 주세요.");return}
         request {val r=service.route(f.point,destination);if(canPlan()){tracker.preview(r);publish();mutable.value=mutable.value.copy(notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")}}
     }
-    fun start() {
+    fun start(accessConfirmed:Boolean=false) {
         if(!canPlan())return
         if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){fix=null;mutable.value=mutable.value.copy(notice="정확한 위치 권한을 확인해 주세요.");return}
+        if((tracker.state.route?.destinationAccessMeters ?: 0.0)>100&&!accessConfirmed){mutable.value=mutable.value.copy(notice="차량 접근 지점과 목적지의 차이를 먼저 확인해 주세요.");return}
         val f=fix
         if(f==null||!tracker.start(f)){mutable.value=mutable.value.copy(notice="출발 위치의 정확한 GPS가 필요합니다. 이동했다면 경로를 다시 계산하세요.");return}
         cancelRequest();safetyHeld=true;stationarySince=null;engine.setNavigationLock(true);publish();spoken="";rerouteFailures=0;guide()

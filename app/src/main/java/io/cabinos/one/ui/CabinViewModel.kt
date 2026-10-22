@@ -25,7 +25,11 @@ class CabinViewModel @Inject constructor(
     private val reminders:DepartureReminders,
     private val nearbyPlaces:NearbyPlaces,
     val liveNavigation:LiveNavigation,
+    private val runtimePreferences:RuntimePreferences,
 ):ViewModel() {
+    private val mutableAppearance=MutableStateFlow(runtimePreferences.appearance)
+    val appearance=mutableAppearance.asStateFlow()
+    fun appearance(value:AppearanceSettings){if(state.value.parkedAllowed){val normalized=AppearanceCatalog.normalize(value);runtimePreferences.appearance=normalized;mutableAppearance.value=normalized}}
     val state=engine.state
     val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
@@ -189,6 +193,7 @@ class CabinViewModel @Inject constructor(
         viewModelScope.launch {
             persistenceMutex.withLock {
                 if (!engine.clearPersonalData()) return@withLock
+                runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
                 demoJob?.cancel();mutableDemoRunning.value=false
                 audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
                 try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }

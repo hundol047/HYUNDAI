@@ -6,7 +6,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import io.cabinos.core.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -16,23 +17,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-val Night=Color(0xFF080F15)
-val Panel=Color(0xFF101C25)
-val Line=Color(0xFF263842)
-val Mint=Color(0xFF62E2C3)
-val Blue=Color(0xFF58A9FF)
-val Purple=Color(0xFFA59AFF)
-val White=Color(0xFFF0F6FA)
-val Muted=Color(0xFF8DABB9)
+val LocalAppearance=staticCompositionLocalOf {AppearanceSettings()}
+val LocalCabinPalette=staticCompositionLocalOf {AppearanceCatalog.palette(AppearanceSettings())}
+private fun rgb(value:Int)=Color(value or (0xFF shl 24))
+val Night:Color @Composable get()=rgb(LocalCabinPalette.current.background)
+val Panel:Color @Composable get()=rgb(LocalCabinPalette.current.panel)
+val Line:Color @Composable get()=rgb(LocalCabinPalette.current.line)
+val Mint:Color @Composable get()=rgb(LocalCabinPalette.current.accent)
+val Blue:Color @Composable get()=rgb(LocalCabinPalette.current.accent)
+val Purple:Color @Composable get()=Color(0xFFB8AFD4)
+val White:Color @Composable get()=rgb(LocalCabinPalette.current.text)
+val Muted:Color @Composable get()=rgb(LocalCabinPalette.current.muted)
 val Amber=Color(0xFFFFCB7A)
 val Red=Color(0xFFFF8983)
 
-@Composable fun CabinTheme(content:@Composable ()->Unit) {
-    MaterialTheme(colorScheme=darkColorScheme(primary=Mint,onPrimary=Night,secondary=Blue,background=Night,surface=Panel,
-        onBackground=White,onSurface=White,outline=Line),content=content)
+@Composable fun CabinTheme(appearance:AppearanceSettings=AppearanceSettings(),content:@Composable ()->Unit) {
+    val palette=remember(appearance){AppearanceCatalog.palette(appearance)}
+    CompositionLocalProvider(LocalAppearance provides appearance,LocalCabinPalette provides palette) {
+        MaterialTheme(colorScheme=darkColorScheme(primary=Mint,onPrimary=Night,secondary=Blue,background=Night,surface=Panel,
+            onBackground=White,onSurface=White,outline=Line,onSurfaceVariant=Muted,
+            primaryContainer=rgb(AppearanceCatalog.blend(palette.panel,palette.accent,.14)),onPrimaryContainer=Mint,
+            secondaryContainer=rgb(AppearanceCatalog.blend(palette.panel,palette.accent,.14)),onSecondaryContainer=White,
+            tertiary=Mint,onTertiary=Night,tertiaryContainer=Panel,onTertiaryContainer=White,
+            surfaceVariant=Panel,surfaceTint=Mint,error=Red,onError=Night,
+            errorContainer=rgb(AppearanceCatalog.blend(palette.panel,0xFF8983,.14)),onErrorContainer=Red),content=content)
+    }
 }
 @Composable fun SurfacePanel(modifier:Modifier=Modifier,accent:Color=Line,content:@Composable ColumnScope.()->Unit) {
-    Column(modifier.background(Brush.linearGradient(listOf(Panel,Color(0xFF0C171F))),RoundedCornerShape(20.dp))
+    Column(modifier.background(Brush.linearGradient(listOf(Panel,Night)),RoundedCornerShape(20.dp))
         .border(1.dp,accent.copy(alpha=.65f),RoundedCornerShape(20.dp)).padding(20.dp),content=content)
 }
 @Composable fun Pill(text:String,color:Color=Mint,modifier:Modifier=Modifier) {

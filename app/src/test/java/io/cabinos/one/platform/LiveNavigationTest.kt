@@ -26,14 +26,14 @@ class LiveNavigationTest {
         fun park(){engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))}
         park();now+=1600;park();assertTrue(engine.state.value.parkedAllowed)
         val points=listOf(NavPoint(48.85,2.35),NavPoint(48.86,2.35),NavPoint(48.87,2.36))
-        val end=NavPlace("Paris",points.last())
+        val end=NavPlace("Paris",NavPoint(48.87,2.363))
         val service=object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=NavigationGeometry.route(end,points,3000.0,600.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"turn","left"),NavManeuver(points[2],"arrive")))}
         val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,service)
         fun gps(p:NavPoint,speed:Float){shadowOf(manager).simulateLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {latitude=p.latitude;longitude=p.longitude;accuracy=5f;this.speed=speed;time=System.currentTimeMillis();elapsedRealtimeNanos=SystemClock.elapsedRealtimeNanos()});shadowOf(Looper.getMainLooper()).idle()}
         try {
             nav.locate();gps(points.first(),0f);nav.plan(end);shadowOf(Looper.getMainLooper()).idle()
-            assertNotNull(nav.state.value.guidance.route);nav.start();assertTrue(nav.state.value.guidance.active);assertFalse(engine.state.value.parkedAllowed)
-            org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofSeconds(2));gps(NavPoint(48.855,2.35),10f)
+            assertNotNull(nav.state.value.guidance.route);nav.start();assertFalse(nav.state.value.guidance.active);nav.start(true);assertTrue(nav.state.value.guidance.active);assertFalse(engine.state.value.parkedAllowed)
+            org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofSeconds(2));gps(NavPoint(48.851,2.35),10f)
             assertTrue(nav.state.value.guidance.remainingMeters<3000);nav.stop();assertFalse(nav.state.value.guidance.active);assertFalse(engine.state.value.parkedAllowed)
             nav.setForeground(false);assertNull(nav.state.value.guidance.route)
         }finally{nav.close();speech.close()}

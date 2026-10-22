@@ -114,6 +114,7 @@ import java.util.*
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Text("당신에게 맞춘 CabinOS",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
         Text("개인 설정은 이 기기에 저장됩니다.",color=Muted,fontSize=12.sp)
+        AppearanceSettingsPanel(vm)
         Row(horizontalArrangement=Arrangement.spacedBy(16.dp)) {
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("시간 프리셋",color=Blue);Spacer(Modifier.height(16.dp))
@@ -143,7 +144,7 @@ import java.util.*
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
             SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))
-            Text("차량 상태 · 충전: 시뮬레이션 제공\nPleos Vehicle · FusedLocation · NaviHelper: 공식 문서 접근 제한으로 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
+            Text("차량 상태 · 충전: 시뮬레이션 제공\nPleos Vehicle · FusedLocation · NaviHelper: SDK 어댑터·대상 기기 검증 미완료\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
         }
     }
 }

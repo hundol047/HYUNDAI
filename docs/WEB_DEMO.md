@@ -33,3 +33,7 @@ node scripts/web/record-demo.cjs
 ## 글로벌 내비게이션 (0.4.0)
 
 왼쪽 `내비`에서 국가 제한 없는 Nominatim 주소 검색·위경도 목적지, OSRM 자동차 경로, 실제 브라우저 GPS 기반 주행 안내를 사용할 수 있도록 구현했습니다. 공유 Kotlin NavigationTracker가 회전/진행/도착/재탐색을 계산합니다. HTTPS 위치 권한과 네트워크가 필요합니다. 차량/위험 예시와 실제 위치 경로를 구분하며, 현재 클라우드의 실제 제공자 접속은 차단돼 미검증입니다. 새 영상의 내비게이션 장면은 합성 서버 응답/GPS를 명시해서 녹화합니다. [사용법과 제한](NAVIGATION_KO.md)을 확인하세요.
+
+## 0.5.0 현재 검증
+
+실내 테마·강조색·야간 지도는 설정에서 바꾸며 시각 설정만 localStorage에 보관합니다. 실제 OSM/Nominatim/OSRM HTTP 200과 서울 브라우저 지도/길 안내를 확인했습니다. GPS 입력은 합성 공개 좌표이며 실기기 검증은 별도입니다. `verify-appearance.cjs`와 `verify-navigation-live.cjs`, `scripts/check-navigation-live.py --all-regions`로 재현합니다. 기본 CI는 합성 fixture로 재현 가능한 47개 브라우저 검사를 실행하며 실제 외부 서비스 가용성을 보장하지 않습니다.

@@ -32,6 +32,7 @@ import java.util.*
 
 @Composable fun CabinApp(vm:CabinViewModel=hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val appearance by vm.appearance.collectAsStateWithLifecycle()
     val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
     var navigationOpen by remember { mutableStateOf(false) }
     val lifecycle=LocalLifecycleOwner.current.lifecycle
@@ -74,8 +75,14 @@ import java.util.*
     }
     val requestNotifications:()->Unit = { if(android.os.Build.VERSION.SDK_INT>=33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.refreshNotifications() }
     LaunchedEffect(s.parkedAllowed) { if(!s.parkedAllowed && route!="dashboard") nav.navigate("dashboard") {popUpTo("dashboard"){inclusive=true}} }
-    CabinTheme {
-        Row(Modifier.fillMaxSize().background(Brush.linearGradient(listOf(Night,androidx.compose.ui.graphics.Color(0xFF0B1720),Night)))) {
+    DisposableEffect(context,appearance.brightness) {
+        val window=(context as? android.app.Activity)?.window
+        val old=window?.attributes?.screenBrightness
+        window?.let {it.attributes=it.attributes.apply {screenBrightness=AppearanceCatalog.windowBrightness(appearance.brightness)}}
+        onDispose {if(window!=null&&old!=null)window.attributes=window.attributes.apply {screenBrightness=old}}
+    }
+    CabinTheme(appearance) {
+        Row(Modifier.fillMaxSize().background(Brush.linearGradient(listOf(Night,Panel,Night)))) {
             NavigationRailPanel(if(navigationOpen||navigationState.guidance.active)"navigation" else route,s.parkedAllowed,onNavigate={ if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} },onAssistant={assistantOpen=true},onDemo={simulatorOpen=true})
             Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=24.dp)) {
                 BrandHeader(s)
@@ -104,7 +111,7 @@ import java.util.*
     }
 }
 @Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit) {
-    Column(Modifier.width(76.dp).fillMaxHeight().background(androidx.compose.ui.graphics.Color(0xFF091119)).border(1.dp,Line.copy(alpha=.4f)).padding(vertical=23.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(15.dp)) {
+    Column(Modifier.width(76.dp).fillMaxHeight().background(Night).border(1.dp,Line.copy(alpha=.4f)).padding(vertical=23.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(15.dp)) {
         Icon(Icons.Outlined.Hexagon,"CabinOS ONE",tint=Mint,modifier=Modifier.size(30.dp))
         Spacer(Modifier.height(24.dp))
         RailItem(Icons.Outlined.SpaceDashboard,"홈",route=="dashboard",true){onNavigate("dashboard")}

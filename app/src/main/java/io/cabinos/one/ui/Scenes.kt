@@ -13,6 +13,7 @@ import kotlin.math.*
 
 /** Original procedural artwork. No external map tiles or geographic data are implied. */
 @Composable fun RouteScene(modifier:Modifier=Modifier,progress:Float=0f) {
+    val Night=Night;val White=White;val Blue=Blue;val Mint=Mint;val Muted=Muted
     Canvas(modifier.background(Color(0xFF091622))) {
         val w=size.width;val h=size.height
         drawRect(Brush.radialGradient(listOf(Color(0xFF173448),Color(0xFF08131D)),center=Offset(w*.52f,h*.5f),radius=w*.9f))
@@ -41,6 +42,7 @@ import kotlin.math.*
     }
 }
 @Composable fun MountainScene(modifier:Modifier=Modifier) {
+    val Night=Night;val White=White;val Blue=Blue;val Mint=Mint;val Muted=Muted
     Canvas(modifier) {
         val w=size.width;val h=size.height
         drawRect(Brush.verticalGradient(listOf(Color(0xFF172446),Color(0xFF425177),Color(0xFFA18489),Color(0xFF243C4B))))
@@ -64,6 +66,7 @@ import kotlin.math.*
     }
 }
 @Composable fun CarIllustration(modifier:Modifier=Modifier) {
+    val Night=Night;val White=White;val Blue=Blue;val Mint=Mint;val Muted=Muted
     Canvas(modifier) {
         val w=size.width;val h=size.height
         drawOval(Brush.radialGradient(listOf(Mint.copy(alpha=.18f),Color.Transparent)),Offset(w*.03f,h*.49f),Size(w*.94f,h*.5f))

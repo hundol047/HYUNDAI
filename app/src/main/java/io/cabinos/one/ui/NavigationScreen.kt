@@ -27,6 +27,7 @@ import java.util.Locale
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
     val g=ui.guidance
     var query by remember {mutableStateOf("")}
+    var accessConfirmed by remember(g.route){mutableStateOf(false)}
     var settings by remember {mutableStateOf(false)}
     var searchEndpoint by remember {mutableStateOf(nav.service.searchEndpoint)}
     var routeEndpoint by remember {mutableStateOf(nav.service.routeEndpoint)}
@@ -60,14 +61,17 @@ import java.util.Locale
                         Text(r.destination.name,color=White,fontSize=15.sp)
                         Spacer(Modifier.height(9.dp))
                         if(g.active) {
+                            if(g.tracking&&!g.offRoute)Text(g.turnSymbol,color=Blue,fontSize=48.sp)
                             Text(if(g.tracking&&!g.offRoute)g.nextInstruction else "위치·경로 확인 중",color=White,fontSize=23.sp)
                             if(g.tracking&&!g.offRoute)Text("${navDistance(g.turnMeters)} 앞",color=Blue,fontSize=24.sp)
                         }
                         Text("남은 거리 ${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
-                        Text(if(g.active&&!g.tracking)"도착 예상 갱신 중지" else "약 ${(g.remainingSeconds/60).toInt().coerceAtLeast(1)}분 · ${SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date(System.currentTimeMillis()+(g.remainingSeconds*1000).toLong()))} 도착 예상",color=Muted,fontSize=13.sp)
+                        Text(if(g.arrived)"차량 경로 도착 · 안내 종료" else if(g.active&&(!g.tracking||g.offRoute))"도착 예상 갱신 중지" else "약 ${kotlin.math.ceil(g.remainingSeconds/60).toInt().coerceAtLeast(1)}분 · ${SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date(System.currentTimeMillis()+(g.remainingSeconds*1000).toLong()))} 도착 예상",color=Muted,fontSize=13.sp)
+                        if(r.destinationAccessMeters>30)Text("차량 접근 지점에서 목적지까지 직선 약 ${navDistance(r.destinationAccessMeters)} · 주차장·진입로를 확인하세요.",color=Amber,fontSize=12.sp)
+                        if(canPlan&&r.destinationAccessMeters>100)Row {Checkbox(accessConfirmed,{accessConfirmed=it});Text("목적지와 차량 접근 지점의 차이를 확인했습니다.",color=White,fontSize=12.sp)}
                         Text("실시간 교통·차선 안내 미제공",color=Muted,fontSize=11.sp)
                         Spacer(Modifier.height(9.dp))
-                        if(canPlan)ActionButton("안내 시작",{nav.start()},Modifier.fillMaxWidth(),Mint,!ui.busy)
+                        if(canPlan)ActionButton("안내 시작",{nav.start(accessConfirmed)},Modifier.fillMaxWidth(),Mint,!ui.busy&&(r.destinationAccessMeters<=100||accessConfirmed))
                         ActionButton("안내 종료·경로 지우기",{nav.stop()},Modifier.fillMaxWidth(),Muted)
                         if(g.active&&!g.tracking)ActionButton("GPS 다시 연결",{nav.locate()},Modifier.fillMaxWidth(),Blue)
                         if(g.offRoute)ActionButton("재탐색 재시도",{nav.retry()},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
@@ -90,12 +94,14 @@ import java.util.Locale
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
 @Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean) {
+    val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
         userAgentValue="CabinOS_ONE/0.4.0 (+https://github.com/hundol047/HYUNDAI)"
         osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
     };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=2.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
     var lastRoute by remember {mutableStateOf<DrivingRoute?>(null)}
+    var previousPalette by remember {mutableStateOf<CabinPalette?>(null)}
     var previousFix by remember {mutableStateOf<NavFix?>(null)}
     DisposableEffect(map,owner) {
         val observer=LifecycleEventObserver {_,e->if(e==Lifecycle.Event.ON_START)map.onResume() else if(e==Lifecycle.Event.ON_STOP)map.onPause()}
@@ -103,14 +109,15 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
         onDispose {owner.lifecycle.removeObserver(observer);map.onPause();map.onDetach()}
     }
     AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={view->
+        applyMapAppearance(view,appearance,palette)
         view.setUseDataConnection(online);view.setMultiTouchControls(interactive)
         view.gesturesEnabled=interactive
         view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
         view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
-        if(lastRoute!==g.route||previousFix!=g.fix) {
+        if(lastRoute!==g.route||previousFix!=g.fix||previousPalette!=palette) {
             view.overlays.clear()
             g.route?.let {r->
-                view.overlays.add(Polyline(view).apply {setPoints(r.points.map {GeoPoint(it.latitude,it.longitude)});outlinePaint.color=android.graphics.Color.rgb(88,169,255);outlinePaint.strokeWidth=9f})
+                view.overlays.add(Polyline(view).apply {setPoints(r.points.map {GeoPoint(it.latitude,it.longitude)});outlinePaint.color=palette.accent or (0xFF shl 24);outlinePaint.strokeWidth=9f})
                 view.overlays.add(Marker(view).apply {position=GeoPoint(r.destination.point.latitude,r.destination.point.longitude);title=r.destination.name})
                 if(lastRoute!==r&&!g.active)view.controller.setCenter(GeoPoint(r.points.first().latitude,r.points.first().longitude))
             }
@@ -123,7 +130,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
                 if(g.active&&g.tracking)view.controller.setCenter(GeoPoint(f.point.latitude,f.point.longitude))
             }
             view.overlays.add(CopyrightOverlay(context).apply {setCopyrightNotice("© OpenStreetMap contributors")})
-            lastRoute=g.route;previousFix=g.fix;view.invalidate()
+            lastRoute=g.route;previousFix=g.fix;previousPalette=palette;view.invalidate()
         }
     })
 }

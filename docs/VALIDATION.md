@@ -1,13 +1,13 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.4.0`.
+팀 **퓨처랩스** · CabinOS ONE `0.5.0`.
 
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **67개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **19개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **74개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **22개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 4건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3) |
@@ -15,7 +15,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **86개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 12개, 총 38개가 통과했습니다.** 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **96개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개, 총 47개가 통과했습니다.** 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 
@@ -33,6 +33,7 @@ source scripts/env.sh
 node scripts/web/verify.cjs
 node scripts/web/verify-map.cjs
 node scripts/web/verify-navigation.cjs
+node scripts/web/verify-appearance.cjs
 node scripts/web/record-demo.cjs
 ```
 
@@ -55,7 +56,7 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 한국어 TTS/STT는 실제 Android API 어댑터를 제공하지만 해당 언어팩/인식 서비스가 있는 실제 기기에서의 음성 품질·서비스 동작은 미검증입니다. 앱 테스트의 한국어 명령 라우팅은 로컬 엔진을 검증합니다.
 
-초기에는 Pleos 공식 문서 접근이 프록시 403으로 차단됐지만, 환경 재시작 후 공식 개발·SDK 문서를 확인했습니다. 문서 확인과 최소 환경 대조를 완료했으며, 실차 SDK 어댑터·실제 충전/위험/경로/POI 데이터 및 Pleos 환경 실행 호환성은 **미검증·미연동**입니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. [GitHub Actions Android 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39636898536)에서도 JVM/Android 테스트·JVM/JS 빌드·Debug/Release 빌드·Lint가 통과했습니다. 해당 실행의 소스는 `c5e9acad55301c4e924f7fa62a75a9da6c758f43`입니다. 웹 배포 워크플로는 별도 결과이며 공개 URL 성공과 구분합니다.
+초기에는 Pleos 공식 문서 접근이 프록시 403으로 차단됐지만, 환경 재시작 후 공식 개발·SDK 문서를 확인했습니다. 문서 확인과 최소 환경 대조를 완료했으며, Pleos 실차 SDK 어댑터·충전/위험/경로 신호와 Pleos 실행 호환성은 **미검증·미연동**입니다. OSM 기반 경로 서비스의 0.5.0 라이브 확인은 아래에 별도 기록합니다. 관련 제약은 [SDK_CAPABILITIES.md](SDK_CAPABILITIES.md)와 [LIMITATIONS.md](LIMITATIONS.md)에 명시했습니다. [GitHub Actions Android 검증](https://github.com/hundol047/HYUNDAI/actions/runs/39636898536)에서도 JVM/Android 테스트·JVM/JS 빌드·Debug/Release 빌드·Lint가 통과했습니다. 해당 실행의 소스는 `c5e9acad55301c4e924f7fa62a75a9da6c758f43`입니다. 웹 배포 워크플로는 별도 결과이며 공개 URL 성공과 구분합니다.
 
 ## 실행 영상과 재점검
 
@@ -67,12 +68,19 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 이번 검사에서 모바일 크기 변경 후 지도 마커가 화면 밖으로 밀리는 문제를 발견해 ResizeObserver와 영역 재조정을 추가했습니다. 지도에서 외출 계획을 선택할 때 공유 일정이 왕복 이동 전체를 확보하도록 정정했습니다. Android Lint의 K2/UAST 내부 오류는 별도 실행에서 통과했으며, 재현 위험을 줄이도록 테스트·Release 컴파일·Lint 호출을 분리했습니다. 검사나 단언을 끄지 않았습니다.
 
-위에 링크된 기존 GitHub Actions 성공은 이전 버전의 근거입니다. 새 지도 버전의 원격 실행 결과는 해당 커밋의 Actions를 별도로 확인해야 합니다. OSM/Overpass 실서버 접속은 현재 클라우드에서 CONNECT 403으로 차단돼 미검증입니다.
+위에 링크된 기존 GitHub Actions 성공은 이전 버전의 근거입니다. 새 지도 버전의 원격 실행 결과는 해당 커밋의 Actions를 별도로 확인해야 합니다. 0.3.0 당시 OSM/Overpass 접속은 CONNECT 403이었습니다. 0.5.0에서 OSM 타일 연결은 성공했고 Overpass는 별도 502/시간 초과로 구분합니다.
 
-## 0.4.0 글로벌 내비게이션 검증
+## 0.4.0 이전 검증 기록
 
-`:core:test` 67개와 `:app:testDebugUnitTest` 19개가 통과했습니다. Android GPS 통합 검사에서 Robolectric의 수신 최소 간격을 충족하도록 가상 단조 시계를 진행시켰습니다. Activity의 비동기 초기화 대기는 20초로 늘렸으며 안전/UI 단언은 유지했습니다. 실제 Android GPS 콜백 → 합성 경로 응답 → 안내 시작 → 위치 진행 → 이동 중 종료 후 잠금 유지까지 검사합니다.
+0.4.0 커밋은 핵심 67개·Android 19개와 합성 프로토콜 브라우저 검사를 통과했습니다. 당시 제공자 접속은 CONNECT 403이어서 녹화의 내비게이션 장면에 합성 응답/GPS를 사용했습니다. 현재 0.5.0의 실서버·테마·영상 결과는 아래와 최상단 집계가 기준입니다. 이전 Actions 링크는 해당 과거 커밋의 근거입니다.
 
-Nominatim/OSRM의 라이브 요청은 프록시 CONNECT 403으로 실패했습니다. 이를 코드/기기 성공으로 보고하지 않습니다. 필요한 도메인은 환경 설정 초안에 저장했지만 적용/게시되지 않았습니다. 최종 브라우저 영상은 실제 CDP 녹화이며 내비게이션 장면의 서버/GPS 입력은 자막으로 명시한 합성 검사 데이터입니다. 기본 공개 서버의 전 세계 데이터는 완전성/SLA가 없으므로 운영 전 계약/자체 서비스와 국가별 실도로 검증이 필요합니다.
+## 0.5.0 실제 서버·테마·정밀도 보완
 
-이 문서에 기록된 이전 원격 실행 성공은 0.3.0 이전/해당 커밋의 결과입니다. 0.4.0의 현재 원격 실행은 저장소 Actions에서 최종 커밋 SHA와 함께 확인합니다.
+- **실제 요청 9건 통과:** OSM 타일 PNG + 서울/파리/뉴욕/도쿄의 Nominatim 검색과 OSRM 자동차 경로. HTTP 상태·응답 해시·도로 형상/안내 수를 [실서버 기록](validation/live-navigation-results.json)에 보관합니다. 기록된 원본 도로 응답은 출처와 함께 Android 회귀 fixture에도 넣어 실제 형식의 파싱과 안내 순서를 확인합니다. CI fixture의 성공은 새로운 실시간 요청 성공과 구분합니다.
+- **실제 Chromium 연결 통과:** TLS 검증·기존 세션 프록시를 유지하고 OS의 공개 CA를 Chromium NSS에도 등록했습니다. 실제 서울 지도 타일·서울시청 검색·도로 경로를 화면에 표시하고 공통 엔진에서 안내를 시작했습니다. [브라우저 근거](validation/live-browser-results.json), [지도 화면](screenshots/seoul-live-guidance.png). GPS는 미리 정한 공개 장소의 합성 위치이며 물리 GPS·실도로 운행은 미검증입니다.
+- **별도 주변 장소 서비스:** Overpass GET은 502, 진단한 상태/POST 요청은 시간 초과였습니다. [결과](validation/live-nearby-results.json). Nominatim/OSRM의 성공을 Overpass 장소 추천 성공으로 확대하지 않습니다. 서비스 오류 시 예시/기존 결과와 연결 실패를 표시합니다.
+- **시각 설정:** 5개 실내 테마·강조색 보정·앱 창 밝기·야간 타일 필터·복원/초기화·주행 변경 차단을 검사했습니다. 모든 프리셋/밝기와 검정/흰색/빨강/어두운 입력의 글자/버튼 대비는 최소 4.5:1입니다. [테마 결과](validation/appearance-results.json).
+- **내비게이션 보완:** 순간 GPS 도약 거부, 방향/진행 거리의 일관성, 교차로 15m 통과 후 다음 안내, 목적지와 차량 접근 지점 차이/확인, 도착 완료/위치 불확실 상태 ETA 표시, 큰 회전 기호를 추가했습니다. 정밀 지도 매칭·교통/차선 데이터·카카오맵과 동일한 정확도를 인증한 것은 아닙니다.
+- **실행 검사 안정화:** Room 응답을 기다리는 Robolectric 검사에서 MainLooper의 대기 콜백을 명시적으로 진행시켰습니다. 20초 대기와 기존 안전·저장/UI 단언을 유지하며, 실제 앱의 동작이나 검사를 생략하지 않았습니다.
+
+직접 재현: `python3 scripts/check-navigation-live.py --all-regions`, `node scripts/web/verify-navigation-live.cjs`. 클라우드 Chromium에서 프록시 CA 신뢰가 필요하면 `scripts/prepare-browser-trust.sh`를 사용합니다. 작업 폴더 밖의 NSS 저장소 쓰기 권한이 필요할 수 있습니다. 기존 인증서/키를 교체하거나 TLS 검증을 해제하지 않습니다. 환경 상태 API는 network.state=unknown이어서 환경 전체 게시 완료는 주장하지 않습니다.

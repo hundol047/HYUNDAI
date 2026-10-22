@@ -35,7 +35,10 @@ class ApplicationTest {
     @Test fun activityLaunchAndDrivingSafetyAreRendered() {
         compose.onNodeWithText("CabinOS").assertIsDisplayed()
         val vm = ViewModelProvider(compose.activity)[CabinViewModel::class.java]
-        compose.waitUntil(20_000) { vm.state.value.sample != null }
+        compose.waitUntil(20_000) {
+            org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+            vm.state.value.sample != null
+        }
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
         compose.runOnIdle { vm.selectScenario("신호 대기") }
@@ -53,6 +56,17 @@ class ApplicationTest {
         capture("parked")
         compose.onNodeWithText("설정").performClick()
         compose.onNodeWithText("당신에게 맞춘 CabinOS").assertIsDisplayed()
+        compose.onNodeWithText("웜 샌드").performScrollTo().performClick()
+        compose.onNodeWithText("야간 밝기").performScrollTo().performClick()
+        compose.runOnIdle {
+            assertEquals("sand",vm.appearance.value.preset)
+            assertEquals("night",vm.appearance.value.brightness)
+            assertEquals(.25f,compose.activity.window.attributes.screenBrightness,0f)
+            assertEquals("sand",io.cabinos.one.platform.RuntimePreferences(compose.activity).appearance.preset)
+        }
+        compose.onNodeWithText("실내에 맞춘 화면 색상").performScrollTo()
+        capture("appearance")
+        compose.runOnIdle {vm.appearance(AppearanceSettings())}
         compose.runOnIdle { vm.engine.tick() }
         compose.onNodeWithText("당신에게 맞춘 CabinOS").assertIsDisplayed()
         compose.onNodeWithText("홈").performClick()

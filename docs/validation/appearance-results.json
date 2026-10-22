@@ -1,0 +1,38 @@
+{
+  "type": "actual browser visual customization/persistence/safety checks",
+  "results": [
+    {
+      "name": "interior palettes apply to actual UI and preserve selected semantics",
+      "result": "passed"
+    },
+    {
+      "name": "custom dark accents are corrected for legible button contrast",
+      "result": "passed"
+    },
+    {
+      "name": "malformed custom color input cannot inject CSS",
+      "result": "passed"
+    },
+    {
+      "name": "visual preferences persist across reload without restoring parking trust",
+      "result": "passed"
+    },
+    {
+      "name": "night map filter affects tile pane and leaves route overlays independent",
+      "result": "passed"
+    },
+    {
+      "name": "driving locks visual changes at the shared bridge boundary",
+      "result": "passed"
+    },
+    {
+      "name": "corrupt saved visual settings recover without enabling parked controls",
+      "result": "passed"
+    },
+    {
+      "name": "settings fit mobile width with keyboard-sized color controls",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

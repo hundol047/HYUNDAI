@@ -19,7 +19,7 @@
 | 충전 상태·잔여 시간 | ChargingProvider | 데모 추정치 또는 사용자 대기 시간 입력 |
 | Pleos Vehicle SDK | 추상화 인터페이스 | 공식 문서 확인, 앱 어댑터 미연동 |
 | Pleos FusedLocation | LocationProvider | Pleos 미연동. Android LocationManager 어댑터 제공 |
-| EchoRoad 내비게이션 | Nominatim · OSRM · Android GPS · 공통 NavigationTracker | 국가 제한 없는 목적지 검색/자동차 경로/회전 안내/재탐색 구현. 실서버·실도로 미검증. [범위](NAVIGATION_KO.md) |
+| EchoRoad 내비게이션 | Nominatim · OSRM · Android GPS · 공통 NavigationTracker | 국가 제한 없는 목적지 검색/자동차 경로/회전 안내/재탐색 구현. 서울·파리·뉴욕·도쿄 실서버와 서울 브라우저 연결 확인. 실기기·실도로 미검증. [범위](NAVIGATION_KO.md) |
 | Pleos NaviHelper | 기존 NavigationProvider | Pleos 미연동. 별도 프레임워크 GPS 내비게이션은 위 행 참조 |
 | 위험 이벤트·주행 데모 경로 | 로컬 저장소, 점수·시간 계산 | 시뮬레이션. 실제 도로 검출 아님. GPS 내비게이션에는 예시 위험을 표시하지 않음 |
 | 정차용 주변 지도·장소 | osmdroid/Leaflet + OSM 타일 + Overpass | 실제 서비스 연결 어댑터. 클라우드 실서버 접속 미검증, 초기 목록은 예시. 도보 추정·영업 여부 미확인 |

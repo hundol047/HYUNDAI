@@ -19,6 +19,16 @@ class NavigationServiceTest {
         val route=NavigationService.parseRoute(json,NavPlace("Paris",NavPoint(48.87,2.36)))
         assertEquals(3,route.points.size);assertTrue(route.steps[1].instruction.contains("좌회전 · Rue du Louvre"));assertEquals(600.0,route.durationSeconds,0.0)
     }
+    @Test fun capturedLiveRoutesFromFourCountriesParseWithOrderedInstructions() {
+        val cases=listOf("seoul-station-south-korea" to NavPoint(37.5665,126.9779),"paris-france" to NavPoint(48.8584,2.2945),"new-york-usa" to NavPoint(40.7580,-73.9851),"tokyo-station-japan" to NavPoint(35.6900,139.7700))
+        for((id,end) in cases) {
+            val raw=javaClass.getResourceAsStream("/navigation-live/$id-driving-route.json")!!.bufferedReader().use {it.readText()}
+            val route=NavigationService.parseRoute(raw,NavPlace(id,end))
+            assertTrue(route.points.size>10);assertTrue(route.steps.size>3)
+            assertTrue(route.steps.zipWithNext().all {(a,b)->a.atMeters<=b.atMeters})
+            assertTrue(route.distanceMeters>1000);assertTrue(route.destinationAccessMeters<1000)
+        }
+    }
     @Test fun noRouteIsAnErrorNotInventedDrivingInstructions() {
         try{NavigationService.parseRoute("""{"code":"NoRoute","routes":[]}""",NavPlace("ocean",NavPoint(0.0,0.0)));fail("NoRoute accepted")}catch(_:IllegalStateException){}
     }

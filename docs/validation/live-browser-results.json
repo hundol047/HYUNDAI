@@ -1,0 +1,174 @@
+{
+  "type": "actual provider traffic in Chromium via session proxy with TLS verification; only GPS is a predefined synthetic public landmark",
+  "result": "passed",
+  "failure": "",
+  "responses": [
+    {
+      "url": "https://tile.openstreetmap.org/2/3/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko,en&q=Seoul%20City%20Hall%20South%20Korea",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/126.9723,37.5547;126.9784204,37.5667893?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6985/3171.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6984/3171.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6984/3172.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6984/3173.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6985/3173.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6985/3172.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6983/3172.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6986/3172.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6983/3171.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6986/3171.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6983/3173.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/13/6986/3173.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    }
+  ],
+  "pageErrors": [],
+  "physicalDeviceGps": "not tested",
+  "realRoadDriving": "not tested"
+}

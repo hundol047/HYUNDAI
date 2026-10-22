@@ -8,15 +8,16 @@ data class NavPoint(val latitude:Double,val longitude:Double) {
 }
 data class NavPlace(val name:String,val point:NavPoint)
 data class NavManeuver(val point:NavPoint,val type:String,val modifier:String="",val road:String="",val exit:Int?=null)
-data class NavStep(val atMeters:Double,val instruction:String,val type:String)
+data class NavStep(val atMeters:Double,val instruction:String,val type:String,val symbol:String="↑")
 data class DrivingRoute(val destination:NavPlace,val points:List<NavPoint>,val cumulative:List<Double>,val distanceMeters:Double,val durationSeconds:Double,val steps:List<NavStep>) {
     val geometryMeters get()=cumulative.last()
+    val destinationAccessMeters get()=NavigationGeometry.distance(points.last(),destination.point)
 }
-data class NavFix(val point:NavPoint,val accuracy:Double,val timestampMs:Long,val speedMps:Double?=null)
+data class NavFix(val point:NavPoint,val accuracy:Double,val timestampMs:Long,val speedMps:Double?=null,val bearingDegrees:Double?=null)
 data class Guidance(
     val route:DrivingRoute?=null,val active:Boolean=false,val tracking:Boolean=false,val arrived:Boolean=false,
     val fix:NavFix?=null,val progressMeters:Double=0.0,val remainingMeters:Double=0.0,val remainingSeconds:Double=0.0,
-    val nextInstruction:String="목적지를 검색해 주세요.",val turnMeters:Double=0.0,val offRoute:Boolean=false,
+    val nextInstruction:String="목적지를 검색해 주세요.",val turnSymbol:String="↑",val turnMeters:Double=0.0,val offRoute:Boolean=false,
     val rerouteRequired:Boolean=false,val status:String="전 세계 목적지 검색 · OSM 도로 데이터",
 )
 object NavigationGeometry {
@@ -25,6 +26,14 @@ object NavigationGeometry {
         val p1=a.latitude*PI/180;val p2=b.latitude*PI/180
         val h=sin((p2-p1)/2).pow(2)+cos(p1)*cos(p2)*sin(delta(b.longitude-a.longitude)*PI/360).pow(2)
         return 6_371_000*2*asin(sqrt(h.coerceIn(0.0,1.0)))
+    }
+    fun symbol(m:NavManeuver)=when {
+        m.type=="arrive"->"●"
+        m.type in listOf("roundabout","rotary")->"⟳"
+        m.modifier=="uturn"->"↶"
+        m.modifier.contains("left")->"↰"
+        m.modifier.contains("right")->"↱"
+        else->"↑"
     }
     fun instruction(m:NavManeuver):String {
         val direction=when(m.modifier){"left"->"좌회전";"right"->"우회전";"slight left"->"왼쪽으로 완만하게";"slight right"->"오른쪽으로 완만하게";"sharp left"->"왼쪽으로 크게";"sharp right"->"오른쪽으로 크게";"uturn"->"유턴";else->"직진"}
@@ -53,12 +62,12 @@ object NavigationGeometry {
             }
             require(gap<=1000)
             cursor=best
-            NavStep(cumulative[best],instruction(m),m.type)
+            NavStep(cumulative[best],instruction(m),m.type,symbol(m))
         }
         return DrivingRoute(destination,points,cumulative,distance,duration,steps)
     }
     /** Project onto a polyline, correctly wrapping longitude across the date line. */
-    fun project(route:DrivingRoute,p:NavPoint,previous:Double?=null):Pair<Double,Double> {
+    fun project(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null):Pair<Double,Double> {
         var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY
         for(i in 0 until route.points.lastIndex) {
             val a=route.points[i];val b=route.points[i+1];val scale=cos(p.latitude*PI/180).coerceAtLeast(.00001)
@@ -68,8 +77,12 @@ object NavigationGeometry {
             val t=if(den==0.0)0.0 else (-(ax*dx+ay*dy)/den).coerceIn(0.0,1.0)
             val gap=hypot(ax+t*dx,ay+t*dy)
             val at=route.cumulative[i]+t*(route.cumulative[i+1]-route.cumulative[i])
+            if(previous!=null&&maxDelta!=null&&abs(at-previous)>maxDelta)continue
+            val segmentHeading=((atan2(dx,dy)*180/PI)+360)%360
+            val headingDifference=heading?.let {abs(delta(segmentHeading-it))} ?: 0.0
+            val headingPenalty=if(heading!=null&&den>25)40*(headingDifference/180).pow(2) else 0.0
             // At intersections prefer the nearby part of the route, not a later crossing.
-            val score=gap+if(previous==null)0.0 else abs(at-previous)*.001
+            val score=gap+headingPenalty+(if(previous==null)0.0 else abs(at-previous)*.001)
             if(score<bestScore){bestScore=score;bestGap=gap;bestProgress=at}
         }
         return bestProgress to bestGap
@@ -79,15 +92,16 @@ object NavigationGeometry {
 /** Shared Android/browser live GPS navigation. No simulated fixes are created here. */
 class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
     var state=Guidance();private set
+    private var nextStepIndex=0
     private var peakProgress=0.0
     private var offSince:Long?=null;private var offCount=0;private var arrivalCount=0
     private var lastRerouteAt:Long?=null
     fun preview(route:DrivingRoute) {state=Guidance(route=route,remainingMeters=route.distanceMeters,remainingSeconds=route.durationSeconds,nextInstruction=route.steps.first().instruction,status="자동차 경로 미리보기 · 실시간 교통 미반영");resetCounters()}
-    private fun resetCounters(){peakProgress=0.0;offSince=null;offCount=0;arrivalCount=0}
-    fun usable(fix:NavFix)=fix.point.valid()&&fix.accuracy.isFinite()&&fix.accuracy in 0.0..50.0&&clock()-fix.timestampMs in 0..10_000
+    private fun resetCounters(){nextStepIndex=0;peakProgress=0.0;offSince=null;offCount=0;arrivalCount=0}
+    fun usable(fix:NavFix)=fix.point.valid()&&fix.accuracy.isFinite()&&fix.accuracy in 0.0..50.0&&clock()-fix.timestampMs in 0..10_000&&(fix.speedMps==null||(fix.speedMps.isFinite()&&fix.speedMps>=0))&&(fix.bearingDegrees==null||(fix.bearingDegrees.isFinite()&&fix.bearingDegrees in 0.0..360.0))
     fun start(fix:NavFix):Boolean {
         val r=state.route ?: return false
-        if(!usable(fix)||NavigationGeometry.distance(r.points.first(),fix.point)>200)return false
+        if(!usable(fix)||NavigationGeometry.distance(r.points.first(),fix.point)>max(45.0,fix.accuracy*2))return false
         state=state.copy(active=true,arrived=false,tracking=false,fix=null,progressMeters=0.0);resetCounters();lastRerouteAt=null
         update(fix);return true
     }
@@ -101,7 +115,15 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         if(!usable(fix)){state=state.copy(tracking=false,status="GPS 정확도·시간을 확인 중 · 회전 안내 일시중지");return}
         if(state.fix!=null && fix.timestampMs<=state.fix!!.timestampMs)return
         val r=state.route ?: return
-        val (at,gap)=NavigationGeometry.project(r,fix.point,state.progressMeters)
+        val previous=state.fix
+        val elapsed=previous?.let {(fix.timestampMs-it.timestampMs)/1000.0} ?: 1.0
+        val maximumTravel=max(120.0,elapsed*75+fix.accuracy*2+(previous?.accuracy ?: 0.0)*2)
+        if(previous!=null&&NavigationGeometry.distance(previous.point,fix.point)>maximumTravel) {
+            state=state.copy(tracking=false,rerouteRequired=false,status="GPS 위치가 크게 바뀌었습니다. 위치 재확인 중 · 회전 안내 중지")
+            return
+        }
+        val heading=fix.bearingDegrees?.takeIf {(fix.speedMps ?: 0.0)>=2}
+        val (at,gap)=NavigationGeometry.project(r,fix.point,state.progressMeters,heading,maximumTravel+100)
         val reversing=at<peakProgress-60&&(fix.speedMps ?: 0.0)>=2
         val off=gap>max(45.0,fix.accuracy*2)||reversing
         if(off){if(offSince==null)offSince=clock();offCount++}else{offCount=0;offSince=null}
@@ -112,11 +134,13 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val arrived=!off&&remaining<50&&NavigationGeometry.distance(fix.point,r.points.last())<30&&(fix.speedMps ?: 0.0)<8
         arrivalCount=if(arrived)arrivalCount+1 else 0
         val done=arrivalCount>=2
-        val next=r.steps.firstOrNull {it.atMeters>progress+12} ?: r.steps.last()
+        // Keep the current turn until its point is passed, not twelve metres before it.
+        if(!off)while(nextStepIndex<r.steps.lastIndex&&(r.steps[nextStepIndex].type=="depart"||progress>r.steps[nextStepIndex].atMeters+15))nextStepIndex++
+        val next=r.steps[nextStepIndex]
         state=state.copy(active=!done,tracking=true,arrived=done,fix=fix,progressMeters=progress,
             remainingMeters=r.distanceMeters*(remaining/r.geometryMeters),remainingSeconds=r.durationSeconds*(remaining/r.geometryMeters),
-            nextInstruction=if(done)"목적지에 도착했습니다." else next.instruction,turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
-            offRoute=off,rerouteRequired=need,status=when{done->"목적지 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";else->"GPS 주행 안내 · 교통 미반영 예상"})
+            turnSymbol=if(done)"●" else next.symbol,nextInstruction=if(done){if(r.destinationAccessMeters>30)"자동차 도착 지점입니다. 목적지까지 약 ${r.destinationAccessMeters.toInt()}미터 남았습니다." else "목적지에 도착했습니다."} else next.instruction,turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
+            offRoute=off,rerouteRequired=need,status=when{done->"차량 경로 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";else->"GPS 주행 안내 · 정확도 약 ${fix.accuracy.toInt()}m · 교통 미반영 예상"})
     }
     fun tick(){if(state.active&&state.fix?.let {usable(it)}!=true)state=state.copy(tracking=false,rerouteRequired=false,status="GPS 신호 대기 · 회전 안내 일시중지")}
     fun takeReroute():Boolean {

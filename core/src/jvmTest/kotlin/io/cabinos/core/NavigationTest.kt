@@ -13,7 +13,7 @@ class NavigationTest {
     private fun running(r:DrivingRoute=route()):NavigationTracker=NavigationTracker({now}).apply {preview(r);assertTrue(start(fix(r.points.first())))}
     @Test fun worldCoordinatesHaveNoKoreaRestriction() {
         for((lat,lon) in listOf(37.5 to 127.0,48.8 to 2.3,40.7 to -74.0,35.6 to 139.7,-33.8 to 151.2,-33.9 to 18.4)) {
-            val r=route(lat,lon);val t=running(r);now+=2000;t.update(fix(NavPoint(lat+.005,lon)))
+            val r=route(lat,lon);val t=running(r);now+=8000;t.update(fix(NavPoint(lat+.005,lon)))
             assertTrue(t.state.tracking);assertTrue(t.state.remainingMeters<3000);assertTrue(t.state.nextInstruction.contains("우회전"))
         }
     }
@@ -24,10 +24,10 @@ class NavigationTest {
         assertEquals(1001,r.steps.size);assertTrue(r.steps.zipWithNext().all {(a,b)->a.atMeters<=b.atMeters})
     }
     @Test fun sustainedBackwardTravelOnSameRoadAlsoRequestsRerouting() {
-        val t=running();now+=1000;t.update(fix(NavPoint(37.008,127.0),speed=10.0))
-        now+=1000;t.update(fix(NavPoint(37.006,127.0),speed=10.0));assertTrue(t.state.offRoute)
-        now+=3000;t.update(fix(NavPoint(37.005,127.0),speed=10.0))
-        now+=3000;t.update(fix(NavPoint(37.004,127.0),speed=10.0));assertTrue(t.takeReroute())
+        val t=running();now+=8000;t.update(fix(NavPoint(37.004,127.0),speed=10.0))
+        now+=1000;t.update(fix(NavPoint(37.003,127.0),speed=10.0));assertTrue(t.state.offRoute)
+        now+=3000;t.update(fix(NavPoint(37.002,127.0),speed=10.0))
+        now+=3000;t.update(fix(NavPoint(37.001,127.0),speed=10.0));assertTrue(t.takeReroute())
     }
     @Test fun dateLineUsesShortDistanceAndProjection() {
         val a=NavPoint(0.0,179.99);val b=NavPoint(0.0,-179.99)
@@ -42,6 +42,7 @@ class NavigationTest {
         assertFalse(t.start(fix(r.points[0]).copy(timestampMs=now-10_001)))
         assertFalse(t.start(fix(r.points[0]).copy(timestampMs=now+1)))
         assertFalse(t.start(fix(NavPoint(0.0,0.0))))
+        assertFalse(t.start(fix(NavPoint(37.0,127.001))))
         assertTrue(t.start(fix(r.points[0])))
     }
     @Test fun gpsLossPausesGuidanceWithoutInventingProgress() {
@@ -50,28 +51,28 @@ class NavigationTest {
     }
     @Test fun offRouteRequiresSustainedEvidenceAndRateLimitsRequests() {
         val t=running();val p=NavPoint(37.005,127.005)
-        now+=1000;t.update(fix(p));assertFalse(t.state.rerouteRequired)
+        now+=10_000;t.update(fix(p));assertFalse(t.state.rerouteRequired)
         now+=3000;t.update(fix(p));assertFalse(t.state.rerouteRequired)
         now+=3000;t.update(fix(p));assertTrue(t.state.rerouteRequired);assertTrue(t.takeReroute());assertFalse(t.takeReroute())
         now+=1000;t.update(fix(p));assertFalse(t.takeReroute())
         now+=30_000;t.update(fix(p));assertTrue(t.takeReroute())
     }
     @Test fun freshRouteReplacesOldProgressUsingCurrentFix() {
-        val t=running();now+=1000;t.update(fix(NavPoint(37.005,127.0)))
+        val t=running();now+=8000;t.update(fix(NavPoint(37.005,127.0)))
         assertTrue(t.replaceRoute(route(37.005,127.0)));assertEquals(3000.0,t.state.remainingMeters,2.0);assertFalse(t.state.offRoute)
     }
     @Test fun arrivalNeedsTwoNearbyFixesNotHighSpeedPass() {
-        val r=route();val t=running(r);now+=1000;t.update(fix(r.points.last(),speed=20.0));assertFalse(t.state.arrived)
-        now+=1000;t.update(fix(r.points.last()));assertFalse(t.state.arrived)
-        now+=1000;t.update(fix(r.points.last()));assertTrue(t.state.arrived);assertFalse(t.state.active)
+        val r=route();val t=running(r);now+=40_000;t.update(fix(r.points.last(),speed=20.0));assertFalse(t.state.arrived)
+        now+=40_000;t.update(fix(r.points.last()));assertFalse(t.state.arrived)
+        now+=40_000;t.update(fix(r.points.last()));assertTrue(t.state.arrived);assertFalse(t.state.active)
     }
     @Test fun duplicateFixDoesNotAdvanceOrCountArrivalTwice() {
-        val r=route();val t=running(r);now+=1000;val f=fix(r.points.last());t.update(f);t.update(f)
+        val r=route();val t=running(r);now+=40_000;val f=fix(r.points.last());t.update(f);t.update(f)
         assertFalse(t.state.arrived)
     }
     @Test fun backgroundRequiresNewFixAndDoesNotContinueVoice() {
         val t=running();t.suspendTracking();assertFalse(t.state.tracking);assertNull(t.state.fix);assertTrue(t.state.active)
-        now+=1000;t.update(fix(NavPoint(37.005,127.0)));assertTrue(t.state.tracking)
+        now+=8000;t.update(fix(NavPoint(37.005,127.0)));assertTrue(t.state.tracking)
     }
     @Test fun koreanTurnsIncludeRoundaboutExitAndNativeRoadName() {
         assertTrue(NavigationGeometry.instruction(NavManeuver(NavPoint(0.0,0.0),"roundabout",exit=3)).contains("3번째"))
@@ -81,6 +82,31 @@ class NavigationTest {
         fun rejected(block:()->Unit){try{block();fail("invalid route accepted")}catch(_:IllegalArgumentException){}}
         rejected {NavigationGeometry.route(NavPlace("원거리",NavPoint(0.0,0.0)),route().points,10.0,5.0,listOf(NavManeuver(route().points[0],"depart")))}
         rejected {NavigationGeometry.route(NavPlace("x",NavPoint(0.0,0.0)),listOf(NavPoint(Double.NaN,0.0),NavPoint(0.0,0.0)),10.0,5.0,listOf(NavManeuver(NavPoint(0.0,0.0),"depart")))}
+    }
+    @Test fun reachingRoadAccessPointDoesNotClaimArrivalAtDistantBuilding() {
+        val old=route();val r=NavigationGeometry.route(NavPlace("건물",NavPoint(37.02,127.015)),old.points,3000.0,600.0,listOf(NavManeuver(old.points.first(),"depart"),NavManeuver(old.points.last(),"arrive")))
+        assertTrue(r.destinationAccessMeters>100)
+        val t=running(r);now+=40_000;t.update(fix(r.points.last(),speed=0.0));now+=1000;t.update(fix(r.points.last(),speed=0.0))
+        assertTrue(t.state.arrived);assertTrue(t.state.nextInstruction.contains("자동차 도착 지점"));assertTrue(t.state.nextInstruction.contains("목적지까지"))
+    }
+    @Test fun impossibleGpsJumpPausesWithoutTeleportingOrRerouting() {
+        val t=running();now+=1000;t.update(fix(NavPoint(38.0,128.0),speed=10.0))
+        assertFalse(t.state.tracking);assertFalse(t.state.rerouteRequired);assertEquals(0.0,t.state.progressMeters,0.0)
+        now+=1000;t.update(fix(NavPoint(37.0005,127.0),speed=10.0));assertTrue(t.state.tracking)
+    }
+    @Test fun turnInstructionRemainsUntilIntersectionIsActuallyPassed() {
+        val r=route();val t=running(r)
+        for(lat in listOf(37.0098,37.00995,37.01,37.01005)) {
+            now+=20_000;t.update(fix(NavPoint(lat,127.0),speed=5.0));assertTrue(t.state.nextInstruction.contains("우회전"))
+        }
+        now+=2000;t.update(fix(NavPoint(37.0103,127.0003),speed=5.0));assertTrue(t.state.nextInstruction.contains("도착"))
+    }
+    @Test fun headingHelpsDistinguishOppositeParallelRouteSegments() {
+        val points=listOf(NavPoint(37.0,127.0),NavPoint(37.01,127.0),NavPoint(37.01,127.0002),NavPoint(37.0,127.0002))
+        val r=NavigationGeometry.route(NavPlace("남쪽",points.last()),points,2300.0,300.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points.last(),"arrive")))
+        val north=NavigationGeometry.project(r,NavPoint(37.005,127.0001),heading=0.0).first
+        val south=NavigationGeometry.project(r,NavPoint(37.005,127.0001),heading=180.0).first
+        assertTrue(north<r.geometryMeters/2);assertTrue(south>r.geometryMeters/2)
     }
     @Test fun navigationLockOverridesSimulatedParkingAndSuppressesDemoHazards() {
         val e=UnifiedVehicleContextEngine({now});fun park(){e.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))}
