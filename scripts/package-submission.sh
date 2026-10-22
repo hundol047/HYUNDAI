@@ -4,7 +4,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/env.sh
-./gradlew :core:test :app:testDebugUnitTest :app:assembleRelease :app:lintDebug --console=plain
+# Keep release compilation and lint analysis in separate invocations (K2/UAST stability).
+./gradlew :core:test :app:testDebugUnitTest --console=plain
+./gradlew :app:assembleRelease --console=plain
+./gradlew :app:lintDebug --console=plain
 SIGNING_DIR="${CABINOS_SIGNING_DIR:-/workspace/.signing/cabinos-one}"
 mkdir -p "$SIGNING_DIR"
 chmod 700 "$SIGNING_DIR"

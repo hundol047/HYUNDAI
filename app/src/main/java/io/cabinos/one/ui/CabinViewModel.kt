@@ -23,6 +23,7 @@ class CabinViewModel @Inject constructor(
     private val navigation:AndroidNavigationProvider,
     private val audio:AmbientAudio,
     private val reminders:DepartureReminders,
+    private val nearbyPlaces:NearbyPlaces,
 ):ViewModel() {
     val state=engine.state
     val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
@@ -35,6 +36,17 @@ class CabinViewModel @Inject constructor(
     private val mutableDemoRunning=MutableStateFlow(false)
     val demoRunning=mutableDemoRunning.asStateFlow()
     private var demoJob:Job?=null
+    private val mutableNearbyStatus=MutableStateFlow("예시 장소 · 실제 지도 위의 데모 핀입니다.")
+    val nearbyStatus=mutableNearbyStatus.asStateFlow()
+    private val mutableNearbyBusy=MutableStateFlow(false)
+    val nearbyBusy=mutableNearbyBusy.asStateFlow()
+    private val mutableMapSelection=MutableStateFlow<String?>(null)
+    val mapSelection=mutableMapSelection.asStateFlow()
+    private var nearbyJob:Job?=null
+    private var lastNearbySearch=0L
+    private var nearbyGeneration=0
+    private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();mutableNearbyBusy.value=false}
+    fun mapUnavailable(){mutableNearbyStatus.value="지도 앱이나 브라우저가 설치되어 있지 않습니다."}
     private var foreground = true
     private val persistenceMutex = Mutex()
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
@@ -54,6 +66,9 @@ class CabinViewModel @Inject constructor(
                 var fingerprint:Any?=null
                 state.collect { s ->
                     if(!s.parkedAllowed || s.session?.status!=SessionStatus.RUNNING) { audio.stop();mutableAudio.value=null }
+                    if(!s.parkedAllowed || !s.networkAvailable || !s.locationAvailable) {
+                        cancelNearby()
+                    }
                     reminders.sync(s)
                     persistenceMutex.withLock {
                         val latest = state.value
@@ -111,11 +126,57 @@ class CabinViewModel @Inject constructor(
             demoJob?.cancel();mutableDemoRunning.value=false
             audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            location.stop()
+            location.stop();cancelNearby()
         } else {
             simulator.heartbeat()
             engine.acceptVehicle(simulator.samples.value)
             if (simulator.realMode) location.start()
+        }
+    }
+    fun mapSelect(id:String) { if(state.value.parkedAllowed)mutableMapSelection.value=id }
+    fun mapOrigin(position:MapPosition) {
+        if(!foreground || !state.value.parkedAllowed || !position.valid())return
+        cancelNearby();mutableMapSelection.value=null
+        engine.updateNearbyActivities(position,emptyList())
+        mutableNearbyStatus.value="기준점이 바뀌었습니다. 주변 검색을 눌러 실제 등록 장소를 불러오세요."
+    }
+    fun mapExamples() {
+        if(!state.value.parkedAllowed)return
+        cancelNearby();mutableMapSelection.value=null
+        engine.updateNearbyActivities(MapPosition(),DemoActivityRepository().activities())
+        mutableNearbyStatus.value="예시 장소 · 실제 지도 위의 데모 핀입니다."
+    }
+    fun mapLocate() {
+        if(!foreground || !state.value.parkedAllowed || !state.value.locationAvailable)return
+        cancelNearby();val generation=nearbyGeneration;mutableNearbyBusy.value=true;mutableNearbyStatus.value="기기 위치 확인 중…"
+        nearbyJob=viewModelScope.launch {
+            try {
+                val position=nearbyPlaces.locate()
+                if(foreground && state.value.parkedAllowed && state.value.locationAvailable) {
+                    if(position!=null) {engine.updateNearbyActivities(position,emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
+                    else mutableNearbyStatus.value="현재 위치를 얻지 못했습니다. 위치 권한·GPS를 확인하거나 지도 중심을 사용하세요."
+                }
+            } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
+        }
+    }
+    fun searchNearby() {
+        if(!foreground || !state.value.parkedAllowed || !state.value.networkAvailable || !state.value.locationAvailable || mutableNearbyBusy.value)return
+        val now=System.currentTimeMillis()
+        if(now-lastNearbySearch in 0..29_999) {mutableNearbyStatus.value="검색은 30초 간격으로 가능합니다. 잠시 후 다시 시도해 주세요.";return}
+        lastNearbySearch=now;val origin=state.value.activityOrigin
+        cancelNearby();val generation=nearbyGeneration
+        mutableNearbyBusy.value=true;mutableNearbyStatus.value="OpenStreetMap 주변 장소 검색 중…"
+        nearbyJob=viewModelScope.launch {
+            try {
+                val places=nearbyPlaces.search(origin)
+                if(foreground && state.value.parkedAllowed && state.value.networkAvailable && state.value.locationAvailable && state.value.activityOrigin==origin) {
+                    engine.updateNearbyActivities(origin,places);mutableMapSelection.value=places.firstOrNull()?.id
+                    mutableNearbyStatus.value=if(places.isEmpty())"이 기준점 주변에 등록된 장소가 없습니다. 지도 중심을 바꿔 검색해 보세요." else "OpenStreetMap 등록 장소 ${places.size}곳 · 영업 여부와 실제 경로는 외부 지도에서 확인하세요."
+                }
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                mutableNearbyStatus.value="장소 검색에 연결하지 못했습니다. 기존 표시를 유지합니다. 네트워크를 확인해 주세요."
+            } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
         }
     }
     fun notificationsAllowed() = reminders.permitted()
@@ -127,7 +188,7 @@ class CabinViewModel @Inject constructor(
             persistenceMutex.withLock {
                 if (!engine.clearPersonalData()) return@withLock
                 demoJob?.cancel();mutableDemoRunning.value=false
-                audio.stop();mutableAudio.value=null;reminders.cancel()
+                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null
                 try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
                 catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
             }

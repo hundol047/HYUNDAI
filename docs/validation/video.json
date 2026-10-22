@@ -10,15 +10,15 @@
     }
   ],
   "format": {
-    "duration": "56.583333",
-    "size": "4038835"
+    "duration": "68.291667",
+    "size": "4833885"
   },
   "path": "docs/video/CabinOS_ONE_demo.mp4",
-  "sha256": "e114199c581c1d6552b0b654ad8c95de0a767838d16f75e6fa708b97efd08c13",
+  "sha256": "20e2d089aff322b0432e94890e931a53fdff4e81feccf9188db9085981086fdb",
   "capture": {
     "type": "actual Chromium browser screencast; shared Kotlin simulation engine",
-    "frames": 179,
-    "seconds": 52.932,
+    "frames": 294,
+    "seconds": 60.736,
     "errors": []
   }
 }

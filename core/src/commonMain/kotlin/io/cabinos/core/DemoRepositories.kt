@@ -15,9 +15,9 @@ class DemoRoadHazardRepository : RoadHazardRepository {
 }
 class DemoActivityRepository : ActivityRecommendationRepository {
     override fun activities() = listOf(
-        NearbyActivity("cafe", "숲속 카페", "카페", 180, 600, "따뜻한 커피와 잠깐의 여유 · 예시 장소"),
-        NearbyActivity("walk", "그린 산책로", "산책", 120, 600, "가볍게 걷고 기분을 전환하세요 · 예시 장소"),
-        NearbyActivity("food", "오후의 테이블", "식당", 300, 1200, "여유롭게 즐기는 한 끼 · 예시 장소"),
-        NearbyActivity("shop", "라이프 스토어", "쇼핑", 420, 900, "일상에 작은 발견 · 예시 장소"),
+        NearbyActivity("cafe", "숲속 카페", "카페", 180, 600, "따뜻한 커피와 잠깐의 여유 · 예시 장소", latitude=37.3966,longitude=127.1105),
+        NearbyActivity("walk", "그린 산책로", "산책", 120, 600, "가볍게 걷고 기분을 전환하세요 · 예시 장소",latitude=37.3935,longitude=127.1098),
+        NearbyActivity("food", "오후의 테이블", "식당", 300, 1200, "여유롭게 즐기는 한 끼 · 예시 장소",latitude=37.3971,longitude=127.1144),
+        NearbyActivity("shop", "라이프 스토어", "쇼핑", 420, 900, "일상에 작은 발견 · 예시 장소",latitude=37.3908,longitude=127.1135),
     )
 }

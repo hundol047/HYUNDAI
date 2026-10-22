@@ -26,6 +26,7 @@ object AppModule {
     @Provides @Singleton fun reminders(@ApplicationContext context:Context)=DepartureReminders(context)
     @Provides @Singleton fun speech(@ApplicationContext context:Context)=AndroidSpeechProvider(context)
     @Provides @Singleton fun location(@ApplicationContext context:Context)=AndroidLocationProvider(context)
+    @Provides @Singleton fun nearby(@ApplicationContext context:Context)=NearbyPlaces(context)
     @Provides @Singleton fun navigation(@ApplicationContext context:Context,location:AndroidLocationProvider)=AndroidNavigationProvider(context,location)
     @Provides @Singleton fun sessions(dao:CabinDao):CabinSessionRepository=RoomCabinSessionRepository(dao)
     @Provides @Singleton fun audio(@ApplicationContext context:Context)=AmbientAudio(context)

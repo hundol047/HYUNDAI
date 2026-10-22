@@ -56,6 +56,13 @@ import java.util.*
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
+    val nearbyPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.mapLocate()}
+    val requestNearbyLocation:()->Unit = {
+        if(vm.state.value.parkedAllowed) {
+            if(context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED || context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)vm.mapLocate()
+            else nearbyPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))
+        }
+    }
     val requestNotifications:()->Unit = { if(android.os.Build.VERSION.SDK_INT>=33) notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS) else vm.refreshNotifications() }
     LaunchedEffect(s.parkedAllowed) { if(!s.parkedAllowed && route!="dashboard") nav.navigate("dashboard") {popUpTo("dashboard"){inclusive=true}} }
     CabinTheme {
@@ -65,7 +72,7 @@ import java.util.*
                 BrandHeader(s)
                 Box(Modifier.weight(1f)) {
                     if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={vm.navigation();assistantOpen=true})
-                    else ParkedNavigation(nav,vm,requestNotifications)
+                    else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
                 }
                 BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true})
             }
@@ -77,10 +84,11 @@ import java.util.*
         if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))})
     }
 }
-@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit) {
+@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit) {
     // Collect live timing inside destinations so a tick never rebuilds the navigation graph.
     NavHost(navController=nav,startDestination="dashboard") {
-        composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();ParkedDashboard(s,vm) }
+        composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();ParkedDashboard(s,vm,onMap={nav.navigate("nearby"){launchSingleTop=true}}) }
+        composable("nearby") {val s by vm.state.collectAsStateWithLifecycle();NearbyScreen(s,vm,onLocate)}
         composable("history") { val s by vm.state.collectAsStateWithLifecycle();HistoryScreen(s) }
         composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
     }
@@ -90,6 +98,7 @@ import java.util.*
         Icon(Icons.Outlined.Hexagon,"CabinOS ONE",tint=Mint,modifier=Modifier.size(30.dp))
         Spacer(Modifier.height(24.dp))
         RailItem(Icons.Outlined.SpaceDashboard,"홈",route=="dashboard",true){onNavigate("dashboard")}
+        RailItem(Icons.Outlined.Map,"지도",route=="nearby",parked){onNavigate("nearby")}
         RailItem(Icons.Outlined.History,"기록",route=="history",parked){onNavigate("history")}
         RailItem(Icons.Outlined.Tune,"설정",route=="settings",parked){onNavigate("settings")}
         RailItem(Icons.Outlined.MicNone,"음성",false,true,onAssistant)

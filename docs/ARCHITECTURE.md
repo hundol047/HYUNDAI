@@ -23,7 +23,7 @@ flowchart TD
 - A provider sends timestamped samples. Samples older than 5 seconds, future timestamps, negative speeds and NaN are rejected conservatively. The current app heartbeat is explicitly simulation telemetry; actual telemetry is **not** synthesized in real mode.
 - Every mutation runs on Android Main, or the single browser event loop. Coroutine collectors observe the same authoritative StateFlow. There are no independent StopSense/CabinOS departure timers.
 - Parking debounce is a timestamped candidate, not a UI toggle. Sensor recovery must pass it again. There is no automatic session resumption after drive interruption.
-- Running sessions use an absolute deadline bounded by `departure - preparation buffer - return time`. A shorter charge estimate truncates the deadline; a longer one does not silently extend the chosen session. Activity recommendations account for the complete round trip. Selecting a place reserves the return trip for an already-outside user. Starting an in-car session removes that return reservation.
+- Running sessions use an absolute deadline bounded by `departure - preparation buffer - return time`. A shorter charge estimate truncates the deadline; a longer one does not silently extend the chosen session. Activity recommendations account for the complete round trip. Selecting a place for an outing now reserves both outward and return walking time in the shared budget. The legacy `returnSeconds` field carries this full travel reserve. Starting an in-car session removes the outing reservation.
 - Manual departure overrides are marked user supplied; future charging updates use the earlier of the manual and charging deadlines. A repeated unchanged charging estimate does not slide departure forward.
 - On process recreation Room restores settings, deadlines and progress, **never** the physical parked state. A running session restores paused. Timers use elapsed wall-clock deadlines; a clock jump fails closed until parking is re-established. Foreground/background transitions explicitly invalidate parking and pause sessions. OS reminders are inexact reminders of a saved plan, not background vehicle monitoring or exact alarms.
 
@@ -50,3 +50,9 @@ Vehicle, charging and Pleos-specific navigation integrations remain unavailable 
 ## Android reminders
 
 An explicit unexported receiver handles an immutable PendingIntent carrying a one-use token. The alarm tracks the shared departure deadline minus the preparation buffer. Changed plans invalidate old tokens; driving cancels alarms; early, replayed or stale deliveries do not notify. Android 13+ notification permission and system notification settings are checked at delivery. The text refers only to a saved plan. Alarms can be delayed, and reboot/force-stop requires reopening the app.
+
+## Nearby maps (0.3.0)
+
+Android embeds osmdroid, and the browser bundles Leaflet locally. Both obtain point coordinates and estimated walking budgets from the common Kotlin state. User-chosen origin and selected POI are memory-only; location never establishes vehicle parking trust. Search adapters call Overpass only on a parked user's explicit request and reject invalid coordinates, distant points and duplicate results. Returning empty/error results does not silently invent actual places.
+
+Native search jobs and location callbacks use cancellation generations; the browser uses AbortController and generation checks. Motion/backgrounding prevents late results from modifying the plan. Map labels, markers and the list share category filters. Providers remain replaceable, and neither synthetic protocol tests nor offline UI rendering establish live provider or real GPS validation. See MAPS_KO.md and THIRD_PARTY.md.

@@ -19,7 +19,7 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
     private val notifications = context.getSystemService(NotificationManager::class.java)
 
     init {
-        notifications.createNotificationChannel(NotificationChannel(CHANNEL, "출발 준비 알림", NotificationManager.IMPORTANCE_DEFAULT).apply {
+        notifications.createNotificationChannel(NotificationChannel(CHANNEL, "복귀·출발 준비 알림", NotificationManager.IMPORTANCE_DEFAULT).apply {
             description = "저장한 출발 계획을 확인하도록 안내합니다. 알림은 기기 절전 상태에 따라 늦어질 수 있습니다."
         })
     }
@@ -30,7 +30,9 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         // Losing foreground/telemetry does not fabricate a new parking state or erase an already saved reminder.
         if (!state.parkedAllowed) return
         val departure = state.schedule.departureAtMs ?: run { cancel(); return }
-        val alert = departure - state.schedule.bufferSeconds * 1000
+        // Place plans reserve a full round trip. Once outside, allow the return half before preparation.
+        val returnWalk = if(state.selectedActivityId!=null)state.schedule.returnSeconds/2 else 0
+        val alert = departure - (state.schedule.bufferSeconds + returnWalk) * 1000
         if (alert <= clock()) {
             // A shortened plan must invalidate the previous future alarm as well.
             if (preferences.contains("token")) cancel()
@@ -62,7 +64,7 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         val open = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val notification = Notification.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_notification).setContentTitle("저장한 출발 계획을 확인하세요")
-            .setContentText("출발 준비 시간입니다. 현재 차량 상황과 일정을 확인해 주세요.")
+            .setContentText("계획한 복귀·출발 준비 시간입니다. 현재 차량 상황과 일정을 확인해 주세요.")
             .setContentIntent(open).setAutoCancel(true).setOnlyAlertOnce(true).build()
         return try { notifications.notify(NOTIFICATION_ID, notification); true } catch (_: SecurityException) { false }
     }

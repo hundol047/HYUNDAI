@@ -68,6 +68,12 @@ class PlatformTest {
         assertNull(c.getSharedPreferences("departure-reminder",Context.MODE_PRIVATE).getString("token",null))
         assertNull(shadowOf(c.getSystemService(AlarmManager::class.java)).nextScheduledAlarm)
     }
+    @Test fun selectedPlaceReminderAllowsWalkingBackBeforePreparation() {
+        val c=context();val reminders=DepartureReminders(c) {1_000_000L}
+        val departure=3_000_000L
+        reminders.sync(AppState(parkedAllowed=true,selectedActivityId="cafe",schedule=TimeOptimizer.calculate(departure,1_000_000,300,360)))
+        assertEquals(departure-480_000,shadowOf(c.getSystemService(AlarmManager::class.java)).nextScheduledAlarm!!.triggerAtTime)
+    }
     @Test fun drivingCancelsPreviouslyArmedReminder() {
         val c=context();val reminders=DepartureReminders(c) {1_000_000L}
         reminders.sync(AppState(parkedAllowed=true,schedule=TimeOptimizer.calculate(3_000_000,1_000_000,300)))

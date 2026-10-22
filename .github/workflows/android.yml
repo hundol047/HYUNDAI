@@ -20,7 +20,9 @@ jobs:
           test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug --console=plain
+      - run: ./gradlew :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug --console=plain
+      - run: ./gradlew :app:assembleRelease --console=plain
+      - run: ./gradlew :app:lintDebug --console=plain
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -41,6 +41,7 @@ data class NearbyActivity(
     val id: String, val name: String, val category: String, val oneWaySeconds: Long,
     val minimumActivitySeconds: Long, val description: String,
     val simulated: Boolean = true,
+    val latitude: Double? = null, val longitude: Double? = null,
 )
 data class ActivityOption(val activity: NearbyActivity, val usableSeconds: Long, val feasible: Boolean)
 data class ContextEvent(val id: Long, val name: String, val message: String, val timestampMs: Long)
@@ -51,6 +52,7 @@ data class AppState(
     val sample: VehicleSample? = null, val schedule: SharedSchedule = SharedSchedule(),
     val preferences: Preferences = Preferences(), val session: CabinSession? = null,
     val history: List<CabinSession> = emptyList(), val hazards: List<RankedHazard> = emptyList(),
+    val activityOrigin: MapPosition = MapPosition(), val selectedActivityId: String? = null, val nearbyRevision: Long = 0,
     val activities: List<ActivityOption> = emptyList(), val events: List<ContextEvent> = emptyList(),
     val message: String = "차량 상태를 확인하고 있습니다.",
     val networkAvailable: Boolean = true, val locationAvailable: Boolean = true,

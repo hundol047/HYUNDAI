@@ -34,6 +34,7 @@ jobs:
           cabin_server_pid=$!
           trap 'kill "$cabin_server_pid"' EXIT
           node scripts/web/verify.cjs
+          node scripts/web/verify-map.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

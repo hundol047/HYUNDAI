@@ -52,6 +52,15 @@ class ApplicationTest {
         compose.runOnIdle { vm.engine.tick() }
         compose.onNodeWithText("당신에게 맞춘 CabinOS").assertIsDisplayed()
         compose.onNodeWithText("홈").performClick()
+        compose.runOnIdle {vm.engine.setConnectivity(network=false)}
+        compose.onNodeWithText("지도").performClick()
+        compose.onNodeWithText("멈춘 시간, 어디에서 보낼까요?").assertIsDisplayed()
+        compose.onNodeWithText("숲속 카페").performScrollTo().performClick()
+        compose.onNodeWithText("이 장소로 계획").assertIsDisplayed().performClick()
+        assertEquals("cafe",vm.state.value.selectedActivityId)
+        capture("nearby")
+        compose.onNodeWithText("홈").performClick()
+        compose.runOnIdle {vm.engine.setConnectivity(network=true)}
         compose.runOnIdle { vm.start(SessionKind.FOCUS,25) }
         compose.onNodeWithText("나의 할 일").performScrollTo().assertIsDisplayed()
         capture("focus")

@@ -2,7 +2,9 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/env.sh
-./gradlew :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug --console=plain
+./gradlew :core:test :app:testDebugUnitTest :app:assembleDebug --console=plain
+./gradlew :app:assembleRelease --console=plain
+./gradlew :app:lintDebug --console=plain
 mkdir -p artifacts
 cp app/build/outputs/apk/debug/app-debug.apk artifacts/CabinOS_ONE_demo.apk
 cp app/build/outputs/apk/release/app-release-unsigned.apk artifacts/CabinOS_ONE_release_unsigned.apk

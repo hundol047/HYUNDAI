@@ -1,12 +1,16 @@
 {
   "name": "cabinos-web-validation",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "test": "node verify.cjs",
-    "record": "node record-demo.cjs"
+    "record": "node record-demo.cjs",
+    "test:map": "node verify-map.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
+  },
+  "dependencies": {
+    "leaflet": "1.9.4"
   }
 }

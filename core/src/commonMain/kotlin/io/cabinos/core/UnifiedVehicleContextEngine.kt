@@ -23,6 +23,7 @@ class UnifiedVehicleContextEngine(
     private var manualDepartureAtMs: Long? = null
     private var lastChargeEstimate: Long? = null
     private var returnSeconds = 0L
+    private var nearbyActivities: List<NearbyActivity>? = null
     private var scheduleLabel = "시간 미설정"
     private var lastTickMs = clock()
     private var eventId = 0L
@@ -96,7 +97,7 @@ class UnifiedVehicleContextEngine(
             echoRoadActive = physical == VehicleContext.DRIVING || physical == VehicleContext.STOPPED_IN_TRAFFIC,
             stopSenseActive = allowed, cabinActive = allowed, schedule = schedule, session = session, history = history,
             hazards = ranked, nowMs = now,
-            activities = if (allowed) TimeOptimizer.recommend(recommendations.activities(), schedule, old.preferences.preferredCategory) else emptyList(),
+            activities = if (allowed) TimeOptimizer.recommend(nearbyActivities ?: recommendations.activities(), schedule, old.preferences.preferredCategory) else emptyList(),
         )
         if (context != old.context) event("ContextChanged", "${contextLabel(old.context)} → ${contextLabel(context)}")
         if (allowed && context == VehicleContext.PREPARING_DEPARTURE && !departureAnnounced) {
@@ -117,10 +118,19 @@ class UnifiedVehicleContextEngine(
     fun selectActivity(id: String): Boolean {
         if (!parkedNow()) return reject()
         val option = state.value.activities.firstOrNull { it.activity.id == id && it.feasible } ?: return false
-        returnSeconds = option.activity.oneWaySeconds
-        event("ActivitySelected", "${option.activity.name} 선택 · 복귀 ${returnSeconds / 60}분을 확보했습니다."); tick(); return true
+        returnSeconds = 2 * option.activity.oneWaySeconds
+        mutable.value = state.value.copy(selectedActivityId=id)
+        event("ActivitySelected", "${option.activity.name} 선택 · 왕복 ${returnSeconds / 60}분을 확보했습니다."); tick(); return true
     }
-    fun stayInCabin() { if (parkedNow()) { returnSeconds = 0; tick() } }
+    fun updateNearbyActivities(origin:MapPosition,activities:List<NearbyActivity>):Boolean {
+        if(!parkedNow() || !origin.valid())return false
+        nearbyActivities=activities.filter { it.latitude!=null && it.longitude!=null && MapPosition(it.latitude,it.longitude).valid() && it.name.isNotBlank() && it.oneWaySeconds>=60 && it.minimumActivitySeconds>=0 }.distinctBy { it.id }.take(60)
+        val selected=nearbyActivities!!.firstOrNull { it.id==state.value.selectedActivityId }
+        returnSeconds=selected?.oneWaySeconds?.times(2) ?: 0
+        mutable.value=state.value.copy(activityOrigin=origin,selectedActivityId=selected?.id,nearbyRevision=state.value.nearbyRevision+1)
+        tick();return true
+    }
+    fun stayInCabin() { if (parkedNow()) { returnSeconds = 0;mutable.value=state.value.copy(selectedActivityId=null);tick() } }
     fun startSession(kind: SessionKind, minutes: Int): Boolean {
         if (!parkedNow()) return reject()
         val duration = min(minutes.coerceIn(1,120) * 60L, state.value.schedule.availableSeconds)
@@ -187,7 +197,7 @@ class UnifiedVehicleContextEngine(
             c.contains("충전") -> if (state.value.sample?.charging == true) "충전 예상 시간은 ${state.value.schedule.waitingSeconds / 60}분입니다. ${state.value.schedule.estimateLabel}입니다." else "현재 확인된 충전 정보가 없습니다."
             c.contains("전에알려") -> if (state.value.parkedAllowed) { updatePreferences(state.value.preferences.copy(departureBufferMinutes = minutes ?: 5)); "출발 ${state.value.preferences.departureBufferMinutes}분 전에 알려드릴게요." } else "주행 중에는 출발 설정을 변경할 수 없습니다."
             c.contains("출발") -> if (state.value.parkedAllowed) { endSession(); "세션을 정리했습니다. 차량 신호가 주행을 확인하면 자동 전환합니다." } else "EchoRoad가 주행 상태를 확인하고 있습니다."
-            c.contains("추천") || c.contains("쉴곳") -> if (state.value.parkedAllowed) state.value.activities.firstOrNull { it.feasible }?.let { "${it.activity.name}, 편도 ${it.activity.oneWaySeconds / 60}분입니다. 예시 장소입니다." } ?: "지금은 차량 안에서 짧게 쉬는 것을 추천합니다." else "주행 중에는 주변 활동 추천을 사용할 수 없습니다."
+            c.contains("추천") || c.contains("쉴곳") -> if (state.value.parkedAllowed) state.value.activities.firstOrNull { it.feasible }?.let { "${it.activity.name}, 편도 약 ${it.activity.oneWaySeconds / 60}분입니다. ${if(it.activity.simulated) "예시 장소입니다." else "OpenStreetMap 등록 장소이며 도보 추정입니다."}" } ?: "지금은 차량 안에서 짧게 쉬는 것을 추천합니다." else "주행 중에는 주변 활동 추천을 사용할 수 없습니다."
             c.contains("주행") -> "현재 ${contextLabel(state.value.context)} 상태입니다."
             else -> "위험 구간, 충전 시간, 집중·휴식 세션을 물어보세요."
         }
@@ -203,7 +213,8 @@ class UnifiedVehicleContextEngine(
         if (!parkedNow()) return reject()
         departureAtMs = null; manualDepartureAtMs = null; lastChargeEstimate = null
         sessionDeadlineMs = null; returnSeconds = 0; departureAnnounced = false; scheduleLabel = "시간 미설정"
-        mutable.value = state.value.copy(preferences = Preferences(), session = null, history = emptyList(), events = emptyList())
+        nearbyActivities=null
+        mutable.value = state.value.copy(preferences = Preferences(), session = null, history = emptyList(), events = emptyList(),activityOrigin=MapPosition(),selectedActivityId=null,nearbyRevision=state.value.nearbyRevision+1)
         tick()
         event("PersonalDataCleared", "할 일·세션 기록·개인 설정을 삭제했습니다.")
         return true

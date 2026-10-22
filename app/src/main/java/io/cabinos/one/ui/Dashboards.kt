@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import io.cabinos.core.*
 import kotlin.math.min
 
-@Composable fun ParkedDashboard(s:AppState,vm:CabinViewModel) {
+@Composable fun ParkedDashboard(s:AppState,vm:CabinViewModel,onMap:()->Unit) {
     var waitingOpen by remember { mutableStateOf(false) }
     val active=s.session?.let { it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED } == true
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(17.dp)) {
@@ -64,7 +64,7 @@ import kotlin.math.min
                     Column(horizontalAlignment=Alignment.End) {Text("출발 준비 여유",fontSize=10.sp,color=Muted);Spacer(Modifier.height(4.dp));Text("${s.preferences.departureBufferMinutes}분 확보",fontSize=13.sp,color=White)}
                 }
             }
-            ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight())
+            ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)
         if(active) ActiveSessionPanel(s,vm) else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
@@ -104,9 +104,9 @@ import kotlin.math.min
     }
 }
 
-@Composable private fun ActivityPanel(s:AppState,vm:CabinViewModel,modifier:Modifier) {
+@Composable private fun ActivityPanel(s:AppState,vm:CabinViewModel,modifier:Modifier,onMap:()->Unit) {
     SurfacePanel(modifier) {
-        Row(verticalAlignment=Alignment.CenterVertically) { SectionLabel("StopSense","주변에서 보내는 시간");Spacer(Modifier.weight(1f));Text("예시 장소",fontSize=10.sp,color=Amber) }
+        Row(verticalAlignment=Alignment.CenterVertically) { SectionLabel("StopSense","주변에서 보내는 시간");Spacer(Modifier.weight(1f));TextButton(onClick=onMap){Text("지도에서 보기",fontSize=12.sp,color=Mint)} }
         Spacer(Modifier.height(12.dp))
         Row(horizontalArrangement=Arrangement.spacedBy(5.dp)) {
             listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
@@ -118,17 +118,17 @@ import kotlin.math.min
             s.activities.take(3).forEach { option ->
                 val a=option.activity
                 val color=when(a.category){"카페"->Amber;"산책"->Mint;"식당"->Red;else->Purple}
-                Column(Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).background(Night.copy(alpha=.55f)).border(1.dp,Line,RoundedCornerShape(12.dp)).clickable(enabled=option.feasible){vm.engine.selectActivity(a.id)}.padding(12.dp)) {
+                Column(Modifier.weight(1f).clip(RoundedCornerShape(12.dp)).background(Night.copy(alpha=.55f)).border(1.dp,Line,RoundedCornerShape(12.dp)).clickable{vm.mapSelect(a.id);onMap()}.padding(12.dp)) {
                     Box(Modifier.fillMaxWidth().height(62.dp).background(Brush.linearGradient(listOf(color.copy(alpha=.15f),Panel)),RoundedCornerShape(9.dp)),contentAlignment=Alignment.Center) {
                         Icon(when(a.category){"카페"->Icons.Outlined.LocalCafe;"산책"->Icons.Outlined.Park;"식당"->Icons.Outlined.Restaurant;else->Icons.Outlined.Storefront},null,tint=color,modifier=Modifier.size(34.dp))
                     }
                     Spacer(Modifier.height(10.dp));Text(a.name,fontSize=13.sp,fontWeight=FontWeight.SemiBold,color=White,maxLines=1,overflow=TextOverflow.Ellipsis)
-                    Spacer(Modifier.height(5.dp));Text("도보 ${a.oneWaySeconds/60}분 · 왕복 반영",fontSize=10.sp,color=Muted,maxLines=1)
+                    Spacer(Modifier.height(5.dp));Text("도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM"}",fontSize=10.sp,color=Muted,maxLines=1)
                     Spacer(Modifier.height(5.dp));Text(if(option.feasible)"${option.usableSeconds/60}분 이용 가능  ↗" else "시간 부족",fontSize=10.sp,color=if(option.feasible)Mint else Amber)
                 }
             }
         }
-        Spacer(Modifier.height(12.dp));Text(if(s.schedule.returnSeconds>0)"선택한 장소의 복귀 ${s.schedule.returnSeconds/60}분을 CabinOS 시간에 반영했어요." else "왕복 이동과 출발 준비 시간을 먼저 확보해요.",color=Muted,fontSize=10.sp)
+        Spacer(Modifier.height(12.dp));Text(if(s.schedule.returnSeconds>0)"선택한 장소의 왕복 ${s.schedule.returnSeconds/60}분을 CabinOS 시간에 반영했어요." else "왕복 이동과 출발 준비 시간을 먼저 확보해요.",color=Muted,fontSize=10.sp)
     }
 }
 @Composable private fun ModeCard(title:String,description:String,minutes:Int,icon:androidx.compose.ui.graphics.vector.ImageVector,color:androidx.compose.ui.graphics.Color,modifier:Modifier,onStart:()->Unit) {
