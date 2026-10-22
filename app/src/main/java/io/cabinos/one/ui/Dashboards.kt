@@ -177,7 +177,7 @@ import kotlin.math.min
                 }
                 Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().background(Brush.verticalGradient(listOf(androidx.compose.ui.graphics.Color.Transparent,Night))).padding(20.dp)) {
                     Text(if(s.locationAvailable)"시뮬레이션 경로 · 실제 길 안내 아님" else "위치 사용 불가 · 경로 위험 안내 중단",color=if(s.locationAvailable)Muted else Amber,fontSize=11.sp)
-                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton(if(s.sample?.source==DataSource.VEHICLE && s.locationAvailable) "지도 앱" else "지도 미연동",onNavigation,color=Blue,enabled=s.sample?.source==DataSource.VEHICLE && s.locationAvailable,icon=Icons.Outlined.Navigation)}
+                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton("내비게이션",onNavigation,color=Blue,enabled=true,icon=Icons.Outlined.Navigation)}
                 }
             }
             Column(Modifier.weight(.34f).fillMaxHeight(),verticalArrangement=Arrangement.spacedBy(12.dp)) {

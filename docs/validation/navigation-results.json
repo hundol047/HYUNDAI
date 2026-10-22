@@ -1,0 +1,54 @@
+{
+  "type": "deterministic navigation UI/protocol tests with synthetic GPS/OSRM fixtures; not live provider or real-road validation",
+  "results": [
+    {
+      "name": "global address search is explicit, validates results and caches repeated queries",
+      "result": "passed"
+    },
+    {
+      "name": "actual road geometry and international destination enter shared Kotlin engine",
+      "result": "passed"
+    },
+    {
+      "name": "start enables GPS guidance, locks parked controls and suppresses simulated hazards",
+      "result": "passed"
+    },
+    {
+      "name": "GPS progression updates remaining distance rather than fixed demo counters",
+      "result": "passed"
+    },
+    {
+      "name": "sustained off-route GPS triggers throttled route recalculation",
+      "result": "passed"
+    },
+    {
+      "name": "GPS timeout stops guidance and holds safety lock",
+      "result": "passed"
+    },
+    {
+      "name": "NoRoute response cannot produce a fabricated line or start button",
+      "result": "passed"
+    },
+    {
+      "name": "Tokyo route uses worldwide coordinates without a Korea bounding box",
+      "result": "passed"
+    },
+    {
+      "name": "existing route and GPS can continue offline while online requests stop",
+      "result": "passed"
+    },
+    {
+      "name": "location denied does not substitute the demo Pangyo position",
+      "result": "passed"
+    },
+    {
+      "name": "late route response after driving starts cannot enable planning",
+      "result": "passed"
+    },
+    {
+      "name": "navigation layout fits mobile screen",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

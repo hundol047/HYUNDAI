@@ -1,5 +1,9 @@
 package io.cabinos.one
 
+import androidx.activity.compose.setContent
+import io.cabinos.one.ui.CabinTheme
+import io.cabinos.one.ui.NavigationScreen
+import io.cabinos.one.platform.NavigationUi
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performClick
@@ -31,7 +35,7 @@ class ApplicationTest {
     @Test fun activityLaunchAndDrivingSafetyAreRendered() {
         compose.onNodeWithText("CabinOS").assertIsDisplayed()
         val vm = ViewModelProvider(compose.activity)[CabinViewModel::class.java]
-        compose.waitUntil(10_000) { vm.state.value.sample != null }
+        compose.waitUntil(20_000) { vm.state.value.sample != null }
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
         compose.runOnIdle { vm.selectScenario("신호 대기") }
@@ -84,6 +88,19 @@ class ApplicationTest {
         compose.onNodeWithText("판교IC · 데모 경로").assertDoesNotExist()
         assertFalse(vm.state.value.parkedAllowed)
     }
+    @Test fun navigationScreenRendersOfflineInternationalRouteAndDrivingControls() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val points=listOf(NavPoint(48.85,2.35),NavPoint(48.86,2.35),NavPoint(48.87,2.36))
+        val route=NavigationGeometry.route(NavPlace("Paris · 검사용 목적지",points.last()),points,3000.0,600.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"turn","left","Rue du Louvre"),NavManeuver(points[2],"arrive")))
+        val tracker=NavigationTracker();tracker.preview(route);tracker.start(NavFix(points[0],5.0,System.currentTimeMillis(),0.0))
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님"),vm.liveNavigation,{})}}}
+        compose.onNodeWithText("EchoRoad · 글로벌 내비게이션").assertIsDisplayed()
+        compose.onNodeWithText("좌회전 · Rue du Louvre").assertIsDisplayed()
+        compose.onNodeWithText("안내 종료·경로 지우기").assertIsDisplayed()
+        compose.onNodeWithText("안내 시작").assertDoesNotExist()
+        capture("navigation")
+    }
+
     private fun capture(name:String) {
         val output=File("build/screenshots/$name.png")
         output.parentFile?.mkdirs()

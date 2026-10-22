@@ -112,6 +112,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         recognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR")
             .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM).putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true))
     }
+    fun stopSpeaking() {pending=null;tts?.stop()}
     fun cancelListening() { recognizer?.cancel();recognizer?.destroy();recognizer=null;pending=null;tts?.stop() }
     override fun close() { cancelListening();tts?.shutdown() }
 }

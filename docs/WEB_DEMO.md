@@ -29,3 +29,7 @@ node scripts/web/record-demo.cjs
 브라우저 검사는 Playwright와 Chromium이 필요하며 영상 촬영은 FFmpeg도 필요합니다. 시스템 Chromium이 없으면 `scripts/web`에서 `npx playwright install chromium`을 실행하세요. `CABIN_CHROME`으로 별도 Chromium 실행 파일을 지정할 수 있습니다. 공개 미리보기는 로컬 임시 서버 대신 GitHub Pages를 사용합니다.
 
 다운로드는 `apk/퓨처랩스_CabinOS_ONE_release.apk`의 바이트를 그대로 복사합니다. 검증 스크립트는 내려받은 APK의 SHA-256이 저장소 파일과 같은지 확인합니다. 새 APK를 패키징한 다음에는 웹 사이트도 다시 빌드해야 합니다.
+
+## 글로벌 내비게이션 (0.4.0)
+
+왼쪽 `내비`에서 국가 제한 없는 Nominatim 주소 검색·위경도 목적지, OSRM 자동차 경로, 실제 브라우저 GPS 기반 주행 안내를 사용할 수 있도록 구현했습니다. 공유 Kotlin NavigationTracker가 회전/진행/도착/재탐색을 계산합니다. HTTPS 위치 권한과 네트워크가 필요합니다. 차량/위험 예시와 실제 위치 경로를 구분하며, 현재 클라우드의 실제 제공자 접속은 차단돼 미검증입니다. 새 영상의 내비게이션 장면은 합성 서버 응답/GPS를 명시해서 녹화합니다. [사용법과 제한](NAVIGATION_KO.md)을 확인하세요.

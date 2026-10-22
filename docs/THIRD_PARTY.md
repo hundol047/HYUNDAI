@@ -7,3 +7,8 @@
 - **Overpass API** — https://overpass-api.de/ . 사용자 요청 시 주변 공개 POI를 조회합니다. 이 서비스는 앱 자체의 서버가 아니며, 위치 기준점이 요청에 포함됩니다.
 
 프로젝트의 판교 예시 장소 이름과 핀은 시연용 데이터이며 실제 매장 목록이나 실제 API 응답을 복제한 것이 아닙니다. 실제 OSM 조회 결과와 구분합니다.
+
+- **Nominatim** — explicit worldwide destination search; OpenStreetMap data attribution applies. Public service policy: https://operations.osmfoundation.org/policies/nominatim/ . No autocomplete/systematic enumeration; queries are cached in memory and throttled. Replace with a self-hosted/contract service before scaled deployment.
+- **OSRM** — driving-route geometry and maneuvers from the public demonstration service https://router.project-osrm.org/ . Project: https://project-osrm.org/ . No OSRM binary/source is embedded in the APK. Public demo has no application SLA; compatible HTTPS endpoint is configurable. OSM roads and access restrictions vary by region.
+
+Navigation video/UI fixtures are synthetic protocol/GPS data and are explicitly described as tests, not captured live service responses or actual road driving.

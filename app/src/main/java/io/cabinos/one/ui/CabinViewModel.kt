@@ -24,6 +24,7 @@ class CabinViewModel @Inject constructor(
     private val audio:AmbientAudio,
     private val reminders:DepartureReminders,
     private val nearbyPlaces:NearbyPlaces,
+    val liveNavigation:LiveNavigation,
 ):ViewModel() {
     val state=engine.state
     val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
@@ -59,7 +60,7 @@ class CabinViewModel @Inject constructor(
             launch { simulator.samples.collect { if (foreground) engine.acceptVehicle(it) } }
             launch { while(isActive) {
                 delay(1000)
-                if (foreground) { simulator.heartbeat();engine.tick() }
+                if (foreground) { simulator.heartbeat();engine.tick();liveNavigation.tick() }
                 if (!audio.playing) mutableAudio.value=null
             } }
             launch {
@@ -120,6 +121,7 @@ class CabinViewModel @Inject constructor(
         if(mutableAudio.value==preset) {audio.stop();mutableAudio.value=null} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
     }
     fun setForeground(active: Boolean) {
+        liveNavigation.setForeground(active)
         if (foreground == active) return
         foreground=active
         if (!active) {
@@ -188,7 +190,7 @@ class CabinViewModel @Inject constructor(
             persistenceMutex.withLock {
                 if (!engine.clearPersonalData()) return@withLock
                 demoJob?.cancel();mutableDemoRunning.value=false
-                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null
+                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
                 try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
                 catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
             }
@@ -212,5 +214,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { audio.stop();location.stop();speech.close();super.onCleared() }
+    override fun onCleared() { audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

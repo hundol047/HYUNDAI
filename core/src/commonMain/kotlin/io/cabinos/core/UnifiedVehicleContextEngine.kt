@@ -29,6 +29,12 @@ class UnifiedVehicleContextEngine(
     private var eventId = 0L
     private var departureAnnounced = false
 
+    private var navigationLock=false
+    fun setNavigationLock(locked:Boolean) {
+        if(navigationLock==locked)return
+        navigationLock=locked;parkCandidateAt=null;tick()
+    }
+
     fun acceptVehicle(sample: VehicleSample) {
         val now = clock()
         val previousSample = state.value.sample
@@ -64,7 +70,7 @@ class UnifiedVehicleContextEngine(
         lastTickMs = now
         val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel)
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
-        val physical = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
+        val physical = if(navigationLock)VehicleContext.DRIVING else decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
         val allowed = physical == VehicleContext.PARKED || physical == VehicleContext.CHARGING
         var session = old.session
         if (!allowed && session?.status == SessionStatus.RUNNING) {
@@ -89,7 +95,7 @@ class UnifiedVehicleContextEngine(
             session?.status == SessionStatus.RUNNING && session.kind == SessionKind.RELAX -> VehicleContext.RESTING
             else -> physical
         }
-        val ranked = if (old.sample?.source == DataSource.SIMULATION && old.locationAvailable) ranker.rank(hazards.events(now), old.route, now) else emptyList()
+        val ranked = if (!navigationLock && old.sample?.source == DataSource.SIMULATION && old.locationAvailable) ranker.rank(hazards.events(now), old.route, now) else emptyList()
         val history = if (session?.status == SessionStatus.COMPLETED && old.history.none { it.id == session.id })
             (listOf(session) + old.history).take(100) else old.history
         mutable.value = mutable.value.copy(

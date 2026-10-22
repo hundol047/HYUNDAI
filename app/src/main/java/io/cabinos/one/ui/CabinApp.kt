@@ -32,6 +32,8 @@ import java.util.*
 
 @Composable fun CabinApp(vm:CabinViewModel=hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
+    var navigationOpen by remember { mutableStateOf(false) }
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle,vm) {
         val observer=LifecycleEventObserver { _,event ->
@@ -44,8 +46,8 @@ import java.util.*
     }
     val context=LocalContext.current
     val view=LocalView.current
-    DisposableEffect(view,s.parkedAllowed,s.session?.status) {
-        view.keepScreenOn=s.parkedAllowed && s.session?.status==SessionStatus.RUNNING
+    DisposableEffect(view,s.parkedAllowed,s.session?.status,navigationState.guidance.active) {
+        view.keepScreenOn=navigationState.guidance.active || (s.parkedAllowed && s.session?.status==SessionStatus.RUNNING)
         onDispose { view.keepScreenOn=false }
     }
     val nav=rememberNavController()
@@ -56,6 +58,13 @@ import java.util.*
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
+    val navigationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.liveNavigation.locate()}
+    val requestNavigationLocation:()->Unit = {
+        if(vm.state.value.parkedAllowed) {
+            if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)vm.liveNavigation.locate()
+            else navigationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))
+        }
+    }
     val nearbyPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.mapLocate()}
     val requestNearbyLocation:()->Unit = {
         if(vm.state.value.parkedAllowed) {
@@ -67,11 +76,12 @@ import java.util.*
     LaunchedEffect(s.parkedAllowed) { if(!s.parkedAllowed && route!="dashboard") nav.navigate("dashboard") {popUpTo("dashboard"){inclusive=true}} }
     CabinTheme {
         Row(Modifier.fillMaxSize().background(Brush.linearGradient(listOf(Night,androidx.compose.ui.graphics.Color(0xFF0B1720),Night)))) {
-            NavigationRailPanel(route,s.parkedAllowed,onNavigate={ nav.navigate(it){launchSingleTop=true} },onAssistant={assistantOpen=true},onDemo={simulatorOpen=true})
+            NavigationRailPanel(if(navigationOpen||navigationState.guidance.active)"navigation" else route,s.parkedAllowed,onNavigate={ if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} },onAssistant={assistantOpen=true},onDemo={simulatorOpen=true})
             Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=24.dp)) {
                 BrandHeader(s)
                 Box(Modifier.weight(1f)) {
-                    if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={vm.navigation();assistantOpen=true})
+                    if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
+                    else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true})
                     else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
                 }
                 BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true})
@@ -98,6 +108,7 @@ import java.util.*
         Icon(Icons.Outlined.Hexagon,"CabinOS ONE",tint=Mint,modifier=Modifier.size(30.dp))
         Spacer(Modifier.height(24.dp))
         RailItem(Icons.Outlined.SpaceDashboard,"홈",route=="dashboard",true){onNavigate("dashboard")}
+        RailItem(Icons.Outlined.Navigation,"내비",route=="navigation",true){onNavigate("navigation")}
         RailItem(Icons.Outlined.Map,"지도",route=="nearby",parked){onNavigate("nearby")}
         RailItem(Icons.Outlined.History,"기록",route=="history",parked){onNavigate("history")}
         RailItem(Icons.Outlined.Tune,"설정",route=="settings",parked){onNavigate("settings")}

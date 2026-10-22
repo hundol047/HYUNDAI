@@ -7,6 +7,33 @@ private val hazardRepository = DemoRoadHazardRepository().apply { seed(platformN
 private val engine = UnifiedVehicleContextEngine(hazards = hazardRepository)
 private var sample = VehicleSample(gear=Gear.PARK,parkingReliable=true,charging=true,chargeRemainingSeconds=2400,timestampMs=platformNowMillis())
 private var scenario = "충전"
+private val navigator=NavigationTracker()
+private var navFix:NavFix?=null
+private var navRevision=0
+private var navSafetyHeld=false
+private var stationarySince:Long?=null
+private fun navSnapshot():String {
+    val g=navigator.state
+    return JSON.stringify(json("active" to g.active,"tracking" to g.tracking,"arrived" to g.arrived,"hasRoute" to (g.route!=null),
+        "revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
+        "instruction" to g.nextInstruction,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
+        "fix" to navFix?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
+}
+private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingRoute {
+    val json=JSON.parse<dynamic>(raw)
+    require(json.code=="Ok") {"자동차로 연결되는 경로가 없습니다."}
+    val route=json.routes[0]
+    val coordinates=route.geometry.coordinates as Array<dynamic>
+    require(coordinates.size in 2..150_000)
+    val points=coordinates.map {NavPoint(it[1] as Double,it[0] as Double)}
+    val maneuvers=mutableListOf<NavManeuver>()
+    for(leg in route.legs as Array<dynamic>)for(step in leg.steps as Array<dynamic>) {
+        require(maneuvers.size<10_000)
+        val m=step.maneuver
+        maneuvers.add(NavManeuver(NavPoint(m.location[1] as Double,m.location[0] as Double),m.type as String,m.modifier as? String ?: "",step.name as? String ?: "",(m.exit as? Double)?.toInt()))
+    }
+    return NavigationGeometry.route(NavPlace(name.take(240),NavPoint(lat,lon)),points,route.distance as Double,route.duration as Double,maneuvers)
+}
 
 private fun select(name: String) {
     scenario=name
@@ -45,7 +72,45 @@ private fun snapshot(): String {
 fun main() {
     val bridge=js("({})")
     bridge.state={ snapshot() }
+    bridge.navState={navSnapshot()}
+    bridge.navGeometry={JSON.stringify(navigator.state.route?.points?.map {arrayOf(it.latitude,it.longitude)}?.toTypedArray())}
+    bridge.navFix={lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double ->
+        val f=NavFix(NavPoint(lat,lon),accuracy,timestamp.toLong(),if(speed.isFinite()&&speed>=0)speed else null)
+        if(navigator.usable(f)) {
+            navFix=f
+            if(f.speedMps?.let {it>=2}==true){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
+            if(navSafetyHeld&&!navigator.state.active) {
+                if(f.speedMps?.let {it in 0.0..0.5}==true) {
+                    if(stationarySince==null)stationarySince=platformNowMillis()
+                    if(platformNowMillis()-(stationarySince ?: platformNowMillis())>=5000){navSafetyHeld=false;engine.setNavigationLock(false)}
+                } else stationarySince=null
+            }
+        }
+        navigator.update(f);navSnapshot()
+    }
+    bridge.navPreview={raw:String,name:String,lat:Double,lon:Double ->
+        try {
+            require(engine.state.value.parkedAllowed&&!navigator.state.active)
+            val r=parseNavRoute(raw,name,lat,lon)
+            val f=navFix
+            require(f!=null&&navigator.usable(f)&&NavigationGeometry.distance(f.point,r.points.first())<=1000) {"출발 위치 근처 자동차 경로를 확인하세요."}
+            navigator.preview(r);navRevision++;""
+        }catch(e:Exception){e.message ?: "경로 응답을 확인하세요."}
+    }
+    bridge.navReplace={raw:String ->
+        try {val d=navigator.state.route!!.destination;val r=parseNavRoute(raw,d.name,d.point.latitude,d.point.longitude);val ok=navigator.replaceRoute(r);if(ok)navRevision++;ok}catch(_:Exception){false}
+    }
+    bridge.navStart={
+        val f=navFix
+        val started=engine.state.value.parkedAllowed&&f!=null&&navigator.start(f)
+        if(started){navSafetyHeld=true;stationarySince=null;engine.setNavigationLock(true)}
+        started
+    }
+    bridge.navReroute={navigator.takeReroute()}
+    bridge.navBackground={navFix=null;navigator.suspendTracking()}
+    bridge.navStop={navigator.stop();navRevision++;if(!navSafetyHeld){navFix=null;engine.setNavigationLock(false)}}
     bridge.tick={
+        navigator.tick()
         sample=sample.copy(timestampMs=platformNowMillis())
         engine.acceptVehicle(sample)
         snapshot()
@@ -75,7 +140,7 @@ fun main() {
     bridge.location={ enabled:Boolean -> engine.setConnectivity(location=enabled) }
     bridge.route={ alternate:Boolean -> engine.updateRoute(Route(if(alternate)"demo-detour" else "demo-pangyo")) }
     bridge.preferences={ focus:Int,relax:Int,buffer:Int -> engine.updatePreferences(engine.state.value.preferences.copy(focusMinutes=focus,relaxMinutes=relax,departureBufferMinutes=buffer)) }
-    bridge.clear={ engine.clearPersonalData() }
+    bridge.clear={ if(engine.clearPersonalData()){navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationarySince=null;engine.setNavigationLock(false)} }
     bridge.background={ engine.invalidateTelemetry("브라우저를 벗어나 세션을 일시정지했습니다.") }
     window.asDynamic().CabinOS=bridge
     select("충전")

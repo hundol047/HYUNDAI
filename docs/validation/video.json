@@ -10,15 +10,15 @@
     }
   ],
   "format": {
-    "duration": "68.291667",
-    "size": "4833885"
+    "duration": "84.625000",
+    "size": "5966424"
   },
   "path": "docs/video/CabinOS_ONE_demo.mp4",
-  "sha256": "20e2d089aff322b0432e94890e931a53fdff4e81feccf9188db9085981086fdb",
+  "sha256": "9db77dab9754df9bb577edffb20624a758e1cafba6544f5ee1356758adf0d334",
   "capture": {
-    "type": "actual Chromium browser screencast; shared Kotlin simulation engine",
-    "frames": 294,
-    "seconds": 60.736,
+    "type": "actual Chromium browser screencast; shared Kotlin engine; navigation chapter uses explicitly labeled synthetic provider/GPS fixtures, not live road or device footage",
+    "frames": 321,
+    "seconds": 78.499,
     "errors": []
   }
 }
