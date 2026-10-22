@@ -1,0 +1,20 @@
+{
+  "type": "Python protocol fixtures and loopback HTTP handler checks, not live Kakao verification",
+  "command": "python3 -m unittest discover -s server -v",
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "cases": [
+    "test_duplicate_queries_are_cached_and_excluded_ids_are_forwarded",
+    "test_empty_kakao_nearby_query_can_use_world_search_in_neighbouring_regions",
+    "test_expired_location_query_cache_is_removed_without_another_search",
+    "test_invalid_input_cannot_trigger_any_upstream_call",
+    "test_korean_nearby_uses_kakao_and_keeps_the_key_in_the_upstream_header",
+    "test_missing_gateway_authentication_is_rejected_before_provider_access",
+    "test_provider_errors_do_not_disclose_headers_or_internal_error_text",
+    "test_six_result_pages_cross_the_kakao_fifteen_result_boundary",
+    "test_world_queries_do_not_get_restricted_to_korea_even_with_kakao_configured"
+  ],
+  "kakaoLiveVerified": false
+}

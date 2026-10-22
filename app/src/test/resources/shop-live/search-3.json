@@ -1,0 +1,271 @@
+[
+  {
+    "place_id": 222634558,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 198561926,
+    "lat": "37.5667893",
+    "lon": "126.9784204",
+    "category": "amenity",
+    "type": "townhall",
+    "place_rank": 30,
+    "importance": 0.42336934103650703,
+    "addresstype": "amenity",
+    "name": "서울특별시청",
+    "display_name": "서울특별시청, 110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국",
+    "address": {
+      "amenity": "서울특별시청",
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04524",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": {
+      "building": "yes",
+      "wikidata": "Q623908",
+      "wikipedia": "en:Seoul City Hall",
+      "check_date": "2023-11-30",
+      "government": "administrative",
+      "roof:shape": "round",
+      "start_date": "2012-08-27",
+      "wheelchair": "yes",
+      "addr:city:en": "Seoul",
+      "full_name:zh": "首爾特別市政廳",
+      "roof:material": "glass",
+      "townhall:type": "city",
+      "addr:street:en": "Sejong-daero",
+      "building:levels": "12",
+      "building:material": "glass"
+    },
+    "namedetails": {
+      "name": "서울특별시청",
+      "name:en": "Seoul City Hall",
+      "name:ja": "ソウル特別市庁",
+      "name:ko": "서울특별시청",
+      "name:zh": "首爾市政廳",
+      "alt_name:ko": "서울시청"
+    },
+    "boundingbox": [
+      "37.5664640",
+      "37.5669168",
+      "126.9778176",
+      "126.9790267"
+    ]
+  },
+  {
+    "place_id": 222612647,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "relation",
+    "osm_id": 10757525,
+    "lat": "37.5663541",
+    "lon": "126.9778834",
+    "category": "amenity",
+    "type": "library",
+    "place_rank": 30,
+    "importance": 0.37958691803318917,
+    "addresstype": "amenity",
+    "name": "서울도서관",
+    "display_name": "서울도서관, 110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국",
+    "address": {
+      "amenity": "서울도서관",
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04524",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": {
+      "height": "30",
+      "building": "civic",
+      "wikidata": "Q12601204",
+      "wikipedia": "en:Seoul Metropolitan Library",
+      "wheelchair": "limited",
+      "opening_hours": "Tu-Fr 09:00-21:00; Sa,Su 09:00-18:00; Mo, PH off; ",
+      "addr:street:en": "Sejong-daero",
+      "building:colour": "#C4B598",
+      "building:levels": "4",
+      "addr:street:ko-Latn": "Sejong-daero"
+    },
+    "namedetails": {
+      "name": "서울도서관",
+      "name:en": "Seoul Metropolitan Library",
+      "name:ja": "ソウル図書館",
+      "name:ko": "서울도서관",
+      "name:zh": "首尔图书馆"
+    },
+    "boundingbox": [
+      "37.5661771",
+      "37.5665527",
+      "126.9774192",
+      "126.9783334"
+    ]
+  },
+  {
+    "place_id": 222737157,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 13406788959,
+    "lat": "37.5663890",
+    "lon": "126.9778476",
+    "category": "amenity",
+    "type": "library_dropoff",
+    "place_rank": 30,
+    "importance": 7.29800869763793e-05,
+    "addresstype": "amenity",
+    "name": "",
+    "display_name": "110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국",
+    "address": {
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04524",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": null,
+    "namedetails": null,
+    "boundingbox": [
+      "37.5663390",
+      "37.5664390",
+      "126.9777976",
+      "126.9778976"
+    ]
+  },
+  {
+    "place_id": 223008936,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 414685879,
+    "lat": "37.5668221",
+    "lon": "126.9787974",
+    "category": "amenity",
+    "type": "social_facility",
+    "place_rank": 30,
+    "importance": 7.29800869763793e-05,
+    "addresstype": "amenity",
+    "name": "서울시시민봉사실(무교동)",
+    "display_name": "서울시시민봉사실(무교동), 110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국",
+    "address": {
+      "amenity": "서울시시민봉사실(무교동)",
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04524",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": {
+      "operator": "서울특별시",
+      "wheelchair": "yes",
+      "social_facility": "outreach"
+    },
+    "namedetails": {
+      "name": "서울시시민봉사실(무교동)",
+      "name:en": "Seoul Civic Volunteer Center(Mugyodong)",
+      "name:ja": "ソウル市市民奉仕室",
+      "name:ko": "서울시시민봉사실(무교동)",
+      "name:zh": "首尔市市民奉实寺",
+      "name:ko-Latn": "Seoulsisiminbongsasil(Mugyodong)"
+    },
+    "boundingbox": [
+      "37.5667721",
+      "37.5668721",
+      "126.9787474",
+      "126.9788474"
+    ]
+  },
+  {
+    "place_id": 223024932,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 11841458567,
+    "lat": "37.5664649",
+    "lon": "126.9775105",
+    "category": "tourism",
+    "type": "viewpoint",
+    "place_rank": 30,
+    "importance": 7.29800869763793e-05,
+    "addresstype": "tourism",
+    "name": "",
+    "display_name": "110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국",
+    "address": {
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04524",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": {
+      "level": "5"
+    },
+    "namedetails": null,
+    "boundingbox": [
+      "37.5664149",
+      "37.5665149",
+      "126.9774605",
+      "126.9775605"
+    ]
+  },
+  {
+    "place_id": 417432068,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 13823586201,
+    "lat": "37.5665253",
+    "lon": "126.9787754",
+    "category": "amenity",
+    "type": "cafe",
+    "place_rank": 30,
+    "importance": 7.29800869763793e-05,
+    "addresstype": "amenity",
+    "name": "Happy Plus Cafe",
+    "display_name": "Happy Plus Cafe, 110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04520, 대한민국",
+    "address": {
+      "amenity": "Happy Plus Cafe",
+      "house_number": "110",
+      "road": "세종대로",
+      "quarter": "태평로1가",
+      "suburb": "명동",
+      "borough": "중구",
+      "city": "서울특별시",
+      "ISO3166-2-lvl4": "KR-11",
+      "postcode": "04520",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": null,
+    "namedetails": {
+      "name:en": "Happy Plus Cafe"
+    },
+    "boundingbox": [
+      "37.5664753",
+      "37.5665753",
+      "126.9787254",
+      "126.9788254"
+    ]
+  }
+]

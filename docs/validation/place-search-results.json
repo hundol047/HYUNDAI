@@ -1,0 +1,54 @@
+{
+  "type": "deterministic shop/gateway/UI protocol checks with synthetic data and recorded real OSRM failures; not live commercial provider verification",
+  "results": [
+    {
+      "name": "shop branches at the same building keep separate identities, addresses and details",
+      "result": "passed"
+    },
+    {
+      "name": "shop selection plots its real returned point without requiring GPS or inventing a route",
+      "result": "passed"
+    },
+    {
+      "name": "selected shop destination uses GPS and provider road geometry for guidance",
+      "result": "passed"
+    },
+    {
+      "name": "guidance blocks shop queries, more results and external search actions",
+      "result": "passed"
+    },
+    {
+      "name": "explicit more-results requests exclude old identifiers and stop at eighteen",
+      "result": "passed"
+    },
+    {
+      "name": "nearby shop search uses explicit bounds and rejects distant city results",
+      "result": "passed"
+    },
+    {
+      "name": "missing shops clear old results and offer an explicitly external search",
+      "result": "passed"
+    },
+    {
+      "name": "private search gateway receives only its access token and never forwards it to routing or storage",
+      "result": "passed"
+    },
+    {
+      "name": "a full provider page outside the nearby circle still permits the next explicit page",
+      "result": "passed"
+    },
+    {
+      "name": "offline shop selection keeps the returned pin and does not invent an online route",
+      "result": "passed"
+    },
+    {
+      "name": "recorded real cross-ocean OSRM success is rejected because its origin is thousands of kilometres away",
+      "result": "passed"
+    },
+    {
+      "name": "route provider HTTP rejection leaves the selected shop pin without a fabricated road",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

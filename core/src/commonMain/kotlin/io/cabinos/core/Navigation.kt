@@ -6,7 +6,7 @@ import kotlin.math.*
 data class NavPoint(val latitude:Double,val longitude:Double) {
     fun valid()=latitude.isFinite()&&longitude.isFinite()&&latitude in -90.0..90.0&&longitude in -180.0..180.0
 }
-data class NavPlace(val name:String,val point:NavPoint)
+data class NavPlace(val name:String,val point:NavPoint,val id:String="",val address:String="",val category:String="",val phone:String="",val website:String="",val openingHours:String="",val source:String="")
 data class NavManeuver(val point:NavPoint,val type:String,val modifier:String="",val road:String="",val exit:Int?=null)
 data class NavStep(val atMeters:Double,val instruction:String,val type:String,val symbol:String="↑")
 data class DrivingRoute(val destination:NavPlace,val points:List<NavPoint>,val cumulative:List<Double>,val distanceMeters:Double,val durationSeconds:Double,val steps:List<NavStep>) {
@@ -21,6 +21,9 @@ data class Guidance(
     val rerouteRequired:Boolean=false,val status:String="전 세계 목적지 검색 · OSM 도로 데이터",
 )
 object NavigationGeometry {
+    fun validateOrigin(route:DrivingRoute,origin:NavPoint) {
+        require(origin.valid()&&distance(origin,route.points.first())<=1000) {"출발 위치 근처에 연결 가능한 자동차 도로가 없습니다. 도로 접근 지점을 확인하세요."}
+    }
     private fun delta(degrees:Double)=((degrees+540)%360)-180
     fun distance(a:NavPoint,b:NavPoint):Double {
         val p1=a.latitude*PI/180;val p2=b.latitude*PI/180

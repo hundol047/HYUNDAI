@@ -1,0 +1,11 @@
+{
+  "type": "real running loopback gateway and real upstream Nominatim response; ephemeral gateway token retained only in memory",
+  "result": "passed",
+  "httpStatus": 200,
+  "places": 6,
+  "firstName": "스타벅스",
+  "sha256": "d62404ce89fa5b4e4e45b8079fac405018319784c8800e158bb8d4db7d455711",
+  "upstream": "Nominatim HTTPS with inherited proxy/TLS verification",
+  "commercialKakaoLiveVerified": false,
+  "deployment": "internal HTTP loopback validation only; public HTTPS deployment not performed"
+}

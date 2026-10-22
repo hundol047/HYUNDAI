@@ -1,13 +1,13 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.6.0`.
+팀 **퓨처랩스** · CabinOS ONE `0.7.0`.
 
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **77개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **26개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **83개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **32개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 4건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3) |
@@ -15,7 +15,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **103개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·지도 조작/성능 8개, 총 55개가 통과했습니다.** 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **115개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·가게 검색 12개·지도 조작/성능 8개, 총 67개가 통과했습니다.** Python 선택적 검색 서버는 별도 [9개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 
@@ -34,7 +34,9 @@ node scripts/web/verify.cjs
 node scripts/web/verify-map.cjs
 node scripts/web/verify-navigation.cjs
 node scripts/web/verify-appearance.cjs
+node scripts/web/verify-place-search.cjs
 node scripts/web/verify-map-performance.cjs
+python3 -m unittest discover -s server -v
 node scripts/web/record-demo.cjs
 ```
 
@@ -91,3 +93,13 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 ## 0.6.0 지도 조작·성능 재검토
 
 [지도 성능 점검](MAP_PERFORMANCE_KO.md)에 6개 대륙 7도시의 실제 검색/경로 14건과 타일 1건, 실제 Chromium 확대/축소/드래그, 합성 100,000개 지점 경로의 CPU 4배 부하 비교를 기록했습니다. GPS마다 경로 Polyline을 다시 만들던 Android, 웹의 반복 중심 이동·DOM 재생성·ResizeObserver 누수와 확대 배율 덮어쓰기를 수정했습니다. 두 손가락 줌은 브라우저 터치 에뮬레이션으로 검증했으며 Android 실기기 FPS 검증은 아닙니다. 0.5.0 Actions 링크는 이전 소스의 근거입니다.
+
+## 0.7.0 상호·경로 실제 표본과 오류 보완
+
+[가게 검색 설명](PLACE_SEARCH_KO.md)에 실제 11개 검색 사례(9개 결과 있음·알려진 영어 상호 1개 누락·존재하지 않는 상호 대조 1개 빈 결과)와 12개 경로 요청(유효 미리보기 10개·과도한 출발점 이동 1개·HTTP400 요청 거부 1개)을 구분했습니다. [요약 JSON](validation/place-route-coverage.json), [실제 브라우저 결과](validation/place-search-live-browser.json), [자체 서버 실제 Nominatim 중계](validation/place-gateway-live.json). GPS는 합성 입력이고 실기기/도로 주행은 아닙니다. 카카오 API 실서버는 키 미등록으로 미검증입니다.
+
+상호 ID·주소·제공되는 전화/영업시간/상세 링크, 같은 건물 지점 구분, 명시적 주변 반경·더 보기, GPS 없이 핀 표시, 오프라인/빈 결과/HTTP 오류 처리를 추가했습니다. 실제 뉴욕→런던 HTTP200 응답의 5,388km 출발점 오연결을 거부하고, 도로에서 떨어진 출발 GPS는 안내 시작을 잠급니다. 카카오 서버의 15개 공급자 페이지와 6개 앱 페이지 경계 누락, GPS 없이 가게 선택 후 재시도 간격 소모, 새 좌표 검색 때 남는 이전 미리보기도 수정하고 회귀 검사했습니다. CI의 실제 응답 fixture는 기록 재생이며 실시간 API 호출과 구분합니다. [가게 UI 검사](validation/place-search-results.json).
+
+선택적 Python 서버는 인증·CORS·캐시 만료·오류 비노출·고정 공급자 호스트·카카오 페이지 경계를 검사했습니다. 서버의 실제 공개 HTTPS 배포, 상용 계정 등록과 키 발급은 포함하지 않습니다. 과거 0.5.0 영상은 현재 0.7.0 가게 기능을 촬영한 것이 아닙니다.
+
+0.7.0 최종 지도 부하 재검사도 8개 통과했습니다. CPU 4배 감속·10만 지점 경로에서 초기 파싱/표시 약 1.30초, 120개 GPS 갱신의 p95 약 11.6ms, 최대 25.5ms입니다. [현재 결과](validation/map-performance-v070.json). 0.6.0의 전후 비교 기록을 덮어쓰지 않았습니다. 이 수치는 실제 Android 기기 FPS가 아닙니다.

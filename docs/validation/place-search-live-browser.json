@@ -1,0 +1,144 @@
+{
+  "type": "actual browser provider traffic; GPS is synthetic, including explicitly moving the fixture to the returned road start; not physical GPS correction or road testing",
+  "result": "passed",
+  "failure": "",
+  "details": {
+    "initialResults": 6,
+    "nearbyNotice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+    "nearbyResults": 6,
+    "afterMoreResults": 12,
+    "originAccessMeters": 121.00023742395814,
+    "startInitiallyEnabled": false,
+    "guidanceStartedAtSyntheticRoadPoint": true
+  },
+  "responses": [
+    {
+      "url": "https://tile.openstreetmap.org/0/0/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%ED%8C%90%EA%B5%90",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55910/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55909/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55910/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55909/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55910/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55909/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55908/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55908/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55911/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55908/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55911/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55911/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%ED%8C%90%EA%B5%90&viewbox=126.8848047161307%2C37.57466420252709%2C127.33759528386929%2C37.214935797472904&bounded=1&lat=37.3948&lon=127.1112&radius=20000",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%ED%8C%90%EA%B5%90&exclude_ids=223477312%2C223235395%2C223452219%2C223197552%2C223259300%2C223410994&exclude_place_ids=223477312%2C223235395%2C223452219%2C223197552%2C223259300%2C223410994&viewbox=126.8848047161307%2C37.57466420252709%2C127.33759528386929%2C37.214935797472904&bounded=1&lat=37.3948&lon=127.1112&radius=20000",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55906/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55907/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55907/25417.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55907/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55906/25418.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55906/25419.png",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/127.1112,37.3948;127.1091634,37.3942326?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200
+    }
+  ],
+  "requestFailures": [],
+  "pageErrors": [],
+  "kakaoLiveVerification": false,
+  "observedAt": "2026-10-22T11:04:10.581585+00:00"
+}

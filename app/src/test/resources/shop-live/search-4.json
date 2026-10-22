@@ -1,0 +1,56 @@
+[
+  {
+    "place_id": 98421730,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 251699776,
+    "lat": "48.8541444",
+    "lon": "2.3326307",
+    "category": "amenity",
+    "type": "cafe",
+    "place_rank": 30,
+    "importance": 0.40096532439433336,
+    "addresstype": "amenity",
+    "name": "Café de Flore",
+    "display_name": "Café de Flore, Rue Saint-Benoît, Quartier de Saint-Germain-des-Prés, 파리 6구, 파리, 일드프랑스, 프랑스 본토, 75006, 프랑스",
+    "address": {
+      "amenity": "Café de Flore",
+      "road": "Rue Saint-Benoît",
+      "quarter": "Quartier de Saint-Germain-des-Prés",
+      "suburb": "파리 6구",
+      "city_district": "파리",
+      "city": "파리",
+      "ISO3166-2-lvl6": "FR-75C",
+      "state": "일드프랑스",
+      "ISO3166-2-lvl4": "FR-IDF",
+      "region": "프랑스 본토",
+      "postcode": "75006",
+      "country": "프랑스",
+      "country_code": "fr"
+    },
+    "extratags": {
+      "wikidata": "Q1025686",
+      "contact:city": "Paris",
+      "contact:phone": "+33 1 45 48 55 26",
+      "opening_hours": "Mo-Su 07:30-01:30",
+      "contact:street": "Boulevard Saint-Germain",
+      "indoor_seating": "yes",
+      "contact:website": "https://cafedeflore.fr/",
+      "outdoor_seating": "yes",
+      "contact:postcode": "75006",
+      "contact:housenumber": "172",
+      "check_date:opening_hours": "2026-10-20"
+    },
+    "namedetails": {
+      "name": "Café de Flore",
+      "name:fr": "Café de Flore",
+      "name:zh": "花神咖啡（三大著名咖啡馆之一）"
+    },
+    "boundingbox": [
+      "48.8540944",
+      "48.8541944",
+      "2.3325807",
+      "2.3326807"
+    ]
+  }
+]

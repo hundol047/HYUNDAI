@@ -1,0 +1,46 @@
+[
+  {
+    "place_id": 34393837,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 3733793199,
+    "lat": "-33.9282267",
+    "lon": "18.4227333",
+    "category": "amenity",
+    "type": "cafe",
+    "place_rank": 30,
+    "importance": 7.441443503466877e-05,
+    "addresstype": "amenity",
+    "name": "Truth Coffee Roasting",
+    "display_name": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, 케이프타운, City of Cape Town, 웨스턴케이프주, 7925, 남아프리카 공화국",
+    "address": {
+      "amenity": "Truth Coffee Roasting",
+      "road": "Buitenkant Street",
+      "suburb": "Cape Town Ward 115",
+      "city": "케이프타운",
+      "county": "City of Cape Town",
+      "state": "웨스턴케이프주",
+      "ISO3166-2-lvl4": "ZA-WC",
+      "postcode": "7925",
+      "country": "남아프리카 공화국",
+      "country_code": "za"
+    },
+    "extratags": {
+      "phone": "+27212000440",
+      "cuisine": "coffee_shop;breakfast;burger;cake;chicken;hot_dog;international;local;pasta;sandwich;tea",
+      "website": "http://truthcoffee.com",
+      "diet:vegan": "yes",
+      "diet:vegetarian": "yes",
+      "internet_access": "wlan"
+    },
+    "namedetails": {
+      "name": "Truth Coffee Roasting"
+    },
+    "boundingbox": [
+      "-33.9282767",
+      "-33.9281767",
+      "18.4226833",
+      "18.4227833"
+    ]
+  }
+]

@@ -14,6 +14,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '22'
+      - name: Verify optional place gateway without live provider calls
+        run: python3 -m unittest discover -s server -v
       # ubuntu-24.04 already includes the Android SDK and accepted SDK licenses.
       - name: Install pinned Android platform and build tools
         run: |

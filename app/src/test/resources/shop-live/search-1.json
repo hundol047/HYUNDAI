@@ -1,0 +1,128 @@
+[
+  {
+    "place_id": 221892850,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 6443238585,
+    "lat": "36.3277303",
+    "lon": "127.4272865",
+    "category": "shop",
+    "type": "bakery",
+    "place_rank": 30,
+    "importance": 0.308429648456196,
+    "addresstype": "shop",
+    "name": "성심당",
+    "display_name": "성심당, 15, 대종로480번길, 은행동, 은행선화동, 중구, 대전광역시, 34921, 대한민국",
+    "address": {
+      "shop": "성심당",
+      "house_number": "15",
+      "road": "대종로480번길",
+      "quarter": "은행동",
+      "suburb": "은행선화동",
+      "borough": "중구",
+      "city": "대전광역시",
+      "ISO3166-2-lvl4": "KR-30",
+      "postcode": "34921",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": {
+      "phone": "+82 42-220-4120",
+      "branch": "본점",
+      "website": "https://www.sungsimdangmall.co.kr",
+      "operator": "로쏘 주식회사",
+      "wikidata": "Q22974149",
+      "wikipedia": "ko:성심당",
+      "opening_hours": "Mo-Su 08:00-22:00",
+      "internet_access": "wlan",
+      "payment:credit_cards": "yes"
+    },
+    "namedetails": {
+      "name": "성심당",
+      "name:en": "Sungsimdang Bakery",
+      "name:ko": "성심당"
+    },
+    "boundingbox": [
+      "36.3276803",
+      "36.3277803",
+      "127.4272365",
+      "127.4273365"
+    ]
+  },
+  {
+    "place_id": 222482939,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 6537110230,
+    "lat": "36.3753357",
+    "lon": "127.3922164",
+    "category": "shop",
+    "type": "bakery",
+    "place_rank": 30,
+    "importance": 6.655756466005978e-05,
+    "addresstype": "shop",
+    "name": "성심당",
+    "display_name": "성심당, 엑스포로123번길, 도룡동, 신성동, 유성구, 대전광역시, 34125, 대한민국",
+    "address": {
+      "shop": "성심당",
+      "road": "엑스포로123번길",
+      "quarter": "도룡동",
+      "suburb": "신성동",
+      "borough": "유성구",
+      "city": "대전광역시",
+      "ISO3166-2-lvl4": "KR-30",
+      "postcode": "34125",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": null,
+    "namedetails": {
+      "name": "성심당",
+      "name:en": "Sungsimdang",
+      "name:ko": "성심당"
+    },
+    "boundingbox": [
+      "36.3752857",
+      "36.3753857",
+      "127.3921664",
+      "127.3922664"
+    ]
+  },
+  {
+    "place_id": 221886993,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 12785132273,
+    "lat": "36.3324193",
+    "lon": "127.4337939",
+    "category": "shop",
+    "type": "bakery",
+    "place_rank": 30,
+    "importance": 6.655756466005978e-05,
+    "addresstype": "shop",
+    "name": "성심당",
+    "display_name": "성심당, 대전역지하차도, 정동, 중앙동, 동구, 대전광역시, 34626, 대한민국",
+    "address": {
+      "shop": "성심당",
+      "road": "대전역지하차도",
+      "quarter": "정동",
+      "suburb": "중앙동",
+      "borough": "동구",
+      "city": "대전광역시",
+      "ISO3166-2-lvl4": "KR-30",
+      "postcode": "34626",
+      "country": "대한민국",
+      "country_code": "kr"
+    },
+    "extratags": null,
+    "namedetails": {
+      "name": "성심당"
+    },
+    "boundingbox": [
+      "36.3323693",
+      "36.3324693",
+      "127.4337439",
+      "127.4338439"
+    ]
+  }
+]

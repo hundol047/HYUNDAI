@@ -1,0 +1,49 @@
+[
+  {
+    "place_id": 8991897,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 5210966682,
+    "lat": "-23.5445218",
+    "lon": "-46.6341124",
+    "category": "amenity",
+    "type": "cafe",
+    "place_rank": 30,
+    "importance": 7.861829556720863e-05,
+    "addresstype": "amenity",
+    "name": "Café Girondino",
+    "display_name": "Café Girondino, 365, Rua Boa Vista, Glicério, Sé, 상파울루, 남동지방, 01014-001, 브라질",
+    "address": {
+      "amenity": "Café Girondino",
+      "house_number": "365",
+      "road": "Rua Boa Vista",
+      "suburb": "Glicério",
+      "city": "상파울루",
+      "state": "상파울루",
+      "ISO3166-2-lvl4": "BR-SP",
+      "region": "남동지방",
+      "postcode": "01014-001",
+      "country": "브라질",
+      "country_code": "br"
+    },
+    "extratags": {
+      "phone": "+55 11 5043-3822",
+      "entrance": "yes",
+      "check_date": "2026-02-19",
+      "wheelchair": "limited",
+      "payment:cash": "no",
+      "opening_hours": "Mo 07:00-18:00; Tu-Sa 07:00-20:00; Su off",
+      "payment:debit_cards": "yes",
+      "payment:credit_cards": "yes"
+    },
+    "namedetails": {
+      "name": "Café Girondino"
+    },
+    "boundingbox": [
+      "-23.5445718",
+      "-23.5444718",
+      "-46.6341624",
+      "-46.6340624"
+    ]
+  }
+]

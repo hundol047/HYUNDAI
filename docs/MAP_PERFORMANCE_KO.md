@@ -71,3 +71,7 @@ node scripts/web/verify-navigation-live.cjs
 ```
 
 기본 CI는 CPU 1배의 결정적 지도 검사 8개를 기존 브라우저 검사와 함께 수행합니다. 외부 서버 확인은 의도적으로 CI fixture와 구분합니다.
+
+## 0.7.0 가게 검색 추가 후 회귀
+
+같은 10만 지점/120개 GPS/CPU 4배 감속 검사 8개가 통과했습니다. 초기 파싱·표시는 약 1.30초, GPS 처리·렌더 갱신 p95 11.6ms, 최대 25.5ms였습니다. [별도 결과](validation/map-performance-v070.json). 위 0.6.0 전후 비교와 구분하며, 실기기·실차 FPS를 뜻하지 않습니다. 가게 검색·경로의 실제 표본과 실패 사례는 [가게 검색 안내](PLACE_SEARCH_KO.md)에 있습니다.

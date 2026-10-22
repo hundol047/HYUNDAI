@@ -27,11 +27,15 @@ import java.util.Locale
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
     val g=ui.guidance
     var query by remember {mutableStateOf("")}
+    var nearby by remember {mutableStateOf(false)}
+    var submittedQuery by remember {mutableStateOf("")}
+    var submittedNearby by remember {mutableStateOf(false)}
     var accessConfirmed by remember(g.route){mutableStateOf(false)}
     var settings by remember {mutableStateOf(false)}
     var searchEndpoint by remember {mutableStateOf(nav.service.searchEndpoint)}
     var routeEndpoint by remember {mutableStateOf(nav.service.routeEndpoint)}
     var settingsError by remember {mutableStateOf("")}
+    var accessToken by remember {mutableStateOf("")}
     val canPlan=s.parkedAllowed&&!g.active
     Column(Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
@@ -41,24 +45,34 @@ import java.util.Locale
         Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
         if(canPlan) {
             Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("국가·도시·주소 또는 위도,경도")})
-                ActionButton("검색",{nav.search(query)},color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
+                OutlinedTextField(query,{query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+                ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
                 ActionButton("내 위치 사용",onLocate,color=Mint,enabled=!ui.busy)
             }
+            Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan) }
+            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace) }
             Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy)LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint)
                 if(canPlan)ui.places.forEach { place ->
                     SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){nav.plan(place)},accent=Blue) {
-                        Text(place.name,color=White,fontSize=13.sp)
-                        Text("자동차 경로 계산 →",color=Blue,fontSize=11.sp)
+                        Text(place.name,color=White,fontSize=15.sp)
+                        if(place.address.isNotBlank())Text(place.address,color=Muted,fontSize=11.sp)
+                        Text(listOf(place.category,place.source).filter {it.isNotBlank()}.joinToString(" · "),color=Muted,fontSize=10.sp)
+                        if(place.phone.isNotBlank())Text("전화 ${place.phone}",color=Muted,fontSize=11.sp)
+                        if(place.openingHours.isNotBlank())Text("등록 영업시간 ${place.openingHours} · 현재 영업 여부 미확인",color=Muted,fontSize=10.sp)
+                        if(place.website.isNotBlank())TextButton(onClick={nav.openPlaceWebsite(place)}){Text("상세정보/웹사이트 ↗",fontSize=11.sp,color=Blue)}
+                        Text("지도에 표시 · 자동차 경로 계산 →",color=Blue,fontSize=11.sp)
                     }
                 }
+                if(canPlan&&ui.hasMore&&submittedQuery==query&&submittedNearby==nearby)ActionButton("다른 결과 더 보기 (최대 18개)",{nav.search(query,nearby,true)},Modifier.fillMaxWidth(),Blue,!ui.busy)
+                if(canPlan&&query.isNotBlank())TextButton(onClick={nav.externalSearch(query)}){Text("Google Maps에서 추가 검색 ↗",color=Blue,fontSize=11.sp)}
+                if(canPlan&&ui.places.isEmpty())Text("가게명에 지점·도시를 함께 입력해 보세요. 현지어와 영문 검색 결과가 다를 수 있습니다.",color=Muted,fontSize=11.sp)
                 g.route?.let {r->
                     SurfacePanel(Modifier.fillMaxWidth(),accent=Blue) {
                         Text(r.destination.name,color=White,fontSize=15.sp)
+                        if(r.destination.address.isNotBlank())Text(r.destination.address,color=Muted,fontSize=11.sp)
                         Spacer(Modifier.height(9.dp))
                         if(g.active) {
                             if(g.tracking&&!g.offRoute)Text(g.turnSymbol,color=Blue,fontSize=48.sp)
@@ -71,7 +85,8 @@ import java.util.Locale
                         if(canPlan&&r.destinationAccessMeters>100)Row {Checkbox(accessConfirmed,{accessConfirmed=it});Text("목적지와 차량 접근 지점의 차이를 확인했습니다.",color=White,fontSize=12.sp)}
                         Text("실시간 교통·차선 안내 미제공",color=Muted,fontSize=11.sp)
                         Spacer(Modifier.height(9.dp))
-                        if(canPlan)ActionButton("안내 시작",{nav.start(accessConfirmed)},Modifier.fillMaxWidth(),Mint,!ui.busy&&(r.destinationAccessMeters<=100||accessConfirmed))
+                        if(canPlan&&!ui.originReady)Text(if(ui.originAccessMeters>45)"출발 GPS와 연결도로 시작점이 약 ${navDistance(ui.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다." else "출발 위치의 정확하고 최신인 GPS를 확인해 주세요.",color=Amber,fontSize=11.sp)
+                        if(canPlan)ActionButton("안내 시작",{nav.start(accessConfirmed)},Modifier.fillMaxWidth(),Mint,!ui.busy&&ui.originReady&&(r.destinationAccessMeters<=100||accessConfirmed))
                         ActionButton("안내 종료·경로 지우기",{nav.stop()},Modifier.fillMaxWidth(),Muted)
                         if(g.active&&!g.tracking)ActionButton("GPS 다시 연결",{nav.locate()},Modifier.fillMaxWidth(),Blue)
                         if(g.offRoute)ActionButton("재탐색 재시도",{nav.retry()},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
@@ -84,16 +99,18 @@ import java.util.Locale
         }
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
     }
-    if(settings&&canPlan)AlertDialog(onDismissRequest={settings=false},title={Text("내비게이션 서비스")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
+    if(settings&&canPlan)AlertDialog(onDismissRequest={accessToken="";settings=false},title={Text("내비게이션 서비스")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Text("기본 공개 서버는 체험용이며 상용 가용성을 보장하지 않습니다. 운영 시 자체/계약 서버로 교체하세요. 입력한 서버에 검색어·경로 좌표가 전달됩니다.")
-        OutlinedTextField(searchEndpoint,{searchEndpoint=it},label={Text("Nominatim HTTPS 기본 주소")},singleLine=true)
+        OutlinedTextField(searchEndpoint,{searchEndpoint=it},label={Text("주소·가게 검색 HTTPS 기본 주소")},singleLine=true)
         OutlinedTextField(routeEndpoint,{routeEndpoint=it},label={Text("OSRM HTTPS 기본 주소")},singleLine=true)
+        OutlinedTextField(accessToken,{accessToken=it.take(256)},label={Text("자체 검색 서버 접근키 · 저장하지 않음")},singleLine=true,visualTransformation=androidx.compose.ui.text.input.PasswordVisualTransformation())
+        Text("카카오 등 데이터 API 키는 서버에만 보관합니다. 이 값은 자체 서버 접근용으로 설정에 저장하지 않으며 개인정보를 삭제하면 지웁니다.",fontSize=11.sp)
         Text(settingsError,color=Amber)
-    }},confirmButton={TextButton(onClick={runCatching {nav.configure(searchEndpoint,routeEndpoint)}.onSuccess {settings=false}.onFailure {settingsError=it.message ?: "주소를 확인하세요."}}){Text("적용")}},dismissButton={TextButton(onClick={settings=false}){Text("닫기")}})
+    }},confirmButton={TextButton(onClick={runCatching {nav.configure(searchEndpoint,routeEndpoint,accessToken)}.onSuccess {accessToken="";settings=false}.onFailure {settingsError=it.message ?: "주소를 확인하세요."}}){Text("적용")}},dismissButton={TextButton(onClick={accessToken="";settings=false}){Text("닫기")}})
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean) {
+@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
@@ -112,7 +129,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
         view.gesturesEnabled=interactive
         view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
         view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
-        renderer.update(g,palette.accent or (0xFF shl 24))
+        renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace)
     })
 }
 

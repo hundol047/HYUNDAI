@@ -10,6 +10,7 @@ import org.osmdroid.views.overlay.*
 /** Keep the road geometry alive across GPS updates; only the position marker moves. */
 internal class NavigationMapRenderer(private val map:MapView) {
     private var route:DrivingRoute?=null
+    private var selected:NavPlace?=null
     private var line:Polyline?=null
     private var destination:Marker?=null
     private var position:Marker?=null
@@ -19,7 +20,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
     private var accent:Int?=null
     init {map.overlays.add(CopyrightOverlay(map.context).apply {setCopyrightNotice("© OpenStreetMap contributors")})}
 
-    fun update(g:Guidance,color:Int) {
+    fun update(g:Guidance,color:Int,selectedPlace:NavPlace?=null) {
         var changed=false
         if(route!==g.route) {
             line?.let {map.overlays.remove(it)};destination?.let {map.overlays.remove(it)}
@@ -34,6 +35,14 @@ internal class NavigationMapRenderer(private val map:MapView) {
             }
             accent=color;changed=true
         }
+        if(g.route==null&&selected!=selectedPlace) {
+            destination?.let {map.overlays.remove(it)};destination=null;selected=selectedPlace
+            selectedPlace?.let {p->
+                destination=Marker(map).apply {position=GeoPoint(p.point.latitude,p.point.longitude);title=p.name;subDescription=p.address}
+                map.overlays.add(destination);map.controller.setZoom(16.0);map.controller.setCenter(GeoPoint(p.point.latitude,p.point.longitude))
+            };changed=true
+        }
+        if(g.route!=null)selected=null
         if(accent!=color){line?.outlinePaint?.color=color;accent=color;changed=true}
         val fix=g.fix
         if(fix!=null) {
@@ -47,8 +56,8 @@ internal class NavigationMapRenderer(private val map:MapView) {
                 changed=true
             }
             val startingFollow=g.active&&g.tracking&&!following
-            if(startingFollow||(firstPosition&&g.route==null))map.controller.setZoom(map.zoomLevelDouble.coerceAtLeast(15.0))
-            if((g.active&&g.tracking&&(moved||!following))||(firstPosition&&g.route==null))map.controller.setCenter(GeoPoint(fix.point.latitude,fix.point.longitude))
+            if(startingFollow||(firstPosition&&g.route==null&&selectedPlace==null))map.controller.setZoom(map.zoomLevelDouble.coerceAtLeast(15.0))
+            if((g.active&&g.tracking&&(moved||!following))||(firstPosition&&g.route==null&&selectedPlace==null))map.controller.setCenter(GeoPoint(fix.point.latitude,fix.point.longitude))
         }else if(position!=null){map.overlays.remove(position);position=null;point=null;tracking=null;changed=true}
         following=g.active&&g.tracking
         if(changed)map.invalidate()

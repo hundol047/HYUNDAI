@@ -10,6 +10,32 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationServiceTest {
+    @Test fun recordedInternationalRoadRouteParsesWithoutACountryBoundaryRestriction() {
+        val r=NavigationService.parseRoute(captured("route-international.json"),NavPlace("Brussels",NavPoint(50.8466,4.3528)))
+        NavigationGeometry.validateOrigin(r,NavPoint(48.8566,2.3522))
+        assertTrue(r.distanceMeters>300_000);assertTrue(r.points.size>4000);assertTrue(r.steps.size>30)
+    }
+    private fun captured(name:String)=javaClass.getResourceAsStream("/shop-live/$name")!!.bufferedReader().use {it.readText()}
+    @Test fun realCapturedShopsHaveNamesAddressesAndUsableRecordedCarRoutes() {
+        val cases=org.json.JSONArray(captured("manifest.json"))
+        for(i in 0 until cases.length()) {
+            val c=cases.getJSONObject(i);val places=NavigationService.parsePlaces(captured(c.getString("searchCapture")))
+            val selected=places.first {it.id==c.getString("selectedId")}
+            assertTrue(selected.name.isNotBlank());assertTrue(selected.address.isNotBlank());assertEquals("OSM / Nominatim",selected.source)
+            val route=NavigationService.parseRoute(captured(c.getString("capture")),selected)
+            val origin=c.getJSONArray("origin");NavigationGeometry.validateOrigin(route,NavPoint(origin.getDouble(0),origin.getDouble(1)))
+            assertTrue(route.points.size>1);assertTrue(route.steps.size>1)
+        }
+        assertTrue(NavigationService.parsePlaces(captured("search-2.json")).isEmpty())
+    }
+    @Test fun providerSuccessWithAnOriginSnappedAcrossTheOceanIsRejected() {
+        val route=NavigationService.parseRoute(captured("route-ocean.json"),NavPlace("London",NavPoint(51.5074,-.1278)))
+        try{NavigationGeometry.validateOrigin(route,NavPoint(40.7484,-73.9857));fail("cross-ocean snap accepted")}catch(e:IllegalArgumentException){assertTrue(e.message!!.contains("출발 위치"))}
+    }
+    @Test fun shopDetailsKeepBranchesAtOneCoordinateAndRejectUnsafeLinks() {
+        val places=NavigationService.parsePlaces("""[{"place_id":1,"name":"카페 A","display_name":"A 지점 주소","lat":"37.5","lon":"127","type":"cafe","extratags":{"phone":"000-0000","website":"javascript:alert(1)","opening_hours":"Mo-Fr 09:00-18:00"}},{"place_id":2,"name":"카페 B","display_name":"B 지점 주소","lat":"37.5","lon":"127"}]""")
+        assertEquals(2,places.size);assertEquals("카페",places[0].category);assertEquals("000-0000",places[0].phone);assertEquals("",places[0].website);assertTrue(places[0].openingHours.contains("09:00"))
+    }
     @Test fun internationalSearchParsesCoordinatesAndRejectsMalformedEntries() {
         val result=NavigationService.parsePlaces("""[{"display_name":"東京, 日本","lat":"35.68","lon":"139.76"},{"display_name":"Paris, France","lat":"48.85","lon":"2.35"},{"display_name":"bad","lat":"NaN","lon":"1"},{"display_name":"missing"}]""")
         assertEquals(2,result.size);assertEquals(139.76,result[0].point.longitude,0.0)

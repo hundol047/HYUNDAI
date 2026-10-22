@@ -1,0 +1,128 @@
+[
+  {
+    "name": "스타벅스 판교",
+    "origin": [
+      37.3948,
+      127.1112
+    ],
+    "destination": [
+      37.3942326,
+      127.1091634
+    ],
+    "capture": "route-shop-0.json",
+    "searchCapture": "search-0.json",
+    "selectedId": "222434522"
+  },
+  {
+    "name": "성심당 대전",
+    "origin": [
+      36.3322,
+      127.4348
+    ],
+    "destination": [
+      36.3324193,
+      127.4337939
+    ],
+    "capture": "route-shop-1.json",
+    "searchCapture": "search-1.json",
+    "selectedId": "221886993"
+  },
+  {
+    "name": "서울 중구 세종대로 110",
+    "origin": [
+      37.5547,
+      126.9723
+    ],
+    "destination": [
+      37.5663541,
+      126.9778834
+    ],
+    "capture": "route-shop-3.json",
+    "searchCapture": "search-3.json",
+    "selectedId": "222612647"
+  },
+  {
+    "name": "Café de Flore Paris",
+    "origin": [
+      48.8566,
+      2.3522
+    ],
+    "destination": [
+      48.8541444,
+      2.3326307
+    ],
+    "capture": "route-shop-4.json",
+    "searchCapture": "search-4.json",
+    "selectedId": "98421730"
+  },
+  {
+    "name": "Katz Delicatessen New York",
+    "origin": [
+      40.7484,
+      -73.9857
+    ],
+    "destination": [
+      40.7223431,
+      -73.987353
+    ],
+    "capture": "route-shop-5.json",
+    "searchCapture": "search-5.json",
+    "selectedId": "358916711"
+  },
+  {
+    "name": "スターバックス 渋谷",
+    "origin": [
+      35.658,
+      139.7016
+    ],
+    "destination": [
+      35.6582976,
+      139.7023079
+    ],
+    "capture": "route-shop-6.json",
+    "searchCapture": "search-6.json",
+    "selectedId": "265476408"
+  },
+  {
+    "name": "Café Girondino São Paulo",
+    "origin": [
+      -23.5505,
+      -46.6333
+    ],
+    "destination": [
+      -23.5445218,
+      -46.6341124
+    ],
+    "capture": "route-shop-7.json",
+    "searchCapture": "search-7.json",
+    "selectedId": "8991897"
+  },
+  {
+    "name": "Truth Coffee Cape Town",
+    "origin": [
+      -33.9249,
+      18.4241
+    ],
+    "destination": [
+      -33.9282267,
+      18.4227333
+    ],
+    "capture": "route-shop-8.json",
+    "searchCapture": "search-8.json",
+    "selectedId": "34393837"
+  },
+  {
+    "name": "Pancakes on the Rocks Sydney",
+    "origin": [
+      -33.873,
+      151.206
+    ],
+    "destination": [
+      -33.8786016,
+      151.2019367
+    ],
+    "capture": "route-shop-9.json",
+    "searchCapture": "search-9.json",
+    "selectedId": "23629378"
+  }
+]

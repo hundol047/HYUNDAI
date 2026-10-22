@@ -1,0 +1,251 @@
+[
+  {
+    "place_id": 23504709,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "way",
+    "osm_id": 67028031,
+    "lat": "-33.7962361",
+    "lon": "150.9897198",
+    "category": "amenity",
+    "type": "fast_food",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, Redbank Road, Northmead, 시드니, New South Wales, 2152, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "road": "Redbank Road",
+      "suburb": "Northmead",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2152",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "website": "https://pancakesontherocks.com.au/",
+      "building": "yes"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.7963740",
+      "-33.7961143",
+      "150.9895347",
+      "150.9899050"
+    ]
+  },
+  {
+    "place_id": 23584969,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 2947427489,
+    "lat": "-33.9523618",
+    "lon": "151.0830158",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, 507, King Georges Road, Beverly Hills, St George, 시드니, New South Wales, 2209, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "house_number": "507",
+      "road": "King Georges Road",
+      "suburb": "Beverly Hills",
+      "borough": "St George",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2209",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "email": "beverlyhills@pancakesontherocks.com.au",
+      "level": "0",
+      "phone": "+61 2 9580 7220",
+      "cuisine": "pancake",
+      "website": "https://pancakesontherocks.au/locations",
+      "check_date": "2026-07-23",
+      "opening_hours": "Su-Th 08:00-22:00; Fr,Sa 08:00-22:30"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks",
+      "brand": "Pancakes on the Rocks",
+      "name:en": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.9524118",
+      "-33.9523118",
+      "151.0829658",
+      "151.0830658"
+    ]
+  },
+  {
+    "place_id": 23680750,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 4974881932,
+    "lat": "-33.8636551",
+    "lon": "151.0887024",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, M4 East Tunnel, North Strathfield, Inner West, 시드니, New South Wales, 2137, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "road": "M4 East Tunnel",
+      "suburb": "North Strathfield",
+      "borough": "Inner West",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2137",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "opening_hours": "Mo-Th 09:00-23:00, Fr 09:00-23:30, Sa 07:00-23:30, Su 07:00-23:00"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.8637051",
+      "-33.8636051",
+      "151.0886524",
+      "151.0887524"
+    ]
+  },
+  {
+    "place_id": 23638197,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 6961251016,
+    "lat": "-33.8588733",
+    "lon": "151.2083482",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, Playfair Street, The Rocks, 시드니, New South Wales, 2000, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "road": "Playfair Street",
+      "suburb": "The Rocks",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2000",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "cuisine": "pancake;pizza",
+      "website": "https://pancakesontherocks.au",
+      "check_date": "2024-12-15",
+      "website:menu": "https://pancakesontherocks.au/menu/",
+      "opening_hours": "Su-Th 07:30-00:00; Fr-Sa 07:30-02:00"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.8589233",
+      "-33.8588233",
+      "151.2082982",
+      "151.2083982"
+    ]
+  },
+  {
+    "place_id": 23795246,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 2947427487,
+    "lat": "-33.8572093",
+    "lon": "151.2089190",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, 66-84, George Street, The Rocks, 시드니, New South Wales, 2000, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "house_number": "66-84",
+      "road": "George Street",
+      "suburb": "The Rocks",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2000",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "opening_hours": "Su-Th 07:30-00:00; Fr-Sa 07:30-02:00",
+      "contact:website": "http://www.pancakesontherocks.com.au/"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks",
+      "brand": "Pancakes on the Rocks",
+      "name:en": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.8572593",
+      "-33.8571593",
+      "151.2088690",
+      "151.2089690"
+    ]
+  },
+  {
+    "place_id": 23629378,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 10590350430,
+    "lat": "-33.8786016",
+    "lon": "151.2019367",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 8.246051728079679e-05,
+    "addresstype": "amenity",
+    "name": "Pancakes on the Rocks",
+    "display_name": "Pancakes on the Rocks, Tumbalong Boulevard, Darling Square, Haymarket, 시드니, New South Wales, 2000, 오스트레일리아",
+    "address": {
+      "amenity": "Pancakes on the Rocks",
+      "road": "Tumbalong Boulevard",
+      "neighbourhood": "Darling Square",
+      "suburb": "Haymarket",
+      "city": "시드니",
+      "state": "New South Wales",
+      "ISO3166-2-lvl4": "AU-NSW",
+      "postcode": "2000",
+      "country": "오스트레일리아",
+      "country_code": "au"
+    },
+    "extratags": {
+      "website": "https://pancakesontherocks.au/"
+    },
+    "namedetails": {
+      "name": "Pancakes on the Rocks"
+    },
+    "boundingbox": [
+      "-33.8786516",
+      "-33.8785516",
+      "151.2018867",
+      "151.2019867"
+    ]
+  }
+]

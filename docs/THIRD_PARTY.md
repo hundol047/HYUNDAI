@@ -11,4 +11,7 @@
 - **Nominatim** — explicit worldwide destination search; OpenStreetMap data attribution applies. Public service policy: https://operations.osmfoundation.org/policies/nominatim/ . No autocomplete/systematic enumeration; queries are cached in memory and throttled. Replace with a self-hosted/contract service before scaled deployment.
 - **OSRM** — driving-route geometry and maneuvers from the public demonstration service https://router.project-osrm.org/ . Project: https://project-osrm.org/ . No OSRM binary/source is embedded in the APK. Public demo has no application SLA; compatible HTTPS endpoint is configurable. OSM roads and access restrictions vary by region.
 
-Navigation video/UI fixtures are synthetic protocol/GPS data and are explicitly described as tests, not captured live service responses or actual road driving.
+Deterministic UI fixtures use synthetic protocol/GPS data; live-recorded route/search fixtures under app/src/test/resources/live-navigation and shop-live are explicitly recorded OSM/OSRM responses (see their README files), replayed without live CI requests. The 0.5 video uses live provider traffic with synthetic GPS and offline native gallery renders, not actual road driving.
+
+- **선택적 Kakao Local 서버 어댑터** — https://developers.kakao.com/docs/latest/ko/local/dev-guide . 키워드 검색의 제공자 이름/주소/전화/상세 링크를 변환하며 공급자 출처를 표시합니다. SDK/키를 APK에 포함하지 않습니다. 실서버 키와 최신 약관/할당량 확인은 운영자 설정이 필요하며 현재 실서버 미검증입니다.
+- **Google Maps 외부 검색 URL** — https://www.google.com/maps/search/?api=1 . 외부 페이지 링크만 열며 Google Places 데이터/SDK를 앱에 포함하지 않습니다.

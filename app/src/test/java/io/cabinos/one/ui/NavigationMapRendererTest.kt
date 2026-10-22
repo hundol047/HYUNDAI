@@ -14,6 +14,22 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationMapRendererTest {
+    @Test fun selectedShopWithoutGpsHasAPinButNoInventedRoad() {
+        val map=map();val renderer=NavigationMapRenderer(map);val shop=NavPlace("카페 판교점",NavPoint(37.3948,127.1112),id="101",address="검사용 지점 주소")
+        try {
+            renderer.update(Guidance(),-1,shop);assertEquals(1,map.overlays.filterIsInstance<Marker>().size);assertTrue(map.overlays.none {it is Polyline})
+            assertEquals(0.0,GeoPoint(shop.point.latitude,shop.point.longitude).distanceToAsDouble(map.mapCenter),5.0)
+            val pin=map.overlays.filterIsInstance<Marker>().single();map.controller.setZoom(8.0);renderer.update(Guidance(),0xFF55AAFF.toInt(),shop)
+            assertSame(pin,map.overlays.filterIsInstance<Marker>().single());assertEquals(8.0,map.zoomLevelDouble,0.0)
+        }finally{map.onDetach()}
+    }
+    @Test fun selectingAnotherStoreAtTheSameBuildingUpdatesThePinLabel() {
+        val map=map();val renderer=NavigationMapRenderer(map);val a=NavPlace("Store A",NavPoint(37.5,127.0),id="1");val b=a.copy(name="Store B",id="2")
+        try {
+            renderer.update(Guidance(),-1,a);renderer.update(Guidance(),-1,b)
+            assertEquals("Store B",map.overlays.filterIsInstance<Marker>().single().title);assertTrue(map.overlays.none {it is Polyline})
+        }finally{map.onDetach()}
+    }
     private fun route(name:String="dense route"):DrivingRoute {
         val points=(0..50_000).map {NavPoint(37.5547,126.9723+it*.000002)}
         return NavigationGeometry.route(NavPlace(name,points.last()),points,9000.0,900.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))

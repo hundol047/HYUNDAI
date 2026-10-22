@@ -1,0 +1,437 @@
+{
+  "type": "limited actual business search and road routing sample; not exhaustive coverage or physical GPS testing",
+  "timestamp": "2026-10-22T10:27:46.275753+00:00",
+  "searchReplay": true,
+  "searches": [
+    {
+      "query": "스타벅스 판교",
+      "result": "found",
+      "count": 6,
+      "capture": "search-0.json",
+      "sha256": "9b9f556edbbcb0a05683b7b7bf6e28d8857088364dcc4347097eb6c32bbf6fd7",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "222434522",
+      "selectedName": "스타벅스",
+      "selectedAddress": "스타벅스, 판교역로, 백현동, 판교, 분당구, 성남시, 경기도, 13530, 대한민국"
+    },
+    {
+      "query": "성심당 대전",
+      "result": "found",
+      "count": 3,
+      "capture": "search-1.json",
+      "sha256": "1352718f45aa3f70f9fe9caf5668616023430f3a931587e4bfd2cfcbb2a70d5c",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "221886993",
+      "selectedName": "성심당",
+      "selectedAddress": "성심당, 대전역지하차도, 정동, 중앙동, 동구, 대전광역시, 34626, 대한민국"
+    },
+    {
+      "query": "Cafe Onion Anguk Seoul",
+      "result": "not_found",
+      "count": 0,
+      "capture": "search-2.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "transport": "replay of this session real HTTP response; not a new request"
+    },
+    {
+      "query": "서울 중구 세종대로 110",
+      "result": "found",
+      "count": 6,
+      "capture": "search-3.json",
+      "sha256": "2ef817a8bf4874ec6f63cbda8a9439562a33600d4a5cb4bc5c3122d0c061ca80",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "222612647",
+      "selectedName": "서울도서관",
+      "selectedAddress": "서울도서관, 110, 세종대로, 태평로1가, 명동, 중구, 서울특별시, 04524, 대한민국"
+    },
+    {
+      "query": "Café de Flore Paris",
+      "result": "found",
+      "count": 1,
+      "capture": "search-4.json",
+      "sha256": "8664e1e0df057f8afbd2d64b3e0534146d69bcde0239d6e95ade9bfa366c2fe7",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "98421730",
+      "selectedName": "Café de Flore",
+      "selectedAddress": "Café de Flore, Rue Saint-Benoît, Quartier de Saint-Germain-des-Prés, 파리 6구, 파리, 일드프랑스, 프랑스 본토, 75006, 프랑스"
+    },
+    {
+      "query": "Katz Delicatessen New York",
+      "result": "found",
+      "count": 1,
+      "capture": "search-5.json",
+      "sha256": "11328e9a439a3a4cb767bd24d6c0b23abac42bd1f4ce5d5411b4423289f75aa1",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "358916711",
+      "selectedName": "Katz's Delicatessen",
+      "selectedAddress": "Katz's Delicatessen, 205, 이스트 휴스턴 스트리트, Manhattan Community Board 3, 맨해튼, 뉴욕 카운티, 뉴욕, 10002, 미국"
+    },
+    {
+      "query": "スターバックス 渋谷",
+      "result": "found",
+      "count": 6,
+      "capture": "search-6.json",
+      "sha256": "21f1f46bc7cb235958968f27f400c0db9f6a750d35fa9ba67d95150ff97a4a96",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "265476408",
+      "selectedName": "Starbucks",
+      "selectedAddress": "Starbucks, 12, 시부야2초메, 시부야, 시부야구, 도쿄도, 150-0002, 일본"
+    },
+    {
+      "query": "Café Girondino São Paulo",
+      "result": "found",
+      "count": 1,
+      "capture": "search-7.json",
+      "sha256": "92458a2d0cf259e4ef4a4e7871f40fa630c1ba44ea90aafcfe8e5c4735a98db8",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "8991897",
+      "selectedName": "Café Girondino",
+      "selectedAddress": "Café Girondino, 365, Rua Boa Vista, Glicério, Sé, 상파울루, 남동지방, 01014-001, 브라질"
+    },
+    {
+      "query": "Truth Coffee Cape Town",
+      "result": "found",
+      "count": 1,
+      "capture": "search-8.json",
+      "sha256": "b5074c1dbfacb9034d86b3767409a269a58fd51091ffd85a7b70a0652e10c7ba",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "34393837",
+      "selectedName": "Truth Coffee Roasting",
+      "selectedAddress": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, 케이프타운, City of Cape Town, 웨스턴케이프주, 7925, 남아프리카 공화국"
+    },
+    {
+      "query": "Pancakes on the Rocks Sydney",
+      "result": "found",
+      "count": 6,
+      "capture": "search-9.json",
+      "sha256": "6354568de5e0058904361e460bb46ce3ee345f5d27b4239ff381420d7b4837c5",
+      "transport": "replay of this session real HTTP response; not a new request",
+      "selectedId": "23629378",
+      "selectedName": "Pancakes on the Rocks",
+      "selectedAddress": "Pancakes on the Rocks, Tumbalong Boulevard, Darling Square, Haymarket, 시드니, New South Wales, 2000, 오스트레일리아"
+    },
+    {
+      "query": "CabinOS nonexistent shop zxq98765 Seoul",
+      "result": "not_found",
+      "count": 0,
+      "capture": "search-10.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "transport": "replay of this session real HTTP response; not a new request"
+    }
+  ],
+  "routes": [
+    {
+      "name": "스타벅스 판교",
+      "origin": [
+        37.3948,
+        127.1112
+      ],
+      "destination": [
+        37.3942326,
+        127.1091634
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 1209.4,
+      "sha256": "cc356769d984853cdc43f842f8f14b4b12613f9a5a34a7719fe991cb3983f074",
+      "capture": "route-shop-0.json",
+      "result": "available",
+      "distanceMeters": 187.8,
+      "geometryPoints": 7,
+      "maneuvers": 3,
+      "originAccessMeters": 121.0,
+      "destinationAccessMeters": 44.4,
+      "syntheticGpsStartAtOriginPossible": false,
+      "traffic": "not provided",
+      "selectedId": "222434522",
+      "searchCapture": "search-0.json"
+    },
+    {
+      "name": "성심당 대전",
+      "origin": [
+        36.3322,
+        127.4348
+      ],
+      "destination": [
+        36.3324193,
+        127.4337939
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 654.2,
+      "sha256": "975afb16cbdc516331671f1fc84935ddf537a8f80ec886ff91858025e0d1fac6",
+      "capture": "route-shop-1.json",
+      "result": "available",
+      "distanceMeters": 652.1,
+      "geometryPoints": 43,
+      "maneuvers": 6,
+      "originAccessMeters": 11.4,
+      "destinationAccessMeters": 55.4,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "221886993",
+      "searchCapture": "search-1.json"
+    },
+    {
+      "name": "서울 중구 세종대로 110",
+      "origin": [
+        37.5547,
+        126.9723
+      ],
+      "destination": [
+        37.5663541,
+        126.9778834
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 842.5,
+      "sha256": "cf78fedd6c21b56689931b0ea1dc0bd1f8f151b34f9147607d1a6de519436754",
+      "capture": "route-shop-3.json",
+      "result": "available",
+      "distanceMeters": 3573.3,
+      "geometryPoints": 102,
+      "maneuvers": 4,
+      "originAccessMeters": 18.7,
+      "destinationAccessMeters": 57.7,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "222612647",
+      "searchCapture": "search-3.json"
+    },
+    {
+      "name": "Café de Flore Paris",
+      "origin": [
+        48.8566,
+        2.3522
+      ],
+      "destination": [
+        48.8541444,
+        2.3326307
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 788.8,
+      "sha256": "5a292ca5ebf66a452f2773c481a273669cc6b8e174fa6c980c9c9d5f05a9094b",
+      "capture": "route-shop-4.json",
+      "result": "available",
+      "distanceMeters": 2599.5,
+      "geometryPoints": 143,
+      "maneuvers": 19,
+      "originAccessMeters": 72.0,
+      "destinationAccessMeters": 10.0,
+      "syntheticGpsStartAtOriginPossible": false,
+      "traffic": "not provided",
+      "selectedId": "98421730",
+      "searchCapture": "search-4.json"
+    },
+    {
+      "name": "Katz Delicatessen New York",
+      "origin": [
+        40.7484,
+        -73.9857
+      ],
+      "destination": [
+        40.7223431,
+        -73.987353
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 546.2,
+      "sha256": "f59ecee35fc0d9abf6848d75e984cf618a485838f896a52d8e13905e1341e251",
+      "capture": "route-shop-5.json",
+      "result": "available",
+      "distanceMeters": 4703.3,
+      "geometryPoints": 225,
+      "maneuvers": 7,
+      "originAccessMeters": 33.7,
+      "destinationAccessMeters": 12.2,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "358916711",
+      "searchCapture": "search-5.json"
+    },
+    {
+      "name": "スターバックス 渋谷",
+      "origin": [
+        35.658,
+        139.7016
+      ],
+      "destination": [
+        35.6582976,
+        139.7023079
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 302.3,
+      "sha256": "31da0cf8540a94e127c754df830adbe86f4d0b8db127959b18db45ef5194c7d8",
+      "capture": "route-shop-6.json",
+      "result": "available",
+      "distanceMeters": 72,
+      "geometryPoints": 3,
+      "maneuvers": 2,
+      "originAccessMeters": 32.4,
+      "destinationAccessMeters": 39.6,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "265476408",
+      "searchCapture": "search-6.json"
+    },
+    {
+      "name": "Café Girondino São Paulo",
+      "origin": [
+        -23.5505,
+        -46.6333
+      ],
+      "destination": [
+        -23.5445218,
+        -46.6341124
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 627.5,
+      "sha256": "f700de93813fabc761d4d77c9b1310eb03ff365beb5d891dd8ec302078347e92",
+      "capture": "route-shop-7.json",
+      "result": "available",
+      "distanceMeters": 677.8,
+      "geometryPoints": 38,
+      "maneuvers": 6,
+      "originAccessMeters": 64.0,
+      "destinationAccessMeters": 7.6,
+      "syntheticGpsStartAtOriginPossible": false,
+      "traffic": "not provided",
+      "selectedId": "8991897",
+      "searchCapture": "search-7.json"
+    },
+    {
+      "name": "Truth Coffee Cape Town",
+      "origin": [
+        -33.9249,
+        18.4241
+      ],
+      "destination": [
+        -33.9282267,
+        18.4227333
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 174.9,
+      "sha256": "8ad8c844dcae98823d65a3a8a234751ef742ee01868159050a1814399e84e72d",
+      "capture": "route-shop-8.json",
+      "result": "available",
+      "distanceMeters": 507.2,
+      "geometryPoints": 18,
+      "maneuvers": 3,
+      "originAccessMeters": 25.2,
+      "destinationAccessMeters": 11.5,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "34393837",
+      "searchCapture": "search-8.json"
+    },
+    {
+      "name": "Pancakes on the Rocks Sydney",
+      "origin": [
+        -33.873,
+        151.206
+      ],
+      "destination": [
+        -33.8786016,
+        151.2019367
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 598.6,
+      "sha256": "bcec1dcca76423a94df7faba8c0ff7b7cc69918688c2d31d169572595676f555",
+      "capture": "route-shop-9.json",
+      "result": "available",
+      "distanceMeters": 1212.4,
+      "geometryPoints": 88,
+      "maneuvers": 11,
+      "originAccessMeters": 18.5,
+      "destinationAccessMeters": 72.1,
+      "syntheticGpsStartAtOriginPossible": true,
+      "traffic": "not provided",
+      "selectedId": "23629378",
+      "searchCapture": "search-9.json"
+    },
+    {
+      "name": "Paris to Brussels",
+      "origin": [
+        48.8566,
+        2.3522
+      ],
+      "destination": [
+        50.8466,
+        4.3528
+      ],
+      "expected": "available",
+      "httpStatus": 200,
+      "elapsedMs": 703.8,
+      "sha256": "5b9b85c1a0a1a18b6bebc1900b8e0cbb4c281050c9b9737f2b74b25f0c522ac2",
+      "capture": "route-international.json",
+      "result": "available",
+      "distanceMeters": 306842.5,
+      "geometryPoints": 4586,
+      "maneuvers": 42,
+      "originAccessMeters": 72.0,
+      "destinationAccessMeters": 97.1,
+      "syntheticGpsStartAtOriginPossible": false,
+      "traffic": "not provided"
+    },
+    {
+      "name": "New York to London",
+      "origin": [
+        40.7484,
+        -73.9857
+      ],
+      "destination": [
+        51.5074,
+        -0.1278
+      ],
+      "expected": "unavailable",
+      "httpStatus": 200,
+      "elapsedMs": 1069.8,
+      "sha256": "ebbd0a9dc24c9905372e05b19c7ef2f08f0481092a5bce6f8c8254ab79a75931",
+      "capture": "route-ocean.json",
+      "result": "snap_rejected",
+      "distanceMeters": 2150159.4,
+      "geometryPoints": 27997,
+      "maneuvers": 160,
+      "originAccessMeters": 5388042.1,
+      "destinationAccessMeters": 14.3,
+      "syntheticGpsStartAtOriginPossible": false,
+      "traffic": "not provided"
+    },
+    {
+      "name": "Ocean origin to Paris",
+      "origin": [
+        0.0,
+        0.0
+      ],
+      "destination": [
+        48.8566,
+        2.3522
+      ],
+      "expected": "unavailable",
+      "httpStatus": 400,
+      "elapsedMs": 1101.1,
+      "sha256": "2537c471b6a6cf6e89ed802ac724a688ba7af2fb9a60224ddbda349256a3eff7",
+      "capture": "route-origin-snap.json",
+      "result": "request_rejected",
+      "providerCode": "InvalidUrl"
+    }
+  ],
+  "allRoutesGuaranteed": false,
+  "allBusinessesGuaranteed": false,
+  "commercialProviderLiveValidation": "not performed; account/key not configured",
+  "lastSupplementalObservation": "2026-10-22T10:46:58.374795+00:00",
+  "result": "partial",
+  "summary": {
+    "positiveBusinessOrAddressSearchesFound": 9,
+    "knownBusinessQueryMissing": 1,
+    "negativeControlEmpty": 1,
+    "usableCarRoutePreviews": 10,
+    "farSnappedOriginsRejected": 1,
+    "providerRejectedRequests": 1
+  }
+}

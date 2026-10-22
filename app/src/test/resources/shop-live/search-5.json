@@ -1,0 +1,58 @@
+[
+  {
+    "place_id": 358916711,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 1915398676,
+    "lat": "40.7223431",
+    "lon": "-73.9873530",
+    "category": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": 0.41783763285244574,
+    "addresstype": "amenity",
+    "name": "Katz's Delicatessen",
+    "display_name": "Katz's Delicatessen, 205, 이스트 휴스턴 스트리트, Manhattan Community Board 3, 맨해튼, 뉴욕 카운티, 뉴욕, 10002, 미국",
+    "address": {
+      "amenity": "Katz's Delicatessen",
+      "house_number": "205",
+      "road": "이스트 휴스턴 스트리트",
+      "neighbourhood": "Manhattan Community Board 3",
+      "suburb": "맨해튼",
+      "city_district": "뉴욕 카운티",
+      "city": "뉴욕",
+      "state": "뉴욕",
+      "ISO3166-2-lvl4": "US-NY",
+      "postcode": "10002",
+      "country": "미국",
+      "country_code": "us"
+    },
+    "extratags": {
+      "phone": "+1-212-254-2246",
+      "cuisine": "deli",
+      "website": "https://www.katzsdelicatessen.com",
+      "wikidata": "Q2611788",
+      "wikipedia": "en:Katz's Delicatessen",
+      "diet:kosher": "yes",
+      "reservation": "yes",
+      "payment:cash": "yes",
+      "opening_hours": "Mo-Th 08:00-22:15; Fr 08:00-24:00; Sa 00:00-24:00; Su 00:00-22:15",
+      "contact:twitter": "https://twitter.com/KatzsDeli",
+      "contact:facebook": "https://www.facebook.com/katzsdeli",
+      "contact:instagram": "https://www.instagram.com/katzsdeli/",
+      "payment:credit_cards": "yes"
+    },
+    "namedetails": {
+      "name": "Katz's Delicatessen",
+      "name:en": "Katz's Delicatessen",
+      "alt_name": "Katz's of New York City",
+      "short_name": "Katz's Deli"
+    },
+    "boundingbox": [
+      "40.7222931",
+      "40.7223931",
+      "-73.9874030",
+      "-73.9873030"
+    ]
+  }
+]

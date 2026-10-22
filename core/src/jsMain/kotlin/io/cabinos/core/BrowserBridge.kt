@@ -22,6 +22,8 @@ private var stationarySince:Long?=null
 private fun navSnapshot():String {
     val g=navigator.state
     return JSON.stringify(json("active" to g.active,"tracking" to g.tracking,"arrived" to g.arrived,"hasRoute" to (g.route!=null),
+        "originAccessMeters" to (g.route?.let {r->navFix?.let {NavigationGeometry.distance(it.point,r.points.first())}} ?: 0.0),
+        "originReady" to (g.route?.let {r->navFix?.let {navigator.usable(it)&&NavigationGeometry.distance(it.point,r.points.first())<=kotlin.math.max(45.0,it.accuracy*2)}} ?: false),
         "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
         "instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
         "fix" to (if(g.active)g.fix else navFix)?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
@@ -86,6 +88,23 @@ fun main() {
     // Restore visual preferences only: this never establishes parked/vehicle trust.
     bridge.restoreAppearance={preset:String,accent:String,brightness:String,night:Boolean -> if(!appearanceRestored){appearanceRestored=true;appearance=AppearanceCatalog.normalize(AppearanceSettings(preset,accent,brightness,night))}}
     bridge.navState={navSnapshot()}
+    bridge.placeRequests={query:String,lat:Double,lon:Double,nearby:Boolean,excluded:String ->
+        val p=NavPoint(lat,lon).takeIf {it.valid()}
+        val ids=JSON.parse<Array<String>>(excluded).toList()
+        JSON.stringify(PlaceSearch.requests(query,p,nearby,ids).map {json(*it.entries.map {e->e.key to e.value}.toTypedArray())}.toTypedArray())
+    }
+    bridge.placeResults={raw:String,lat:Double,lon:Double,nearby:Boolean ->
+        fun text(v:dynamic):String=if(jsTypeOf(v)=="string")v as String else ""
+        fun number(v:dynamic):Double=when(jsTypeOf(v)){"number"->v as Double;"string"->(v as String).toDoubleOrNull() ?: Double.NaN;else->Double.NaN}
+        val rows=JSON.parse<Array<dynamic>>(raw).take(6).mapNotNull {o->
+            if(o==null)null else {
+                val tags=o.extratags
+                PlaceSearch.place(text(o.name).ifBlank {text(o.display_name)},number(o.lat),number(o.lon),if(jsTypeOf(o.place_id)=="number")"${o.place_id}" else text(o.place_id),text(o.display_name),PlaceSearch.category(text(o.type)),text(tags?.phone).ifBlank {text(if(tags!=null)tags["contact:phone"] else null)},text(tags?.website).ifBlank {text(if(tags!=null)tags["contact:website"] else null)},text(tags?.opening_hours),text(o.source).ifBlank {"OSM / Nominatim"})
+            }
+        }
+        JSON.stringify(PlaceSearch.results(rows,NavPoint(lat,lon).takeIf {it.valid()},nearby).map {p->json("name" to p.name,"latitude" to p.point.latitude,"longitude" to p.point.longitude,"id" to p.id,"address" to p.address,"category" to p.category,"phone" to p.phone,"website" to p.website,"openingHours" to p.openingHours,"source" to p.source)}.toTypedArray())
+    }
+    bridge.navClearPreview={if(engine.state.value.parkedAllowed&&!navigator.state.active){navigator.stop();navRevision++;true}else false}
     bridge.navGeometry={JSON.stringify(navigator.state.route?.points?.map {arrayOf(it.latitude,it.longitude)}?.toTypedArray())}
     bridge.navFix={lat:Double,lon:Double,accuracy:Double,timestamp:Double,speed:Double,bearing:Double ->
         val f=NavFix(NavPoint(lat,lon),accuracy,timestamp.toLong(),if(speed.isFinite()&&speed>=0)speed else null,if(bearing.isFinite()&&bearing>=0)bearing else null)
@@ -106,7 +125,8 @@ fun main() {
             require(engine.state.value.parkedAllowed&&!navigator.state.active)
             val r=parseNavRoute(raw,name,lat,lon)
             val f=navFix
-            require(f!=null&&navigator.usable(f)&&NavigationGeometry.distance(f.point,r.points.first())<=1000) {"출발 위치 근처 자동차 경로를 확인하세요."}
+            require(f!=null&&navigator.usable(f)) {"출발 위치의 정확한 GPS를 확인하세요."}
+            NavigationGeometry.validateOrigin(r,f.point)
             navigator.preview(r);navRevision++;""
         }catch(e:Exception){e.message ?: "경로 응답을 확인하세요."}
     }

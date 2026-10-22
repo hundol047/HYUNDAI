@@ -32,6 +32,9 @@ class LiveNavigationTest {
         fun gps(p:NavPoint,speed:Float){shadowOf(manager).simulateLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {latitude=p.latitude;longitude=p.longitude;accuracy=5f;this.speed=speed;time=System.currentTimeMillis();elapsedRealtimeNanos=SystemClock.elapsedRealtimeNanos()});shadowOf(Looper.getMainLooper()).idle()}
         try {
             nav.locate();gps(points.first(),0f);nav.plan(end);shadowOf(Looper.getMainLooper()).idle()
+            assertNotNull(nav.state.value.guidance.route);assertTrue(nav.state.value.originReady)
+            nav.search("48.88,2.37");assertNull(nav.state.value.guidance.route);assertEquals(NavPoint(48.88,2.37),nav.state.value.places.single().point);assertNull(nav.state.value.selectedPlace)
+            nav.plan(end);shadowOf(Looper.getMainLooper()).idle()
             assertNotNull(nav.state.value.guidance.route);nav.start();assertFalse(nav.state.value.guidance.active);nav.start(true);assertTrue(nav.state.value.guidance.active);assertFalse(engine.state.value.parkedAllowed)
             org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofSeconds(2));gps(NavPoint(48.851,2.35),10f)
             assertTrue(nav.state.value.guidance.remainingMeters<3000);nav.stop();assertFalse(nav.state.value.guidance.active);assertFalse(engine.state.value.parkedAllowed)
