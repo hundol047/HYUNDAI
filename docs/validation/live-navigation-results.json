@@ -1,12 +1,13 @@
 {
   "type": "actual external provider requests; no fixtures or alternate proxy routes",
-  "timestamp": "2026-10-22T06:32:34.218183+00:00",
+  "timestamp": "2026-10-22T08:08:05.825622+00:00",
   "results": [
     {
       "name": "OSM map tile",
       "host": "tile.openstreetmap.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 177.3,
       "bytes": 6799,
       "sha256": "72513936d924818835d1685aaae200423e20bfcbaa2bcf24341ed8e09f291479",
       "evidence": {
@@ -18,6 +19,7 @@
       "host": "nominatim.openstreetmap.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 618.4,
       "bytes": 496,
       "sha256": "f0dd42ea33caa8df1653b79b5b80b5178d5189f801d4a28fd982016c35abb80b",
       "evidence": {
@@ -29,6 +31,7 @@
       "host": "router.project-osrm.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 1584.9,
       "bytes": 12401,
       "sha256": "5138e3967241a84a957ec2c93e982851487a19255984f6b5a9462a962c8d3cd0",
       "evidence": {
@@ -44,8 +47,9 @@
       "host": "nominatim.openstreetmap.org",
       "result": "passed",
       "httpStatus": 200,
-      "bytes": 447,
-      "sha256": "605cbc3ccbf3d20bb2df7e9e4ac1458f14da3e4cc1730073071dce2572ddfa8c",
+      "elapsedMs": 1172.8,
+      "bytes": 446,
+      "sha256": "87ed55d93d697d5b16a6256cf8434dc5ef02d037c8ea664ff18cf7be5407553f",
       "evidence": {
         "places": 1
       }
@@ -55,6 +59,7 @@
       "host": "router.project-osrm.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 1545.3,
       "bytes": 21375,
       "sha256": "957dad241dfc131f9e78d11318bf3349b4436b444305b40b5131da8bdb73fa7e",
       "evidence": {
@@ -70,6 +75,7 @@
       "host": "nominatim.openstreetmap.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 1489.8,
       "bytes": 417,
       "sha256": "26f4c834315a0537df1262e00b1d3849b71c79b52c7b368a6148b624c66032cf",
       "evidence": {
@@ -81,6 +87,7 @@
       "host": "router.project-osrm.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 503.9,
       "bytes": 8416,
       "sha256": "806b3e67cb30fab499af5a215d02d0aac1d86280efef20db65f1a0dd2de90414",
       "evidence": {
@@ -96,6 +103,7 @@
       "host": "nominatim.openstreetmap.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 711.1,
       "bytes": 498,
       "sha256": "64ac2e233c1d497ed591296754b2c7907b7068d321b65c1292dd7c0c2b4ee8cb",
       "evidence": {
@@ -107,6 +115,7 @@
       "host": "router.project-osrm.org",
       "result": "passed",
       "httpStatus": 200,
+      "elapsedMs": 448.4,
       "bytes": 11678,
       "sha256": "3e849786aeaabcff9e8895df2ad59457cf9a42b08a8b8e9f7da4a9d84fa95a0f",
       "evidence": {
@@ -114,6 +123,90 @@
         "durationSeconds": 230.1,
         "geometryPoints": 101,
         "maneuvers": 11,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Sao Paulo Brazil destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 699.3,
+      "bytes": 455,
+      "sha256": "55e3993ccd248580b839bea3c0e35caa4da41cc4af05ae3683e07ac4a05229d0",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Sao Paulo Brazil driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 988.8,
+      "bytes": 16329,
+      "sha256": "4ced41ce44682890acb5befbd4c4e9009212fe3c81a816271c42a671becc9c39",
+      "evidence": {
+        "distanceMeters": 3753,
+        "durationSeconds": 408.8,
+        "geometryPoints": 161,
+        "maneuvers": 15,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Cape Town South Africa destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 625.3,
+      "bytes": 486,
+      "sha256": "6a72c9129dc3c728eecdf6690b0d0eef2456930066f1a2e3b9df0e2bbacc5827",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Cape Town South Africa driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 421.7,
+      "bytes": 14210,
+      "sha256": "a5f3fcdd693b85ee632349a9bfb530924a6ea9ac03bd77c47102144fa58ea4df",
+      "evidence": {
+        "distanceMeters": 3208.3,
+        "durationSeconds": 315.3,
+        "geometryPoints": 119,
+        "maneuvers": 10,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Sydney Australia destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 831.1,
+      "bytes": 446,
+      "sha256": "c2068e19ef72adf6ec746da4f0fc9817f08b51f0ffb2bda92afe63ec8c072dd5",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Sydney Australia driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 346.9,
+      "bytes": 24083,
+      "sha256": "66bad35f975ced7fa4836bf9573a21a2b945cfc453946c6e9920bec9a91f1699",
+      "evidence": {
+        "distanceMeters": 8748.4,
+        "durationSeconds": 620.9,
+        "geometryPoints": 309,
+        "maneuvers": 15,
         "traffic": "not provided"
       }
     }

@@ -1,13 +1,13 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.5.0`.
+팀 **퓨처랩스** · CabinOS ONE `0.6.0`.
 
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **74개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **22개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **77개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **26개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 4건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3) |
@@ -15,7 +15,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **96개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개, 총 47개가 통과했습니다.** 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **103개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·지도 조작/성능 8개, 총 55개가 통과했습니다.** 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 
@@ -34,6 +34,7 @@ node scripts/web/verify.cjs
 node scripts/web/verify-map.cjs
 node scripts/web/verify-navigation.cjs
 node scripts/web/verify-appearance.cjs
+node scripts/web/verify-map-performance.cjs
 node scripts/web/record-demo.cjs
 ```
 
@@ -50,7 +51,7 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 ## 기기/실차 검증의 한계
 
-현재 머신에는 `/dev/kvm`이 없어 Android API 35 에뮬레이터를 소프트웨어 CPU 모드로 구동했습니다. Debug APK 설치와 Activity/프로세스 실행은 확인했지만 Android System UI 응답 지연과 빈 UIAutomation root로 장치 UI 스모크 검증을 완료하지 못했습니다. 안정 채널 에뮬레이터에서도 Android system_server의 SIGABRT가 관찰되어 이 머신의 장치 실행 검증은 중단했습니다. `scripts/device_smoke.py` 실행은 이 환경에서 **통과하지 않았으며**, 위 66개 테스트에 포함하지 않습니다. Release APK의 실제 장치 전체 실행 시나리오도 아직 통과했다고 주장하지 않습니다.
+현재 머신에는 `/dev/kvm`이 없어 Android API 35 에뮬레이터를 소프트웨어 CPU 모드로 구동했습니다. Debug APK 설치와 Activity/프로세스 실행은 확인했지만 Android System UI 응답 지연과 빈 UIAutomation root로 장치 UI 스모크 검증을 완료하지 못했습니다. 안정 채널 에뮬레이터에서도 Android system_server의 SIGABRT가 관찰되어 이 머신의 장치 실행 검증은 중단했습니다. `scripts/device_smoke.py` 실행은 이 환경에서 **통과하지 않았으며**, 위 JVM/Android 테스트에 포함하지 않습니다. Release APK의 실제 장치 전체 실행 시나리오도 아직 통과했다고 주장하지 않습니다.
 
 에뮬레이터 설치 성공, Robolectric UI 동작, 실제 차량 동작은 각각 다른 검증입니다. 심사 환경/하드웨어 가속 에뮬레이터에서 서명된 제출 APK를 설치하고 장치 스모크 검사를 추가 수행해야 합니다.
 
@@ -86,3 +87,7 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 직접 재현: `python3 scripts/check-navigation-live.py --all-regions`, `node scripts/web/verify-navigation-live.cjs`. 클라우드 Chromium에서 프록시 CA 신뢰가 필요하면 `scripts/prepare-browser-trust.sh`를 사용합니다. 작업 폴더 밖의 NSS 저장소 쓰기 권한이 필요할 수 있습니다. 기존 인증서/키를 교체하거나 TLS 검증을 해제하지 않습니다. 환경 상태 API는 network.state=unknown이어서 환경 전체 게시 완료는 주장하지 않습니다.
 
 현재 v0.5.0 Android 소스 `a0a0e48ee4ab11cdd993551dcbccce6416abe07d`의 [원격 테스트·Debug/Release 빌드·Lint](https://github.com/hundol047/HYUNDAI/actions/runs/39739092859)가 통과했습니다. 이후 웹 상단 시계를 ETA와 동일한 기기 시간대로 보정하고, America/New_York 시간대에서 내비게이션 브라우저 검사 13개를 다시 통과했습니다. APK 내용은 이 웹 시간대 수정으로 바뀌지 않습니다.
+
+## 0.6.0 지도 조작·성능 재검토
+
+[지도 성능 점검](MAP_PERFORMANCE_KO.md)에 6개 대륙 7도시의 실제 검색/경로 14건과 타일 1건, 실제 Chromium 확대/축소/드래그, 합성 100,000개 지점 경로의 CPU 4배 부하 비교를 기록했습니다. GPS마다 경로 Polyline을 다시 만들던 Android, 웹의 반복 중심 이동·DOM 재생성·ResizeObserver 누수와 확대 배율 덮어쓰기를 수정했습니다. 두 손가락 줌은 브라우저 터치 에뮬레이션으로 검증했으며 Android 실기기 FPS 검증은 아닙니다. 0.5.0 Actions 링크는 이전 소스의 근거입니다.

@@ -97,12 +97,10 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
-        userAgentValue="CabinOS_ONE/0.4.0 (+https://github.com/hundol047/HYUNDAI)"
+        userAgentValue="CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)"
         osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
-    };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=2.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
-    var lastRoute by remember {mutableStateOf<DrivingRoute?>(null)}
-    var previousPalette by remember {mutableStateOf<CabinPalette?>(null)}
-    var previousFix by remember {mutableStateOf<NavFix?>(null)}
+    };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
+    val renderer=remember(map){NavigationMapRenderer(map)}
     DisposableEffect(map,owner) {
         val observer=LifecycleEventObserver {_,e->if(e==Lifecycle.Event.ON_START)map.onResume() else if(e==Lifecycle.Event.ON_STOP)map.onPause()}
         owner.lifecycle.addObserver(observer);map.onResume()
@@ -114,24 +112,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
         view.gesturesEnabled=interactive
         view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
         view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
-        if(lastRoute!==g.route||previousFix!=g.fix||previousPalette!=palette) {
-            view.overlays.clear()
-            g.route?.let {r->
-                view.overlays.add(Polyline(view).apply {setPoints(r.points.map {GeoPoint(it.latitude,it.longitude)});outlinePaint.color=palette.accent or (0xFF shl 24);outlinePaint.strokeWidth=9f})
-                view.overlays.add(Marker(view).apply {position=GeoPoint(r.destination.point.latitude,r.destination.point.longitude);title=r.destination.name})
-                if(lastRoute!==r&&!g.active)view.controller.setCenter(GeoPoint(r.points.first().latitude,r.points.first().longitude))
-            }
-            g.fix?.let {f->
-                view.overlays.add(Marker(view).apply {
-                    position=GeoPoint(f.point.latitude,f.point.longitude);title=if(g.tracking)"현재 GPS 위치" else "마지막 확인 위치"
-                    icon=android.graphics.drawable.GradientDrawable().apply {shape=android.graphics.drawable.GradientDrawable.OVAL;setColor(if(g.tracking)android.graphics.Color.CYAN else android.graphics.Color.GRAY);setStroke(3,android.graphics.Color.WHITE);setSize(30,30)}
-                    setAnchor(Marker.ANCHOR_CENTER,Marker.ANCHOR_CENTER)
-                })
-                if(g.active&&g.tracking)view.controller.setCenter(GeoPoint(f.point.latitude,f.point.longitude))
-            }
-            view.overlays.add(CopyrightOverlay(context).apply {setCopyrightNotice("© OpenStreetMap contributors")})
-            lastRoute=g.route;previousFix=g.fix;previousPalette=palette;view.invalidate()
-        }
+        renderer.update(g,palette.accent or (0xFF shl 24))
     })
 }
 

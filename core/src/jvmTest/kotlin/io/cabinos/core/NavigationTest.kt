@@ -23,6 +23,31 @@ class NavigationTest {
         val r=NavigationGeometry.route(NavPlace("장거리",points.last()),points,23000.0,2000.0,maneuvers)
         assertEquals(1001,r.steps.size);assertTrue(r.steps.zipWithNext().all {(a,b)->a.atMeters<=b.atMeters})
     }
+    @Test fun boundedProjectionFindsTheMiddleOfASparseLongSegment() {
+        val points=listOf(NavPoint(0.0,0.0),NavPoint(0.0,1.0))
+        val r=NavigationGeometry.route(NavPlace("long segment",points.last()),points,111195.0,6000.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"arrive")))
+        val (at,gap)=NavigationGeometry.project(r,NavPoint(0.0,.455),50_000.0,90.0,1000.0)
+        assertEquals(50_593.725,at,.1);assertEquals(0.0,gap,.01)
+    }
+    @Test fun denseGlobalRouteProjectionMatchesUnboundedGeometryNearCurrentProgress() {
+        for((lat,lon) in listOf(-33.9 to 18.4,-23.5 to -46.6,52.5 to 13.4)) {
+            val points=(0..100_000).map {NavPoint(lat,lon+it*.000002)}
+            val r=NavigationGeometry.route(NavPlace("dense road",points.last()),points,20000.0,1500.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))
+            for(i in listOf(0,1,50_000,99_999,100_000)) {
+                val p=points[i];val previous=r.cumulative[i]
+                val full=NavigationGeometry.project(r,p,previous,90.0)
+                val bounded=NavigationGeometry.project(r,p,previous,90.0,300.0)
+                assertEquals(full.first,bounded.first,.001);assertEquals(full.second,bounded.second,.001)
+            }
+        }
+    }
+    @Test fun boundedProjectionHandlesDuplicatePointsAndDateLineBoundary() {
+        val a=NavPoint(0.0,179.99);val b=NavPoint(0.0,-179.99)
+        val points=listOf(a,a,b,b)
+        val r=NavigationGeometry.route(NavPlace("date line",b),points,2224.0,200.0,listOf(NavManeuver(a,"depart"),NavManeuver(b,"arrive")))
+        val (at,gap)=NavigationGeometry.project(r,NavPoint(0.0,180.0),1111.95,90.0,50.0)
+        assertEquals(r.geometryMeters/2,at,1.0);assertEquals(0.0,gap,.01)
+    }
     @Test fun sustainedBackwardTravelOnSameRoadAlsoRequestsRerouting() {
         val t=running();now+=8000;t.update(fix(NavPoint(37.004,127.0),speed=10.0))
         now+=1000;t.update(fix(NavPoint(37.003,127.0),speed=10.0));assertTrue(t.state.offRoute)

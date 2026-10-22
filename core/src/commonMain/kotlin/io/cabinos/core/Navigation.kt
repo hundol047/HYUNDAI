@@ -69,8 +69,19 @@ object NavigationGeometry {
     /** Project onto a polyline, correctly wrapping longitude across the date line. */
     fun project(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null):Pair<Double,Double> {
         var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY
-        for(i in 0 until route.points.lastIndex) {
-            val a=route.points[i];val b=route.points[i+1];val scale=cos(p.latitude*PI/180).coerceAtLeast(.00001)
+        // Cumulative distances are ordered. Visit only the physically reachable window
+        // on a GPS update, including segments that straddle either boundary.
+        fun lowerBound(target:Double):Int {
+            var low=0;var high=route.cumulative.size
+            while(low<high){val mid=(low+high) ushr 1;if(route.cumulative[mid]<target)low=mid+1 else high=mid}
+            return low
+        }
+        val bounded=previous!=null&&maxDelta!=null
+        val first=if(bounded)(lowerBound(previous!!-maxDelta!!)-1).coerceIn(0,route.points.lastIndex-1) else 0
+        val last=if(bounded)lowerBound(previous!!+maxDelta!!).coerceIn(first,route.points.lastIndex-1) else route.points.lastIndex-1
+        val scale=cos(p.latitude*PI/180).coerceAtLeast(.00001)
+        for(i in first..last) {
+            val a=route.points[i];val b=route.points[i+1]
             val ax=delta(a.longitude-p.longitude)*scale*111_195;val ay=(a.latitude-p.latitude)*111_195
             val bx=ax+delta(b.longitude-a.longitude)*scale*111_195;val by=(b.latitude-p.latitude)*111_195
             val dx=bx-ax;val dy=by-ay;val den=dx*dx+dy*dy
@@ -78,9 +89,7 @@ object NavigationGeometry {
             val gap=hypot(ax+t*dx,ay+t*dy)
             val at=route.cumulative[i]+t*(route.cumulative[i+1]-route.cumulative[i])
             if(previous!=null&&maxDelta!=null&&abs(at-previous)>maxDelta)continue
-            val segmentHeading=((atan2(dx,dy)*180/PI)+360)%360
-            val headingDifference=heading?.let {abs(delta(segmentHeading-it))} ?: 0.0
-            val headingPenalty=if(heading!=null&&den>25)40*(headingDifference/180).pow(2) else 0.0
+            val headingPenalty=if(heading!=null&&den>25){val segmentHeading=((atan2(dx,dy)*180/PI)+360)%360;40*(abs(delta(segmentHeading-heading))/180).pow(2)} else 0.0
             // At intersections prefer the nearby part of the route, not a later crossing.
             val score=gap+headingPenalty+(if(previous==null)0.0 else abs(at-previous)*.001)
             if(score<bestScore){bestScore=score;bestGap=gap;bestProgress=at}

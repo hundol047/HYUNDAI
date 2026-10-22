@@ -4,22 +4,22 @@ import argparse,datetime,hashlib,json,time,urllib.request,urllib.parse
 from pathlib import Path
 parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');args=parser.parse_args()
 artifact_dir=Path('artifacts/navigation-live');artifact_dir.mkdir(parents=True,exist_ok=True)
-headers={'User-Agent':'CabinOS_ONE/0.5.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
+headers={'User-Agent':'CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
 rows=[];blocked=False
-regions=[('Seoul Station South Korea',(126.9723,37.5547),(126.9779,37.5665)),('Paris France',(2.3522,48.8566),(2.2945,48.8584)),('New York USA',(-73.9857,40.7484),(-73.9851,40.7580)),('Tokyo Station Japan',(139.7671,35.6812),(139.7700,35.6900))]
+regions=[('Seoul Station South Korea',(126.9723,37.5547),(126.9779,37.5665)),('Paris France',(2.3522,48.8566),(2.2945,48.8584)),('New York USA',(-73.9857,40.7484),(-73.9851,40.7580)),('Tokyo Station Japan',(139.7671,35.6812),(139.7700,35.6900)),('Sao Paulo Brazil',(-46.6333,-23.5505),(-46.6559,-23.5614)),('Cape Town South Africa',(18.4241,-33.9249),(18.4174,-33.9065)),('Sydney Australia',(151.2060,-33.8730),(151.2153,-33.8568))]
 def check(name,url,validate):
  global blocked
- host=urllib.parse.urlsplit(url).hostname
+ host=urllib.parse.urlsplit(url).hostname;started=time.perf_counter()
  try:
   with urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=12) as r:
    payload=r.read(12_000_001);assert len(payload)<=12_000_000
    evidence=validate(payload)
    artifact=artifact_dir/(name.lower().replace(' ','-')+('.png' if 'tile' in name.lower() else '.json'));artifact.write_bytes(payload)
-   row={'name':name,'host':host,'result':'passed','httpStatus':r.status,'bytes':len(payload),'sha256':hashlib.sha256(payload).hexdigest(),'evidence':evidence}
+   row={'name':name,'host':host,'result':'passed','httpStatus':r.status,'elapsedMs':round((time.perf_counter()-started)*1000,1),'bytes':len(payload),'sha256':hashlib.sha256(payload).hexdigest(),'evidence':evidence}
  except Exception as e:
   message=str(e);denied='Tunnel connection failed: 403' in message or 'CONNECT' in message and '403' in message
   blocked|=denied
-  row={'name':name,'host':host,'result':'blocked' if denied else 'failed','reason':message}
+  row={'name':name,'host':host,'result':'blocked' if denied else 'failed','reason':message,'elapsedMs':round((time.perf_counter()-started)*1000,1)}
  rows.append(row);print(json.dumps(row,ensure_ascii=False),flush=True)
 def places(data):
  items=json.loads(data);assert isinstance(items,list) and items

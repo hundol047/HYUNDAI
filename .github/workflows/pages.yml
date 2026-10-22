@@ -37,6 +37,7 @@ jobs:
           node scripts/web/verify-map.cjs
           node scripts/web/verify-navigation.cjs
           node scripts/web/verify-appearance.cjs
+          CABIN_CPU_RATE=1 node scripts/web/verify-map-performance.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

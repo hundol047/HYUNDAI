@@ -94,14 +94,14 @@ import org.osmdroid.views.overlay.*
     val owner=LocalLifecycleOwner.current
     val map=remember {
         Configuration.getInstance().apply {
-            userAgentValue="CabinOS_ONE/0.3.0 (+https://github.com/hundol047/HYUNDAI)"
+            userAgentValue="CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)"
             osmdroidBasePath=java.io.File(context.cacheDir,"osm")
             osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles")
             tileDownloadThreads=2
         }
         MapView(context).apply {
             setTileSource(TileSourceFactory.MAPNIK);setMultiTouchControls(true)
-            minZoomLevel=3.0;maxZoomLevel=19.0;controller.setZoom(16.0)
+            minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(16.0)
             zoomController.setVisibility(org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
         }
     }

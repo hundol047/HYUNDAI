@@ -1,0 +1,60 @@
+{
+  "type": "headless Chromium deterministic map/GPS stress workload; synthetic 100000-point route, fixture GPS, aborted tile requests; not device FPS or live network latency",
+  "timestamp": "2026-10-22T08:02:41.596Z",
+  "baseline": true,
+  "metrics": {
+    "points": 100000,
+    "parseAndInitialRenderMs": 817.6000000014901,
+    "cpuThrottleRate": 4,
+    "idle": {
+      "recenterCalls": 25,
+      "guidanceChildListMutations": 25,
+      "stopButtonPreserved": false
+    },
+    "moving": {
+      "fixes": 120,
+      "p50Ms": 29.399999998509884,
+      "p95Ms": 34.399999998509884,
+      "maxMs": 58.600000001490116,
+      "rafIntervalP95Ms": 48.30000000447035,
+      "recenterCalls": 125,
+      "stopButtonPreserved": false,
+      "tracking": true
+    }
+  },
+  "checks": [
+    {
+      "name": "nearby zoom buttons, mouse wheel and drag pan work while parked",
+      "result": "passed"
+    },
+    {
+      "name": "chosen nearby zoom and center survive timer updates and resize",
+      "result": "failed",
+      "error": "Expected values to be strictly equal:\n\n15 !== 8\n"
+    },
+    {
+      "name": "navigation zoom and pan survive updates without changing route coordinates",
+      "result": "passed"
+    },
+    {
+      "name": "preview zoom is preserved and guidance starts with driving controls locked",
+      "result": "passed"
+    },
+    {
+      "name": "idle navigation preserves controls and does not repeatedly recenter map",
+      "result": "failed",
+      "error": "Expected values to be strictly equal:\n\n25 !== 0\n"
+    },
+    {
+      "name": "100000-point route remains responsive and keeps the stop control stable during GPS updates",
+      "result": "failed",
+      "error": "Expected values to be strictly equal:\n\nfalse !== true\n"
+    },
+    {
+      "name": "screen changes release map ResizeObservers",
+      "result": "failed",
+      "error": "Expected values to be strictly equal:\n\n8 !== 0\n"
+    }
+  ],
+  "pageErrors": []
+}
