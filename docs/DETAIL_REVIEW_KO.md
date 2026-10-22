@@ -47,3 +47,5 @@ source scripts/env.sh
 node scripts/web/verify-navigation-detail.cjs
 node scripts/web/verify-map-performance.cjs
 ```
+
+원격 Python 검사 단계가 실패한 뒤, 시작 직후 단조 시계가 60초 미만인 환경에서 캐시 테스트의 `(0, [])`를 만료 상태로 잘못 가정하는 문제를 재현했습니다. 테스트는 명시적 시계 10초를 사용해 61초 전 항목은 삭제하고 1초 전 항목은 유지하는지 확인하도록 고쳤습니다. 서버의 실제 60초 만료 정책은 바꾸지 않았습니다. 최초 원격 실행은 실패 이력으로 남기며 후속 실행 결과와 구분합니다.

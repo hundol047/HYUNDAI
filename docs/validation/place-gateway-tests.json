@@ -16,5 +16,6 @@
     "test_six_result_pages_cross_the_kakao_fifteen_result_boundary",
     "test_world_queries_do_not_get_restricted_to_korea_even_with_kakao_configured"
   ],
-  "kakaoLiveVerified": false
+  "kakaoLiveVerified": false,
+  "startupClockRegression": "Clock fixed at monotonic 10 seconds; a 61-second-old entry expires while a 1-second-old entry remains. No host uptime assumption."
 }

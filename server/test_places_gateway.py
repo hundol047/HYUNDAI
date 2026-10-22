@@ -5,6 +5,7 @@ import threading
 import unittest
 import urllib.request
 import urllib.error
+from unittest.mock import patch
 from http.server import ThreadingHTTPServer
 from places_gateway import Config, Gateway, GatewayError, GatewayServer
 
@@ -16,8 +17,14 @@ class Response(io.BytesIO):
 
 class GatewayTests(unittest.TestCase):
     def test_expired_location_query_cache_is_removed_without_another_search(self):
-        g=Gateway(self.config(),interval=0);g.cache["expired query/location"]=(0,[])
-        g.prune_expired();self.assertEqual(g.cache,{})
+        # A fresh CI VM may have a monotonic clock below sixty seconds.
+        # Use ages relative to an explicit clock, not an assumed expired zero.
+        with patch("places_gateway.time.monotonic", return_value=10.0):
+            g=Gateway(self.config(),interval=0)
+            g.cache["expired query/location"]=(10.0-61,[])
+            g.cache["fresh query/location"]=(10.0-1,[])
+            g.prune_expired()
+            self.assertEqual(g.cache,{"fresh query/location":(9.0,[])})
     def config(self, key=""):
         return Config("fixture-access-token-not-real", key)
 
