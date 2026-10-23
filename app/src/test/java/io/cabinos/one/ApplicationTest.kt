@@ -32,6 +32,23 @@ import org.robolectric.annotation.Config
 class ApplicationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @Test fun navigationNamesakeShowsActualDistanceAndHidesItWithoutUsableGps() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val origin=NavFix(NavPoint(37.6868,128.7550),5.0,System.currentTimeMillis(),0.0)
+        val place=NavPlace("대관령 옛길",NavPoint(37.5073769,127.1056803),address="서울특별시 송파구 송파대로 458",category="식당",source="OSM / Nominatim")
+        val hint=PlaceSearch.locationHint(origin.point,place.point)
+        fun show(ready:Boolean) {compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            NavigationScreen(AppState(parkedAllowed=true,networkAvailable=false),NavigationUi(places=listOf(place),mapFix=origin,gpsNotice=if(ready)"검사용 합성 GPS · 정확도 5m · 실기기 수신 아님" else "검사용 GPS 신호 끊김",
+                gpsConnection=if(ready)io.cabinos.one.platform.GpsConnection.READY else io.cabinos.one.platform.GpsConnection.STALE),vm.liveNavigation,{})
+        }}}}
+        show(true)
+        compose.onNodeWithText(hint).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("식당 · OSM / Nominatim").assertIsDisplayed()
+        capture("navigation-namesake")
+        show(false)
+        compose.onNodeWithText(hint).assertDoesNotExist()
+    }
+
     @Test fun activityLaunchAndDrivingSafetyAreRendered() {
         compose.onNodeWithText("CabinOS").assertIsDisplayed()
         val vm = ViewModelProvider(compose.activity)[CabinViewModel::class.java]

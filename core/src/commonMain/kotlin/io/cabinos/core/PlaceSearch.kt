@@ -16,7 +16,18 @@ object PlaceSearch {
         if(words.size<2)return null
         val cities=listOf("서울","부산","대구","인천","광주","대전","울산","세종","수원","성남","고양","용인","청주","천안","전주","포항","창원","김해","양산","춘천","원주","강릉","충주","제천","목포","여수","순천","경주","구미","안동","제주","서귀포")
         val last=words.last();val city=cities.firstOrNull {last.startsWith(it)&&last.length>=it.length+2&&last.all {c->c in '가'..'힣'}} ?: return null
-        return (words.dropLast(1)+city+last.substring(city.length)).joinToString(" ")
+        // The request boundary is 180 characters too. Never let the inserted
+        // space push a branch character off the end of the actual request.
+        return (words.dropLast(1)+city+last.substring(city.length)).joinToString(" ").takeIf {it.length<=180}
+    }
+    /** Search relevance is not proof of location. Keep global results, but make
+     * namesakes and distant branches visible before the user selects a route. */
+    fun locationHint(origin:NavPoint?,destination:NavPoint):String {
+        if(origin?.valid()!=true||!destination.valid())return ""
+        val meters=NavigationGeometry.distance(origin,destination)
+        val tenths=round(meters/100).toInt()
+        val distance=if(meters<1000)"${round(meters).toInt()} m" else "${tenths/10}.${tenths%10} km"
+        return "내 위치에서 직선 약 $distance"+if(meters>=100_000)" · 먼 결과: 주소·업종을 확인하세요." else ""
     }
     private fun clean(s:String,limit:Int)=s.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(limit)
     fun place(name:String,lat:Double,lon:Double,id:String="",address:String="",category:String="",phone:String="",website:String="",hours:String="",source:String="OSM / Nominatim"):NavPlace? {

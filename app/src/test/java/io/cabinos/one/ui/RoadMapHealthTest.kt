@@ -19,6 +19,18 @@ class RoadMapHealthTest {
         controller.setZoom(15.0);controller.setCenter(GeoPoint(37.5547,126.9723))
     }
     private fun fill(map:RoadMapView,indices:List<Long>){indices.forEach {map.tileProvider.tileCache.putTile(it,BitmapDrawable(map.resources,Bitmap.createBitmap(256,256,Bitmap.Config.ARGB_8888)))}}
+    @Test fun movingViewportCannotHidePersistentFailureAndRecoveryStartsANewTimeout(){
+        val m=map();try {
+            m.sampleHealth()
+            for(i in 1..17){now=i*1000L;m.controller.setCenter(GeoPoint(37.5547+i*.01,126.9723));m.sampleHealth()}
+            assertEquals(RoadMapStatus.UNAVAILABLE,m.health.status)
+            fill(m,m.visibleTileIndices());assertEquals(RoadMapStatus.READY,m.sampleHealth().status)
+            now=60000;m.controller.setCenter(GeoPoint(48.85,2.35))
+            assertEquals(RoadMapStatus.LOADING,m.sampleHealth().status)
+            now+=14999;assertEquals(RoadMapStatus.LOADING,m.sampleHealth().status)
+            now+=1;assertEquals(RoadMapStatus.UNAVAILABLE,m.sampleHealth().status)
+        }finally{m.endHealth();m.onDetach()}
+    }
     @Test fun healthRequiresEveryVisibleBitmapAndTimeoutIsNotHiddenByOneGoodTile(){
         val m=map();try {
             val tiles=m.visibleTileIndices();assertTrue(tiles.size>=4);assertEquals(RoadMapStatus.LOADING,m.sampleHealth().status)

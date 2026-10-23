@@ -32,6 +32,23 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/voice-n
   await test('background/cancel retires callbacks and prevents delayed searches',async()=>{await fresh();await page.locator('#nav-voice').click();await page.evaluate(()=>{window.oldVoice=mics.at(-1);Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));oldVoice.onresult({resultIndex:0,results:[Object.assign([{transcript:'late cafe',confidence:1}],{isFinal:true})]})});assert.equal(await page.evaluate(()=>oldVoice.aborted),true);assert.equal(await page.locator('[data-nav-place]').count(),0);assert.equal(await page.locator('#nav-voice').getAttribute('aria-pressed'),'false')});
   await test('language and recognition provider failures never become shop searches',async()=>{await fresh();await page.locator('#nav-voice').click();await page.evaluate(()=>mics.at(-1).onerror({error:'language-not-supported'}));assert.match(await page.locator('#nav-voice-status').textContent(),/지원하지/);assert.equal(await page.locator('[data-nav-place]').count(),0)});
   await test('a missing voice is reported without falsely claiming speech playback',async()=>{await fresh();await plan();await page.evaluate(()=>speechSynthesis.getVoices=()=>[]);await say('start navigation');await page.waitForFunction(()=>JSON.parse(CabinOS.navState()).active);assert.match(await page.locator('#nav-voice-status').textContent(),/음성팩/)});
+  await test('ambiguous opposing roads hold arrows and speech until precise GPS course returns',async()=>{
+   await fresh();await page.locator('[data-nav="locate"]').click();
+   await page.evaluate(()=>{
+    const now=Date.now.bind(Date);window.confidenceOffset=0;Date.now=()=>now()+confidenceOffset;
+    const p=[[2.35,48.85],[2.35,48.852],[2.3503,48.852],[2.3503,48.85]];
+    const raw={code:'Ok',routes:[{distance:478,duration:90,geometry:{coordinates:p},legs:[{steps:[{maneuver:{type:'depart',location:p[0]}},{maneuver:{type:'turn',modifier:'right',location:p[1]}},{maneuver:{type:'arrive',location:p[3]}}]}]}]};
+    CabinOS.navFix(48.85,2.35,5,Date.now(),0,-1);const error=CabinOS.navPreview(JSON.stringify(raw),'Ambiguous road fixture',48.85,2.3503);if(error)throw Error(error);if(!CabinOS.navStart(true))throw Error('start failed');
+    confidenceOffset+=30000;CabinOS.navFix(48.852,2.3503,5,Date.now(),5,180);cabinDemo.render();
+   });
+   const count=await page.evaluate(()=>said.length);assert.ok(count>0);
+   await page.evaluate(()=>{confidenceOffset+=5000;CabinOS.navFix(48.8515,2.35015,25,Date.now(),-1,-1);cabinDemo.render()});
+   assert.equal((await state()).directionUncertain,true);assert.equal(await page.locator('#nav-turn').isVisible(),false);assert.match(await page.locator('#nav-instruction').textContent(),/진행 방향 확인/);assert.match(await page.locator('#nav-eta').textContent(),/갱신 중지/);
+   await page.evaluate(()=>EchoNavigation.voiceCommand('안내 반복'));assert.equal(await page.evaluate(()=>said.length),count);
+   await page.screenshot({path:path.join(out,'gps-ambiguous-roads.png'),fullPage:true});
+   await page.evaluate(()=>{confidenceOffset+=1000;CabinOS.navFix(48.8514,2.3503,5,Date.now(),5,180);cabinDemo.render()});
+   assert.equal((await state()).directionUncertain,false);assert.equal(await page.locator('#nav-turn').isVisible(),true);assert.ok(await page.evaluate(n=>said.length>n,count));
+  });
   await test('microphone has a bounded 30 second session',async()=>{await fresh();await page.clock.install();await page.locator('#nav-voice').click();await page.clock.fastForward(31000);assert.equal(await page.evaluate(()=>mics.at(-1).aborted),true);assert.match(await page.locator('#nav-voice-status').textContent(),/시간/)});
   await test('voice controls fit mobile and no recognition service offers a clear fallback',async()=>{await fresh();await page.setViewportSize({width:390,height:844});await page.evaluate(()=>{delete window.SpeechRecognition;delete window.webkitSpeechRecognition});await page.locator('#nav-voice').click();assert.match(await page.locator('#nav-voice-status').textContent(),/제공하지/);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:path.join(out,'voice-mobile.png'),fullPage:true})});
   assert.deepEqual(errors,[]);

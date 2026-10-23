@@ -46,11 +46,11 @@ class NearbyPlaces(private val context:Context) {
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
     suspend fun search(origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())
-        val query="[out:json][timeout:12];(nwr[amenity~\"^(cafe|restaurant|fast_food)$\"](around:1200,${origin.latitude},${origin.longitude});nwr[leisure=park](around:1200,${origin.latitude},${origin.longitude});nwr[shop~\"^(convenience|supermarket|mall)$\"](around:1200,${origin.latitude},${origin.longitude}););out center tags 60;"
+        val query=NearbyGeometry.query(origin)
         val connection=URL("https://overpass-api.de/api/interpreter?data="+URLEncoder.encode(query,"UTF-8")).openConnection() as HttpURLConnection
         try {
             connection.connectTimeout=12_000;connection.readTimeout=18_000
-            connection.setRequestProperty("User-Agent","CabinOS_ONE/0.3.0 (+https://github.com/hundol047/HYUNDAI)")
+            connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)")
             connection.setRequestProperty("Accept","application/json")
             check(connection.responseCode==200) {"장소 검색 서버가 응답하지 않습니다 (${connection.responseCode})."}
             val bytes=connection.inputStream.use { it.readBytesLimited(2_000_000) }
@@ -63,7 +63,7 @@ class NearbyPlaces(private val context:Context) {
             return (0 until elements.length()).mapNotNull { index ->
                 val item=elements.optJSONObject(index) ?: return@mapNotNull null
                 val tags=item.optJSONObject("tags") ?: return@mapNotNull null
-                val name=tags.optString("name:ko").ifBlank { tags.optString("name") }
+                val name=NearbyGeometry.placeName(tags.opt("name:ko") as? String ?: "",tags.opt("name") as? String ?: "",tags.opt("name:en") as? String ?: "")
                 val category=when {
                     tags.optString("amenity")=="cafe"->"카페"
                     tags.optString("amenity") in listOf("restaurant","fast_food")->"식당"

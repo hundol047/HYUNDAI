@@ -10,6 +10,15 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NearbyPlacesTest {
+    @Test fun registeredEnglishNamesSurviveMissingLocalNamesWithoutInventingUnnamedBusinesses() {
+        val raw="""{"elements":[null,
+          {"type":"node","id":9,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:en":"Registered English name"}},
+          {"type":"node","id":10,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe"}}
+        ]}"""
+        val result=NearbyPlaces.parse(raw,MapPosition())
+        assertEquals(1,result.size);assertEquals("Registered English name",result.single().name)
+        assertFalse(result.single().simulated)
+    }
     @Test fun overpassNodesAndWayCentersUseActualCoordinatesAndRejectBadData() {
         // Deliberately synthetic protocol fixture; not evidence of a live provider request.
         val json="""{"elements":[

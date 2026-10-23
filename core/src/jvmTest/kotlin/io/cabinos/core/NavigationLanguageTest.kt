@@ -30,6 +30,17 @@ class NavigationLanguageTest {
             assertFalse(NavigationLanguages.arrival(code,60.0).contains("목적지"))
         }
     }
+    @Test fun allLanguagesDistinguishVehicleAccessFromArrivalAtTheRequestedBuilding(){
+        assertEquals(NavigationLanguages.codes.toSet(),navVehicleAccessLabels.keys)
+        for(code in NavigationLanguages.codes) {
+            val text=NavigationLanguages.arrival(code,51.9)
+            assertTrue("$code: $text",text.startsWith(navVehicleAccessLabels.getValue(code)))
+            assertTrue(text.contains("51"));assertFalse(text.contains('{'))
+            assertNotEquals(NavigationLanguages.arrival(code,0.0),text)
+        }
+        assertEquals("Vehicle route endpoint · Destination: ≈ 51 m",NavigationLanguages.arrival("en-NZ",51.9))
+        assertEquals(NavigationLanguages.arrival("en",51.9),NavigationLanguages.arrival("hi-IN",51.9))
+    }
     @Test fun commandsAreExactAndNamesRetainCase(){
         assertEquals(NavigationVoiceAction.STOP,NavigationVoice.parse("안내 종료!").action)
         assertEquals(NavigationVoiceAction.REPEAT,NavigationVoice.parse("Repeat").action)

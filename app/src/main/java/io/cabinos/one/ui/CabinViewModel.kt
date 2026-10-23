@@ -178,7 +178,7 @@ class CabinViewModel @Inject constructor(
                 val places=nearbyPlaces.search(origin)
                 if(foreground && state.value.parkedAllowed && state.value.networkAvailable && state.value.locationAvailable && state.value.activityOrigin==origin) {
                     engine.updateNearbyActivities(origin,places);mutableMapSelection.value=places.firstOrNull()?.id
-                    mutableNearbyStatus.value=if(places.isEmpty())"이 기준점 주변에 등록된 장소가 없습니다. 지도 중심을 바꿔 검색해 보세요." else "OpenStreetMap 등록 장소 ${places.size}곳 · 영업 여부와 실제 경로는 외부 지도에서 확인하세요."
+                    mutableNearbyStatus.value=if(places.isEmpty())"표시할 이름 있는 장소를 찾지 못했습니다. 지도 데이터에 없는 장소가 있을 수 있습니다." else "OpenStreetMap 등록 장소 ${places.size}곳 · 영업 여부와 실제 경로는 외부 지도에서 확인하세요."
                 }
             } catch(error:Exception) {
                 if(error is CancellationException)throw error

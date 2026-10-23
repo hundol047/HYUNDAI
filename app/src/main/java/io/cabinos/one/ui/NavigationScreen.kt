@@ -47,7 +47,7 @@ import java.util.Locale
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
             if(canPlan)Row {TextButton(onClick={languageDialog=true}){Text("언어 · ${ui.language}",color=Mint)};TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}}
         }
-        Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
+        Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||g.directionUncertain||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
         Text(ui.gpsNotice+if(ui.gpsAgeSeconds!=null)" · ${ui.gpsAgeSeconds}초 전 수신" else "",color=if(ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Amber else Muted,fontSize=11.sp)
         if(canPlan&&ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
             TextButton(onClick={nav.locate()}){Text("GPS 다시 연결",color=Blue)}
@@ -82,6 +82,8 @@ import java.util.Locale
                         Text("${index+1}. ${place.name}",color=White,fontSize=15.sp)
                         if(place.address.isNotBlank())Text(place.address,color=Muted,fontSize=11.sp)
                         Text(listOf(place.category,place.source).filter {it.isNotBlank()}.joinToString(" · "),color=Muted,fontSize=10.sp)
+                        val locationHint=PlaceSearch.locationHint(ui.mapFix?.takeIf {ui.gpsConnection==GpsConnection.READY}?.point,place.point)
+                        if(locationHint.isNotEmpty())Text(locationHint,color=Amber,fontSize=11.sp)
                         if(place.phone.isNotBlank())Text("전화 ${place.phone}",color=Muted,fontSize=11.sp)
                         if(place.openingHours.isNotBlank())Text("등록 영업시간 ${place.openingHours} · 현재 영업 여부 미확인",color=Muted,fontSize=10.sp)
                         if(place.website.isNotBlank())TextButton(onClick={nav.openPlaceWebsite(place)}){Text("상세정보/웹사이트 ↗",fontSize=11.sp,color=Blue)}
@@ -97,12 +99,12 @@ import java.util.Locale
                         if(r.destination.address.isNotBlank())Text(r.destination.address,color=Muted,fontSize=11.sp)
                         Spacer(Modifier.height(9.dp))
                         if(g.active) {
-                            if(g.tracking&&!g.offRoute)Text(g.turnSymbol,color=Blue,fontSize=48.sp)
+                            if(g.tracking&&!g.offRoute&&!g.directionUncertain)Text(g.turnSymbol,color=Blue,fontSize=48.sp)
                             Text(if(g.tracking&&!g.offRoute)g.nextInstruction else "위치·경로 확인 중",color=White,fontSize=23.sp)
-                            if(g.tracking&&!g.offRoute)Text("${navDistance(g.turnMeters)} 앞",color=Blue,fontSize=24.sp)
+                            if(g.tracking&&!g.offRoute&&!g.directionUncertain)Text("${navDistance(g.turnMeters)} 앞",color=Blue,fontSize=24.sp)
                         }
-                        if(!g.arrived)Text("남은 거리 ${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
-                        Text(if(g.arrived)"차량 경로 도착 · 안내 종료" else if(g.active&&(!g.tracking||g.offRoute))"도착 예상 갱신 중지" else "약 ${kotlin.math.ceil(g.remainingSeconds/60).toInt().coerceAtLeast(1)}분 · ${SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date(System.currentTimeMillis()+(g.remainingSeconds*1000).toLong()))} 도착 예상",color=Muted,fontSize=13.sp)
+                        if(!g.arrived)Text("남은 거리 ${if(g.directionUncertain)"약 " else ""}${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
+                        Text(if(g.arrived)"차량 경로 도착 · 안내 종료" else if(g.active&&(!g.tracking||g.offRoute||g.directionUncertain))"도착 예상 갱신 중지" else "약 ${kotlin.math.ceil(g.remainingSeconds/60).toInt().coerceAtLeast(1)}분 · ${SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date(System.currentTimeMillis()+(g.remainingSeconds*1000).toLong()))} 도착 예상",color=Muted,fontSize=13.sp)
                         if(r.destinationAccessMeters>30)Text("차량 접근 지점에서 목적지까지 직선 약 ${navDistance(r.destinationAccessMeters)} · 주차장·진입로를 확인하세요.",color=Amber,fontSize=12.sp)
                         if(canPlan&&r.destinationAccessMeters>100)Row {Checkbox(accessConfirmed,{accessConfirmed=it});Text("목적지와 차량 접근 지점의 차이를 확인했습니다.",color=White,fontSize=12.sp)}
                         Text("실시간 교통·차선 안내 미제공",color=Muted,fontSize=11.sp)

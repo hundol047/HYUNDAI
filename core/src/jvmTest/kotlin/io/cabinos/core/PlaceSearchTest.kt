@@ -4,6 +4,24 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PlaceSearchTest {
+    @Test fun namesakeLocationHintExposesDistantResultsWithoutRemovingGlobalSearchResults() {
+        val origin=NavPoint(37.6868,128.7550)
+        val restaurant=PlaceSearch.place("대관령 옛길",37.5073769,127.1056803,"namesake",category="식당")!!
+        assertTrue(PlaceSearch.locationHint(origin,restaurant.point).contains("146.7 km"))
+        assertTrue(PlaceSearch.locationHint(origin,restaurant.point).contains("먼 결과"))
+        assertEquals(listOf(restaurant),PlaceSearch.results(listOf(restaurant),origin,false))
+        assertEquals("",PlaceSearch.locationHint(null,restaurant.point))
+        assertEquals("",PlaceSearch.locationHint(NavPoint(Double.NaN,0.0),restaurant.point))
+        assertFalse(PlaceSearch.locationHint(restaurant.point,restaurant.point).contains("먼 결과"))
+    }
+    @Test fun spacingRetryNeverTruncatesTheBranchAtTheRequestLengthBoundary() {
+        val query="가".repeat(175)+" 원주무실"
+        assertEquals(180,query.length);assertNull(PlaceSearch.spacingSuggestion(query))
+        val shorter=query.drop(1);val suggestion=PlaceSearch.spacingSuggestion(shorter)!!
+        assertEquals(180,suggestion.length)
+        assertEquals(suggestion,PlaceSearch.requests(suggestion).single()["q"])
+        assertTrue(suggestion.endsWith("원주 무실"))
+    }
     @Test fun spacingRetryPreservesBusinessCityAndBranchWithoutBroadeningTheQuery() {
         assertEquals("스타벅스 원주 무실",PlaceSearch.spacingSuggestion("스타벅스 원주무실"))
         assertEquals("카페 서울 강남",PlaceSearch.spacingSuggestion("카페 서울강남"))

@@ -209,6 +209,32 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun ambiguousOpposingRoadsStopAndroidTtsAndPreciseCourseResumesIt() {
+        val points=listOf(origin,NavPoint(48.852,2.35),NavPoint(48.852,2.3503),NavPoint(48.85,2.3503))
+        val goal=NavPlace("GPS ambiguity fixture",points.last())
+        val loop=NavigationGeometry.route(goal,points,478.0,90.0,listOf(NavManeuver(points[0],"depart"),NavManeuver(points[1],"turn","right"),NavManeuver(points[3],"arrive")))
+        org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=loop}).use {f->
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            f.nav.locate();f.gps();f.nav.plan(goal);f.idle();f.nav.start()
+            fun position(point:NavPoint,accuracy:Float,bearing:Float?) {
+                val location=Location(LocationManager.GPS_PROVIDER).apply {
+                    latitude=point.latitude;longitude=point.longitude;this.accuracy=accuracy;time=f.now
+                    if(bearing!=null){this.bearing=bearing;speed=5f}
+                }
+                shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).forEach {it.onLocationChanged(location)};f.idle()
+            }
+            f.advance(30000);position(points[2],5f,180f)
+            val count=tts.spokenTextList.size;assertTrue(count>0)
+            f.advance(5000);position(NavPoint(48.8515,2.35015),25f,null)
+            assertTrue(f.nav.state.value.guidance.directionUncertain);assertTrue(tts.isStopped)
+            f.nav.handleVoice("안내 반복");assertEquals(count,tts.spokenTextList.size)
+            f.advance(1000);position(NavPoint(48.8514,2.3503),5f,180f)
+            assertFalse(f.nav.state.value.guidance.directionUncertain);assertTrue(tts.spokenTextList.size>count)
+        }
+    }
+
     @Test fun recoveredGpsRepeatsCurrentGuidanceThroughTheAndroidTtsApi() {
         org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
         Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->

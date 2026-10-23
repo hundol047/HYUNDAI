@@ -1,0 +1,36 @@
+package io.cabinos.core
+
+/** Road access is distinct from the requested building/POI in every supported pack. */
+internal val navVehicleAccessLabels=mapOf(
+    "ar" to "نهاية مسار السيارة",
+    "ca" to "Final de la ruta en cotxe",
+    "da" to "Bilrutens slutpunkt",
+    "de" to "Endpunkt der Fahrtroute",
+    "en" to "Vehicle route endpoint",
+    "eo" to "Fino de la aŭta itinero",
+    "es" to "Fin de la ruta en coche",
+    "es-ES" to "Fin de la ruta en coche",
+    "fi" to "Autoreitin päätepiste",
+    "fr" to "Fin de l’itinéraire en voiture",
+    "he" to "סוף מסלול הרכב",
+    "hu" to "Az autós útvonal végpontja",
+    "id" to "Titik akhir rute mobil",
+    "it" to "Fine del percorso in auto",
+    "ja" to "自動車ルートの終点",
+    "ko" to "자동차 도착 지점",
+    "my" to "ကားလမ်းကြောင်းအဆုံး",
+    "nl" to "Eindpunt van de autoroute",
+    "no" to "Bilrutens endepunkt",
+    "pl" to "Koniec trasy samochodowej",
+    "pt-BR" to "Fim da rota de carro",
+    "pt-PT" to "Fim do percurso de carro",
+    "ro" to "Sfârșitul traseului auto",
+    "ru" to "Конец автомобильного маршрута",
+    "sl" to "Konec avtomobilske poti",
+    "sv" to "Bilruttens slutpunkt",
+    "tr" to "Araç rotasının sonu",
+    "uk" to "Кінець автомобільного маршруту",
+    "vi" to "Điểm cuối tuyến đường ô tô",
+    "yo" to "Òpin ọ̀nà ọkọ̀ ayọ́kẹ́lẹ́",
+    "zh-Hans" to "驾车路线终点"
+)

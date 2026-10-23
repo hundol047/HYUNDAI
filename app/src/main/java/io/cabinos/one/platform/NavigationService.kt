@@ -41,7 +41,7 @@ open class NavigationService {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
         try {
             c.connectTimeout=12_000;c.readTimeout=20_000;c.instanceFollowRedirects=false
-            c.setRequestProperty("User-Agent","CabinOS_ONE/0.10.1 (+https://github.com/hundol047/HYUNDAI)")
+            c.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)")
             if(accessToken.isNotEmpty())c.setRequestProperty("Authorization","Bearer $accessToken")
             c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language",language+",en;q=0.7")
             check(c.responseCode==200) {if(c.responseCode==429)"서비스 요청 한도를 넘었습니다. 잠시 후 재시도하세요." else if(url.contains("/route/v1/driving/")&&c.responseCode in listOf(400,404,422))"경로 요청을 처리하지 못했습니다 (${c.responseCode}). 좌표·도로 연결·서버 주소를 확인하세요." else "내비게이션 서버 연결 실패 (${c.responseCode})"}
@@ -193,7 +193,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             val spacingNotice=if(resolvedSearchQuery!=query)"띄어쓰기를 나눠 검색했습니다: $resolvedSearchQuery · " else ""
             seenPlaceIds=page.seenIds;val result=page.places
             val combined=(old+result).distinctBy {it.id.ifBlank {it.name+it.point}}.take(PlaceSearch.maxResults)
-            mutable.value=mutable.value.copy(places=combined,hasMore=page.hasMore&&combined.size<PlaceSearch.maxResults,notice=spacingNotice+(if(result.isEmpty()&&page.hasMore)"이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요." else if(result.isEmpty())"등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다." else "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다."))
+            mutable.value=mutable.value.copy(places=combined,hasMore=page.hasMore&&combined.size<PlaceSearch.maxResults,notice=spacingNotice+(if(result.isEmpty()&&page.hasMore)"이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요." else if(result.isEmpty())"일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다." else "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다."))
             if(engine.state.value.preferences.voiceEnabled&&combined.isNotEmpty())speech.speakNavigation(combined.take(6).mapIndexed {i,p->"${i+1}. ${p.name}"}.joinToString(". "),language)
         }}
     }
@@ -215,7 +215,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     }
     private fun guide() {
         val g=tracker.state
-        if(!g.tracking||g.offRoute||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();spoken="";return}
+        if(!g.tracking||g.offRoute||g.directionUncertain||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();spoken="";return}
         val band=when{g.arrived->"arrived";g.turnMeters<60->"now";g.turnMeters<300->"soon";else->"ahead"}
         val key="${g.nextInstruction}|$band"
         if(key!=spoken&&!mutable.value.voiceListening){

@@ -14,6 +14,29 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationMapRendererTest {
+    @Test
+    @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+    fun dateLinePinsAndRoadStayNearTheViewportInsteadOfCrossingTheWholeWorld() {
+        for(direction in listOf(1.0,-1.0)) {
+            val map=map();val renderer=NavigationMapRenderer(map)
+            val a=NavPoint(-16.8,179.999*direction);val b=NavPoint(-16.8,-179.999*direction)
+            val r=NavigationGeometry.route(NavPlace("Boundary fixture",b),listOf(a,b),213.0,30.0,listOf(NavManeuver(a,"depart"),NavManeuver(b,"arrive")))
+            try {
+                renderer.update(Guidance(route=r,fix=NavFix(a,5.0,100),tracking=true),android.graphics.Color.MAGENTA)
+                val bitmap=android.graphics.Bitmap.createBitmap(1000,640,android.graphics.Bitmap.Config.ARGB_8888)
+                map.draw(android.graphics.Canvas(bitmap))
+                for(marker in map.overlays.filterIsInstance<Marker>()) {
+                    val point=map.projection.toPixels(marker.position,null)
+                    assertTrue("Marker must be near the visible date-line road: $point",point.x in 0..1000&&point.y in 0..640)
+                }
+                val pixels=IntArray(1000*640);bitmap.getPixels(pixels,0,1000,0,0,1000,640)
+                val xs=pixels.indices.filter {(pixels[it] and 0x00ffffff)==0x00ff00ff}.map {it%1000}
+                assertTrue("Road must actually be drawn",xs.isNotEmpty())
+                assertTrue("A 213m road must not stretch across the screen",xs.max()-xs.min()<200)
+                bitmap.recycle()
+            }finally{map.onDetach()}
+        }
+    }
     @Test fun selectedShopWithoutGpsHasAPinButNoInventedRoad() {
         val map=map();val renderer=NavigationMapRenderer(map);val shop=NavPlace("카페 판교점",NavPoint(37.3948,127.1112),id="101",address="검사용 지점 주소")
         try {

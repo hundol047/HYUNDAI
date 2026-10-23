@@ -21,7 +21,7 @@ internal data class RoadMapHealth(val status:RoadMapStatus=RoadMapStatus.LOADING
     }
 }
 internal fun configureRoadTiles(context:Context) {Configuration.getInstance().apply {
-    userAgentValue="CabinOS_ONE/0.10.1 (+https://github.com/hundol047/HYUNDAI)"
+    userAgentValue="CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)"
     osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
 }}
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */
@@ -30,15 +30,14 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
     var onHealth:((RoadMapHealth)->Unit)?=null
     var health=RoadMapHealth();private set
     private var online=true
-    private var viewport=""
-    private var waitingSince=clock()
+    private var waitingSince:Long?=null
     private var observing=false
     private val check=object:Runnable {override fun run(){if(!observing)return;sampleHealth();postDelayed(this,1000)}}
     init {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(2.0);controller.setCenter(GeoPoint(20.0,0.0))}
-    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=clock()};setUseDataConnection(available);sampleHealth()}
+    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null};setUseDataConnection(available);sampleHealth()}
     fun beginHealth(){if(!observing){observing=true;post(check)}}
     fun endHealth(){observing=false;removeCallbacks(check);onHealth=null}
-    fun retryRoads(){if(!online)return;waitingSince=clock();health=RoadMapHealth();onHealth?.invoke(health);invalidate()}
+    fun retryRoads(){if(!online)return;waitingSince=null;health=RoadMapHealth();onHealth?.invoke(health);invalidate()}
     internal fun visibleTileIndices():List<Long> {
         if(width<=0||height<=0)return emptyList()
         val p=projection;val s=p.screenRect
@@ -51,10 +50,12 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
         return (x0..x1).flatMap {x->(y0..y1).map {y->MapTileIndex.getTileIndex(z,((x%count)+count)%count,y)}}.distinct()
     }
     internal fun sampleHealth():RoadMapHealth {
-        val indices=visibleTileIndices();val key=indices.joinToString(",")
-        if(viewport!=key){viewport=key;waitingSince=clock()}
+        val indices=visibleTileIndices()
         val loaded=indices.count {index->(tileProvider.tileCache.getMapTile(index) as? BitmapDrawable)?.bitmap?.let {!it.isRecycled}==true}
-        val status=when{!online->RoadMapStatus.OFFLINE;indices.isNotEmpty()&&loaded==indices.size->RoadMapStatus.READY;clock()-waitingSince>=15_000&&loaded<indices.size->RoadMapStatus.UNAVAILABLE;loaded>0->RoadMapStatus.PARTIAL;else->RoadMapStatus.LOADING}
+        val complete=indices.isNotEmpty()&&loaded==indices.size
+        // Moving to another unloaded viewport is still the same unresolved gap.
+        if(!online||indices.isEmpty()||complete)waitingSince=null else if(waitingSince==null)waitingSince=clock()
+        val status=when{!online->RoadMapStatus.OFFLINE;complete->RoadMapStatus.READY;waitingSince?.let {clock()-it>=15_000}==true->RoadMapStatus.UNAVAILABLE;loaded>0->RoadMapStatus.PARTIAL;else->RoadMapStatus.LOADING}
         val next=RoadMapHealth(status,indices.size,loaded)
         if(health!=next){health=next;post {onHealth?.invoke(health)}}
         return next

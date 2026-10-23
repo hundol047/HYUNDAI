@@ -11,6 +11,12 @@
  const text=(id,value)=>{const e=$(id);if(e&&e.textContent!==value)e.textContent=value};
  const canPlan=()=>state?.parked&&!nav?.active&&!document.hidden;
  const valid=(lat,lon)=>Number.isFinite(lat)&&Number.isFinite(lon)&&Math.abs(lat)<=90&&Math.abs(lon)<=180;
+ const nearLongitude=(longitude,reference)=>longitude+360*Math.round((reference-longitude)/360);
+ function alignWorldCopy(){
+  if(!map)return;const reference=map.getCenter().lng;
+  if(line){const shift=360*Math.round((reference-line.getBounds().getCenter().lng)/360);if(shift)line.setLatLngs(line.getLatLngs().map(p=>[p.lat,p.lng+shift]))}
+  for(const pin of [marker,placePin])if(pin){const p=pin.getLatLng(),lon=nearLongitude(p.lng,reference);if(lon!==p.lng)pin.setLatLng([p.lat,lon])}
+ }
  function cancel(){generation++;controller?.abort();controller=null;busy=false}
  async function get(url,token=''){
   controller=new AbortController();const current=controller,signal=current.signal,timer=setTimeout(()=>{timedOut=true;current.abort()},25000);let timedOut=false;
@@ -50,7 +56,7 @@
    results=[...new Map([...previous,...unique].map(p=>[p.id||[p.name,p.latitude,p.longitude].join('|'),p])).values()].slice(0,18);
    const oldSeen=seenPlaceIds.length;seenPlaceIds=[...new Set([...seenPlaceIds,...rows.map(p=>p.id).filter(Boolean)])].slice(0,18);hasMore=rows.length>=6&&seenPlaceIds.length>oldSeen&&seenPlaceIds.length<18&&results.length<18;
    const spacingNotice=lastResolvedQuery!==query?'띄어쓰기를 나눠 검색했습니다: '+lastResolvedQuery+' · ':'';
-   notice=spacingNotice+(!unique.length&&hasMore?'이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요.':unique.length?'가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.':'등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.');
+   notice=spacingNotice+(!unique.length&&hasMore?'이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요.':unique.length?'가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.':'일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.');
   })
  }
  async function plan(place){
@@ -104,7 +110,7 @@
  function stopNavigationVoice(){voiceGeneration++;if(navigationVoice)window.speechSynthesis?.cancel();navigationVoice=false;spoken=''}
  function voiceFor(tag){const voices=window.speechSynthesis?.getVoices()||[],base=tag.split('-')[0].toLowerCase();return voices.find(v=>v.lang.toLowerCase()===tag.toLowerCase())||voices.find(v=>v.lang.split('-')[0].toLowerCase()===base)}
  function announce(text,tag){const voice=voiceFor(tag);if(!voice||!window.SpeechSynthesisUtterance){window.EchoVoice?.notice('선택한 언어의 음성팩이 없습니다. 화면 안내를 사용하거나 기기 음성팩을 설치하세요.');return false}const utterance=new SpeechSynthesisUtterance(text);utterance.lang=voice.lang;utterance.voice=voice;const speechId=++voiceGeneration;utterance.onend=utterance.onerror=()=>{if(speechId===voiceGeneration)navigationVoice=false};speechSynthesis.cancel();navigationVoice=true;speechSynthesis.speak(utterance);return true}
- function speak(){if(!window.speechSynthesis||window.EchoVoice?.listening)return;if(!nav?.tracking||nav.offRoute||!state.voice){stopNavigationVoice();return;}const band=nav.arrived?'arrived':nav.turnMeters<60?'now':nav.turnMeters<300?'soon':'ahead';const key=nav.instruction+'|'+band+'|'+nav.instructionLanguage;if(key===spoken)return;const distance=new Intl.NumberFormat(nav.instructionLanguage,{style:'unit',unit:'meter',unitDisplay:'long',maximumFractionDigits:0}).format(nav.turnMeters);if(announce(nav.arrived?nav.instruction:bridge.navSpoken(distance,nav.instruction),nav.instructionLanguage))spoken=key}
+ function speak(){if(!window.speechSynthesis||window.EchoVoice?.listening)return;if(!nav?.tracking||nav.offRoute||nav.directionUncertain||!state.voice){stopNavigationVoice();return;}const band=nav.arrived?'arrived':nav.turnMeters<60?'now':nav.turnMeters<300?'soon':'ahead';const key=nav.instruction+'|'+band+'|'+nav.instructionLanguage;if(key===spoken)return;const distance=new Intl.NumberFormat(nav.instructionLanguage,{style:'unit',unit:'meter',unitDisplay:'long',maximumFractionDigits:0}).format(nav.turnMeters);if(announce(nav.arrived?nav.instruction:bridge.navSpoken(distance,nav.instruction),nav.instructionLanguage))spoken=key}
  function setLanguage(tag){if(!canPlan()||!bridge.navSetLanguage(tag))return false;cancel();stopNavigationVoice();cache.clear();results=[];hasMore=false;nav=JSON.parse(bridge.navState());render();return true}
  async function voiceCommand(raw){
   if(document.hidden)return;const c=JSON.parse(bridge.navVoiceCommand(raw));
@@ -125,12 +131,11 @@
   '↰':'M35 42V23a9 9 0 0 0-9-9H8m12-10L8 14l12 10',
   '↱':'M13 42V23a9 9 0 0 1 9-9h18M28 4l12 10-12 10',
   '↶':'M36 42V18a12 12 0 0 0-24 0v13m-8-9 8 9 8-9',
-  '⟳':'M33 10a16 16 0 1 0 6 22M33 10h10V0',
  };
  function renderManeuver(symbol){
   const e=$('nav-symbol');if(!e||e.dataset.symbol===symbol)return;
   e.dataset.symbol=symbol;e.setAttribute('aria-hidden','true');
-  const shape=symbol==='●'?'<circle cx="24" cy="24" r="14"/>':`<path d="${maneuverPaths[symbol]||maneuverPaths['↑']}"/>`;
+  const shape=symbol==='◎'?'<circle cx="24" cy="24" r="12"/><path d="M24 3v9m21 12h-9M24 45v-9M3 24h9"/>':symbol==='●'?'<circle cx="24" cy="24" r="14"/>':`<path d="${maneuverPaths[symbol]||maneuverPaths['↑']}"/>`;
   e.innerHTML=`<svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">${shape}</svg>`;
  }
  function renderGuidance(planAllowed){
@@ -142,8 +147,8 @@
   }
   if(!nav.hasRoute){text('nav-empty',planAllowed?'국가 제한 없이 검색합니다. 정확한 기기 GPS로 출발 위치를 정해 주세요.':'목적지 설정은 안전한 주차 확인 후 가능합니다.');return}
   text('nav-destination',nav.destination);text('nav-destination-address',selection?.address||'');$('nav-destination-address').hidden=!selection?.address;text('nav-instruction',nav.active?(nav.tracking&&!nav.offRoute?nav.instruction:'위치·경로 확인 중'):nav.arrived?nav.instruction:'자동차 경로 미리보기');
-  $('nav-turn').hidden=!(nav.active&&nav.tracking&&!nav.offRoute);renderManeuver(nav.turnSymbol||'↑');text('nav-turn-distance',distance(nav.turnMeters)+' 앞');
-  text('nav-remaining',distance(nav.remainingMeters));$('nav-remaining').closest('p').hidden=nav.arrived;text('nav-eta',nav.arrived?'차량 경로 도착 · 안내 종료':nav.active&&(!nav.tracking||nav.offRoute)?'도착 예상 갱신 중지':`약 ${Math.max(1,Math.ceil(nav.remainingSeconds/60))}분 · ${etaFormat.format(new Date(Date.now()+nav.remainingSeconds*1000))} 도착 예상`);
+  $('nav-turn').hidden=!(nav.active&&nav.tracking&&!nav.offRoute&&!nav.directionUncertain);renderManeuver(nav.turnSymbol||'↑');text('nav-turn-distance',distance(nav.turnMeters)+' 앞');
+  text('nav-remaining',(nav.directionUncertain?'약 ':'')+distance(nav.remainingMeters));$('nav-remaining').closest('p').hidden=nav.arrived;text('nav-eta',nav.arrived?'차량 경로 도착 · 안내 종료':nav.active&&(!nav.tracking||nav.offRoute||nav.directionUncertain)?'도착 예상 갱신 중지':`약 ${Math.max(1,Math.ceil(nav.remainingSeconds/60))}분 · ${etaFormat.format(new Date(Date.now()+nav.remainingSeconds*1000))} 도착 예상`);
   $('nav-access').hidden=!(nav.destinationAccessMeters>30);text('nav-access',`차량 접근 지점에서 목적지까지 직선 약 ${distance(nav.destinationAccessMeters)} · 주차장·진입로를 확인하세요.`);
   text('nav-origin-access',nav.originAccessMeters>45?`출발 GPS와 연결도로 시작점이 약 ${distance(nav.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다.`:'출발 위치의 정확하고 최신인 GPS를 확인해 주세요.');$('nav-origin-access').hidden=!planAllowed||nav.originReady;
   const start=$('nav-guidance').querySelector('[data-nav="start"]');if(start)start.disabled=busy||!nav.originReady||(confirm&&!accessConfirmed);
@@ -156,23 +161,24 @@
   $('nav-search').disabled=busy||!state.network;$('nav-locate').disabled=busy;$('nav-cancel').hidden=!busy||!planAllowed;refreshGpsStatus();text('nav-gps-status',gpsNotice+(nav.gpsReady&&nav.gpsAgeSeconds!==null?' · '+nav.gpsAgeSeconds+'초 전 수신':''));$('nav-gps-help').hidden=!['POOR','STALE','DENIED','DISABLED'].includes(gpsState);$('nav-status').textContent=nav.active||nav.arrived?nav.status:notice;
   $('nav-notice').textContent=(busy?'요청 중… ':'')+notice+(!state.network?' · 오프라인: 새 지도·검색·재탐색 불가':'');
   if(document.activeElement!==$('nav-query'))$('nav-query').value=query;
-  const resultKey=JSON.stringify(results)+String(busy)+String(hasMore);if($('nav-results').dataset.key!==resultKey){$('nav-results').dataset.key=resultKey;$('nav-results').innerHTML=results.map((p,i)=>`<button data-nav-place="${i}" ${busy?'disabled':''}><b>${i+1}. ${esc(p.name)}</b>${p.address?`<small>${esc(p.address)}</small>`:''}<small>${esc([p.category,p.source].filter(Boolean).join(' · '))}</small>${p.phone?`<small>전화 ${esc(p.phone)}</small>`:''}${p.openingHours?`<small>등록 영업시간 ${esc(p.openingHours)} · 현재 영업 여부 미확인</small>`:''}<small>지도에 표시 · 자동차 경로 계산 →</small></button>${p.website?`<a href="${esc(p.website)}" data-place-external target="_blank" rel="noopener noreferrer">상세정보/웹사이트 ↗</a>`:''}`).join('')+(hasMore?`<button data-nav="more" ${busy?'disabled':''}>다른 결과 더 보기 (최대 18개)</button>`:'')}
+  const currentOrigin=origin(),locationHints=results.map(p=>currentOrigin?bridge.placeLocationHint(currentOrigin.latitude,currentOrigin.longitude,p.latitude,p.longitude):'');
+  const resultKey=JSON.stringify([results,locationHints])+String(busy)+String(hasMore);if($('nav-results').dataset.key!==resultKey){$('nav-results').dataset.key=resultKey;$('nav-results').innerHTML=results.map((p,i)=>`<button data-nav-place="${i}" ${busy?'disabled':''}><b>${i+1}. ${esc(p.name)}</b>${p.address?`<small>${esc(p.address)}</small>`:''}<small>${esc([p.category,p.source].filter(Boolean).join(' · '))}</small>${locationHints[i]?`<small class="nav-place-distance">${esc(locationHints[i])}</small>`:''}${p.phone?`<small>전화 ${esc(p.phone)}</small>`:''}${p.openingHours?`<small>등록 영업시간 ${esc(p.openingHours)} · 현재 영업 여부 미확인</small>`:''}<small>지도에 표시 · 자동차 경로 계산 →</small></button>${p.website?`<a href="${esc(p.website)}" data-place-external target="_blank" rel="noopener noreferrer">상세정보/웹사이트 ↗</a>`:''}`).join('')+(hasMore?`<button data-nav="more" ${busy?'disabled':''}>다른 결과 더 보기 (최대 18개)</button>`:'')}
 
   renderGuidance(planAllowed);
   roadTiles?.setOnline(state.network);renderRoadHealth();
-  if(!map&&window.L){map=L.map('navigation-map',{trackResize:false,worldCopyJump:true,minZoom:1,maxZoom:19}).setView([20,0],2);const roadLayer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,updateWhenIdle:true,updateWhenZooming:false,keepBuffer:2,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'}).addTo(map);roadTiles=window.CabinRoadTiles.attach(map,roadLayer,h=>{roadHealth=h;renderRoadHealth()});roadTiles.setOnline(state.network);resizeObserver=new ResizeObserver(()=>{if(map){map.stop();map.invalidateSize({animate:false,debounceMoveend:true})}});resizeObserver.observe($('navigation-map'))}
+  if(!map&&window.L){map=L.map('navigation-map',{trackResize:false,worldCopyJump:true,minZoom:1,maxZoom:19}).setView([20,0],2);map.on('moveend',alignWorldCopy);const roadLayer=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,updateWhenIdle:true,updateWhenZooming:false,keepBuffer:2,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'}).addTo(map);roadTiles=window.CabinRoadTiles.attach(map,roadLayer,h=>{roadHealth=h;renderRoadHealth()});roadTiles.setOnline(state.network);resizeObserver=new ResizeObserver(()=>{if(map){map.stop();map.invalidateSize({animate:false,debounceMoveend:true})}});resizeObserver.observe($('navigation-map'))}
   if(!map)return;const accent=getComputedStyle(document.documentElement).getPropertyValue('--blue').trim();if(line&&accent!==lastAccent)line.setStyle({color:accent});lastAccent=accent;
   if(mapInteractive!==planAllowed){mapInteractive=planAllowed;if(planAllowed&&!map.zoomControl._map)map.zoomControl.addTo(map);if(!planAllowed&&map.zoomControl._map)map.zoomControl.remove();for(const handler of ['dragging','scrollWheelZoom','doubleClickZoom','boxZoom','keyboard','touchZoom'])map[handler]?.[planAllowed?'enable':'disable']()}
   if(revision!==nav.revision){revision=nav.revision;if(line){map.removeLayer(line);line=null}const geometry=bridge.navGeometryPoints?bridge.navGeometryPoints():JSON.parse(bridge.navGeometry());if(geometry){const wrapped=[];for(const p of geometry){let lon=p[1];if(wrapped.length){while(lon-wrapped.at(-1)[1]>180)lon-=360;while(lon-wrapped.at(-1)[1]<-180)lon+=360}wrapped.push([Math.max(-85,Math.min(85,p[0])),lon])}line=L.polyline(wrapped,{color:accent||'#58a9ff',weight:6}).addTo(map);const bounds=line.getBounds();if(nav.fix&&!nav.active){let lon=nav.fix.longitude;const reference=wrapped[0][1];while(lon-reference>180)lon-=360;while(lon-reference< -180)lon+=360;bounds.extend([nav.fix.latitude,lon])}map.fitBounds(bounds,{padding:[30,30],maxZoom:16})}}
   const nextSelection=selection?[selection.id,selection.latitude,selection.longitude,selection.name].join('|'):'';
-  if(nextSelection!==selectionKey){selectionKey=nextSelection;if(placePin){map.removeLayer(placePin);placePin=null}if(selection){const point=[Math.max(-85,Math.min(85,selection.latitude)),selection.longitude];placePin=L.circleMarker(point,{radius:9,color:'#ffcb7a',fillColor:'#a46d26',fillOpacity:1,weight:3}).bindTooltip(document.createTextNode(selection.name+(selection.address?' · '+selection.address:''))).addTo(map);if(!nav.hasRoute)map.setView(point,16,{animate:false})}}
+  if(nextSelection!==selectionKey){selectionKey=nextSelection;if(placePin){map.removeLayer(placePin);placePin=null}if(selection){const point=[Math.max(-85,Math.min(85,selection.latitude)),nearLongitude(selection.longitude,map.getCenter().lng)];placePin=L.circleMarker(point,{radius:9,color:'#ffcb7a',fillColor:'#a46d26',fillOpacity:1,weight:3}).bindTooltip(document.createTextNode(selection.name+(selection.address?' · '+selection.address:''))).addTo(map);if(!nav.hasRoute)map.setView(point,16,{animate:false})}}
   const following=nav.active&&nav.tracking;
   if(nav.fix){let lon=nav.fix.longitude;const reference=map.getCenter().lng;while(lon-reference>180)lon-=360;while(lon-reference< -180)lon+=360;const point=[Math.max(-85,Math.min(85,nav.fix.latitude)),lon];const moved=!lastFixPoint||point[0]!==lastFixPoint[0]||point[1]!==lastFixPoint[1];
    if(!marker)marker=L.circleMarker(point,{radius:9,color:'#fff',fillOpacity:1,fillColor:'#62e2c3'}).addTo(map);else if(moved)marker.setLatLng(point);
    if(lastTracking!==nav.tracking){marker.setStyle({fillColor:nav.tracking?'#62e2c3':'#81949c'});lastTracking=nav.tracking}
    if((following&&(moved||!wasFollowing))||(!lastFixPoint&&!nav.hasRoute&&!selection))map.setView(point,Math.max(map.getZoom(),15),{animate:false});lastFixPoint=point;
   }else if(marker){map.removeLayer(marker);marker=null;lastFixPoint=null;lastTracking=null}
-  wasFollowing=following;
+  alignWorldCopy();wasFollowing=following;
 
  }
  function renderRoadHealth(){const e=$('nav-map-status');if(!e)return;text('nav-map-status',window.CabinRoadTiles.message(roadHealth));$('nav-road-health').hidden=roadHealth.status==='READY';$('nav-tiles-retry').hidden=roadHealth.status!=='UNAVAILABLE'||!canPlan()}

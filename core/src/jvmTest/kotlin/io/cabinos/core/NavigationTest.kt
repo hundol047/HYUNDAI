@@ -4,6 +4,92 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun opposingRoadsInsideGpsUncertaintyHoldTurnsAndRecoverWithPreciseCourse() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.002,0.0),NavPoint(.002,.0003),NavPoint(0.0,.0003))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,478.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p[1],"turn","right"),NavManeuver(p.last(),"arrive")))
+        val t=running(r)
+        now+=30_000;t.update(NavFix(p[2],5.0,now,5.0,180.0))
+        now+=5000;t.update(NavFix(NavPoint(.0015,.00015),25.0,now,null,null))
+        assertTrue(t.state.tracking);assertTrue(t.state.directionUncertain);assertFalse(t.state.offRoute)
+        assertEquals("GPS 위치·진행 방향 확인 중",t.state.nextInstruction);assertFalse(t.state.arrived)
+        now+=1000;t.update(NavFix(NavPoint(.0014,.0003),5.0,now,5.0,180.0))
+        assertFalse(t.state.directionUncertain);assertTrue(t.state.tracking);assertFalse(t.state.offRoute)
+        assertNotEquals("GPS 위치·진행 방향 확인 중",t.state.nextInstruction)
+    }
+    @Test fun continuityNeverPrefersADistantSegmentOverAnAvailablePlausibleRoad() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.002,0.0),NavPoint(.002,.002),NavPoint(0.0,.002))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,667.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p.last(),"arrive")))
+        val (_,gap)=NavigationGeometry.project(r,NavPoint(.001,0.0),550.0,null,1000.0,40.0,2.0,550.0,50.0)
+        assertTrue("A close route segment must take priority over continuity outside GPS tolerance",gap<1)
+        val (_,offGap)=NavigationGeometry.project(r,NavPoint(.001,.005),550.0,null,1000.0,40.0,2.0,550.0,50.0)
+        assertTrue("A truly off-road fix must remain off road",offGap>50)
+    }
+    @Test fun recordedNarrowIstanbulLoopKeepsProgressWithCoarseGpsAndNoCourse() {
+        val points=javaClass.getResourceAsStream("/world-istanbul.csv")!!.bufferedReader().useLines {lines->
+            lines.filter {it.isNotBlank()&&!it.startsWith("#")}.map {line->val v=line.split(',');NavPoint(v[0].toDouble(),v[1].toDouble())}.toList()
+        }
+        val total=points.zipWithNext().sumOf {(a,b)->NavigationGeometry.distance(a,b)}
+        val r=NavigationGeometry.route(NavPlace("Recorded road",points.last()),points,total,600.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))
+        for(accuracy in listOf(25.0,50.0)) for(speed in listOf(10.0,null)) {
+            val tracker=running(r);var segment=0;var at=10.0;var index=0
+            while(at<total-100) {
+                while(segment<points.lastIndex-1&&r.cumulative[segment+1]<at)segment++
+                val t=(at-r.cumulative[segment])/(r.cumulative[segment+1]-r.cumulative[segment])
+                val lat=points[segment].latitude+(points[segment+1].latitude-points[segment].latitude)*t
+                val lon=points[segment].longitude+(points[segment+1].longitude-points[segment].longitude)*t
+                val angle=index*2.399963229728653;val radius=accuracy-1
+                val noisy=NavPoint(lat+kotlin.math.cos(angle)*radius/111195,lon+kotlin.math.sin(angle)*radius/(111195*kotlin.math.cos(lat*kotlin.math.PI/180)))
+                now+=1000;tracker.update(NavFix(noisy,accuracy,now,speed))
+                assertTrue(tracker.state.tracking);assertFalse("False off-route at $at m / accuracy $accuracy",tracker.state.offRoute)
+                assertFalse(tracker.state.arrived);assertTrue(kotlin.math.abs(tracker.state.progressMeters-at)<150)
+                at+=10;index++
+            }
+        }
+    }
+    @Test fun denselySampledSegmentsKeepCourseDirectionAndDuplicateVerticesAreNotCandidates() {
+        val p=(0..50).map {NavPoint(it*.000018,0.0)}+
+            (50 downTo 0).flatMap {listOf(NavPoint(it*.000018,.0001),NavPoint(it*.000018,.0001))}
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,211.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p.last(),"arrive")))
+        val (at,gap)=NavigationGeometry.project(r,NavPoint(.00045,0.0),100.0,180.0,400.0)
+        assertTrue("Short/duplicate segments must not attract the fix to the opposing leg",at>r.cumulative[51])
+        assertTrue(gap<12)
+    }
+    @Test fun courseCanDisambiguateTheReturnLegWithinCoarsePositionUncertainty() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.001,0.0),NavPoint(.001,.00045),NavPoint(0.0,.00045))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,272.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p.last(),"arrive")))
+        val (at,gap)=NavigationGeometry.project(r,NavPoint(.0005,0.0),111.0,180.0,400.0,100.0)
+        assertTrue(at>r.cumulative[2]);assertTrue(gap<51)
+    }
+    @Test fun noisyFixPrefersTheCurrentSameHeadingLegAfterANarrowLoop() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.001,0.0),NavPoint(.001,.0001),NavPoint(0.0,.0001),NavPoint(0.0,.0002),NavPoint(.001,.0002))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,355.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p.last(),"arrive")))
+        val (progress,gap)=NavigationGeometry.project(r,NavPoint(.0005,.00005),300.0,0.0,400.0)
+        assertTrue("Must not jump back to the first parallel leg",progress>r.cumulative[4])
+        assertTrue(gap<25)
+    }
+    @Test fun rejoiningFurtherAheadRecoversEvenWhenReroutingWasUnavailable() {
+        val t=running();now+=10_000;t.update(fix(NavPoint(37.001,127.0),speed=10.0))
+        now+=3000;t.update(fix(NavPoint(37.001,127.002),speed=10.0));assertTrue(t.state.offRoute)
+        now+=40_000;t.update(fix(NavPoint(37.007,127.002),speed=10.0));assertTrue(t.state.offRoute)
+        now+=3000;t.update(fix(NavPoint(37.007,127.0),speed=10.0))
+        assertTrue(t.state.tracking);assertFalse(t.state.offRoute);assertFalse(t.state.rerouteRequired)
+        assertTrue(t.state.progressMeters>750)
+    }
+    @Test fun reportedGpsUncertaintyDoesNotBecomeFalseReverseTravel() {
+        val t=running()
+        for(i in 1..50){
+            now+=1000
+            val at=(i*5.0+if(i%2==1)49.0 else -49.0).coerceAtLeast(0.0)
+            t.update(fix(NavPoint(37.0+at/111195.0,127.0),accuracy=50.0,speed=5.0))
+            assertTrue(t.state.tracking);assertFalse("False reverse travel at noisy fix $i",t.state.offRoute)
+            assertFalse(t.takeReroute())
+        }
+        // A real sustained reversal larger than the uncertainty still reroutes.
+        for(at in listOf(120.0,80.0,40.0)){
+            now+=3000;t.update(fix(NavPoint(37.0+at/111195.0,127.0),accuracy=50.0,speed=5.0))
+        }
+        assertTrue(t.state.offRoute);assertTrue(t.takeReroute())
+    }
     @Test fun finalLegNeverAnnouncesCompletedArrivalBeforeTwoArrivalFixesInEveryLanguage() {
         assertEquals(NavigationLanguages.codes.toSet(),navDestinationLabels.keys)
         val points=listOf(NavPoint(46.0,8.0),NavPoint(46.02,8.0))
@@ -130,6 +216,27 @@ class NavigationTest {
         now+=40_000;t.update(fix(r.points.last()));assertFalse(t.state.arrived)
         now+=40_000;t.update(fix(r.points.last()));assertTrue(t.state.arrived);assertFalse(t.state.active)
     }
+    @Test fun coarseFixesNearDestinationWaitForTwoPreciseArrivalFixes() {
+        val r=route();val t=running(r)
+        repeat(3){now+=40_000;t.update(fix(r.points.last(),accuracy=50.0,speed=0.0))}
+        assertFalse(t.state.arrived);assertTrue(t.state.active)
+        assertTrue(t.state.status.contains("정확한 GPS"))
+        now+=1000;t.update(fix(r.points.last(),accuracy=5.0,speed=0.0));assertFalse(t.state.arrived)
+        now+=1000;t.update(fix(r.points.last(),accuracy=5.0,speed=0.0));assertTrue(t.state.arrived)
+    }
+    @Test fun invalidGpsAndSignalLossBreakTheConsecutiveArrivalEvidence() {
+        for(interruption in listOf("poor","stale","background")){
+            val r=route();val t=running(r)
+            now+=40_000;t.update(fix(r.points.last(),speed=0.0));assertFalse(t.state.arrived)
+            when(interruption){
+                "poor"->{now+=1000;t.update(fix(r.points.last(),accuracy=100.0,speed=0.0))}
+                "stale"->{now+=11_000;t.tick()}
+                else->t.suspendTracking()
+            }
+            now+=1000;t.update(fix(r.points.last(),speed=0.0));assertFalse(interruption,t.state.arrived)
+            now+=1000;t.update(fix(r.points.last(),speed=0.0));assertTrue(interruption,t.state.arrived)
+        }
+    }
     @Test fun duplicateFixDoesNotAdvanceOrCountArrivalTwice() {
         val r=route();val t=running(r);now+=40_000;val f=fix(r.points.last());t.update(f);t.update(f)
         assertFalse(t.state.arrived)
@@ -137,6 +244,13 @@ class NavigationTest {
     @Test fun backgroundRequiresNewFixAndDoesNotContinueVoice() {
         val t=running();t.suspendTracking();assertFalse(t.state.tracking);assertNull(t.state.fix);assertTrue(t.state.active)
         now+=8000;t.update(fix(NavPoint(37.005,127.0)));assertTrue(t.state.tracking)
+    }
+    @Test fun roundaboutIconDoesNotAssumeAClockwiseTrafficDirection() {
+        for (type in listOf("roundabout", "rotary")) {
+            val maneuver=NavManeuver(NavPoint(0.0,0.0),type,exit=3)
+            assertEquals("◎",NavigationGeometry.symbol(maneuver))
+            assertTrue(NavigationGeometry.instruction(maneuver).contains("3번째"))
+        }
     }
     @Test fun koreanTurnsIncludeRoundaboutExitAndNativeRoadName() {
         assertTrue(NavigationGeometry.instruction(NavManeuver(NavPoint(0.0,0.0),"roundabout",exit=3)).contains("3번째"))

@@ -28,7 +28,7 @@ private fun navSnapshot():String {
         "originAccessMeters" to (g.route?.let {r->navFix?.let {NavigationGeometry.distance(it.point,r.points.first())}} ?: 0.0),
         "originReady" to (g.route?.let {r->navFix?.let {navigator.usable(it)&&NavigationGeometry.distance(it.point,r.points.first())<=kotlin.math.max(45.0,it.accuracy*2)}} ?: false),
         "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
-        "language" to navigationLanguage,"instructionLanguage" to NavigationLanguages.resolve(navigationLanguage),"instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
+        "language" to navigationLanguage,"instructionLanguage" to NavigationLanguages.resolve(navigationLanguage),"instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"directionUncertain" to g.directionUncertain,"status" to g.status,"safetyHeld" to navSafetyHeld,
         "fix" to (if(g.active)g.fix else navFix)?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
 }
 private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingRoute {
@@ -101,6 +101,9 @@ fun main() {
     bridge.navVoiceCommand={raw:String -> val c=NavigationVoice.parse(raw);JSON.stringify(json("action" to c.action.name,"query" to c.query,"index" to c.index))}
     bridge.navSpoken={distance:String,instruction:String -> NavigationLanguages.spoken(navigationLanguage,distance,instruction)}
     bridge.placeSpacingSuggestion={query:String ->PlaceSearch.spacingSuggestion(query)}
+    bridge.placeLocationHint={lat:Double,lon:Double,targetLat:Double,targetLon:Double ->
+        PlaceSearch.locationHint(NavPoint(lat,lon),NavPoint(targetLat,targetLon))
+    }
     bridge.placeRequests={query:String,lat:Double,lon:Double,nearby:Boolean,excluded:String ->
         val p=NavPoint(lat,lon).takeIf {it.valid()}
         val ids=JSON.parse<Array<String>>(excluded).toList()
@@ -171,6 +174,8 @@ fun main() {
     bridge.activity={ id:String -> engine.selectActivity(id) }
     bridge.mapOrigin={ lat:Double,lon:Double,label:String -> engine.updateNearbyActivities(MapPosition(lat,lon,label.take(100)),emptyList()) }
     bridge.mapExamples={ engine.updateNearbyActivities(MapPosition(),DemoActivityRepository().activities()) }
+    bridge.nearbyQuery={lat:Double,lon:Double ->NearbyGeometry.query(MapPosition(lat,lon))}
+    bridge.nearbyName={korean:String,local:String,english:String ->NearbyGeometry.placeName(korean,local,english)}
     bridge.places={ lat:Double,lon:Double,label:String,raw:String ->
         val origin=MapPosition(lat,lon,label.take(100))
         val data=JSON.parse<Array<dynamic>>(raw)
