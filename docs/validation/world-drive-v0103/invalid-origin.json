@@ -1,0 +1,171 @@
+{
+  "id": "furka",
+  "label": "스위스 푸르카 산악도로",
+  "country": "CH",
+  "continent": "Europe",
+  "language": "de-CH",
+  "start": [
+    46.5918,
+    8.4162
+  ],
+  "end": [
+    46.5622,
+    8.3857
+  ],
+  "query": "Hotel Belvedere Furka",
+  "result": "failed",
+  "search": {
+    "providerResults": [],
+    "uiCount": 0,
+    "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+    "results": [],
+    "result": "empty",
+    "nearestResultMeters": null
+  },
+  "responses": [
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=de-CH%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Hotel+Belvedere+Furka",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34294/23166.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34294/23167.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34296/23167.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34295/23167.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34293/23166.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34296/23166.png",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/8.4162,46.5918;8.3857,46.5622?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34293/23167.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/34295/23166.png",
+      "status": 200
+    }
+  ],
+  "requestFailures": [
+    {
+      "url": "https://tile.openstreetmap.org/2/1/1.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/1.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/0.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/0.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/1.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/1.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/0.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/0.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/2.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17149/11579.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17150/11579.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17149/11578.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17150/11578.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17149/11580.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17150/11580.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17148/11579.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17151/11579.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17148/11578.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17151/11578.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17148/11580.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/17151/11580.png",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "pageErrors": [],
+  "checkpoints": [],
+  "samples": [],
+  "failure": "page.waitForSelector: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-nav=\"start\"]') to be visible\u001b[22m\n",
+  "failureStack": "page.waitForSelector: Timeout 40000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-nav=\"start\"]') to be visible\u001b[22m\n\n    at /workspace/HYUNDAI/scripts/web/verify-world-drive-live.cjs:70:96",
+  "notice": "출발 위치 근처에 연결 가능한 자동차 도로가 없습니다. 도로 접근 지점을 확인하세요."
+}

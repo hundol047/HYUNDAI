@@ -2,7 +2,7 @@
 
 **차량의 상황을 이해하고, 이동의 모든 순간을 연결하다.**
 
-**팀명: 퓨처랩스** · **버전: 0.10.2** · 차량의 주행·정차 상황에 맞춰 위험 안내, 대기 시간 활용, 집중·휴식을 연결하는 통합 차량용 앱.
+**팀명: 퓨처랩스** · **버전: 0.10.3** · 차량의 주행·정차 상황에 맞춰 위험 안내, 대기 시간 활용, 집중·휴식을 연결하는 통합 차량용 앱.
 
 **제출 APK:** [`apk/퓨처랩스_CabinOS_ONE_release.apk`](apk/퓨처랩스_CabinOS_ONE_release.apk)
 
@@ -28,7 +28,7 @@
 
 **0.10.0 음성 길찾기:** 내비의 음성 버튼 → 목적지 → 결과 번호 → 안내 시작. 길 안내 번역 31개 언어/지역 팩과 BCP 47 인식 언어 선택을 제공합니다. 지원하지 않는 번역은 영어로 대체하며 실제 STT/TTS는 기기 서비스·언어팩에 따릅니다. [사용법·언어 범위·실행 근거](docs/VOICE_NAVIGATION_KO.md).
 
-**배포 파일:** [0.10.2 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.2)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.2.zip`](web-release/CabinOS_ONE_web_v0.10.2.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
+**배포 파일:** [0.10.3 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.3)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.3.zip`](web-release/CabinOS_ONE_web_v0.10.3.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
 
 ## 구현된 기능
 
@@ -137,8 +137,10 @@ node scripts/web/record-demo.cjs
 
 공식 공모전: https://appdevchallenge.auto-hmg.io/guide/submission
 
-지도 범위·조작·성능: [6개 대륙 실경로·확대/축소·GPS 갱신 점검](docs/MAP_PERFORMANCE_KO.md). 157개 JVM/Android 테스트와 118개 브라우저 검사를 기준으로 하며 실기기 FPS·실도로 정확도는 별도 검증 대상입니다.
+지도 범위·조작·성능: [6개 대륙 실경로·확대/축소·GPS 갱신 점검](docs/MAP_PERFORMANCE_KO.md). 158개 JVM/Android 테스트와 118개 브라우저 검사를 기준으로 하며 실기기 FPS·실도로 정확도는 별도 검증 대상입니다.
 
 복잡한 도로 모의 주행: [실제 서버·합성 GPS로 3개 도시 주행, 화면 검토와 수정](docs/CHALLENGING_DRIVE_KO.md). [직접 실행 녹화 MP4](docs/video/CabinOS_ONE_challenging_drive_v0101r2.mp4).
 
 0.10.2: [서울시청→연세대 미래캠퍼스 113km 모의 주행·상호 검색 누락 보정·진출 표지 복구](docs/SEOUL_YONSEI_DRIVE_KO.md). [새 실행 영상](docs/video/CabinOS_ONE_seoul_yonsei_v0102.mp4).
+
+0.10.3: [21개국·26개 지역 모의 주행과 조기 도착 문구 수정](docs/WORLD_DRIVE_KO.md). [스위스 산악도로 재검증 실행 영상](docs/video/CabinOS_ONE_world_furka_v0103.mp4).

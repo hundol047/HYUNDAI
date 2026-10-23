@@ -4,6 +4,28 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun finalLegNeverAnnouncesCompletedArrivalBeforeTwoArrivalFixesInEveryLanguage() {
+        assertEquals(NavigationLanguages.codes.toSet(),navDestinationLabels.keys)
+        val points=listOf(NavPoint(46.0,8.0),NavPoint(46.02,8.0))
+        val base=NavigationGeometry.route(NavPlace("Destination",points.last()),points,2224.0,500.0,
+            listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive",road="Furkastrasse")))
+        for(language in NavigationLanguages.codes+listOf("de-CH","th-TH","hi-IN")) {
+            val r=base.localized(language);val tracker=running(r)
+            now+=30_000;tracker.update(fix(NavPoint(46.01,8.0),speed=5.0))
+            assertTrue(tracker.state.active);assertFalse(tracker.state.arrived)
+            assertTrue(tracker.state.turnMeters>1000)
+            assertEquals(NavigationLanguages.upcomingArrival(language,"Furkastrasse"),tracker.state.nextInstruction)
+            assertNotEquals(NavigationLanguages.arrival(language,0.0),tracker.state.nextInstruction)
+            now+=30_000;tracker.update(fix(points.last(),speed=0.0))
+            assertFalse(tracker.state.arrived)
+            now+=1000;tracker.update(fix(points.last(),speed=0.0))
+            assertTrue(tracker.state.arrived);assertFalse(tracker.state.active)
+            assertEquals(NavigationLanguages.arrival(language,0.0),tracker.state.nextInstruction)
+        }
+        assertEquals("Ziel · Furkastrasse",NavigationLanguages.upcomingArrival("de-CH","Furkastrasse"))
+        assertEquals("Destination",NavigationLanguages.upcomingArrival("en-US"))
+        assertEquals("목적지",NavigationLanguages.upcomingArrival("ko-KR"))
+    }
     @Test fun unnamedMotorwayRampsKeepDestinationSignsWithoutInventingRoadNames() {
         assertEquals("19: 남원주, 충주",NavigationGeometry.roadLabel("","19: 남원주, 충주"))
         assertEquals("신평RampA1 · 55: 안동",NavigationGeometry.roadLabel("신평RampA1","55: 안동"))
@@ -141,7 +163,8 @@ class NavigationTest {
         for(lat in listOf(37.0098,37.00995,37.01,37.01005)) {
             now+=20_000;t.update(fix(NavPoint(lat,127.0),speed=5.0));assertTrue(t.state.nextInstruction.contains("우회전"))
         }
-        now+=2000;t.update(fix(NavPoint(37.0103,127.0003),speed=5.0));assertTrue(t.state.nextInstruction.contains("도착"))
+        now+=2000;t.update(fix(NavPoint(37.0103,127.0003),speed=5.0))
+        assertEquals("목적지",t.state.nextInstruction);assertFalse(t.state.arrived)
     }
     @Test fun headingHelpsDistinguishOppositeParallelRouteSegments() {
         val points=listOf(NavPoint(37.0,127.0),NavPoint(37.01,127.0),NavPoint(37.01,127.0002),NavPoint(37.0,127.0002))

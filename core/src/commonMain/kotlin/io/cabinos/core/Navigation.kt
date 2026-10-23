@@ -164,7 +164,11 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val next=r.steps[nextStepIndex]
         state=state.copy(active=!done,tracking=true,arrived=done,fix=fix,progressMeters=progress,
             remainingMeters=r.distanceMeters*(remaining/r.geometryMeters),remainingSeconds=r.durationSeconds*(remaining/r.geometryMeters),
-            turnSymbol=if(done)"●" else next.symbol,nextInstruction=if(done)NavigationLanguages.arrival(r.language,r.destinationAccessMeters) else next.instruction,turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
+            turnSymbol=if(done)"●" else next.symbol,nextInstruction=when {
+                done->NavigationLanguages.arrival(r.language,r.destinationAccessMeters)
+                next.type=="arrive"->NavigationLanguages.upcomingArrival(r.language,next.maneuver?.road.orEmpty())
+                else->next.instruction
+            },turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
             offRoute=off,rerouteRequired=need,status=when{done->"차량 경로 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";else->"GPS 주행 안내 · 정확도 약 ${fix.accuracy.toInt()}m · 교통 미반영 예상"})
     }
     fun tick(){if(state.active&&state.fix?.let {usable(it)}!=true)state=state.copy(tracking=false,rerouteRequired=false,status="GPS 신호 대기 · 회전 안내 일시중지")}

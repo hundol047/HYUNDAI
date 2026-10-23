@@ -1,0 +1,289 @@
+{
+  "type": "Offline shared production JS tracker replay of captured live-provider geometry and all original synthetic 1Hz positions. No new provider or map-rendering claim.",
+  "observedAt": "2026-10-23T12:52:31.387Z",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "cases": [
+    {
+      "id": "busan",
+      "result": "passed",
+      "samples": 529,
+      "finalLegSamples": 63,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 마린시티3로"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다."
+    },
+    {
+      "id": "daegu",
+      "result": "passed",
+      "samples": 304,
+      "finalLegSamples": 13,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 대봉로43안길"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다."
+    },
+    {
+      "id": "daejeon",
+      "result": "passed",
+      "samples": 1108,
+      "finalLegSamples": 8,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 중교로73번길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "jeju",
+      "result": "passed",
+      "samples": 883,
+      "finalLegSamples": 6,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 중앙로13길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "tokyo",
+      "result": "passed",
+      "samples": 244,
+      "finalLegSamples": 2,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "目的地 · 道玄坂"
+      ],
+      "arrivalInstruction": "目的地に到着しました。目的地は前方です"
+    },
+    {
+      "id": "beijing",
+      "result": "passed",
+      "samples": 1036,
+      "finalLegSamples": 19,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "目的地"
+      ],
+      "arrivalInstruction": "您已经到达您的个目的地，目的地在您正前方"
+    },
+    {
+      "id": "singapore",
+      "result": "passed",
+      "samples": 896,
+      "finalLegSamples": 4,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Flint Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead · 40 m"
+    },
+    {
+      "id": "bangkok",
+      "result": "passed",
+      "samples": 828,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "delhi",
+      "result": "passed",
+      "samples": 1004,
+      "finalLegSamples": 24,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead · 227 m"
+    },
+    {
+      "id": "dubai",
+      "result": "passed",
+      "samples": 656,
+      "finalLegSamples": 69,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "الوجهة"
+      ],
+      "arrivalInstruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك · 43 m"
+    },
+    {
+      "id": "istanbul",
+      "result": "passed",
+      "samples": 1012,
+      "finalLegSamples": 2,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Varış noktası · Sıraselviler Caddesi"
+      ],
+      "arrivalInstruction": " hedefinize ulaştınız, hedefiniz karşınızdadır"
+    },
+    {
+      "id": "london",
+      "result": "passed",
+      "samples": 464,
+      "finalLegSamples": 48,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Davies Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "berlin",
+      "result": "passed",
+      "samples": 484,
+      "finalLegSamples": 7,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Ziel"
+      ],
+      "arrivalInstruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus · 61 m"
+    },
+    {
+      "id": "nairobi",
+      "result": "passed",
+      "samples": 528,
+      "finalLegSamples": 30,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Chiromo Road"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "cape-town",
+      "result": "passed",
+      "samples": 651,
+      "finalLegSamples": 25,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead · 32 m"
+    },
+    {
+      "id": "new-york",
+      "result": "passed",
+      "samples": 732,
+      "finalLegSamples": 4,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Union Square East"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "toronto",
+      "result": "passed",
+      "samples": 424,
+      "finalLegSamples": 27,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Freeland Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead · 52 m"
+    },
+    {
+      "id": "mexico-city",
+      "result": "passed",
+      "samples": 796,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "sao-paulo",
+      "result": "passed",
+      "samples": 753,
+      "finalLegSamples": 16,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destino · Passagem Subterrânea Daher Elias Cutait"
+      ],
+      "arrivalInstruction": "Você chegou ao seu destino, em frente"
+    },
+    {
+      "id": "buenos-aires",
+      "result": "passed",
+      "samples": 500,
+      "finalLegSamples": 150,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destino · México"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "sydney",
+      "result": "passed",
+      "samples": 560,
+      "finalLegSamples": 39,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Circular Quay West"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "auckland",
+      "result": "passed",
+      "samples": 513,
+      "finalLegSamples": 101,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Quay Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "tromso",
+      "result": "passed",
+      "samples": 1018,
+      "finalLegSamples": 136,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Reisemål · Ringvegen"
+      ],
+      "arrivalInstruction": "Du har ankommet din destinasjon, rett forut · 145 m"
+    },
+    {
+      "id": "queenstown",
+      "result": "passed",
+      "samples": 3968,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Berkshire Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead · 51 m"
+    },
+    {
+      "id": "gangwon",
+      "result": "passed",
+      "samples": 2596,
+      "finalLegSamples": 20,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 313미터 남았습니다."
+    },
+    {
+      "id": "furka",
+      "result": "passed",
+      "samples": 1868,
+      "finalLegSamples": 1862,
+      "maxProgressDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Ziel · Furkastrasse"
+      ],
+      "arrivalInstruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus"
+    }
+  ]
+}

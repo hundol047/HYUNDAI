@@ -1,0 +1,12 @@
+{
+  "reason": "Initial test coordinate was in the harbour, 114m from the vehicle road. The app disclosed the access gap and required confirmation. Test destination corrected to Circular Quay West road endpoint.",
+  "originalEnd": [
+    -33.858,
+    151.211
+  ],
+  "originalAccessMeters": 114.22111064533325,
+  "correctedEnd": [
+    -33.857846,
+    151.209777
+  ]
+}

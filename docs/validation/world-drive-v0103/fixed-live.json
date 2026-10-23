@@ -1,0 +1,577 @@
+{
+  "observedAt": "2026-10-23T12:50:09.996Z",
+  "sourceCommit": "25064cda5550f938a143ffb27ac5b5293b64f8f4",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "scope": "Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic 1Hz 5m/s GPS. Shared tracker processes every position; map renders only at bounded checkpoints. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "furka",
+      "label": "스위스 푸르카 산악도로",
+      "country": "CH",
+      "continent": "Europe",
+      "language": "de-CH",
+      "start": [
+        46.586213,
+        8.430412
+      ],
+      "end": [
+        46.565596,
+        8.38096
+      ],
+      "query": "Hotel Belvedere Furka",
+      "result": "passed",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/17150/11579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17152/11580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17152/11579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17149/11580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17151/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17151/11579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17150/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17149/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17149/11579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17152/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17150/11580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17151/11580.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=de-CH%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Hotel+Belvedere+Furka",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34293/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34293/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34293/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34295/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34295/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34295/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/8.430412,46.586213;8.38096,46.565596?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34297/23163.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34298/23163.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34298/23162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34297/23162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34297/23164.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34296/23164.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34299/23162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34299/23163.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34299/23164.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34296/23163.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34296/23162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8575/5790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8574/5789.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8574/5790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8575/5791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8573/5790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8574/5791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8573/5789.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8575/5789.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8576/5790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8576/5789.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8573/5791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8576/5791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17149/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17149/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17150/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17150/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17148/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17151/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17148/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17151/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17148/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17147/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17147/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17146/11581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17146/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17146/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17147/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17145/11582.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17145/11583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34293/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34293/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34294/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23165.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23166.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34295/23167.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34292/23167.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/34298/23164.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 576,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ziel · Furkastrasse",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.7515372448519264,
+          "capture": "checkpoint-00.png"
+        },
+        {
+          "atMeters": 2330.642778324414,
+          "label": "2331m",
+          "timeout": false,
+          "waitMs": 638,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ziel · Furkastrasse",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0,
+          "capture": "checkpoint-01.png"
+        },
+        {
+          "atMeters": 4661.285556648828,
+          "label": "4661m",
+          "timeout": false,
+          "waitMs": 588,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ziel · Furkastrasse",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.728602394423096,
+          "capture": "checkpoint-02.png"
+        },
+        {
+          "atMeters": 6991.928334973241,
+          "label": "6992m",
+          "timeout": false,
+          "waitMs": 278,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ziel · Furkastrasse",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.114368007635682,
+          "capture": "checkpoint-03.png"
+        },
+        {
+          "atMeters": 9272.571113297656,
+          "label": "9273m",
+          "timeout": false,
+          "waitMs": 655,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ziel · Furkastrasse",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.64947533847648,
+          "capture": "checkpoint-04.png"
+        },
+        {
+          "atMeters": 9322.571113297656,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 377,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 49.467248184641505,
+          "capture": "checkpoint-05.png"
+        },
+        {
+          "atMeters": 9322.571113297656,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 536,
+          "visible": 16,
+          "decoded": 16,
+          "instruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 49.467248184641505,
+          "capture": "checkpoint-06.png"
+        }
+      ],
+      "route": {
+        "distanceMeters": 9339.5,
+        "geometryMeters": 9322.571113297656,
+        "durationSeconds": 560.5,
+        "points": 692,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Furkastrasse",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 9322.571113297656,
+            "type": "arrive",
+            "road": "Furkastrasse",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 0,
+        "destinationSnapMeters": 0
+      },
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 4420.724692794869,
+        "originReady": false,
+        "destinationAccessMeters": 0,
+        "revision": 4,
+        "destination": "좌표 목적지 46.565596, 8.380960",
+        "remainingMeters": 25.045397580984194,
+        "remainingSeconds": 1.5030724711324632,
+        "language": "de-CH",
+        "instructionLanguage": "de",
+        "instruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus",
+        "turnSymbol": "●",
+        "turnMeters": 25.00000000122236,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 46.565596,
+          "longitude": 8.38096,
+          "accuracy": 5,
+          "timestamp": 1792761688950
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "video": "page@3ac44d2fcedb8b790492322965e6edda.webm",
+      "sampleCount": 1868,
+      "trackingFailures": 0,
+      "falseOffRoutes": 0
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "scope": "Provider metadata compared to the countries general traffic side, not independent lane legality verification. Production parsers currently do not consume driving_side.",
+  "cases": [
+    {
+      "id": "tokyo",
+      "country": "JP",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "singapore",
+      "country": "SG",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "bangkok",
+      "country": "TH",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "delhi",
+      "country": "IN",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "london",
+      "country": "GB",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "nairobi",
+      "country": "KE",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "cape-town",
+      "country": "ZA",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "sydney",
+      "country": "AU",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "auckland",
+      "country": "NZ",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    },
+    {
+      "id": "queenstown",
+      "country": "NZ",
+      "expectedGeneralTrafficSide": "left",
+      "providerStepSides": [
+        "right"
+      ]
+    }
+  ]
+}

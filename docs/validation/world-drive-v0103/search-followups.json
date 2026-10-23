@@ -1,0 +1,761 @@
+{
+  "observedAt": "2026-10-23T12:44:47.944150+00:00",
+  "scope": "Manual alternative queries to the same live Nominatim provider, API diagnostics only. These are not automatic application corrections and results do not establish exact-branch equivalence.",
+  "queries": [
+    {
+      "region": "daegu",
+      "query": "스타벅스 반월당",
+      "url": "https://nominatim.openstreetmap.org/search?q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EB%B0%98%EC%9B%94%EB%8B%B9&format=jsonv2&limit=6&accept-language=ko%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [],
+      "elapsedMs": 605
+    },
+    {
+      "region": "daegu",
+      "query": "스타벅스 대구",
+      "url": "https://nominatim.openstreetmap.org/search?q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EB%8C%80%EA%B5%AC&format=jsonv2&limit=6&accept-language=ko%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [
+        {
+          "place_id": 271551503,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 471793150,
+          "lat": "35.8227462",
+          "lon": "128.5336417",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 334, 월곡로, 상인동, 상인1동, 달서구, 대구광역시, 42749, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "334",
+            "road": "월곡로",
+            "quarter": "상인동",
+            "suburb": "상인1동",
+            "borough": "달서구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "42749",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "smoking": "no",
+            "website": "http://www.istarbucks.co.kr/index.do",
+            "brand:en": "Starbucks",
+            "building": "yes",
+            "operator": "(주)스타벅스커피 코리아",
+            "payment:jcb": "yes",
+            "payment:cash": "yes",
+            "payment:visa": "yes",
+            "payment:coins": "yes",
+            "payment:notes": "yes",
+            "brand:wikidata": "Q37158",
+            "payment:unionpay": "yes",
+            "payment:mastercard": "yes",
+            "payment:diners_club": "yes",
+            "payment:discover_card": "yes",
+            "payment:american_express": "yes"
+          },
+          "namedetails": {
+            "name": "스타벅스 대구상인 DT점",
+            "brand": "스타벅스",
+            "name:de": "Starbucks",
+            "name:en": "Starbucks",
+            "name:ja": "スターバックス",
+            "name:ko": "스타벅스",
+            "name:ru": "Старбакс",
+            "name:zh": "星巴克",
+            "int_name": "Starbucks"
+          },
+          "boundingbox": [
+            "35.8226280",
+            "35.8228564",
+            "128.5335042",
+            "128.5337778"
+          ]
+        },
+        {
+          "place_id": 279800278,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 1272706708,
+          "lat": "35.8563177",
+          "lon": "128.6502027",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 2636, 달구벌대로, 만촌3동, 수성구, 대구광역시, 42068, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "2636",
+            "road": "달구벌대로",
+            "suburb": "만촌3동",
+            "borough": "수성구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "42068",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "building": "yes",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158",
+            "building:levels": "3",
+            "internet_access": "wlan"
+          },
+          "namedetails": {
+            "name": "스타벅스",
+            "brand": "스타벅스",
+            "name:en": "Starbucks",
+            "name:ko": "스타벅스"
+          },
+          "boundingbox": [
+            "35.8562374",
+            "35.8563992",
+            "128.6501179",
+            "128.6502949"
+          ]
+        },
+        {
+          "place_id": 272619709,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 1015021461,
+          "lat": "35.8144370",
+          "lon": "128.5243413",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 91, 월배로, 진천동, 상인1동, 달서구, 대구광역시, 42784, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "91",
+            "road": "월배로",
+            "quarter": "진천동",
+            "suburb": "상인1동",
+            "borough": "달서구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "42784",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "building": "yes",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "ko:스타벅스"
+          },
+          "namedetails": {
+            "name": "스타벅스",
+            "brand": "스타벅스",
+            "name:en": "Starbucks",
+            "name:ko": "스타벅스"
+          },
+          "boundingbox": [
+            "35.8143707",
+            "35.8145075",
+            "128.5242340",
+            "128.5244393"
+          ]
+        },
+        {
+          "place_id": 268370141,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 641862101,
+          "lat": "35.8588391",
+          "lon": "128.5619355",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 1798, 달구벌대로, 두류동, 두류1·2동, 달서구, 대구광역시, 41864, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "1798",
+            "road": "달구벌대로",
+            "quarter": "두류동",
+            "suburb": "두류1·2동",
+            "borough": "달서구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "41864",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "smoking": "no",
+            "website": "http://www.istarbucks.co.kr/index.do",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "building": "yes",
+            "operator": "(주)스타벅스커피 코리아",
+            "takeaway": "yes",
+            "payment:jcb": "yes",
+            "payment:cash": "yes",
+            "payment:visa": "yes",
+            "payment:coins": "yes",
+            "payment:notes": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "ko:스타벅스",
+            "outdoor_seating": "yes",
+            "payment:unionpay": "yes",
+            "payment:mastercard": "yes",
+            "payment:diners_club": "yes",
+            "payment:discover_card": "yes",
+            "payment:american_express": "yes"
+          },
+          "namedetails": {
+            "name": "스타벅스대구두류DT점",
+            "brand": "스타벅스",
+            "name:de": "Starbucks",
+            "name:en": "Starbucks",
+            "name:ja": "スターバックス",
+            "name:ko": "스타벅스",
+            "name:ru": "Старбакс",
+            "name:zh": "星巴克",
+            "int_name": "Starbucks"
+          },
+          "boundingbox": [
+            "35.8587760",
+            "35.8589043",
+            "128.5618516",
+            "128.5620206"
+          ]
+        },
+        {
+          "place_id": 269999748,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 8674662983,
+          "lat": "35.8212668",
+          "lon": "128.6399583",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 191, 지범로, 범물1동, 수성구, 대구광역시, 42199, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "191",
+            "road": "지범로",
+            "suburb": "범물1동",
+            "borough": "수성구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "42199",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "ko:스타벅스"
+          },
+          "namedetails": {
+            "name": "스타벅스 동아수성점",
+            "brand": "스타벅스",
+            "name:en": "Starbucks",
+            "name:ja": "スターバックス",
+            "name:ko": "스타벅스"
+          },
+          "boundingbox": [
+            "35.8212168",
+            "35.8213168",
+            "128.6399083",
+            "128.6400083"
+          ]
+        },
+        {
+          "place_id": 271728527,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 368907704,
+          "lat": "35.8473585",
+          "lon": "128.6124959",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.06881818874955e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 희망로, 중동, 황금2동, 수성구, 대구광역시, 42134, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "road": "희망로",
+            "quarter": "중동",
+            "suburb": "황금2동",
+            "borough": "수성구",
+            "city": "대구광역시",
+            "ISO3166-2-lvl4": "KR-27",
+            "postcode": "42134",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158"
+          },
+          "namedetails": {
+            "name": "스타벅스",
+            "brand": "스타벅스",
+            "name:en": "Starbucks",
+            "name:ko": "스타벅스"
+          },
+          "boundingbox": [
+            "35.8473085",
+            "35.8474085",
+            "128.6124459",
+            "128.6125459"
+          ]
+        }
+      ],
+      "elapsedMs": 661
+    },
+    {
+      "region": "dubai",
+      "query": "Starbucks Dubai",
+      "url": "https://nominatim.openstreetmap.org/search?q=Starbucks+Dubai&format=jsonv2&limit=6&accept-language=en%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [
+        {
+          "place_id": 45708353,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 498321325,
+          "lat": "25.1568871",
+          "lon": "55.2057582",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks coffee",
+          "display_name": "Starbucks coffee, Jumeira Street, Umm Suqeim 2, Umm Suqeim, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks coffee",
+            "road": "Jumeira Street",
+            "residential": "Umm Suqeim 2",
+            "suburb": "Umm Suqeim 2",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "building": "yes",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "en:Starbucks"
+          },
+          "namedetails": {
+            "name": "Starbucks",
+            "brand": "Starbucks",
+            "name:ar": "Starbucks",
+            "name:en": "Starbucks coffee",
+            "official_name": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.1567777",
+            "25.1569963",
+            "55.2056384",
+            "55.2058779"
+          ]
+        },
+        {
+          "place_id": 45710113,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 499184487,
+          "lat": "25.1805158",
+          "lon": "55.2349191",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks",
+          "display_name": "Starbucks, Al Wasl Road, Jumeirah 3, Jumeirah, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks",
+            "road": "Al Wasl Road",
+            "neighbourhood": "Jumeirah 3",
+            "suburb": "Jumeirah 3",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "building": "yes",
+            "takeaway": "yes",
+            "addr:city:ar": "دبي",
+            "addr:city:en": "Dubai",
+            "addr:city:ur": "دبئی",
+            "drive_through": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "en:Starbucks"
+          },
+          "namedetails": {
+            "name": "Starbucks",
+            "brand": "Starbucks",
+            "name:ar": "Starbucks",
+            "name:en": "Starbucks",
+            "official_name": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.1804480",
+            "25.1805836",
+            "55.2348430",
+            "55.2349953"
+          ]
+        },
+        {
+          "place_id": 45597746,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 450947649,
+          "lat": "25.2108785",
+          "lon": "55.4160693",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks",
+          "display_name": "Starbucks, Tripoli Street, Mirdif, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks",
+            "road": "Tripoli Street",
+            "suburb": "Mirdif",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:ar": "ستاربكس",
+            "brand:en": "Starbucks",
+            "building": "yes",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158"
+          },
+          "namedetails": {
+            "name": "ستاربكس",
+            "brand": "ستاربكس",
+            "name:ar": "ستاربكس",
+            "name:en": "Starbucks",
+            "official_name": "ستاربكس كافية",
+            "official_name:ar": "ستاربكس كافية",
+            "official_name:en": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.2108146",
+            "25.2109423",
+            "55.4160082",
+            "55.4161304"
+          ]
+        },
+        {
+          "place_id": 45612319,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 4904950822,
+          "lat": "25.2158904",
+          "lon": "55.2508102",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks",
+          "display_name": "Starbucks, 75a Street, Jumeirah 1, Jumeirah, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks",
+            "road": "75a Street",
+            "suburb": "Jumeirah 1",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:ar": "ستاربكس",
+            "brand:en": "Starbucks",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158",
+            "brand:wikipedia": "en:Starbucks"
+          },
+          "namedetails": {
+            "name": "ستاربكس",
+            "brand": "ستاربكس",
+            "name:ar": "ستاربكس",
+            "name:en": "Starbucks",
+            "official_name": "ستاربكس كافية",
+            "official_name:ar": "ستاربكس كافية",
+            "official_name:en": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.2158404",
+            "25.2159404",
+            "55.2507602",
+            "55.2508602"
+          ]
+        },
+        {
+          "place_id": 45704610,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 4906099608,
+          "lat": "25.1987898",
+          "lon": "55.2483947",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks",
+          "display_name": "Starbucks, Al Wasl Road, Boxpark, Al Wasl, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks",
+            "road": "Al Wasl Road",
+            "retail": "Boxpark",
+            "suburb": "Al Wasl",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "takeaway": "yes",
+            "addr:street:en": "Al Wasl Road",
+            "brand:wikidata": "Q37158",
+            "indoor_seating": "yes",
+            "brand:wikipedia": "en:Starbucks",
+            "outdoor_seating": "yes"
+          },
+          "namedetails": {
+            "name": "Starbucks",
+            "brand": "Starbucks",
+            "name:ar": "Starbucks",
+            "name:en": "Starbucks",
+            "official_name": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.1987398",
+            "25.1988398",
+            "55.2483447",
+            "55.2484447"
+          ]
+        },
+        {
+          "place_id": 45614282,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 9355789551,
+          "lat": "25.2391903",
+          "lon": "55.2709606",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 7.416266117337328e-05,
+          "addresstype": "amenity",
+          "name": "Starbucks",
+          "display_name": "Starbucks, 1st Street, Jumeirah, Dubai, Dubai Emirate, United Arab Emirates",
+          "address": {
+            "amenity": "Starbucks",
+            "road": "1st Street",
+            "suburb": "Jumeirah",
+            "city": "Dubai",
+            "ISO3166-2-lvl10": "AE-DU",
+            "state": "Dubai Emirate",
+            "ISO3166-2-lvl4": "AE-DU",
+            "country": "United Arab Emirates",
+            "country_code": "ae"
+          },
+          "extratags": {
+            "cuisine": "coffee_shop",
+            "brand:ar": "ستاربكس",
+            "brand:en": "Starbucks",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158"
+          },
+          "namedetails": {
+            "name": "ستاربكس",
+            "brand": "ستاربكس",
+            "name:ar": "ستاربكس",
+            "name:en": "Starbucks",
+            "official_name": "ستاربكس كافية",
+            "official_name:ar": "ستاربكس كافية",
+            "official_name:en": "Starbucks Coffee"
+          },
+          "boundingbox": [
+            "25.2391403",
+            "25.2392403",
+            "55.2709106",
+            "55.2710106"
+          ]
+        }
+      ],
+      "elapsedMs": 533
+    },
+    {
+      "region": "toronto",
+      "query": "Balzac's Toronto",
+      "url": "https://nominatim.openstreetmap.org/search?q=Balzac%27s+Toronto&format=jsonv2&limit=6&accept-language=en%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [
+        {
+          "place_id": 351509350,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 11411061715,
+          "lat": "43.6696728",
+          "lon": "-79.4485219",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 8.130235751883753e-05,
+          "addresstype": "amenity",
+          "name": "Balzac’s",
+          "display_name": "Balzac’s, Powerhouse Street, Wallace Emerson, Davenport, Toronto, Ontario, M6H 4L1, Canada",
+          "address": {
+            "amenity": "Balzac’s",
+            "road": "Powerhouse Street",
+            "neighbourhood": "Wallace Emerson",
+            "quarter": "Davenport",
+            "city": "Toronto",
+            "state": "Ontario",
+            "ISO3166-2-lvl4": "CA-ON",
+            "postcode": "M6H 4L1",
+            "country": "Canada",
+            "country_code": "ca"
+          },
+          "extratags": {
+            "check_date": "2023-12-11"
+          },
+          "namedetails": {
+            "name": "Balzac’s",
+            "name:en": "Balzac’s"
+          },
+          "boundingbox": [
+            "43.6696228",
+            "43.6697228",
+            "-79.4485719",
+            "-79.4484719"
+          ]
+        }
+      ],
+      "elapsedMs": 534
+    },
+    {
+      "region": "sao-paulo",
+      "query": "Bella Paulista São Paulo",
+      "url": "https://nominatim.openstreetmap.org/search?q=Bella+Paulista+S%C3%A3o+Paulo&format=jsonv2&limit=6&accept-language=pt-BR%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [
+        {
+          "place_id": 8966314,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 4881860688,
+          "lat": "-23.5569212",
+          "lon": "-46.6618303",
+          "category": "shop",
+          "type": "newsagent",
+          "place_rank": 30,
+          "importance": 7.861829556720863e-05,
+          "addresstype": "shop",
+          "name": "Bella Paulista",
+          "display_name": "Bella Paulista, 2353, Avenida Paulista, Cerqueira César, Jardim Paulista, São Paulo, Região Sudeste, 01311-300, Brasil",
+          "address": {
+            "shop": "Bella Paulista",
+            "house_number": "2353",
+            "road": "Avenida Paulista",
+            "suburb": "Cerqueira César",
+            "city": "São Paulo",
+            "state": "São Paulo",
+            "ISO3166-2-lvl4": "BR-SP",
+            "region": "Região Sudeste",
+            "postcode": "01311-300",
+            "country": "Brasil",
+            "country_code": "br"
+          },
+          "extratags": null,
+          "namedetails": {
+            "name": "Bella Paulista"
+          },
+          "boundingbox": [
+            "-23.5569712",
+            "-23.5568712",
+            "-46.6618803",
+            "-46.6617803"
+          ]
+        }
+      ],
+      "elapsedMs": 425
+    },
+    {
+      "region": "furka",
+      "query": "Belvédère Furkapass",
+      "url": "https://nominatim.openstreetmap.org/search?q=Belv%C3%A9d%C3%A8re+Furkapass&format=jsonv2&limit=6&accept-language=de%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [],
+      "elapsedMs": 430
+    },
+    {
+      "region": "queenstown",
+      "query": "Remarkables Sweet Shop Arrowtown",
+      "url": "https://nominatim.openstreetmap.org/search?q=Remarkables+Sweet+Shop+Arrowtown&format=jsonv2&limit=6&accept-language=en%2Cen&addressdetails=1&namedetails=1&extratags=1",
+      "status": 200,
+      "results": [],
+      "elapsedMs": 484
+    }
+  ]
+}

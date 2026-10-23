@@ -24,6 +24,8 @@ object NavigationLanguages {
         return text+(if(m.exit!=null&&m.exit>10&&type in listOf("roundabout","rotary"))" · #${m.exit}" else "")+if(m.road.isNotBlank())" · ${m.road.take(100)}" else ""
     }
     fun spoken(tag:String,distance:String,instruction:String):String = navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance).replace("{instruction_one}",instruction)
+    fun upcomingArrival(tag:String,road:String=""):String = navDestinationLabels.getValue(resolve(tag))+
+        if(road.isNotBlank())" · ${road.take(100)}" else ""
     fun arrival(tag:String,accessMeters:Double):String {
         if(resolve(tag)=="ko")return if(accessMeters>30)"자동차 도착 지점입니다. 목적지까지 약 ${accessMeters.toInt()}미터 남았습니다." else "목적지에 도착했습니다."
         return instruction(NavManeuver(NavPoint(0.0,0.0),"arrive"),tag)+if(accessMeters>30)" · ${accessMeters.toInt()} m" else ""
