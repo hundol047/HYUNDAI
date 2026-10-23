@@ -10,6 +10,13 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationServiceTest {
+    @Test fun recordedSeoulToMiraeRoutePreservesNamwonjuExitDestinationSign() {
+        val raw=javaClass.getResourceAsStream("/navigation/seoul-yonsei-live.json")!!.bufferedReader().use {it.readText()}
+        val r=NavigationService.parseRoute(raw,NavPlace("연세대학교 미래캠퍼스",NavPoint(37.2800965,127.901503)))
+        assertTrue(r.distanceMeters>100_000)
+        assertTrue(r.steps.any {it.type=="off ramp"&&it.instruction.contains("남원주")&&it.instruction.contains("충주")})
+    }
+
     @Test fun recordedInternationalRoadRouteParsesWithoutACountryBoundaryRestriction() {
         val r=NavigationService.parseRoute(captured("route-international.json"),NavPlace("Brussels",NavPoint(50.8466,4.3528)))
         NavigationGeometry.validateOrigin(r,NavPoint(48.8566,2.3522))

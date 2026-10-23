@@ -3,7 +3,7 @@
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const distance=m=>m>=1000?`${(m/1000).toFixed(1)} km`:`${Math.max(0,Math.round(m))} m`;
  let bridge,state,refresh,nav,map,line,marker,destination,revision=-1,lastFixPoint=null,watch=null,busy=false,notice='목적지를 검색하거나 위도,경도를 입력하세요.',results=[],selection=null,placePin=null,selectionKey='',nearbySearch=false,hasMore=false,lastSubmitted='',seenPlaceIds=[];
- let controller=null,generation=0,lastSearch=0,lastRoute=0,failures=0,spoken='',query='',lastLayout='',accessConfirmed=false,guidanceLayout='',resizeObserver=null,mapInteractive=null,lastAccent='',lastTracking=null,wasFollowing=false;
+ let controller=null,generation=0,lastSearch=0,lastRoute=0,failures=0,spoken='',query='',lastResolvedQuery='',lastLayout='',accessConfirmed=false,guidanceLayout='',resizeObserver=null,mapInteractive=null,lastAccent='',lastTracking=null,wasFollowing=false;
  let navigationVoice=false,voiceGeneration=0,roadTiles=null,roadHealth={status:"LOADING",loaded:0,visible:0};
  let searchAccessToken='',gpsNotice='GPS 미연결 · 내 위치 사용을 눌러 주세요.',locationGeneration=0,resumeLocation=false,gpsState='OFF',gpsStartedAt=null,lastGpsEventAt=null;
  let searchEndpoint='https://nominatim.openstreetmap.org',routeEndpoint='https://router.project-osrm.org';
@@ -28,24 +28,29 @@
   if(more&&(!hasMore||lastSubmitted!==query+'|'+nearbySearch))return;
   const f=origin();if(nearbySearch&&!f){notice='주변 가게 검색은 내 위치를 먼저 받아 주세요.';render();return}
   const previous=more?results:[];
-  if(!more){seenPlaceIds=[];results=[];selection=null;hasMore=false;bridge.navClearPreview();nav=JSON.parse(bridge.navState())}
+  if(!more){lastResolvedQuery=query;seenPlaceIds=[];results=[];selection=null;hasMore=false;bridge.navClearPreview();nav=JSON.parse(bridge.navState())}
   const coords=query.split(',').map(s=>Number(s.trim()));if(!more&&coords.length===2&&coords.every(Number.isFinite)&&query.split(',').every(s=>s.trim()!=='')){results=valid(...coords)?[{name:`좌표 목적지 ${coords[0].toFixed(6)}, ${coords[1].toFixed(6)}`,latitude:coords[0],longitude:coords[1],source:'좌표 입력'}]:[];notice='좌표는 위도,경도 순서입니다.';render();return}
   lastSubmitted=query+'|'+nearbySearch;
   await request(async id=>{
-   const queries=JSON.parse(bridge.placeRequests(query,f?.latitude??NaN,f?.longitude??NaN,nearbySearch,JSON.stringify(more?seenPlaceIds:[])));const rows=[];
-   for(const params of queries){
-    const key=searchEndpoint+'|'+nav.language+'|'+JSON.stringify(params);let data;
-    if(cache.has(key))data=cache.get(key);else {
-     await new Promise(r=>setTimeout(r,Math.max(0,1500-(Date.now()-lastSearch))));if(id!==generation||!canPlan())return;lastSearch=Date.now();
-     const raw=await get(`${searchEndpoint}/search?${new URLSearchParams(params)}`,searchAccessToken);if(id!==generation||!canPlan())return;const parsed=JSON.parse(raw);if(!Array.isArray(parsed))throw Error('검색 응답 형식을 확인하세요.');data=raw;cache.set(key,data);if(cache.size>30)cache.delete(cache.keys().next().value);
-    }
-    rows.push(...JSON.parse(bridge.placeResults(data,f?.latitude??NaN,f?.longitude??NaN,false)));
+   async function readRows(searchQuery){
+    const queries=JSON.parse(bridge.placeRequests(searchQuery,f?.latitude??NaN,f?.longitude??NaN,nearbySearch,JSON.stringify(more?seenPlaceIds:[])));const rows=[];
+    for(const params of queries){
+     const key=searchEndpoint+'|'+nav.language+'|'+JSON.stringify(params);let data;
+     if(cache.has(key))data=cache.get(key);else {
+      await new Promise(r=>setTimeout(r,Math.max(0,1500-(Date.now()-lastSearch))));if(id!==generation||!canPlan())return [];lastSearch=Date.now();
+      const raw=await get(`${searchEndpoint}/search?${new URLSearchParams(params)}`,searchAccessToken);if(id!==generation||!canPlan())return [];const parsed=JSON.parse(raw);if(!Array.isArray(parsed))throw Error('검색 응답 형식을 확인하세요.');data=raw;cache.set(key,data);if(cache.size>30)cache.delete(cache.keys().next().value);
+     }
+     rows.push(...JSON.parse(bridge.placeResults(data,f?.latitude??NaN,f?.longitude??NaN,false)));
+    }return rows;
    }
-   if(id!==generation||!canPlan())return;
+   let rows=await readRows(more?lastResolvedQuery:query);if(id!==generation||!canPlan())return;
+   const suggestion=!more&&!rows.length?bridge.placeSpacingSuggestion(query):null;
+   if(suggestion){rows=await readRows(suggestion);if(id!==generation||!canPlan())return;lastResolvedQuery=suggestion}
    const unique=[...new Map(rows.map(p=>[p.id||[p.name,p.latitude,p.longitude].join('|'),p])).values()].filter(p=>!nearbySearch||L.latLng(f.latitude,f.longitude).distanceTo([p.latitude,p.longitude])<=20000).sort((a,b)=>nearbySearch?L.latLng(f.latitude,f.longitude).distanceTo([a.latitude,a.longitude])-L.latLng(f.latitude,f.longitude).distanceTo([b.latitude,b.longitude]):0).slice(0,6);
    results=[...new Map([...previous,...unique].map(p=>[p.id||[p.name,p.latitude,p.longitude].join('|'),p])).values()].slice(0,18);
    const oldSeen=seenPlaceIds.length;seenPlaceIds=[...new Set([...seenPlaceIds,...rows.map(p=>p.id).filter(Boolean)])].slice(0,18);hasMore=rows.length>=6&&seenPlaceIds.length>oldSeen&&seenPlaceIds.length<18&&results.length<18;
-   notice=!unique.length&&hasMore?'이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요.':unique.length?'가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.':'등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.';
+   const spacingNotice=lastResolvedQuery!==query?'띄어쓰기를 나눠 검색했습니다: '+lastResolvedQuery+' · ':'';
+   notice=spacingNotice+(!unique.length&&hasMore?'이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요.':unique.length?'가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.':'등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.');
   })
  }
  async function plan(place){
@@ -138,7 +143,7 @@
   if(!nav.hasRoute){text('nav-empty',planAllowed?'국가 제한 없이 검색합니다. 정확한 기기 GPS로 출발 위치를 정해 주세요.':'목적지 설정은 안전한 주차 확인 후 가능합니다.');return}
   text('nav-destination',nav.destination);text('nav-destination-address',selection?.address||'');$('nav-destination-address').hidden=!selection?.address;text('nav-instruction',nav.active?(nav.tracking&&!nav.offRoute?nav.instruction:'위치·경로 확인 중'):nav.arrived?nav.instruction:'자동차 경로 미리보기');
   $('nav-turn').hidden=!(nav.active&&nav.tracking&&!nav.offRoute);renderManeuver(nav.turnSymbol||'↑');text('nav-turn-distance',distance(nav.turnMeters)+' 앞');
-  text('nav-remaining',distance(nav.remainingMeters));text('nav-eta',nav.arrived?'차량 경로 도착 · 안내 종료':nav.active&&(!nav.tracking||nav.offRoute)?'도착 예상 갱신 중지':`약 ${Math.max(1,Math.ceil(nav.remainingSeconds/60))}분 · ${etaFormat.format(new Date(Date.now()+nav.remainingSeconds*1000))} 도착 예상`);
+  text('nav-remaining',distance(nav.remainingMeters));$('nav-remaining').closest('p').hidden=nav.arrived;text('nav-eta',nav.arrived?'차량 경로 도착 · 안내 종료':nav.active&&(!nav.tracking||nav.offRoute)?'도착 예상 갱신 중지':`약 ${Math.max(1,Math.ceil(nav.remainingSeconds/60))}분 · ${etaFormat.format(new Date(Date.now()+nav.remainingSeconds*1000))} 도착 예상`);
   $('nav-access').hidden=!(nav.destinationAccessMeters>30);text('nav-access',`차량 접근 지점에서 목적지까지 직선 약 ${distance(nav.destinationAccessMeters)} · 주차장·진입로를 확인하세요.`);
   text('nav-origin-access',nav.originAccessMeters>45?`출발 GPS와 연결도로 시작점이 약 ${distance(nav.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다.`:'출발 위치의 정확하고 최신인 GPS를 확인해 주세요.');$('nav-origin-access').hidden=!planAllowed||nav.originReady;
   const start=$('nav-guidance').querySelector('[data-nav="start"]');if(start)start.disabled=busy||!nav.originReady||(confirm&&!accessConfirmed);
@@ -178,5 +183,5 @@
  document.addEventListener('input',event=>{if(event.target.id==='nav-query'){if(query!==event.target.value&&busy&&canPlan()){cancel();notice='입력 변경으로 이전 요청을 취소했습니다. 검색을 눌러 주세요.'}query=event.target.value;if(lastSubmitted!==query+'|'+nearbySearch){hasMore=false;render()}const link=$('nav-external-search');if(link){link.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(query);link.hidden=!query.trim()}}});
  document.addEventListener('click',event=>{const b=event.target.closest('button');if(!b||b.disabled||!bridge)return;if(b.dataset.navPlace!==undefined){plan(results[+b.dataset.navPlace]);return}if(!b.dataset.nav)return;switch(b.dataset.nav){case'tiles':if(canPlan())roadTiles?.retry();break;case'cancel':if(canPlan()){cancel();notice='요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.'}break;case'clear':if(canPlan()){cancel();selection=null;destination=null;bridge.navClearPreview();notice='선택한 장소를 지웠습니다.'}break;case'replan':if(canPlan()&&(selection||destination)){plan(selection||destination);return}break;case'more':search(true);return;case'locate':case'gps':locate();break;case'start':if(canPlan()){if(bridge.navStart(accessConfirmed)){spoken='';failures=0;notice='GPS 주행 안내를 시작했습니다.'}else notice='출발 위치의 정확한 GPS가 필요합니다. 이동했다면 경로를 다시 계산하세요.'}break;case'stop':cancel();bridge.navStop();destination=null;selection=null;results=[];hasMore=false;spoken='';if(!JSON.parse(bridge.navState()).safetyHeld){resumeLocation=false;stopWatch();setGps('OFF','GPS 미연결 · 내 위치 사용을 눌러 주세요.')}notice='안내 종료 · 이동이 감지됐다면 정차 상태를 다시 확인합니다.';break;case'retry':failures=0;reroute();break}nav=JSON.parse(bridge.navState());render();refresh?.()});
  document.addEventListener('visibilitychange',()=>{if(!bridge)return;if(document.hidden){resumeLocation=resumeLocation||watch!==null;cancel();stopWatch();window.speechSynthesis?.cancel();bridge.navBackground();nav=JSON.parse(bridge.navState());setGps('OFF','화면 밖에서는 위치 수신 중지')}else{if(nav?.active||nav?.safetyHeld)resumeLocation=true;resumeGPS()}});
- window.EchoNavigation={html,voiceCommand,setLanguage,pauseVoice:stopNavigationVoice,get canPlan(){return canPlan()},get language(){return nav?.language||'ko-KR'},get instructionLanguage(){return nav?.instructionLanguage||'ko'},update(s,b,r){bridge=b;state=s;refresh=r;nav=JSON.parse(b.navState());if(!s.network&&busy)cancel();resumeGPS();render();speak();reroute()},destroy(){roadTiles?.destroy();roadTiles=null;roadHealth={status:"LOADING",loaded:0,visible:0};window.EchoVoice?.cancel();resizeObserver?.disconnect();resizeObserver=null;map?.remove();map=null;line=null;marker=null;placePin=null;selectionKey='';revision=-1;lastFixPoint=null;lastLayout='';guidanceLayout='';mapInteractive=null;lastAccent='';lastTracking=null;wasFollowing=false},reset(){window.EchoVoice?.reset();cancel();stopWatch();cache.clear();searchAccessToken='';results=[];seenPlaceIds=[];selection=null;hasMore=false;nearbySearch=false;query='';destination=null;resumeLocation=false;setGps('OFF','GPS 미연결 · 내 위치 사용을 눌러 주세요.');notice='개인 검색·위치 정보를 초기화했습니다.'},get active(){return nav?.active===true},get guidance(){return nav}};
+ window.EchoNavigation={html,voiceCommand,setLanguage,pauseVoice:stopNavigationVoice,get canPlan(){return canPlan()},get language(){return nav?.language||'ko-KR'},get instructionLanguage(){return nav?.instructionLanguage||'ko'},update(s,b,r){bridge=b;state=s;refresh=r;nav=JSON.parse(b.navState());if(!s.network&&busy)cancel();resumeGPS();render();speak();reroute()},destroy(){roadTiles?.destroy();roadTiles=null;roadHealth={status:"LOADING",loaded:0,visible:0};window.EchoVoice?.cancel();resizeObserver?.disconnect();resizeObserver=null;map?.remove();map=null;line=null;marker=null;placePin=null;selectionKey='';revision=-1;lastFixPoint=null;lastLayout='';guidanceLayout='';mapInteractive=null;lastAccent='';lastTracking=null;wasFollowing=false},reset(){window.EchoVoice?.reset();cancel();stopWatch();cache.clear();searchAccessToken='';results=[];seenPlaceIds=[];selection=null;hasMore=false;nearbySearch=false;query='';lastResolvedQuery='';destination=null;resumeLocation=false;setGps('OFF','GPS 미연결 · 내 위치 사용을 눌러 주세요.');notice='개인 검색·위치 정보를 초기화했습니다.'},get active(){return nav?.active===true},get guidance(){return nav}};
 })();

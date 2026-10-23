@@ -94,7 +94,8 @@ open class NavigationService {
             for(i in 0 until legs.length()) {
                 val steps=legs.getJSONObject(i).getJSONArray("steps")
                 for(j in 0 until steps.length()) {require(maneuvers.size<10_000);val step=steps.getJSONObject(j);val m=step.getJSONObject("maneuver");val p=m.getJSONArray("location")
-                    maneuvers.add(NavManeuver(NavPoint(p.getDouble(1),p.getDouble(0)),m.getString("type"),m.optString("modifier"),step.optString("name"),if(m.has("exit"))m.getInt("exit") else null))
+                    val road=NavigationGeometry.roadLabel(step.optString("name"),step.optString("destinations"),step.optString("ref"))
+                    maneuvers.add(NavManeuver(NavPoint(p.getDouble(1),p.getDouble(0)),m.getString("type"),m.optString("modifier"),road,if(m.has("exit"))m.getInt("exit") else null))
                 }
             }
             return NavigationGeometry.route(destination,points,route.getDouble("distance"),route.getDouble("duration"),maneuvers)
@@ -118,7 +119,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private var safetyHeld=false;private val stationary=StationaryEvidence()
     private var voiceGeneration=0
     init {service.language=language}
-    private var lastQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
+    private var lastQuery="";private var resolvedSearchQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
     private var lastFixTimestamp=Long.MIN_VALUE;private var resumeLocation=false
     private var locationGeneration=0;private var requestedAt:Long?=null;private var receivedAt:Long?=null
     private var listener:LocationListener?=null
@@ -176,17 +177,23 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val center=fix?.takeIf {tracker.usable(it)}?.point
         if(nearby&&center==null){mutable.value=mutable.value.copy(notice="주변 가게 검색은 내 위치를 먼저 받아 주세요.");return}
         val old=if(more)mutable.value.places else emptyList()
-        if(!more){cancelRequest();seenPlaceIds=emptyList();tracker.stop();publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false)}
+        if(!more){resolvedSearchQuery=query;cancelRequest();seenPlaceIds=emptyList();tracker.stop();publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false)}
         val coordinates=query.split(',').map {it.trim().toDoubleOrNull()}
         if(!more&&coordinates.size==2&&coordinates.all {it!=null}) {
             val p=NavPoint(coordinates[0]!!,coordinates[1]!!)
             mutable.value=mutable.value.copy(places=if(p.valid())listOf(NavPlace("좌표 목적지 ${p.latitude}, ${p.longitude}",p,source="좌표 입력")) else emptyList(),hasMore=false,notice="좌표는 위도,경도 순서입니다.");return
         }
         lastQuery=query;nearbySearch=nearby
-        request {current->val page=service.search(query,center,nearby,seenPlaceIds);if(current()&&canPlan()){
+        request {current->
+            var page=service.search(if(more)resolvedSearchQuery else query,center,nearby,seenPlaceIds)
+            if(!current()||!canPlan())return@request
+            val suggestion=if(!more&&page.places.isEmpty()&&page.seenIds.isEmpty())PlaceSearch.spacingSuggestion(query) else null
+            if(suggestion!=null){page=service.search(suggestion,center,nearby,seenPlaceIds);if(!current()||!canPlan())return@request;resolvedSearchQuery=suggestion}
+            if(current()&&canPlan()){
+            val spacingNotice=if(resolvedSearchQuery!=query)"띄어쓰기를 나눠 검색했습니다: $resolvedSearchQuery · " else ""
             seenPlaceIds=page.seenIds;val result=page.places
             val combined=(old+result).distinctBy {it.id.ifBlank {it.name+it.point}}.take(PlaceSearch.maxResults)
-            mutable.value=mutable.value.copy(places=combined,hasMore=page.hasMore&&combined.size<PlaceSearch.maxResults,notice=if(result.isEmpty()&&page.hasMore)"이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요." else if(result.isEmpty())"등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다." else "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.")
+            mutable.value=mutable.value.copy(places=combined,hasMore=page.hasMore&&combined.size<PlaceSearch.maxResults,notice=spacingNotice+(if(result.isEmpty()&&page.hasMore)"이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요." else if(result.isEmpty())"등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다." else "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다."))
             if(engine.state.value.preferences.voiceEnabled&&combined.isNotEmpty())speech.speakNavigation(combined.take(6).mapIndexed {i,p->"${i+1}. ${p.name}"}.joinToString(". "),language)
         }}
     }
@@ -295,6 +302,6 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val uri=android.net.Uri.parse("https://www.google.com/maps/search/?api=1&query="+android.net.Uri.encode(query.take(180)))
         runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,uri).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {mutable.value=mutable.value.copy(notice="외부 지도를 열 수 없습니다. 브라우저 설치를 확인하세요.")}
     }
-    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearCache();lastQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
+    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearCache();lastQuery="";resolvedSearchQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
     fun close(){cancelVoice();cancelRequest();stopLocation();scope.cancel()}
 }

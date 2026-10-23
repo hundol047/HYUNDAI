@@ -8,6 +8,16 @@ object PlaceSearch {
     const val pageSize=6
     const val maxResults=18
     const val radiusMeters=20_000.0
+    /** A bounded retry preserving every character; never remove a city/branch.
+     * Only a multi-word Korean query with a city joined to a following locality
+     * is eligible. The original query always runs first. */
+    fun spacingSuggestion(query:String):String? {
+        val words=clean(query,180).split(Regex("\\s+"))
+        if(words.size<2)return null
+        val cities=listOf("서울","부산","대구","인천","광주","대전","울산","세종","수원","성남","고양","용인","청주","천안","전주","포항","창원","김해","양산","춘천","원주","강릉","충주","제천","목포","여수","순천","경주","구미","안동","제주","서귀포")
+        val last=words.last();val city=cities.firstOrNull {last.startsWith(it)&&last.length>=it.length+2&&last.all {c->c in '가'..'힣'}} ?: return null
+        return (words.dropLast(1)+city+last.substring(city.length)).joinToString(" ")
+    }
     private fun clean(s:String,limit:Int)=s.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(limit)
     fun place(name:String,lat:Double,lon:Double,id:String="",address:String="",category:String="",phone:String="",website:String="",hours:String="",source:String="OSM / Nominatim"):NavPlace? {
         val point=NavPoint(lat,lon);val label=clean(name,240)

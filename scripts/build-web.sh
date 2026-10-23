@@ -6,7 +6,7 @@ npm ci --prefix scripts/web --ignore-scripts --no-audit --no-fund
 ./gradlew :core:jsBrowserDistribution --console=plain
 python3 - <<'PY'
 from pathlib import Path
-import shutil
+import shutil, re
 root=Path.cwd()
 out=root/'build/site'
 if out.exists():shutil.rmtree(out) # This script owns this generated build directory.
@@ -20,7 +20,13 @@ shutil.copy2(root/'scripts/web/node_modules/leaflet/LICENSE',out/'vendor/leaflet
 (out/'apk').mkdir()
 for p in (root/'apk').glob('*'):
  if p.suffix=='.apk' or p.name=='SHA256SUMS':shutil.copy2(p,out/'apk'/p.name)
-shutil.copytree(root/'docs/screenshots',out/'images')
+# Ship gallery/poster assets, keeping validation-only screenshots in the repo.
+# This avoids growing every user's download when a new road audit is added.
+html=(out/'index.html').read_text()
+images={name+'.png' for name in re.findall(r'data-image="([a-z0-9-]+)"',html)}
+images.update(re.findall(r'(?:src|poster)="images/([^"/]+)"',html))
+(out/'images').mkdir()
+for name in sorted(images):shutil.copy2(root/'docs/screenshots'/name,out/'images'/name)
 videos=list((root/'docs/video').glob('*.mp4'))
 if videos:
  (out/'videos').mkdir()

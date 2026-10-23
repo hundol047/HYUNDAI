@@ -1,6 +1,6 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.10.1`.
+팀 **퓨처랩스** · CabinOS ONE `0.10.2`.
 
 [0.10.0 음성 기능·지원 언어·기기 한계](VOICE_NAVIGATION_KO.md)와 [실제 제공자 요청](validation/voice-review-live-providers.json)을 함께 확인하세요.
 
@@ -8,12 +8,14 @@
 
 [웹 r2 복잡한 경로 모의 주행](CHALLENGING_DRIVE_KO.md): 실제 서버·합성 GPS로 3개 도시 4.742km, 782개 위치, 46개 도로 타일 확인 지점을 통과했습니다. 상호 검색 누락과 주변 추천 서버 시간 초과는 별도로 기록했습니다.
 
+[0.10.2 서울시청→미래캠퍼스 실제 경로 모의 주행](SEOUL_YONSEI_DRIVE_KO.md): 113.2km, 위치 입력 6,930개, 도로 확인 53곳. 검색 공백 보정·고속도로 방향 표지·도착 표시를 보완했습니다.
+
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **93개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **59개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **95개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **62개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 4건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3) |
@@ -21,7 +23,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **152개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·가게 검색 12개·조작/수명/지연 12개·GPS 15개·음성/언어 14개·도로 타일 7개·지도 조작/성능 8개, 총 115개가 통과했습니다.** Python 선택적 검색 서버는 별도 [10개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **157개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 11개·내비게이션 13개·색상 8개·가게 검색 15개·조작/수명/지연 12개·GPS 15개·음성/언어 14개·도로 타일 7개·지도 조작/성능 8개, 총 118개가 통과했습니다.** Python 선택적 검색 서버는 별도 [10개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 

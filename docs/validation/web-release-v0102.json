@@ -1,0 +1,17 @@
+{
+  "path": "web-release/CabinOS_ONE_web_v0.10.2.zip",
+  "bytes": 44565932,
+  "sha256": "9f857fbfabf01eb46f8c0ae13d5a8a9bfb6684847af6143f0e849eb4e1801fee",
+  "version": "0.10.2",
+  "sourceAndBundledArtifactsMatch": true,
+  "galleryAndPosterImages": [
+    "appearance.png",
+    "driving.png",
+    "focus.png",
+    "navigation.png",
+    "nearby.png",
+    "parked.png",
+    "video-poster.jpg"
+  ],
+  "validationOnlyScreenshotsExcluded": true
+}

@@ -4,6 +4,11 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PlaceSearchTest {
+    @Test fun spacingRetryPreservesBusinessCityAndBranchWithoutBroadeningTheQuery() {
+        assertEquals("스타벅스 원주 무실",PlaceSearch.spacingSuggestion("스타벅스 원주무실"))
+        assertEquals("카페 서울 강남",PlaceSearch.spacingSuggestion("카페 서울강남"))
+        listOf("스타벅스 원주 무실","원주무실","서울우유","연세대학교 미래캠퍼스","Café de Flore Paris","카페 서울숲","원주시 연세대길 1").forEach {assertNull(PlaceSearch.spacingSuggestion(it))}
+    }
     @Test fun outsideCircleResultsAreStillExcludedWhenFetchingTheNextPage() {
         val origin=NavPoint(37.5,127.0);val places=(1..6).map {PlaceSearch.place("far shop $it",37.68,127.2,"$it")!!}
         val page=PlaceSearch.page(places,origin,true,emptyList())

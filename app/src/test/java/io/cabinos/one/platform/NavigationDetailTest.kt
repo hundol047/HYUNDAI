@@ -24,6 +24,36 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test fun emptyBusinessSearchRetriesSpacingOnceAndMoreUsesTheResolvedQuery() {
+        val calls=mutableListOf<Pair<String,List<String>>>()
+        val service=object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+            calls+=query to excluded
+            if(query=="스타벅스 원주무실")return PlaceSearchPage(emptyList(),emptyList(),false)
+            val places=(excluded.size until excluded.size+6).map {NavPlace("검사용 지점 $it",destination.point,id="$it",address="검사용 주소")}
+            return PlaceSearch.page(places,origin,nearby,excluded)
+        }}
+        Fixture(service).use {f->
+            f.nav.search("스타벅스 원주무실");f.idle()
+            assertEquals(listOf("스타벅스 원주무실","스타벅스 원주 무실"),calls.map {it.first})
+            assertEquals(6,f.nav.state.value.places.size);assertTrue(f.nav.state.value.notice.contains("띄어쓰기"));assertTrue(f.nav.state.value.hasMore)
+            f.nav.search("스타벅스 원주무실",more=true);f.idle()
+            assertEquals("스타벅스 원주 무실",calls.last().first);assertEquals(6,calls.last().second.size);assertEquals(12,f.nav.state.value.places.size)
+        }
+    }
+    @Test fun cancellingSpacingRetryPreventsLatePlacesReplacingANewSearch() {
+        val pending=CompletableDeferred<PlaceSearchPage>()
+        val service=object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage = when(query){
+            "스타벅스 원주무실"->PlaceSearchPage(emptyList(),emptyList(),false)
+            "스타벅스 원주 무실"->withContext(NonCancellable){pending.await()}
+            else->PlaceSearchPage(listOf(destination.copy(name="새 검색 결과",id="new")),listOf("new"),false)
+        }}
+        Fixture(service).use {f->
+            f.nav.search("스타벅스 원주무실");f.idle();assertTrue(f.nav.state.value.busy)
+            f.nav.cancelPending();f.nav.search("새 가게");f.idle()
+            pending.complete(PlaceSearchPage(listOf(destination.copy(name="이전 결과",id="old")),listOf("old"),false));f.idle()
+            assertEquals("새 검색 결과",f.nav.state.value.places.single().name)
+        }
+    }
     private val origin=NavPoint(48.85,2.35)
     private val destination=NavPlace("검사용 가게",NavPoint(48.86,2.35))
     private fun route()=NavigationGeometry.route(destination,listOf(origin,destination.point),1200.0,180.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))

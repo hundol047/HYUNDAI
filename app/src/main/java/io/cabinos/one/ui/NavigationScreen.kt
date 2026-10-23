@@ -101,7 +101,7 @@ import java.util.Locale
                             Text(if(g.tracking&&!g.offRoute)g.nextInstruction else "위치·경로 확인 중",color=White,fontSize=23.sp)
                             if(g.tracking&&!g.offRoute)Text("${navDistance(g.turnMeters)} 앞",color=Blue,fontSize=24.sp)
                         }
-                        Text("남은 거리 ${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
+                        if(!g.arrived)Text("남은 거리 ${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
                         Text(if(g.arrived)"차량 경로 도착 · 안내 종료" else if(g.active&&(!g.tracking||g.offRoute))"도착 예상 갱신 중지" else "약 ${kotlin.math.ceil(g.remainingSeconds/60).toInt().coerceAtLeast(1)}분 · ${SimpleDateFormat("HH:mm",Locale.getDefault()).format(Date(System.currentTimeMillis()+(g.remainingSeconds*1000).toLong()))} 도착 예상",color=Muted,fontSize=13.sp)
                         if(r.destinationAccessMeters>30)Text("차량 접근 지점에서 목적지까지 직선 약 ${navDistance(r.destinationAccessMeters)} · 주차장·진입로를 확인하세요.",color=Amber,fontSize=12.sp)
                         if(canPlan&&r.destinationAccessMeters>100)Row {Checkbox(accessConfirmed,{accessConfirmed=it});Text("목적지와 차량 접근 지점의 차이를 확인했습니다.",color=White,fontSize=12.sp)}

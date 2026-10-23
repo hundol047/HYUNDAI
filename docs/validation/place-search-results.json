@@ -30,6 +30,18 @@
       "result": "passed"
     },
     {
+      "name": "empty joined Korean locality retries spacing once and paging keeps the resolved query",
+      "result": "passed"
+    },
+    {
+      "name": "a successful original business search never retries or broadens its city",
+      "result": "passed"
+    },
+    {
+      "name": "an unregistered business stops after one spacing retry without invented results",
+      "result": "passed"
+    },
+    {
       "name": "private search gateway receives only its access token and never forwards it to routing or storage",
       "result": "passed"
     },

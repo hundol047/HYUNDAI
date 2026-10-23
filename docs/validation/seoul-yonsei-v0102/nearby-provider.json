@@ -1,0 +1,8 @@
+{
+  "type": "one actual bounded named-business request at campus entrance; no alternate host",
+  "query": "[out:json][timeout:10];nwr[\"name\"][\"amenity\"~\"^(cafe|restaurant|fast_food)$\"](around:400,37.27693,127.90777);out center tags 60;",
+  "observedAt": "2026-10-23T09:59:42.924160+00:00",
+  "result": "unavailable",
+  "reason": "The read operation timed out",
+  "elapsedMs": 16210.6
+}

@@ -1,0 +1,3131 @@
+{
+  "observedAt": "2026-10-23T10:15:01.413Z",
+  "result": "passed",
+  "type": "Actual Chromium and live Nominatim/OSRM/OSM; full route tracker receives synthetic 1 Hz GPS. Map is inspected at bounded checkpoints, not every intervening frame. No provider interception or fabricated roads.",
+  "physicalGps": false,
+  "physicalDriving": false,
+  "allBusinessesGuaranteed": false,
+  "sourceSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "responses": [
+    {
+      "url": "https://tile.openstreetmap.org/2/0/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EC%9B%90%EC%A3%BC%EB%AC%B4%EC%8B%A4",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EC%9B%90%EC%A3%BC+%EB%AC%B4%EC%8B%A4",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%9D%B4%EB%94%94%EC%95%BC+%EB%A7%A4%EC%A7%80%EB%A6%AC",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%97%B0%EC%84%B8%EB%8C%80%ED%95%99%EA%B5%90+%EB%AF%B8%EB%9E%98%EC%BA%A0%ED%8D%BC%EC%8A%A4",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/126.9784204,37.5667893;127.901503,37.2800965?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/875/396.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/874/396.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/874/397.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/876/396.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/873/396.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/876/397.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/873/397.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/10/875/397.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27985/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27984/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27984/12704.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27985/12704.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27984/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27983/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27985/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27983/12704.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12704.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27983/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27946/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27944/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27944/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27947/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27947/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27946/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27945/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27945/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27946/12687.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27948/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27947/12687.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27948/12687.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27948/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27945/12687.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27949/12688.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27949/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27949/12687.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27950/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27951/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27950/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27951/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27952/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27949/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27952/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27952/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27949/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27950/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27951/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27954/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27955/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27954/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27954/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27955/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27955/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27953/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27953/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27956/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27953/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27956/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27956/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27959/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27960/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27961/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27961/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27960/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27959/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27960/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27958/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27959/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27958/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27958/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27961/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27959/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27960/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27961/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27958/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27962/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27961/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27962/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27959/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27960/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27962/12692.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27963/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27963/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27963/12695.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12693.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12695.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12694.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12695.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27962/12695.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27966/12698.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12698.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27966/12697.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12697.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12699.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27967/12698.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27965/12698.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12697.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27967/12697.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27967/12699.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27966/12699.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27964/12699.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27968/12703.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27968/12702.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27967/12703.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27967/12702.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27966/12702.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27969/12703.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27969/12702.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27966/12703.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27970/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27970/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27969/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27970/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27969/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12705.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27969/12706.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27973/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27973/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27973/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27974/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27974/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27974/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27974/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27973/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27972/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27971/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27975/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27975/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27975/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27977/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27978/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27977/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27977/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27978/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27979/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27979/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27976/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27976/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27978/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27979/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27976/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27982/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27982/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27983/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27983/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27984/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27984/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27981/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27981/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27988/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27987/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27988/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27987/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27988/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27987/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27989/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27989/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27986/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27989/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27992/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27992/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27994/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27994/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27991/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27991/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27993/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27993/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27997/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27997/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27997/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27998/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27999/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27998/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27999/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27996/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27996/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27996/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27999/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27998/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28002/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28002/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28002/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28003/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28003/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28001/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28003/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28001/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28004/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28004/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28004/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28001/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28008/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28007/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28007/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28008/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28007/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28009/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28008/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28006/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28009/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28006/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28009/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28006/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28012/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28012/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28013/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28013/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28011/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28013/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28011/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28014/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28014/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28011/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28014/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28012/12707.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28018/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28018/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28017/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28016/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28017/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28019/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28019/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28016/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28022/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28023/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28022/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28021/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28023/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28021/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28021/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28022/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28023/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12708.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28023/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12709.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12710.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12713.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12713.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12713.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12712.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12713.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12711.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12716.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28029/12716.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12717.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12716.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12716.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28029/12717.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12717.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12717.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12718.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12718.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28029/12718.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12718.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12720.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12719.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12719.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12721.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12720.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12720.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12719.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12721.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12719.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12720.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28028/12721.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12721.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12722.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12722.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28026/12723.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28025/12723.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12721.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12723.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28027/12722.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12723.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/28024/12722.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56051/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56052/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25444.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25443.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56050/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/56053/25445.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112103/50888.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112102/50889.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112102/50888.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112105/50889.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112104/50888.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112104/50889.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112105/50888.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/17/112103/50889.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%9A%B0%EB%A6%AC%EC%9D%80%ED%96%89+%EC%97%B0%EC%84%B8%EB%8C%80%EB%AF%B8%EB%9E%98%EC%BA%A0%ED%8D%BC%EC%8A%A4",
+      "status": 200
+    }
+  ],
+  "requestFailures": [],
+  "pageErrors": [],
+  "searches": [
+    {
+      "query": "스타벅스 원주무실",
+      "results": []
+    },
+    {
+      "query": "스타벅스 원주 무실",
+      "results": [
+        {
+          "place_id": 223365011,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 4631390762,
+          "lat": "37.3437897",
+          "lon": "127.9311158",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 5.8555733577432175e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 178, 서원대로, 무실동, 원주시, 강원특별자치도, 26382, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "house_number": "178",
+            "road": "서원대로",
+            "quarter": "무실동",
+            "city": "원주시",
+            "province": "강원특별자치도",
+            "ISO3166-2-lvl4": "KR-42",
+            "postcode": "26382",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "branch": "원주터미널점",
+            "cuisine": "coffee_shop",
+            "smoking": "no",
+            "website": "http://www.istarbucks.co.kr/index.do",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "operator": "(주)스타벅스커피 코리아",
+            "takeaway": "yes",
+            "payment:jcb": "yes",
+            "payment:cash": "yes",
+            "payment:visa": "yes",
+            "payment:coins": "yes",
+            "payment:notes": "yes",
+            "brand:wikidata": "Q37158",
+            "payment:unionpay": "yes",
+            "payment:mastercard": "yes",
+            "payment:diners_club": "yes",
+            "payment:discover_card": "yes",
+            "payment:american_express": "yes"
+          },
+          "namedetails": {
+            "name": "스타벅스",
+            "brand": "스타벅스",
+            "name:de": "Starbucks",
+            "name:en": "Starbucks",
+            "name:ja": "スターバックス",
+            "name:ko": "스타벅스",
+            "name:ru": "Старбакс",
+            "name:zh": "星巴克",
+            "int_name": "Starbucks"
+          },
+          "boundingbox": [
+            "37.3437397",
+            "37.3438397",
+            "127.9310658",
+            "127.9311658"
+          ]
+        },
+        {
+          "place_id": 223174997,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 13245189594,
+          "lat": "37.3331320",
+          "lon": "127.9303270",
+          "category": "amenity",
+          "type": "cafe",
+          "place_rank": 30,
+          "importance": 5.8555733577432175e-05,
+          "addresstype": "amenity",
+          "name": "스타벅스",
+          "display_name": "스타벅스, 능라동길, 무실동, 원주시, 강원특별자치도, 26392, 대한민국",
+          "address": {
+            "amenity": "스타벅스",
+            "road": "능라동길",
+            "quarter": "무실동",
+            "city": "원주시",
+            "province": "강원특별자치도",
+            "ISO3166-2-lvl4": "KR-42",
+            "postcode": "26392",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "branch": "원주무실점",
+            "cuisine": "coffee_shop",
+            "brand:en": "Starbucks",
+            "brand:ko": "스타벅스",
+            "takeaway": "yes",
+            "brand:wikidata": "Q37158"
+          },
+          "namedetails": {
+            "name": "스타벅스",
+            "brand": "스타벅스",
+            "name:en": "Starbucks",
+            "name:ko": "스타벅스"
+          },
+          "boundingbox": [
+            "37.3330820",
+            "37.3331820",
+            "127.9302770",
+            "127.9303770"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "이디야 매지리",
+      "results": []
+    },
+    {
+      "query": "연세대학교 미래캠퍼스",
+      "results": [
+        {
+          "place_id": 223144392,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "way",
+          "osm_id": 296912707,
+          "lat": "37.2800965",
+          "lon": "127.9015030",
+          "category": "amenity",
+          "type": "university",
+          "place_rank": 30,
+          "importance": 0.5822016528777608,
+          "addresstype": "amenity",
+          "name": "연세대학교 미래캠퍼스",
+          "display_name": "연세대학교 미래캠퍼스, 연세대길, 흥업면, 원주시, 강원특별자치도, 26493, 대한민국",
+          "address": {
+            "amenity": "연세대학교 미래캠퍼스",
+            "road": "연세대길",
+            "town": "흥업면",
+            "city": "원주시",
+            "province": "강원특별자치도",
+            "ISO3166-2-lvl4": "KR-42",
+            "postcode": "26493",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "website": "https://www.yonsei.ac.kr/wj/",
+            "wikidata": "Q16096532",
+            "wikipedia": "ko:연세대학교 원주캠퍼스",
+            "wikipedia:en": "Yonsei University"
+          },
+          "namedetails": {
+            "name": "연세대학교 미래캠퍼스",
+            "name:en": "Yonsei University Mirae Campus",
+            "name:ko": "연세대학교 미래캠퍼스",
+            "alt_name:en": "Yonsei University Wonju Campus",
+            "alt_name:ko": "연세대학교 원주캠퍼스"
+          },
+          "boundingbox": [
+            "37.2745950",
+            "37.2854369",
+            "127.8975225",
+            "127.9069538"
+          ]
+        }
+      ]
+    },
+    {
+      "query": "우리은행 연세대미래캠퍼스",
+      "results": [
+        {
+          "place_id": 222220471,
+          "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+          "osm_type": "node",
+          "osm_id": 12398988006,
+          "lat": "37.2748331",
+          "lon": "127.9043276",
+          "category": "amenity",
+          "type": "bank",
+          "place_rank": 30,
+          "importance": 5.8555733577432175e-05,
+          "addresstype": "amenity",
+          "name": "우리은행 연세대미래캠퍼스 출장소",
+          "display_name": "우리은행 연세대미래캠퍼스 출장소, 1, 연세대길, 흥업면, 원주시, 강원특별자치도, 26493, 대한민국",
+          "address": {
+            "amenity": "우리은행 연세대미래캠퍼스 출장소",
+            "house_number": "1",
+            "road": "연세대길",
+            "town": "흥업면",
+            "city": "원주시",
+            "province": "강원특별자치도",
+            "ISO3166-2-lvl4": "KR-42",
+            "postcode": "26493",
+            "country": "대한민국",
+            "country_code": "kr"
+          },
+          "extratags": {
+            "atm": "yes",
+            "fax": "+82 505 001 3462",
+            "phone": "+82 33 763 3020",
+            "branch": "연세대미래캠퍼스 출장소",
+            "brand:en": "Woori Bank",
+            "brand:ko": "우리은행",
+            "opening_hours": "Mo-Fr 09:00-16:00",
+            "brand:wikidata": "Q494369"
+          },
+          "namedetails": {
+            "name": "우리은행 연세대미래캠퍼스 출장소",
+            "brand": "우리은행",
+            "name:en": "Woori Bank Yonsei University Mirae Campus Subbranch",
+            "name:ko": "우리은행 연세대미래캠퍼스 출장소"
+          },
+          "boundingbox": [
+            "37.2747831",
+            "37.2748831",
+            "127.9042776",
+            "127.9043776"
+          ]
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "label": "서울시청 출발 / depart · 세종대로20길 / end of road · 세종대로",
+      "atMeters": 0,
+      "waitMs": 1089,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "도로 끝에서 우회전 · 세종대로",
+      "remainingMeters": 113173.7,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-00.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-seoul-start.png"
+    },
+    {
+      "label": "turn · 청계천로",
+      "atMeters": 313.3518021478662,
+      "waitMs": 564,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 · 청계천로",
+      "remainingMeters": 112860.01536077642,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 2.120929355786485,
+      "capture": "checkpoint-01.png"
+    },
+    {
+      "label": "5km 도로",
+      "atMeters": 5000,
+      "waitMs": 892,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "좌회전 · 고산자로",
+      "remainingMeters": 108168.38908303533,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-02.png"
+    },
+    {
+      "label": "turn · 고산자로 / turn",
+      "atMeters": 5884.954516725825,
+      "waitMs": 1018,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "좌회전 · 고산자로",
+      "remainingMeters": 107282.49458232589,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.1422180244932372,
+      "capture": "checkpoint-03.png"
+    },
+    {
+      "label": "turn · 천호대로",
+      "atMeters": 6379.817418635312,
+      "waitMs": 1052,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 천호대로",
+      "remainingMeters": 106787.10604526308,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.6127620045479214,
+      "capture": "checkpoint-04.png"
+    },
+    {
+      "label": "continue · 천호대로",
+      "atMeters": 6693.5420975893085,
+      "waitMs": 533,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 · 천호대로",
+      "remainingMeters": 106473.04813316737,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.2757719081077675,
+      "capture": "checkpoint-05.png"
+    },
+    {
+      "label": "10km 도로",
+      "atMeters": 10000,
+      "waitMs": 1073,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 진입로 이용",
+      "remainingMeters": 103163.07816609513,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.5050226977979809,
+      "capture": "checkpoint-06.png"
+    },
+    {
+      "label": "15km 도로",
+      "atMeters": 15000,
+      "waitMs": 1626,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 진입로 이용",
+      "remainingMeters": 98157.76724920535,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-07.png"
+    },
+    {
+      "label": "진출입·분기 접근 / on ramp",
+      "atMeters": 19725.18980346782,
+      "waitMs": 1263,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 진입로 이용",
+      "remainingMeters": 93427.55842764283,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-08.png"
+    },
+    {
+      "label": "진출입·분기 통과 / 20km 도로",
+      "atMeters": 19965.18980346782,
+      "waitMs": 497,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "왼쪽으로 완만하게 방향으로 합류 · 수도권제1순환고속도로",
+      "remainingMeters": 93187.30350362862,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 2.200733500569771,
+      "capture": "checkpoint-09.png"
+    },
+    {
+      "label": "진출입·분기 접근 / merge · 수도권제1순환고속도로",
+      "atMeters": 20508.73949218639,
+      "waitMs": 416,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "왼쪽으로 완만하게 방향으로 합류 · 수도권제1순환고속도로",
+      "remainingMeters": 92643.1764654752,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.3762523614433195,
+      "capture": "checkpoint-10.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-ring-road-merge.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 20748.73949218639,
+      "waitMs": 668,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 중부고속도로",
+      "remainingMeters": 92402.92154146131,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.7419636714016652,
+      "capture": "checkpoint-11.png"
+    },
+    {
+      "label": "진출입·분기 접근 / fork · 중부고속도로",
+      "atMeters": 22087.96356813272,
+      "waitMs": 710,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 중부고속도로",
+      "remainingMeters": 91062.27496394102,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.8826189284873525,
+      "capture": "checkpoint-12.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 22327.96356813272,
+      "waitMs": 323,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 중부고속도로",
+      "remainingMeters": 90822.02003993386,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.5491143640008608,
+      "capture": "checkpoint-13.png"
+    },
+    {
+      "label": "25km 도로",
+      "atMeters": 25000,
+      "waitMs": 683,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 중부고속도로",
+      "remainingMeters": 88147.14541535052,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.599547626757324,
+      "capture": "checkpoint-14.png"
+    },
+    {
+      "label": "진출입·분기 접근 / fork · 중부고속도로",
+      "atMeters": 25240.744168456888,
+      "waitMs": 394,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 중부고속도로",
+      "remainingMeters": 87906.14553243798,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 2.1893801639085413,
+      "capture": "checkpoint-15.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 25480.744168456888,
+      "waitMs": 364,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 오른쪽으로 완만하게 · 중부고속도로 · 35: 서이천, 대전, 곤지암, 광주",
+      "remainingMeters": 87665.89060842532,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.3348559021509994,
+      "capture": "checkpoint-16.png"
+    },
+    {
+      "label": "진출입·분기 접근 / fork · 중부고속도로 · 35: 서이천, 대전, 곤지암, 광주",
+      "atMeters": 29729.617829744482,
+      "waitMs": 663,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 오른쪽으로 완만하게 · 중부고속도로 · 35: 서이천, 대전, 곤지암, 광주",
+      "remainingMeters": 83412.5038641325,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-17.png"
+    },
+    {
+      "label": "진출입·분기 통과 / 30km 도로",
+      "atMeters": 29969.617829744482,
+      "waitMs": 371,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 52: 원주, 양평",
+      "remainingMeters": 83172.24894012259,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.421926010458132,
+      "capture": "checkpoint-18.png"
+    },
+    {
+      "label": "35km 도로",
+      "atMeters": 35000,
+      "waitMs": 631,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 52: 원주, 양평",
+      "remainingMeters": 78136.52358150174,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-19.png"
+    },
+    {
+      "label": "40km 도로",
+      "atMeters": 40000,
+      "waitMs": 717,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 52: 원주, 양평",
+      "remainingMeters": 73131.21266457291,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-20.png"
+    },
+    {
+      "label": "진출입·분기 접근 / off ramp · 52: 원주, 양평",
+      "atMeters": 43515.28093787838,
+      "waitMs": 696,
+      "timeout": false,
+      "visible": 9,
+      "decoded": 9,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 52: 원주, 양평",
+      "remainingMeters": 69612.19785369889,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-21.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 43755.28093787838,
+      "waitMs": 589,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 광주원주고속도로",
+      "remainingMeters": 69371.94292968737,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.8318448931510604,
+      "capture": "checkpoint-22.png"
+    },
+    {
+      "label": "45km 도로",
+      "atMeters": 45000,
+      "waitMs": 613,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 광주원주고속도로",
+      "remainingMeters": 68125.90174766902,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.9851710478244168,
+      "capture": "checkpoint-23.png"
+    },
+    {
+      "label": "new name · 광주원주고속도로",
+      "atMeters": 46082.979514289334,
+      "waitMs": 624,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 광주원주고속도로",
+      "remainingMeters": 67041.77191052905,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.6634379106168036,
+      "capture": "checkpoint-24.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-gwangju-wonju-expressway.png"
+    },
+    {
+      "label": "50km 도로",
+      "atMeters": 50000,
+      "waitMs": 650,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 63120.590830737725,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-25.png"
+    },
+    {
+      "label": "55km 도로",
+      "atMeters": 55000,
+      "waitMs": 685,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 58115.279913834165,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-26.png"
+    },
+    {
+      "label": "60km 도로",
+      "atMeters": 60000,
+      "waitMs": 637,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 53109.968996929296,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-27.png"
+    },
+    {
+      "label": "65km 도로",
+      "atMeters": 65000,
+      "waitMs": 642,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 48104.65808000762,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-28.png"
+    },
+    {
+      "label": "70km 도로",
+      "atMeters": 70000,
+      "waitMs": 653,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 43099.34716307496,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-29.png"
+    },
+    {
+      "label": "75km 도로",
+      "atMeters": 75000,
+      "waitMs": 656,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 38094.03624614937,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-30.png"
+    },
+    {
+      "label": "80km 도로",
+      "atMeters": 80000,
+      "waitMs": 704,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 33088.725329193796,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-31.png"
+    },
+    {
+      "label": "85km 도로",
+      "atMeters": 85000,
+      "waitMs": 779,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 28083.41441229244,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-32.png"
+    },
+    {
+      "label": "90km 도로",
+      "atMeters": 90000,
+      "waitMs": 625,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 23078.103495330262,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-33.png"
+    },
+    {
+      "label": "95km 도로",
+      "atMeters": 95000,
+      "waitMs": 721,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 18072.792578411783,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-34.png"
+    },
+    {
+      "label": "진출입·분기 접근 / off ramp · 55: 안동, 춘천",
+      "atMeters": 96498.92802988854,
+      "waitMs": 865,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 55: 안동, 춘천",
+      "remainingMeters": 16572.27241209011,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.8425914678462192,
+      "capture": "checkpoint-35.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 96738.92802988854,
+      "waitMs": 341,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 오른쪽으로 완만하게 · 신평RampA1 · 55: 안동",
+      "remainingMeters": 16332.017488077388,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.9545053550117057,
+      "capture": "checkpoint-36.png"
+    },
+    {
+      "label": "진출입·분기 접근 / fork · 신평RampA1 · 55: 안동",
+      "atMeters": 97291.6751026637,
+      "waitMs": 703,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 오른쪽으로 완만하게 · 신평RampA1 · 55: 안동",
+      "remainingMeters": 15778.683296547468,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.5375979378754387,
+      "capture": "checkpoint-37.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 97531.6751026637,
+      "waitMs": 523,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "왼쪽으로 완만하게 방향으로 합류 · 중앙고속도로",
+      "remainingMeters": 15538.428372533126,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.8230138117177002,
+      "capture": "checkpoint-38.png"
+    },
+    {
+      "label": "진출입·분기 접근 / merge · 중앙고속도로",
+      "atMeters": 97884.69164316438,
+      "waitMs": 335,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "왼쪽으로 완만하게 방향으로 합류 · 중앙고속도로",
+      "remainingMeters": 15185.036863734662,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.9302033461217397,
+      "capture": "checkpoint-39.png"
+    },
+    {
+      "label": "진출입·분기 통과",
+      "atMeters": 98124.69164316438,
+      "waitMs": 366,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 19: 남원주, 충주, 강원 혁신도시",
+      "remainingMeters": 14944.781939721881,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.5225218667384264,
+      "capture": "checkpoint-40.png"
+    },
+    {
+      "label": "100km 도로",
+      "atMeters": 100000,
+      "waitMs": 728,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 19: 남원주, 충주, 강원 혁신도시",
+      "remainingMeters": 13067.481661501028,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.0291194248303273,
+      "capture": "checkpoint-41.png"
+    },
+    {
+      "label": "진출입·분기 접근 / 105km 도로 / off ramp · 19: 남원주, 충주, 강원 혁신도시",
+      "atMeters": 104902.5810093328,
+      "waitMs": 630,
+      "timeout": false,
+      "visible": 8,
+      "decoded": 8,
+      "zoom": 15,
+      "instruction": "오른쪽으로 완만하게 출구 이용 · 19: 남원주, 충주, 강원 혁신도시",
+      "remainingMeters": 8159.693212081072,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-42.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-namwonju-exit.png"
+    },
+    {
+      "label": "진출입·분기 통과 / new name · 남원주IC4교",
+      "atMeters": 105142.5810093328,
+      "waitMs": 680,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 남원주IC4교",
+      "remainingMeters": 7919.438288060352,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0.28070917187138633,
+      "capture": "checkpoint-43.png"
+    },
+    {
+      "label": "진출입·분기 접근 / fork · 19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+      "atMeters": 105776.09334545245,
+      "waitMs": 373,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "갈림길에서 왼쪽으로 완만하게 · 19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+      "remainingMeters": 7285.253045667678,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 2.268685059694124,
+      "capture": "checkpoint-44.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-campus-direction.png"
+    },
+    {
+      "label": "진출입·분기 통과 / new name · 남원주IC6교 · 19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+      "atMeters": 106016.09334545245,
+      "waitMs": 374,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 남원주IC6교 · 19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+      "remainingMeters": 7044.998121641131,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.7669240380752158,
+      "capture": "checkpoint-45.png"
+    },
+    {
+      "label": "turn · 북원로",
+      "atMeters": 106368.87000887835,
+      "waitMs": 334,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진 · 북원로",
+      "remainingMeters": 6691.846744721221,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.3777004616937252,
+      "capture": "checkpoint-46.png"
+    },
+    {
+      "label": "110km 도로",
+      "atMeters": 110000,
+      "waitMs": 723,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "우회전 · 연세대길",
+      "remainingMeters": 3056.859827655203,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-47.png"
+    },
+    {
+      "label": "turn · 연세대길",
+      "atMeters": 112054.33602324818,
+      "waitMs": 626,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "우회전 · 연세대길",
+      "remainingMeters": 1000.3417228313026,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 0,
+      "capture": "checkpoint-48.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-campus-access.png"
+    },
+    {
+      "label": "new name",
+      "atMeters": 112381.19409981018,
+      "waitMs": 319,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "직진",
+      "remainingMeters": 673.1364630388347,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.7320509194799862,
+      "capture": "checkpoint-49.png"
+    },
+    {
+      "label": "turn / turn",
+      "atMeters": 112820.17071681669,
+      "waitMs": 329,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "좌회전",
+      "remainingMeters": 233.69357237026873,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": false,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 1.5435048090065835,
+      "capture": "checkpoint-50.png"
+    },
+    {
+      "label": "arrive",
+      "atMeters": 113053.61632714994,
+      "waitMs": 293,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "자동차 도착 지점입니다. 목적지까지 약 42미터 남았습니다.",
+      "remainingMeters": 23.47051386946076,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": true,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 100.71808345131963,
+      "capture": "checkpoint-51.png"
+    },
+    {
+      "label": "연세대학교 미래캠퍼스 도착 확인",
+      "atMeters": 113053.61632714994,
+      "waitMs": 311,
+      "timeout": false,
+      "visible": 12,
+      "decoded": 12,
+      "zoom": 15,
+      "instruction": "자동차 도착 지점입니다. 목적지까지 약 42미터 남았습니다.",
+      "remainingMeters": 23.47051386946076,
+      "tracking": true,
+      "offRoute": false,
+      "arrived": true,
+      "planningHidden": true,
+      "dragEnabled": false,
+      "notice": "도로 지도 표시 중",
+      "centerDistance": 100.71808345131963,
+      "capture": "checkpoint-52.png",
+      "publishedCapture": "../../screenshots/yonsei-v0102-arrival.png"
+    }
+  ],
+  "spacingSearch": {
+    "count": 2,
+    "notice": "띄어쓰기를 나눠 검색했습니다: 스타벅스 원주 무실 · 가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다."
+  },
+  "missingSearch": {
+    "count": 0,
+    "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다."
+  },
+  "route": {
+    "distanceMeters": 113173.7,
+    "durationSeconds": 5849.5,
+    "geometryMeters": 113053.61632714994,
+    "points": 1455,
+    "steps": [
+      {
+        "atMeters": 0,
+        "type": "depart",
+        "modifier": "left",
+        "road": "세종대로20길",
+        "location": [
+          126.978423,
+          37.567005
+        ]
+      },
+      {
+        "atMeters": 104.18537618212682,
+        "type": "end of road",
+        "modifier": "right",
+        "road": "세종대로",
+        "ref": "31",
+        "location": [
+          126.977241,
+          37.567003
+        ]
+      },
+      {
+        "atMeters": 313.3518021478662,
+        "type": "turn",
+        "modifier": "slight right",
+        "road": "청계천로",
+        "location": [
+          126.97722,
+          37.568884
+        ]
+      },
+      {
+        "atMeters": 5884.954516725825,
+        "type": "turn",
+        "modifier": "left",
+        "road": "고산자로",
+        "ref": "51",
+        "location": [
+          127.037926,
+          37.571787
+        ]
+      },
+      {
+        "atMeters": 5967.39324843217,
+        "type": "turn",
+        "modifier": "right",
+        "road": "",
+        "location": [
+          127.037949,
+          37.572528
+        ]
+      },
+      {
+        "atMeters": 6379.817418635312,
+        "type": "turn",
+        "modifier": "straight",
+        "road": "천호대로",
+        "location": [
+          127.04249,
+          37.57251
+        ]
+      },
+      {
+        "atMeters": 6693.5420975893085,
+        "type": "continue",
+        "modifier": "slight right",
+        "road": "천호대로",
+        "location": [
+          127.045644,
+          37.571216
+        ]
+      },
+      {
+        "atMeters": 19845.18980346782,
+        "type": "on ramp",
+        "modifier": "slight right",
+        "road": "",
+        "location": [
+          127.176736,
+          37.548063
+        ]
+      },
+      {
+        "atMeters": 20628.73949218639,
+        "type": "merge",
+        "modifier": "slight left",
+        "road": "수도권제1순환고속도로",
+        "ref": "100",
+        "location": [
+          127.182034,
+          37.543214
+        ]
+      },
+      {
+        "atMeters": 22207.96356813272,
+        "type": "fork",
+        "modifier": "slight left",
+        "road": "중부고속도로",
+        "ref": "35",
+        "location": [
+          127.192694,
+          37.532512
+        ]
+      },
+      {
+        "atMeters": 25360.744168456888,
+        "type": "fork",
+        "modifier": "slight left",
+        "road": "중부고속도로",
+        "ref": "35",
+        "location": [
+          127.22036,
+          37.521807
+        ]
+      },
+      {
+        "atMeters": 29849.617829744482,
+        "type": "fork",
+        "modifier": "slight right",
+        "road": "중부고속도로",
+        "ref": "35",
+        "destinations": "35: 서이천, 대전, 곤지암, 광주",
+        "location": [
+          127.240614,
+          37.485169
+        ]
+      },
+      {
+        "atMeters": 43635.28093787838,
+        "type": "off ramp",
+        "modifier": "slight right",
+        "road": "",
+        "destinations": "52: 원주, 양평",
+        "location": [
+          127.31532,
+          37.384124
+        ]
+      },
+      {
+        "atMeters": 46082.979514289334,
+        "type": "new name",
+        "modifier": "straight",
+        "road": "광주원주고속도로",
+        "ref": "52",
+        "location": [
+          127.328796,
+          37.37461
+        ]
+      },
+      {
+        "atMeters": 96618.92802988854,
+        "type": "off ramp",
+        "modifier": "slight right",
+        "road": "",
+        "destinations": "55: 안동, 춘천",
+        "location": [
+          127.883977,
+          37.389491
+        ]
+      },
+      {
+        "atMeters": 97411.6751026637,
+        "type": "fork",
+        "modifier": "slight right",
+        "road": "신평RampA1",
+        "destinations": "55: 안동",
+        "location": [
+          127.891793,
+          37.385999
+        ]
+      },
+      {
+        "atMeters": 98004.69164316438,
+        "type": "merge",
+        "modifier": "slight left",
+        "road": "중앙고속도로",
+        "ref": "55",
+        "location": [
+          127.894116,
+          37.38123
+        ]
+      },
+      {
+        "atMeters": 105022.5810093328,
+        "type": "off ramp",
+        "modifier": "slight right",
+        "road": "",
+        "destinations": "19: 남원주, 충주, 강원 혁신도시",
+        "location": [
+          127.928274,
+          37.325744
+        ]
+      },
+      {
+        "atMeters": 105360.72694771913,
+        "type": "new name",
+        "modifier": "straight",
+        "road": "남원주IC4교",
+        "location": [
+          127.927931,
+          37.323582
+        ]
+      },
+      {
+        "atMeters": 105896.09334545245,
+        "type": "fork",
+        "modifier": "slight left",
+        "road": "",
+        "destinations": "19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+        "location": [
+          127.921889,
+          37.323563
+        ]
+      },
+      {
+        "atMeters": 106031.2402813316,
+        "type": "new name",
+        "modifier": "straight",
+        "road": "남원주IC6교",
+        "destinations": "19: 충주, 연세대학교 미래캠퍼스, 한라대학교, 강릉원주대학교 원주캠퍼스",
+        "location": [
+          127.92049,
+          37.323904
+        ]
+      },
+      {
+        "atMeters": 106368.87000887835,
+        "type": "turn",
+        "modifier": "straight",
+        "road": "북원로",
+        "location": [
+          127.920481,
+          37.324723
+        ]
+      },
+      {
+        "atMeters": 112054.33602324818,
+        "type": "turn",
+        "modifier": "right",
+        "road": "연세대길",
+        "location": [
+          127.907399,
+          37.276666
+        ]
+      },
+      {
+        "atMeters": 112381.19409981018,
+        "type": "new name",
+        "modifier": "straight",
+        "road": "",
+        "location": [
+          127.903763,
+          37.277183
+        ]
+      },
+      {
+        "atMeters": 112820.17071681669,
+        "type": "turn",
+        "modifier": "left",
+        "road": "",
+        "location": [
+          127.901914,
+          37.280613
+        ]
+      },
+      {
+        "atMeters": 112950.42489039626,
+        "type": "turn",
+        "modifier": "sharp left",
+        "road": "",
+        "location": [
+          127.900484,
+          37.280891
+        ]
+      },
+      {
+        "atMeters": 113053.61632714994,
+        "type": "arrive",
+        "modifier": "left",
+        "road": "",
+        "location": [
+          127.901019,
+          37.280067
+        ]
+      }
+    ],
+    "destinationAccessMeters": 42.94785281053625
+  },
+  "checkpointPolicy": "Every ~5km plus every maneuver location, merging neighboring checks within 220m. Extra ramp/fork approach checks. Only visible viewport tiles are requested by Leaflet; no prefetch or offline download.",
+  "finalState": {
+    "active": false,
+    "tracking": true,
+    "arrived": true,
+    "hasRoute": true,
+    "gpsReady": true,
+    "gpsAgeSeconds": 0,
+    "gpsAccuracy": 5,
+    "originAccessMeters": 87496.05169456359,
+    "originReady": false,
+    "destinationAccessMeters": 42.94785281053625,
+    "revision": 5,
+    "destination": "연세대학교 미래캠퍼스",
+    "remainingMeters": 23.47051386946076,
+    "remainingSeconds": 1.213097838803633,
+    "language": "ko-KR",
+    "instructionLanguage": "ko",
+    "instruction": "자동차 도착 지점입니다. 목적지까지 약 42미터 남았습니다.",
+    "turnSymbol": "●",
+    "turnMeters": 23.445610331720673,
+    "offRoute": false,
+    "status": "차량 경로 도착 · 안내 종료",
+    "safetyHeld": true,
+    "fix": {
+      "latitude": 37.280067,
+      "longitude": 127.901019,
+      "accuracy": 5,
+      "timestamp": 1792757494749
+    }
+  },
+  "campusDetail": {
+    "label": "주차 확인 후 캠퍼스 확대·상호 표시 점검",
+    "atMeters": 113053.61632714994,
+    "waitMs": 745,
+    "timeout": false,
+    "visible": 9,
+    "decoded": 9,
+    "zoom": 17,
+    "instruction": "자동차 도착 지점입니다. 목적지까지 약 42미터 남았습니다.",
+    "remainingMeters": 23.47051386946076,
+    "tracking": true,
+    "offRoute": false,
+    "arrived": true,
+    "planningHidden": false,
+    "dragEnabled": true,
+    "notice": "도로 지도 표시 중",
+    "centerDistance": 100.71808345131963,
+    "capture": "campus-detail.png"
+  },
+  "campusBusinessSearch": {
+    "count": 1,
+    "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다."
+  },
+  "video": "../../video/CabinOS_ONE_seoul_yonsei_v0102.mp4",
+  "sourceSha256Matches": true,
+  "sampleCount": 6930,
+  "sampleTrace": {
+    "path": "gps-samples.jsonl.gz",
+    "format": "gzip-compressed UTF-8 JSON Lines; one guidance result per synthetic route position, reconstructed from atMeters and route geometry",
+    "sha256": "93a33592b6eb43ff19da191cc2ff7d309970b4e0f1149458867e978218ae1a72"
+  },
+  "trackingFailures": 0,
+  "falseOffRouteCount": 0,
+  "namwonjuSignVerified": true,
+  "engineSha256": "acd8d1d741d9b03a92ce22561a7eb6040043035644aa77cac53fb99e7609410a"
+}

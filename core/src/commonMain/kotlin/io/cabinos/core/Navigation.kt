@@ -21,6 +21,11 @@ data class Guidance(
     val rerouteRequired:Boolean=false,val status:String="전 세계 목적지 검색 · OSM 도로 데이터",
 )
 object NavigationGeometry {
+    /** Keep provider destination signs, especially for unnamed motorway ramps. */
+    fun roadLabel(name:String,destinations:String="",reference:String=""):String {
+        fun clean(value:String)=value.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(200)
+        return listOf(clean(name),clean(destinations)).filter {it.isNotBlank()}.distinct().joinToString(" · ").ifBlank {clean(reference)}.take(300)
+    }
     fun validateOrigin(route:DrivingRoute,origin:NavPoint) {
         require(origin.valid()&&distance(origin,route.points.first())<=1000) {"출발 위치 근처에 연결 가능한 자동차 도로가 없습니다. 도로 접근 지점을 확인하세요."}
     }

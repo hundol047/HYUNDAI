@@ -1,0 +1,13 @@
+{
+  "type": "One small read-only OSM map API audit of the campus-entrance area, independent of Nominatim search indexing; not a world catalog",
+  "bbox": [
+    127.9035,
+    37.2735,
+    127.9115,
+    37.2803
+  ],
+  "observedAt": "2026-10-23T10:16:39.064576+00:00",
+  "result": "unavailable",
+  "reason": "<urlopen error Tunnel connection failed: 403 Forbidden>",
+  "elapsedMs": 13.3
+}

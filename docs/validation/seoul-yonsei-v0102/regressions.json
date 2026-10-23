@@ -1,0 +1,36 @@
+{
+  "scope": "Actual Chromium deterministic UI/GPS/rendering/protocol regressions for 0.10.2; external providers are mocked or explicitly aborted in these suites; live route results are separate",
+  "totalPassed": 118,
+  "suites": {
+    "browser": {
+      "passed": 15
+    },
+    "map": {
+      "passed": 11
+    },
+    "navigation": {
+      "passed": 13
+    },
+    "appearance": {
+      "passed": 8
+    },
+    "place-search": {
+      "passed": 15
+    },
+    "navigation-detail": {
+      "passed": 12
+    },
+    "road-tiles": {
+      "passed": 7
+    },
+    "gps": {
+      "passed": 15
+    },
+    "voice-navigation": {
+      "passed": 14
+    },
+    "map-performance": {
+      "passed": 8
+    }
+  }
+}

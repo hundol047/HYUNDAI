@@ -42,7 +42,8 @@ private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingR
     for(leg in route.legs as Array<dynamic>)for(step in leg.steps as Array<dynamic>) {
         require(maneuvers.size<10_000)
         val m=step.maneuver
-        maneuvers.add(NavManeuver(NavPoint(m.location[1] as Double,m.location[0] as Double),m.type as String,m.modifier as? String ?: "",step.name as? String ?: "",(m.exit as? Double)?.toInt()))
+        val road=NavigationGeometry.roadLabel(step.name as? String ?: "",step.destinations as? String ?: "",step.ref as? String ?: "")
+        maneuvers.add(NavManeuver(NavPoint(m.location[1] as Double,m.location[0] as Double),m.type as String,m.modifier as? String ?: "",road,(m.exit as? Double)?.toInt()))
     }
     return NavigationGeometry.route(NavPlace(name.take(240),NavPoint(lat,lon)),points,route.distance as Double,route.duration as Double,maneuvers).localized(navigationLanguage)
 }
@@ -99,6 +100,7 @@ fun main() {
     }
     bridge.navVoiceCommand={raw:String -> val c=NavigationVoice.parse(raw);JSON.stringify(json("action" to c.action.name,"query" to c.query,"index" to c.index))}
     bridge.navSpoken={distance:String,instruction:String -> NavigationLanguages.spoken(navigationLanguage,distance,instruction)}
+    bridge.placeSpacingSuggestion={query:String ->PlaceSearch.spacingSuggestion(query)}
     bridge.placeRequests={query:String,lat:Double,lon:Double,nearby:Boolean,excluded:String ->
         val p=NavPoint(lat,lon).takeIf {it.valid()}
         val ids=JSON.parse<Array<String>>(excluded).toList()

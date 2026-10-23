@@ -4,6 +4,12 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun unnamedMotorwayRampsKeepDestinationSignsWithoutInventingRoadNames() {
+        assertEquals("19: 남원주, 충주",NavigationGeometry.roadLabel("","19: 남원주, 충주"))
+        assertEquals("신평RampA1 · 55: 안동",NavigationGeometry.roadLabel("신평RampA1","55: 안동"))
+        assertEquals("A1",NavigationGeometry.roadLabel("","","A1"))
+        assertEquals("기존 도로",NavigationGeometry.roadLabel("기존 도로","기존 도로"))
+    }
     private var now=100_000L
     private fun route(lat:Double=37.0,lon:Double=127.0):DrivingRoute {
         val points=listOf(NavPoint(lat,lon),NavPoint(lat+.01,lon),NavPoint(lat+.02,lon+.01))

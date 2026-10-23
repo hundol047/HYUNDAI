@@ -1,0 +1,26 @@
+{
+  "result": "passed",
+  "type": "Actual continuous Playwright screen capture of the browser application; accelerated synthetic GPS, map checkpoints; MP4 decode, playback and seeking verified in Chromium",
+  "observedAt": "2026-10-23T10:23:42.045Z",
+  "duration": 72.64,
+  "width": 1440,
+  "height": 1050,
+  "seeks": [
+    {
+      "atSeconds": 20,
+      "result": "passed"
+    },
+    {
+      "atSeconds": 40,
+      "result": "passed"
+    },
+    {
+      "atSeconds": 60,
+      "result": "passed"
+    }
+  ],
+  "rangeStatus": 206,
+  "bytes": 12949752,
+  "sha256": "2b4d31434446d64fc5fb800c4e3646dc5c50359316ff8389a2e1d9d873185b42",
+  "audioRecorded": false
+}
