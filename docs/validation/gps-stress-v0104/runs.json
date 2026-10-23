@@ -2,21 +2,21 @@
   {
     "name": "course",
     "exitCode": 0,
-    "seconds": 200.47
+    "seconds": 214.07
   },
   {
     "name": "no-course",
     "exitCode": 0,
-    "seconds": 201.54
+    "seconds": 214.79
   },
   {
     "name": "no-motion-metadata-stop",
     "exitCode": 0,
-    "seconds": 200.52
+    "seconds": 213.21
   },
   {
     "name": "varied",
     "exitCode": 0,
-    "seconds": 32.5
+    "seconds": 35.37
   }
 ]

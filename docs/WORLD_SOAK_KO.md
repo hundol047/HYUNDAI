@@ -23,7 +23,7 @@
 - 빈 상호 검색: 토론토, 서울, 대구, 두바이, 상파울루, 스위스 푸르카 산악도로, 퀸스타운→애로타운, 웰링턴, 쿠알라룸푸르. 좌표 경로의 통과로 상호 검색 성공을 대신하지 않습니다.
 - 가나 아크라 검색은 현지 결과와 다른 국가의 동명 결과를 함께 반환했습니다. 주소·국가·거리 검토 대상으로 남겼으며 자동 선택하지 않았습니다.
 
-[측정 요약·경로별 결과](validation/world-soak-v0104/summary.json), [시간/상태 기록](validation/world-soak-v0104/status.json), [증거 파일 SHA-256](validation/world-soak-v0104/SHA256SUMS)를 공개합니다. 각 경로에 실제 응답 경로·검색 결과·압축 GPS 기록·지도 상세 화면을 보관했습니다.
+[측정 요약·경로별 결과](validation/world-soak-v0104/summary.json), [시간/상태 기록](validation/world-soak-v0104/status.json), [증거 파일 SHA-256](validation/world-soak-v0104/SHA256SUMS)를 공개합니다. 실제 응답 경로·검색 결과·압축 GPS 기록, 완료 경로의 지도 상세 화면과 미완료 화면을 보관했습니다.
 
 검사 중 수정본을 순차 적용하여 4개 엔진 해시가 섞여 있습니다. 이미 진행 중인 경로는 로드한 빌드를 유지했습니다. [빌드 전환 시각](validation/world-soak-v0104/site-switches.json)과 각 결과의 `engineSha256`으로 구분하며, 최종 릴리스 하나가 5시간 내내 실행됐다고 해석하지 않습니다. 완료한 50개 경로의 기록은 [최종 엔진으로 다시 재생](validation/replay-soak-v0104.json)하여 모두 통과했습니다. 이 재생은 외부 서버·지도 렌더링 재검사가 아니며 5시간에 더하지 않았습니다.
 
