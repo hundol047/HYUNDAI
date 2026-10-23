@@ -1,0 +1,14 @@
+{
+  "path": "artifacts/releases/CabinOS_ONE_web_v0.10.1-r1.zip",
+  "bytes": 28049328,
+  "sha256": "b41839e1eba9da1dfe434f559ce84d24a32bb90863e25f63737199196e83ca0e",
+  "version": "0.10.1-r1",
+  "type": "HTTPS static hosting bundle; not a deployed public website",
+  "repositoryPath": "web-release/CabinOS_ONE_web_v0.10.1-r1.zip",
+  "timestamp": "2026-10-23T06:21:52.802839+00:00",
+  "nativeRoadCapture": "images/navigation.png: Android Compose/osmdroid, actual OSM road tiles; GPS is a test input",
+  "githubPagesEnabled": false,
+  "releaseDistribution": "Release body links to versioned repository files; uploads.github.com is blocked by the cloud proxy",
+  "androidVersion": "0.10.1",
+  "revisionReason": "Single ResizeObserver owner; stop in-flight pan before viewport resize"
+}

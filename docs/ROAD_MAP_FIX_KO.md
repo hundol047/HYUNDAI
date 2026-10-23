@@ -40,3 +40,11 @@ node scripts/web/verify-navigation-live.cjs
 최종 기본 회귀: 코어 93개 + Android 59개 = 152개, 브라우저 115개 통과. Android 실서버 지도 검사는 위 별도 1개입니다. CPU 4배 감속·10만 지점 경로·120개 GPS 입력의 웹 측정은 초기 표시 606.9ms, 갱신 p95 14.8ms, 최대 29.7ms였습니다. 실기기 FPS나 네트워크 지연을 뜻하지 않습니다. [측정](validation/map-performance-v0101.json).
 
 현재 웹도 실제 OSM·Nominatim·OSRM 연결과 확대/축소·드래그·안내 시작을 통과했습니다. [실제 브라우저 기록](validation/roads-web-live.json) · [화면](screenshots/roads-web-live-guidance.png). 브라우저 GPS는 공개 장소 시험 좌표입니다.
+
+## 웹 화면 크기 전환 추가 수정 · r1
+
+GitHub Chromium 검사에서 주변 지도를 모바일 크기로 바꾸면 SVG 핀이 사라지는 것을 발견했습니다. 즉시 크기를 바꾸는 재현에서 경로 속성이 `M0 0`이 되고 지도 중심이 의도와 다르게 이동했습니다. Leaflet의 창 크기 처리와 ResizeObserver가 중복 실행되고 이동 애니메이션이 겹친 경우였습니다.
+
+내비·주변 지도 모두 ResizeObserver 한 곳에서 크기를 처리하고 먼저 이동 애니메이션을 정리하도록 수정했습니다. 이동 중 화면 크기를 바꾸는 실제 Chromium 검사에서 핀과 지도 중심이 유지됐고, 기존 확대/축소·터치·성능 검사도 통과했습니다. Android 소스와 APK는 같은 0.10.1입니다. 웹 배포 파일만 `0.10.1-r1`로 구분합니다.
+
+웹 r1의 재현/핀 좌표 기록: [JSON](validation/road-resize-r1.json) · [모바일 화면](screenshots/map-resize-r1.png). 실제 지도 연결도 다시 통과했습니다: [웹 기록](validation/roads-web-live-r1.json). 같은 CPU 4배 부하에서 초기 표시 629.8ms, GPS 처리·화면 갱신 p95 10.3ms, 최대 13.8ms를 관찰했습니다. [r1 측정](validation/map-performance-v0101-r1.json).
