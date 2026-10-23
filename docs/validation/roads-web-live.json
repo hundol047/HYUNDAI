@@ -1,0 +1,771 @@
+{
+  "type": "actual provider traffic in Chromium via session proxy with TLS verification; only GPS is a predefined synthetic public landmark",
+  "result": "passed",
+  "failure": "",
+  "responses": [
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Seoul+City+Hall+South+Korea",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55884/25378.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55885/25378.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55884/25379.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55883/25378.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55883/25379.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55885/25379.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55882/25379.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55882/25378.png",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/126.9723,37.5547;126.9784204,37.5667893?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55882/25380.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55882/25381.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55883/25380.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55882/25382.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55884/25382.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55881/25381.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55881/25380.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55883/25382.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55883/25381.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55884/25381.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/55884/25380.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27943/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13970/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13971/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13972/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13969/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13968/6344.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13968/6345.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/14/13968/6346.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12689.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27939/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27941/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12690.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27940/12691.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/27942/12691.png",
+      "status": 200
+    }
+  ],
+  "interactions": [
+    {
+      "name": "zoom in button and visible live tiles",
+      "elapsedMs": 388,
+      "result": "passed"
+    },
+    {
+      "name": "zoom out button and visible live tiles",
+      "elapsedMs": 496,
+      "result": "passed"
+    },
+    {
+      "name": "drag pan and visible live tiles",
+      "elapsedMs": 666,
+      "result": "passed"
+    }
+  ],
+  "networkTimings": [
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 195.92
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 206.248
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 207.065
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 217.604
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 256.723
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 274.952
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 280.024
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 280.694
+    },
+    {
+      "host": "nominatim.openstreetmap.org",
+      "elapsedMs": 652.707
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 89.454
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 90.896
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 97.286
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 97.787
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 100.886
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 103.12
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 106.769
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 978.199
+    },
+    {
+      "host": "router.project-osrm.org",
+      "elapsedMs": 1379.27
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 80.344
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 88.948
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 113.907
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 121.146
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 121.297
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 126.75
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 129.948
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 132.773
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 133.48
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 134.081
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 141.692
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 70.383
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 90.107
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 132.297
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 150.401
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 151.271
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 151.725
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 152.447
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 153.938
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 158.032
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 160.701
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 172.405
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 173.697
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 98.281
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 100.8
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 127.38
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 128.63
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 130.166
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 130.646
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 131.091
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 131.686
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 134.095
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 132.798
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 132.977
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 149.751
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 48.06
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 48.776
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 54.279
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 57.564
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 48.322
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 72.461
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 75.183
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 75.017
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 89.246
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 89.187
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 90.649
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 94.481
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 51.558
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 54.858
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 55.697
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 1.991
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 3.045
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 3.105
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 2.948
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 3.009
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 2.943
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 63.316
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 70.98
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 83.727
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 89.527
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 89.923
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 84.701
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 114.257
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 106.407
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 105.305
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 119.604
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 122.471
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "elapsedMs": 125.697
+    }
+  ],
+  "networkFailures": [
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "host": "tile.openstreetmap.org",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "pageErrors": [],
+  "physicalDeviceGps": "not tested",
+  "realRoadDriving": "not tested"
+}

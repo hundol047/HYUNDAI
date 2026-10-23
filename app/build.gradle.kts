@@ -13,8 +13,8 @@ android {
         applicationId = "io.cabinos.one"
         minSdk = 29
         targetSdk = 35
-        versionCode = 10
-        versionName = "0.10.0"
+        versionCode = 11
+        versionName = "0.10.1"
     }
     buildFeatures { compose = true; buildConfig = true }
     compileOptions {
@@ -32,6 +32,7 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
         unitTests.all { test ->
+            if (!project.hasProperty("liveRoadTiles")) test.exclude("**/RoadMapLiveTest.class")
             test.systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
             val testHome = layout.buildDirectory.dir("robolectric-home").get().asFile
             testHome.mkdirs()

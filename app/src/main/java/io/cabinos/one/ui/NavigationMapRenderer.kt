@@ -20,7 +20,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
     private var accent:Int?=null
     init {map.overlays.add(CopyrightOverlay(map.context).apply {setCopyrightNotice("© OpenStreetMap contributors")})}
 
-    fun update(g:Guidance,color:Int,selectedPlace:NavPlace?=null) {
+    fun update(g:Guidance,color:Int,selectedPlace:NavPlace?=null,location:NavFix?=g.fix,locationCurrent:Boolean=g.tracking) {
         var changed=false
         if(route!==g.route) {
             line?.let {map.overlays.remove(it)};destination?.let {map.overlays.remove(it)}
@@ -44,15 +44,15 @@ internal class NavigationMapRenderer(private val map:MapView) {
         }
         if(g.route!=null)selected=null
         if(accent!=color){line?.outlinePaint?.color=color;accent=color;changed=true}
-        val fix=g.fix
+        val fix=location
         if(fix!=null) {
             val firstPosition=point==null
             val moved=point!=fix.point
             if(position==null){position=Marker(map).apply {setAnchor(Marker.ANCHOR_CENTER,Marker.ANCHOR_CENTER)};map.overlays.add(position);changed=true}
             if(moved){position!!.position=GeoPoint(fix.point.latitude,fix.point.longitude);point=fix.point;changed=true}
-            if(tracking!=g.tracking) {
-                tracking=g.tracking;position!!.title=if(g.tracking)"현재 GPS 위치" else "마지막 확인 위치"
-                position!!.icon=GradientDrawable().apply {shape=GradientDrawable.OVAL;setColor(if(g.tracking)Color.CYAN else Color.GRAY);setStroke(3,Color.WHITE);setSize(30,30)}
+            if(tracking!=locationCurrent) {
+                tracking=locationCurrent;position!!.title=if(locationCurrent)"현재 GPS 위치" else "마지막 확인 위치"
+                position!!.icon=GradientDrawable().apply {shape=GradientDrawable.OVAL;setColor(if(locationCurrent)Color.CYAN else Color.GRAY);setStroke(3,Color.WHITE);setSize(30,30)}
                 changed=true
             }
             val startingFollow=g.active&&g.tracking&&!following

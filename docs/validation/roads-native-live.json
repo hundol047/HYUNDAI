@@ -1,0 +1,9 @@
+{
+  "result": "passed",
+  "type": "actual Android Compose + osmdroid via Robolectric native graphics, live OSM\/OSRM HTTP; no supplied bitmap fixtures",
+  "visibleTiles": 16,
+  "loadedTiles": 16,
+  "routePoints": 102,
+  "physicalDeviceGps": false,
+  "realRoadDriving": false
+}

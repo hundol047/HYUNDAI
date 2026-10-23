@@ -1,0 +1,12 @@
+{
+  "path": "artifacts/releases/CabinOS_ONE_web_v0.10.1.zip",
+  "bytes": 26651149,
+  "sha256": "6c42af56e1880a8624b1092d5afc303560c3b70e0905c3c2d2a0827485169fdb",
+  "version": "0.10.1",
+  "type": "HTTPS static hosting bundle; not a deployed public website",
+  "repositoryPath": "web-release/CabinOS_ONE_web_v0.10.1.zip",
+  "timestamp": "2026-10-23T06:21:52.802839+00:00",
+  "nativeRoadCapture": "images/navigation.png: Android Compose/osmdroid, actual OSM road tiles; GPS is a test input",
+  "githubPagesEnabled": false,
+  "releaseDistribution": "Release body links to versioned repository files; uploads.github.com is blocked by the cloud proxy"
+}

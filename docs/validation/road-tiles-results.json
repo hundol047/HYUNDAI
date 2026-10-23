@@ -1,0 +1,34 @@
+{
+  "type": "actual Chromium lifecycle execution with explicit synthetic bitmap/provider/GPS inputs; real-road rendering is verified separately",
+  "results": [
+    {
+      "name": "all visible decoded bitmap tiles are required before the map reports ready",
+      "result": "passed"
+    },
+    {
+      "name": "failed basemap is explicit and GPS success cannot disguise an empty map",
+      "result": "passed"
+    },
+    {
+      "name": "tile retry recovers roads without clearing the entered destination",
+      "result": "passed"
+    },
+    {
+      "name": "old viewport tiles cannot mark a newly failed viewport as ready",
+      "result": "passed"
+    },
+    {
+      "name": "offline state retains already displayed roads and labels its limitation",
+      "result": "passed"
+    },
+    {
+      "name": "leaving and reopening the map retires old health callbacks",
+      "result": "passed"
+    },
+    {
+      "name": "failed-map help and retry fit a narrow mobile viewport",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

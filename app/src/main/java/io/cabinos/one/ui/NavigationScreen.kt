@@ -74,7 +74,7 @@ import java.util.Locale
             Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace) }
+            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix) }
             Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEachIndexed { index,place ->
@@ -141,32 +141,29 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?) {
+@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
-    val map=remember {Configuration.getInstance().apply {
-        userAgentValue="CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)"
-        osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
-    };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
+    val map=remember {configureRoadTiles(context);RoadMapView(context)}
     val renderer=remember(map){NavigationMapRenderer(map)}
+    var health by remember {mutableStateOf(RoadMapHealth())}
     DisposableEffect(map,owner) {
-        val observer=LifecycleEventObserver {_,e->if(e==Lifecycle.Event.ON_START)map.onResume() else if(e==Lifecycle.Event.ON_STOP)map.onPause()}
-        owner.lifecycle.addObserver(observer);map.onResume()
-        onDispose {owner.lifecycle.removeObserver(observer);map.onPause();map.onDetach()}
+        map.onHealth={health=it}
+        val observer=LifecycleEventObserver {_,e->if(e==Lifecycle.Event.ON_START){map.onHealth={health=it};map.onResume();map.beginHealth()}else if(e==Lifecycle.Event.ON_STOP){map.onPause();map.endHealth()}}
+        owner.lifecycle.addObserver(observer);map.onResume();map.beginHealth()
+        onDispose {owner.lifecycle.removeObserver(observer);map.endHealth();map.onPause();map.onDetach()}
     }
-    AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={view->
-        applyMapAppearance(view,appearance,palette)
-        view.setUseDataConnection(online);view.setMultiTouchControls(interactive)
-        view.gesturesEnabled=interactive
-        view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
-        view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
-        renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace)
-    })
-}
-
-/** Guidance text remains accessible outside the read-only map during driving. */
-private class NavigationMapView(context:android.content.Context):MapView(context) {
-    var gesturesEnabled=true
-    override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean=if(gesturesEnabled)super.dispatchTouchEvent(event) else false
-    override fun performClick():Boolean=super.performClick()
+    Box(Modifier.fillMaxSize()) {
+        AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={view->
+            view.onHealth={health=it};applyMapAppearance(view,appearance,palette)
+            view.connection(online);view.setMultiTouchControls(interactive);view.gesturesEnabled=interactive
+            view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
+            view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
+            renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking)
+        })
+        if(health.status!=RoadMapStatus.READY)Column(Modifier.align(androidx.compose.ui.Alignment.TopCenter).padding(10.dp).clip(RoundedCornerShape(12.dp)).background(Panel.copy(alpha=.96f)).padding(10.dp)) {
+            Text(health.message,color=if(health.status in listOf(RoadMapStatus.UNAVAILABLE,RoadMapStatus.OFFLINE))Amber else Muted,fontSize=12.sp)
+            if(health.status==RoadMapStatus.UNAVAILABLE&&interactive)TextButton(onClick={map.retryRoads()}){Text("도로 지도 다시 불러오기",color=Blue)}
+        }
+    }
 }

@@ -30,6 +30,16 @@ class NavigationMapRendererTest {
             assertEquals("Store B",map.overlays.filterIsInstance<Marker>().single().title);assertTrue(map.overlays.none {it is Polyline})
         }finally{map.onDetach()}
     }
+    @Test fun freshGpsBeforePlanningCentersOnLocalStreetsWithoutInventingARoute() {
+        val map=map();val renderer=NavigationMapRenderer(map);val p=NavPoint(37.5547,126.9723)
+        try {
+            map.controller.setZoom(2.0)
+            renderer.update(Guidance(),-1,location=NavFix(p,5.0,100),locationCurrent=true)
+            assertEquals(15.0,map.zoomLevelDouble,0.0);assertEquals(0.0,GeoPoint(p.latitude,p.longitude).distanceToAsDouble(map.mapCenter),5.0)
+            assertEquals("현재 GPS 위치",map.overlays.filterIsInstance<Marker>().single().title)
+            assertTrue(map.overlays.none {it is Polyline})
+        }finally{map.onDetach()}
+    }
     private fun route(name:String="dense route"):DrivingRoute {
         val points=(0..50_000).map {NavPoint(37.5547,126.9723+it*.000002)}
         return NavigationGeometry.route(NavPlace(name,points.last()),points,9000.0,900.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))

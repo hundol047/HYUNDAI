@@ -281,4 +281,14 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun freshGpsIsPublishedForTheMapBeforeAnyRouteAndRemovedOnSignalLoss(){
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps();assertEquals(origin,f.nav.state.value.mapFix!!.point)
+            assertNull(f.nav.state.value.guidance.route);assertNull(f.nav.state.value.guidance.fix)
+            f.advance(20);f.gps(accuracy=200f);assertNull(f.nav.state.value.mapFix)
+            f.advance(20);f.gps();assertNotNull(f.nav.state.value.mapFix)
+            f.nav.setForeground(false);assertNull(f.nav.state.value.mapFix)
+        }
+    }
+
 }

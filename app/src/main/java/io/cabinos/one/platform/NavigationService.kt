@@ -41,7 +41,7 @@ open class NavigationService {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
         try {
             c.connectTimeout=12_000;c.readTimeout=20_000;c.instanceFollowRedirects=false
-            c.setRequestProperty("User-Agent","CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)")
+            c.setRequestProperty("User-Agent","CabinOS_ONE/0.10.1 (+https://github.com/hundol047/HYUNDAI)")
             if(accessToken.isNotEmpty())c.setRequestProperty("Authorization","Bearer $accessToken")
             c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language",language+",en;q=0.7")
             check(c.responseCode==200) {if(c.responseCode==429)"서비스 요청 한도를 넘었습니다. 잠시 후 재시도하세요." else if(url.contains("/route/v1/driving/")&&c.responseCode in listOf(400,404,422))"경로 요청을 처리하지 못했습니다 (${c.responseCode}). 좌표·도로 연결·서버 주소를 확인하세요." else "내비게이션 서버 연결 실패 (${c.responseCode})"}
@@ -104,7 +104,7 @@ open class NavigationService {
 
 enum class GpsConnection { OFF, WAITING, READY, POOR, STALE, DENIED, DISABLED }
 
-data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val gpsAgeSeconds:Long?=null,val language:String="ko-KR",val voiceListening:Boolean=false,val voiceNotice:String="목적지 → 결과 번호 → 안내 시작을 말하세요.")
+data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val mapFix:NavFix?=null,val gpsAgeSeconds:Long?=null,val language:String="ko-KR",val voiceListening:Boolean=false,val voiceNotice:String="목적지 → 결과 번호 → 안내 시작을 말하세요.")
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
@@ -145,7 +145,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private fun invalidateGps(status:GpsConnection,message:String){val ownVoice=tracker.state.tracking||spoken.isNotEmpty();fix=null;fixProvider=null;stationary.reset();tracker.suspendTracking();if(ownVoice)speech.stopSpeaking();spoken="";mutable.value=mutable.value.copy(gpsConnection=status,gpsNotice=message);publish()}
     private fun publish(){
         val r=tracker.state.route;val f=fix;val gap=if(r!=null&&f!=null)NavigationGeometry.distance(f.point,r.points.first()) else 0.0
-        mutable.value=mutable.value.copy(guidance=tracker.state,originAccessMeters=gap,originReady=r!=null&&f!=null&&tracker.usable(f)&&gap<=kotlin.math.max(45.0,f.accuracy*2),gpsAccuracy=f?.accuracy,gpsAgeSeconds=f?.let {((clock()-it.timestampMs)/1000).coerceAtLeast(0)})
+        mutable.value=mutable.value.copy(guidance=tracker.state,originAccessMeters=gap,originReady=r!=null&&f!=null&&tracker.usable(f)&&gap<=kotlin.math.max(45.0,f.accuracy*2),gpsAccuracy=f?.accuracy,mapFix=f,gpsAgeSeconds=f?.let {((clock()-it.timestampMs)/1000).coerceAtLeast(0)})
     }
     private fun cancelRequest(){generation++;job?.cancel();service.cancel();mutable.value=mutable.value.copy(busy=false)}
     private fun request(block:suspend (()->Boolean)->Unit) {

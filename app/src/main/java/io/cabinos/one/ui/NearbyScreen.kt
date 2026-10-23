@@ -93,12 +93,7 @@ import org.osmdroid.views.overlay.*
     val context=LocalContext.current
     val owner=LocalLifecycleOwner.current
     val map=remember {
-        Configuration.getInstance().apply {
-            userAgentValue="CabinOS_ONE/0.6.0 (+https://github.com/hundol047/HYUNDAI)"
-            osmdroidBasePath=java.io.File(context.cacheDir,"osm")
-            osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles")
-            tileDownloadThreads=2
-        }
+        configureRoadTiles(context)
         MapView(context).apply {
             setTileSource(TileSourceFactory.MAPNIK);setMultiTouchControls(true)
             minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(16.0)
