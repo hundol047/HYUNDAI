@@ -11,12 +11,19 @@ object NearbyGeometry {
      * objects cannot crowd named businesses out of the response. */
     fun query(origin:MapPosition):String {
         require(origin.valid())
-        val named="[~\"^(name|name:ko|name:en)$\"~\".\"]"
+        val named="[~\"^(name|name:[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8})*)$\"~\".\"]"
         val around="(around:1200,${origin.latitude},${origin.longitude})"
         return "[out:json][timeout:12];(nwr[amenity~\"^(cafe|restaurant|fast_food)$\"]$named$around;nwr[leisure=park]$named$around;nwr[shop~\"^(convenience|supermarket|mall)$\"]$named$around;);out center tags 60;"
     }
     fun placeName(korean:String,local:String,english:String):String =
         listOf(korean,local,english).map {value->value.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(100)}.firstOrNull {it.isNotBlank()} ?: ""
+    private val localizedNameKey=Regex("name:[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8})*")
+    /** Prefer configured/common names, then preserve any registered language name.
+     * Metadata such as name:pronunciation and name:etymology is not a place name. */
+    fun placeName(tags:Map<String,String>):String {
+        val keys=listOf("name:ko","name","name:en")+tags.keys.filter {localizedNameKey.matches(it)}.sorted()
+        return keys.asSequence().distinct().map {placeName("",tags[it].orEmpty(),"")}.firstOrNull {it.isNotBlank()} ?: ""
+    }
     fun distanceMeters(a:MapPosition,b:MapPosition):Double {
         require(a.valid() && b.valid())
         val dLat=(b.latitude-a.latitude)*PI/180;val dLon=(b.longitude-a.longitude)*PI/180

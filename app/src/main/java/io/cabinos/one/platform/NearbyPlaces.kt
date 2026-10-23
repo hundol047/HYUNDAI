@@ -63,7 +63,7 @@ class NearbyPlaces(private val context:Context) {
             return (0 until elements.length()).mapNotNull { index ->
                 val item=elements.optJSONObject(index) ?: return@mapNotNull null
                 val tags=item.optJSONObject("tags") ?: return@mapNotNull null
-                val name=NearbyGeometry.placeName(tags.opt("name:ko") as? String ?: "",tags.opt("name") as? String ?: "",tags.opt("name:en") as? String ?: "")
+                val name=NearbyGeometry.placeName(tags.keys().asSequence().associateWith {tags.opt(it) as? String ?: ""})
                 val category=when {
                     tags.optString("amenity")=="cafe"->"카페"
                     tags.optString("amenity") in listOf("restaurant","fast_food")->"식당"

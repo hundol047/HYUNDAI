@@ -4,11 +4,19 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NearbyTest {
+    @Test fun otherRegisteredLanguagesArePreservedWithoutTreatingMetadataAsNames() {
+        assertEquals("喫茶店",NearbyGeometry.placeName(mapOf("name:fr" to "\u202e", "name:ja" to "喫茶店", "name:pronunciation" to "not a name")))
+        assertEquals("茶館",NearbyGeometry.placeName(mapOf("name:zh-Hant" to "茶館")))
+        assertEquals("",NearbyGeometry.placeName(mapOf("name:pronunciation" to "phonetic", "name:etymology" to "metadata")))
+        assertEquals("한국 이름",NearbyGeometry.placeName(mapOf("name:ko" to "한국 이름", "name" to "Local name", "name:fr" to "Nom")))
+        assertTrue(NearbyGeometry.query(MapPosition()).contains("name:[A-Za-z]{2,3}"))
+    }
+
     @Test fun nearbyNamesUseRegisteredEnglishFallbackAndQueriesFilterNamesBeforeLimiting() {
         assertEquals("English only",NearbyGeometry.placeName("\u202e"," ","English only"))
         assertEquals("현지 이름",NearbyGeometry.placeName("","현지 이름","English name"))
         val query=NearbyGeometry.query(MapPosition(48.85,2.35))
-        assertEquals(3,Regex("name:en").findAll(query).count())
+        assertEquals(3,query.split("[~").size-1)
         assertTrue(query.endsWith("out center tags 60;"))
         try{NearbyGeometry.query(MapPosition(Double.NaN,0.0));fail("Invalid origin must not reach the provider")}catch(_:IllegalArgumentException){}
     }

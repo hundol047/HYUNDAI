@@ -10,6 +10,15 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NearbyPlacesTest {
+    @Test fun localizedOnlyNamesAreNotDroppedByTheAndroidParser() {
+        val raw="""{"elements":[
+          {"type":"node","id":20,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:fr":"Café enregistré"}},
+          {"type":"node","id":21,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:ja":"喫茶店"}},
+          {"type":"node","id":22,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:pronunciation":"metadata"}}
+        ]}"""
+        assertEquals(listOf("Café enregistré","喫茶店"),NearbyPlaces.parse(raw,MapPosition()).map {it.name})
+    }
+
     @Test fun registeredEnglishNamesSurviveMissingLocalNamesWithoutInventingUnnamedBusinesses() {
         val raw="""{"elements":[null,
           {"type":"node","id":9,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:en":"Registered English name"}},

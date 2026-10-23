@@ -176,6 +176,7 @@ fun main() {
     bridge.mapExamples={ engine.updateNearbyActivities(MapPosition(),DemoActivityRepository().activities()) }
     bridge.nearbyQuery={lat:Double,lon:Double ->NearbyGeometry.query(MapPosition(lat,lon))}
     bridge.nearbyName={korean:String,local:String,english:String ->NearbyGeometry.placeName(korean,local,english)}
+    bridge.nearbyLocalizedName={raw:String -> val tags=JSON.parse<dynamic>(raw);NearbyGeometry.placeName((js("Object.keys")(tags) as Array<String>).associateWith {tags[it] as? String ?: ""})}
     bridge.places={ lat:Double,lon:Double,label:String,raw:String ->
         val origin=MapPosition(lat,lon,label.take(100))
         val data=JSON.parse<Array<dynamic>>(raw)
