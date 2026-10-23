@@ -44,7 +44,8 @@ jobs:
           node scripts/web/verify-gps.cjs
           node scripts/web/verify-voice-navigation.cjs
           CABIN_CPU_RATE=1 node scripts/web/verify-map-performance.cjs
-      - uses: actions/configure-pages@v5
+      # Keep the verified site artifact available even while owner-side Pages
+      # enablement is pending. Hosting configuration belongs to deployment.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: build/site
@@ -55,6 +56,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v5
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
