@@ -1,0 +1,21 @@
+{
+  "version": "0.10.0",
+  "type": "HTTPS static hosting bundle; not a deployed public website",
+  "file": "CabinOS_ONE_web_v0.10.0.zip",
+  "bytes": 23231261,
+  "sha256": "a406d5dbee7e84b375d24b2c583049b15f941a14bf0684aa4c1583bef601da87",
+  "timestamp": "2026-10-23T02:37:54.263345+00:00",
+  "contents": [
+    "interactive Kotlin browser demo",
+    "Android Compose gallery (Robolectric, not a device capture)",
+    "team-signed release APK",
+    "historic v0.5 browser MP4",
+    "license notices"
+  ],
+  "githubPages": {
+    "enabled": false,
+    "enableApiStatus": 403,
+    "reason": "Resource not accessible by integration",
+    "ownerAction": "Settings > Pages > Source: GitHub Actions"
+  }
+}

@@ -40,6 +40,7 @@ jobs:
           node scripts/web/verify-place-search.cjs
           node scripts/web/verify-navigation-detail.cjs
           node scripts/web/verify-gps.cjs
+          node scripts/web/verify-voice-navigation.cjs
           CABIN_CPU_RATE=1 node scripts/web/verify-map-performance.cjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

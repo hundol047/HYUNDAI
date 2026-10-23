@@ -103,9 +103,10 @@ class CabinViewModel @Inject constructor(
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
     fun command(text:String) { mutableReply.value=engine.assistant(text);if(state.value.preferences.voiceEnabled) speech.speak(mutableReply.value) }
-    fun listen() { speech.listen { text ->
-        if(text.contains("권한") || text.contains("서비스가 없습니다") || text.contains("완료되지")) mutableReply.value=text else command(text)
-    } }
+    fun listen() {
+        liveNavigation.cancelVoice()
+        speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it})
+    }
     private fun writeTask(action:suspend ()->Unit) {
         if (!state.value.parkedAllowed) return
         viewModelScope.launch {

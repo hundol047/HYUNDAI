@@ -1,0 +1,62 @@
+{
+  "type": "Chromium API/UI execution with synthetic speech recognition, voices, GPS and provider responses; not acoustic or physical device validation",
+  "results": [
+    {
+      "name": "voice destination, numbered selection and explicit start work through microphone callbacks",
+      "result": "passed"
+    },
+    {
+      "name": "driving destination changes are blocked but stop remains available without a permission prompt",
+      "result": "passed"
+    },
+    {
+      "name": "unconfirmed microphone permission while driving never starts recognition",
+      "result": "passed"
+    },
+    {
+      "name": "language selection localizes route text, synthesis and provider request headers",
+      "result": "passed"
+    },
+    {
+      "name": "all 31 packs expose native names and unsupported translation uses an explicit English fallback",
+      "result": "passed"
+    },
+    {
+      "name": "selected language restores after reload and personal reset removes it",
+      "result": "passed"
+    },
+    {
+      "name": "permission denial produces recovery help and no destination request",
+      "result": "passed"
+    },
+    {
+      "name": "recognition constructor/start errors leave a usable cancel/retry control",
+      "result": "passed"
+    },
+    {
+      "name": "interim and low-confidence results cannot select destinations",
+      "result": "passed"
+    },
+    {
+      "name": "background/cancel retires callbacks and prevents delayed searches",
+      "result": "passed"
+    },
+    {
+      "name": "language and recognition provider failures never become shop searches",
+      "result": "passed"
+    },
+    {
+      "name": "a missing voice is reported without falsely claiming speech playback",
+      "result": "passed"
+    },
+    {
+      "name": "microphone has a bounded 30 second session",
+      "result": "passed"
+    },
+    {
+      "name": "voice controls fit mobile and no recognition service offers a clear fallback",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

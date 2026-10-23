@@ -91,6 +91,21 @@ class GatewayTests(unittest.TestCase):
         for q in ({"q":"x"},{"q":"shop","bounded":"1","lat":"NaN","lon":"127","viewbox":"1,1,2,0"},{"q":"shop","exclude_place_ids":"123%0dKey"}):
             with self.assertRaises(GatewayError):g.search(q)
 
+    def test_selected_language_reaches_provider_and_does_not_share_other_language_cache(self):
+        from urllib.parse import urlsplit, parse_qs
+        requests=[]
+        def opener(request, **_):
+            language=parse_qs(urlsplit(request.full_url).query)["accept-language"][0]
+            requests.append(language)
+            return Response([{"place_id":1,"name":language,"lat":"48.85","lon":"2.35"}])
+        gateway=Gateway(self.config(),opener,interval=0)
+        for language in ["fr-FR,en","de-DE,en","fr-FR,en"]:
+            self.assertEqual(gateway.search({"q":"Paris cafe","accept-language":language})[0]["name"],language)
+        self.assertEqual(requests,["fr-FR,en","de-DE,en"])
+        for language in ["en\r\nHost: bad","en;q=1,ko","x"*97]:
+            with self.assertRaises(GatewayError):gateway.search({"q":"shop","accept-language":language})
+        self.assertEqual(len(requests),2)
+
     def test_provider_errors_do_not_disclose_headers_or_internal_error_text(self):
         def opener(*_,**__):raise OSError("fixture-kakao-key-not-real internal details")
         g=Gateway(self.config(),opener,interval=0)

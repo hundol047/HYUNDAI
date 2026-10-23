@@ -24,6 +24,7 @@ open class NavigationService {
     var routeEndpoint="https://router.project-osrm.org"
         private set
     @Volatile private var connection:HttpURLConnection?=null
+    var language="ko-KR"
     private var searchAccessToken=""
     private var lastSearch=0L
     private var lastRoute=0L
@@ -40,9 +41,9 @@ open class NavigationService {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
         try {
             c.connectTimeout=12_000;c.readTimeout=20_000;c.instanceFollowRedirects=false
-            c.setRequestProperty("User-Agent","CabinOS_ONE/0.9.0 (+https://github.com/hundol047/HYUNDAI)")
+            c.setRequestProperty("User-Agent","CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)")
             if(accessToken.isNotEmpty())c.setRequestProperty("Authorization","Bearer $accessToken")
-            c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language","ko,en")
+            c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language",language+",en;q=0.7")
             check(c.responseCode==200) {if(c.responseCode==429)"서비스 요청 한도를 넘었습니다. 잠시 후 재시도하세요." else if(url.contains("/route/v1/driving/")&&c.responseCode in listOf(400,404,422))"경로 요청을 처리하지 못했습니다 (${c.responseCode}). 좌표·도로 연결·서버 주소를 확인하세요." else "내비게이션 서버 연결 실패 (${c.responseCode})"}
             val output=java.io.ByteArrayOutputStream();val buffer=ByteArray(8192)
             c.inputStream.use { stream ->while(true){currentCoroutineContext().ensureActive();val n=stream.read(buffer);if(n<0)break;check(output.size()+n<=12_000_000){"경로가 너무 큽니다. 가까운 경유 구간으로 나누세요."};output.write(buffer,0,n)} }
@@ -50,8 +51,8 @@ open class NavigationService {
         } finally {c.disconnect();if(connection===c)connection=null}
     }
     open suspend fun search(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList()):PlaceSearchPage {
-        val requests=PlaceSearch.requests(query,origin,nearby,excluded)
-        val key=requests.toString();cache[key]?.let {return it}
+        val requests=PlaceSearch.requests(query,origin,nearby,excluded,language)
+        val key=language+"|"+requests.toString();cache[key]?.let {return it}
         val places=mutableListOf<NavPlace>()
         for(params in requests) {
             delay((1500-(System.currentTimeMillis()-lastSearch)).coerceAtLeast(0));currentCoroutineContext().ensureActive();lastSearch=System.currentTimeMillis()
@@ -103,16 +104,20 @@ open class NavigationService {
 
 enum class GpsConnection { OFF, WAITING, READY, POOR, STALE, DENIED, DISABLED }
 
-data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val gpsAgeSeconds:Long?=null)
+data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val gpsAgeSeconds:Long?=null,val language:String="ko-KR",val voiceListening:Boolean=false,val voiceNotice:String="목적지 → 결과 번호 → 안내 시작을 말하세요.")
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
     private val tracker=NavigationTracker(clock)
-    private val mutable=MutableStateFlow(NavigationUi());val state=mutable.asStateFlow()
+    private val preferences=RuntimePreferences(context)
+    private var language=preferences.navigationLanguage
+    private val mutable=MutableStateFlow(NavigationUi(language=language));val state=mutable.asStateFlow()
     private val scope=CoroutineScope(SupervisorJob()+Dispatchers.Main.immediate)
     private val manager=context.getSystemService(LocationManager::class.java)
     private var job:Job?=null;private var generation=0;private var foreground=true;private var listening=false
     private var safetyHeld=false;private val stationary=StationaryEvidence()
+    private var voiceGeneration=0
+    init {service.language=language}
     private var lastQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
     private var lastFixTimestamp=Long.MIN_VALUE;private var resumeLocation=false
     private var locationGeneration=0;private var requestedAt:Long?=null;private var receivedAt:Long?=null
@@ -182,6 +187,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             seenPlaceIds=page.seenIds;val result=page.places
             val combined=(old+result).distinctBy {it.id.ifBlank {it.name+it.point}}.take(PlaceSearch.maxResults)
             mutable.value=mutable.value.copy(places=combined,hasMore=page.hasMore&&combined.size<PlaceSearch.maxResults,notice=if(result.isEmpty()&&page.hasMore)"이번 결과에 20km 내 가게가 없습니다. 다른 결과 더 보기를 눌러 확인하세요." else if(result.isEmpty())"등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다." else "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.")
+            if(engine.state.value.preferences.voiceEnabled&&combined.isNotEmpty())speech.speakNavigation(combined.take(6).mapIndexed {i,p->"${i+1}. ${p.name}"}.joinToString(". "),language)
         }}
     }
     fun plan(destination:NavPlace) {
@@ -190,7 +196,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         if(!engine.state.value.networkAvailable){mutable.value=mutable.value.copy(notice="선택한 가게 위치는 표시합니다. 새 자동차 경로는 온라인 연결이 필요합니다.");return}
         val f=fix
         if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(notice="선택한 가게를 지도에 표시했습니다. 자동차 경로는 내 위치를 먼저 받아 주세요.");return}
-        request {current->val r=service.route(f.point,destination);if(current()&&canPlan()){tracker.preview(r);publish();mutable.value=mutable.value.copy(notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")}}
+        request {current->val r=service.route(f.point,destination);if(current()&&canPlan()){tracker.preview(r.localized(language));publish();if(engine.state.value.preferences.voiceEnabled)speech.speakNavigation(destination.name,language);mutable.value=mutable.value.copy(notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")}}
     }
     fun start(accessConfirmed:Boolean=false) {
         if(!canPlan()||mutable.value.busy)return
@@ -205,13 +211,19 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         if(!g.tracking||g.offRoute||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();spoken="";return}
         val band=when{g.arrived->"arrived";g.turnMeters<60->"now";g.turnMeters<300->"soon";else->"ahead"}
         val key="${g.nextInstruction}|$band"
-        if(key!=spoken){spoken=key;speech.speak(if(g.arrived)g.nextInstruction else "${g.turnMeters.toInt()}미터 앞, ${g.nextInstruction}")}
+        if(key!=spoken&&!mutable.value.voiceListening){
+            val code=NavigationLanguages.resolve(language)
+            val spokenLocale=java.util.Locale.forLanguageTag(if(code=="ko")"ko-KR" else code)
+            val distance=android.icu.text.MeasureFormat.getInstance(spokenLocale,android.icu.text.MeasureFormat.FormatWidth.WIDE).format(android.icu.util.Measure(g.turnMeters.toInt(),android.icu.util.MeasureUnit.METER))
+            if(speech.speakNavigation(if(g.arrived)g.nextInstruction else NavigationLanguages.spoken(code,distance,g.nextInstruction),spokenLocale.toLanguageTag()))spoken=key
+            mutable.value=mutable.value.copy(voiceNotice=speech.status)
+        }
     }
     private fun reroute() {
         if(!foreground||!engine.state.value.networkAvailable||mutable.value.busy||rerouteFailures>=3||!tracker.takeReroute())return
         val g=tracker.state;val destination=g.route?.destination ?: return;val origin=g.fix?.point ?: return
         request {current->
-            try {val r=service.route(origin,destination);if(current()&&foreground&&tracker.state.active&&tracker.replaceRoute(r)){spoken="";rerouteFailures=0;publish();guide();mutable.value=mutable.value.copy(notice="경로를 다시 계산했습니다.")}}
+            try {val r=service.route(origin,destination);if(current()&&foreground&&tracker.state.active&&tracker.replaceRoute(r.localized(language))){spoken="";rerouteFailures=0;publish();guide();mutable.value=mutable.value.copy(notice="경로를 다시 계산했습니다.")}}
             catch(e:Exception){if(e !is CancellationException)rerouteFailures++;throw e}
         }
     }
@@ -227,15 +239,49 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     fun configure(search:String,route:String,accessToken:String=""){if(canPlan()){cancelRequest();service.configure(search,route,accessToken);tracker.stop();mutable.value=mutable.value.copy(guidance=tracker.state,places=emptyList(),selectedPlace=null,hasMore=false,originReady=false,notice="검색 서버 설정을 적용했습니다. 가게를 다시 검색하세요.")}}
     fun cancelPending(){if(canPlan()&&mutable.value.busy){cancelRequest();mutable.value=mutable.value.copy(notice="요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")}}
     fun retry(){rerouteFailures=0;reroute()}
-    fun stop(){cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
+    fun stop(){cancelVoice();cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
     private fun stopLocation(){locationGeneration++;listener?.let {runCatching {manager.removeUpdates(it)}};listener=null;listening=false}
-    fun setForeground(active:Boolean){foreground=active;if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
+    fun setForeground(active:Boolean){foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
     private fun resumeLocationIfReady(){if(foreground&&resumeLocation&&(canPlan()||tracker.state.active||safetyHeld)){resumeLocation=false;locate()}}
     fun openLocationSettings(appPermissions:Boolean=false){
         if(!canPlan())return
         val intent=if(appPermissions)android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:${context.packageName}")) else android.content.Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)
         resumeLocation=true
         runCatching {context.startActivity(intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {resumeLocation=false;mutable.value=mutable.value.copy(gpsNotice="설정 화면을 열 수 없습니다. 기기 설정에서 위치·앱 권한을 확인해 주세요.")}
+    }
+    fun setLanguage(tag:String){
+        if(!canPlan()||!NavigationLanguages.validTag(tag))return
+        cancelVoice();cancelRequest();language=tag;preferences.navigationLanguage=tag;service.language=tag;service.clearCache()
+        tracker.state.route?.let {tracker.preview(it.localized(tag))};spoken="";publish()
+        mutable.value=mutable.value.copy(language=tag,places=emptyList(),hasMore=false,voiceNotice=if(NavigationLanguages.resolve(tag)=="en"&&!tag.startsWith("en",true))"선택한 언어의 안내 번역 없음 · 영어 안내로 대체. 목적지 인식은 선택 언어 사용." else "언어 적용 · 기기 음성팩이 필요합니다.")
+    }
+    fun availableVoiceLanguages()=speech.navigationLanguages()
+    fun voiceError(message:String){mutable.value=mutable.value.copy(voiceListening=false,voiceNotice=message)}
+    fun cancelVoice(){voiceGeneration++;speech.cancelRecognition();mutable.value=mutable.value.copy(voiceListening=false)}
+    fun listenDestination(){
+        if(!foreground)return
+        cancelVoice();val epoch=voiceGeneration
+        mutable.value=mutable.value.copy(voiceListening=true,voiceNotice="듣고 있습니다 · 목적지 또는 짧은 명령을 말하세요.")
+        speech.listenNavigation(language,{raw->if(epoch==voiceGeneration&&foreground){mutable.value=mutable.value.copy(voiceListening=false);handleVoice(raw)}},{error->if(epoch==voiceGeneration)voiceError(error)})
+    }
+    fun handleVoice(raw:String){
+        if(!foreground)return
+        val c=NavigationVoice.parse(raw)
+        mutable.value=mutable.value.copy(voiceNotice="인식: ${raw.take(180)}")
+        when(c.action){
+            NavigationVoiceAction.REPEAT->{spoken="";guide()}
+            NavigationVoiceAction.STOP->stop()
+            NavigationVoiceAction.CANCEL->{cancelPending();cancelVoice()}
+            else->{
+                if(!canPlan()){voiceError("새 목적지·결과 선택·안내 시작은 안전한 주차 확인 후 가능합니다. 주행 중에는 안내 반복·종료를 말하세요.");return}
+                when(c.action){
+                    NavigationVoiceAction.SEARCH->if(c.query.isNotBlank())search(c.query) else voiceError("목적지를 조금 더 자세히 말씀해 주세요.")
+                    NavigationVoiceAction.SELECT->mutable.value.places.getOrNull(c.index)?.let {plan(it)} ?: voiceError("검색 결과에 있는 번호를 말씀해 주세요.")
+                    NavigationVoiceAction.START->if(tracker.state.route==null||mutable.value.busy)voiceError("먼저 결과 번호를 말하고 경로 계산을 기다려 주세요.") else start()
+                    else->Unit
+                }
+            }
+        }
     }
     fun clearSelection(){if(canPlan()){cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=null,notice="선택한 장소를 지웠습니다.")}}
     fun openPlaceWebsite(place:NavPlace) {
@@ -249,6 +295,6 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val uri=android.net.Uri.parse("https://www.google.com/maps/search/?api=1&query="+android.net.Uri.encode(query.take(180)))
         runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,uri).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {mutable.value=mutable.value.copy(notice="외부 지도를 열 수 없습니다. 브라우저 설치를 확인하세요.")}
     }
-    fun clear(){stop();service.clearCache();lastQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
-    fun close(){cancelRequest();stopLocation();scope.cancel()}
+    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearCache();lastQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
+    fun close(){cancelVoice();cancelRequest();stopLocation();scope.cancel()}
 }

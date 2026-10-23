@@ -10,6 +10,7 @@ import hmac
 import json
 import math
 import os
+import re
 import threading
 import time
 import urllib.error
@@ -97,12 +98,15 @@ class Gateway:
                     raise ValueError()
             except (KeyError, ValueError, TypeError):
                 raise GatewayError(400, "Nearby search requires a valid location and viewbox.") from None
-        return q, excluded, near, lat, lon
+        language = raw.get("accept-language", "ko,en")
+        if len(language) > 96 or not re.fullmatch(r"[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*(?:,[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*)?", language):
+            raise GatewayError(400, "Invalid search language.")
+        return q, excluded, near, lat, lon, language
 
     def search(self, raw):
-        q, excluded, near, lat, lon = self.parameters(raw)
+        q, excluded, near, lat, lon, language = self.parameters(raw)
         kakao = bool(self.config.kakao_key and near and 33 <= lat <= 39 and 124 <= lon <= 132)
-        key = json.dumps([kakao, q, raw.get("viewbox"), lat, lon, excluded], ensure_ascii=False)
+        key = json.dumps([kakao, q, raw.get("viewbox"), lat, lon, excluded, language], ensure_ascii=False)
         with self.lock:
             cached = self.cache.get(key)
             if cached and time.monotonic() - cached[0] < 60:
@@ -141,7 +145,7 @@ class Gateway:
                 params = {k: raw[k] for k in ("viewbox", "bounded", "exclude_place_ids") if k in raw}
                 if "exclude_place_ids" in params and not all(x.isdigit() for x in params["exclude_place_ids"].split(",")):
                     raise GatewayError(400, "Invalid Nominatim identifiers.")
-                params.update(q=q, format="jsonv2", limit=6, addressdetails=1, namedetails=1, extratags=1, **{"accept-language": "ko,en"})
+                params.update(q=q, format="jsonv2", limit=6, addressdetails=1, namedetails=1, extratags=1, **{"accept-language": language})
                 rows = self.fetch("nominatim.openstreetmap.org", "/search", params, {})
                 if not isinstance(rows, list):
                     raise GatewayError(502, "Invalid place provider response.")

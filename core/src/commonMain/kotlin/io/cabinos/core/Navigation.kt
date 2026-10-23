@@ -8,8 +8,8 @@ data class NavPoint(val latitude:Double,val longitude:Double) {
 }
 data class NavPlace(val name:String,val point:NavPoint,val id:String="",val address:String="",val category:String="",val phone:String="",val website:String="",val openingHours:String="",val source:String="")
 data class NavManeuver(val point:NavPoint,val type:String,val modifier:String="",val road:String="",val exit:Int?=null)
-data class NavStep(val atMeters:Double,val instruction:String,val type:String,val symbol:String="↑")
-data class DrivingRoute(val destination:NavPlace,val points:List<NavPoint>,val cumulative:List<Double>,val distanceMeters:Double,val durationSeconds:Double,val steps:List<NavStep>) {
+data class NavStep(val atMeters:Double,val instruction:String,val type:String,val symbol:String="↑",val maneuver:NavManeuver?=null)
+data class DrivingRoute(val destination:NavPlace,val points:List<NavPoint>,val cumulative:List<Double>,val distanceMeters:Double,val durationSeconds:Double,val steps:List<NavStep>,val language:String="ko") {
     val geometryMeters get()=cumulative.last()
     val destinationAccessMeters get()=NavigationGeometry.distance(points.last(),destination.point)
 }
@@ -73,7 +73,7 @@ object NavigationGeometry {
             }
             require(gap<=1000)
             cursor=best
-            NavStep(cumulative[best],instruction(m),m.type,symbol(m))
+            NavStep(cumulative[best],instruction(m),m.type,symbol(m),m)
         }
         return DrivingRoute(destination,points,cumulative,distance,duration,steps)
     }
@@ -159,7 +159,7 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val next=r.steps[nextStepIndex]
         state=state.copy(active=!done,tracking=true,arrived=done,fix=fix,progressMeters=progress,
             remainingMeters=r.distanceMeters*(remaining/r.geometryMeters),remainingSeconds=r.durationSeconds*(remaining/r.geometryMeters),
-            turnSymbol=if(done)"●" else next.symbol,nextInstruction=if(done){if(r.destinationAccessMeters>30)"자동차 도착 지점입니다. 목적지까지 약 ${r.destinationAccessMeters.toInt()}미터 남았습니다." else "목적지에 도착했습니다."} else next.instruction,turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
+            turnSymbol=if(done)"●" else next.symbol,nextInstruction=if(done)NavigationLanguages.arrival(r.language,r.destinationAccessMeters) else next.instruction,turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
             offRoute=off,rerouteRequired=need,status=when{done->"차량 경로 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";else->"GPS 주행 안내 · 정확도 약 ${fix.accuracy.toInt()}m · 교통 미반영 예상"})
     }
     fun tick(){if(state.active&&state.fix?.let {usable(it)}!=true)state=state.copy(tracking=false,rerouteRequired=false,status="GPS 신호 대기 · 회전 안내 일시중지")}

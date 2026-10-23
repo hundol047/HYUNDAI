@@ -25,12 +25,17 @@ import java.util.Date
 import java.util.Locale
 
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
+    val context=LocalContext.current
+    DisposableEffect(nav){onDispose {nav.cancelVoice()}}
     val g=ui.guidance
     var query by remember {mutableStateOf("")}
     var nearby by remember {mutableStateOf(false)}
     var submittedQuery by remember {mutableStateOf("")}
     var submittedNearby by remember {mutableStateOf(false)}
     var accessConfirmed by remember(g.route){mutableStateOf(false)}
+    var languageDialog by remember {mutableStateOf(false)}
+    var languageTag by remember(ui.language){mutableStateOf(ui.language)}
+    val microphone=androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.RequestPermission()){granted->if(granted)nav.listenDestination() else nav.voiceError("마이크 권한이 거부됐습니다. 주차 후 앱 권한 설정에서 허용해 주세요.")}
     var settings by remember {mutableStateOf(false)}
     var searchEndpoint by remember {mutableStateOf(nav.service.searchEndpoint)}
     var routeEndpoint by remember {mutableStateOf(nav.service.routeEndpoint)}
@@ -40,7 +45,7 @@ import java.util.Locale
     Column(Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
-            if(canPlan)TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}
+            if(canPlan)Row {TextButton(onClick={languageDialog=true}){Text("언어 · ${ui.language}",color=Mint)};TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}}
         }
         Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
         Text(ui.gpsNotice+if(ui.gpsAgeSeconds!=null)" · ${ui.gpsAgeSeconds}초 전 수신" else "",color=if(ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Amber else Muted,fontSize=11.sp)
@@ -49,6 +54,16 @@ import java.util.Locale
             TextButton(onClick={nav.openLocationSettings()}){Text("위치 설정",color=Blue)}
             TextButton(onClick={nav.openLocationSettings(true)}){Text("앱 권한 설정",color=Blue)}
         }
+        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
+            ActionButton(if(ui.voiceListening)"음성 입력 취소" else "🎙 음성 길찾기",{
+                if(ui.voiceListening)nav.cancelVoice()
+                else if(context.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO)==android.content.pm.PackageManager.PERMISSION_GRANTED)nav.listenDestination()
+                else if(canPlan)microphone.launch(android.Manifest.permission.RECORD_AUDIO)
+                else nav.voiceError("주행 중에는 새 마이크 권한 창을 열지 않습니다. 주차 후 권한을 허용해 주세요.")
+            },color=if(ui.voiceListening)Amber else Blue)
+            Text(ui.voiceNotice,color=Muted,fontSize=12.sp,modifier=Modifier.weight(1f))
+        }
+        if(canPlan)Text("음성: 목적지 → 1번~6번 → 안내 시작 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
             Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
@@ -62,9 +77,9 @@ import java.util.Locale
             Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace) }
             Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
-                if(canPlan)ui.places.forEach { place ->
+                if(canPlan)ui.places.forEachIndexed { index,place ->
                     SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){nav.plan(place)},accent=Blue) {
-                        Text(place.name,color=White,fontSize=15.sp)
+                        Text("${index+1}. ${place.name}",color=White,fontSize=15.sp)
                         if(place.address.isNotBlank())Text(place.address,color=Muted,fontSize=11.sp)
                         Text(listOf(place.category,place.source).filter {it.isNotBlank()}.joinToString(" · "),color=Muted,fontSize=10.sp)
                         if(place.phone.isNotBlank())Text("전화 ${place.phone}",color=Muted,fontSize=11.sp)
@@ -108,6 +123,13 @@ import java.util.Locale
         }
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
     }
+    if(languageDialog&&canPlan)AlertDialog(onDismissRequest={languageDialog=false},title={Text("길 안내·목적지 음성 언어")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)){
+        Text("31개 지역별 길 안내 번역을 내장했습니다. 다른 언어는 영어 안내로 대체합니다. 음성 인식·재생은 기기 서비스와 언어팩에 따릅니다.",fontSize=12.sp)
+        OutlinedTextField(languageTag,{languageTag=it.take(48)},label={Text("언어 코드 · ko-KR / en-US / fr-FR")},singleLine=true)
+        val codes=remember { (NavigationLanguages.codes+nav.availableVoiceLanguages()).distinct().sorted() }
+        Column(Modifier.heightIn(max=220.dp).verticalScroll(rememberScrollState())){codes.forEach {tag->TextButton(onClick={languageTag=tag}){Text("${Locale.forLanguageTag(tag).getDisplayName(Locale.forLanguageTag(tag))} · $tag")}}}
+        Text("기기 TTS 보고 언어 ${nav.availableVoiceLanguages().size}개 · 인식 언어는 실제 요청 결과로 확인합니다.",fontSize=11.sp)
+    }},confirmButton={TextButton(enabled=NavigationLanguages.validTag(languageTag),onClick={nav.setLanguage(languageTag);languageDialog=false}){Text("적용")}},dismissButton={TextButton(onClick={languageDialog=false}){Text("닫기")}})
     if(settings&&canPlan)AlertDialog(onDismissRequest={accessToken="";settings=false},title={Text("내비게이션 서비스")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Text("기본 공개 서버는 체험용이며 상용 가용성을 보장하지 않습니다. 운영 시 자체/계약 서버로 교체하세요. 입력한 서버에 검색어·경로 좌표가 전달됩니다.")
         OutlinedTextField(searchEndpoint,{searchEndpoint=it},label={Text("주소·가게 검색 HTTPS 기본 주소")},singleLine=true)
@@ -123,7 +145,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {Configuration.getInstance().apply {
-        userAgentValue="CabinOS_ONE/0.9.0 (+https://github.com/hundol047/HYUNDAI)"
+        userAgentValue="CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)"
         osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
     };NavigationMapView(context).apply {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(15.0)}}
     val renderer=remember(map){NavigationMapRenderer(map)}

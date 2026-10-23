@@ -15,6 +15,7 @@ private fun appearanceSnapshot():String {
         "colors" to json("background" to AppearanceCatalog.format(p.background),"panel" to AppearanceCatalog.format(p.panel),"line" to AppearanceCatalog.format(p.line),"accent" to AppearanceCatalog.format(p.accent),"text" to AppearanceCatalog.format(p.text),"muted" to AppearanceCatalog.format(p.muted))))
 }
 private val navigator=NavigationTracker()
+private var navigationLanguage="ko-KR"
 private var lastNavFixTimestamp=Long.MIN_VALUE
 private var navFix:NavFix?=null
 private var navRevision=0
@@ -27,7 +28,7 @@ private fun navSnapshot():String {
         "originAccessMeters" to (g.route?.let {r->navFix?.let {NavigationGeometry.distance(it.point,r.points.first())}} ?: 0.0),
         "originReady" to (g.route?.let {r->navFix?.let {navigator.usable(it)&&NavigationGeometry.distance(it.point,r.points.first())<=kotlin.math.max(45.0,it.accuracy*2)}} ?: false),
         "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
-        "instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
+        "language" to navigationLanguage,"instructionLanguage" to NavigationLanguages.resolve(navigationLanguage),"instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"status" to g.status,"safetyHeld" to navSafetyHeld,
         "fix" to (if(g.active)g.fix else navFix)?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
 }
 private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingRoute {
@@ -43,7 +44,7 @@ private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingR
         val m=step.maneuver
         maneuvers.add(NavManeuver(NavPoint(m.location[1] as Double,m.location[0] as Double),m.type as String,m.modifier as? String ?: "",step.name as? String ?: "",(m.exit as? Double)?.toInt()))
     }
-    return NavigationGeometry.route(NavPlace(name.take(240),NavPoint(lat,lon)),points,route.distance as Double,route.duration as Double,maneuvers)
+    return NavigationGeometry.route(NavPlace(name.take(240),NavPoint(lat,lon)),points,route.distance as Double,route.duration as Double,maneuvers).localized(navigationLanguage)
 }
 
 private fun select(name: String) {
@@ -90,10 +91,18 @@ fun main() {
     // Restore visual preferences only: this never establishes parked/vehicle trust.
     bridge.restoreAppearance={preset:String,accent:String,brightness:String,night:Boolean -> if(!appearanceRestored){appearanceRestored=true;appearance=AppearanceCatalog.normalize(AppearanceSettings(preset,accent,brightness,night))}}
     bridge.navState={navSnapshot()}
+    bridge.navLanguages={JSON.stringify(NavigationLanguages.codes.toTypedArray())}
+    bridge.navSetLanguage={tag:String ->
+        if(engine.state.value.parkedAllowed&&!navigator.state.active&&NavigationLanguages.validTag(tag)){
+            navigationLanguage=tag;navigator.state.route?.let {navigator.preview(it.localized(tag))};true
+        }else false
+    }
+    bridge.navVoiceCommand={raw:String -> val c=NavigationVoice.parse(raw);JSON.stringify(json("action" to c.action.name,"query" to c.query,"index" to c.index))}
+    bridge.navSpoken={distance:String,instruction:String -> NavigationLanguages.spoken(navigationLanguage,distance,instruction)}
     bridge.placeRequests={query:String,lat:Double,lon:Double,nearby:Boolean,excluded:String ->
         val p=NavPoint(lat,lon).takeIf {it.valid()}
         val ids=JSON.parse<Array<String>>(excluded).toList()
-        JSON.stringify(PlaceSearch.requests(query,p,nearby,ids).map {json(*it.entries.map {e->e.key to e.value}.toTypedArray())}.toTypedArray())
+        JSON.stringify(PlaceSearch.requests(query,p,nearby,ids,navigationLanguage).map {json(*it.entries.map {e->e.key to e.value}.toTypedArray())}.toTypedArray())
     }
     bridge.placeResults={raw:String,lat:Double,lon:Double,nearby:Boolean ->
         fun text(v:dynamic):String=if(jsTypeOf(v)=="string")v as String else ""
@@ -176,7 +185,7 @@ fun main() {
     bridge.location={ enabled:Boolean -> engine.setConnectivity(location=enabled) }
     bridge.route={ alternate:Boolean -> engine.updateRoute(Route(if(alternate)"demo-detour" else "demo-pangyo")) }
     bridge.preferences={ focus:Int,relax:Int,buffer:Int -> engine.updatePreferences(engine.state.value.preferences.copy(focusMinutes=focus,relaxMinutes=relax,departureBufferMinutes=buffer)) }
-    bridge.clear={ if(engine.clearPersonalData()){appearance=AppearanceSettings();navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationary.reset();engine.setNavigationLock(false)} }
+    bridge.clear={ if(engine.clearPersonalData()){appearance=AppearanceSettings();navigationLanguage="ko-KR";navigator.stop();navFix=null;navRevision++;navSafetyHeld=false;stationary.reset();engine.setNavigationLock(false)} }
     bridge.background={ engine.invalidateTelemetry("브라우저를 벗어나 세션을 일시정지했습니다.") }
     window.asDynamic().CabinOS=bridge
     select("충전")

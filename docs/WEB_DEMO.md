@@ -2,15 +2,21 @@
 
 같은 페이지에서 직접 조작하는 브라우저 데모, 실제 Android Compose UI 갤러리, 제출용 APK 다운로드, 한국어 자막 MP4를 제공합니다. 브라우저와 Android는 `core`의 Kotlin 상태 엔진을 공유합니다. 실차 연결은 미지원 상태로 명확하게 표시합니다.
 
+## 0.10.0 배포 파일
+
+[GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.0)에서 전용 팀 인증서로 서명한 APK와 `CabinOS_ONE_web_v0.10.0.zip`을 제공합니다. 웹 ZIP에는 인터랙티브 데모·Android UI 갤러리·APK·기존 MP4가 포함됩니다. HTTPS 정적 호스팅에 압축을 풀어 배포해야 하며 ZIP 다운로드 자체가 사이트 공개를 뜻하지 않습니다. GitHub Release에는 자동 24시간 만료를 설정하지 않았습니다.
+
+음성 길찾기와 언어 선택은 [사용법과 실제 지원 범위](VOICE_NAVIGATION_KO.md)를 확인하세요. 기존 MP4는 0.5.0 녹화로 새 음성 기능의 녹화가 아닙니다.
+
 ## 공개 접속 상태
 
 GitHub Pages 배포 워크플로와 정적 사이트 구성을 준비했습니다. **현재 공개 사이트 배포 성공은 확인되지 않았습니다.** 예상 배포 주소는 `https://hundol047.github.io/HYUNDAI/`이며, 배포 성공 전에는 동작하는 링크로 간주하면 안 됩니다.
 
 저장소 소유자가 한 번 [Settings → Pages](https://github.com/hundol047/HYUNDAI/settings/pages)에서 **Build and deployment → Source → GitHub Actions**를 선택해야 합니다. 이후 main 푸시 또는 [Publish CabinOS ONE demo](https://github.com/hundol047/HYUNDAI/actions/workflows/pages.yml)의 Run workflow로 배포합니다. Actions의 `deploy` 성공 후 표시되는 URL을 확인하세요.
 
-환경 재시작 후 GitHub API 조회와 공개 주소 접근은 가능해졌습니다. 저장소 조회에서 `has_pages=false`를 확인했고, 공개 주소는 HTTP 404입니다. Pages 생성 API는 연동 앱 권한 제한으로 `403 Resource not accessible by integration`을 반환했습니다. 저장소 소유자가 위 설정에서 Pages를 활성화해야 합니다.
+환경 재시작 후 GitHub API 조회와 공개 주소 접근은 가능해졌습니다. 저장소 조회에서 `has_pages=false`를 확인했고, 공개 주소는 HTTP 404입니다. 2026-10-23에도 Pages 활성화를 다시 요청했지만 생성 API는 연동 앱 권한 제한으로 `403 Resource not accessible by integration`을 반환했습니다. 저장소 소유자가 위 설정에서 Pages를 활성화해야 합니다.
 
-[최신 원격 웹 검사](https://github.com/hundol047/HYUNDAI/actions/runs/39638061596)에서 사이트 빌드와 브라우저 기능 검사는 통과했으며, `configure-pages` 단계에서 Pages 미활성화로 HTTP 404가 발생했습니다. 필요한 도메인과 재사용 시작 절차는 클라우드 환경 설정 초안에 저장했습니다. 초안 저장은 사이트 배포를 의미하지 않습니다.
+[이전 원격 웹 검사](https://github.com/hundol047/HYUNDAI/actions/runs/39638061596)에서 사이트 빌드와 브라우저 기능 검사는 통과했으며, `configure-pages` 단계에서 Pages 미활성화로 HTTP 404가 발생했습니다. 필요한 도메인과 재사용 시작 절차는 클라우드 환경 설정 초안에 저장했습니다. 초안 저장은 사이트 배포를 의미하지 않습니다.
 
 GitHub Pages는 이 작업 환경의 서버 종료와 관계없이 유지되며 24시간 만료를 설정하지 않았습니다. 실제 가용 시간은 GitHub 서비스와 저장소 설정에 따릅니다.
 
@@ -36,4 +42,6 @@ node scripts/web/record-demo.cjs
 
 ## 0.5.0 현재 검증
 
-실내 테마·강조색·야간 지도는 설정에서 바꾸며 시각 설정만 localStorage에 보관합니다. 실제 OSM/Nominatim/OSRM HTTP 200과 서울 브라우저 지도/길 안내를 확인했습니다. GPS 입력은 합성 공개 좌표이며 실기기 검증은 별도입니다. `verify-appearance.cjs`와 `verify-navigation-live.cjs`, `scripts/check-navigation-live.py --all-regions`로 재현합니다. 기본 CI는 합성 fixture로 재현 가능한 47개 브라우저 검사를 실행하며 실제 외부 서비스 가용성을 보장하지 않습니다.
+실내 테마·강조색·야간 지도는 설정에서 바꾸며 시각 설정만 localStorage에 보관합니다. 실제 OSM/Nominatim/OSRM HTTP 200과 서울 브라우저 지도/길 안내를 확인했습니다. GPS 입력은 합성 공개 좌표이며 실기기 검증은 별도입니다. `verify-appearance.cjs`와 `verify-navigation-live.cjs`, `scripts/check-navigation-live.py --all-regions`로 재현합니다. 당시 CI는 합성 fixture로 재현 가능한 47개 브라우저 검사를 실행했으며 실제 외부 서비스 가용성을 보장하지 않습니다.
+
+0.10.0의 브라우저 회귀 범위는 108개이며 자세한 집계는 [검증 결과](VALIDATION.md)를 참고하세요. 배포 ZIP은 `./scripts/build-web.sh` 후 `python3 scripts/package-web-release.py`로 재생성합니다.

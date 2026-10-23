@@ -24,10 +24,11 @@ object PlaceSearch {
         val seen=(excluded+places.map {it.id}.filter {it.isNotBlank()}).distinct().take(maxResults)
         return PlaceSearchPage(results(places,origin,nearby),seen,places.size>=pageSize&&seen.size>excluded.size&&seen.size<maxResults)
     }
-    fun requests(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList()):List<Map<String,String>> {
+    fun requests(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList(),language:String="ko"):List<Map<String,String>> {
+        require(NavigationLanguages.validTag(language))
         val q=clean(query,180);require(q.length>=2){"가게 이름·지점·도시 또는 주소를 2자 이상 입력하세요."}
         val ids=excluded.take(maxResults).filter {it.length in 1..160&&it.all {c->c.isLetterOrDigit()||c in "._:-"}}.distinct()
-        val base=linkedMapOf("format" to "jsonv2","limit" to "$pageSize","accept-language" to "ko,en","namedetails" to "1","addressdetails" to "1","extratags" to "1","q" to q)
+        val base=linkedMapOf("format" to "jsonv2","limit" to "$pageSize","accept-language" to "$language,en","namedetails" to "1","addressdetails" to "1","extratags" to "1","q" to q)
         if(ids.isNotEmpty()){base["exclude_ids"]=ids.joinToString(",");val numeric=ids.filter {it.all(Char::isDigit)};if(numeric.isNotEmpty())base["exclude_place_ids"]=numeric.joinToString(",")}
         if(!nearby)return listOf(base)
         require(origin?.valid()==true){"주변 가게 검색은 정확한 내 위치를 먼저 받아 주세요."}

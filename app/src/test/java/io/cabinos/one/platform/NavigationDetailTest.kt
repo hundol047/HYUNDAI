@@ -216,4 +216,69 @@ class NavigationDetailTest {
         }
     }
 
+    private fun enableMicrophone(context:Context){
+        shadowOf(context as Application).grantPermissions(Manifest.permission.RECORD_AUDIO)
+        val info=android.content.pm.ResolveInfo().apply {serviceInfo=android.content.pm.ServiceInfo().apply {packageName="test.speech";name="RecognitionService"}}
+        shadowOf(context.packageManager).addResolveInfoForIntent(android.content.Intent(android.speech.RecognitionService.SERVICE_INTERFACE),info)
+    }
+    private fun recognitionResult(text:String)=android.os.Bundle().apply {putStringArrayList(android.speech.SpeechRecognizer.RESULTS_RECOGNITION,arrayListOf(text))}
+    @Test fun microphoneUsesSelectedLanguageAndOnlyFinalResultsSearch(){
+        var searched=""
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {searched=query;return PlaceSearchPage(listOf(destination),emptyList(),false)}}).use {f->
+            enableMicrophone(f.context);f.nav.setLanguage("fr-FR");f.nav.listenDestination();f.idle()
+            val mic=shadowOf(org.robolectric.shadows.ShadowSpeechRecognizer.getLatestSpeechRecognizer())
+            assertEquals("fr-FR",mic.lastRecognizerIntent.getStringExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE))
+            mic.triggerOnPartialResults(recognitionResult("partial"));f.idle();assertEquals("",searched)
+            mic.triggerOnResults(recognitionResult("Café Paris"));f.idle();assertEquals("Café Paris",searched);assertFalse(f.nav.state.value.voiceListening);assertTrue(mic.isDestroyed)
+        }
+    }
+    @Test fun microphoneDenialAndRecognitionErrorsDoNotBecomeSearchQueries(){
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {calls++;return PlaceSearchPage(emptyList(),emptyList(),false)}}).use {f->
+            shadowOf(f.context as Application).denyPermissions(Manifest.permission.RECORD_AUDIO)
+            f.nav.listenDestination();assertFalse(f.nav.state.value.voiceListening);assertTrue(f.nav.state.value.voiceNotice.contains("권한"));assertEquals(0,calls)
+            enableMicrophone(f.context);f.nav.listenDestination();f.idle()
+            shadowOf(org.robolectric.shadows.ShadowSpeechRecognizer.getLatestSpeechRecognizer()).triggerOnError(android.speech.SpeechRecognizer.ERROR_NETWORK)
+            f.idle();assertEquals(0,calls);assertFalse(f.nav.state.value.voiceListening);assertTrue(f.nav.state.value.voiceNotice.contains("서버"))
+        }
+    }
+    @Test fun lateMicrophoneResultAfterBackgroundDoesNotSearch(){
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {calls++;return PlaceSearchPage(emptyList(),emptyList(),false)}}).use {f->
+            enableMicrophone(f.context);f.nav.listenDestination();f.idle();val mic=shadowOf(org.robolectric.shadows.ShadowSpeechRecognizer.getLatestSpeechRecognizer())
+            f.nav.setForeground(false);mic.triggerOnResults(recognitionResult("retired cafe"));f.idle()
+            assertEquals(0,calls);assertFalse(f.nav.state.value.voiceListening);assertTrue(mic.isDestroyed)
+        }
+    }
+    @Test fun voiceCanSelectAndStartButCannotChangeDestinationOrLanguageWhileDriving(){
+        Fixture(object:NavigationService(){
+            override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>)=PlaceSearchPage(listOf(destination),emptyList(),false)
+            override suspend fun route(origin:NavPoint,destination:NavPlace)=route()
+        }).use {f->
+            f.nav.locate();f.gps();f.nav.handleVoice("Paris Cafe");f.idle();assertEquals(1,f.nav.state.value.places.size)
+            f.nav.handleVoice("1번");f.idle();assertNotNull(f.nav.state.value.guidance.route)
+            f.nav.handleVoice("안내 시작");assertTrue(f.nav.state.value.guidance.active)
+            f.nav.handleVoice("New Cafe");assertTrue(f.nav.state.value.voiceNotice.contains("주차"));assertTrue(f.nav.state.value.guidance.active)
+            val before=f.nav.state.value.language;f.nav.setLanguage("de-DE");assertEquals(before,f.nav.state.value.language)
+            f.nav.handleVoice("안내 종료");assertFalse(f.nav.state.value.guidance.active);assertFalse(f.engine.state.value.parkedAllowed)
+        }
+    }
+    @Test fun changingLanguageRelocalizesPreviewAndPersistsOnlyLanguage(){
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.plan(destination);f.idle();f.nav.setLanguage("fr-FR")
+            assertEquals("fr",f.nav.state.value.guidance.route!!.language);assertFalse(f.nav.state.value.guidance.nextInstruction.contains("출발"))
+            assertEquals("fr-FR",RuntimePreferences(f.context).navigationLanguage)
+            f.nav.setLanguage("hi-IN");assertEquals("en",f.nav.state.value.guidance.route!!.language);assertTrue(f.nav.state.value.voiceNotice.contains("영어"))
+            f.nav.clear();assertEquals("ko-KR",RuntimePreferences(f.context).navigationLanguage)
+        }
+    }
+    @Test fun microphoneTimeoutStopsRecordingWithoutInterpretingAnErrorAsDestination(){
+        Fixture(NavigationService()).use {f->
+            enableMicrophone(f.context);f.nav.listenDestination();f.idle()
+            val mic=shadowOf(org.robolectric.shadows.ShadowSpeechRecognizer.getLatestSpeechRecognizer())
+            shadowOf(Looper.getMainLooper()).idleFor(Duration.ofSeconds(31));assertFalse(f.nav.state.value.voiceListening);assertTrue(mic.isDestroyed)
+            assertTrue(f.nav.state.value.voiceNotice.contains("시간"));assertTrue(f.nav.state.value.places.isEmpty())
+        }
+    }
+
 }

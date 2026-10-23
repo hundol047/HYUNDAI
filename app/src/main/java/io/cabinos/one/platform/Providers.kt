@@ -78,41 +78,75 @@ class AndroidNavigationProvider(private val context:Context, private val locatio
     }
 }
 class AndroidSpeechProvider(private val context:Context):SpeechProvider {
-    private var ready=false
+    private var initialized=false
     private var pending:String?=null
-    var status="한국어 음성 엔진 준비 중"; private set
+    var status="음성 엔진 준비 중"; private set
     private var tts:TextToSpeech?=null
     private var recognizer:SpeechRecognizer?=null
+    private var recognitionEpoch=0
+    private val handler=android.os.Handler(android.os.Looper.getMainLooper())
+    private var timeout:Runnable?=null
     init {
         tts=TextToSpeech(context) { result ->
-            if(result==TextToSpeech.SUCCESS) {
-                val supported=tts?.setLanguage(Locale.KOREAN) ?: TextToSpeech.LANG_NOT_SUPPORTED
-                ready=supported!=TextToSpeech.LANG_NOT_SUPPORTED && supported!=TextToSpeech.LANG_MISSING_DATA
-                status=if(ready) "한국어 음성 안내 사용 가능" else "한국어 TTS 음성팩 설치 필요"
-                pending?.let { if(ready) speak(it) };pending=null
-            } else status="TTS 사용 불가 · 화면 안내 사용"
+            initialized=result==TextToSpeech.SUCCESS
+            status=if(initialized)"음성 엔진 준비됨 · 언어팩은 언어별 확인" else "TTS 사용 불가 · 화면 안내 사용"
+            pending?.let {if(initialized)speak(it)};pending=null
         }
     }
-    override fun speak(text:String) { if(ready) tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"cabinos-${System.nanoTime()}") else pending=text }
-    override fun listen(onResult:(String)->Unit) {
-        if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED) { onResult("마이크 권한이 필요합니다. 명령 버튼도 사용할 수 있습니다.");return }
-        if(!SpeechRecognizer.isRecognitionAvailable(context)) { onResult("음성 인식 서비스가 없습니다. 명령 버튼을 사용해 주세요.");return }
-        recognizer?.destroy();recognizer=SpeechRecognizer.createSpeechRecognizer(context)
-        recognizer?.setRecognitionListener(object:RecognitionListener {
-            override fun onReadyForSpeech(params:Bundle?) { status="듣고 있습니다" }
-            override fun onBeginningOfSpeech() {}
-            override fun onRmsChanged(rmsdB:Float) {}
-            override fun onBufferReceived(buffer:ByteArray?) {}
-            override fun onEndOfSpeech() {}
-            override fun onError(error:Int) { onResult("음성 인식이 완료되지 않았습니다. 명령 버튼으로 다시 시도해 주세요.") }
-            override fun onResults(results:Bundle?) { results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull()?.let(onResult) }
-            override fun onPartialResults(partialResults:Bundle?) {}
-            override fun onEvent(eventType:Int,params:Bundle?) {}
-        })
-        recognizer?.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).putExtra(RecognizerIntent.EXTRA_LANGUAGE,"ko-KR")
-            .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM).putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE,true))
+    override fun speak(text:String) { if(initialized)speakNavigation(text,"ko-KR") else pending=text }
+    fun navigationLanguages():List<String> = runCatching {tts?.availableLanguages?.map {it.toLanguageTag()}?.sorted() ?: emptyList()}.getOrDefault(emptyList())
+    fun speakNavigation(text:String,tag:String):Boolean {
+        if(!initialized)return false
+        val locale=Locale.forLanguageTag(tag)
+        val supported=tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
+        if(supported<TextToSpeech.LANG_AVAILABLE){status="${locale.getDisplayName(locale)} 음성팩 미지원/미설치 · 화면 안내 사용";return false}
+        val result=tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"cabinos-${System.nanoTime()}")
+        status=if(result==TextToSpeech.SUCCESS)"${locale.getDisplayName(locale)} 음성 안내" else "음성 재생 불가 · 화면 안내 사용"
+        return result==TextToSpeech.SUCCESS
     }
-    fun stopSpeaking() {pending=null;tts?.stop()}
-    fun cancelListening() { recognizer?.cancel();recognizer?.destroy();recognizer=null;pending=null;tts?.stop() }
-    override fun close() { cancelListening();tts?.shutdown() }
+    override fun listen(onResult:(String)->Unit) { listenNavigation("ko-KR",onResult,{onResult(it)}) }
+    fun listenNavigation(tag:String,onResult:(String)->Unit,onError:(String)->Unit,onReady:()->Unit={}) {
+        cancelRecognition();val epoch=recognitionEpoch
+        if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)!=PackageManager.PERMISSION_GRANTED){onError("마이크 권한이 필요합니다. 주차 후 권한을 허용해 주세요.");return}
+        if(!SpeechRecognizer.isRecognitionAvailable(context)){onError("음성 인식 서비스가 없습니다. 기기의 음성 인식 서비스를 설치/설정해 주세요.");return}
+        fun finish(text:String?,error:String?) {
+            if(epoch!=recognitionEpoch)return
+            cancelRecognition()
+            if(text.isNullOrBlank())onError(error ?: "말씀을 인식하지 못했습니다. 다시 시도해 주세요.") else onResult(text.trim().take(180))
+        }
+        try {
+            val current=SpeechRecognizer.createSpeechRecognizer(context);recognizer=current
+            current.setRecognitionListener(object:RecognitionListener {
+                override fun onReadyForSpeech(params:Bundle?){if(epoch==recognitionEpoch){status="듣고 있습니다";onReady()}}
+                override fun onBeginningOfSpeech(){}
+                override fun onRmsChanged(rmsdB:Float){}
+                override fun onBufferReceived(buffer:ByteArray?){}
+                override fun onEndOfSpeech(){}
+                override fun onError(error:Int){finish(null,when(error){
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS->"마이크 권한이 해제됐습니다. 주차 후 다시 허용해 주세요."
+                    SpeechRecognizer.ERROR_LANGUAGE_NOT_SUPPORTED,SpeechRecognizer.ERROR_LANGUAGE_UNAVAILABLE->"선택한 언어의 음성 인식이 지원되지 않거나 언어팩이 없습니다. 언어/기기 설정을 확인하세요."
+                    SpeechRecognizer.ERROR_NETWORK,SpeechRecognizer.ERROR_NETWORK_TIMEOUT->"음성 인식 서버에 연결하지 못했습니다. 네트워크를 확인해 주세요."
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT,SpeechRecognizer.ERROR_NO_MATCH->"말씀을 인식하지 못했습니다. 다시 시도해 주세요."
+                    else->"음성 인식이 완료되지 않았습니다. 다시 시도해 주세요."
+                })}
+                override fun onResults(results:Bundle?){
+                    val confidence=results?.getFloatArray(SpeechRecognizer.CONFIDENCE_SCORES)?.firstOrNull()
+                    if(confidence!=null&&confidence>=0&&confidence<0.4f)finish(null,"말씀을 확실히 인식하지 못했습니다. 다시 말씀해 주세요.")
+                    else finish(results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull(),null)
+                }
+                override fun onPartialResults(partialResults:Bundle?){}
+                override fun onEvent(eventType:Int,params:Bundle?){}
+            })
+            timeout=Runnable {finish(null,"음성 입력 시간이 지났습니다. 다시 눌러 말씀해 주세요.")}.also {handler.postDelayed(it,30_000)}
+            tts?.stop()
+            current.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE,tag)
+                .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1))
+        }catch(_:RuntimeException){finish(null,"음성 인식을 시작하지 못했습니다. 마이크·기기 음성 서비스를 확인하세요.")}
+    }
+    fun stopSpeaking(){pending=null;tts?.stop()}
+    fun cancelRecognition(){recognitionEpoch++;timeout?.let {handler.removeCallbacks(it)};timeout=null;val old=recognizer;recognizer=null;runCatching {old?.cancel()};runCatching {old?.destroy()}}
+    fun cancelListening(){cancelRecognition();stopSpeaking()}
+    override fun close(){cancelListening();tts?.shutdown()}
 }

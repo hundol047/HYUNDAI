@@ -5,7 +5,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:51"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.ContextEngineTest",
@@ -13,7 +13,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:51"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.IntelligenceTest",
@@ -21,7 +21,15 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:51"
+    "timestamp": "2026-10-23T02:22:12"
+  },
+  {
+    "name": "io.cabinos.core.NavigationLanguageTest",
+    "tests": "5",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.NavigationTest",
@@ -29,7 +37,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:51"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.NearbyTest",
@@ -37,7 +45,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:52"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.PlaceSearchTest",
@@ -45,7 +53,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:52"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.core.StationaryEvidenceTest",
@@ -53,7 +61,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T14:58:52"
+    "timestamp": "2026-10-23T02:22:12"
   },
   {
     "name": "io.cabinos.one.ApplicationTest",
@@ -61,7 +69,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:15"
+    "timestamp": "2026-10-23T02:33:28"
   },
   {
     "name": "io.cabinos.one.platform.AppearancePersistenceTest",
@@ -69,7 +77,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:33"
+    "timestamp": "2026-10-23T02:33:41"
   },
   {
     "name": "io.cabinos.one.platform.LiveNavigationTest",
@@ -77,15 +85,15 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:34"
+    "timestamp": "2026-10-23T02:33:42"
   },
   {
     "name": "io.cabinos.one.platform.NavigationDetailTest",
-    "tests": "16",
+    "tests": "22",
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:35"
+    "timestamp": "2026-10-23T02:33:42"
   },
   {
     "name": "io.cabinos.one.platform.NavigationServiceTest",
@@ -93,7 +101,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:35"
+    "timestamp": "2026-10-23T02:33:43"
   },
   {
     "name": "io.cabinos.one.platform.NearbyPlacesTest",
@@ -101,7 +109,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:36"
+    "timestamp": "2026-10-23T02:33:43"
   },
   {
     "name": "io.cabinos.one.platform.PlatformTest",
@@ -109,7 +117,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:36"
+    "timestamp": "2026-10-23T02:33:43"
   },
   {
     "name": "io.cabinos.one.platform.StorageTest",
@@ -117,7 +125,7 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:37"
+    "timestamp": "2026-10-23T02:33:45"
   },
   {
     "name": "io.cabinos.one.ui.NavigationMapRendererTest",
@@ -125,6 +133,6 @@
     "failures": "0",
     "errors": "0",
     "skipped": "0",
-    "timestamp": "2026-10-22T15:27:39"
+    "timestamp": "2026-10-23T02:33:46"
   }
 ]

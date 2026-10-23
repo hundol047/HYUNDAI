@@ -124,7 +124,7 @@ import java.util.*
             }
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
-                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("한국어 음성 안내",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
                 Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)
