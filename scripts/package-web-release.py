@@ -15,9 +15,15 @@ version=re.search(r'versionName = "([^"]+)"',(root/'app/build.gradle.kts').read_
 web_version=version+('-'+args.revision if args.revision else '')
 archive=out/f'CabinOS_ONE_web_v{web_version}.zip'
 with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+    def public_file(info, data):
+        # Public static assets must be readable by the hosting service account,
+        # independently of the build shell's restrictive umask. No secrets ship.
+        info.create_system=3
+        info.external_attr=0o100644 << 16
+        z.writestr(info,data,compress_type=zipfile.ZIP_DEFLATED,compresslevel=9)
     for f in sorted(site.rglob('*')):
-        if f.is_file():z.write(f,f.relative_to(site))
-    z.writestr('HOSTING.txt',f'CabinOS ONE web {web_version} / Android {version} / FutureLabs\nUpload this directory to HTTPS static hosting.\nDo not open index.html as file://. Microphone/GPS require HTTPS and supported device services.\nGitHub repository: https://github.com/hundol047/HYUNDAI\nCabinOS_ONE_demo.mp4 is the historic 0.5 browser demo. Other MP4 files are actual browser rehearsals with synthetic GPS; see docs/CHALLENGING_DRIVE_KO.md and docs/SEOUL_YONSEI_DRIVE_KO.md / docs/WORLD_DRIVE_KO.md / docs/WORLD_SOAK_KO.md / docs/VIDEO_REVIEW_V0104.md in the repository.\n')
+        if f.is_file():public_file(zipfile.ZipInfo.from_file(f,f.relative_to(site)),f.read_bytes())
+    public_file(zipfile.ZipInfo('HOSTING.txt'),f'CabinOS ONE web {web_version} / Android {version} / FutureLabs\nUpload this directory to HTTPS static hosting.\nDo not open index.html as file://. Microphone/GPS require HTTPS and supported device services.\nGitHub repository: https://github.com/hundol047/HYUNDAI\nCabinOS_ONE_demo.mp4 is the historic 0.5 browser demo. Other MP4 files are actual browser rehearsals with synthetic GPS; see docs/CHALLENGING_DRIVE_KO.md and docs/SEOUL_YONSEI_DRIVE_KO.md / docs/WORLD_DRIVE_KO.md / docs/WORLD_SOAK_KO.md / docs/VIDEO_REVIEW_V0104.md in the repository.\n')
 checks=out/'SHA256SUMS'
 checks.write_text(''.join(f'{hashlib.sha256(f.read_bytes()).hexdigest()}  {f.name}\n' for f in [archive,root/'apk/퓨처랩스_CabinOS_ONE_release.apk']),encoding='utf-8')
 print(json.dumps({'path':str(archive.relative_to(root)),'bytes':archive.stat().st_size,'sha256':hashlib.sha256(archive.read_bytes()).hexdigest()}))
