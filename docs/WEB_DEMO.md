@@ -4,7 +4,7 @@
 
 ## 0.10.0 배포 파일
 
-[GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.0)에서 전용 팀 인증서로 서명한 APK와 `CabinOS_ONE_web_v0.10.0.zip`을 제공합니다. 웹 ZIP에는 인터랙티브 데모·Android UI 갤러리·APK·기존 MP4가 포함됩니다. HTTPS 정적 호스팅에 압축을 풀어 배포해야 하며 ZIP 다운로드 자체가 사이트 공개를 뜻하지 않습니다. GitHub Release에는 자동 24시간 만료를 설정하지 않았습니다.
+[GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.0)에서 전용 팀 인증서로 서명한 APK와 [`web-release/CabinOS_ONE_web_v0.10.0.zip`](../web-release/CabinOS_ONE_web_v0.10.0.zip)의 버전별 저장소 다운로드 링크를 제공합니다. 클라우드 프록시가 `uploads.github.com` 연결을 HTTP 403으로 차단해 Release 첨부파일 업로드는 완료되지 않았으며, 허용된 기존 Git 저장소에 배포 파일을 보관합니다. 웹 ZIP에는 인터랙티브 데모·Android UI 갤러리·APK·기존 MP4가 포함됩니다. HTTPS 정적 호스팅에 압축을 풀어 배포해야 하며 ZIP 다운로드 자체가 사이트 공개를 뜻하지 않습니다. GitHub Release에는 자동 24시간 만료를 설정하지 않았습니다.
 
 음성 길찾기와 언어 선택은 [사용법과 실제 지원 범위](VOICE_NAVIGATION_KO.md)를 확인하세요. 기존 MP4는 0.5.0 녹화로 새 음성 기능의 녹화가 아닙니다.
 

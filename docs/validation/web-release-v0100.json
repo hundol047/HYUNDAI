@@ -17,5 +17,12 @@
     "enableApiStatus": 403,
     "reason": "Resource not accessible by integration",
     "ownerAction": "Settings > Pages > Source: GitHub Actions"
+  },
+  "repositoryPath": "web-release/CabinOS_ONE_web_v0.10.0.zip",
+  "releaseDistribution": "Release body links to versioned repository APK and ZIP files",
+  "releaseAssetUpload": {
+    "status": 403,
+    "source": "cloud HTTPS proxy CONNECT denial for uploads.github.com",
+    "uploadedAssets": 0
   }
 }

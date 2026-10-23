@@ -26,7 +26,7 @@
 
 **0.10.0 음성 길찾기:** 내비의 음성 버튼 → 목적지 → 결과 번호 → 안내 시작. 길 안내 번역 31개 언어/지역 팩과 BCP 47 인식 언어 선택을 제공합니다. 지원하지 않는 번역은 영어로 대체하며 실제 STT/TTS는 기기 서비스·언어팩에 따릅니다. [사용법·언어 범위·실행 근거](docs/VOICE_NAVIGATION_KO.md).
 
-**배포 파일:** [0.10.0 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.0)에 서명 APK와 HTTPS 호스팅용 웹 ZIP을 제공합니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
+**배포 파일:** [0.10.0 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.0)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.0.zip`](web-release/CabinOS_ONE_web_v0.10.0.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
 
 ## 구현된 기능
 
