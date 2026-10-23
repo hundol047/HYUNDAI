@@ -114,7 +114,7 @@ def archive(source, output, allow_running=False):
         'candidateRoutes': len(cases), 'candidateCountries': len({r['country'] for r in cases}),
         'resultCounts': dict(Counter(r['result'] for r in summaries)),
         'passedRoutes': len(finished), 'passedCountries': sorted({r['country'] for r in finished}),
-        'passedContinents': sorted({r['continent'] for r in finished}),
+        'passedContinents': sorted({continent for r in finished for continent in r['continent'].split('/')}),
         'unattempted': [r['id'] for r in cases if r['id'] not in {s['id'] for s in summaries}],
         'movingGpsSamples': sum(r['movingGpsSamples'] for r in summaries),
         'observedDistanceMeters': sum(r['distanceMeters'] for r in summaries),
