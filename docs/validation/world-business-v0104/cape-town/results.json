@@ -1,0 +1,494 @@
+{
+  "observedAt": "2026-10-23T14:35:51.200Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:35:51.206Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "cape-town",
+      "label": "케이프타운",
+      "country": "ZA",
+      "continent": "Africa",
+      "language": "en-ZA",
+      "start": [
+        -33.925,
+        18.424
+      ],
+      "end": [
+        -33.9282267,
+        18.4227333
+      ],
+      "query": "Truth Coffee Cape Town",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:45:01.310Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 34208674,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3733793199,
+            "lat": "-33.9282267",
+            "lon": "18.4227333",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.441443503466877e-05,
+            "addresstype": "amenity",
+            "name": "Truth Coffee Roasting",
+            "display_name": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa",
+            "address": {
+              "amenity": "Truth Coffee Roasting",
+              "road": "Buitenkant Street",
+              "suburb": "Cape Town Ward 115",
+              "city": "Cape Town",
+              "county": "City of Cape Town",
+              "state": "Western Cape",
+              "ISO3166-2-lvl4": "ZA-WC",
+              "postcode": "7925",
+              "country": "South Africa",
+              "country_code": "za"
+            },
+            "extratags": {
+              "phone": "+27212000440",
+              "cuisine": "coffee_shop;breakfast;burger;cake;chicken;hot_dog;international;local;pasta;sandwich;tea",
+              "website": "http://truthcoffee.com",
+              "diet:vegan": "yes",
+              "diet:vegetarian": "yes",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "Truth Coffee Roasting"
+            },
+            "boundingbox": [
+              "-33.9282767",
+              "-33.9281767",
+              "18.4226833",
+              "18.4227833"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Truth Coffee RoastingTruth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa카페 · OSM / Nominatim내 위치에서 직선 약 377 m전화 +27212000440지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 377.34740755496784
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/18060/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18062/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18061/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18062/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18060/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18061/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18059/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18059/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-ZA%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Truth+Coffee+Cape+Town",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39341.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39341.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39341.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39341.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/18.424,-33.925;18.4227333,-33.9282267?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72244/78682.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78682.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78680.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72244/78680.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78680.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78682.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78681.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72245/78681.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72244/78681.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78681.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72245/78680.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72245/78682.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Buitenkant Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6305541721114131,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 126.74040164844973,
+          "label": "127m",
+          "timeout": false,
+          "waitMs": 337,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Buitenkant Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9425118635825126,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 253.48080329689947,
+          "label": "253m",
+          "timeout": false,
+          "waitMs": 353,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Buitenkant Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5307332645207525,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 380.2212049453492,
+          "label": "380m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Buitenkant Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.2275197165664835,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 456.96160659379893,
+          "label": "457m",
+          "timeout": false,
+          "waitMs": 336,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Buitenkant Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7767433174743391,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 506.96160659379893,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 326,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.580902366698176,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 506.96160659379893,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 800,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.580902366698176,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "coordinateEndpoint": [
+        -33.908,
+        18.419
+      ],
+      "selectedPlace": {
+        "name": "Truth Coffee Roasting",
+        "latitude": -33.9282267,
+        "longitude": 18.4227333,
+        "id": "34208674",
+        "address": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa",
+        "category": "카페",
+        "phone": "+27212000440",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "destinationMode": "provider-search-result",
+      "route": {
+        "distanceMeters": 506.9,
+        "geometryMeters": 506.96160659379893,
+        "durationSeconds": 46.1,
+        "points": 18,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Darling Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 160.79571522753852,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Buitenkant Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 506.96160659379893,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Buitenkant Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 10.787174427995357,
+        "destinationSnapMeters": 11.47190469968686
+      },
+      "drivingStartedAt": "2026-10-23T14:45:06.765Z",
+      "drivingWallSeconds": 58.118,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 372.8209051826823,
+        "originReady": false,
+        "destinationAccessMeters": 11.471904699140756,
+        "revision": 3,
+        "destination": "Truth Coffee Roasting",
+        "remainingMeters": 19.99756957075158,
+        "remainingSeconds": 1.8186781558722587,
+        "language": "en-ZA",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999994932352,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -33.928299,
+          "longitude": 18.422822,
+          "accuracy": 5,
+          "timestamp": 1792766766322
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 76,
+      "finishedAt": "2026-10-23T14:46:13.420Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 58
+    }
+  ]
+}

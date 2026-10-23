@@ -1,0 +1,616 @@
+{
+  "observedAt": "2026-10-23T16:21:33.871Z",
+  "sourceCommit": "6cf6e02ab09074a452f275402e67a206c4f806ad",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:21:33.880Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "christchurch",
+      "label": "크라이스트처치",
+      "country": "NZ",
+      "continent": "Oceania",
+      "language": "en-NZ",
+      "start": [
+        -43.531,
+        172.63
+      ],
+      "end": [
+        -43.535,
+        172.645
+      ],
+      "query": "C1 Espresso Christchurch",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:21:34.015Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 25678506,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 297852006,
+            "lat": "-43.5351376",
+            "lon": "172.6404818",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.963530937662345e-05,
+            "addresstype": "amenity",
+            "name": "C1 Espresso",
+            "display_name": "C1 Espresso, 185, High Street, Innovation Precinct, Christchurch Central, Linwood-Central-Heathcote Community, Christchurch City, Canterbury, 8011, New Zealand",
+            "address": {
+              "amenity": "C1 Espresso",
+              "house_number": "185",
+              "road": "High Street",
+              "commercial": "Innovation Precinct",
+              "suburb": "Christchurch Central",
+              "city": "Linwood-Central-Heathcote Community",
+              "county": "Christchurch City",
+              "state": "Canterbury",
+              "ISO3166-2-lvl4": "NZ-CAN",
+              "postcode": "8011",
+              "country": "New Zealand",
+              "country_code": "nz"
+            },
+            "extratags": {
+              "website": "https://www.c1espresso.co.nz/",
+              "building": "yes",
+              "opening_hours": "Mo-Fr 07:00-21:00; Sa-Su 07:00-17:00",
+              "indoor_seating": "yes",
+              "outdoor_seating": "yes"
+            },
+            "namedetails": {
+              "name": "C1 Espresso"
+            },
+            "boundingbox": [
+              "-43.5352123",
+              "-43.5350531",
+              "172.6403950",
+              "172.6405701"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. C1 EspressoC1 Espresso, 185, High Street, Innovation Precinct, Christchurch Central, Linwood-Central-Heathcote Community, Christchurch City, Canterbury, 8011, New Zealand카페 · OSM / Nominatim내 위치에서 직선 약 962 m등록 영업시간 Mo-Fr 07:00-21:00; Sa-Su 07:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 962.1124539051845
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/32096/20793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32097/20794.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32096/20792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32097/20792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32095/20793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32095/20794.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32095/20792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32096/20794.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32098/20794.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32097/20793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32098/20792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32098/20793.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-NZ%2Cen&namedetails=1&addressdetails=1&extratags=1&q=C1+Espresso+Christchurch",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64196/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64196/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64197/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64197/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64196/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64195/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64195/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64195/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64197/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/172.63,-43.531;172.645,-43.535?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64193/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64193/41586.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64192/41586.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64192/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64195/41586.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64194/41586.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64193/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64194/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64192/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64194/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64196/41586.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64194/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64193/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41588.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41587.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128392/83176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128395/83176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128394/83176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128393/83177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128395/83178.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128393/83176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128394/83178.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128392/83177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128395/83177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128393/83178.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128392/83178.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/128394/83177.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41589.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41587.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64198/41588.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 858,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Worcester Boulevard",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5789868635380855,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 492.0043922586514,
+          "label": "492m",
+          "timeout": false,
+          "waitMs": 313,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continue straight · Durham Street South",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4773400337551102,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 984.0087845173028,
+          "label": "984m",
+          "timeout": false,
+          "waitMs": 311,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Tuam Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.19453809395430408,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1476.0131767759542,
+          "label": "1476m",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Tuam Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4148412283469539,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1918.0175690346057,
+          "label": "1918m",
+          "timeout": false,
+          "waitMs": 326,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Tuam Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9083148053178046,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1968.0175690346057,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 322,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 33 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 19.463639405370028,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1968.0175690346057,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 727,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 33 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 19.463639405370028,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1971,
+        "geometryMeters": 1968.0175690346057,
+        "durationSeconds": 330.7,
+        "points": 129,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 7.005280378302492,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Worcester Boulevard",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 58.277443972991705,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Montreal Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 177.47964594514323,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Gloucester Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 409.6634586781001,
+            "type": "turn",
+            "modifier": "sharp right",
+            "road": "Cambridge Terrace",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 789.308473694953,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Durham Street South",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1051.0435452192569,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Tuam Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1968.0175690346057,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Tuam Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 2.4184957571915806,
+        "destinationSnapMeters": 33.35886758530675
+      },
+      "drivingStartedAt": "2026-10-23T16:21:40.699Z",
+      "drivingWallSeconds": 206.37,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1302.7039439525279,
+        "originReady": false,
+        "destinationAccessMeters": 33.35886758532689,
+        "revision": 4,
+        "destination": "좌표 목적지 -43.535000, 172.645000",
+        "remainingMeters": 15.02273174831755,
+        "remainingSeconds": 2.520556767716192,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 33 m",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000007712515,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -43.5353,
+          "longitude": 172.64500199999998,
+          "accuracy": 5,
+          "timestamp": 1792772708503
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 225,
+      "finishedAt": "2026-10-23T16:25:16.284Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 206
+    }
+  ]
+}

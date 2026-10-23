@@ -1,0 +1,909 @@
+{
+  "observedAt": "2026-10-23T15:09:05.953Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:09:05.959Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "osaka",
+      "label": "오사카",
+      "country": "JP",
+      "continent": "Asia",
+      "language": "ja-JP",
+      "start": [
+        34.705,
+        135.497
+      ],
+      "end": [
+        34.693,
+        135.501
+      ],
+      "query": "Starbucks Osaka",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:09:06.087Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 268772622,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10704607474,
+            "lat": "34.5401803",
+            "lon": "135.5606011",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 1, 黒山, 美原区, 堺市, 大阪府, 587-8577, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "1",
+              "neighbourhood": "黒山",
+              "suburb": "美原区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "587-8577",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "level:ref": "1",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.5401303",
+              "34.5402303",
+              "135.5605511",
+              "135.5606511"
+            ]
+          },
+          {
+            "place_id": 268573920,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 8936373193,
+            "lat": "34.5666648",
+            "lon": "135.5152250",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 11, そよら新金岡, 北区, 堺市, 大阪府, 591-8021, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "11",
+              "retail": "そよら新金岡",
+              "suburb": "北区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "591-8021",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "level": "1",
+              "branch": "そよら新金岡店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "capacity": "83",
+              "takeaway": "yes",
+              "start_date": "2021-07-17",
+              "opening_hours": "Mo-Su 08:00-22:30",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ja:スターバックス",
+              "internet_access": "no"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.5666148",
+              "34.5667148",
+              "135.5151750",
+              "135.5152750"
+            ]
+          },
+          {
+            "place_id": 426355850,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 14106393771,
+            "lat": "34.5467501",
+            "lon": "135.4924100",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 大阪高石線, 百舌鳥陵南町二丁, 北区, 堺市, 大阪府, 590-0078, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "road": "大阪高石線",
+              "neighbourhood": "百舌鳥陵南町二丁",
+              "suburb": "北区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "590-0078",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "branch": "堺百舌鳥店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.5467001",
+              "34.5468001",
+              "135.4923600",
+              "135.4924600"
+            ]
+          },
+          {
+            "place_id": 268640544,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10275183643,
+            "lat": "34.4967736",
+            "lon": "135.5131654",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 3, 茶山台一丁, 南区, 堺市, 大阪府, 590-0115, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "3",
+              "neighbourhood": "茶山台一丁",
+              "suburb": "南区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "590-0115",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "phone": "+81 72 284 0177",
+              "branch": "堺 泉ヶ丘駅前店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "start_date": "2016-04-29",
+              "opening_hours": "Mo-Su 07:00-22:00",
+              "brand:wikidata": "Q37158",
+              "internet_access": "wlan",
+              "not:brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.4967236",
+              "34.4968236",
+              "135.5131154",
+              "135.5132154"
+            ]
+          },
+          {
+            "place_id": 268683018,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 5367543137,
+            "lat": "34.4841342",
+            "lon": "135.5149342",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 堺泉北環状線, 茶山台三丁, 南区, 堺市, 大阪府, 590-0078, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "road": "堺泉北環状線",
+              "neighbourhood": "茶山台三丁",
+              "suburb": "南区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "590-0078",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "branch": "泉北槇塚台店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.4840842",
+              "34.4841842",
+              "135.5148842",
+              "135.5149842"
+            ]
+          },
+          {
+            "place_id": 267903205,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2274719106,
+            "lat": "34.5818952",
+            "lon": "135.4694231",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.485313191419879e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 1, 戎島町三丁, 堺区, 堺市, 大阪府, 590-0985, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "1",
+              "neighbourhood": "戎島町三丁",
+              "suburb": "堺区",
+              "city": "堺市",
+              "province": "大阪府",
+              "ISO3166-2-lvl4": "JP-27",
+              "postcode": "590-0985",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "atm": "no",
+              "level": "0",
+              "branch": "堺プラットプラット店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "start_date": "2015-10-07",
+              "drive_through": "no",
+              "opening_hours": "07:00-22:00",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks",
+              "outdoor_seating": "no"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "34.5818452",
+              "34.5819452",
+              "135.4693731",
+              "135.4694731"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. スターバックススターバックス, 1, 黒山, 美原区, 堺市, 大阪府, 587-8577, 日本카페 · OSM / Nominatim내 위치에서 직선 약 19.2 km지도에 표시 · 자동차 경로 계산 →",
+          "2. スターバックススターバックス, 11, そよら新金岡, 北区, 堺市, 大阪府, 591-8021, 日本카페 · OSM / Nominatim내 위치에서 직선 약 15.5 km등록 영업시간 Mo-Su 08:00-22:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. スターバックススターバックス, 大阪高石線, 百舌鳥陵南町二丁, 北区, 堺市, 大阪府, 590-0078, 日本카페 · OSM / Nominatim내 위치에서 직선 약 17.6 km지도에 표시 · 자동차 경로 계산 →",
+          "4. スターバックススターバックス, 3, 茶山台一丁, 南区, 堺市, 大阪府, 590-0115, 日本카페 · OSM / Nominatim내 위치에서 직선 약 23.2 km전화 +81 72 284 0177등록 영업시간 Mo-Su 07:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "5. スターバックススターバックス, 堺泉北環状線, 茶山台三丁, 南区, 堺市, 大阪府, 590-0078, 日本카페 · OSM / Nominatim내 위치에서 직선 약 24.6 km지도에 표시 · 자동차 경로 계산 →",
+          "6. スターバックススターバックス, 1, 戎島町三丁, 堺区, 堺市, 大阪府, 590-0985, 日本카페 · OSM / Nominatim내 위치에서 직선 약 13.9 km등록 영업시간 07:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 13919.154043523497
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/28715/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28715/13011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28718/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ja-JP%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Starbucks+Osaka",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/135.497,34.705;135.501,34.693?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28716/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28718/13013.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28717/13013.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28717/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28716/13013.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28718/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28715/13012.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28715/13011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57432/26024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57432/26023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57432/26025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57434/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57433/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57436/26027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114871/52052.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114870/52052.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114869/52053.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114869/52054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114869/52052.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114871/52053.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114868/52054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114870/52054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114871/52054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114868/52053.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114868/52052.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/114870/52053.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/57435/26026.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28716/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28717/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28716/13012.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28717/13012.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28718/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28716/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28717/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28718/13011.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28715/13013.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 2724,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "左折です · 大阪市道九条梅田線",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.802343424808117,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 453.3094358513344,
+          "label": "453m",
+          "timeout": false,
+          "waitMs": 415,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "右折です · 国道176号",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8813757459834552,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 906.6188717026688,
+          "label": "907m",
+          "timeout": false,
+          "waitMs": 323,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "目的地 · 御堂筋",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.87807968972685,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1359.9283075540031,
+          "label": "1360m",
+          "timeout": false,
+          "waitMs": 562,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "目的地 · 御堂筋",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7194236320089342,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1763.2377434053376,
+          "label": "1763m",
+          "timeout": false,
+          "waitMs": 1278,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地 · 御堂筋",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.49727663279973183,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1813.2377434053376,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 631,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地に到着しました。目的地は前方です",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.86537148620283,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1813.2377434053376,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1430,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地に到着しました。目的地は前方です",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.86537148620283,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1811,
+        "geometryMeters": 1813.2377434053376,
+        "durationSeconds": 187.2,
+        "points": 93,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 162.2749907306216,
+            "type": "turn",
+            "modifier": "left",
+            "road": "大阪市道九条梅田線",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 483.6320662017722,
+            "type": "turn",
+            "modifier": "right",
+            "road": "国道176号",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 749.2598989223231,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "御堂筋",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1813.2377434053376,
+            "type": "arrive",
+            "road": "御堂筋",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 10.42630098095739,
+        "destinationSnapMeters": 1.0118142976480304
+      },
+      "drivingStartedAt": "2026-10-23T15:09:14.572Z",
+      "drivingWallSeconds": 190.82,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1393.5912433694014,
+        "originReady": false,
+        "destinationAccessMeters": 1.0118142950576288,
+        "revision": 4,
+        "destination": "좌표 목적지 34.693000, 135.501000",
+        "remainingMeters": 19.975317704828655,
+        "remainingSeconds": 2.0648147290689804,
+        "language": "ja-JP",
+        "instructionLanguage": "ja",
+        "instruction": "目的地に到着しました。目的地は前方です",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999946772,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 34.693001,
+          "longitude": 135.500989,
+          "accuracy": 5,
+          "timestamp": 1792768347156
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 213,
+      "finishedAt": "2026-10-23T15:12:35.290Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 190
+    }
+  ]
+}

@@ -1,0 +1,1009 @@
+{
+  "observedAt": "2026-10-23T17:26:10.790Z",
+  "sourceCommit": "572ec98bf23ba41706ba3540d80ed0c85cb343e5",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T17:26:10.797Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "singapore",
+      "label": "싱가포르",
+      "country": "SG",
+      "continent": "Asia",
+      "language": "en-SG",
+      "start": [
+        1.3,
+        103.839
+      ],
+      "end": [
+        1.286,
+        103.852
+      ],
+      "query": "Ya Kun Kaya Toast Singapore",
+      "result": "passed",
+      "startedAt": "2026-10-23T17:26:10.915Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 258140213,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1395135459,
+            "lat": "1.4358391",
+            "lon": "103.7857200",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, Woodlands Square, Woodlands Regional Centre, Woodlands, North Region, Singapore, 737737, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "road": "Woodlands Square",
+              "neighbourhood": "Woodlands Regional Centre",
+              "suburb": "Woodlands",
+              "borough": "North Region",
+              "city": "Singapore",
+              "postcode": "737737",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "level": "-1",
+              "indoor": "room",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "level:ref": "B1",
+              "wheelchair": "yes",
+              "brand:wikidata": "Q8046237",
+              "brand:wikipedia": "en:Ya Kun Kaya Toast"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.4357861",
+              "1.4358926",
+              "103.7856759",
+              "103.7857637"
+            ]
+          },
+          {
+            "place_id": 253777653,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6798804271,
+            "lat": "1.4026584",
+            "lon": "103.9133408",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, #B1-10/11/12, Punggol Drive, Waterway East, Punggol, North-east Region, Singapore, 820681, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "house_number": "#B1-10/11/12",
+              "road": "Punggol Drive",
+              "neighbourhood": "Waterway East",
+              "quarter": "Waterway East",
+              "suburb": "Punggol",
+              "borough": "North-east Region",
+              "city": "Singapore",
+              "postcode": "820681",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "level": "-1",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "wheelchair": "yes",
+              "brand:wikidata": "Q8046237"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.4026084",
+              "1.4027084",
+              "103.9132908",
+              "103.9133908"
+            ]
+          },
+          {
+            "place_id": 253979938,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10940122722,
+            "lat": "1.3250466",
+            "lon": "103.8509699",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, 360, Balestier Road, Balestier, Whampoa, Novena, Central Region, Singapore, 329784, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "house_number": "360",
+              "road": "Balestier Road",
+              "neighbourhood": "Balestier",
+              "suburb": "Whampoa",
+              "borough": "Central Region",
+              "city": "Singapore",
+              "postcode": "329784",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "check_date": "2024-01-07",
+              "brand:wikidata": "Q8046237",
+              "outdoor_seating": "no",
+              "air_conditioning": "yes"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.3249966",
+              "1.3250966",
+              "103.8509199",
+              "103.8510199"
+            ]
+          },
+          {
+            "place_id": 257239834,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6798680644,
+            "lat": "1.3546388",
+            "lon": "103.8307875",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, Marigold Drive, Upper Thomson, Sin Ming, Bishan, Central Region, Singapore, 576587, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "road": "Marigold Drive",
+              "neighbourhood": "Upper Thomson",
+              "quarter": "Sin Ming",
+              "suburb": "Bishan",
+              "borough": "Central Region",
+              "city": "Singapore",
+              "postcode": "576587",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "wheelchair": "yes",
+              "brand:wikidata": "Q8046237",
+              "brand:wikipedia": "en:Ya Kun Kaya Toast"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.3545888",
+              "1.3546888",
+              "103.8307375",
+              "103.8308375"
+            ]
+          },
+          {
+            "place_id": 255451795,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6814428191,
+            "lat": "1.3333637",
+            "lon": "103.7437378",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, #B1-39, Jem Parking (In), Jurong Gateway, Jurong East, West Region, Singapore, 608549, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "house_number": "#B1-39",
+              "road": "Jem Parking (In)",
+              "neighbourhood": "Jurong Gateway",
+              "suburb": "Jurong East",
+              "borough": "West Region",
+              "city": "Singapore",
+              "postcode": "608549",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q8046237",
+              "brand:wikipedia": "en:Ya Kun Kaya Toast"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.3333137",
+              "1.3334137",
+              "103.7436878",
+              "103.7437878"
+            ]
+          },
+          {
+            "place_id": 253849361,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6814451192,
+            "lat": "1.3331650",
+            "lon": "103.7455252",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.432822156095243e-05,
+            "addresstype": "amenity",
+            "name": "Ya Kun Kaya Toast",
+            "display_name": "Ya Kun Kaya Toast, #02-12, Boon Lay Way, Jurong Gateway, Jurong East, West Region, Singapore, 609606, Singapore",
+            "address": {
+              "amenity": "Ya Kun Kaya Toast",
+              "house_number": "#02-12",
+              "road": "Boon Lay Way",
+              "neighbourhood": "Jurong Gateway",
+              "suburb": "Jurong East",
+              "borough": "West Region",
+              "city": "Singapore",
+              "postcode": "609606",
+              "country": "Singapore",
+              "country_code": "sg"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q8046237",
+              "brand:wikipedia": "en:Ya Kun Kaya Toast"
+            },
+            "namedetails": {
+              "name": "Ya Kun Kaya Toast",
+              "brand": "Ya Kun Kaya Toast"
+            },
+            "boundingbox": [
+              "1.3331150",
+              "1.3332150",
+              "103.7454752",
+              "103.7455752"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Ya Kun Kaya ToastYa Kun Kaya Toast, Woodlands Square, Woodlands Regional Centre, Woodlands, North Region, Singapore, 737737, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 16.2 km지도에 표시 · 자동차 경로 계산 →",
+          "2. Ya Kun Kaya ToastYa Kun Kaya Toast, #B1-10/11/12, Punggol Drive, Waterway East, Punggol, North-east Region, Singapore, 820681, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 14.1 km지도에 표시 · 자동차 경로 계산 →",
+          "3. Ya Kun Kaya ToastYa Kun Kaya Toast, 360, Balestier Road, Balestier, Whampoa, Novena, Central Region, Singapore, 329784, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 3.1 km지도에 표시 · 자동차 경로 계산 →",
+          "4. Ya Kun Kaya ToastYa Kun Kaya Toast, Marigold Drive, Upper Thomson, Sin Ming, Bishan, Central Region, Singapore, 576587, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 6.1 km지도에 표시 · 자동차 경로 계산 →",
+          "5. Ya Kun Kaya ToastYa Kun Kaya Toast, #B1-39, Jem Parking (In), Jurong Gateway, Jurong East, West Region, Singapore, 608549, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 11.2 km지도에 표시 · 자동차 경로 계산 →",
+          "6. Ya Kun Kaya ToastYa Kun Kaya Toast, #02-12, Boon Lay Way, Jurong Gateway, Jurong East, West Region, Singapore, 609606, Singapore카페 · OSM / Nominatim내 위치에서 직선 약 11.0 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 3086.606730603519
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-SG%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Ya+Kun+Kaya+Toast+Singapore",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51675/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51675/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/103.839,1.3;103.852,1.286?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51671/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51671/32532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51671/32531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51670/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51670/32531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51670/32532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12917/8133.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12917/8134.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12918/8133.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12918/8132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12917/8132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12918/8134.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12916/8133.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12919/8133.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12916/8132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12919/8132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12916/8134.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12919/8134.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25833/16265.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25833/16264.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25833/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25834/16267.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16267.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16267.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16267.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25838/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25838/16267.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16268.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25835/16268.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16268.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25838/16268.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51675/32533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51675/32534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25836/16266.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25837/16266.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32534.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51672/32533.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32534.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51674/32533.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51673/32533.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 557,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a slight right · Grange Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.607172369302229,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1116.024065392445,
+          "label": "1116m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a slight right · Penang Lane",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.8422379801980112,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2232.04813078489,
+          "label": "2232m",
+          "timeout": false,
+          "waitMs": 336,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Havelock Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.7565112858290461,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3348.072196177335,
+          "label": "3348m",
+          "timeout": false,
+          "waitMs": 349,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Pickering Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.318394194199439,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3881.282051574792,
+          "label": "3881m",
+          "timeout": false,
+          "waitMs": 348,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Keep left at the fork · Collyer Quay",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.8968432480605284,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4414.09626156978,
+          "label": "4414m",
+          "timeout": false,
+          "waitMs": 315,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Flint Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.706759759237363,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4464.09626156978,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 345,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 40 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 25.757696924773608,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4464.09626156978,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 554,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 40 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 25.757696924773608,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 4455.4,
+        "geometryMeters": 4464.09626156978,
+        "durationSeconds": 414.7,
+        "points": 204,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Somerset Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 251.29564788739748,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Grange Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 420.9325954325599,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Orchard Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1249.020866542584,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Penang Lane",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1373.7704743806019,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Penang Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1411.2307879184646,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "Clemenceau Avenue",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2602.366816824422,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Havelock Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3105.609152170125,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Upper Pickering Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3355.0564095564505,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Pickering Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3507.1976098036416,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Church Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3881.282051574792,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Collyer Quay",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4249.672009231218,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "Fullerton Square",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4401.913241796069,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Flint Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4464.09626156978,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Flint Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 35.98895172136606,
+        "destinationSnapMeters": 40.31693253123107
+      },
+      "drivingStartedAt": "2026-10-23T17:26:17.456Z",
+      "drivingWallSeconds": 455.809,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2176.391496912384,
+        "originReady": false,
+        "destinationAccessMeters": 40.31693253278732,
+        "revision": 4,
+        "destination": "좌표 목적지 1.286000, 103.852000",
+        "remainingMeters": 19.961039094995083,
+        "remainingSeconds": 1.85793484596096,
+        "language": "en-SG",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 40 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.00000000048749,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 1.285942,
+          "longitude": 103.85235799999998,
+          "accuracy": 5,
+          "timestamp": 1792776834722
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 475,
+      "finishedAt": "2026-10-23T17:34:01.597Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 455
+    }
+  ]
+}

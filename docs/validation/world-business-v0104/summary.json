@@ -1,0 +1,184 @@
+{
+  "scope": "Supplemental actual business-search selection drives with live providers and 1 Hz synthetic GPS. Excluded from the five-hour elapsed-time/count totals.",
+  "cases": [
+    {
+      "id": "lisbon",
+      "country": "PT",
+      "continent": "Europe",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "A Brasileira",
+        "latitude": 38.7106819,
+        "longitude": -9.1420119,
+        "id": "297105278",
+        "address": "A Brasileira, 120/122, Rua Garrett, Chiado, Santa Maria Maior, Madalena, Lisboa, 1200-273, Portugal",
+        "category": "카페",
+        "phone": "+351 21 346 9541",
+        "website": "",
+        "openingHours": "Mo-Su 08:00-02:00",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 1220.6,
+      "movingGpsSamples": 130,
+      "drivingWallSeconds": 130.29,
+      "engineSha256": "868301530196597281e061769cf8bfb4fa283c2295fe1799ea918a3eac98d188",
+      "evidence": "lisbon/results.json"
+    },
+    {
+      "id": "tokyo",
+      "country": "JP",
+      "continent": "Asia",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "スターバックス",
+        "latitude": 35.647024,
+        "longitude": 139.7221081,
+        "id": "265446825",
+        "address": "スターバックス, 回生橋, 恵比寿二丁目, 恵比寿, 渋谷区, 東京, 150-0012, 日本",
+        "category": "카페",
+        "phone": "",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 3844,
+      "movingGpsSamples": 394,
+      "drivingWallSeconds": 394.757,
+      "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+      "evidence": "tokyo/results.json"
+    },
+    {
+      "id": "london",
+      "country": "GB",
+      "continent": "Europe",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "Fortnum & Mason",
+        "latitude": 51.5081856,
+        "longitude": -0.1381409,
+        "id": "280193733",
+        "address": "Fortnum & Mason, 181-184, Piccadilly, St. James's, Westminster, Mayfair, City of Westminster, Greater London, England, W1A 1ER, United Kingdom",
+        "category": "department_store",
+        "phone": "+44 20 7734 8040",
+        "website": "",
+        "openingHours": "Mo-Sa 10:00-21:00; Su 12:00-18:00",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 1155.8,
+      "movingGpsSamples": 122,
+      "drivingWallSeconds": 122.203,
+      "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+      "evidence": "london/results.json"
+    },
+    {
+      "id": "cape-town",
+      "country": "ZA",
+      "continent": "Africa",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "Truth Coffee Roasting",
+        "latitude": -33.9282267,
+        "longitude": 18.4227333,
+        "id": "34208674",
+        "address": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa",
+        "category": "카페",
+        "phone": "+27212000440",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 506.9,
+      "movingGpsSamples": 58,
+      "drivingWallSeconds": 58.118,
+      "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+      "evidence": "cape-town/results.json"
+    },
+    {
+      "id": "new-york",
+      "country": "US",
+      "continent": "North America",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "Katz's Delicatessen",
+        "latitude": 40.7223431,
+        "longitude": -73.987353,
+        "id": "358916711",
+        "address": "Katz's Delicatessen, 205, East Houston Street, Manhattan Community Board 3, Manhattan, New York County, New York, 10002, United States",
+        "category": "식당",
+        "phone": "+1-212-254-2246",
+        "website": "https://www.katzsdelicatessen.com",
+        "openingHours": "Mo-Th 08:00-22:15; Fr 08:00-24:00; Sa 00:00-24:00; Su 00:00-22:15",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 7361.3,
+      "movingGpsSamples": 744,
+      "drivingWallSeconds": 745.195,
+      "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+      "evidence": "new-york/results.json"
+    },
+    {
+      "id": "auckland",
+      "country": "NZ",
+      "continent": "Oceania",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "SkyCity Auckland",
+        "latitude": -36.8499299,
+        "longitude": 174.7614933,
+        "id": "26077086",
+        "address": "SkyCity Auckland, Wellesley Street West, Victoria Quarter, Wynyard Quarter, City Centre, Auckland, Waitematā, Auckland, 1010, New Zealand",
+        "category": "bus_stop",
+        "phone": "",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 1145.2,
+      "movingGpsSamples": 122,
+      "drivingWallSeconds": 122.191,
+      "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+      "evidence": "auckland/results.json"
+    },
+    {
+      "id": "santiago",
+      "country": "CL",
+      "continent": "South America",
+      "result": "passed",
+      "selectedPlace": {
+        "name": "Cafe Haiti",
+        "latitude": -33.4414466,
+        "longitude": -70.6493627,
+        "id": "1630278",
+        "address": "Cafe Haiti, Estado, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile",
+        "category": "카페",
+        "phone": "",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "routeMeters": 1908.3,
+      "movingGpsSamples": 198,
+      "drivingWallSeconds": 198.311,
+      "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+      "evidence": "santiago/results.json"
+    }
+  ],
+  "passedRoutes": 7,
+  "countries": [
+    "CL",
+    "GB",
+    "JP",
+    "NZ",
+    "PT",
+    "US",
+    "ZA"
+  ],
+  "continents": [
+    "Africa",
+    "Asia",
+    "Europe",
+    "North America",
+    "Oceania",
+    "South America"
+  ]
+}

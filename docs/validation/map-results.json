@@ -26,6 +26,14 @@
       "result": "passed"
     },
     {
+      "name": "localized-only names survive while pronunciation metadata is not a business name",
+      "result": "passed"
+    },
+    {
+      "name": "nearby queries limit named objects and preserve an English-only registered name",
+      "result": "passed"
+    },
+    {
       "name": "motion cancels pending place results and removes map controls",
       "result": "passed"
     },

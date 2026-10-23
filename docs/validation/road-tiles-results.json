@@ -18,6 +18,10 @@
       "result": "passed"
     },
     {
+      "name": "continuous GPS-like map movement cannot postpone a persistent tile failure forever",
+      "result": "passed"
+    },
+    {
       "name": "offline state retains already displayed roads and labels its limitation",
       "result": "passed"
     },

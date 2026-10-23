@@ -1,0 +1,36 @@
+{
+  "scope": "Actual Chromium renderer with fixture roads/places/GPS and aborted tile requests; not a live Fiji route or map-data coverage claim.",
+  "results": [
+    {
+      "name": "navigation east keeps destination and GPS pins on the short date-line route",
+      "result": "failed",
+      "error": "[{\"longitude\":179.999,\"x\":334,\"y\":230,\"visible\":true},{\"longitude\":-179.999,\"x\":-16776788,\"y\":230,\"visible\":false}]"
+    },
+    {
+      "name": "navigation east preserves overlays when the map changes world copy",
+      "result": "failed",
+      "error": "false == true"
+    },
+    {
+      "name": "nearby east displays cafes across the date line and after world-copy panning",
+      "result": "failed",
+      "error": "[{\"longitude\":179.999,\"x\":376,\"y\":205,\"visible\":true},{\"longitude\":-179.999,\"x\":-16776746,\"y\":205,\"visible\":false}]"
+    },
+    {
+      "name": "navigation west keeps destination and GPS pins on the short date-line route",
+      "result": "failed",
+      "error": "[{\"longitude\":-179.999,\"x\":428,\"y\":230,\"visible\":true},{\"longitude\":179.999,\"x\":16777550,\"y\":230,\"visible\":false}]"
+    },
+    {
+      "name": "navigation west preserves overlays when the map changes world copy",
+      "result": "failed",
+      "error": "false == true"
+    },
+    {
+      "name": "nearby west displays cafes across the date line and after world-copy panning",
+      "result": "failed",
+      "error": "[{\"longitude\":-179.999,\"x\":377,\"y\":205,\"visible\":true},{\"longitude\":179.999,\"x\":16777499,\"y\":205,\"visible\":false}]"
+    }
+  ],
+  "pageErrors": []
+}

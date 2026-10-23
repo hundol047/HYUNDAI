@@ -26,6 +26,10 @@
       "result": "passed"
     },
     {
+      "name": "a distant namesake remains searchable but exposes distance and its actual category",
+      "result": "passed"
+    },
+    {
       "name": "missing shops clear old results and offer an explicitly external search",
       "result": "passed"
     },

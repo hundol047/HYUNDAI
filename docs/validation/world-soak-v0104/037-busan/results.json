@@ -1,0 +1,1010 @@
+{
+  "observedAt": "2026-10-23T16:52:09.604Z",
+  "sourceCommit": "572ec98bf23ba41706ba3540d80ed0c85cb343e5",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:52:09.612Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "busan",
+      "label": "부산",
+      "country": "KR",
+      "continent": "Asia",
+      "language": "ko-KR",
+      "start": [
+        35.1631,
+        129.1637
+      ],
+      "end": [
+        35.1557,
+        129.1466
+      ],
+      "query": "스타벅스 해운대",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:52:09.729Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 270171241,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 504638566,
+            "lat": "35.1615894",
+            "lon": "129.1711649",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 좌동순환로, 중동, 중1동, 해운대구, 부산광역시, 48103, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "좌동순환로",
+              "quarter": "중동",
+              "suburb": "중1동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48103",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "http://www.istarbucks.co.kr/index.do",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "building": "yes",
+              "takeaway": "yes",
+              "check_date": "2024-09-09",
+              "payment:jcb": "yes",
+              "payment:visa": "yes",
+              "drive_through": "yes",
+              "payment:coins": "yes",
+              "payment:notes": "yes",
+              "brand:wikidata": "Q37158",
+              "payment:unionpay": "yes",
+              "payment:mastercard": "yes",
+              "payment:diners_club": "yes",
+              "payment:discover_card": "yes",
+              "payment:american_express": "yes"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "35.1614803",
+              "35.1616983",
+              "129.1710609",
+              "129.1712689"
+            ]
+          },
+          {
+            "place_id": 266877582,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9277863043,
+            "lat": "35.1746921",
+            "lon": "129.1266023",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 78, 센텀중앙로, 우2동, 해운대구, 부산광역시, 48059, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "78",
+              "road": "센텀중앙로",
+              "suburb": "우2동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48059",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "phone": "1522-3232",
+              "branch": "센텀그린타워점",
+              "cuisine": "coffee_shop",
+              "website": "https://www.starbucks.co.kr/store/store_map.do",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "opening_hours": "07:00 ~ 22:00",
+              "brand:wikidata": "Q37158",
+              "internet_access": "yes",
+              "outdoor_seating": "no",
+              "internet_access:fee": "customers"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "35.1746421",
+              "35.1747421",
+              "129.1265523",
+              "129.1266523"
+            ]
+          },
+          {
+            "place_id": 267598893,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 5069584621,
+            "lat": "35.1693303",
+            "lon": "129.1762096",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 해운대로, 중동, 좌2동, 해운대구, 부산광역시, 48104, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "해운대로",
+              "quarter": "중동",
+              "suburb": "좌2동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48104",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "http://www.istarbucks.co.kr/index.do",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "payment:jcb": "yes",
+              "payment:visa": "yes",
+              "payment:coins": "yes",
+              "payment:notes": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ko:스타벅스",
+              "payment:unionpay": "yes",
+              "payment:mastercard": "yes",
+              "payment:diners_club": "yes",
+              "payment:discover_card": "yes",
+              "payment:american_express": "yes"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "35.1692803",
+              "35.1693803",
+              "129.1761596",
+              "129.1762596"
+            ]
+          },
+          {
+            "place_id": 269658590,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4526476190,
+            "lat": "35.1717074",
+            "lon": "129.1284077",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 센텀서로, 우2동, 해운대구, 부산광역시, 48058, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "센텀서로",
+              "suburb": "우2동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48058",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "http://www.istarbucks.co.kr/index.do",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "payment:jcb": "yes",
+              "payment:visa": "yes",
+              "payment:coins": "yes",
+              "payment:notes": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks",
+              "payment:unionpay": "yes",
+              "payment:mastercard": "yes",
+              "payment:diners_club": "yes",
+              "payment:discover_card": "yes",
+              "payment:american_express": "yes"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ko": "스타벅스",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "35.1716574",
+              "35.1717574",
+              "129.1283577",
+              "129.1284577"
+            ]
+          },
+          {
+            "place_id": 269750391,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9523055873,
+            "lat": "35.1600424",
+            "lon": "129.1630692",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 1410-26, 해운대해변로, 중1동, 해운대구, 부산광역시, 48099, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "1410-26",
+              "road": "해운대해변로",
+              "suburb": "중1동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48099",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "phone": "1522 3232",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "opening_hours": "Tu-Su 08:00-22:00",
+              "brand:wikidata": "Q37158",
+              "internet_access": "yes",
+              "outdoor_seating": "yes"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "35.1599924",
+              "35.1600924",
+              "129.1630192",
+              "129.1631192"
+            ]
+          },
+          {
+            "place_id": 269754027,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9676341614,
+            "lat": "35.1597195",
+            "lon": "129.1696978",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.220035095745812e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 30, 달맞이길, 중동, 중1동, 해운대구, 부산광역시, 48099, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "30",
+              "road": "달맞이길",
+              "quarter": "중동",
+              "suburb": "중1동",
+              "borough": "해운대구",
+              "city": "부산광역시",
+              "ISO3166-2-lvl4": "KR-26",
+              "postcode": "48099",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "level": "99",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "35.1596695",
+              "35.1597695",
+              "129.1696478",
+              "129.1697478"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. 스타벅스스타벅스, 좌동순환로, 중동, 중1동, 해운대구, 부산광역시, 48103, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 699 m지도에 표시 · 자동차 경로 계산 →",
+          "2. 스타벅스스타벅스, 78, 센텀중앙로, 우2동, 해운대구, 부산광역시, 48059, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 3.6 km전화 1522-3232등록 영업시간 07:00 ~ 22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. 스타벅스스타벅스, 해운대로, 중동, 좌2동, 해운대구, 부산광역시, 48104, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.3 km지도에 표시 · 자동차 경로 계산 →",
+          "4. 스타벅스스타벅스, 센텀서로, 우2동, 해운대구, 부산광역시, 48058, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 3.3 km지도에 표시 · 자동차 경로 계산 →",
+          "5. 스타벅스스타벅스, 1410-26, 해운대해변로, 중1동, 해운대구, 부산광역시, 48099, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 345 m전화 1522 3232등록 영업시간 Tu-Su 08:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "6. 스타벅스스타벅스, 30, 달맞이길, 중동, 중1동, 해운대구, 부산광역시, 48099, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 662 m지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 344.7914774130474
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/28141/12961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28141/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28139/12961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28142/12961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28139/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28142/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28141/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28142/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28139/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%ED%95%B4%EC%9A%B4%EB%8C%80",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/129.1637,35.1631;129.1466,35.1557?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28140/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28139/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28141/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28139/12960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28141/12962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56281/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56281/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56280/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56281/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56280/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56280/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56283/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56281/25921.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56283/25921.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56282/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56283/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56282/25921.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56280/25921.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56282/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25921.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56282/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56276/25922.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112557/51847.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112556/51848.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112555/51848.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112557/51848.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112558/51848.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112556/51847.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112555/51847.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/112558/51847.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56278/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25923.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56277/25924.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56279/25924.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28138/12961.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28138/12960.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28138/12962.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 605,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "유턴 · 중동2로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.061755267943326,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 526.9402964068165,
+          "label": "527m",
+          "timeout": false,
+          "waitMs": 360,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "갈림길에서 오른쪽으로 완만하게 · 중동1로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8445912763771288,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 657.7326670044794,
+          "label": "658m",
+          "timeout": false,
+          "waitMs": 329,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "도로 끝에서 우회전 · 해운대해변로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.3335821377680577,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1315.4653340089587,
+          "label": "1315m",
+          "timeout": false,
+          "waitMs": 301,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "좌회전 · 마린시티3로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8765867570074117,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1973.198001013438,
+          "label": "1973m",
+          "timeout": false,
+          "waitMs": 296,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "좌회전 · 마린시티3로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.946169692058395,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2580.9306680179175,
+          "label": "2581m",
+          "timeout": false,
+          "waitMs": 294,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "목적지 · 마린시티3로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1178754588163657,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2630.9306680179175,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 290,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 20.00205408713645,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2630.9306680179175,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 855,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 20.00205408713645,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2632.7,
+        "geometryMeters": 2630.9306680179175,
+        "durationSeconds": 259.9,
+        "points": 67,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 34.45828171497195,
+            "type": "turn",
+            "modifier": "uturn",
+            "road": "중동2로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 160.02284475584742,
+            "type": "turn",
+            "modifier": "left",
+            "road": "중동1로19번길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 350.24111579789724,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "중동1로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 526.9402964068165,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "중동1로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 667.1664312919347,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "해운대해변로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2279.1759192620707,
+            "type": "turn",
+            "modifier": "left",
+            "road": "마린시티3로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2630.9306680179175,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "마린시티3로",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 19.707103650724292,
+        "destinationSnapMeters": 38.768424578284964
+      },
+      "drivingStartedAt": "2026-10-23T16:52:15.697Z",
+      "drivingWallSeconds": 271.456,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1804.4679779472813,
+        "originReady": false,
+        "destinationAccessMeters": 38.768424578383964,
+        "revision": 4,
+        "destination": "좌표 목적지 35.155700, 129.146600",
+        "remainingMeters": 15.010087679117877,
+        "remainingSeconds": 1.481795034680266,
+        "language": "ko-KR",
+        "instructionLanguage": "ko",
+        "instruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다.",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000001705303,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 35.155814,
+          "longitude": 129.14619700000003,
+          "accuracy": 5,
+          "timestamp": 1792774608556
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 290,
+      "finishedAt": "2026-10-23T16:56:55.710Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 271
+    }
+  ]
+}

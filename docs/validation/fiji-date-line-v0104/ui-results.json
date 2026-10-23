@@ -1,0 +1,140 @@
+{
+  "scope": "Live OSRM and visible OSM tiles, synthetic GPS at Waiyevo. No completed crossing drive.",
+  "responses": [
+    {
+      "url": "https://tile.openstreetmap.org/2/2/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/2/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/1/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/0/2.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/0.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/2/3/1.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/32767/17935.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/32766/17935.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/32767/17934.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/15/32766/17934.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65532/35871.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65534/35871.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65535/35871.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65533/35871.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65532/35872.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65533/35872.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65535/35872.png",
+      "status": 200
+    },
+    {
+      "url": "https://tile.openstreetmap.org/16/65534/35872.png",
+      "status": 200
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/-179.9980874,-16.796193;179.990617,-16.8048744?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 400
+    }
+  ],
+  "notice": "경로 요청을 처리하지 못했습니다 (400). 좌표·도로 연결·서버 주소를 확인하세요.",
+  "nav": {
+    "active": false,
+    "tracking": false,
+    "arrived": false,
+    "hasRoute": false,
+    "gpsReady": true,
+    "gpsAgeSeconds": 0,
+    "gpsAccuracy": 5,
+    "originAccessMeters": 0,
+    "originReady": false,
+    "destinationAccessMeters": 0,
+    "revision": 2,
+    "destination": null,
+    "remainingMeters": 0,
+    "remainingSeconds": 0,
+    "language": "ko-KR",
+    "instructionLanguage": "ko",
+    "instruction": "목적지를 검색해 주세요.",
+    "turnSymbol": "↑",
+    "turnMeters": 0,
+    "offRoute": false,
+    "directionUncertain": false,
+    "status": "전 세계 목적지 검색 · OSM 도로 데이터",
+    "safetyHeld": false,
+    "fix": {
+      "latitude": -16.796193,
+      "longitude": -179.9980874,
+      "accuracy": 5,
+      "timestamp": 1792770948917
+    }
+  },
+  "selectedPinCount": 2,
+  "noFabricatedRoute": true,
+  "result": "provider-no-route"
+}

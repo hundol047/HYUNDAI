@@ -1,0 +1,2 @@
+Map and geospatial data: © OpenStreetMap contributors, ODbL 1.0, https://www.openstreetmap.org/copyright
+Live services: Nominatim, OSRM public routing, OpenStreetMap raster tiles. Captured at the per-case timestamps; not an exhaustive or authoritative catalog.

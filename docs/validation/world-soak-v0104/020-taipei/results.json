@@ -1,0 +1,1072 @@
+{
+  "observedAt": "2026-10-23T15:34:12.324Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:34:12.337Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "taipei",
+      "label": "타이베이",
+      "country": "TW",
+      "continent": "Asia",
+      "language": "zh-TW",
+      "start": [
+        25.0475,
+        121.517
+      ],
+      "end": [
+        25.033,
+        121.529
+      ],
+      "query": "Din Tai Fung Taipei",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:34:12.559Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 230779609,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4114512598,
+            "lat": "25.0410982",
+            "lon": "121.5432301",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 忠孝東路三段, 誠安里, 大安區, 東區商圈, 臺北市, 10654, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "road": "忠孝東路三段",
+              "neighbourhood": "誠安里",
+              "suburb": "大安區",
+              "village": "東區商圈",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "10654",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "phone": "+886 2 8772 0528",
+              "cuisine": "taiwanese",
+              "website": "https://www.dintaifung.com.tw/",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "opening_hours": "Su-Th 10:00-21:30; Fr-Sa 10:00-22:00",
+              "brand:wikidata": "Q699142"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.0410482",
+              "25.0411482",
+              "121.5431801",
+              "121.5432801"
+            ]
+          },
+          {
+            "place_id": 230279614,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2718780533,
+            "lat": "25.0334657",
+            "lon": "121.5645173",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 信義路五段, 西村里, 信義區, 信義商圈, 臺北市, 110615, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "road": "信義路五段",
+              "neighbourhood": "西村里",
+              "suburb": "信義區",
+              "village": "信義商圈",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "110615",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "level": "-1",
+              "cuisine": "taiwanese",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "brand:wikidata": "Q699142"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:ja": "鼎泰豊",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.0334157",
+              "25.0335157",
+              "121.5644673",
+              "121.5645673"
+            ]
+          },
+          {
+            "place_id": 229268757,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4111818890,
+            "lat": "25.0397126",
+            "lon": "121.5663494",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 19, 松高路, 西村里, 信義區, 興雅, 臺北市, 110, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "house_number": "19",
+              "road": "松高路",
+              "neighbourhood": "西村里",
+              "suburb": "信義區",
+              "village": "興雅",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "110",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "phone": "+886 2 2345 2528",
+              "cuisine": "taiwanese",
+              "website": "https://www.dintaifung.com.tw/",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "opening_hours": "Mo-Su 11:00-21:30",
+              "brand:wikidata": "Q699142"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.0396626",
+              "25.0397626",
+              "121.5662994",
+              "121.5663994"
+            ]
+          },
+          {
+            "place_id": 230435490,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2426176904,
+            "lat": "25.0335186",
+            "lon": "121.5301015",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 194, 信義路二段, 福住里, 大安區, 華山, 臺北市, 106, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "house_number": "194",
+              "road": "信義路二段",
+              "neighbourhood": "福住里",
+              "suburb": "大安區",
+              "village": "華山",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "106",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "cuisine": "taiwanese",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "wheelchair": "no",
+              "opening_hours": "Mo-Fr 10:00-21:00; Sa-Su 09:00-21:00",
+              "brand:wikidata": "Q699142",
+              "toilets:wheelchair": "no"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:ja": "鼎泰豐 信義本店",
+              "name:ko": "딘다이펑",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.0334686",
+              "25.0335686",
+              "121.5300515",
+              "121.5301515"
+            ]
+          },
+          {
+            "place_id": 231759983,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4786142617,
+            "lat": "25.1050572",
+            "lon": "121.5244404",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 中山北路六段, 德行里, 士林區, 蘭雅, 臺北市, 111046, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "road": "中山北路六段",
+              "neighbourhood": "德行里",
+              "suburb": "士林區",
+              "village": "蘭雅",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "111046",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "level": "-1",
+              "cuisine": "taiwanese",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "wheelchair": "yes",
+              "brand:wikidata": "Q699142",
+              "toilets:wheelchair": "yes"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.1050072",
+              "25.1051072",
+              "121.5243904",
+              "121.5244904"
+            ]
+          },
+          {
+            "place_id": 230812292,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 7726663785,
+            "lat": "25.0338424",
+            "lon": "121.5320635",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.457007705801507e-05,
+            "addresstype": "amenity",
+            "name": "鼎泰豐",
+            "display_name": "鼎泰豐, 277, 信義路二段, 三愛里, 中正區, 華山, 臺北市, 100, 臺灣",
+            "address": {
+              "amenity": "鼎泰豐",
+              "house_number": "277",
+              "road": "信義路二段",
+              "neighbourhood": "三愛里",
+              "suburb": "中正區",
+              "village": "華山",
+              "city": "臺北市",
+              "ISO3166-2-lvl4": "TW-TPE",
+              "postcode": "100",
+              "country": "臺灣",
+              "country_code": "tw"
+            },
+            "extratags": {
+              "phone": "+886 2-2395-2395",
+              "branch": "新生店",
+              "cuisine": "taiwanese",
+              "brand:en": "Din Tai Fung",
+              "brand:zh": "鼎泰豐",
+              "operator": "鼎泰豐",
+              "branch:en": "Xinsheng",
+              "branch:zh": "新生店",
+              "brand:wikidata": "Q699142",
+              "brand:wikipedia": "zh:鼎泰豐"
+            },
+            "namedetails": {
+              "name": "鼎泰豐",
+              "brand": "鼎泰豐",
+              "name:en": "Din Tai Fung",
+              "name:zh": "鼎泰豐",
+              "name:hak": "Tín-thai-fûng",
+              "name:nan": "Téng-thài-hong",
+              "name:zh-Hans": "鼎泰丰",
+              "name:zh-Hant": "鼎泰豐",
+              "name:zh-hant": "鼎泰豐",
+              "name:nan-Hant": "鼎泰豐",
+              "name:nan-Latn-tailo": "Tíng-thài-hong",
+              "name:nan-Latn-pehoeji": "Téng-thài-hong"
+            },
+            "boundingbox": [
+              "25.0337924",
+              "25.0338924",
+              "121.5320135",
+              "121.5321135"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. 鼎泰豐鼎泰豐, 忠孝東路三段, 誠安里, 大安區, 東區商圈, 臺北市, 10654, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 2.7 km전화 +886 2 8772 0528등록 영업시간 Su-Th 10:00-21:30; Fr-Sa 10:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. 鼎泰豐鼎泰豐, 信義路五段, 西村里, 信義區, 信義商圈, 臺北市, 110615, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 5.0 km지도에 표시 · 자동차 경로 계산 →",
+          "3. 鼎泰豐鼎泰豐, 19, 松高路, 西村里, 信義區, 興雅, 臺北市, 110, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 5.0 km전화 +886 2 2345 2528등록 영업시간 Mo-Su 11:00-21:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "4. 鼎泰豐鼎泰豐, 194, 信義路二段, 福住里, 大安區, 華山, 臺北市, 106, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 2.0 km등록 영업시간 Mo-Fr 10:00-21:00; Sa-Su 09:00-21:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "5. 鼎泰豐鼎泰豐, 中山北路六段, 德行里, 士林區, 蘭雅, 臺北市, 111046, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 6.4 km지도에 표시 · 자동차 경로 계산 →",
+          "6. 鼎泰豐鼎泰豐, 277, 信義路二段, 三愛里, 中正區, 華山, 臺北市, 100, 臺灣식당 · OSM / Nominatim내 위치에서 직선 약 2.1 km전화 +886 2-2395-2395지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 2039.383453570624
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/27444/14027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27444/14028.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27445/14027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27443/14027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27446/14027.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27443/14028.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27445/14028.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27446/14028.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=zh-TW%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Din+Tai+Fung+Taipei",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27444/14026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27443/14026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27446/14026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27445/14026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/121.517,25.0475;121.529,25.033?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13722/7014.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13723/7014.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28055.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54888/28055.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54888/28054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28055.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54888/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54887/28056.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54887/28054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54887/28055.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28054.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28055.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54888/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54888/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54889/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28059.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54893/28057.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109782/56116.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109783/56117.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109784/56117.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109782/56117.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109783/56116.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109784/56116.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109781/56117.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/109781/56116.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54891/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54890/28058.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/54892/28058.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13722/7013.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13723/7013.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13722/7015.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13723/7015.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13721/7014.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13724/7014.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13721/7013.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13724/7013.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13721/7015.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13724/7015.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 638,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · 市民大道一段",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9126630930983981,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 760.7131919981852,
+          "label": "761m",
+          "timeout": false,
+          "waitMs": 353,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · 中山南路",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8791223361372097,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1521.4263839963703,
+          "label": "1521m",
+          "timeout": false,
+          "waitMs": 352,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 4th exit · 信義路一段",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9072365001804357,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2282.1395759945553,
+          "label": "2282m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · 信義路二段",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.3602218148100707,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2992.8527679927406,
+          "label": "2993m",
+          "timeout": false,
+          "waitMs": 322,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · 麗水街",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6126069520117661,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3042.8527679927406,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.56656925329246,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3042.8527679927406,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 777,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.56656925329246,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3040.3,
+        "geometryMeters": 3042.8527679927406,
+        "durationSeconds": 254.7,
+        "points": 122,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "承德路一段",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 115.31183304373562,
+            "type": "turn",
+            "modifier": "right",
+            "road": "市民大道一段",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 535.5764754698638,
+            "type": "turn",
+            "modifier": "right",
+            "road": "中山北路一段",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 805.9012673324488,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "中山南路",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1558.328798877739,
+            "type": "rotary",
+            "modifier": "right",
+            "road": "信義路一段",
+            "drivingSide": "right",
+            "exit": 4
+          },
+          {
+            "atMeters": 1648.346575433962,
+            "type": "exit rotary",
+            "modifier": "right",
+            "road": "信義路一段",
+            "drivingSide": "right",
+            "exit": 4
+          },
+          {
+            "atMeters": 2423.2289988801253,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "信義路二段",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2957.8716725375266,
+            "type": "turn",
+            "modifier": "right",
+            "road": "麗水街",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3042.8527679927406,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "麗水街",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 82.40836229651507,
+        "destinationSnapMeters": 9.181977874979857
+      },
+      "drivingStartedAt": "2026-10-23T15:34:19.218Z",
+      "drivingWallSeconds": 314.688,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2085.114203900966,
+        "originReady": false,
+        "destinationAccessMeters": 9.181977874941483,
+        "revision": 4,
+        "destination": "좌표 목적지 25.033000, 121.529000",
+        "remainingMeters": 19.98322121883187,
+        "remainingSeconds": 1.674086913934966,
+        "language": "zh-TW",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999999698048,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 25.032987,
+          "longitude": 121.52909,
+          "accuracy": 5,
+          "timestamp": 1792769975332
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 333,
+      "finishedAt": "2026-10-23T15:39:42.409Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 314
+    }
+  ]
+}

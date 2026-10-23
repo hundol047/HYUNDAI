@@ -1,0 +1,2 @@
+© OpenStreetMap contributors, ODbL 1.0, https://www.openstreetmap.org/copyright
+Live Nominatim, OSRM and OpenStreetMap viewport tile requests at the recorded timestamps. Not an exhaustive business catalog or physical GPS test.

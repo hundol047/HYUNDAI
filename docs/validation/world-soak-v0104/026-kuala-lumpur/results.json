@@ -1,0 +1,827 @@
+{
+  "observedAt": "2026-10-23T16:01:28.044Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:01:28.050Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "kuala-lumpur",
+      "label": "쿠알라룸푸르",
+      "country": "MY",
+      "continent": "Asia",
+      "language": "ms-MY",
+      "start": [
+        3.147,
+        101.695
+      ],
+      "end": [
+        3.158,
+        101.712
+      ],
+      "query": "Old Town White Coffee Kuala Lumpur",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:01:28.172Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/25640/16096.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25641/16096.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25641/16098.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25639/16098.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25639/16096.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25640/16098.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25641/16097.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25639/16097.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25640/16097.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ms-MY%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Old+Town+White+Coffee+Kuala+Lumpur",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/101.695,3.147;101.712,3.158?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12820/8048.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12820/8047.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51280/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51280/32195.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51280/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32195.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51279/32194.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32195.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51279/32195.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51279/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32195.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51280/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51280/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51281/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32191.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32190.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51285/32190.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51282/32190.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32190.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102568/64385.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102569/64385.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102568/64386.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102566/64386.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102567/64386.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102569/64384.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102569/64386.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102566/64385.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102566/64384.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102567/64384.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102567/64385.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/102568/64384.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32192.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51283/32193.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51284/32193.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12821/8048.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12821/8047.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12820/8049.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12821/8049.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12819/8048.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12822/8048.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12819/8047.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12822/8047.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12819/8049.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12822/8049.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 616,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Jalan Tun H.S. Lee",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.0705435857073244,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1099.7640214582568,
+          "label": "1100m",
+          "timeout": false,
+          "waitMs": 331,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Keep right at the fork · Jalan Munshi Abdullah",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9051338458622106,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1892.592089031853,
+          "label": "1893m",
+          "timeout": false,
+          "waitMs": 309,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Take the ramp on the right · E12: Kuantan, Ampang, Hulu Kelang",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1954388631461694,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2345.3260235311304,
+          "label": "2345m",
+          "timeout": false,
+          "waitMs": 332,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Take the ramp on the left · Kuala Lumpuc City Centre",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.6557297536124786,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3248.1115617926707,
+          "label": "3248m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Take the ramp on the left · Kuala Lumpuc City Centre",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.6718523196390875,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3517.989035296696,
+          "label": "3518m",
+          "timeout": false,
+          "waitMs": 320,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · E12",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1111857154055564,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4640.652047062261,
+          "label": "4641m",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Lorong Kuda",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6887318082334636,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4690.652047062261,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 424,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 19.490247060903997,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4690.652047062261,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 933,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 19.490247060903997,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 4681.6,
+        "geometryMeters": 4690.652047062261,
+        "durationSeconds": 456.1,
+        "points": 188,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Leboh Pasar Besar",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 174.80327839359097,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Jalan Tun H.S. Lee",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 252.87103767155847,
+            "type": "new name",
+            "modifier": "slight left",
+            "road": "Jalan Tun Tan Siew Sin",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 336.3829879857634,
+            "type": "new name",
+            "modifier": "right",
+            "road": "Leboh Ampang",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 660.544170209519,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Jalan Ampang",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 976.2874455234565,
+            "type": "new name",
+            "modifier": "slight left",
+            "road": "Jalan Munshi Abdullah",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1099.7640214582568,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "Jalan Munshi Abdullah",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1557.3635269851527,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Jalan Dang Wangi",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1693.543435668126,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Jalan Raja Abdullah",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1892.592089031853,
+            "type": "on ramp",
+            "modifier": "right",
+            "road": "",
+            "destinations": "E12: Kuantan, Ampang, Hulu Kelang",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2090.193362419374,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Lebuhraya Bertingkat Ampang - Kuala Lumpur",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3248.1115617926707,
+            "type": "off ramp",
+            "modifier": "slight left",
+            "road": "",
+            "destinations": "Kuala Lumpuc City Centre",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3539.901483797212,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "destinations": "E12",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3854.5958582901962,
+            "type": "merge",
+            "modifier": "slight right",
+            "road": "Lebuhraya Bertingkat Ampang - Kuala Lumpur",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4140.722861717713,
+            "type": "off ramp",
+            "modifier": "slight left",
+            "road": "",
+            "destinations": "KLCC",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4270.735549814365,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Lorong Kuda",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4690.652047062261,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Lorong Kuda",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 5.014845426051189,
+        "destinationSnapMeters": 15.824490628672926
+      },
+      "drivingStartedAt": "2026-10-23T16:01:35.449Z",
+      "drivingWallSeconds": 479.054,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2233.5899473144077,
+        "originReady": false,
+        "destinationAccessMeters": 15.824490628162053,
+        "revision": 4,
+        "destination": "좌표 목적지 3.158000, 101.712000",
+        "remainingMeters": 14.971052918857513,
+        "remainingSeconds": 1.458539225113404,
+        "language": "ms-MY",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000004316462,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 3.157866,
+          "longitude": 101.711952,
+          "accuracy": 5,
+          "timestamp": 1792771776079
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 500,
+      "finishedAt": "2026-10-23T16:09:43.372Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 478
+    }
+  ]
+}

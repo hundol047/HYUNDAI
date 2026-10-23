@@ -1,0 +1,616 @@
+{
+  "observedAt": "2026-10-23T16:43:54.403Z",
+  "sourceCommit": "7afb9dd52be1f76374c8b06b1f716effd531a014",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:43:54.410Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "quito",
+      "label": "키토",
+      "country": "EC",
+      "continent": "South America",
+      "language": "es-EC",
+      "start": [
+        -0.219,
+        -78.51
+      ],
+      "end": [
+        -0.208,
+        -78.5
+      ],
+      "query": "Cafe Mosaico Quito",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:43:54.538Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 2987058,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 7057398785,
+            "lat": "-0.2206592",
+            "lon": "-78.5034209",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.236057068737342e-05,
+            "addresstype": "amenity",
+            "name": "Café Mosaico",
+            "display_name": "Café Mosaico, Manuel Samaniego, San Blas, La Tola, Itchimbia, Quito, Distrito Metropolitano de Quito, Pichincha, 170403, Ecuador",
+            "address": {
+              "amenity": "Café Mosaico",
+              "road": "Manuel Samaniego",
+              "neighbourhood": "San Blas",
+              "hamlet": "La Tola",
+              "city_district": "Itchimbia",
+              "city": "Quito",
+              "county": "Distrito Metropolitano de Quito",
+              "state": "Pichincha",
+              "ISO3166-2-lvl4": "EC-P",
+              "postcode": "170403",
+              "country": "Ecuador",
+              "country_code": "ec"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Café Mosaico"
+            },
+            "boundingbox": [
+              "-0.2207092",
+              "-0.2206092",
+              "-78.5034709",
+              "-78.5033709"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Café MosaicoCafé Mosaico, Manuel Samaniego, San Blas, La Tola, Itchimbia, Quito, Distrito Metropolitano de Quito, Pichincha, 170403, Ecuador식당 · OSM / Nominatim내 위치에서 직선 약 754 m지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 754.462815581098
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/9236/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9237/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9237/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9236/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=es-EC%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+Mosaico+Quito",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-78.51,-0.219;-78.5,-0.208?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9237/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9237/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9236/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9236/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9240/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9240/16404.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9240/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18479/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18479/32804.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18479/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32804.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18477/32805.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32804.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18476/32804.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18478/32806.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16402.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9238/16403.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9239/16403.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 330,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Gira a la derecha · Venezuela",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.1557884167033143,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 544.1346161778713,
+          "label": "544m",
+          "timeout": false,
+          "waitMs": 332,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Gira a la izquierda · Montúfar",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.8752856450505406,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 860.6340093910301,
+          "label": "861m",
+          "timeout": false,
+          "waitMs": 317,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Mantente a la izquierda en el cruza · Avenida 10 de Agosto",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 3.8812264056891856,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1088.2692323557426,
+          "label": "1088m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continúa recto · Luis Felipe Borja",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.7314951911371428,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1632.4038485336139,
+          "label": "1632m",
+          "timeout": false,
+          "waitMs": 342,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continúa levemente a la derecha · Avenida 10 de Agosto",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.0813500557967877,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2126.538464711485,
+          "label": "2127m",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Haz un cambio de sentido · Avenida 10 de Agosto",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 4.8302652695561825,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2176.538464711485,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Has llegado a tu destino, en frente",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 23.895921585224006,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2176.538464711485,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 866,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Has llegado a tu destino, en frente",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 23.895921585224006,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2170.3,
+        "geometryMeters": 2176.538464711485,
+        "durationSeconds": 263.3,
+        "points": 101,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Olmedo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 56.424026620328625,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Venezuela",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 337.48524081354833,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Oriente",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 624.3368772960396,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Montúfar",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 803.9052140552577,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "Avenida Pichincha",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 860.6340093910301,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Avenida 10 de Agosto",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1219.1594818153735,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Luis Felipe Borja",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1586.3317965055514,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Estrada",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1646.9466562529485,
+            "type": "new name",
+            "modifier": "slight right",
+            "road": "Avenida 10 de Agosto",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2127.5181229740087,
+            "type": "continue",
+            "modifier": "uturn",
+            "road": "Avenida 10 de Agosto",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2176.538464711485,
+            "type": "arrive",
+            "road": "Avenida 10 de Agosto",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 2.9187255026362533,
+        "destinationSnapMeters": 1.1975992087572735
+      },
+      "drivingStartedAt": "2026-10-23T16:44:00.928Z",
+      "drivingWallSeconds": 226.364,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1655.524925529399,
+        "originReady": false,
+        "destinationAccessMeters": 1.1975992058243667,
+        "revision": 4,
+        "destination": "좌표 목적지 -0.208000, -78.500000",
+        "remainingMeters": 19.942675357028524,
+        "remainingSeconds": 2.4194380599482144,
+        "language": "es-EC",
+        "instructionLanguage": "es",
+        "instruction": "Has llegado a tu destino, en frente",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000001363333,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -0.207996,
+          "longitude": -78.50001000000003,
+          "accuracy": 5,
+          "timestamp": 1792774068718
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 246,
+      "finishedAt": "2026-10-23T16:47:55.896Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 226
+    }
+  ]
+}

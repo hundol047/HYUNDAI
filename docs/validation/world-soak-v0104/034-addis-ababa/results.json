@@ -1,0 +1,669 @@
+{
+  "observedAt": "2026-10-23T16:39:49.255Z",
+  "sourceCommit": "7afb9dd52be1f76374c8b06b1f716effd531a014",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:39:49.262Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "addis-ababa",
+      "label": "아디스아바바",
+      "country": "ET",
+      "continent": "Africa",
+      "language": "en-ET",
+      "start": [
+        9.009,
+        38.754
+      ],
+      "end": [
+        9.02,
+        38.755
+      ],
+      "query": "Tomoca Coffee Addis Ababa",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:39:49.381Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 422371501,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1535018953,
+            "lat": "9.0308980",
+            "lon": "38.7508324",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.150148775458942e-05,
+            "addresstype": "amenity",
+            "name": "Tomoca Coffee",
+            "display_name": "Tomoca Coffee, 858/3, Wawel Street, Doro Manekiya, Somale Tera, Addis Ababa, Arada, Addis Ababa, 3658, Ethiopia",
+            "address": {
+              "amenity": "Tomoca Coffee",
+              "house_number": "858/3",
+              "road": "Wawel Street",
+              "neighbourhood": "Doro Manekiya",
+              "suburb": "Somale Tera",
+              "city": "Addis Ababa",
+              "county": "Arada",
+              "state_district": "Addis Ababa",
+              "state": "Addis Ababa",
+              "ISO3166-2-lvl4": "ET-AA",
+              "postcode": "3658",
+              "country": "Ethiopia",
+              "country_code": "et"
+            },
+            "extratags": {
+              "owner": "Wedsen Zewdu",
+              "building": "yes",
+              "start_date": "1953",
+              "description": "First Tomoca Coffee",
+              "contact:phone": "+251 111112498"
+            },
+            "namedetails": {
+              "name": "Tomoca Coffee",
+              "name:am": "ቶሞካ ቡና",
+              "name:en": "Tomoca Coffee",
+              "name:es": "Café Tomoca",
+              "alt_name": "TO.MO.CA"
+            },
+            "boundingbox": [
+              "9.0308118",
+              "9.0310125",
+              "38.7507445",
+              "38.7509343"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Tomoca CoffeeTomoca Coffee, 858/3, Wawel Street, Doro Manekiya, Somale Tera, Addis Ababa, Arada, Addis Ababa, 3658, Ethiopia카페 · OSM / Nominatim내 위치에서 직선 약 2.5 km전화 +251 111112498지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 2459.6696574134394
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/19911/15560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19909/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19910/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19910/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19911/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19912/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19909/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19909/15560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19910/15560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19912/15560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19912/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19911/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-ET%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Tomoca+Coffee+Addis+Ababa",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/38.754,9.009;38.755,9.02?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19911/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19913/15560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19913/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19912/15561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19913/15559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31122.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31122.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31122.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31122.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39824/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39821/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79647/62237.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79645/62237.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79646/62237.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79645/62239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79645/62238.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79646/62238.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79647/62239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79647/62238.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/79646/62239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39822/31119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/39823/31119.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 330,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Make a U-turn",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5601861769298804,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 548.8551047144787,
+          "label": "549m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Gambia Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8366673683229627,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1097.7102094289573,
+          "label": "1098m",
+          "timeout": false,
+          "waitMs": 342,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Yohanes Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7126789021001707,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1646.565314143436,
+          "label": "1647m",
+          "timeout": false,
+          "waitMs": 340,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Taitu Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1403392900452272,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2023.8376811707858,
+          "label": "2024m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 4th exit · Taitu Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5173015223038421,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2145.4204188579147,
+          "label": "2145m",
+          "timeout": false,
+          "waitMs": 413,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Taitu Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1058057366151501,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2195.4204188579147,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 324,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 86 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 26.032721191778897,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2195.4204188579147,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 855,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 86 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 26.032721191778897,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2188.4,
+        "geometryMeters": 2195.4204188579147,
+        "durationSeconds": 174.7,
+        "points": 85,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 191.25020252150293,
+            "type": "continue",
+            "modifier": "uturn",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 756.2533438983199,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Gambia Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1363.3740800511912,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Yohanes Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1547.6207066497595,
+            "type": "turn",
+            "modifier": "sharp left",
+            "road": "Ras Desta Damtew Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1690.8253493789298,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Taitu Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2023.8376811707858,
+            "type": "roundabout",
+            "modifier": "right",
+            "road": "Taitu Street",
+            "drivingSide": "right",
+            "exit": 4
+          },
+          {
+            "atMeters": 2087.90542925932,
+            "type": "exit roundabout",
+            "modifier": "right",
+            "road": "Taitu Street",
+            "drivingSide": "right",
+            "exit": 4
+          },
+          {
+            "atMeters": 2195.4204188579147,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Taitu Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 15.30586862163645,
+        "destinationSnapMeters": 86.58920443668619
+      },
+      "drivingStartedAt": "2026-10-23T16:39:55.107Z",
+      "drivingWallSeconds": 227.825,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1157.9958902328142,
+        "originReady": false,
+        "destinationAccessMeters": 86.58920444017595,
+        "revision": 4,
+        "destination": "좌표 목적지 9.020000, 38.755000",
+        "remainingMeters": 19.936044888619953,
+        "remainingSeconds": 1.5914947185349595,
+        "language": "en-ET",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 86 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000009291398,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 9.019346,
+          "longitude": 38.75542799999994,
+          "accuracy": 5,
+          "timestamp": 1792773824371
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 246,
+      "finishedAt": "2026-10-23T16:43:51.507Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 227
+    }
+  ]
+}

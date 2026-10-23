@@ -1,0 +1,908 @@
+{
+  "observedAt": "2026-10-23T15:12:36.709Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:12:36.724Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "san-francisco",
+      "label": "샌프란시스코",
+      "country": "US",
+      "continent": "North America",
+      "language": "en-US",
+      "start": [
+        37.802,
+        -122.418
+      ],
+      "end": [
+        37.79,
+        -122.407
+      ],
+      "query": "Blue Bottle Coffee San Francisco",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:12:37.023Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 323734664,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1189071437,
+            "lat": "37.7960029",
+            "lon": "-122.3938436",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 1, Ferry Building, San Francisco, California, 94111, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "1",
+              "locality": "Ferry Building",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94111",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "level": "0",
+              "indoor": "room",
+              "cuisine": "coffee_shop",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "takeaway": "yes",
+              "check_date": "2024-03-02",
+              "wheelchair": "yes",
+              "payment:cash": "yes",
+              "brand:wikidata": "Q4928917",
+              "outdoor_seating": "no",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7959369",
+              "37.7960576",
+              "-122.3938977",
+              "-122.3937895"
+            ]
+          },
+          {
+            "place_id": 322766175,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 1246390510,
+            "lat": "37.7897410",
+            "lon": "-122.4037025",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 199, Sutter Street, Union Square, Financial District, San Francisco, California, 94104, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "199",
+              "road": "Sutter Street",
+              "neighbourhood": "Union Square",
+              "quarter": "Financial District",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94104",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "website": "https://bluebottlecoffee.com/cafes/sutter-street",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "takeaway": "yes",
+              "wheelchair": "yes",
+              "opening_hours": "Mo-Su 06:30-17:30",
+              "brand:wikidata": "Q4928917",
+              "opening_hours:url": "https://bluebottlecoffee.com/cafes/sutter-street"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7896910",
+              "37.7897910",
+              "-122.4037525",
+              "-122.4036525"
+            ]
+          },
+          {
+            "place_id": 323362942,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2411698457,
+            "lat": "37.7763144",
+            "lon": "-122.4232552",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 315, Linden Street, Hayes Valley, Western Addition, San Francisco, California, 94102, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "315",
+              "road": "Linden Street",
+              "neighbourhood": "Hayes Valley",
+              "suburb": "Western Addition",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94102",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "takeaway": "yes",
+              "check_date": "2025-03-16",
+              "brand:wikidata": "Q4928917",
+              "internet_access": "no"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7762644",
+              "37.7763644",
+              "-122.4233052",
+              "-122.4232052"
+            ]
+          },
+          {
+            "place_id": 323166574,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9897737049,
+            "lat": "37.7871903",
+            "lon": "-122.4037010",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 705, Market Street, South of Market, Financial District, San Francisco, California, 94108, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "705",
+              "road": "Market Street",
+              "neighbourhood": "South of Market",
+              "quarter": "Financial District",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94108",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "takeaway": "yes",
+              "check_date": "2024-06-15",
+              "opening_hours": "06:30-17:30",
+              "brand:wikidata": "Q4928917",
+              "indoor_seating": "yes",
+              "outdoor_seating": "yes"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7871403",
+              "37.7872403",
+              "-122.4037510",
+              "-122.4036510"
+            ]
+          },
+          {
+            "place_id": 323442245,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10897941851,
+            "lat": "37.7711067",
+            "lon": "-122.3910720",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 1385, 4th Street, Mission Bay, San Francisco, California, 94158, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "1385",
+              "road": "4th Street",
+              "quarter": "Mission Bay",
+              "suburb": "Mission Bay",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94158",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "takeaway": "yes",
+              "check_date": "2026-08-01",
+              "opening_hours": "Mo-Su 06:30-17:30",
+              "brand:wikidata": "Q4928917",
+              "check_date:opening_hours": "2026-08-01"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7710567",
+              "37.7711567",
+              "-122.3911220",
+              "-122.3910220"
+            ]
+          },
+          {
+            "place_id": 323930550,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4862634093,
+            "lat": "37.7824865",
+            "lon": "-122.3931170",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.251392385743523e-05,
+            "addresstype": "amenity",
+            "name": "Blue Bottle Coffee",
+            "display_name": "Blue Bottle Coffee, 2, South Park, South Beach, San Francisco, California, 94017, United States",
+            "address": {
+              "amenity": "Blue Bottle Coffee",
+              "house_number": "2",
+              "road": "South Park",
+              "neighbourhood": "South Beach",
+              "city": "San Francisco",
+              "state": "California",
+              "ISO3166-2-lvl4": "US-CA",
+              "postcode": "94017",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "brand:en": "Blue Bottle Coffee",
+              "brand:ja": "ブルーボトルコーヒー",
+              "delivery": "no",
+              "operator": "Blue Bottle",
+              "takeaway": "yes",
+              "check_date": "2026-04-26",
+              "opening_hours": "Mo-Fr 06:00-18:00; Sa-Su 06:30-18:00",
+              "brand:wikidata": "Q4928917",
+              "internet_access": "yes"
+            },
+            "namedetails": {
+              "name": "Blue Bottle Coffee",
+              "brand": "Blue Bottle Coffee",
+              "name:en": "Blue Bottle Coffee",
+              "name:ja": "ブルーボトルコーヒー"
+            },
+            "boundingbox": [
+              "37.7824365",
+              "37.7825365",
+              "-122.3931670",
+              "-122.3930670"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Blue Bottle CoffeeBlue Bottle Coffee, 1, Ferry Building, San Francisco, California, 94111, United States카페 · OSM / Nominatim내 위치에서 직선 약 2.2 km지도에 표시 · 자동차 경로 계산 →",
+          "2. Blue Bottle CoffeeBlue Bottle Coffee, 199, Sutter Street, Union Square, Financial District, San Francisco, California, 94104, United States카페 · OSM / Nominatim내 위치에서 직선 약 1.9 km등록 영업시간 Mo-Su 06:30-17:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. Blue Bottle CoffeeBlue Bottle Coffee, 315, Linden Street, Hayes Valley, Western Addition, San Francisco, California, 94102, United States카페 · OSM / Nominatim내 위치에서 직선 약 2.9 km지도에 표시 · 자동차 경로 계산 →",
+          "4. Blue Bottle CoffeeBlue Bottle Coffee, 705, Market Street, South of Market, Financial District, San Francisco, California, 94108, United States카페 · OSM / Nominatim내 위치에서 직선 약 2.1 km등록 영업시간 06:30-17:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "5. Blue Bottle CoffeeBlue Bottle Coffee, 1385, 4th Street, Mission Bay, San Francisco, California, 94158, United States카페 · OSM / Nominatim내 위치에서 직선 약 4.2 km등록 영업시간 Mo-Su 06:30-17:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "6. Blue Bottle CoffeeBlue Bottle Coffee, 2, South Park, South Beach, San Francisco, California, 94017, United States카페 · OSM / Nominatim내 위치에서 직선 약 3.1 km등록 영업시간 Mo-Fr 06:00-18:00; Sa-Su 06:30-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1853.7398570838786
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-US%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Blue+Bottle+Coffee+San+Francisco",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-122.418,37.802;-122.407,37.79?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5243/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5243/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5239/12662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5243/12661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5243/12664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5240/12664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10482/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10484/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10483/25326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10485/25327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5241/12663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5242/12663.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 826,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Union Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.479951967298536,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 550.5570012429556,
+          "label": "551m",
+          "timeout": false,
+          "waitMs": 882,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Taylor Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.1675538882491445,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1101.1140024859112,
+          "label": "1101m",
+          "timeout": false,
+          "waitMs": 339,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · Clay Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2871092333567205,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1651.6710037288667,
+          "label": "1652m",
+          "timeout": false,
+          "waitMs": 746,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Stockton Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4601346484905076,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2152.2280049718224,
+          "label": "2152m",
+          "timeout": false,
+          "waitMs": 960,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Stockton Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.313869928029955,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2202.2280049718224,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 940,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 25.769852412879846,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2202.2280049718224,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 888,
+          "visible": 16,
+          "decoded": 16,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 25.769852412879846,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2201.6,
+        "geometryMeters": 2202.2280049718224,
+        "durationSeconds": 264.6,
+        "points": 107,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Leavenworth Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 292.0661967108029,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Union Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 584.9321069856144,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Taylor Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1304.4145669175914,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Clay Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1743.262735661485,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Stockton Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2202.2280049718224,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Stockton Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 4.981283919651012,
+        "destinationSnapMeters": 8.089460400884168
+      },
+      "drivingStartedAt": "2026-10-23T15:12:46.169Z",
+      "drivingWallSeconds": 230.662,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1641.6995728352458,
+        "originReady": false,
+        "destinationAccessMeters": 8.08946040096282,
+        "revision": 4,
+        "destination": "좌표 목적지 37.790000, -122.407000",
+        "remainingMeters": 19.994296639152694,
+        "remainingSeconds": 2.403020935101655,
+        "language": "en-US",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999999272404,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 37.789989,
+          "longitude": -122.407091,
+          "accuracy": 5,
+          "timestamp": 1792768598907
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 250,
+      "finishedAt": "2026-10-23T15:16:46.673Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 230
+    }
+  ]
+}

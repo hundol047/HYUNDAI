@@ -1,0 +1,721 @@
+{
+  "observedAt": "2026-10-23T15:23:36.864Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:23:36.872Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "lima",
+      "label": "리마",
+      "country": "PE",
+      "continent": "South America",
+      "language": "es-PE",
+      "start": [
+        -12.12,
+        -77.036
+      ],
+      "end": [
+        -12.13,
+        -77.029
+      ],
+      "query": "La Lucha Sangucheria Miraflores",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:23:37.033Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 3639457,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 1427327355,
+            "lat": "-12.1207589",
+            "lon": "-77.0302869",
+            "category": "amenity",
+            "type": "fast_food",
+            "place_rank": 30,
+            "importance": 7.730144197752372e-05,
+            "addresstype": "amenity",
+            "name": "La Lucha Sangucheria",
+            "display_name": "La Lucha Sangucheria, 308, Avenida Diagonal, Miraflores, Lima, Lima Metropolitana, Lima, 15074, Perú",
+            "address": {
+              "amenity": "La Lucha Sangucheria",
+              "house_number": "308",
+              "road": "Avenida Diagonal",
+              "suburb": "Miraflores",
+              "city": "Miraflores",
+              "region": "Lima",
+              "ISO3166-2-lvl6": "PE-LMA",
+              "state_district": "Lima Metropolitana",
+              "state": "Lima",
+              "ISO3166-2-lvl4": "PE-LIM",
+              "postcode": "15074",
+              "country": "Perú",
+              "country_code": "pe"
+            },
+            "extratags": {
+              "cuisine": "burger",
+              "website": "https://lalucha.com.pe/",
+              "operator": "Lucha Partners",
+              "check_date": "2024-11-12",
+              "wheelchair": "limited",
+              "opening_hours": "Mo-Th 08:00-01:00; Fr-Su 08:00-03:00",
+              "outdoor_seating": "yes",
+              "toilets:wheelchair": "no"
+            },
+            "namedetails": {
+              "name": "La Lucha Sangucheria"
+            },
+            "boundingbox": [
+              "-12.1208089",
+              "-12.1207089",
+              "-77.0303369",
+              "-77.0302369"
+            ]
+          },
+          {
+            "place_id": 3633042,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4853892922,
+            "lat": "-12.1323639",
+            "lon": "-77.0299763",
+            "category": "amenity",
+            "type": "fast_food",
+            "place_rank": 30,
+            "importance": 7.730144197752372e-05,
+            "addresstype": "amenity",
+            "name": "La Lucha Sangucheria",
+            "display_name": "La Lucha Sangucheria, 610, Malecón de la Reserva, Armendáriz, Miraflores, Lima, Lima Metropolitana, Lima, 15074, Perú",
+            "address": {
+              "amenity": "La Lucha Sangucheria",
+              "house_number": "610",
+              "road": "Malecón de la Reserva",
+              "neighbourhood": "Armendáriz",
+              "suburb": "Miraflores",
+              "city": "Miraflores",
+              "region": "Lima",
+              "ISO3166-2-lvl6": "PE-LMA",
+              "state_district": "Lima Metropolitana",
+              "state": "Lima",
+              "ISO3166-2-lvl4": "PE-LIM",
+              "postcode": "15074",
+              "country": "Perú",
+              "country_code": "pe"
+            },
+            "extratags": {
+              "level": "-2",
+              "cuisine": "peruvian",
+              "takeaway": "yes",
+              "wheelchair": "yes",
+              "opening_hours": "Mo-Su 11:00-22:00",
+              "brand:wikidata": "Q111903592",
+              "toilets:wheelchair": "no"
+            },
+            "namedetails": {
+              "name": "La Lucha Sangucheria Criolla",
+              "brand": "La Lucha Sangucheria Criolla",
+              "name:es": "La Lucha Sangucheria",
+              "alt_name": "La Lucha"
+            },
+            "boundingbox": [
+              "-12.1324139",
+              "-12.1323139",
+              "-77.0300263",
+              "-77.0299263"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. La Lucha SangucheriaLa Lucha Sangucheria, 308, Avenida Diagonal, Miraflores, Lima, Lima Metropolitana, Lima, 15074, Perú간편식 · OSM / Nominatim내 위치에서 직선 약 627 m등록 영업시간 Mo-Th 08:00-01:00; Fr-Su 08:00-03:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. La Lucha SangucheriaLa Lucha Sangucheria, 610, Malecón de la Reserva, Armendáriz, Miraflores, Lima, Lima Metropolitana, Lima, 15074, Perú간편식 · OSM / Nominatim내 위치에서 직선 약 1.5 km등록 영업시간 Mo-Su 11:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 626.8130093693339
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=es-PE%2Cen&namedetails=1&addressdetails=1&extratags=1&q=La+Lucha+Sangucheria+Miraflores",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18743/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18743/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-77.036,-12.12;-77.029,-12.13?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9374/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9374/17494.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9374/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17497.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17497.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9370/17497.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17497.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9374/17497.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18743/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18743/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34991.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34991.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18743/34991.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34991.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17495.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9371/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9373/17496.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9372/17495.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34993.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18746/34992.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18745/34993.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34993.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/18744/34992.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 522,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a la derecha · Avenida José Pardo",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.562340779011531,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 589.8085092380466,
+          "label": "590m",
+          "timeout": false,
+          "waitMs": 422,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a la derecha · Calle Mártìr José Olaya",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 4.855738380266579,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1179.617018476093,
+          "label": "1180m",
+          "timeout": false,
+          "waitMs": 320,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Mantente a la izquierda en el cruza · Malecón 28 de Julio",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 3.528567877558304,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1769.4255277141397,
+          "label": "1769m",
+          "timeout": false,
+          "waitMs": 310,
+          "visible": 6,
+          "decoded": 6,
+          "instruction": "Gira a la derecha · Calle Cristóbal Colón",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 4.237452634416929,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2309.234036952186,
+          "label": "2309m",
+          "timeout": false,
+          "waitMs": 325,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destino · Calle Los Dalias",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.796274273296586,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2359.234036952186,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Has llegado a tu destino, en frente",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 22.89995228192127,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2359.234036952186,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1196,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Has llegado a tu destino, en frente",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 22.89995228192127,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2355.3,
+        "geometryMeters": 2359.234036952186,
+        "durationSeconds": 288.9,
+        "points": 76,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Calle Bolognesi",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 98.86989224708654,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenida José Pardo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 700.2144101183461,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Calle Mártìr José Olaya",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 884.8635277834105,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenida Diagonal",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1179.7576884164287,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Malecón 28 de Julio",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1243.5359238308392,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Malecón 28 de Julio",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1496.1660840947245,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Avenida 28 de Julio",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1771.5152601532757,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Calle Cristóbal Colón",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1969.560032495439,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Calle José Gonzales",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2244.406519710941,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Calle Los Dalias",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2359.234036952186,
+            "type": "arrive",
+            "road": "Calle Los Dalias",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 16.745647291641657,
+        "destinationSnapMeters": 0.869698527905703
+      },
+      "drivingStartedAt": "2026-10-23T15:23:43.599Z",
+      "drivingWallSeconds": 242.387,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1338.2471486323627,
+        "originReady": false,
+        "destinationAccessMeters": 0.8696985263608082,
+        "revision": 4,
+        "destination": "좌표 목적지 -12.130000, -77.029000",
+        "remainingMeters": 19.9666498795644,
+        "remainingSeconds": 2.4490999661215787,
+        "language": "es-PE",
+        "instructionLanguage": "es",
+        "instruction": "Has llegado a tu destino, en frente",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999974625,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -12.13,
+          "longitude": -77.028992,
+          "accuracy": 5,
+          "timestamp": 1792769267404
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 262,
+      "finishedAt": "2026-10-23T15:27:56.392Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 242
+    }
+  ]
+}

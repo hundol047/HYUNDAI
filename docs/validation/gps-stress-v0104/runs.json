@@ -1,0 +1,22 @@
+[
+  {
+    "name": "course",
+    "exitCode": 0,
+    "seconds": 200.47
+  },
+  {
+    "name": "no-course",
+    "exitCode": 0,
+    "seconds": 201.54
+  },
+  {
+    "name": "no-motion-metadata-stop",
+    "exitCode": 0,
+    "seconds": 200.52
+  },
+  {
+    "name": "varied",
+    "exitCode": 0,
+    "seconds": 32.5
+  }
+]

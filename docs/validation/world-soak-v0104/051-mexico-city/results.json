@@ -1,0 +1,475 @@
+{
+  "observedAt": "2026-10-23T18:25:23.020Z",
+  "sourceCommit": "4707be392a81dc881a908f82e1202b9927ee84d8",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T18:25:23.032Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "mexico-city",
+      "label": "멕시코시티",
+      "country": "MX",
+      "continent": "North America",
+      "language": "es-MX",
+      "start": [
+        19.4326,
+        -99.1332
+      ],
+      "end": [
+        19.427,
+        -99.161
+      ],
+      "query": "Cafe de Tacuba Ciudad de Mexico",
+      "result": "deadline-incomplete",
+      "startedAt": "2026-10-23T18:25:23.163Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 311108374,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4181864727,
+            "lat": "19.4357184",
+            "lon": "-99.1376076",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 9.399328603031995e-05,
+            "addresstype": "amenity",
+            "name": "Café de Tacuba",
+            "display_name": "Café de Tacuba, 28, Calle Tacuba, Centro, Ciudad de México, Cuauhtémoc, Ciudad de México, 06010, México",
+            "address": {
+              "amenity": "Café de Tacuba",
+              "house_number": "28",
+              "road": "Calle Tacuba",
+              "neighbourhood": "Centro",
+              "city": "Ciudad de México",
+              "borough": "Cuauhtémoc",
+              "state": "Ciudad de México",
+              "ISO3166-2-lvl4": "MX-CMX",
+              "postcode": "06010",
+              "country": "México",
+              "country_code": "mx"
+            },
+            "extratags": {
+              "phone": "+52 55 55212048",
+              "cuisine": "regional",
+              "website": "https://cafedetacuba.mx/",
+              "opening_hours": "08:00-23:30",
+              "internet_access": "no"
+            },
+            "namedetails": {
+              "name": "Café de Tacuba"
+            },
+            "boundingbox": [
+              "19.4356684",
+              "19.4357684",
+              "-99.1376576",
+              "-99.1375576"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Café de TacubaCafé de Tacuba, 28, Calle Tacuba, Centro, Ciudad de México, Cuauhtémoc, Ciudad de México, 06010, México카페 · OSM / Nominatim내 위치에서 직선 약 578 m전화 +52 55 55212048등록 영업시간 08:00-23:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 577.7932740310455
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/7359/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7360/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7362/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7361/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7361/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7360/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7360/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7361/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7359/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7362/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7362/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7359/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=es-MX%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+de+Tacuba+Ciudad+de+Mexico",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14716/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14715/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14716/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14715/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14714/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14717/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14715/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14714/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14716/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14714/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14717/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14717/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-99.1332,19.4326;-99.161,19.427?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7358/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7358/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7359/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7360/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7358/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7357/14580.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7357/14579.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/7357/14581.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14719/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14718/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14719/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14718/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14720/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14718/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14719/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14720/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14720/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14717/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14717/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14722/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14721/29160.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14720/29159.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14719/29159.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14722/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14721/29161.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14721/29159.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14722/29159.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14721/29162.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/14722/29162.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 571,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a la derecha · Avenida José María Pino Suárez",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6443741919844461,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3965,
+        "geometryMeters": 3964.922662454948,
+        "durationSeconds": 465.5,
+        "points": 94,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Plaza de la Constitución",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 90.2812033612906,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenida José María Pino Suárez",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 115.52945885679037,
+            "type": "continue",
+            "modifier": "slight right",
+            "road": "Avenida José María Pino Suárez",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 758.2696502977619,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenida José María Izazaga",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1706.6140656687219,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Avenida Arcos de Belén",
+            "destinations": "Zona Rosa, Plaza de la Ciudadela",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2428.844895665064,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Avenida Chapultepec",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3545.503247645188,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "Avenida Chapultepec",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3652.61033945551,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Calle Havre",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3925.5949865220973,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Calle Londres",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3964.922662454948,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Calle Londres",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 67.30078481418,
+        "destinationSnapMeters": 11.939488604633956
+      },
+      "drivingStartedAt": "2026-10-23T18:25:29.454Z",
+      "drivingWallSeconds": 39.062,
+      "failure": "Configured wall-clock audit deadline reached; route intentionally incomplete",
+      "failureStack": "Error: Configured wall-clock audit deadline reached; route intentionally incomplete\n    at /workspace/HYUNDAI/scripts/web/verify-world-drive-live.cjs:79:39",
+      "notice": "GPS 주행 안내를 시작했습니다.",
+      "gpsCallbacks": 45,
+      "finishedAt": "2026-10-23T18:26:08.799Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 39
+    }
+  ]
+}

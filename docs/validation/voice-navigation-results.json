@@ -50,6 +50,10 @@
       "result": "passed"
     },
     {
+      "name": "ambiguous opposing roads hold arrows and speech until precise GPS course returns",
+      "result": "passed"
+    },
+    {
       "name": "microphone has a bounded 30 second session",
       "result": "passed"
     },

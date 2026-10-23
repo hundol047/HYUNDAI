@@ -1,0 +1,318 @@
+{
+  "type": "Offline shared production JS tracker replay of captured live-provider geometry and all original synthetic 1Hz positions. No new provider or map-rendering claim.",
+  "observedAt": "2026-10-23T18:17:20.542Z",
+  "expectedCases": 26,
+  "harnessSha256": "4dd7fc2e4a91fdad3d385e7237f0e48cae539a0d0d58ed3299358c29c2630c87",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "cases": [
+    {
+      "id": "busan",
+      "result": "passed",
+      "samples": 529,
+      "finalLegSamples": 64,
+      "maxProgressDeltaMeters": 5.003362554942463,
+      "maxPreArrivalDeltaMeters": 1.034209162753541e-8,
+      "upcomingInstructions": [
+        "목적지 · 마린시티3로"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다."
+    },
+    {
+      "id": "daegu",
+      "result": "passed",
+      "samples": 304,
+      "finalLegSamples": 14,
+      "maxProgressDeltaMeters": 4.990726807028906,
+      "maxPreArrivalDeltaMeters": 9.913946996675804e-9,
+      "upcomingInstructions": [
+        "목적지 · 대봉로43안길"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다."
+    },
+    {
+      "id": "daejeon",
+      "result": "passed",
+      "samples": 1108,
+      "finalLegSamples": 9,
+      "maxProgressDeltaMeters": 5.002391448049956,
+      "maxPreArrivalDeltaMeters": 1.018725015455857e-8,
+      "upcomingInstructions": [
+        "목적지 · 중교로73번길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "jeju",
+      "result": "passed",
+      "samples": 883,
+      "finalLegSamples": 7,
+      "maxProgressDeltaMeters": 5.003644914865367,
+      "maxPreArrivalDeltaMeters": 1.0548774298513308e-8,
+      "upcomingInstructions": [
+        "목적지 · 중앙로13길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "tokyo",
+      "result": "passed",
+      "samples": 244,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 4.992743101596091,
+      "maxPreArrivalDeltaMeters": 1.0255007509840652e-8,
+      "upcomingInstructions": [
+        "目的地 · 道玄坂"
+      ],
+      "arrivalInstruction": "目的地に到着しました。目的地は前方です"
+    },
+    {
+      "id": "beijing",
+      "result": "passed",
+      "samples": 1036,
+      "finalLegSamples": 20,
+      "maxProgressDeltaMeters": 5.004985422415096,
+      "maxPreArrivalDeltaMeters": 9.70612745732069e-9,
+      "upcomingInstructions": [
+        "目的地"
+      ],
+      "arrivalInstruction": "您已经到达您的个目的地，目的地在您正前方"
+    },
+    {
+      "id": "singapore",
+      "result": "passed",
+      "samples": 896,
+      "finalLegSamples": 5,
+      "maxProgressDeltaMeters": 4.990259771159945,
+      "maxPreArrivalDeltaMeters": 1.2606051313923672e-8,
+      "upcomingInstructions": [
+        "Destination · Flint Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 40 m"
+    },
+    {
+      "id": "bangkok",
+      "result": "passed",
+      "samples": 828,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 5.001438147436531,
+      "maxPreArrivalDeltaMeters": 1.2280452210688964e-8,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "delhi",
+      "result": "passed",
+      "samples": 1004,
+      "finalLegSamples": 25,
+      "maxProgressDeltaMeters": 4.997139764049393,
+      "maxPreArrivalDeltaMeters": 1.1084011930506676e-8,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 227 m"
+    },
+    {
+      "id": "dubai",
+      "result": "passed",
+      "samples": 656,
+      "finalLegSamples": 70,
+      "maxProgressDeltaMeters": 4.993872194937241,
+      "maxPreArrivalDeltaMeters": 1.1424248214098043e-8,
+      "upcomingInstructions": [
+        "الوجهة"
+      ],
+      "arrivalInstruction": "نهاية مسار السيارة · الوجهة: ≈ 43 m"
+    },
+    {
+      "id": "istanbul",
+      "result": "passed",
+      "samples": 1012,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 5.001870772331678,
+      "maxPreArrivalDeltaMeters": 9.54150891629979e-9,
+      "upcomingInstructions": [
+        "Varış noktası · Sıraselviler Caddesi"
+      ],
+      "arrivalInstruction": " hedefinize ulaştınız, hedefiniz karşınızdadır"
+    },
+    {
+      "id": "london",
+      "result": "passed",
+      "samples": 464,
+      "finalLegSamples": 49,
+      "maxProgressDeltaMeters": 5.0106179278073135,
+      "maxPreArrivalDeltaMeters": 7.878952601458877e-9,
+      "upcomingInstructions": [
+        "Destination · Davies Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "berlin",
+      "result": "passed",
+      "samples": 484,
+      "finalLegSamples": 8,
+      "maxProgressDeltaMeters": 5.013480831976064,
+      "maxPreArrivalDeltaMeters": 7.678181646042503e-9,
+      "upcomingInstructions": [
+        "Ziel"
+      ],
+      "arrivalInstruction": "Endpunkt der Fahrtroute · Ziel: ≈ 61 m"
+    },
+    {
+      "id": "nairobi",
+      "result": "passed",
+      "samples": 528,
+      "finalLegSamples": 31,
+      "maxProgressDeltaMeters": 4.983619459322906,
+      "maxPreArrivalDeltaMeters": 1.1321844795020297e-8,
+      "upcomingInstructions": [
+        "Destination · Chiromo Road"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "cape-town",
+      "result": "passed",
+      "samples": 651,
+      "finalLegSamples": 26,
+      "maxProgressDeltaMeters": 4.998823729441751,
+      "maxPreArrivalDeltaMeters": 1.0488292900845408e-8,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 32 m"
+    },
+    {
+      "id": "new-york",
+      "result": "passed",
+      "samples": 732,
+      "finalLegSamples": 5,
+      "maxProgressDeltaMeters": 5.000907834882604,
+      "maxPreArrivalDeltaMeters": 8.433431730736629e-9,
+      "upcomingInstructions": [
+        "Destination · Union Square East"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "toronto",
+      "result": "passed",
+      "samples": 424,
+      "finalLegSamples": 28,
+      "maxProgressDeltaMeters": 5.000099465746635,
+      "maxPreArrivalDeltaMeters": 9.142866019828944e-9,
+      "upcomingInstructions": [
+        "Destination · Freeland Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 52 m"
+    },
+    {
+      "id": "mexico-city",
+      "result": "passed",
+      "samples": 796,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 5.00009752298476,
+      "maxPreArrivalDeltaMeters": 1.1912561603821814e-8,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "sao-paulo",
+      "result": "passed",
+      "samples": 753,
+      "finalLegSamples": 17,
+      "maxProgressDeltaMeters": 4.994569438617702,
+      "maxPreArrivalDeltaMeters": 1.1570591595955193e-8,
+      "upcomingInstructions": [
+        "Destino · Passagem Subterrânea Daher Elias Cutait"
+      ],
+      "arrivalInstruction": "Você chegou ao seu destino, em frente"
+    },
+    {
+      "id": "buenos-aires",
+      "result": "passed",
+      "samples": 500,
+      "finalLegSamples": 151,
+      "maxProgressDeltaMeters": 4.996909952090434,
+      "maxPreArrivalDeltaMeters": 1.0398252925369889e-8,
+      "upcomingInstructions": [
+        "Destino · México"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "sydney",
+      "result": "passed",
+      "samples": 560,
+      "finalLegSamples": 40,
+      "maxProgressDeltaMeters": 4.99204286491155,
+      "maxPreArrivalDeltaMeters": 1.0475901035533752e-8,
+      "upcomingInstructions": [
+        "Destination · Circular Quay West"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "auckland",
+      "result": "passed",
+      "samples": 513,
+      "finalLegSamples": 102,
+      "maxProgressDeltaMeters": 4.998560300231794,
+      "maxPreArrivalDeltaMeters": 9.96215021586977e-9,
+      "upcomingInstructions": [
+        "Destination · Quay Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "tromso",
+      "result": "passed",
+      "samples": 1018,
+      "finalLegSamples": 137,
+      "maxProgressDeltaMeters": 5.016546421794729,
+      "maxPreArrivalDeltaMeters": 4.405137588037178e-9,
+      "upcomingInstructions": [
+        "Reisemål · Ringvegen"
+      ],
+      "arrivalInstruction": "Bilrutens endepunkt · Reisemål: ≈ 145 m"
+    },
+    {
+      "id": "queenstown",
+      "result": "passed",
+      "samples": 3968,
+      "finalLegSamples": 4,
+      "maxProgressDeltaMeters": 5.006701773009352,
+      "maxPreArrivalDeltaMeters": 1.7273123376071453e-8,
+      "upcomingInstructions": [
+        "Destination · Berkshire Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 51 m"
+    },
+    {
+      "id": "gangwon",
+      "result": "passed",
+      "samples": 2596,
+      "finalLegSamples": 21,
+      "maxProgressDeltaMeters": 5.002321749450598,
+      "maxPreArrivalDeltaMeters": 1.3826138456352055e-8,
+      "upcomingInstructions": [
+        "목적지"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 313미터 남았습니다."
+    },
+    {
+      "id": "furka",
+      "result": "passed",
+      "samples": 1868,
+      "finalLegSamples": 1864,
+      "maxProgressDeltaMeters": 10.018159029822787,
+      "maxPreArrivalDeltaMeters": 8.706138032721356e-9,
+      "upcomingInstructions": [
+        "Ziel · Furkastrasse"
+      ],
+      "arrivalInstruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus"
+    }
+  ],
+  "complete": true
+}

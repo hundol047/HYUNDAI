@@ -1,0 +1,1061 @@
+{
+  "observedAt": "2026-10-23T17:06:45.136Z",
+  "sourceCommit": "572ec98bf23ba41706ba3540d80ed0c85cb343e5",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T17:06:45.146Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "jeju",
+      "label": "제주",
+      "country": "KR",
+      "continent": "Asia",
+      "language": "ko-KR",
+      "start": [
+        33.506,
+        126.492
+      ],
+      "end": [
+        33.5115,
+        126.527
+      ],
+      "query": "스타벅스 제주",
+      "result": "passed",
+      "startedAt": "2026-10-23T17:06:45.280Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 224513741,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 282206012,
+            "lat": "33.3479457",
+            "lon": "126.3593061",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 1360-2, 평화로, 금악리, 한림읍, 제주시, 제주특별자치도, 63021, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "1360-2",
+              "road": "평화로",
+              "village": "금악리",
+              "town": "한림읍",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63021",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "layer": "1",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "building": "yes",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.3477940",
+              "33.3480988",
+              "126.3591976",
+              "126.3594339"
+            ]
+          },
+          {
+            "place_id": 223918445,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1203429771,
+            "lat": "33.5006579",
+            "lon": "126.5052636",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 42, 월성로, 용담이동, 용담2동, 제주시, 제주특별자치도, 63164, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "42",
+              "road": "월성로",
+              "quarter": "용담이동",
+              "city_district": "용담2동",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63164",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "website": "https://starbucks.com/",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "building": "yes",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.5005539",
+              "33.5007776",
+              "126.5051376",
+              "126.5054407"
+            ]
+          },
+          {
+            "place_id": 224637642,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 372303721,
+            "lat": "33.5003864",
+            "lon": "126.5295338",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 광양7길, 이도이동, 이도2동, 제주시, 제주특별자치도, 63208, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "광양7길",
+              "quarter": "이도이동",
+              "city_district": "이도2동",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63208",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "building": "commercial",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.5003621",
+              "33.5004523",
+              "126.5294767",
+              "126.5296296"
+            ]
+          },
+          {
+            "place_id": 420909035,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 13969521216,
+            "lat": "33.5133362",
+            "lon": "126.5252508",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 55, 제주칠성로, 일도일동, 제주시, 제주특별자치도, 63277, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "house_number": "55",
+              "road": "제주칠성로",
+              "quarter": "일도일동",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63277",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.5132862",
+              "33.5133862",
+              "126.5252008",
+              "126.5253008"
+            ]
+          },
+          {
+            "place_id": 224471461,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 13653728238,
+            "lat": "33.4803746",
+            "lon": "126.5233452",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 연북로, 이도2동, 제주시, 제주특별자치도, 63235, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "연북로",
+              "city_district": "이도2동",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63235",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.4803246",
+              "33.4804246",
+              "126.5232952",
+              "126.5233952"
+            ]
+          },
+          {
+            "place_id": 224577512,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9806451487,
+            "lat": "33.5117779",
+            "lon": "126.5803752",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 5.871900511172682e-05,
+            "addresstype": "amenity",
+            "name": "스타벅스",
+            "display_name": "스타벅스, 연삼로, 도련일동, 삼양동, 제주시, 제주특별자치도, 63325, 대한민국",
+            "address": {
+              "amenity": "스타벅스",
+              "road": "연삼로",
+              "quarter": "도련일동",
+              "city_district": "삼양동",
+              "city": "제주시",
+              "province": "제주특별자치도",
+              "ISO3166-2-lvl4": "KR-49",
+              "postcode": "63325",
+              "country": "대한민국",
+              "country_code": "kr"
+            },
+            "extratags": {
+              "branch": "제주삼화DT점",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ko": "스타벅스",
+              "takeaway": "yes",
+              "drive_through": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "스타벅스",
+              "brand": "스타벅스",
+              "name:en": "Starbucks",
+              "name:ko": "스타벅스"
+            },
+            "boundingbox": [
+              "33.5117279",
+              "33.5118279",
+              "126.5803252",
+              "126.5804252"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. 스타벅스스타벅스, 1360-2, 평화로, 금악리, 한림읍, 제주시, 제주특별자치도, 63021, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 21.5 km지도에 표시 · 자동차 경로 계산 →",
+          "2. 스타벅스스타벅스, 42, 월성로, 용담이동, 용담2동, 제주시, 제주특별자치도, 63164, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.4 km지도에 표시 · 자동차 경로 계산 →",
+          "3. 스타벅스스타벅스, 광양7길, 이도이동, 이도2동, 제주시, 제주특별자치도, 63208, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 3.5 km지도에 표시 · 자동차 경로 계산 →",
+          "4. 스타벅스스타벅스, 55, 제주칠성로, 일도일동, 제주시, 제주특별자치도, 63277, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 3.2 km지도에 표시 · 자동차 경로 계산 →",
+          "5. 스타벅스스타벅스, 연북로, 이도2동, 제주시, 제주특별자치도, 63235, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 4.1 km지도에 표시 · 자동차 경로 계산 →",
+          "6. 스타벅스스타벅스, 연삼로, 도련일동, 삼양동, 제주시, 제주특별자치도, 63325, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 8.2 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1365.7502018363175
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/27899/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27899/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EC%A0%9C%EC%A3%BC",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27899/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55803/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55803/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55803/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/126.492,33.506;126.527,33.5115?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55797/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55798/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55798/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55797/26288.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55796/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55796/26288.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55796/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55798/26288.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55799/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55799/26288.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55799/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13950/6570.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13949/6571.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13949/6570.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13950/6571.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13948/6571.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13948/6570.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13948/6572.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13951/6571.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13951/6570.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13951/6572.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27899/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27895/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27895/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27899/13145.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27897/13145.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13145.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27898/13145.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27900/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27900/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27900/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27901/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27901/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27901/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27902/13142.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27902/13143.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27902/13144.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26287.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55801/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26286.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55800/26285.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26287.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/27896/13143.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55802/26287.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/55797/26286.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13949/6572.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13950/6572.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 549,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "오른쪽으로 완만하게",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.519402450370966,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 570.2463010283076,
+          "label": "570m",
+          "timeout": false,
+          "waitMs": 309,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "갈림길에서 오른쪽으로 완만하게 · 공항서로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.7722957765607386,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1098.5991414949006,
+          "label": "1099m",
+          "timeout": false,
+          "waitMs": 299,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "직진 · 용문로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.63785959070062,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2197.198282989801,
+          "label": "2197m",
+          "timeout": false,
+          "waitMs": 425,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "갈림길에서 오른쪽으로 완만하게 · 용문로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4421607174932638,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2485.7263244510946,
+          "label": "2486m",
+          "timeout": false,
+          "waitMs": 304,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "갈림길에서 오른쪽으로 완만하게 · 용문로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2812971896218364,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3295.797424484702,
+          "label": "3296m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "직진 · 관덕로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.9954742626701425,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4324.372858469155,
+          "label": "4324m",
+          "timeout": false,
+          "waitMs": 308,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "갈림길에서 오른쪽으로 완만하게 · 중앙로13길",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.811162698843211,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4394.396565979602,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 382,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "목적지에 도착했습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 19.394554283397767,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4394.396565979602,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 691,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "목적지에 도착했습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 19.394554283397767,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 4397.6,
+        "geometryMeters": 4394.396565979602,
+        "durationSeconds": 441.9,
+        "points": 209,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 355.5355230662653,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 389.1246122765988,
+            "type": "turn",
+            "modifier": "sharp left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 468.55759983263187,
+            "type": "turn",
+            "modifier": "left",
+            "road": "공항서로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 570.2463010283076,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "공항서로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1434.8103041667075,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "용문로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2485.7263244510946,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "용문로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2609.8757509688735,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "한천교",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2711.371619646474,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "서문로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3446.697648872359,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "관덕로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3929.779857418157,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3979.701653033888,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "중앙로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4148.459474847362,
+            "type": "continue",
+            "modifier": "left",
+            "road": "중앙로13길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4324.372858469155,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "중앙로13길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4394.396565979602,
+            "type": "arrive",
+            "road": "중앙로13길",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 49.26357534604723,
+        "destinationSnapMeters": 4.012668301666795
+      },
+      "drivingStartedAt": "2026-10-23T17:06:51.122Z",
+      "drivingWallSeconds": 449.943,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 3264.813041134848,
+        "originReady": false,
+        "destinationAccessMeters": 4.012668301768896,
+        "revision": 4,
+        "destination": "좌표 목적지 33.511500, 126.527000",
+        "remainingMeters": 15.03465950630274,
+        "remainingSeconds": 1.510782253009637,
+        "language": "ko-KR",
+        "instructionLanguage": "ko",
+        "instruction": "목적지에 도착했습니다.",
+        "turnSymbol": "●",
+        "turnMeters": 15.023707500561613,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 33.511464,
+          "longitude": 126.52700299999992,
+          "accuracy": 5,
+          "timestamp": 1792775662585
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 469,
+      "finishedAt": "2026-10-23T17:14:30.534Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 449
+    }
+  ]
+}

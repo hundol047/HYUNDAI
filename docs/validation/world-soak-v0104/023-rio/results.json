@@ -1,0 +1,712 @@
+{
+  "observedAt": "2026-10-23T15:49:22.729Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:49:22.737Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "rio",
+      "label": "리우데자네이루",
+      "country": "BR",
+      "continent": "South America",
+      "language": "pt-BR",
+      "start": [
+        -22.967,
+        -43.181
+      ],
+      "end": [
+        -22.979,
+        -43.19
+      ],
+      "query": "Confeitaria Colombo Rio de Janeiro",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:49:22.853Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 10487611,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 338511051,
+            "lat": "-22.9051703",
+            "lon": "-43.1787441",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 0.3897107592752421,
+            "addresstype": "amenity",
+            "name": "Confeitaria Colombo",
+            "display_name": "Confeitaria Colombo, 32, Rua Gonçalves Dias, Saara, Castelo, Centro, Rio de Janeiro, Região Sudeste, 20050-030, Brasil",
+            "address": {
+              "amenity": "Confeitaria Colombo",
+              "house_number": "32",
+              "road": "Rua Gonçalves Dias",
+              "neighbourhood": "Saara",
+              "quarter": "Castelo",
+              "suburb": "Centro",
+              "city": "Rio de Janeiro",
+              "state": "Rio de Janeiro",
+              "ISO3166-2-lvl4": "BR-RJ",
+              "region": "Região Sudeste",
+              "postcode": "20050-030",
+              "country": "Brasil",
+              "country_code": "br"
+            },
+            "extratags": {
+              "phone": "+55 21 2505 1500",
+              "tourism": "attraction",
+              "wikidata": "Q18479573",
+              "amenity_1": "restaurant",
+              "wikipedia": "pt:Confeitaria Colombo",
+              "opening_hours": "Mo-Fr 09:00-19:30; Sa 09:00-17:30",
+              "contact:website": "www.confeitariacolombo.com.br",
+              "wikimedia_commons": "Category:Confeitaria Colombo"
+            },
+            "namedetails": {
+              "name": "Confeitaria Colombo",
+              "name:pt": "Confeitaria Colombo",
+              "name:ru": "Кондитерская Коломбо"
+            },
+            "boundingbox": [
+              "-22.9052203",
+              "-22.9051203",
+              "-43.1787941",
+              "-43.1786941"
+            ]
+          },
+          {
+            "place_id": 10527709,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6171448485,
+            "lat": "-22.9857815",
+            "lon": "-43.1867720",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 8.152666514071897e-05,
+            "addresstype": "amenity",
+            "name": "Confeitaria Colombo",
+            "display_name": "Confeitaria Colombo, Orla Copacabana, Copacabana, Rio de Janeiro, Região Sudeste, 22041-001, Brasil",
+            "address": {
+              "amenity": "Confeitaria Colombo",
+              "road": "Orla Copacabana",
+              "suburb": "Copacabana",
+              "city": "Rio de Janeiro",
+              "state": "Rio de Janeiro",
+              "ISO3166-2-lvl4": "BR-RJ",
+              "region": "Região Sudeste",
+              "postcode": "22041-001",
+              "country": "Brasil",
+              "country_code": "br"
+            },
+            "extratags": {
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "Confeitaria Colombo"
+            },
+            "boundingbox": [
+              "-22.9858315",
+              "-22.9857315",
+              "-43.1868220",
+              "-43.1867220"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Confeitaria ColomboConfeitaria Colombo, 32, Rua Gonçalves Dias, Saara, Castelo, Centro, Rio de Janeiro, Região Sudeste, 20050-030, Brasil카페 · OSM / Nominatim내 위치에서 직선 약 6.9 km전화 +55 21 2505 1500등록 영업시간 Mo-Fr 09:00-19:30; Sa 09:00-17:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. Confeitaria ColomboConfeitaria Colombo, Orla Copacabana, Copacabana, Rio de Janeiro, Região Sudeste, 22041-001, Brasil식당 · OSM / Nominatim내 위치에서 직선 약 2.2 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 2170.3934291574637
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/12455/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12455/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12454/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12454/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=pt-BR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Confeitaria+Colombo+Rio+de+Janeiro",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12454/18531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12455/18531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18531.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-43.181,-22.967;-43.19,-22.979?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12451/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12451/18534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12453/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12454/18534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12452/18532.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12451/18533.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24907/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24907/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24907/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24908/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24908/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24908/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24908/37064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24907/37064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24909/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24909/37064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24909/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24907/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49811/74135.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49810/74136.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49812/74137.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49811/74136.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49810/74137.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49809/74135.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49812/74135.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49810/74135.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49812/74136.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49811/74137.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49809/74137.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/49809/74136.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24905/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24904/37068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24906/37068.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 601,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à direita · Rua Rodolfo Dantas",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5430864241315879,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 561.6734427631835,
+          "label": "562m",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Vire à direita · Rua Djalma Ulrich",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.880449741584029,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1123.346885526367,
+          "label": "1123m",
+          "timeout": false,
+          "waitMs": 297,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à direita · Rua Djalma Ulrich",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8624834179304159,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1685.0203282895504,
+          "label": "1685m",
+          "timeout": false,
+          "waitMs": 300,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à direita · Rua Djalma Ulrich",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.037319086520605,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2196.693771052734,
+          "label": "2197m",
+          "timeout": false,
+          "waitMs": 356,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destino · Rua Djalma Ulrich",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.3187608047376818,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2246.693771052734,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 296,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Você chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.260626665413337,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2246.693771052734,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 978,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Você chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.260626665413337,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2243.7,
+        "geometryMeters": 2246.693771052734,
+        "durationSeconds": 195.6,
+        "points": 63,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Avenida Nossa Senhora de Copacabana",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 250.36773330786878,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua Rodolfo Dantas",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 383.16660207394165,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenida Atlântica",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2175.8169262254974,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua Djalma Ulrich",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2246.693771052734,
+            "type": "arrive",
+            "road": "Rua Djalma Ulrich",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 18.80197994227351,
+        "destinationSnapMeters": 2.738452101190973
+      },
+      "drivingStartedAt": "2026-10-23T15:49:29.234Z",
+      "drivingWallSeconds": 234.472,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1609.007316128429,
+        "originReady": false,
+        "destinationAccessMeters": 2.73845210082972,
+        "revision": 4,
+        "destination": "좌표 목적지 -22.979000, -43.190000",
+        "remainingMeters": 19.973349534592934,
+        "remainingSeconds": 1.741225283668217,
+        "language": "pt-BR",
+        "instructionLanguage": "pt-BR",
+        "instruction": "Você chegou ao seu destino, em frente",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999993858182,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -22.979024,
+          "longitude": -43.190006,
+          "accuracy": 5,
+          "timestamp": 1792770805114
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 253,
+      "finishedAt": "2026-10-23T15:53:33.361Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 234
+    }
+  ]
+}

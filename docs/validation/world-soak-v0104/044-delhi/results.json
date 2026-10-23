@@ -1,0 +1,886 @@
+{
+  "observedAt": "2026-10-23T17:41:26.330Z",
+  "sourceCommit": "706d4e9204bed0382b291ae1f4a2bae1b0a052aa",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T17:41:26.340Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "delhi",
+      "label": "뉴델리",
+      "country": "IN",
+      "continent": "Asia",
+      "language": "hi-IN",
+      "start": [
+        28.633,
+        77.216
+      ],
+      "end": [
+        28.613,
+        77.23
+      ],
+      "query": "Saravana Bhavan New Delhi",
+      "result": "passed",
+      "startedAt": "2026-10-23T17:41:26.467Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 244225048,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4389312993,
+            "lat": "28.6321998",
+            "lon": "77.2162101",
+            "category": "amenity",
+            "type": "fast_food",
+            "place_rank": 30,
+            "importance": 5.58350499732512e-05,
+            "addresstype": "amenity",
+            "name": "सर्वण भवन",
+            "display_name": "सर्वण भवन, 13/90, Connaught Circus, नई दिल्ली, दिल्ली, 110001, भारत",
+            "address": {
+              "amenity": "सर्वण भवन",
+              "house_number": "13/90",
+              "locality": "Connaught Circus",
+              "city": "नई दिल्ली",
+              "state_district": "नई दिल्ली",
+              "state": "दिल्ली",
+              "ISO3166-2-lvl4": "IN-DL",
+              "postcode": "110001",
+              "country": "भारत",
+              "country_code": "in"
+            },
+            "extratags": {
+              "level": "0;1",
+              "cuisine": "indian;south_indian",
+              "website": "https://saravanabhavan.com/",
+              "takeaway": "yes",
+              "panoramax": "6d68e8d9-7a66-4966-b52e-915348d7848f",
+              "panoramax:0": "72f064d1-ef5f-421a-94ff-8fa232dc089f",
+              "contact:phone": "+91 11 2334 7755;+91 11 2334 5577",
+              "opening_hours": "Mo-Su 08:00-23:00",
+              "brand:wikidata": "Q3528082",
+              "indoor_seating": "yes"
+            },
+            "namedetails": {
+              "name": "Saravana Bhavan",
+              "brand": "Saravanaa Bhavan;Saravana Bhavan",
+              "name:en": "Saravana Bhavan",
+              "name:hi": "सर्वण भवन",
+              "official_name": "Hotel Saravana Bhavan"
+            },
+            "boundingbox": [
+              "28.6321498",
+              "28.6322498",
+              "77.2161601",
+              "77.2162601"
+            ]
+          },
+          {
+            "place_id": 241786421,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1475265591,
+            "lat": "28.6269495",
+            "lon": "77.2197453",
+            "category": "amenity",
+            "type": "fast_food",
+            "place_rank": 30,
+            "importance": 7.748149843590475e-05,
+            "addresstype": "amenity",
+            "name": "सरवण भवन",
+            "display_name": "सरवण भवन, 50, जनपथ, Kashmiri Market, कनॉट प्लेस, नई दिल्ली, दिल्ली, 110001, भारत",
+            "address": {
+              "amenity": "सरवण भवन",
+              "house_number": "50",
+              "road": "जनपथ",
+              "neighbourhood": "Kashmiri Market",
+              "suburb": "कनॉट प्लेस",
+              "city": "नई दिल्ली",
+              "state_district": "नई दिल्ली",
+              "state": "दिल्ली",
+              "ISO3166-2-lvl4": "IN-DL",
+              "postcode": "110001",
+              "country": "भारत",
+              "country_code": "in"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "indian;south_indian",
+              "takeaway": "yes",
+              "diet:jain": "limited",
+              "diet:vegan": "yes",
+              "contact:phone": "+91 11 2331 7755;+91 11 2331 6060",
+              "opening_hours": "Mo-Su 08:00-23:00",
+              "brand:wikidata": "Q3528082",
+              "indoor_seating": "yes",
+              "toilets:wheelchair": "no",
+              "diet:lacto_vegetarian": "yes"
+            },
+            "namedetails": {
+              "name": "Saravana Bhavan",
+              "brand": "Saravana Bhavan",
+              "name:en": "Saravana Bhavan",
+              "name:hi": "सरवण भवन",
+              "official_name": "Hotel Saravana Bhavan"
+            },
+            "boundingbox": [
+              "28.6269081",
+              "28.6269908",
+              "77.2196536",
+              "77.2198357"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. सर्वण भवनसर्वण भवन, 13/90, Connaught Circus, नई दिल्ली, दिल्ली, 110001, भारत간편식 · OSM / Nominatim내 위치에서 직선 약 91 m전화 +91 11 2334 7755;+91 11 2334 5577등록 영업시간 Mo-Su 08:00-23:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. सरवण भवनसरवण भवन, 50, जनपथ, Kashmiri Market, कनॉट प्लेस, नई दिल्ली, दिल्ली, 110001, भारत간편식 · OSM / Nominatim내 위치에서 직선 약 766 m전화 +91 11 2331 7755;+91 11 2331 6060등록 영업시간 Mo-Su 08:00-23:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 91.31033070627576
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23410/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23410/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=hi-IN%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Saravana+Bhavan+New+Delhi",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/77.216,28.633;77.23,28.613?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46824/27325.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46823/27325.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27325.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46823/27326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46823/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27325.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46824/27326.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11706/6831.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11705/6830.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11706/6830.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11706/6832.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11705/6831.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11707/6831.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11704/6831.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11705/6832.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11707/6830.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11704/6830.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11704/6832.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/11707/6832.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23410/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13661.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23410/13663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23410/13664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23414/13664.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23414/13662.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23414/13663.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23414/13665.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23412/13665.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23411/13665.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/23413/13665.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27328.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27327.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27329.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27329.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27329.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27329.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46824/27327.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27327.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46825/27327.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46828/27328.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27327.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46827/27328.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/46826/27328.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 512,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · Bangla Sahib Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.785538716777519,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1251.640997556735,
+          "label": "1252m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Baba Kharak Singh Marg",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.298895522502509,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1531.4385379751864,
+          "label": "1531m",
+          "timeout": false,
+          "waitMs": 340,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 1st exit · Ashoka Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.9729518073679801,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2189.000856834569,
+          "label": "2189m",
+          "timeout": false,
+          "waitMs": 374,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 2nd exit · Ashoka Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.2912063424536364,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2503.28199511347,
+          "label": "2503m",
+          "timeout": false,
+          "waitMs": 360,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 3rd exit · Ashoka Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.602817908184134,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3754.9229926702055,
+          "label": "3755m",
+          "timeout": false,
+          "waitMs": 484,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Exit the roundabout · Man Singh Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.377111915552904,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4956.56399022694,
+          "label": "4957m",
+          "timeout": false,
+          "waitMs": 371,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destination",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.0954544200644047,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 5006.56399022694,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 310,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 227 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 26.44787980546239,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 5006.56399022694,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 676,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 227 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 26.44787980546239,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 5003.7,
+        "geometryMeters": 5006.56399022694,
+        "durationSeconds": 407.2,
+        "points": 210,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Shaheed Bhagat Singh Marg",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 726.6679286389383,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Bangla Sahib Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1357.5674845886465,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "Baba Kharak Singh Marg",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1531.4385379751864,
+            "type": "rotary",
+            "modifier": "left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 1576.364911005372,
+            "type": "exit rotary",
+            "modifier": "left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 2189.000856834569,
+            "type": "rotary",
+            "modifier": "straight",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2304.1451479210164,
+            "type": "exit rotary",
+            "modifier": "left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2597.4697625962463,
+            "type": "rotary",
+            "modifier": "straight",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 2671.4276281333973,
+            "type": "exit rotary",
+            "modifier": "left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 2944.63168554029,
+            "type": "rotary",
+            "modifier": "slight left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 3082.279495182857,
+            "type": "exit rotary",
+            "modifier": "slight left",
+            "road": "Ashoka Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 3723.134619103093,
+            "type": "rotary",
+            "modifier": "slight left",
+            "road": "Man Singh Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 3841.4895176102623,
+            "type": "exit rotary",
+            "modifier": "left",
+            "road": "Man Singh Road",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 4501.891740287409,
+            "type": "roundabout",
+            "modifier": "left",
+            "road": "Akbar Road",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 4512.979646904486,
+            "type": "exit roundabout",
+            "modifier": "left",
+            "road": "Akbar Road",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 4845.060237416185,
+            "type": "roundabout",
+            "modifier": "slight left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5006.56399022694,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 4.0137107245997115,
+        "destinationSnapMeters": 227.52667289955662
+      },
+      "drivingStartedAt": "2026-10-23T17:41:32.325Z",
+      "drivingWallSeconds": 511.128,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2489.1843990361226,
+        "originReady": false,
+        "destinationAccessMeters": 227.52667290232253,
+        "revision": 4,
+        "destination": "좌표 목적지 28.613000, 77.230000",
+        "remainingMeters": 19.988559058727247,
+        "remainingSeconds": 1.6266645179994275,
+        "language": "hi-IN",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 227 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000000293767,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 28.613132,
+          "longitude": 77.22767399999998,
+          "accuracy": 5,
+          "timestamp": 1792777804880
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 530,
+      "finishedAt": "2026-10-23T17:50:12.664Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 510
+    }
+  ]
+}

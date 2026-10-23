@@ -1,0 +1,111 @@
+{
+  "scope": "Continuous actual Chromium recording. Previously captured OSRM routes, accelerated synthetic GPS/clock, live visible OSM map tiles. No physical driving, acoustic speech or real-time drive-duration claim.",
+  "observedAt": "2026-10-23T15:26:44.900Z",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "scenes": [
+    {
+      "id": "istanbul",
+      "uncertain": {
+        "active": true,
+        "tracking": true,
+        "arrived": false,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 25,
+        "originAccessMeters": 2267.1901464995767,
+        "originReady": false,
+        "destinationAccessMeters": 6.093408688118603,
+        "revision": 3,
+        "destination": "좌표 목적지 41.036500, 28.985000",
+        "remainingMeters": 1691.9761445586894,
+        "remainingSeconds": 181.95664727468954,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "GPS 위치·진행 방향 확인 중",
+        "turnSymbol": "↶",
+        "turnMeters": 68.01445262612833,
+        "offRoute": false,
+        "directionUncertain": true,
+        "status": "GPS 오차 안에 여러 도로가 있습니다 · 회전 안내 대기",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 41.02784915959413,
+          "longitude": 28.98287887696573,
+          "accuracy": 25,
+          "timestamp": 1792769543243
+        }
+      },
+      "recovered": {
+        "active": true,
+        "tracking": true,
+        "arrived": false,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2246.179496918062,
+        "originReady": false,
+        "destinationAccessMeters": 6.093408688118603,
+        "revision": 3,
+        "destination": "좌표 목적지 41.036500, 28.985000",
+        "remainingMeters": 1699.142842288502,
+        "remainingSeconds": 182.72736044055864,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "Make a U-turn · Meclis-i Mebusan Caddesi",
+        "turnSymbol": "↶",
+        "turnMeters": 75.17846990963062,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "GPS 주행 안내 · 정확도 약 5m · 교통 미반영 예상",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 41.02764057891199,
+          "longitude": 28.982952439815534,
+          "accuracy": 5,
+          "timestamp": 1792769544243
+        }
+      },
+      "atMeters": 3360
+    },
+    {
+      "id": "queenstown",
+      "arrived": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 16767.601310292375,
+        "originReady": false,
+        "destinationAccessMeters": 51.16185011294154,
+        "revision": 3,
+        "destination": "좌표 목적지 -44.939000, 168.830000",
+        "remainingMeters": 15.047576868343773,
+        "remainingSeconds": 0.9960162407566,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 51 m",
+        "turnSymbol": "●",
+        "turnMeters": 15.027434778134193,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -44.938999,
+          "longitude": 168.83065,
+          "accuracy": 5,
+          "timestamp": 1792771218304
+        }
+      }
+    }
+  ],
+  "result": "passed",
+  "pageErrors": [],
+  "video": "../../video/CabinOS_ONE_gps_access_v0104.mp4",
+  "finishedAt": "2026-10-23T15:27:26.457Z"
+}

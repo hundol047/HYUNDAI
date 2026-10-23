@@ -1,0 +1,19 @@
+{
+  "scope": "One actual app nearby query at synthetic Lisbon GPS. Original configured Overpass and live visible OSM tiles; no intercepted response or alternate host.",
+  "observedAt": "2026-10-23T18:13:30.732Z",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "requests": [
+    "https://overpass-api.de/api/interpreter?data=%5Bout%3Ajson%5D%5Btimeout%3A12%5D%3B%28nwr%5Bamenity%7E%22%5E%28cafe%7Crestaurant%7Cfast_food%29%24%22%5D%5B%7E%22%5E%28name%7Cname%3A%5BA-Za-z%5D%7B2%2C3%7D%28%5B-_%5D%5BA-Za-z0-9%5D%7B2%2C8%7D%29*%29%24%22%7E%22.%22%5D%28around%3A1200%2C38.7063%2C-9.1453%29%3Bnwr%5Bleisure%3Dpark%5D%5B%7E%22%5E%28name%7Cname%3A%5BA-Za-z%5D%7B2%2C3%7D%28%5B-_%5D%5BA-Za-z0-9%5D%7B2%2C8%7D%29*%29%24%22%7E%22.%22%5D%28around%3A1200%2C38.7063%2C-9.1453%29%3Bnwr%5Bshop%7E%22%5E%28convenience%7Csupermarket%7Cmall%29%24%22%5D%5B%7E%22%5E%28name%7Cname%3A%5BA-Za-z%5D%7B2%2C3%7D%28%5B-_%5D%5BA-Za-z0-9%5D%7B2%2C8%7D%29*%29%24%22%7E%22.%22%5D%28around%3A1200%2C38.7063%2C-9.1453%29%3B%29%3Bout+center+tags+60%3B"
+  ],
+  "responses": [],
+  "failures": [
+    {
+      "errorText": "net::ERR_ABORTED"
+    }
+  ],
+  "elapsedMs": 18057,
+  "status": "장소 검색에 연결하지 못했습니다. 기존 표시를 유지합니다. 네트워크를 확인해 주세요.",
+  "activities": [],
+  "realResults": 0,
+  "result": "unavailable"
+}

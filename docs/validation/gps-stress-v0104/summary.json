@@ -1,0 +1,42 @@
+{
+  "scope": "Offline captured OSRM routes with synthetic bounded radial GPS noise/loss; not live driving or physical GPS accuracy. Same final production JS engine.",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "harnessSha256": "963a55e8fd46951e9a2dea6b997621d7ea30dc26859586dd5a95bad5858330e7",
+  "conditions": 246,
+  "passed": 246,
+  "inputs": 122856,
+  "uncertainInputs": 1246,
+  "worstAllProgressError": {
+    "suite": "no-motion-metadata-stop",
+    "inputs": 334,
+    "maximumProgressErrorMeters": 138.03437623292348,
+    "maximumConfidentProgressErrorMeters": 78.75117285435135,
+    "uncertainInputs": 14,
+    "issues": [],
+    "issueCount": 0,
+    "staleVerified": true,
+    "recovered": true,
+    "arrived": true,
+    "id": "nairobi",
+    "accuracyMeters": 50,
+    "progressToleranceMeters": 150,
+    "result": "passed"
+  },
+  "worstConfidentProgressError": {
+    "suite": "no-course",
+    "inputs": 275,
+    "maximumProgressErrorMeters": 90.51014571274146,
+    "maximumConfidentProgressErrorMeters": 90.51014571274146,
+    "uncertainInputs": 7,
+    "issues": [],
+    "issueCount": 0,
+    "staleVerified": true,
+    "recovered": true,
+    "arrived": true,
+    "id": "busan",
+    "accuracyMeters": 50,
+    "progressToleranceMeters": 150,
+    "result": "passed"
+  },
+  "acceptance": "No false off-route, tracking loss, early arrival; stale signal pauses, recovery and accurate final arrival. Confident progress error <= max(75 m, 3 \u00d7 supplied accuracy); ambiguous fixes must hold turn guidance. These thresholds do not certify lane-level or commercial navigation accuracy."
+}

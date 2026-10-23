@@ -1,0 +1,2 @@
+Map data: © OpenStreetMap contributors, ODbL 1.0, https://www.openstreetmap.org/copyright
+Actual final app Overpass request timed out after 18 seconds; no successful live recommendations claimed. Synthetic Lisbon GPS.

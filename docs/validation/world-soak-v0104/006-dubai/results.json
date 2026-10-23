@@ -1,0 +1,915 @@
+{
+  "observedAt": "2026-10-23T13:44:20.635Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9e0cebec55f791cef968108e91ec28f17a82a9c9907586a4656808cb570e02bb",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T13:44:20.644Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "dubai",
+      "label": "두바이",
+      "country": "AE",
+      "continent": "Asia",
+      "language": "ar-AE",
+      "start": [
+        25.217,
+        55.279
+      ],
+      "end": [
+        25.1975,
+        55.2795
+      ],
+      "query": "Starbucks Dubai Mall",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:44:20.788Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/21415/14010.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21416/14010.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21415/14009.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21416/14009.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21415/14011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21416/14011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21414/14010.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21417/14010.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21414/14009.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21414/14011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21417/14011.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/21417/14009.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ar-AE%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Starbucks+Dubai+Mall",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/55.279,25.217;55.2795,25.1975?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10708/7005.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10707/7005.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10707/7004.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10708/7004.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10707/7006.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10708/7006.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10706/7005.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10709/7005.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10706/7004.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10709/7004.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10706/7006.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/10709/7006.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28021.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28020.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28021.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28021.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28021.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28020.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28020.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28020.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28021.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28023.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28022.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42828/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42829/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28026.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85663/56050.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85662/56049.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85661/56049.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85663/56051.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85662/56050.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85662/56051.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85661/56051.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85663/56049.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85664/56049.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85664/56051.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85664/56050.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/85661/56050.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42831/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28024.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42830/28025.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/42832/28025.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 621,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "اسلك المسار يمينا قليلا · D71: Financial Centre Street, Burj Khalifa, The Dubai Mall, Al Safa Street, Jumeira, Museum of the F",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 815.1740465997879,
+          "label": "815m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "اسلك المسار يمينا قليلا · D71: Financial Centre Street, Burj Khalifa, The Dubai Mall, Al Safa Street, Jumeira, Museum of the F",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5907990831258807,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1161.2010018531896,
+          "label": "1161m",
+          "timeout": false,
+          "waitMs": 327,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف يساراً قليلاً · D71 (East): Financial Center Street, Burj Khalifa, The Dubai Mall, Museum of the Future",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1568505662205355,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1630.3480931995757,
+          "label": "1630m",
+          "timeout": false,
+          "waitMs": 383,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "انعطف يساراً قليلاً · (lower level): Burj Khalifa",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.41836666465396116,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1800.7963072061339,
+          "label": "1801m",
+          "timeout": false,
+          "waitMs": 356,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف يساراً قليلاً · (lower level): Burj Khalifa",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7309531228965511,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2445.5221397993637,
+          "label": "2446m",
+          "timeout": false,
+          "waitMs": 324,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف نحو يساراً قليلاً",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6993195542070586,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3210.6961863991514,
+          "label": "3211m",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "الوجهة",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9390480510871084,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3260.6961863991514,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 319,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك · 43 m",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.475691453798675,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3260.6961863991514,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 867,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك · 43 m",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.475691453798675,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 3256.7,
+        "geometryMeters": 3260.6961863991514,
+        "durationSeconds": 293.7,
+        "points": 124,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "شارع الشيخ زايد",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 841.4266513763832,
+            "type": "off ramp",
+            "modifier": "slight right",
+            "road": "",
+            "destinations": "D71: Financial Centre Street, Burj Khalifa, The Dubai Mall, Al Safa Street, Jumeira, Museum of the Future",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1161.2010018531896,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "",
+            "destinations": "D71 (East): Financial Center Street, Burj Khalifa, The Dubai Mall, Museum of the Future",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1800.7963072061339,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "",
+            "destinations": "(lower level): Burj Khalifa",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1979.6363629758155,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "",
+            "destinations": "D71 (East): Financial Center Street, Burj Khalifa",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2280.4423317216424,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "شارع المركز المالي",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2546.325191932004,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2660.992695000898,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "شارع الشيخ محمد بن راشد",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2753.442483608487,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2813.045873720165,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2884.536270001961,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3260.6961863991514,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 4.623507124521869,
+        "destinationSnapMeters": 43.611200433457725
+      },
+      "drivingStartedAt": "2026-10-23T13:44:27.851Z",
+      "drivingWallSeconds": 335.689,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2135.1179424087695,
+        "originReady": false,
+        "destinationAccessMeters": 43.611200432313,
+        "revision": 4,
+        "destination": "좌표 목적지 25.197500, 55.279500",
+        "remainingMeters": 19.975488759924477,
+        "remainingSeconds": 1.8014557830901892,
+        "language": "ar-AE",
+        "instructionLanguage": "ar",
+        "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك · 43 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000006708433,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 25.197833,
+          "longitude": 55.279729,
+          "accuracy": 5,
+          "timestamp": 1792763404971
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "finishedAt": "2026-10-23T13:50:13.220Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 335
+    }
+  ]
+}

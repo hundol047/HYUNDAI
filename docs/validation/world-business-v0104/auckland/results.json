@@ -1,0 +1,645 @@
+{
+  "observedAt": "2026-10-23T14:35:51.200Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:35:51.206Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "auckland",
+      "label": "오클랜드",
+      "country": "NZ",
+      "continent": "Oceania",
+      "language": "en-NZ",
+      "start": [
+        -36.858,
+        174.76
+      ],
+      "end": [
+        -36.8499299,
+        174.7614933
+      ],
+      "query": "SkyCity Auckland",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:58:54.048Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 26077086,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3261160610,
+            "lat": "-36.8499299",
+            "lon": "174.7614933",
+            "category": "highway",
+            "type": "bus_stop",
+            "place_rank": 30,
+            "importance": 7.485084306091428e-05,
+            "addresstype": "highway",
+            "name": "SkyCity Auckland",
+            "display_name": "SkyCity Auckland, Wellesley Street West, Victoria Quarter, Wynyard Quarter, City Centre, Auckland, Waitematā, Auckland, 1010, New Zealand",
+            "address": {
+              "highway": "SkyCity Auckland",
+              "road": "Wellesley Street West",
+              "neighbourhood": "Victoria Quarter",
+              "quarter": "Wynyard Quarter",
+              "suburb": "City Centre",
+              "city": "Auckland",
+              "state": "Auckland",
+              "ISO3166-2-lvl4": "NZ-AUK",
+              "postcode": "1010",
+              "country": "New Zealand",
+              "country_code": "nz"
+            },
+            "extratags": {
+              "bin": "yes",
+              "bus": "yes",
+              "lit": "yes",
+              "kerb": "raised",
+              "bench": "yes",
+              "network": "AT",
+              "shelter": "no",
+              "tactile_paving": "yes",
+              "network:wikidata": "Q4819567",
+              "public_transport": "platform",
+              "kerb:approach_aid": "no",
+              "passenger_information_display": "yes",
+              "passenger_information_display:speech_output": "yes"
+            },
+            "namedetails": {
+              "ref": "1083",
+              "name": "SkyCity Auckland",
+              "name:en": "SkyCity Auckland",
+              "name:mi": "SkyCity Tāmaki Makaurau"
+            },
+            "boundingbox": [
+              "-36.8499799",
+              "-36.8498799",
+              "174.7614433",
+              "174.7615433"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. SkyCity AucklandSkyCity Auckland, Wellesley Street West, Victoria Quarter, Wynyard Quarter, City Centre, Auckland, Waitematā, Auckland, 1010, New Zealandbus_stop · OSM / Nominatim내 위치에서 직선 약 907 m지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 907.1371391446489
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-NZ%2Cen&namedetails=1&addressdetails=1&extratags=1&q=SkyCity+Auckland",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/174.76,-36.858;174.7614933,-36.8499299?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19998.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19995.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/19995.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19995.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32289/19995.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64581/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64580/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64582/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39994.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39993.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/39992.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19996.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/19997.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/19997.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 568,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Pitt Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.6308960031295471,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 286.48081295864404,
+          "label": "286m",
+          "timeout": false,
+          "waitMs": 361,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Vincent Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.5021495225026298,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 572.9616259172881,
+          "label": "573m",
+          "timeout": false,
+          "waitMs": 340,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Mayoral Drive",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.1561112091923895,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 859.4424388759321,
+          "label": "859m",
+          "timeout": false,
+          "waitMs": 407,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Wellesley Street West",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.4461472775200486,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1095.9232518345761,
+          "label": "1096m",
+          "timeout": false,
+          "waitMs": 355,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4709497759598757,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1145.9232518345761,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 344,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 22.173411763992107,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1145.9232518345761,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 815,
+          "visible": 16,
+          "decoded": 16,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 22.173411763992107,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "coordinateEndpoint": [
+        -36.844,
+        174.77
+      ],
+      "selectedPlace": {
+        "name": "SkyCity Auckland",
+        "latitude": -36.8499299,
+        "longitude": 174.7614933,
+        "id": "26077086",
+        "address": "SkyCity Auckland, Wellesley Street West, Victoria Quarter, Wynyard Quarter, City Centre, Auckland, Waitematā, Auckland, 1010, New Zealand",
+        "category": "bus_stop",
+        "phone": "",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "destinationMode": "provider-search-result",
+      "route": {
+        "distanceMeters": 1145.2,
+        "geometryMeters": 1145.9232518345761,
+        "durationSeconds": 202.7,
+        "points": 101,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Karangahape Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 87.3015986079063,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Pitt Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 372.74662409341363,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Vincent Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 778.7661973493796,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Mayoral Drive",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1026.8556632373552,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Wellesley Street West",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1134.752385485847,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1145.9232518345761,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 16.905736991523096,
+        "destinationSnapMeters": 7.893294084685807
+      },
+      "drivingStartedAt": "2026-10-23T14:58:59.794Z",
+      "drivingWallSeconds": 122.191,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 889.0484380502495,
+        "originReady": false,
+        "destinationAccessMeters": 7.893294086900244,
+        "revision": 3,
+        "destination": "SkyCity Auckland",
+        "remainingMeters": 24.984221203000306,
+        "remainingSeconds": 4.4221984263431375,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 13.829133654946872,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -36.849951,
+          "longitude": 174.761578,
+          "accuracy": 5,
+          "timestamp": 1792767663443
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 140,
+      "finishedAt": "2026-10-23T15:01:11.512Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 122
+    }
+  ]
+}

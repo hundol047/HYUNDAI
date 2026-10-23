@@ -1,0 +1,830 @@
+{
+  "observedAt": "2026-10-23T13:50:15.594Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9e0cebec55f791cef968108e91ec28f17a82a9c9907586a4656808cb570e02bb",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T13:50:15.602Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "marrakesh",
+      "label": "마라케시",
+      "country": "MA",
+      "continent": "Africa",
+      "language": "ar-MA",
+      "start": [
+        31.634,
+        -8.0065
+      ],
+      "end": [
+        31.6222,
+        -7.9895
+      ],
+      "query": "Cafe de France Marrakech",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:50:15.730Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 297430409,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 660578106,
+            "lat": "31.6263381",
+            "lon": "-7.9873070",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.850919356064725e-05,
+            "addresstype": "amenity",
+            "name": "Café de France",
+            "display_name": "Café de France, 102, Rue des Banques, الأسواق, المدينة, مقاطعة مراكش المدينة, مراكش, عمالة مراكش, مراكش-أسفي, 40040, المغرب",
+            "address": {
+              "amenity": "Café de France",
+              "house_number": "102",
+              "road": "Rue des Banques",
+              "retail": "الأسواق",
+              "suburb": "المدينة",
+              "city": "مراكش",
+              "county": "مراكش",
+              "state_district": "عمالة مراكش",
+              "ISO3166-2-lvl5": "MA-MAR",
+              "state": "مراكش-أسفي",
+              "ISO3166-2-lvl4": "MA-07",
+              "postcode": "40040",
+              "country": "المغرب",
+              "country_code": "ma"
+            },
+            "extratags": {
+              "phone": "+212 5 24 44 23 19",
+              "cuisine": "coffee_shop",
+              "website": "https://www.cafe-france-marrakech.com/",
+              "drink:wine": "no",
+              "opening_hours": "Mo-Su 07:00-23:00"
+            },
+            "namedetails": {
+              "name": "Café de France"
+            },
+            "boundingbox": [
+              "31.6262881",
+              "31.6263881",
+              "-7.9873570",
+              "-7.9872570"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Café de FranceCafé de France, 102, Rue des Banques, الأسواق, المدينة, مقاطعة مراكش المدينة, مراكش, عمالة مراكش, مراكش-أسفي, 40040, المغرب카페 · OSM / Nominatim전화 +212 5 24 44 23 19등록 영업시간 Mo-Su 07:00-23:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 2006.9446569598706
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/15655/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15655/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15653/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15656/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15654/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15656/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15653/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15654/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ar-MA%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+de+France+Marrakech",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-8.0065,31.634;-7.9895,31.6222?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15655/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15656/13347.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15655/13347.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15656/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15657/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15657/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15654/13347.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15655/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15656/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15657/13347.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15654/13346.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15654/13345.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31311/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31311/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31310/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31310/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31310/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31311/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31309/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31309/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31308/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31310/26691.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31311/26691.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31308/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31309/26691.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31308/26691.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26691.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31309/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26692.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31311/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26693.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31315/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62626/53389.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62626/53388.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62628/53389.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62627/53390.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62625/53389.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62625/53388.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62628/53388.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62626/53390.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62628/53390.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62625/53390.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62627/53389.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62627/53388.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31313/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26694.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31312/26695.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31314/26695.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 798,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف يمينا · Avenue des Nations Unies شارع الأمم المتحدة",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1249200102436667,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 787.8161492461786,
+          "label": "788m",
+          "timeout": false,
+          "waitMs": 313,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "ادخل مسار الدوران واسلك المخرج الثالثة · Boulevard Mohammed V شارع محمد الخامس",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.3846844101217074,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1108.4704898056593,
+          "label": "1108m",
+          "timeout": false,
+          "waitMs": 422,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "ادخل مسار الدوران واسلك المخرج الثالثة · Boulevard Mohammed V شارع محمد الخامس",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5790044472716375,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1575.6322984923572,
+          "label": "1576m",
+          "timeout": false,
+          "waitMs": 339,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "تابع قدما · Rue Ibn Khaldoun",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6703625916457222,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2363.448447738536,
+          "label": "2363m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف يسارا · Rue Ibn Khaldoun",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1440775516636454,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2715.1717878538734,
+          "label": "2715m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "انعطف يساراً قليلاً · Avenue Houman El Fetouaki",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9416737111223701,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3101.2645969847144,
+          "label": "3101m",
+          "timeout": false,
+          "waitMs": 386,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "الوجهة · Avenue Houman El Fetouaki",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5193993809734425,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3151.2645969847144,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 475,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 30.18242603830904,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3151.2645969847144,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 972,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك",
+          "instructionLanguage": "ar",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 30.18242603830904,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 3152.5,
+        "geometryMeters": 3151.2645969847144,
+        "durationSeconds": 307,
+        "points": 162,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Rue Ibn Toumert",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 122.45409751945013,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "Avenue des Nations Unies شارع الأمم المتحدة",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 402.9744300922251,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 450.152048517855,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 473.25121260415176,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Boulevard Mohammed V شارع محمد الخامس",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1108.4704898056593,
+            "type": "roundabout",
+            "modifier": "right",
+            "road": "Boulevard Mohammed V شارع محمد الخامس",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 1156.2824158002986,
+            "type": "exit roundabout",
+            "modifier": "right",
+            "road": "Boulevard Mohammed V شارع محمد الخامس",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 2289.058451873,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Rue Ibn Khaldoun",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2566.028288083933,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "Rue Ibn Khaldoun",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2657.9741592946516,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "Avenue Houman El Fetouaki",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2715.1717878538734,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Avenue Houman El Fetouaki",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2724.0808810114745,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "Avenue Houman El Fetouaki",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2950.410600173537,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2959.100592155124,
+            "type": "turn",
+            "modifier": "sharp left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2982.236453487593,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Avenue Houman El Fetouaki",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3151.2645969847144,
+            "type": "arrive",
+            "road": "Avenue Houman El Fetouaki",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 3.005655321905125,
+        "destinationSnapMeters": 4.616559232065508
+      },
+      "drivingStartedAt": "2026-10-23T13:50:22.639Z",
+      "drivingWallSeconds": 324.631,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2074.5768001524148,
+        "originReady": false,
+        "destinationAccessMeters": 4.616559233783745,
+        "revision": 4,
+        "destination": "좌표 목적지 31.622200, -7.989500",
+        "remainingMeters": 25.009800855689548,
+        "remainingSeconds": 2.4355301705619956,
+        "language": "ar-MA",
+        "instructionLanguage": "ar",
+        "instruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك",
+        "turnSymbol": "●",
+        "turnMeters": 25.000000004035883,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 31.622172,
+          "longitude": -7.989536,
+          "accuracy": 5,
+          "timestamp": 1792763748868
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "finishedAt": "2026-10-23T13:55:57.406Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 324
+    }
+  ]
+}

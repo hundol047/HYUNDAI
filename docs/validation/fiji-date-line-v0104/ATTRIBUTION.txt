@@ -1,0 +1,2 @@
+Map/geospatial data: © OpenStreetMap contributors, ODbL 1.0, https://www.openstreetmap.org/copyright
+Live Nominatim, OSRM and normal viewport tile requests. The selected Waiyevo to Wairiki route returned HTTP 400 NoRoute; no crossing drive was completed. Renderer fixtures are reported separately.

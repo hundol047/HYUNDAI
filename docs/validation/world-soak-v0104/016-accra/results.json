@@ -1,0 +1,745 @@
+{
+  "observedAt": "2026-10-23T15:16:51.395Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:16:51.403Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "accra",
+      "label": "아크라",
+      "country": "GH",
+      "continent": "Africa",
+      "language": "en-GH",
+      "start": [
+        5.556,
+        -0.196
+      ],
+      "end": [
+        5.569,
+        -0.181
+      ],
+      "query": "Cafe Accra",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:16:51.544Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 59428997,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10834484410,
+            "lat": "40.7624845",
+            "lon": "29.9340069",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.531090257109968e-05,
+            "addresstype": "amenity",
+            "name": "Accra Chocolate",
+            "display_name": "Accra Chocolate, Belde Sokak, İzmit Kent Meydanı, Karabaş Mahallesi, Kocaeli, İzmit, Kocaeli, Marmara Region, 41040, Turkey",
+            "address": {
+              "amenity": "Accra Chocolate",
+              "road": "Belde Sokak",
+              "quarter": "İzmit Kent Meydanı",
+              "suburb": "Karabaş Mahallesi",
+              "city": "Kocaeli",
+              "town": "İzmit",
+              "province": "Kocaeli",
+              "ISO3166-2-lvl4": "TR-41",
+              "region": "Marmara Region",
+              "postcode": "41040",
+              "country": "Turkey",
+              "country_code": "tr"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Accra Chocolate"
+            },
+            "boundingbox": [
+              "40.7624345",
+              "40.7625345",
+              "29.9339569",
+              "29.9340569"
+            ]
+          },
+          {
+            "place_id": 289376516,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 5734519537,
+            "lat": "42.5196459",
+            "lon": "-0.3636352",
+            "category": "amenity",
+            "type": "pub",
+            "place_rank": 30,
+            "importance": 5.887464713507313e-05,
+            "addresstype": "amenity",
+            "name": "Bar Accra",
+            "display_name": "Bar Accra, 1, Calle del General Villacampa, Aurín, Puente Sardas, Sabiñánigo, Alto Gállego, Huesca, Aragon, 22600, Spain",
+            "address": {
+              "amenity": "Bar Accra",
+              "house_number": "1",
+              "road": "Calle del General Villacampa",
+              "hamlet": "Aurín",
+              "village": "Puente Sardas",
+              "town": "Sabiñánigo",
+              "county": "Alto Gállego",
+              "state_district": "Huesca",
+              "ISO3166-2-lvl6": "ES-HU",
+              "state": "Aragon",
+              "ISO3166-2-lvl4": "ES-AR",
+              "postcode": "22600",
+              "country": "Spain",
+              "country_code": "es"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Bar Accra"
+            },
+            "boundingbox": [
+              "42.5195959",
+              "42.5196959",
+              "-0.3636852",
+              "-0.3635852"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Accra ChocolateAccra Chocolate, Belde Sokak, İzmit Kent Meydanı, Karabaş Mahallesi, Kocaeli, İzmit, Kocaeli, Marmara Region, 41040, Turkey카페 · OSM / Nominatim내 위치에서 직선 약 4930.2 km · 먼 결과: 주소·업종을 확인하세요.지도에 표시 · 자동차 경로 계산 →",
+          "2. Bar AccraBar Accra, 1, Calle del General Villacampa, Aurín, Puente Sardas, Sabiñánigo, Alto Gállego, Huesca, Aragon, 22600, Spainpub · OSM / Nominatim내 위치에서 직선 약 4110.2 km · 먼 결과: 주소·업종을 확인하세요.지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [
+          {
+            "name": "Accra Chocolate",
+            "address": "Accra Chocolate, Belde Sokak, İzmit Kent Meydanı, Karabaş Mahallesi, Kocaeli, İzmit, Kocaeli, Marmara Region, 41040, Turkey",
+            "country": "tr"
+          },
+          {
+            "name": "Bar Accra",
+            "address": "Bar Accra, 1, Calle del General Villacampa, Aurín, Puente Sardas, Sabiñánigo, Alto Gállego, Huesca, Aragon, 22600, Spain",
+            "country": "es"
+          }
+        ],
+        "distantResults": [
+          {
+            "name": "Accra Chocolate",
+            "address": "Accra Chocolate, Belde Sokak, İzmit Kent Meydanı, Karabaş Mahallesi, Kocaeli, İzmit, Kocaeli, Marmara Region, 41040, Turkey",
+            "type": "cafe",
+            "distanceMeters": 4930209.428783449
+          },
+          {
+            "name": "Bar Accra",
+            "address": "Bar Accra, 1, Calle del General Villacampa, Aurín, Puente Sardas, Sabiñánigo, Alto Gállego, Huesca, Aragon, 22600, Spain",
+            "type": "pub",
+            "distanceMeters": 4110203.16132762
+          }
+        ],
+        "nearestResultMeters": 4110203.16132762
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/16366/15878.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16365/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16365/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16365/15878.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16366/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16364/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16367/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16367/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16364/15878.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16367/15878.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16364/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16366/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-GH%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+Accra",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31751.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-0.196,5.556;-0.181,5.569?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31754.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31754.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31754.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32732/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32732/31754.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8182/7938.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8183/7938.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8182/7937.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8181/7938.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8181/7939.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8182/7939.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8183/7939.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8184/7938.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8183/7937.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8184/7937.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8181/7937.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8184/7939.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16368/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16368/15878.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16368/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16366/15875.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16365/15875.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16367/15875.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16368/15875.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16369/15877.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16369/15875.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16369/15876.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31752.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31751.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32736/31753.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31751.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31751.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31751.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32734/31751.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32735/31751.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32733/31751.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 710,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Ethiopia Close",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.2002296765982567,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 949.7339344121972,
+          "label": "950m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Oxford Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.6622697490431043,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1899.4678688243944,
+          "label": "1899m",
+          "timeout": false,
+          "waitMs": 320,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 2nd exit · Cantonments Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.9190811194035766,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2849.2018032365913,
+          "label": "2849m",
+          "timeout": false,
+          "waitMs": 657,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "Enter the roundabout and take the 2nd exit · Cantonments Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.0135958503854976,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3104.9135072468175,
+          "label": "3105m",
+          "timeout": false,
+          "waitMs": 567,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 2nd exit · Cantonments Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2412069912155272,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3748.9357376487887,
+          "label": "3749m",
+          "timeout": false,
+          "waitMs": 615,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.3602459657999526,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3798.9357376487887,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 410,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "You have arrived at your destination, straight ahead · 32 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 26.898068282498947,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3798.9357376487887,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 761,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead · 32 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 26.898068282498947,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3787,
+        "geometryMeters": 3798.9357376487887,
+        "durationSeconds": 355.3,
+        "points": 119,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Egypt Lane",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 114.44395396159516,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Ethiopia Close",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 209.73372464389854,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Guinea Bissau Loop",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 286.10688462045874,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Castle Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 879.1849620124088,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Lokko Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1564.546845686647,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Oxford Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3104.9135072468175,
+            "type": "rotary",
+            "modifier": "slight right",
+            "road": "Cantonments Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 3161.3163548393923,
+            "type": "exit rotary",
+            "modifier": "straight",
+            "road": "Cantonments Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 3551.8929901043994,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3627.5757585342526,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3798.9357376487887,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 16.017736586839472,
+        "destinationSnapMeters": 32.10339609466087
+      },
+      "drivingStartedAt": "2026-10-23T15:16:58.013Z",
+      "drivingWallSeconds": 387.87,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2190.5157313588234,
+        "originReady": false,
+        "destinationAccessMeters": 32.10339608966024,
+        "revision": 4,
+        "destination": "좌표 목적지 5.569000, -0.181000",
+        "remainingMeters": 19.937162729393496,
+        "remainingSeconds": 1.8705238758261182,
+        "language": "en-GH",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead · 32 m",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999999899956,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 5.569153,
+          "longitude": -0.181246,
+          "accuracy": 5,
+          "timestamp": 1792769007408
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 406,
+      "finishedAt": "2026-10-23T15:23:35.098Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 387
+    }
+  ]
+}

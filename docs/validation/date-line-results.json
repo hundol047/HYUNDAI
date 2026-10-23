@@ -1,0 +1,38 @@
+{
+  "scope": "Actual Chromium renderer with fixture roads/places/GPS and aborted tile requests; not a live Fiji route or map-data coverage claim.",
+  "results": [
+    {
+      "name": "navigation east keeps destination and GPS pins on the short date-line route",
+      "result": "passed"
+    },
+    {
+      "name": "navigation east preserves overlays when the map changes world copy",
+      "result": "passed"
+    },
+    {
+      "name": "navigation east follows moving GPS across the boundary without losing pins or tracking",
+      "result": "passed"
+    },
+    {
+      "name": "nearby east displays cafes across the date line and after world-copy panning",
+      "result": "passed"
+    },
+    {
+      "name": "navigation west keeps destination and GPS pins on the short date-line route",
+      "result": "passed"
+    },
+    {
+      "name": "navigation west preserves overlays when the map changes world copy",
+      "result": "passed"
+    },
+    {
+      "name": "navigation west follows moving GPS across the boundary without losing pins or tracking",
+      "result": "passed"
+    },
+    {
+      "name": "nearby west displays cafes across the date line and after world-copy panning",
+      "result": "passed"
+    }
+  ],
+  "pageErrors": []
+}

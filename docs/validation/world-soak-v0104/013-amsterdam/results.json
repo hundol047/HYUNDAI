@@ -1,0 +1,1036 @@
+{
+  "observedAt": "2026-10-23T14:59:00.603Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:59:00.612Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "amsterdam",
+      "label": "암스테르담",
+      "country": "NL",
+      "continent": "Europe",
+      "language": "nl-NL",
+      "start": [
+        52.374,
+        4.8939
+      ],
+      "end": [
+        52.36,
+        4.885
+      ],
+      "query": "Bocca Coffee Amsterdam",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:59:00.741Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 156555096,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2729944123,
+            "lat": "52.3644463",
+            "lon": "4.8868127",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.268177309829888e-05,
+            "addresstype": "amenity",
+            "name": "Bocca Coffee Roasters",
+            "display_name": "Bocca Coffee Roasters, 96-H, Kerkstraat, Grachtengordel, Centrum, Amsterdam, Noord-Holland, Nederland, 1017 GP, Nederland",
+            "address": {
+              "amenity": "Bocca Coffee Roasters",
+              "house_number": "96-H",
+              "road": "Kerkstraat",
+              "quarter": "Grachtengordel",
+              "suburb": "Centrum",
+              "city": "Amsterdam",
+              "municipality": "Amsterdam",
+              "state": "Noord-Holland",
+              "ISO3166-2-lvl4": "NL-NH",
+              "country": "Nederland",
+              "postcode": "1017 GP",
+              "country_code": "nl"
+            },
+            "extratags": {
+              "website": "https://www.bocca.nl/",
+              "check_date": "2025-04-28",
+              "wheelchair": "yes",
+              "payment:cash": "no",
+              "payment:visa": "yes",
+              "opening_hours": "Mo-Th 08:00-18:00; Fr 08:00-19:00; Sa 09:00-19:00; Su 09:00-18:00",
+              "payment:v_pay": "yes",
+              "indoor_seating": "yes",
+              "internet_access": "wlan",
+              "outdoor_seating": "yes",
+              "payment:maestro": "yes",
+              "payment:mastercard": "yes",
+              "payment:visa_debit": "yes",
+              "payment:debit_cards": "yes",
+              "payment:american_express": "yes"
+            },
+            "namedetails": {
+              "name": "Bocca Coffee Roasters",
+              "name:en": "Bocca Coffee Roasters",
+              "name:nl": "Bocca Coffee Roasters"
+            },
+            "boundingbox": [
+              "52.3643963",
+              "52.3644963",
+              "4.8867627",
+              "4.8868627"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Bocca Coffee RoastersBocca Coffee Roasters, 96-H, Kerkstraat, Grachtengordel, Centrum, Amsterdam, Noord-Holland, Nederland, 1017 GP, Nederland카페 · OSM / Nominatim내 위치에서 직선 약 1.2 km등록 영업시간 Mo-Th 08:00-18:00; Fr 08:00-19:00; Sa 09:00-19:00; Su 09:00-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1166.2152666764396
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16828/10768.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16829/10767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16828/10767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16829/10768.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16828/10769.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16829/10769.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16827/10767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16827/10768.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16830/10768.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16830/10767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16827/10769.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16830/10769.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=nl-NL%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Bocca+Coffee+Amsterdam",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/4.8939,52.374;4.885,52.36?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21534.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21535.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21536.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21537.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21538.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33662/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33663/21539.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33660/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33661/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33659/21543.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21543.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33658/21543.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21543.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21542.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21541.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21543.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67315/43080.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67312/43081.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67312/43082.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67315/43082.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67312/43080.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67314/43081.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67314/43080.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67313/43082.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67314/43082.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67315/43081.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67313/43081.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/67313/43080.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33657/21540.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33656/21541.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/33655/21541.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4206/2692.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4207/2692.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4206/2691.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4207/2691.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4206/2693.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4207/2693.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4205/2692.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4208/2692.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4205/2691.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4208/2691.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4205/2693.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/4208/2693.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 660,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ga rechtdoor · Prins Hendrikkade",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.436062724128515,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1394.0137194758593,
+          "label": "1394m",
+          "timeout": false,
+          "waitMs": 381,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Houd rechts aan op de splitsing · Prins Hendrikkade",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6492423932438978,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2894.0691897562747,
+          "label": "2894m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ga rechtdoor · Weesperplein",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.33762574442186966,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4341.103784634412,
+          "label": "4341m",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ga rechts · Gerard Doustraat",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8852349317051282,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 5738.138379512549,
+          "label": "5738m",
+          "timeout": false,
+          "waitMs": 346,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Bestemming",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5735805178059533,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 5788.138379512549,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "U bent gearriveerd op uw bestemming, deze bevindt zich recht vooruit · 49 m",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.41669758599646,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 5788.138379512549,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 895,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "U bent gearriveerd op uw bestemming, deze bevindt zich recht vooruit · 49 m",
+          "instructionLanguage": "nl",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.41669758599646,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 5799.1,
+        "geometryMeters": 5788.138379512549,
+        "durationSeconds": 871.6,
+        "points": 316,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Damrak",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 467.4774008912805,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Prins Hendrikkade",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1394.0137194758593,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "Prins Hendrikkade",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1532.0669184333153,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Foeliestraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1724.9843515319517,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Valkenburgerstraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2135.828884196981,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Meester Visserplein",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2194.935700633076,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Meester Visserplein",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2256.2425378304774,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Jonas Daniël Meijerplein",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2386.969748715498,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Weesperstraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2887.7205858281377,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Weesperplein",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3118.9283852209583,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4248.177367271818,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Eerste Van der Helststraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4477.108754088793,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "Gerard Doustraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4866.86546633853,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "Ruysdaelkade",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4939.4505771542335,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Ruysdaelstraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5103.950457757149,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Johannes Vermeerstraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5241.674947528789,
+            "type": "continue",
+            "modifier": "left",
+            "road": "Johannes Vermeerstraat",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5658.28087431507,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5677.823168356173,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 5788.138379512549,
+            "type": "arrive",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 25.79750554872749,
+        "destinationSnapMeters": 49.9602641418952
+      },
+      "drivingStartedAt": "2026-10-23T14:59:06.444Z",
+      "drivingWallSeconds": 588.13,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1709.7269277029588,
+        "originReady": false,
+        "destinationAccessMeters": 49.960264141528086,
+        "revision": 4,
+        "destination": "좌표 목적지 52.360000, 4.885000",
+        "remainingMeters": 20.0378761510627,
+        "remainingSeconds": 3.0116764417351396,
+        "language": "nl-NL",
+        "instructionLanguage": "nl",
+        "instruction": "U bent gearriveerd op uw bestemming, deze bevindt zich recht vooruit · 49 m",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999998961357,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 52.359552,
+          "longitude": 4.884944,
+          "accuracy": 5,
+          "timestamp": 1792768136009
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 605,
+      "finishedAt": "2026-10-23T15:09:04.186Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 587
+    }
+  ]
+}

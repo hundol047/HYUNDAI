@@ -50,6 +50,10 @@
       "result": "passed"
     },
     {
+      "name": "roundabout guidance preserves the exit number without an assumed rotation arrow",
+      "result": "passed"
+    },
+    {
       "name": "navigation layout fits mobile screen",
       "result": "passed"
     }

@@ -1,0 +1,640 @@
+{
+  "observedAt": "2026-10-23T15:31:42.102Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:31:42.111Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "rome",
+      "label": "로마",
+      "country": "IT",
+      "continent": "Europe",
+      "language": "it-IT",
+      "start": [
+        41.9,
+        12.496
+      ],
+      "end": [
+        41.892,
+        12.487
+      ],
+      "query": "Sant Eustachio Il Caffe Roma",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:31:42.232Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 80748575,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 261859088,
+            "lat": "41.8982524",
+            "lon": "12.4754268",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.896238651097914e-05,
+            "addresstype": "amenity",
+            "name": "Sant'Eustachio il Caffe",
+            "display_name": "Sant'Eustachio il Caffe, 82, Piazza di Sant'Eustachio, Sant'Eustachio, Municipio Roma I, Roma, Lazio, 00186, Italia",
+            "address": {
+              "amenity": "Sant'Eustachio il Caffe",
+              "house_number": "82",
+              "road": "Piazza di Sant'Eustachio",
+              "quarter": "Sant'Eustachio",
+              "suburb": "Municipio Roma I",
+              "city": "Roma",
+              "county": "Roma",
+              "ISO3166-2-lvl6": "IT-RM",
+              "state": "Lazio",
+              "ISO3166-2-lvl4": "IT-62",
+              "postcode": "00186",
+              "country": "Italia",
+              "country_code": "it"
+            },
+            "extratags": {
+              "email": "info@santeustachioilcaffe.it",
+              "phone": "+39 06 68802048",
+              "cuisine": "coffee_shop",
+              "toilets": "yes",
+              "website": "http://www.santeustachioilcaffe.it/",
+              "check_date": "2023-08-28",
+              "start_date": "1938",
+              "wheelchair": "yes",
+              "opening_hours": "Su-Th 07:30-01:00; Fr 07:30-01:30; Sa 07:30-02:00",
+              "toilets:access": "customers",
+              "outdoor_seating": "yes",
+              "toilets:wheelchair": "no"
+            },
+            "namedetails": {
+              "name": "Sant'Eustachio",
+              "name:it": "Sant'Eustachio il Caffe",
+              "name:zh": "鹿角咖啡"
+            },
+            "boundingbox": [
+              "41.8982024",
+              "41.8983024",
+              "12.4753768",
+              "12.4754768"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Sant'Eustachio il CaffeSant'Eustachio il Caffe, 82, Piazza di Sant'Eustachio, Sant'Eustachio, Municipio Roma I, Roma, Lazio, 00186, Italia카페 · OSM / Nominatim내 위치에서 직선 약 1.7 km전화 +39 06 68802048등록 영업시간 Su-Th 07:30-01:00; Fr 07:30-01:30; Sa 07:30-02:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1713.7895069885062
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=it-IT%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Sant+Eustachio+Il+Caffe+Roma",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/12.496,41.9;12.487,41.892?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17522/12175.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35040/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24353.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35039/24355.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35042/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35041/24354.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17520/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12176.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17519/12177.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17521/12177.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 344,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a destra · Via Cesare Balbo",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4361178267888937,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 304.0061544955338,
+          "label": "304m",
+          "timeout": false,
+          "waitMs": 397,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a destra leggermente · Via Cavour",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.3665657959912731,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 608.0123089910676,
+          "label": "608m",
+          "timeout": false,
+          "waitMs": 335,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a destra leggermente · Via Cavour",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.5542858001113042,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 912.0184634866014,
+          "label": "912m",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destinazione · Largo Corrado Ricci",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.985011837923429,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1166.0246179821352,
+          "label": "1166m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destinazione · Largo Corrado Ricci",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.5472056506176487,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1216.0246179821352,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 351,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Sei arrivato alla tua destinazione, si trova davanti a te · 162 m",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 23.810186685594946,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1216.0246179821352,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 621,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "Sei arrivato alla tua destinazione, si trova davanti a te · 162 m",
+          "instructionLanguage": "it",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 23.810186685594946,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1217.6,
+        "geometryMeters": 1216.0246179821352,
+        "durationSeconds": 151.9,
+        "points": 66,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Via Napoli",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 48.368164869232196,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Via Cesare Balbo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 94.70344828099795,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Via Agostino Depretis",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 235.85010212484303,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Via Cavour",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 742.5315708755531,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Via Cavour",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1216.0246179821352,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Largo Corrado Ricci",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 35.56058527778644,
+        "destinationSnapMeters": 162.24252175655556
+      },
+      "drivingStartedAt": "2026-10-23T15:31:48.260Z",
+      "drivingWallSeconds": 130.247,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 967.679803219758,
+        "originReady": false,
+        "destinationAccessMeters": 162.24252175413045,
+        "revision": 4,
+        "destination": "좌표 목적지 41.892000, 12.487000",
+        "remainingMeters": 20.025910369156456,
+        "remainingSeconds": 2.498304685508267,
+        "language": "it-IT",
+        "instructionLanguage": "it",
+        "instruction": "Sei arrivato alla tua destinazione, si trova davanti a te · 162 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000005015863,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 41.893306,
+          "longitude": 12.487874,
+          "accuracy": 5,
+          "timestamp": 1792769639978
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 149,
+      "finishedAt": "2026-10-23T15:34:06.943Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 130
+    }
+  ]
+}

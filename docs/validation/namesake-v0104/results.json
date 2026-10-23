@@ -1,0 +1,15 @@
+{
+  "scope": "Actual browser + live Nominatim response; synthetic Gangwon geolocation. A namesake is not automatically a provider error.",
+  "observedAt": "2026-10-23T15:29:00.384Z",
+  "origin": [
+    37.6868,
+    128.755
+  ],
+  "query": "대관령 옛길",
+  "results": [
+    "1. 대관령 옛길대관령 옛길, 458, 송파대로, 송파동, 송파1동, 송파구, 서울특별시, 05616, 대한민국식당 · OSM / Nominatim내 위치에서 직선 약 146.7 km · 먼 결과: 주소·업종을 확인하세요.지도에 표시 · 자동차 경로 계산 →"
+  ],
+  "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+  "warningVisible": 1,
+  "routeChosen": false
+}

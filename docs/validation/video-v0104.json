@@ -1,0 +1,22 @@
+[
+  {
+    "path": "docs/video/CabinOS_ONE_world_shop_v0104.mp4",
+    "seconds": 148.6,
+    "width": 1440,
+    "height": 1050,
+    "codec": "H.264",
+    "audio": false,
+    "bytes": 16928850,
+    "sha256": "8450e44169787ac8dc4dc2c92c99ceea97d66f7d738893449a62daa1b509560e"
+  },
+  {
+    "path": "docs/video/CabinOS_ONE_gps_access_v0104.mp4",
+    "seconds": 42.32,
+    "width": 1440,
+    "height": 1050,
+    "codec": "H.264",
+    "audio": false,
+    "bytes": 3444631,
+    "sha256": "9ef1919940767b6579ee0f028340ccc61509750e40a2ca59076d027040404bd7"
+  }
+]

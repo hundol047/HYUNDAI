@@ -1,0 +1,790 @@
+{
+  "observedAt": "2026-10-23T14:35:51.200Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:35:51.206Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "london",
+      "label": "런던",
+      "country": "GB",
+      "continent": "Europe",
+      "language": "en-GB",
+      "start": [
+        51.5075,
+        -0.128
+      ],
+      "end": [
+        51.5081856,
+        -0.1381409
+      ],
+      "query": "Fortnum Mason London",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:42:43.800Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 280193733,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 211484721,
+            "lat": "51.5081856",
+            "lon": "-0.1381409",
+            "category": "shop",
+            "type": "department_store",
+            "place_rank": 30,
+            "importance": 0.4519984561927137,
+            "addresstype": "shop",
+            "name": "Fortnum & Mason",
+            "display_name": "Fortnum & Mason, 181-184, Piccadilly, St. James's, Westminster, Mayfair, City of Westminster, Greater London, England, W1A 1ER, United Kingdom",
+            "address": {
+              "shop": "Fortnum & Mason",
+              "house_number": "181-184",
+              "road": "Piccadilly",
+              "neighbourhood": "St. James's",
+              "quarter": "Westminster",
+              "suburb": "Mayfair",
+              "city": "City of Westminster",
+              "ISO3166-2-lvl8": "GB-WSM",
+              "state": "England",
+              "ISO3166-2-lvl4": "GB-ENG",
+              "postcode": "W1A 1ER",
+              "country": "United Kingdom",
+              "country_code": "gb"
+            },
+            "extratags": {
+              "phone": "+44 20 7734 8040",
+              "fhrs:id": "411632",
+              "building": "yes",
+              "wikidata": "Q498563",
+              "wikipedia": "en:Fortnum & Mason",
+              "wheelchair": "yes",
+              "fhrs:rating": "5",
+              "fhrs:hygiene": "5",
+              "opening_hours": "Mo-Sa 10:00-21:00; Su 12:00-18:00",
+              "fhrs:structural": "5",
+              "toilets:wheelchair": "yes",
+              "fhrs:local_authority_id": "00515/0181/0/000",
+              "fhrs:confidence_management": "5"
+            },
+            "namedetails": {
+              "name": "Fortnum & Mason"
+            },
+            "boundingbox": [
+              "51.5079604",
+              "51.5085125",
+              "-0.1385638",
+              "-0.1377768"
+            ]
+          },
+          {
+            "place_id": 280528294,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 438299681,
+            "lat": "51.4702804",
+            "lon": "-0.4875044",
+            "category": "amenity",
+            "type": "deli",
+            "place_rank": 30,
+            "importance": 9.307927061870783e-05,
+            "addresstype": "amenity",
+            "name": "Fortnum & Mason",
+            "display_name": "Fortnum & Mason, Windsor Close, London Borough of Hillingdon, Greater London, England, TW6 2FF, United Kingdom",
+            "address": {
+              "amenity": "Fortnum & Mason",
+              "road": "Windsor Close",
+              "city_district": "London Borough of Hillingdon",
+              "ISO3166-2-lvl8": "GB-HIL",
+              "city": "Greater London",
+              "state": "England",
+              "ISO3166-2-lvl4": "GB-ENG",
+              "postcode": "TW6 2FF",
+              "country": "United Kingdom",
+              "country_code": "gb"
+            },
+            "extratags": {
+              "shop": "gift",
+              "level": "2",
+              "indoor": "room",
+              "level_ref": "2",
+              "check_date": "2026-02-04"
+            },
+            "namedetails": {
+              "name": "Fortnum & Mason"
+            },
+            "boundingbox": [
+              "51.4702265",
+              "51.4703363",
+              "-0.4876199",
+              "-0.4873878"
+            ]
+          },
+          {
+            "place_id": 280665948,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 438299680,
+            "lat": "51.4705782",
+            "lon": "-0.4877842",
+            "category": "amenity",
+            "type": "bar",
+            "place_rank": 30,
+            "importance": 9.307927061870783e-05,
+            "addresstype": "amenity",
+            "name": "Fortnum & Mason",
+            "display_name": "Fortnum & Mason, Windsor Close, London Borough of Hillingdon, Greater London, England, TW6 2FF, United Kingdom",
+            "address": {
+              "amenity": "Fortnum & Mason",
+              "road": "Windsor Close",
+              "city_district": "London Borough of Hillingdon",
+              "ISO3166-2-lvl8": "GB-HIL",
+              "city": "Greater London",
+              "state": "England",
+              "ISO3166-2-lvl4": "GB-ENG",
+              "postcode": "TW6 2FF",
+              "country": "United Kingdom",
+              "country_code": "gb"
+            },
+            "extratags": {
+              "level": "2",
+              "level_ref": "2",
+              "check_date": "2026-02-04",
+              "indoor_seating": "yes",
+              "outdoor_seating": "no"
+            },
+            "namedetails": {
+              "name": "Fortnum & Mason"
+            },
+            "boundingbox": [
+              "51.4705209",
+              "51.4706354",
+              "-0.4878384",
+              "-0.4877300"
+            ]
+          },
+          {
+            "place_id": 280056043,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 12410053302,
+            "lat": "51.5137552",
+            "lon": "-0.0870742",
+            "category": "shop",
+            "type": "tea",
+            "place_rank": 30,
+            "importance": 9.307927061870783e-05,
+            "addresstype": "shop",
+            "name": "Fortnum & Mason",
+            "display_name": "Fortnum & Mason, Threadneedle Street, Leadenhall Market, Bank, City of London, Greater London, England, EC3V 3LP, United Kingdom",
+            "address": {
+              "shop": "Fortnum & Mason",
+              "road": "Threadneedle Street",
+              "neighbourhood": "Leadenhall Market",
+              "quarter": "Bank",
+              "city": "City of London",
+              "ISO3166-2-lvl6": "GB-LND",
+              "state": "England",
+              "ISO3166-2-lvl4": "GB-ENG",
+              "postcode": "EC3V 3LP",
+              "country": "United Kingdom",
+              "country_code": "gb"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Fortnum & Mason"
+            },
+            "boundingbox": [
+              "51.5137052",
+              "51.5138052",
+              "-0.0871242",
+              "-0.0870242"
+            ]
+          },
+          {
+            "place_id": 280184712,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3310086158,
+            "lat": "51.5301681",
+            "lon": "-0.1256988",
+            "category": "shop",
+            "type": "deli",
+            "place_rank": 30,
+            "importance": 9.307927061870783e-05,
+            "addresstype": "shop",
+            "name": "Fortnum & Mason",
+            "display_name": "Fortnum & Mason, Pancras Road, King's Cross, London Borough of Camden, Greater London, England, N1C 4QP, United Kingdom",
+            "address": {
+              "shop": "Fortnum & Mason",
+              "road": "Pancras Road",
+              "suburb": "King's Cross",
+              "city_district": "London Borough of Camden",
+              "ISO3166-2-lvl8": "GB-CMD",
+              "city": "Greater London",
+              "state": "England",
+              "ISO3166-2-lvl4": "GB-ENG",
+              "postcode": "N1C 4QP",
+              "country": "United Kingdom",
+              "country_code": "gb"
+            },
+            "extratags": {
+              "level": "0",
+              "phone": "+44 20 7734 8040",
+              "website": "https://www.fortnumandmason.com/st-pancras",
+              "check_date": "2025-08-29",
+              "wheelchair": "yes",
+              "opening_hours": "Mo-Sa 07:30-21:00; Su 09:00-19:00"
+            },
+            "namedetails": {
+              "name": "Fortnum & Mason",
+              "name:en": "Fortnum & Mason",
+              "addr:housename": "St Pancras International Station"
+            },
+            "boundingbox": [
+              "51.5301181",
+              "51.5302181",
+              "-0.1257488",
+              "-0.1256488"
+            ]
+          }
+        ],
+        "uiCount": 5,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Fortnum & MasonFortnum & Mason, 181-184, Piccadilly, St. James's, Westminster, Mayfair, City of Westminster, Greater London, England, W1A 1ER, United Kingdomdepartment_store · OSM / Nominatim내 위치에서 직선 약 706 m전화 +44 20 7734 8040등록 영업시간 Mo-Sa 10:00-21:00; Su 12:00-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. Fortnum & MasonFortnum & Mason, Windsor Close, London Borough of Hillingdon, Greater London, England, TW6 2FF, United Kingdomdeli · OSM / Nominatim내 위치에서 직선 약 25.2 km지도에 표시 · 자동차 경로 계산 →",
+          "3. Fortnum & MasonFortnum & Mason, Windsor Close, London Borough of Hillingdon, Greater London, England, TW6 2FF, United Kingdombar · OSM / Nominatim내 위치에서 직선 약 25.2 km지도에 표시 · 자동차 경로 계산 →",
+          "4. Fortnum & MasonFortnum & Mason, Threadneedle Street, Leadenhall Market, Bank, City of London, Greater London, England, EC3V 3LP, United Kingdomtea · OSM / Nominatim내 위치에서 직선 약 2.9 km지도에 표시 · 자동차 경로 계산 →",
+          "5. Fortnum & MasonFortnum & Mason, Pancras Road, King's Cross, London Borough of Camden, Greater London, England, N1C 4QP, United Kingdomdeli · OSM / Nominatim내 위치에서 직선 약 2.5 km전화 +44 20 7734 8040등록 영업시간 Mo-Sa 07:30-21:00; Su 09:00-19:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 705.9653408564945
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/16371/10895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16372/10895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16371/10896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16370/10895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16373/10896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16370/10896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16372/10896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16373/10895.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-GB%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Fortnum+Mason+London",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16372/10897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16371/10897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16370/10897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/16373/10897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32744/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32741/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32744/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32741/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32741/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32744/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-0.128,51.5075;-0.1381409,51.5081856?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32745/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32745/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32745/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32746/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32746/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32746/21793.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32745/21790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32744/21790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32741/21790.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65485/43584.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65484/43585.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65485/43583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65486/43585.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65484/43583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65485/43585.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65487/43585.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65486/43583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65486/43584.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65487/43583.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65487/43584.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/65484/43584.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21791.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32742/21792.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/32743/21792.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 642,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Exit the roundabout · Trafalgar Square",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.13173063436373303,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 288.19063726565497,
+          "label": "288m",
+          "timeout": false,
+          "waitMs": 307,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Waterloo Place",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8307142390236648,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 576.3812745313099,
+          "label": "576m",
+          "timeout": false,
+          "waitMs": 315,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Keep right at the fork · Regent Street St James's",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6236788678428408,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 864.571911796965,
+          "label": "865m",
+          "timeout": false,
+          "waitMs": 321,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Duke Street St James's",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7244189473002803,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1102.7625490626199,
+          "label": "1103m",
+          "timeout": false,
+          "waitMs": 361,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · Duke Street St James's",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8274047065774371,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1152.7625490626199,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 335,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 19.673633510876208,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1152.7625490626199,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 850,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 19.673633510876208,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "coordinateEndpoint": [
+        51.514,
+        -0.149
+      ],
+      "selectedPlace": {
+        "name": "Fortnum & Mason",
+        "latitude": 51.5081856,
+        "longitude": -0.1381409,
+        "id": "280193733",
+        "address": "Fortnum & Mason, 181-184, Piccadilly, St. James's, Westminster, Mayfair, City of Westminster, Greater London, England, W1A 1ER, United Kingdom",
+        "category": "department_store",
+        "phone": "+44 20 7734 8040",
+        "website": "",
+        "openingHours": "Mo-Sa 10:00-21:00; Su 12:00-18:00",
+        "source": "OSM / Nominatim"
+      },
+      "destinationMode": "provider-search-result",
+      "route": {
+        "distanceMeters": 1155.8,
+        "geometryMeters": 1152.7625490626199,
+        "durationSeconds": 200.4,
+        "points": 117,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Charing Cross",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 129.6289903394153,
+            "type": "exit rotary",
+            "modifier": "slight left",
+            "road": "Trafalgar Square",
+            "drivingSide": "right",
+            "exit": 5
+          },
+          {
+            "atMeters": 204.36004047364108,
+            "type": "new name",
+            "modifier": "slight left",
+            "road": "Cockspur Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 452.57022498470485,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Waterloo Place",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 622.6690662651721,
+            "type": "fork",
+            "modifier": "slight right",
+            "road": "Regent Street St James's",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 802.6492605065429,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Piccadilly",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1113.4108431908382,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Duke Street St James's",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1152.7625490626199,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Duke Street St James's",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 3.4964256608922217,
+        "destinationSnapMeters": 23.93753701154843
+      },
+      "drivingStartedAt": "2026-10-23T14:42:49.717Z",
+      "drivingWallSeconds": 122.203,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 729.4916107230466,
+        "originReady": false,
+        "destinationAccessMeters": 23.937537010007446,
+        "revision": 3,
+        "destination": "Fortnum & Mason",
+        "remainingMeters": 15.039523978824558,
+        "remainingSeconds": 2.60764890582838,
+        "language": "en-GB",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 14.999999998995463,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 51.508089,
+          "longitude": -0.13845,
+          "accuracy": 5,
+          "timestamp": 1792766693365
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 140,
+      "finishedAt": "2026-10-23T14:45:01.179Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 122
+    }
+  ]
+}

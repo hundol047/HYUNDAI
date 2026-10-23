@@ -1,0 +1,898 @@
+[
+  {
+    "id": "lisbon",
+    "label": "리스본",
+    "country": "PT",
+    "continent": "Europe",
+    "language": "pt-PT",
+    "start": [
+      38.7137,
+      -9.1394
+    ],
+    "end": [
+      38.7063,
+      -9.1453
+    ],
+    "query": "A Brasileira Lisboa"
+  },
+  {
+    "id": "toronto",
+    "label": "토론토",
+    "country": "CA",
+    "continent": "North America",
+    "language": "en-CA",
+    "start": [
+      43.6535,
+      -79.384
+    ],
+    "end": [
+      43.643,
+      -79.374
+    ],
+    "query": "Balzacs Toronto"
+  },
+  {
+    "id": "seoul",
+    "label": "서울",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      37.5663,
+      126.9779
+    ],
+    "end": [
+      37.5796,
+      126.977
+    ],
+    "query": "스타벅스 광화문"
+  },
+  {
+    "id": "daegu",
+    "label": "대구",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      35.8714,
+      128.6014
+    ],
+    "end": [
+      35.8586,
+      128.5995
+    ],
+    "query": "스타벅스 대구 반월당"
+  },
+  {
+    "id": "montreal",
+    "label": "몬트리올",
+    "country": "CA",
+    "continent": "North America",
+    "language": "fr-CA",
+    "start": [
+      45.5018,
+      -73.5736
+    ],
+    "end": [
+      45.5088,
+      -73.554
+    ],
+    "query": "Schwartz Montreal"
+  },
+  {
+    "id": "dubai",
+    "label": "두바이",
+    "country": "AE",
+    "continent": "Asia",
+    "language": "ar-AE",
+    "start": [
+      25.217,
+      55.279
+    ],
+    "end": [
+      25.1975,
+      55.2795
+    ],
+    "query": "Starbucks Dubai Mall"
+  },
+  {
+    "id": "marrakesh",
+    "label": "마라케시",
+    "country": "MA",
+    "continent": "Africa",
+    "language": "ar-MA",
+    "start": [
+      31.634,
+      -8.0065
+    ],
+    "end": [
+      31.6222,
+      -7.9895
+    ],
+    "query": "Cafe de France Marrakech"
+  },
+  {
+    "id": "sao-paulo",
+    "label": "상파울루",
+    "country": "BR",
+    "continent": "South America",
+    "language": "pt-BR",
+    "start": [
+      -23.5505,
+      -46.6333
+    ],
+    "end": [
+      -23.5614,
+      -46.6559
+    ],
+    "query": "Padaria Bella Paulista Sao Paulo"
+  },
+  {
+    "id": "santiago",
+    "label": "산티아고",
+    "country": "CL",
+    "continent": "South America",
+    "language": "es-CL",
+    "start": [
+      -33.4378,
+      -70.6504
+    ],
+    "end": [
+      -33.4431,
+      -70.6539
+    ],
+    "query": "Cafe Haiti Santiago"
+  },
+  {
+    "id": "furka",
+    "label": "스위스 푸르카 산악도로",
+    "country": "CH",
+    "continent": "Europe",
+    "language": "de-CH",
+    "start": [
+      46.586213,
+      8.430412
+    ],
+    "end": [
+      46.565596,
+      8.38096
+    ],
+    "query": "Hotel Belvedere Furka"
+  },
+  {
+    "id": "melbourne",
+    "label": "멜버른",
+    "country": "AU",
+    "continent": "Oceania",
+    "language": "en-AU",
+    "start": [
+      -37.8165,
+      144.9567
+    ],
+    "end": [
+      -37.8136,
+      144.973
+    ],
+    "query": "Market Lane Coffee Melbourne"
+  },
+  {
+    "id": "queenstown",
+    "label": "퀸스타운→애로타운",
+    "country": "NZ",
+    "continent": "Oceania",
+    "language": "en-NZ",
+    "start": [
+      -45.031,
+      168.662
+    ],
+    "end": [
+      -44.939,
+      168.83
+    ],
+    "query": "The Remarkables Sweet Shop Arrowtown"
+  },
+  {
+    "id": "amsterdam",
+    "label": "암스테르담",
+    "country": "NL",
+    "continent": "Europe",
+    "language": "nl-NL",
+    "start": [
+      52.374,
+      4.8939
+    ],
+    "end": [
+      52.36,
+      4.885
+    ],
+    "query": "Bocca Coffee Amsterdam"
+  },
+  {
+    "id": "osaka",
+    "label": "오사카",
+    "country": "JP",
+    "continent": "Asia",
+    "language": "ja-JP",
+    "start": [
+      34.705,
+      135.497
+    ],
+    "end": [
+      34.693,
+      135.501
+    ],
+    "query": "Starbucks Osaka"
+  },
+  {
+    "id": "san-francisco",
+    "label": "샌프란시스코",
+    "country": "US",
+    "continent": "North America",
+    "language": "en-US",
+    "start": [
+      37.802,
+      -122.418
+    ],
+    "end": [
+      37.79,
+      -122.407
+    ],
+    "query": "Blue Bottle Coffee San Francisco"
+  },
+  {
+    "id": "accra",
+    "label": "아크라",
+    "country": "GH",
+    "continent": "Africa",
+    "language": "en-GH",
+    "start": [
+      5.556,
+      -0.196
+    ],
+    "end": [
+      5.569,
+      -0.181
+    ],
+    "query": "Cafe Accra"
+  },
+  {
+    "id": "lima",
+    "label": "리마",
+    "country": "PE",
+    "continent": "South America",
+    "language": "es-PE",
+    "start": [
+      -12.12,
+      -77.036
+    ],
+    "end": [
+      -12.13,
+      -77.029
+    ],
+    "query": "La Lucha Sangucheria Miraflores"
+  },
+  {
+    "id": "wellington",
+    "label": "웰링턴",
+    "country": "NZ",
+    "continent": "Oceania",
+    "language": "en-NZ",
+    "start": [
+      -41.284,
+      174.776
+    ],
+    "end": [
+      -41.297,
+      174.775
+    ],
+    "query": "Fidel Cafe Wellington"
+  },
+  {
+    "id": "rome",
+    "label": "로마",
+    "country": "IT",
+    "continent": "Europe",
+    "language": "it-IT",
+    "start": [
+      41.9,
+      12.496
+    ],
+    "end": [
+      41.892,
+      12.487
+    ],
+    "query": "Sant Eustachio Il Caffe Roma"
+  },
+  {
+    "id": "taipei",
+    "label": "타이베이",
+    "country": "TW",
+    "continent": "Asia",
+    "language": "zh-TW",
+    "start": [
+      25.0475,
+      121.517
+    ],
+    "end": [
+      25.033,
+      121.529
+    ],
+    "query": "Din Tai Fung Taipei"
+  },
+  {
+    "id": "vancouver",
+    "label": "밴쿠버",
+    "country": "CA",
+    "continent": "North America",
+    "language": "en-CA",
+    "start": [
+      49.282,
+      -123.12
+    ],
+    "end": [
+      49.29,
+      -123.13
+    ],
+    "query": "Revolver Coffee Vancouver"
+  },
+  {
+    "id": "kigali",
+    "label": "키갈리",
+    "country": "RW",
+    "continent": "Africa",
+    "language": "en-RW",
+    "start": [
+      -1.944,
+      30.062
+    ],
+    "end": [
+      -1.956,
+      30.075
+    ],
+    "query": "Question Coffee Kigali"
+  },
+  {
+    "id": "rio",
+    "label": "리우데자네이루",
+    "country": "BR",
+    "continent": "South America",
+    "language": "pt-BR",
+    "start": [
+      -22.967,
+      -43.181
+    ],
+    "end": [
+      -22.979,
+      -43.19
+    ],
+    "query": "Confeitaria Colombo Rio de Janeiro"
+  },
+  {
+    "id": "hobart",
+    "label": "호바트",
+    "country": "AU",
+    "continent": "Oceania",
+    "language": "en-AU",
+    "start": [
+      -42.882,
+      147.324
+    ],
+    "end": [
+      -42.89,
+      147.331
+    ],
+    "query": "Jackman McRoss Hobart"
+  },
+  {
+    "id": "helsinki",
+    "label": "헬싱키",
+    "country": "FI",
+    "continent": "Europe",
+    "language": "fi-FI",
+    "start": [
+      60.17,
+      24.941
+    ],
+    "end": [
+      60.161,
+      24.951
+    ],
+    "query": "Cafe Ekberg Helsinki"
+  },
+  {
+    "id": "kuala-lumpur",
+    "label": "쿠알라룸푸르",
+    "country": "MY",
+    "continent": "Asia",
+    "language": "ms-MY",
+    "start": [
+      3.147,
+      101.695
+    ],
+    "end": [
+      3.158,
+      101.712
+    ],
+    "query": "Old Town White Coffee Kuala Lumpur"
+  },
+  {
+    "id": "los-angeles",
+    "label": "로스앤젤레스",
+    "country": "US",
+    "continent": "North America",
+    "language": "en-US",
+    "start": [
+      34.049,
+      -118.249
+    ],
+    "end": [
+      34.057,
+      -118.238
+    ],
+    "query": "Grand Central Market Los Angeles"
+  },
+  {
+    "id": "dakar",
+    "label": "다카르",
+    "country": "SN",
+    "continent": "Africa",
+    "language": "fr-SN",
+    "start": [
+      14.669,
+      -17.433
+    ],
+    "end": [
+      14.681,
+      -17.442
+    ],
+    "query": "Cafe de Rome Dakar"
+  },
+  {
+    "id": "bogota",
+    "label": "보고타",
+    "country": "CO",
+    "continent": "South America",
+    "language": "es-CO",
+    "start": [
+      4.6,
+      -74.075
+    ],
+    "end": [
+      4.612,
+      -74.07
+    ],
+    "query": "Juan Valdez Bogota"
+  },
+  {
+    "id": "christchurch",
+    "label": "크라이스트처치",
+    "country": "NZ",
+    "continent": "Oceania",
+    "language": "en-NZ",
+    "start": [
+      -43.531,
+      172.63
+    ],
+    "end": [
+      -43.535,
+      172.645
+    ],
+    "query": "C1 Espresso Christchurch"
+  },
+  {
+    "id": "stockholm",
+    "label": "스톡홀름",
+    "country": "SE",
+    "continent": "Europe",
+    "language": "sv-SE",
+    "start": [
+      59.332,
+      18.058
+    ],
+    "end": [
+      59.32,
+      18.074
+    ],
+    "query": "Vete Katten Stockholm"
+  },
+  {
+    "id": "jakarta",
+    "label": "자카르타",
+    "country": "ID",
+    "continent": "Asia",
+    "language": "id-ID",
+    "start": [
+      -6.186,
+      106.822
+    ],
+    "end": [
+      -6.196,
+      106.823
+    ],
+    "query": "Starbucks Jakarta"
+  },
+  {
+    "id": "honolulu",
+    "label": "호놀룰루",
+    "country": "US",
+    "continent": "North America",
+    "language": "en-US",
+    "start": [
+      21.289,
+      -157.84
+    ],
+    "end": [
+      21.279,
+      -157.827
+    ],
+    "query": "Island Vintage Coffee Waikiki"
+  },
+  {
+    "id": "addis-ababa",
+    "label": "아디스아바바",
+    "country": "ET",
+    "continent": "Africa",
+    "language": "en-ET",
+    "start": [
+      9.009,
+      38.754
+    ],
+    "end": [
+      9.02,
+      38.755
+    ],
+    "query": "Tomoca Coffee Addis Ababa"
+  },
+  {
+    "id": "quito",
+    "label": "키토",
+    "country": "EC",
+    "continent": "South America",
+    "language": "es-EC",
+    "start": [
+      -0.219,
+      -78.51
+    ],
+    "end": [
+      -0.208,
+      -78.5
+    ],
+    "query": "Cafe Mosaico Quito"
+  },
+  {
+    "id": "perth",
+    "label": "퍼스",
+    "country": "AU",
+    "continent": "Oceania",
+    "language": "en-AU",
+    "start": [
+      -31.952,
+      115.852
+    ],
+    "end": [
+      -31.955,
+      115.868
+    ],
+    "query": "London Court Perth"
+  },
+  {
+    "id": "busan",
+    "label": "부산",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      35.1631,
+      129.1637
+    ],
+    "end": [
+      35.1557,
+      129.1466
+    ],
+    "query": "스타벅스 해운대"
+  },
+  {
+    "id": "daejeon",
+    "label": "대전",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      36.351,
+      127.385
+    ],
+    "end": [
+      36.3273,
+      127.4273
+    ],
+    "query": "성심당 대전"
+  },
+  {
+    "id": "jeju",
+    "label": "제주",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      33.506,
+      126.492
+    ],
+    "end": [
+      33.5115,
+      126.527
+    ],
+    "query": "스타벅스 제주"
+  },
+  {
+    "id": "tokyo",
+    "label": "도쿄",
+    "country": "JP",
+    "continent": "Asia",
+    "language": "ja-JP",
+    "start": [
+      35.669,
+      139.703
+    ],
+    "end": [
+      35.6595,
+      139.7005
+    ],
+    "query": "Starbucks Shibuya Tokyo"
+  },
+  {
+    "id": "beijing",
+    "label": "베이징",
+    "country": "CN",
+    "continent": "Asia",
+    "language": "zh-CN",
+    "start": [
+      39.916,
+      116.41
+    ],
+    "end": [
+      39.93,
+      116.44
+    ],
+    "query": "Starbucks Beijing"
+  },
+  {
+    "id": "singapore",
+    "label": "싱가포르",
+    "country": "SG",
+    "continent": "Asia",
+    "language": "en-SG",
+    "start": [
+      1.3,
+      103.839
+    ],
+    "end": [
+      1.286,
+      103.852
+    ],
+    "query": "Ya Kun Kaya Toast Singapore"
+  },
+  {
+    "id": "bangkok",
+    "label": "방콕",
+    "country": "TH",
+    "continent": "Asia",
+    "language": "th-TH",
+    "start": [
+      13.756,
+      100.5018
+    ],
+    "end": [
+      13.746,
+      100.534
+    ],
+    "query": "Starbucks Bangkok"
+  },
+  {
+    "id": "delhi",
+    "label": "뉴델리",
+    "country": "IN",
+    "continent": "Asia",
+    "language": "hi-IN",
+    "start": [
+      28.633,
+      77.216
+    ],
+    "end": [
+      28.613,
+      77.23
+    ],
+    "query": "Saravana Bhavan New Delhi"
+  },
+  {
+    "id": "istanbul",
+    "label": "이스탄불",
+    "country": "TR",
+    "continent": "Europe/Asia",
+    "language": "tr-TR",
+    "start": [
+      41.008,
+      28.978
+    ],
+    "end": [
+      41.0365,
+      28.985
+    ],
+    "query": "Hafiz Mustafa Istanbul"
+  },
+  {
+    "id": "london",
+    "label": "런던",
+    "country": "GB",
+    "continent": "Europe",
+    "language": "en-GB",
+    "start": [
+      51.5075,
+      -0.128
+    ],
+    "end": [
+      51.514,
+      -0.149
+    ],
+    "query": "Fortnum Mason London"
+  },
+  {
+    "id": "berlin",
+    "label": "베를린",
+    "country": "DE",
+    "continent": "Europe",
+    "language": "de-DE",
+    "start": [
+      52.5163,
+      13.378
+    ],
+    "end": [
+      52.521,
+      13.409
+    ],
+    "query": "Dussmann Berlin"
+  },
+  {
+    "id": "nairobi",
+    "label": "나이로비",
+    "country": "KE",
+    "continent": "Africa",
+    "language": "en-KE",
+    "start": [
+      -1.286,
+      36.817
+    ],
+    "end": [
+      -1.27,
+      36.807
+    ],
+    "query": "Java House Nairobi"
+  },
+  {
+    "id": "cape-town",
+    "label": "케이프타운",
+    "country": "ZA",
+    "continent": "Africa",
+    "language": "en-ZA",
+    "start": [
+      -33.925,
+      18.424
+    ],
+    "end": [
+      -33.908,
+      18.419
+    ],
+    "query": "Truth Coffee Cape Town"
+  },
+  {
+    "id": "new-york",
+    "label": "뉴욕",
+    "country": "US",
+    "continent": "North America",
+    "language": "en-US",
+    "start": [
+      40.758,
+      -73.9855
+    ],
+    "end": [
+      40.735,
+      -73.99
+    ],
+    "query": "Katz Delicatessen New York"
+  },
+  {
+    "id": "mexico-city",
+    "label": "멕시코시티",
+    "country": "MX",
+    "continent": "North America",
+    "language": "es-MX",
+    "start": [
+      19.4326,
+      -99.1332
+    ],
+    "end": [
+      19.427,
+      -99.161
+    ],
+    "query": "Cafe de Tacuba Ciudad de Mexico"
+  },
+  {
+    "id": "buenos-aires",
+    "label": "부에노스아이레스",
+    "country": "AR",
+    "continent": "South America",
+    "language": "es-AR",
+    "start": [
+      -34.6037,
+      -58.3816
+    ],
+    "end": [
+      -34.615,
+      -58.373
+    ],
+    "query": "Cafe Tortoni Buenos Aires"
+  },
+  {
+    "id": "sydney",
+    "label": "시드니",
+    "country": "AU",
+    "continent": "Oceania",
+    "language": "en-AU",
+    "start": [
+      -33.873,
+      151.206
+    ],
+    "end": [
+      -33.857846,
+      151.209777
+    ],
+    "query": "Queen Victoria Building Sydney"
+  },
+  {
+    "id": "auckland",
+    "label": "오클랜드",
+    "country": "NZ",
+    "continent": "Oceania",
+    "language": "en-NZ",
+    "start": [
+      -36.858,
+      174.76
+    ],
+    "end": [
+      -36.844,
+      174.77
+    ],
+    "query": "SkyCity Auckland"
+  },
+  {
+    "id": "tromso",
+    "label": "노르웨이 트롬쇠",
+    "country": "NO",
+    "continent": "Europe",
+    "language": "nb-NO",
+    "start": [
+      69.651,
+      18.955
+    ],
+    "end": [
+      69.682,
+      18.92
+    ],
+    "query": "Fiskekompaniet Tromso"
+  },
+  {
+    "id": "gangwon",
+    "label": "강원 대관령 주변",
+    "country": "KR",
+    "continent": "Asia",
+    "language": "ko-KR",
+    "start": [
+      37.6868,
+      128.755
+    ],
+    "end": [
+      37.721,
+      128.826
+    ],
+    "query": "대관령 옛길"
+  }
+]

@@ -1,0 +1,659 @@
+{
+  "observedAt": "2026-10-23T15:53:37.819Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:53:37.826Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "hobart",
+      "label": "호바트",
+      "country": "AU",
+      "continent": "Oceania",
+      "language": "en-AU",
+      "start": [
+        -42.882,
+        147.324
+      ],
+      "end": [
+        -42.89,
+        147.331
+      ],
+      "query": "Jackman McRoss Hobart",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:53:37.960Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 24173195,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 764736363,
+            "lat": "-42.8591070",
+            "lon": "147.3044660",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.942931258101804e-05,
+            "addresstype": "amenity",
+            "name": "Jackman & McRoss",
+            "display_name": "Jackman & McRoss, 30, Cross Street, New Town, Hobart, Tasmania, 7008, Australia",
+            "address": {
+              "amenity": "Jackman & McRoss",
+              "house_number": "30",
+              "road": "Cross Street",
+              "suburb": "New Town",
+              "city": "Hobart",
+              "state": "Tasmania",
+              "ISO3166-2-lvl4": "AU-TAS",
+              "postcode": "7008",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "wheelchair": "limited",
+              "opening_hours": "Mo-Su 07:00-17:00; PH off",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "Jackman & McRoss"
+            },
+            "boundingbox": [
+              "-42.8591570",
+              "-42.8590570",
+              "147.3044160",
+              "147.3045160"
+            ]
+          },
+          {
+            "place_id": 24196836,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6494302521,
+            "lat": "-42.8849300",
+            "lon": "147.3267440",
+            "category": "shop",
+            "type": "bakery",
+            "place_rank": 30,
+            "importance": 2.8699931334355954e-05,
+            "addresstype": "shop",
+            "name": "Jackman & McRoss",
+            "display_name": "Jackman & McRoss, 4, Victoria Street, Hobart, Tasmania, 7000, Australia",
+            "address": {
+              "shop": "Jackman & McRoss",
+              "house_number": "4",
+              "road": "Victoria Street",
+              "suburb": "Hobart",
+              "city": "Hobart",
+              "state": "Tasmania",
+              "ISO3166-2-lvl4": "AU-TAS",
+              "postcode": "7000",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "opening_hours": "Mo-Fr 07:00-16:00"
+            },
+            "namedetails": {
+              "name": "Jackman & McRoss"
+            },
+            "boundingbox": [
+              "-42.8849800",
+              "-42.8848800",
+              "147.3266940",
+              "147.3267940"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Jackman & McRossJackman & McRoss, 30, Cross Street, New Town, Hobart, Tasmania, 7008, Australia카페 · OSM / Nominatim내 위치에서 직선 약 3.0 km등록 영업시간 Mo-Su 07:00-17:00; PH off · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. Jackman & McRossJackman & McRoss, 4, Victoria Street, Hobart, Tasmania, 7000, Australia베이커리 · OSM / Nominatim내 위치에서 직선 약 395 m등록 영업시간 Mo-Fr 07:00-16:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 395.1342639992874
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-AU%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Jackman+McRoss+Hobart",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/147.324,-42.882;147.331,-42.89?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20714.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20714.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20714.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20714.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29794/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29792/20711.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29796/20714.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29796/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29796/20712.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59589/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59590/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59587/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59588/41428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29793/20713.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29795/20713.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 492,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Murray Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.1268295035565075,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 404.9648961953248,
+          "label": "405m",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Davey Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2199250749691837,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 789.7695188337924,
+          "label": "790m",
+          "timeout": false,
+          "waitMs": 369,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Take the ramp on the left · B68: Sandy Bay, Taroona",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.736633973048489,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1214.8946885859743,
+          "label": "1215m",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a slight left · Hampden Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.42683315377815834,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1569.8595847812992,
+          "label": "1570m",
+          "timeout": false,
+          "waitMs": 304,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Logan Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.2924479105993583,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1619.8595847812992,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead · 40 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 20.960381807074967,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1619.8595847812992,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 556,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "You have arrived at your destination, straight ahead · 40 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 20.960381807074967,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1621.8,
+        "geometryMeters": 1619.8595847812992,
+        "durationSeconds": 191.5,
+        "points": 95,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Bathurst Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 24.752756878901554,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Murray Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 550.122894589748,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Davey Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 789.7695188337924,
+            "type": "off ramp",
+            "modifier": "left",
+            "road": "",
+            "destinations": "B68: Sandy Bay, Taroona",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1223.1672956735429,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "Hampden Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1435.0939290026445,
+            "type": "turn",
+            "modifier": "right",
+            "road": "De Witt Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1541.5224079258726,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Logan Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1619.8595847812992,
+            "type": "arrive",
+            "modifier": "straight",
+            "road": "Logan Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 6.17777027988726,
+        "destinationSnapMeters": 40.29925637779745
+      },
+      "drivingStartedAt": "2026-10-23T15:53:43.795Z",
+      "drivingWallSeconds": 170.311,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1090.3985171551117,
+        "originReady": false,
+        "destinationAccessMeters": 40.29925637511973,
+        "revision": 4,
+        "destination": "좌표 목적지 -42.890000, 147.331000",
+        "remainingMeters": 15.017968365286066,
+        "remainingSeconds": 1.773301851000297,
+        "language": "en-AU",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead · 40 m",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000000398131,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -42.890268,
+          "longitude": 147.33133299999997,
+          "accuracy": 5,
+          "timestamp": 1792770995521
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 188,
+      "finishedAt": "2026-10-23T15:56:43.036Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 170
+    }
+  ]
+}

@@ -1,0 +1,752 @@
+{
+  "observedAt": "2026-10-23T18:03:27.201Z",
+  "sourceCommit": "706d4e9204bed0382b291ae1f4a2bae1b0a052aa",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T18:03:27.208Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "berlin",
+      "label": "베를린",
+      "country": "DE",
+      "continent": "Europe",
+      "language": "de-DE",
+      "start": [
+        52.5163,
+        13.378
+      ],
+      "end": [
+        52.521,
+        13.409
+      ],
+      "query": "Dussmann Berlin",
+      "result": "passed",
+      "startedAt": "2026-10-23T18:03:27.330Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 143635825,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 32898110,
+            "lat": "52.5183690",
+            "lon": "13.3890173",
+            "category": "shop",
+            "type": "books",
+            "place_rank": 30,
+            "importance": 0.19938740066310082,
+            "addresstype": "shop",
+            "name": "Dussmann das KulturKaufhaus",
+            "display_name": "Dussmann das KulturKaufhaus, 90, Friedrichstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschland",
+            "address": {
+              "shop": "Dussmann das KulturKaufhaus",
+              "house_number": "90",
+              "road": "Friedrichstraße",
+              "quarter": "Dorotheenstadt",
+              "suburb": "Mitte",
+              "borough": "Mitte",
+              "city": "Berlin",
+              "ISO3166-2-lvl4": "DE-BE",
+              "postcode": "10117",
+              "country": "Deutschland",
+              "country_code": "de"
+            },
+            "extratags": {
+              "email": "kundenservice@dussmann.de",
+              "phone": "+49 30 20251111",
+              "toilets": "yes",
+              "website": "https://www.kulturkaufhaus.de/",
+              "building": "commercial",
+              "operator": "Dussmann das KulturKaufhaus GmbH",
+              "wikidata": "Q1791764",
+              "ref:vatin": "DE183032559",
+              "wikipedia": "de:Kulturkaufhaus Dussmann",
+              "check_date": "2026-03-13",
+              "roof:shape": "flat",
+              "wheelchair": "yes",
+              "roof:levels": "1",
+              "payment:cash": "yes",
+              "surveillance": "indoor",
+              "opening_hours": "Mo-Fr 09:00-24:00; Sa 09:00-23:30",
+              "changing_table": "yes",
+              "building:levels": "7",
+              "contact:website": "https://www.kulturkaufhaus.de/",
+              "contact:youtube": "https://www.youtube.com/user/KulturKaufhaus",
+              "internet_access": "wlan",
+              "air_conditioning": "yes",
+              "contact:facebook": "https://www.facebook.com/kulturkaufhaus",
+              "contact:instagram": "https://www.instagram.com/dussmann.official/",
+              "wikimedia_commons": "Category:Dussmann Kulturkaufhaus",
+              "toilets:wheelchair": "yes",
+              "internet_access:fee": "no",
+              "payment:debit_cards": "yes",
+              "toilets:handwashing": "yes",
+              "internet_access:ssid": "KulturKaufhaus free-Wifi",
+              "payment:credit_cards": "yes",
+              "toilets:paper_supplied": "yes",
+              "check_date:opening_hours": "2026-03-13"
+            },
+            "namedetails": {
+              "name": "Dussmann das KulturKaufhaus"
+            },
+            "boundingbox": [
+              "52.5181289",
+              "52.5186813",
+              "13.3886431",
+              "13.3893789"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Dussmann das KulturKaufhausDussmann das KulturKaufhaus, 90, Friedrichstraße, Dorotheenstadt, Mitte, Berlin, 10117, Deutschlandbooks · OSM / Nominatim내 위치에서 직선 약 780 m전화 +49 30 20251111등록 영업시간 Mo-Fr 09:00-24:00; Sa 09:00-23:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 780.1724607705038
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/17601/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17601/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17602/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17600/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17602/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17600/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=de-DE%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Dussmann+Berlin",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/13.378,52.5163;13.409,52.521?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35205/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35206/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35205/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35206/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35204/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35204/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8801/5372.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8801/5373.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8802/5374.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8802/5373.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8801/5374.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8800/5373.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8802/5372.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8800/5372.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8800/5374.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8803/5374.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8803/5372.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/8803/5373.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17601/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17602/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17601/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17602/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17600/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17604/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17604/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17604/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17602/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17601/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17605/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17605/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17605/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17606/10745.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17606/10746.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17606/10747.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35207/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21492.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35210/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35208/21491.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/35209/21493.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/17603/10746.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 518,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Links abbiegen · Pariser Platz",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.5363034370967632,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 600.9547257355622,
+          "label": "601m",
+          "timeout": false,
+          "waitMs": 354,
+          "visible": 6,
+          "decoded": 6,
+          "instruction": "Geradeaus weiterfahren · Schloßplatz",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.8510654480087133,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1201.9094514711244,
+          "label": "1202m",
+          "timeout": false,
+          "waitMs": 323,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Geradeaus weiterfahren · Schloßplatz",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4637357006934806,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1802.8641772066867,
+          "label": "1803m",
+          "timeout": false,
+          "waitMs": 313,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Rechts abbiegen · Gontardstraße",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.5662045809572849,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2353.8189029422488,
+          "label": "2354m",
+          "timeout": false,
+          "waitMs": 407,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ziel",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.712471273202005,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2403.8189029422488,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 846,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Endpunkt der Fahrtroute · Ziel: ≈ 61 m",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 20.48034198541982,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2403.8189029422488,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1043,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "Endpunkt der Fahrtroute · Ziel: ≈ 61 m",
+          "instructionLanguage": "de",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 20.48034198541982,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2410.3,
+        "geometryMeters": 2403.8189029422488,
+        "durationSeconds": 284.3,
+        "points": 125,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "Pariser Platz",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 15.098904517477767,
+            "type": "continue",
+            "modifier": "left",
+            "road": "Pariser Platz",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 101.0823677738721,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Unter den Linden",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1423.2010489053514,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Schloßplatz",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1717.8180180167553,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Karl-Liebknecht-Straße",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2296.9043988571257,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Gontardstraße",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2333.4068917327304,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2403.8189029422488,
+            "type": "arrive",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 16.404285151601005,
+        "destinationSnapMeters": 61.28570457150406
+      },
+      "drivingStartedAt": "2026-10-23T18:03:33.088Z",
+      "drivingWallSeconds": 250.42,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2169.7089450925587,
+        "originReady": false,
+        "destinationAccessMeters": 61.28570457108827,
+        "revision": 4,
+        "destination": "좌표 목적지 52.521000, 13.409000",
+        "remainingMeters": 15.040442505959149,
+        "remainingSeconds": 1.7740521115397194,
+        "language": "de-DE",
+        "instructionLanguage": "de",
+        "instruction": "Endpunkt der Fahrtroute · Ziel: ≈ 61 m",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000002021807,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 52.521545,
+          "longitude": 13.409134999999992,
+          "accuracy": 5,
+          "timestamp": 1792778865484
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 269,
+      "finishedAt": "2026-10-23T18:07:53.195Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 250
+    }
+  ]
+}

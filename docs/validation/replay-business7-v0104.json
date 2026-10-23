@@ -1,0 +1,90 @@
+{
+  "type": "Offline shared production JS tracker replay of captured live-provider geometry and all original synthetic 1Hz positions. No new provider or map-rendering claim.",
+  "observedAt": "2026-10-23T18:17:21.775Z",
+  "expectedCases": 7,
+  "harnessSha256": "4dd7fc2e4a91fdad3d385e7237f0e48cae539a0d0d58ed3299358c29c2630c87",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "cases": [
+    {
+      "id": "auckland",
+      "result": "passed",
+      "samples": 122,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 9.959649105439894e-9,
+      "maxPreArrivalDeltaMeters": 9.959649105439894e-9,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "cape-town",
+      "result": "passed",
+      "samples": 58,
+      "finalLegSamples": 36,
+      "maxProgressDeltaMeters": 8.423910458077444e-9,
+      "maxPreArrivalDeltaMeters": 8.423910458077444e-9,
+      "upcomingInstructions": [
+        "Destination · Buitenkant Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "lisbon",
+      "result": "passed",
+      "samples": 130,
+      "finalLegSamples": 13,
+      "maxProgressDeltaMeters": 9.678785772848641e-9,
+      "maxPreArrivalDeltaMeters": 9.678785772848641e-9,
+      "upcomingInstructions": [
+        "Destino · Rua Nova da Trindade"
+      ],
+      "arrivalInstruction": "Chegou ao seu destino, em frente"
+    },
+    {
+      "id": "london",
+      "result": "passed",
+      "samples": 122,
+      "finalLegSamples": 1,
+      "maxProgressDeltaMeters": 7.883159014454577e-9,
+      "maxPreArrivalDeltaMeters": 7.883159014454577e-9,
+      "upcomingInstructions": [
+        "Destination · Duke Street St James's"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "new-york",
+      "result": "passed",
+      "samples": 744,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 9.299355951952748e-9,
+      "maxPreArrivalDeltaMeters": 9.299355951952748e-9,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "santiago",
+      "result": "passed",
+      "samples": 198,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 1.0514497716940241e-8,
+      "maxPreArrivalDeltaMeters": 1.0514497716940241e-8,
+      "upcomingInstructions": [
+        "Destino · Ramón Nieto"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "tokyo",
+      "result": "passed",
+      "samples": 394,
+      "finalLegSamples": 12,
+      "maxProgressDeltaMeters": 1.0240910341963172e-8,
+      "maxPreArrivalDeltaMeters": 1.0240910341963172e-8,
+      "upcomingInstructions": [
+        "目的地"
+      ],
+      "arrivalInstruction": "目的地に到着しました。目的地は前方です"
+    }
+  ],
+  "complete": true
+}

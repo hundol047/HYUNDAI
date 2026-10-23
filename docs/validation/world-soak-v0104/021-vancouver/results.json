@@ -1,0 +1,697 @@
+{
+  "observedAt": "2026-10-23T15:39:47.320Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:39:47.329Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "vancouver",
+      "label": "밴쿠버",
+      "country": "CA",
+      "continent": "North America",
+      "language": "en-CA",
+      "start": [
+        49.282,
+        -123.12
+      ],
+      "end": [
+        49.29,
+        -123.13
+      ],
+      "query": "Revolver Coffee Vancouver",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:39:47.443Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 376429421,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2168314490,
+            "lat": "49.2831716",
+            "lon": "-123.1094590",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.869764248107145e-05,
+            "addresstype": "amenity",
+            "name": "Revolver",
+            "display_name": "Revolver, 325, Cambie Street, Gastown, Downtown, Vancouver, Metro Vancouver Regional District, British Columbia, V6B 1H7, Canada",
+            "address": {
+              "amenity": "Revolver",
+              "house_number": "325",
+              "road": "Cambie Street",
+              "neighbourhood": "Gastown",
+              "suburb": "Downtown",
+              "city": "Vancouver",
+              "county": "Metro Vancouver Regional District",
+              "state": "British Columbia",
+              "ISO3166-2-lvl4": "CA-BC",
+              "postcode": "V6B 1H7",
+              "country": "Canada",
+              "country_code": "ca"
+            },
+            "extratags": {
+              "phone": "+1-604-558-4444",
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "https://revolvercoffee.ca/",
+              "wheelchair": "no",
+              "opening_hours": "Mo-Fr 07:30-18:00; Sa 09:00-18:00",
+              "indoor_seating": "yes",
+              "diet:vegetarian": "yes",
+              "outdoor_seating": "no",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Revolver",
+              "alt_name": "Revolver Coffee"
+            },
+            "boundingbox": [
+              "49.2831216",
+              "49.2832216",
+              "-123.1095090",
+              "-123.1094090"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. RevolverRevolver, 325, Cambie Street, Gastown, Downtown, Vancouver, Metro Vancouver Regional District, British Columbia, V6B 1H7, Canada카페 · OSM / Nominatim내 위치에서 직선 약 776 m전화 +1-604-558-4444등록 영업시간 Mo-Fr 07:30-18:00; Sa 09:00-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 775.6174401734021
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/5175/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5177/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5178/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5177/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5178/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5175/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5176/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5176/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-CA%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Revolver+Coffee+Vancouver",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22424.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22424.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22424.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22424.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-123.12,49.282;-123.13,49.29?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5177/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5176/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5176/11212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5177/11212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5175/11212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5178/11212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5177/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5176/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5178/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5175/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5178/11214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/5175/11213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10355/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10355/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10355/22428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10356/22428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22429.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22429.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10355/22429.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10356/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10356/22429.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22429.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10356/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10355/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10354/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10351/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20706/44851.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20707/44851.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20704/44852.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20705/44851.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20707/44850.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20705/44852.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20707/44852.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20706/44852.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20704/44850.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20704/44851.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20705/44850.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/20706/44850.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10353/22425.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/10352/22426.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 605,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · Howe Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.45861081409471116,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 411.9881306212251,
+          "label": "412m",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · West Georgia Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4468095800064352,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 823.9762612424502,
+          "label": "824m",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · West Georgia Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6652164024966657,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1235.9643918636752,
+          "label": "1236m",
+          "timeout": false,
+          "waitMs": 344,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · West Georgia Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8506499309313594,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1597.9525224849003,
+          "label": "1598m",
+          "timeout": false,
+          "waitMs": 306,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destination · West Georgia Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.05680398846997794,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1647.9525224849003,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 366,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.81327169504712,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1647.9525224849003,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 846,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.81327169504712,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1650.8,
+        "geometryMeters": 1647.9525224849003,
+        "durationSeconds": 192.9,
+        "points": 66,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "Robson Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 43.170029428935365,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Howe Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 209.75194557073905,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Smithe Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 309.7542825214831,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Hornby Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 651.4980533420098,
+            "type": "turn",
+            "modifier": "left",
+            "road": "West Georgia Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1647.9525224849003,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "West Georgia Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 41.7875245565229,
+        "destinationSnapMeters": 13.531212853893788
+      },
+      "drivingStartedAt": "2026-10-23T15:39:53.528Z",
+      "drivingWallSeconds": 174.417,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1154.1012632767224,
+        "originReady": false,
+        "destinationAccessMeters": 13.531212854604599,
+        "revision": 4,
+        "destination": "좌표 목적지 49.290000, -123.130000",
+        "remainingMeters": 20.03455775939957,
+        "remainingSeconds": 2.341086861999138,
+        "language": "en-CA",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999831516,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 49.290086,
+          "longitude": -123.129868,
+          "accuracy": 5,
+          "timestamp": 1792770169425
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 192,
+      "finishedAt": "2026-10-23T15:42:57.021Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 174
+    }
+  ]
+}

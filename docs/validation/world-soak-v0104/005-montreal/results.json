@@ -1,0 +1,837 @@
+{
+  "observedAt": "2026-10-23T13:39:20.305Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9e0cebec55f791cef968108e91ec28f17a82a9c9907586a4656808cb570e02bb",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T13:39:20.317Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "montreal",
+      "label": "몬트리올",
+      "country": "CA",
+      "continent": "North America",
+      "language": "fr-CA",
+      "start": [
+        45.5018,
+        -73.5736
+      ],
+      "end": [
+        45.5088,
+        -73.554
+      ],
+      "query": "Schwartz Montreal",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:39:20.526Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 365222271,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 343490371,
+            "lat": "45.5163277",
+            "lon": "-73.5776499",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 0.37978567549726355,
+            "addresstype": "amenity",
+            "name": "Schwartz's",
+            "display_name": "Schwartz's, 3895, Boulevard Saint-Laurent, Le Plateau-Mont-Royal, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2W 1X9, Canada",
+            "address": {
+              "amenity": "Schwartz's",
+              "house_number": "3895",
+              "road": "Boulevard Saint-Laurent",
+              "suburb": "Le Plateau-Mont-Royal",
+              "city": "Montréal",
+              "county": "Agglomération de Montréal",
+              "state_district": "Montréal (région administrative)",
+              "state": "Québec",
+              "ISO3166-2-lvl4": "CA-QC",
+              "postcode": "H2W 1X9",
+              "country": "Canada",
+              "country_code": "ca"
+            },
+            "extratags": {
+              "email": "info@schwartzsdeli.com",
+              "phone": "+1-514-842-4813",
+              "website": "https://schwartzsdeli.com",
+              "wikidata": "Q3475576",
+              "wikipedia": "en:Schwartz's",
+              "wheelchair": "yes",
+              "website:menu": "https://schwartzsdeli.com/pages/menu",
+              "opening_hours": "Su-Th 10:30-00:30; Sa 10:30-02:30; Fr 10:30-01:30"
+            },
+            "namedetails": {
+              "name": "Schwartz's"
+            },
+            "boundingbox": [
+              "45.5162777",
+              "45.5163777",
+              "-73.5776999",
+              "-73.5775999"
+            ]
+          },
+          {
+            "place_id": 365670536,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 21302206,
+            "lat": "45.4629170",
+            "lon": "-73.8531702",
+            "category": "highway",
+            "type": "residential",
+            "place_rank": 26,
+            "importance": 0.05341450751506825,
+            "addresstype": "residential",
+            "name": "Place Schwartz",
+            "display_name": "Place Schwartz, Kirkland, Agglomération de Montréal, Montréal (région administrative), Québec, H9H 3J1, Canada",
+            "address": {
+              "road": "Place Schwartz",
+              "town": "Kirkland",
+              "county": "Agglomération de Montréal",
+              "state_district": "Montréal (région administrative)",
+              "state": "Québec",
+              "ISO3166-2-lvl4": "CA-QC",
+              "postcode": "H9H 3J1",
+              "country": "Canada",
+              "country_code": "ca"
+            },
+            "extratags": {
+              "lanes": "2",
+              "surface": "asphalt",
+              "maxspeed": "40",
+              "sidewalk": "no",
+              "routing:motor_vehicle": "destination"
+            },
+            "namedetails": {
+              "name": "Place Schwartz"
+            },
+            "boundingbox": [
+              "45.4628877",
+              "45.4630117",
+              "-73.8534139",
+              "-73.8529087"
+            ]
+          },
+          {
+            "place_id": 365136357,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3625891856,
+            "lat": "45.5325073",
+            "lon": "-73.6022896",
+            "category": "amenity",
+            "type": "dentist",
+            "place_rank": 30,
+            "importance": 8.117418173490527e-05,
+            "addresstype": "amenity",
+            "name": "Centre dentaire Schwartz",
+            "display_name": "Centre dentaire Schwartz, 6200, Rue Saint-Denis, La Petite-Patrie, Rosemont–La Petite-Patrie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2S 2R7, Canada",
+            "address": {
+              "amenity": "Centre dentaire Schwartz",
+              "house_number": "6200",
+              "road": "Rue Saint-Denis",
+              "neighbourhood": "La Petite-Patrie",
+              "suburb": "Rosemont–La Petite-Patrie",
+              "city": "Montréal",
+              "county": "Agglomération de Montréal",
+              "state_district": "Montréal (région administrative)",
+              "state": "Québec",
+              "ISO3166-2-lvl4": "CA-QC",
+              "postcode": "H2S 2R7",
+              "country": "Canada",
+              "country_code": "ca"
+            },
+            "extratags": {
+              "phone": "+1-514-270-1523",
+              "website": "https://centredentaireschwartz.com/",
+              "healthcare": "dentist",
+              "opening_hours": "Mo-Th 09:00-19:30; Fr 09:00-16:00"
+            },
+            "namedetails": {
+              "name": "Centre dentaire Schwartz"
+            },
+            "boundingbox": [
+              "45.5324573",
+              "45.5325573",
+              "-73.6023396",
+              "-73.6022396"
+            ]
+          }
+        ],
+        "uiCount": 3,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Schwartz'sSchwartz's, 3895, Boulevard Saint-Laurent, Le Plateau-Mont-Royal, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2W 1X9, Canada식당 · OSM / Nominatim전화 +1-514-842-4813등록 영업시간 Su-Th 10:30-00:30; Sa 10:30-02:30; Fr 10:30-01:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. Place SchwartzPlace Schwartz, Kirkland, Agglomération de Montréal, Montréal (région administrative), Québec, H9H 3J1, Canadaresidential · OSM / Nominatim지도에 표시 · 자동차 경로 계산 →",
+          "3. Centre dentaire SchwartzCentre dentaire Schwartz, 6200, Rue Saint-Denis, La Petite-Patrie, Rosemont–La Petite-Patrie, Montréal, Agglomération de Montréal, Montréal (région administrative), Québec, H2S 2R7, Canadadentist · OSM / Nominatim전화 +1-514-270-1523등록 영업시간 Mo-Th 09:00-19:30; Fr 09:00-16:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1645.944824686029
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/9686/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9686/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9688/11723.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9688/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9688/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9687/11723.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9685/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9685/11723.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9685/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9687/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9686/11723.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9687/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=fr-CA%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Schwartz+Montreal",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-73.5736,45.5018;-73.554,45.5088?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9688/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9687/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9688/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9687/11723.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9686/11722.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9686/11721.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19374/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19375/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19375/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19374/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19374/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19375/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19373/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19373/23446.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19373/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19374/23446.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19372/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19372/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19375/23446.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19372/23446.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23446.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23445.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19376/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19375/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23443.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19379/23444.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38756/46885.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38754/46885.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38757/46887.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38757/46885.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38754/46887.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38755/46887.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38756/46887.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38755/46886.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38754/46886.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38756/46886.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38755/46885.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38757/46886.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19377/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19378/23443.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9689/11722.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9689/11721.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9689/11723.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 619,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Tourner à gauche · Boulevard De Maisonneuve Ouest",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.0778082459507983,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 676.2676654293433,
+          "label": "676m",
+          "timeout": false,
+          "waitMs": 332,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Tourner à droite · Rue De Bleury",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.2849160141969665,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1352.5353308586866,
+          "label": "1353m",
+          "timeout": false,
+          "waitMs": 342,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continuer tout droit · Place Jean-Paul-Riopelle",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.6718208269179275,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2028.80299628803,
+          "label": "2029m",
+          "timeout": false,
+          "waitMs": 325,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continuer tout droit · Rue Saint-Antoine Est",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.473519411505124,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2655.0706617173732,
+          "label": "2655m",
+          "timeout": false,
+          "waitMs": 340,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Tourner à droite · Rue Notre-Dame Est",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.5268223447232696,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2705.0706617173732,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 319,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vous êtes arrivé à votre destination, droit devant",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.58884190069848,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2705.0706617173732,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 864,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vous êtes arrivé à votre destination, droit devant",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.58884190069848,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 2707.7,
+        "geometryMeters": 2705.0706617173732,
+        "durationSeconds": 363.8,
+        "points": 173,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 13.355787978286935,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Boulevard De Maisonneuve Ouest",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 56.61313899096449,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Rue Metcalfe",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 466.7747785743488,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Boulevard René-Lévesque Ouest",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1244.3255952739846,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rue De Bleury",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1517.1966538726679,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Place Jean-Paul-Riopelle",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1642.2593974792421,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Rue Saint-Antoine Ouest",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2116.568883488627,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Rue Saint-Antoine Est",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2492.5682212752113,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rue Gosford",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2652.448262626433,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rue Notre-Dame Est",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2705.0706617173732,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Rue Notre-Dame Est",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 6.434122218242429,
+        "destinationSnapMeters": 29.351273144675492
+      },
+      "drivingStartedAt": "2026-10-23T13:39:27.797Z",
+      "drivingWallSeconds": 278.494,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1725.3625949939712,
+        "originReady": false,
+        "destinationAccessMeters": 29.351273142725816,
+        "revision": 4,
+        "destination": "좌표 목적지 45.508800, -73.554000",
+        "remainingMeters": 20.019440070567583,
+        "remainingSeconds": 2.689763377653539,
+        "language": "fr-CA",
+        "instructionLanguage": "fr",
+        "instruction": "Vous êtes arrivé à votre destination, droit devant",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999944339,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 45.508669,
+          "longitude": -73.553673,
+          "accuracy": 5,
+          "timestamp": 1792763047722
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "finishedAt": "2026-10-23T13:44:16.314Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 278
+    }
+  ]
+}

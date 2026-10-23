@@ -1,0 +1,703 @@
+{
+  "observedAt": "2026-10-23T16:35:29.171Z",
+  "sourceCommit": "6cf6e02ab09074a452f275402e67a206c4f806ad",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:35:29.178Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "honolulu",
+      "label": "호놀룰루",
+      "country": "US",
+      "continent": "North America",
+      "language": "en-US",
+      "start": [
+        21.289,
+        -157.84
+      ],
+      "end": [
+        21.279,
+        -157.827
+      ],
+      "query": "Island Vintage Coffee Waikiki",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:35:29.313Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 378247366,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2707157945,
+            "lat": "21.2783235",
+            "lon": "-157.8286655",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.20050354771804e-05,
+            "addresstype": "amenity",
+            "name": "Island Vintage Coffee",
+            "display_name": "Island Vintage Coffee, 2301, Kalakaua Avenue, Kalakaua Shopping District, Waikīkī, East Honolulu, Honolulu, Honolulu County, Hawaii, 96815, United States",
+            "address": {
+              "amenity": "Island Vintage Coffee",
+              "house_number": "2301",
+              "road": "Kalakaua Avenue",
+              "retail": "Kalakaua Shopping District",
+              "suburb": "Waikīkī",
+              "city": "East Honolulu",
+              "county": "Honolulu County",
+              "state": "Hawaii",
+              "ISO3166-2-lvl4": "US-HI",
+              "postcode": "96815",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "level": "1",
+              "phone": "+1-808-926-5662",
+              "branch": "Royal Hawaiian Center",
+              "cuisine": "coffee_shop",
+              "website": "https://www.islandvintagecoffee.com",
+              "takeaway": "yes",
+              "check_date": "2026-09-25",
+              "payment:visa": "yes",
+              "website:menu": "https://ohbz.com/qr/0a34a83a-266c-4be4-892e-f77a5e5806e3",
+              "opening_hours": "06:00-22:00",
+              "indoor_seating": "no",
+              "outdoor_seating": "yes",
+              "contact:facebook": "https://www.facebook.com/IslandVintageCoffee",
+              "contact:instagram": "https://www.instagram.com/islandvintagecoffee",
+              "payment:apple_pay": "yes",
+              "payment:google_pay": "yes",
+              "payment:mastercard": "yes",
+              "payment:credit_cards": "yes",
+              "opening_hours:kitchen": "07:00-21:30"
+            },
+            "namedetails": {
+              "name": "Island Vintage Coffee",
+              "name:en": "Island Vintage Coffee",
+              "name:it": "Island Vintage",
+              "name:ko": "아이랜드 빈티지 코나 커피 추천함"
+            },
+            "boundingbox": [
+              "21.2782735",
+              "21.2783735",
+              "-157.8287155",
+              "-157.8286155"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Island Vintage CoffeeIsland Vintage Coffee, 2301, Kalakaua Avenue, Kalakaua Shopping District, Waikīkī, East Honolulu, Honolulu, Honolulu County, Hawaii, 96815, United States카페 · OSM / Nominatim내 위치에서 직선 약 1.7 km전화 +1-808-926-5662등록 영업시간 06:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1669.8924081820335
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/2015/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2016/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2015/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2016/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2017/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2017/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2018/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2018/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-US%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Island+Vintage+Coffee+Waikiki",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-157.84,21.289;-157.827,21.279?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2016/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2017/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2018/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2018/14401.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2019/14400.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2018/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2016/14399.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4033/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4033/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4033/28799.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28799.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4032/28799.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4032/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28799.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4033/28798.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28798.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28798.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28799.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28798.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28800.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28803.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4034/28803.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28803.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28803.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8073/57603.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8073/57604.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8072/57604.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8071/57603.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8072/57603.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8074/57603.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8071/57604.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/8074/57604.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4036/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28801.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4035/28802.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/4037/28802.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2017/14401.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2019/14399.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2016/14401.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/2019/14401.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 562,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.3917810102508417,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 581.4691528927841,
+          "label": "581m",
+          "timeout": false,
+          "waitMs": 323,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Kalākaua Avenue",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.41755661365572416,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1162.9383057855682,
+          "label": "1163m",
+          "timeout": false,
+          "waitMs": 310,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Dukes Lane",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.0532323821081355,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1744.4074586783522,
+          "label": "1744m",
+          "timeout": false,
+          "waitMs": 334,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Dukes Lane",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.872478885850808,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2275.8766115711364,
+          "label": "2276m",
+          "timeout": false,
+          "waitMs": 335,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destination · Dukes Lane",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.0656217769491767,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2325.8766115711364,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 336,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.800705912458422,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2325.8766115711364,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 793,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.800705912458422,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2321.6,
+        "geometryMeters": 2325.8766115711364,
+        "durationSeconds": 358.9,
+        "points": 86,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 34.189017427012345,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 74.86892457039058,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Atkinson Drive",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 427.55559696022755,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "Kapiolani Boulevard",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 589.2725927062862,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Kalākaua Avenue",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2194.050501777054,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Dukes Lane",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2325.8766115711364,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Dukes Lane",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 31.708643699753768,
+        "destinationSnapMeters": 6.217457003857698
+      },
+      "drivingStartedAt": "2026-10-23T16:35:35.930Z",
+      "drivingWallSeconds": 242.416,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1765.3409346869896,
+        "originReady": false,
+        "destinationAccessMeters": 6.217457003652056,
+        "revision": 4,
+        "destination": "좌표 목적지 21.279000, -157.827000",
+        "remainingMeters": 19.96322580682575,
+        "remainingSeconds": 3.0861482348680918,
+        "language": "en-US",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999998029125,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 21.279039,
+          "longitude": -157.82704300000006,
+          "accuracy": 5,
+          "timestamp": 1792773579792
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 261,
+      "finishedAt": "2026-10-23T16:39:47.660Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 242
+    }
+  ]
+}

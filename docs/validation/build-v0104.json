@@ -1,0 +1,46 @@
+{
+  "version": "0.10.4",
+  "applicationSourceCommit": "4707be392a81dc881a908f82e1202b9927ee84d8",
+  "auditToolsCommit": "4707be392a81dc881a908f82e1202b9927ee84d8",
+  "runtimeSourceHashes": {
+    "core/src/commonMain/kotlin/io/cabinos/core/Navigation.kt": "aaa3b7dda6f28e3f694cefee53f8988ffcb1c3f58a51329b87c353e1b0d06174",
+    "core/src/commonMain/kotlin/io/cabinos/core/NavigationLanguage.kt": "ee5fad9df747789198f1325e4837d1ab79fe98a2d3e03de929ec1b35e5d1c8b9",
+    "core/src/commonMain/kotlin/io/cabinos/core/NavigationAccessLabels.kt": "9fd65cbb95adbac6bc5efc769f8812d0a4cd1c83319d5627947bfc130c813e92",
+    "core/src/commonMain/kotlin/io/cabinos/core/PlaceSearch.kt": "eaf9d032ad41e23fc0ac74833971503d93828ced70e1aea68b172ab5b478b4bf",
+    "core/src/commonMain/kotlin/io/cabinos/core/NearbyGeometry.kt": "5d173f732534ac4a3eb8f1ceff40aa84115d89f3585cb93e1c6143cb406bb394",
+    "core/src/jsMain/kotlin/io/cabinos/core/BrowserBridge.kt": "8943dc7a05d023f789f1ab44632eb6ff46e743a91ac927bf0d10bd324d599e2a",
+    "core/src/jsMain/resources/navigation.js": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "core/src/jsMain/resources/nearby-map.js": "d98d66ac8dd08fb85d372276c3b5ebf89ae7f8f6491e9ec37d05c80ad0d56aa7",
+    "core/src/jsMain/resources/road-tiles.js": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+    "app/src/main/java/io/cabinos/one/platform/NavigationService.kt": "2901e044f9b9eecf1d0fd4b294f700e7e511918221e6e9bb8197e285bd707c73",
+    "app/src/main/java/io/cabinos/one/ui/RoadMapView.kt": "59c53ba83a64d233193a8df3e45bd76c5f727063a008cb4ea14ed4ffa7c5f77b",
+    "app/src/main/java/io/cabinos/one/platform/NearbyPlaces.kt": "a36f6470e8a5d1cca9255fbe635e4d46d880193013591acd219a9b6960e3c5f2",
+    "app/src/main/java/io/cabinos/one/ui/CabinViewModel.kt": "5185067365508920f855ec1daccce5fa7aaa51537eb7abe4ee4c7d542250ce15",
+    "app/src/main/java/io/cabinos/one/ui/NavigationScreen.kt": "18f5849a81353deeaba63cce9bce341cfd6ef6fd928d79fb7e047d1c64760f61",
+    "core/src/jsMain/resources/app.css": "e6dcf3b742a9f7f6ff9ec3e9bdbb3c947ea834c39accf935784d34d34c62b395",
+    "core/src/jsMain/resources/index.html": "f5ebb99bb390a46384189004d00c36879ba73d21468f99aa128aaf3daba7e872"
+  },
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "apkSha256": "c56a956e6facfbb2f1eb875502e42c6ede23dab590c17cd0375d46c68cd04b88",
+  "nativeJvmTests": 180,
+  "browserChecks": 132,
+  "gpsFaultConditions": 246,
+  "notes": [
+    "Application runtime files match the application source commit. Later audit/report changes do not alter the runtime.",
+    "Five-hour audit completed; mixed runtime builds and final-engine replay are documented in world-soak-v0104/summary.json and replay-soak-v0104.json."
+  ],
+  "lint": {
+    "errors": 0,
+    "warnings": 5,
+    "ids": {
+      "ApplySharedPref": 3,
+      "DiscouragedApi": 1,
+      "ViewConstructor": 1
+    }
+  },
+  "executionEnvironment": {
+    "node": "v24.19.0",
+    "chromium": "Chromium 154.0.8037.57 built on Debian GNU/Linux 13 (trixie)",
+    "ciNodeMajor": 22
+  }
+}

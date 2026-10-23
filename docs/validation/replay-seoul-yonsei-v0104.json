@@ -1,0 +1,30 @@
+{
+  "type": "Offline shared production JS tracker replay of captured live-provider geometry and all original synthetic 1Hz positions. No new provider or map-rendering claim.",
+  "observedAt": "2026-10-23T18:17:23.182Z",
+  "expectedCases": 1,
+  "harnessSha256": "4dd7fc2e4a91fdad3d385e7237f0e48cae539a0d0d58ed3299358c29c2630c87",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "cases": [
+    {
+      "id": "seoul-yonsei",
+      "result": "passed",
+      "samples": 6930,
+      "finalLegSamples": 13,
+      "maxProgressDeltaMeters": 5.005310918351441,
+      "maxPreArrivalDeltaMeters": 1.82626536116004e-08,
+      "upcomingInstructions": [
+        "목적지"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 42미터 남았습니다."
+    }
+  ],
+  "complete": true,
+  "sourceReport": "seoul-yonsei-v0102/results.json",
+  "routeFile": "seoul-yonsei-v0102/route.json",
+  "samplesFile": "seoul-yonsei-v0102/gps-samples.jsonl.gz",
+  "inputHashes": {
+    "route.json": "123cf0597eb5d2e8399349bd18f7dee0d43f3975a46e54d73d7ce5c9ca5e4823",
+    "gps-samples.jsonl.gz": "93a33592b6eb43ff19da191cc2ff7d309970b4e0f1149458867e978218ae1a72"
+  },
+  "sourceCommit": "4707be392a81dc881a908f82e1202b9927ee84d8"
+}

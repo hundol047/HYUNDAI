@@ -1,0 +1,21 @@
+[
+  {
+    "at": "2026-10-23T14:18:41.364800+00:00",
+    "activeScenarioKeepsLoadedPreviousBuild": "furka",
+    "nextScenarioBuild": "site-v0104-navigation",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa"
+  },
+  {
+    "at": "2026-10-23T15:56:06.360240+00:00",
+    "activeScenarioKeepsLoadedPreviousBuild": "hobart",
+    "nextScenarioBuild": "site-v0104-release",
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d"
+  },
+  {
+    "at": "2026-10-23T18:18:40.962992+00:00",
+    "activeScenarioKeepsLoadedPreviousBuild": "cape-town",
+    "nextScenarioBuild": "site-v0104-localized",
+    "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546"
+  }
+]

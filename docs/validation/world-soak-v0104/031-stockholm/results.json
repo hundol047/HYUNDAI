@@ -1,0 +1,1070 @@
+{
+  "observedAt": "2026-10-23T16:25:18.812Z",
+  "sourceCommit": "6cf6e02ab09074a452f275402e67a206c4f806ad",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:25:18.819Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "stockholm",
+      "label": "스톡홀름",
+      "country": "SE",
+      "continent": "Europe",
+      "language": "sv-SE",
+      "start": [
+        59.332,
+        18.058
+      ],
+      "end": [
+        59.32,
+        18.074
+      ],
+      "query": "Vete Katten Stockholm",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:25:18.948Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 166637215,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 449884388,
+            "lat": "59.3341120",
+            "lon": "18.0583460",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 0.09078915819201436,
+            "addresstype": "amenity",
+            "name": "Vete-Katten",
+            "display_name": "Vete-Katten, 55, Kungsgatan, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 22, Sverige",
+            "address": {
+              "amenity": "Vete-Katten",
+              "house_number": "55",
+              "road": "Kungsgatan",
+              "neighbourhood": "Klara",
+              "suburb": "Norrmalm",
+              "city_district": "Norra innerstadens stadsdelsområde",
+              "city": "Stockholm",
+              "municipality": "Stockholms kommun",
+              "county": "Stockholms län",
+              "ISO3166-2-lvl4": "SE-AB",
+              "postcode": "111 22",
+              "country": "Sverige",
+              "country_code": "se"
+            },
+            "extratags": {
+              "takeaway": "yes",
+              "wikidata": "Q10714690",
+              "wikipedia": "sv:Vete-Katten",
+              "check_date": "2025-12-01",
+              "wheelchair": "no",
+              "payment:cash": "no",
+              "contact:email": "info@vetekatten.se",
+              "contact:phone": "+468208405",
+              "opening_hours": "Mo-Fr 07:30-20:00; Sa-Su 09:00-19:00",
+              "indoor_seating": "yes",
+              "contact:website": "https://vetekatten.se/",
+              "diet:vegetarian": "yes",
+              "outdoor_seating": "yes",
+              "wikimedia_commons": "Category:Vete Katten",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes",
+              "check_date:opening_hours": "2025-12-01"
+            },
+            "namedetails": {
+              "name": "Vete-Katten"
+            },
+            "boundingbox": [
+              "59.3340620",
+              "59.3341620",
+              "18.0582960",
+              "18.0583960"
+            ]
+          },
+          {
+            "place_id": 166495925,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3601164236,
+            "lat": "59.3104842",
+            "lon": "18.0755201",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.40184634164495e-05,
+            "addresstype": "amenity",
+            "name": "Vete-Katten",
+            "display_name": "Vete-Katten, Götgatan, Skanstull, Södermalm, Södermalms stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 116 62, Sverige",
+            "address": {
+              "amenity": "Vete-Katten",
+              "road": "Götgatan",
+              "neighbourhood": "Skanstull",
+              "suburb": "Södermalm",
+              "city_district": "Södermalms stadsdelsområde",
+              "city": "Stockholm",
+              "municipality": "Stockholms kommun",
+              "county": "Stockholms län",
+              "ISO3166-2-lvl4": "SE-AB",
+              "postcode": "116 62",
+              "country": "Sverige",
+              "country_code": "se"
+            },
+            "extratags": {
+              "check_date": "2025-12-11",
+              "wheelchair": "yes",
+              "contact:email": "gotgatan@vetekatten.se",
+              "contact:phone": "+46850237290",
+              "opening_hours": "Mo-Fr 07:00-20:00; Sa, Su 07:30-18:00",
+              "contact:website": "https://vetekatten.se/",
+              "diet:vegetarian": "yes",
+              "check_date:opening_hours": "2025-12-11"
+            },
+            "namedetails": {
+              "name": "Vete-Katten"
+            },
+            "boundingbox": [
+              "59.3104342",
+              "59.3105342",
+              "18.0754701",
+              "18.0755701"
+            ]
+          },
+          {
+            "place_id": 166070409,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 12105858646,
+            "lat": "59.3310128",
+            "lon": "18.0597217",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.40184634164495e-05,
+            "addresstype": "amenity",
+            "name": "Vete-Katten",
+            "display_name": "Vete-Katten, Klarabergsgenvägen, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 81, Sverige",
+            "address": {
+              "amenity": "Vete-Katten",
+              "road": "Klarabergsgenvägen",
+              "neighbourhood": "Klara",
+              "suburb": "Norrmalm",
+              "city_district": "Norra innerstadens stadsdelsområde",
+              "city": "Stockholm",
+              "municipality": "Stockholms kommun",
+              "county": "Stockholms län",
+              "ISO3166-2-lvl4": "SE-AB",
+              "postcode": "111 81",
+              "country": "Sverige",
+              "country_code": "se"
+            },
+            "extratags": {
+              "level": "0",
+              "check_date": "2025-12-03",
+              "wheelchair": "yes",
+              "contact:email": "continental@vetekatten.se",
+              "contact:phone": "+4687305110",
+              "opening_hours": "Mo-Fr 07:00-19:00; Sa-Su 11:00-17:00",
+              "indoor_seating": "yes",
+              "contact:website": "https://vetekatten.se/butiker-konditorier/",
+              "diet:vegetarian": "yes",
+              "outdoor_seating": "no",
+              "check_date:opening_hours": "2025-12-03",
+              "check_date:diet:vegetarian": "2025-01-21"
+            },
+            "namedetails": {
+              "name": "Vete-Katten"
+            },
+            "boundingbox": [
+              "59.3309628",
+              "59.3310628",
+              "18.0596717",
+              "18.0597717"
+            ]
+          },
+          {
+            "place_id": 166102739,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6859092792,
+            "lat": "59.3307477",
+            "lon": "18.0576093",
+            "category": "shop",
+            "type": "bakery",
+            "place_rank": 30,
+            "importance": 8.40184634164495e-05,
+            "addresstype": "shop",
+            "name": "Vete-Katten",
+            "display_name": "Vete-Katten, Klarabergsviadukten, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 20, Sverige",
+            "address": {
+              "shop": "Vete-Katten",
+              "road": "Klarabergsviadukten",
+              "neighbourhood": "Klara",
+              "suburb": "Norrmalm",
+              "city_district": "Norra innerstadens stadsdelsområde",
+              "city": "Stockholm",
+              "municipality": "Stockholms kommun",
+              "county": "Stockholms län",
+              "ISO3166-2-lvl4": "SE-AB",
+              "postcode": "111 20",
+              "country": "Sverige",
+              "country_code": "se"
+            },
+            "extratags": {
+              "level": "0",
+              "takeaway": "only",
+              "check_date": "2025-12-03",
+              "wheelchair": "yes",
+              "contact:email": "centralen@vetekatten.se",
+              "contact:phone": "+46850237220",
+              "opening_hours": "Mo-Fr 06:00-20:00; Sa,Su 07:00-19:00",
+              "indoor_seating": "no",
+              "contact:website": "https://vetekatten.se/butiker-konditorier/centralen/",
+              "outdoor_seating": "no",
+              "check_date:opening_hours": "2025-12-03"
+            },
+            "namedetails": {
+              "name": "Vete-Katten"
+            },
+            "boundingbox": [
+              "59.3306977",
+              "59.3307977",
+              "18.0575593",
+              "18.0576593"
+            ]
+          }
+        ],
+        "uiCount": 4,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Vete-KattenVete-Katten, 55, Kungsgatan, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 22, Sverige카페 · OSM / Nominatim내 위치에서 직선 약 236 m전화 +468208405등록 영업시간 Mo-Fr 07:30-20:00; Sa-Su 09:00-19:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. Vete-KattenVete-Katten, Götgatan, Skanstull, Södermalm, Södermalms stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 116 62, Sverige카페 · OSM / Nominatim내 위치에서 직선 약 2.6 km전화 +46850237290등록 영업시간 Mo-Fr 07:00-20:00; Sa, Su 07:30-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. Vete-KattenVete-Katten, Klarabergsgenvägen, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 81, Sverige카페 · OSM / Nominatim내 위치에서 직선 약 147 m전화 +4687305110등록 영업시간 Mo-Fr 07:00-19:00; Sa-Su 11:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "4. Vete-KattenVete-Katten, Klarabergsviadukten, Klara, Norrmalm, Norra innerstadens stadsdelsområde, Stockholm, Stockholms kommun, Stockholms län, 111 20, Sverige베이커리 · OSM / Nominatim내 위치에서 직선 약 141 m전화 +46850237220등록 영업시간 Mo-Fr 06:00-20:00; Sa,Su 07:00-19:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 141.0015620447743
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/18027/9636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18028/9636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18029/9637.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18027/9637.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18027/9635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18028/9637.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18028/9635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18026/9637.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18029/9636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18029/9635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18026/9636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18026/9635.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=sv-SE%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Vete+Katten+Stockholm",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/18.058,59.332;18.074,59.32?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9013/4818.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9014/4818.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9013/4817.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9014/4817.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9013/4819.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9014/4819.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9015/4817.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9015/4818.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9012/4818.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9012/4817.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9012/4819.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9015/4819.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36054/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36054/19271.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19271.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36053/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19272.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19272.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36053/19271.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19271.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36053/19272.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36054/19272.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19272.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19271.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36054/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36054/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19274.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19273.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36056/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36055/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19275.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36059/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72115/38553.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72116/38553.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72116/38552.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72114/38554.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72115/38552.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72115/38554.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72114/38552.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72117/38554.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72117/38553.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72117/38552.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72116/38554.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72114/38553.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19276.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36057/19277.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36058/19277.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 705,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ta påfarten till höger · Söderkopplet · Södermalm",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5669881185132262,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 318.8383884363214,
+          "label": "319m",
+          "timeout": false,
+          "waitMs": 302,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ta påfarten till höger · Söderkopplet · Södermalm",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.44916658439605117,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 500.8770805973948,
+          "label": "501m",
+          "timeout": false,
+          "waitMs": 336,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Håll till vänster · Centralbron",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5707267548577339,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1001.7541611947896,
+          "label": "1002m",
+          "timeout": false,
+          "waitMs": 315,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Ta avfarten till höger · Riddarfjärdsavfarten · Hornstull, Stadsgården",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.450058062517294,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1351.3561181986743,
+          "label": "1351m",
+          "timeout": false,
+          "waitMs": 361,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Ta avfarten till höger · Riddarfjärdsavfarten · Hornstull, Stadsgården",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.26832451936249563,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1502.6312417921845,
+          "label": "1503m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Sväng höger · Guldfjärdsplan",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5447918170256589,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1953.5083223895792,
+          "label": "1954m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination · Stadsgårdsleden",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4229102572498958,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2003.5083223895792,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 353,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Du är framme vid din destination, rakt fram",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.239359437045053,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2003.5083223895792,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 794,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Du är framme vid din destination, rakt fram",
+          "instructionLanguage": "sv",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.239359437045053,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2008.4,
+        "geometryMeters": 2003.5083223895792,
+        "durationSeconds": 218.9,
+        "points": 79,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "Vasagatan",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 318.8383884363214,
+            "type": "on ramp",
+            "modifier": "right",
+            "road": "Söderkopplet",
+            "destinations": "Södermalm",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 511.395317772183,
+            "type": "merge",
+            "modifier": "slight left",
+            "road": "Centralbron",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1351.3561181986743,
+            "type": "off ramp",
+            "modifier": "slight right",
+            "road": "Riddarfjärdsavfarten",
+            "destinations": "Hornstull, Stadsgården",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1683.6053754855207,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Guldfjärdsplan",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1753.2431751197503,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Stadsgårdsleden",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2003.5083223895792,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Stadsgårdsleden",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 3.639305807602055,
+        "destinationSnapMeters": 27.208384261702726
+      },
+      "drivingStartedAt": "2026-10-23T16:25:25.480Z",
+      "drivingWallSeconds": 210.442,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1600.1118403096953,
+        "originReady": false,
+        "destinationAccessMeters": 27.20838426147906,
+        "revision": 4,
+        "destination": "좌표 목적지 59.320000, 18.074000",
+        "remainingMeters": 20.048831118194208,
+        "remainingSeconds": 2.185166865053133,
+        "language": "sv-SE",
+        "instructionLanguage": "sv",
+        "instruction": "Du är framme vid din destination, rakt fram",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999963552,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 59.320224,
+          "longitude": 18.074193000000037,
+          "accuracy": 5,
+          "timestamp": 1792772937397
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 231,
+      "finishedAt": "2026-10-23T16:29:05.241Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 210
+    }
+  ]
+}

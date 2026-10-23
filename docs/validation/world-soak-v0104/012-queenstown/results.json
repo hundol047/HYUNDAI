@@ -1,0 +1,1498 @@
+{
+  "observedAt": "2026-10-23T14:25:27.080Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:25:27.096Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "queenstown",
+      "label": "퀸스타운→애로타운",
+      "country": "NZ",
+      "continent": "Oceania",
+      "language": "en-NZ",
+      "start": [
+        -45.031,
+        168.662
+      ],
+      "end": [
+        -44.939,
+        168.83
+      ],
+      "query": "The Remarkables Sweet Shop Arrowtown",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:25:27.234Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/31735/20984.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31736/20984.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31735/20985.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31734/20984.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31735/20983.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31736/20985.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31737/20985.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31737/20984.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31736/20983.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31737/20983.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31734/20983.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/31734/20985.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-NZ%2Cen&namedetails=1&addressdetails=1&extratags=1&q=The+Remarkables+Sweet+Shop+Arrowtown",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/168.662,-45.031;168.83,-44.939?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1984/1310.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1982/1310.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1983/1311.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1983/1310.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1982/1311.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1985/1310.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1985/1311.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/11/1984/1311.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63471/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63472/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63471/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63472/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63473/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63470/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63470/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63473/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63471/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63473/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63472/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63470/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63474/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63474/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63474/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63475/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63475/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63476/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63476/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63476/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63475/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63476/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63475/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63474/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63478/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63478/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63478/41969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63479/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63479/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63478/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63476/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63479/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63480/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63480/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63480/41968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63480/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63477/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63478/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63479/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63481/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63481/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63481/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63482/41967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63482/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63482/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63481/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63480/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63479/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63482/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63483/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63483/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63483/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63484/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63484/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63484/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41966.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63484/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63483/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41965.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41964.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63485/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63489/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63489/41963.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63489/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63486/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63490/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63490/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63490/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63488/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63489/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63487/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63491/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63491/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63491/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63492/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63492/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63492/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63493/41962.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63493/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63493/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63494/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63494/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63491/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63492/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63494/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63493/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63495/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63495/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63495/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63496/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63496/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63496/41961.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63494/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63493/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63496/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63495/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63497/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63497/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63497/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41960.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63497/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41958.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41959.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41957.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41956.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41955.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41955.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41955.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41955.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41954.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41954.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41954.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41954.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41953.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41953.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41953.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41953.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41952.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41952.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41952.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41952.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41951.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41951.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41951.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41951.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41950.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41950.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41950.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41950.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63498/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41950.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63499/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63501/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63502/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63503/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63500/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41944.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/63504/41946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127004/83890.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127005/83891.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127004/83891.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127003/83890.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127003/83891.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127006/83891.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127004/83889.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127005/83890.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127006/83890.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127003/83889.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127006/83889.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/127005/83889.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 1068,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · Ballarat Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4549230961239516,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4956.256858694504,
+          "label": "4956m",
+          "timeout": false,
+          "waitMs": 310,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 1st exit · Frankton Ladies Mile Highway · SH 6: Cromwell, Wanaka",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.04689406158531713,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 6346.205998770069,
+          "label": "6346m",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 1st exit · Frankton Ladies Mile Highway · SH 6: Cromwell, Wanaka",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6473549388274399,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 7264.728690025447,
+          "label": "7265m",
+          "timeout": false,
+          "waitMs": 332,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 1st exit · Frankton Ladies Mile Highway · SH 6: Cromwell, Wanaka",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.77089907400842,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 7669.546426258581,
+          "label": "7670m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 1st exit · Frankton Ladies Mile Highway · SH 6: Cromwell, Wanaka",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9156069457198494,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 9912.513717389009,
+          "label": "9913m",
+          "timeout": false,
+          "waitMs": 466,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "Enter the roundabout and take the 2nd exit · Frankton Ladies Mile Highway · SH 6: Cromwell, Wanaka",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.5550402486443998,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 14868.770576083512,
+          "label": "14869m",
+          "timeout": false,
+          "waitMs": 317,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Berkshire Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4997044634438992,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 19775.027434778018,
+          "label": "19775m",
+          "timeout": false,
+          "waitMs": 461,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Exit the roundabout · Berkshire Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9863942111393522,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 19825.027434778018,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 303,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead · 51 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 20.125087825506522,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 19825.027434778018,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 876,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead · 51 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 20.125087825506522,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 19851.6,
+        "geometryMeters": 19825.027434778018,
+        "durationSeconds": 1314,
+        "points": 711,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Athol Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 42.583561912823356,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Ballarat Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 96.2577423308769,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Stanley Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 554.4133992323544,
+            "type": "new name",
+            "modifier": "left",
+            "road": "Frankton Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 6346.205998770069,
+            "type": "roundabout",
+            "modifier": "slight left",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 6363.726611014654,
+            "type": "exit roundabout",
+            "modifier": "straight",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 7264.728690025447,
+            "type": "rotary",
+            "modifier": "slight left",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 7283.023776852563,
+            "type": "exit rotary",
+            "modifier": "straight",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 7669.546426258581,
+            "type": "rotary",
+            "modifier": "left",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 7715.993698774957,
+            "type": "exit rotary",
+            "modifier": "straight",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 10208.592650902498,
+            "type": "rotary",
+            "modifier": "straight",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 10236.935060266936,
+            "type": "exit rotary",
+            "modifier": "straight",
+            "road": "Frankton Ladies Mile Highway",
+            "destinations": "SH 6: Cromwell, Wanaka",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 11987.571292366565,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Lake Hayes Arrow Junction Highway",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 13966.73613426806,
+            "type": "off ramp",
+            "modifier": "slight left",
+            "road": "",
+            "destinations": "Arrowtown",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 14075.329190373843,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Arrowtown Lake Hayes Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 19355.25488040635,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Berkshire Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 19751.411524839288,
+            "type": "roundabout",
+            "modifier": "left",
+            "road": "Berkshire Street",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 19773.7446163384,
+            "type": "exit roundabout",
+            "modifier": "left",
+            "road": "Berkshire Street",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 19825.027434778018,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Berkshire Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 17.326709951622547,
+        "destinationSnapMeters": 51.161850115178595
+      },
+      "drivingStartedAt": "2026-10-23T14:25:35.211Z",
+      "drivingWallSeconds": 1994.947,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 16767.601310292375,
+        "originReady": false,
+        "destinationAccessMeters": 51.16185011294154,
+        "revision": 4,
+        "destination": "좌표 목적지 -44.939000, 168.830000",
+        "remainingMeters": 15.02010531738877,
+        "remainingSeconds": 0.9941978675295112,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead · 51 m",
+        "turnSymbol": "●",
+        "turnMeters": 14.999999999508873,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -44.938999,
+          "longitude": 168.83065,
+          "accuracy": 5,
+          "timestamp": 1792767531594
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 2015,
+      "finishedAt": "2026-10-23T14:58:59.672Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 1991
+    }
+  ]
+}

@@ -1,0 +1,970 @@
+{
+  "observedAt": "2026-10-23T17:34:06.082Z",
+  "sourceCommit": "ab6809423818bbdbdf0517eeded28ca801c076ec",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T17:34:06.092Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "bangkok",
+      "label": "방콕",
+      "country": "TH",
+      "continent": "Asia",
+      "language": "th-TH",
+      "start": [
+        13.756,
+        100.5018
+      ],
+      "end": [
+        13.746,
+        100.534
+      ],
+      "query": "Starbucks Bangkok",
+      "result": "passed",
+      "startedAt": "2026-10-23T17:34:06.209Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 257373206,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 12428814629,
+            "lat": "13.8133657",
+            "lon": "100.5619306",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, ถนนลาดพร้าว, แขวงจอมพล, เขตจตุจักร, กรุงเทพมหานคร, 10900, ประเทศไทย",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "ถนนลาดพร้าว",
+              "quarter": "แขวงจอมพล",
+              "suburb": "เขตจตุจักร",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "postcode": "10900",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Starbucks"
+            },
+            "boundingbox": [
+              "13.8133157",
+              "13.8134157",
+              "100.5618806",
+              "100.5619806"
+            ]
+          },
+          {
+            "place_id": 257865902,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 11359558869,
+            "lat": "13.7446279",
+            "lon": "100.5638192",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, สวูนิเพล็กซ์, แขวงคลองเตยเหนือ, วัฒนา, กรุงเทพมหานคร, 10110, ประเทศไทย",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "สวูนิเพล็กซ์",
+              "quarter": "แขวงคลองเตยเหนือ",
+              "suburb": "วัฒนา",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "postcode": "10110",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:th": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "13.7445779",
+              "13.7446779",
+              "100.5637692",
+              "100.5638692"
+            ]
+          },
+          {
+            "place_id": 257506376,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 5383648575,
+            "lat": "13.7187850",
+            "lon": "100.5685401",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, 2929, ถนนพระรามที่ 4, ชุมชนทรัพย์มโนทัย, แขวงคลองตัน, เขตคลองเตย, กรุงเทพมหานคร, 10110, ประเทศไทย",
+            "address": {
+              "amenity": "Starbucks",
+              "house_number": "2929",
+              "road": "ถนนพระรามที่ 4",
+              "neighbourhood": "ชุมชนทรัพย์มโนทัย",
+              "quarter": "แขวงคลองตัน",
+              "suburb": "เขตคลองเตย",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "postcode": "10110",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "website": "https://www.starbucks.com/",
+              "takeaway": "yes",
+              "wheelchair": "yes",
+              "opening_hours": "Mo-Su 07:30-22:00",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks",
+              "toilets:wheelchair": "yes"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:th": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "13.7187350",
+              "13.7188350",
+              "100.5684901",
+              "100.5685901"
+            ]
+          },
+          {
+            "place_id": 257222954,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2075948506,
+            "lat": "13.7673692",
+            "lon": "100.4432605",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "สตาร์บัคส์",
+            "display_name": "สตาร์บัคส์, Orchid Street, เดอะเซอร์เคิล ราชพฤกษ์, แขวงบางระมาด, เขตตลิ่งชัน, กรุงเทพมหานคร, กระทุ่มล้ม, 10170, ประเทศไทย",
+            "address": {
+              "amenity": "สตาร์บัคส์",
+              "road": "Orchid Street",
+              "retail": "เดอะเซอร์เคิล ราชพฤกษ์",
+              "quarter": "แขวงบางระมาด",
+              "suburb": "เขตตลิ่งชัน",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "municipality": "กระทุ่มล้ม",
+              "postcode": "10170",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": {
+              "shop": "coffee",
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "https://www.starbucks.com/",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:en": "Starbucks Coffee",
+              "name:th": "สตาร์บัคส์",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "13.7673192",
+              "13.7674192",
+              "100.4432105",
+              "100.4433105"
+            ]
+          },
+          {
+            "place_id": 257367989,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3464845917,
+            "lat": "13.7274992",
+            "lon": "100.5391513",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "สตาร์บัคส์",
+            "display_name": "สตาร์บัคส์, 990, ถนนพระรามที่ 4, แขวงลุมพินี, เขตปทุมวัน, กรุงเทพมหานคร, 10500, ประเทศไทย",
+            "address": {
+              "amenity": "สตาร์บัคส์",
+              "house_number": "990",
+              "road": "ถนนพระรามที่ 4",
+              "quarter": "แขวงลุมพินี",
+              "suburb": "เขตปทุมวัน",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "postcode": "10500",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": {
+              "shop": "coffee",
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "https://www.starbucks.com/",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:en": "Starbucks Coffee",
+              "name:th": "สตาร์บัคส์",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "13.7274492",
+              "13.7275492",
+              "100.5391013",
+              "100.5392013"
+            ]
+          },
+          {
+            "place_id": 257324378,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3244557097,
+            "lat": "13.7379474",
+            "lon": "100.5586902",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.662546730750007e-05,
+            "addresstype": "amenity",
+            "name": "สตาร์บัคส์",
+            "display_name": "สตาร์บัคส์, ถนนสุขุมวิท, สมาหาร, แขวงคลองเตย, เขตคลองเตย, กรุงเทพมหานคร, 10110, ประเทศไทย",
+            "address": {
+              "amenity": "สตาร์บัคส์",
+              "road": "ถนนสุขุมวิท",
+              "neighbourhood": "สมาหาร",
+              "quarter": "แขวงคลองเตย",
+              "suburb": "เขตคลองเตย",
+              "city": "กรุงเทพมหานคร",
+              "ISO3166-2-lvl4": "TH-10",
+              "postcode": "10110",
+              "country": "ประเทศไทย",
+              "country_code": "th"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "smoking": "no",
+              "website": "https://www.starbucks.co.th/",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "internet_access": "wlan",
+              "internet_access:fee": "no"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:en": "Starbucks Coffee",
+              "name:th": "สตาร์บัคส์",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "13.7378974",
+              "13.7379974",
+              "100.5586402",
+              "100.5587402"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. StarbucksStarbucks, ถนนลาดพร้าว, แขวงจอมพล, เขตจตุจักร, กรุงเทพมหานคร, 10900, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 9.1 km지도에 표시 · 자동차 경로 계산 →",
+          "2. StarbucksStarbucks, สวูนิเพล็กซ์, แขวงคลองเตยเหนือ, วัฒนา, กรุงเทพมหานคร, 10110, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 6.8 km지도에 표시 · 자동차 경로 계산 →",
+          "3. StarbucksStarbucks, 2929, ถนนพระรามที่ 4, ชุมชนทรัพย์มโนทัย, แขวงคลองตัน, เขตคลองเตย, กรุงเทพมหานคร, 10110, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 8.3 km등록 영업시간 Mo-Su 07:30-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "4. สตาร์บัคส์สตาร์บัคส์, Orchid Street, เดอะเซอร์เคิล ราชพฤกษ์, แขวงบางระมาด, เขตตลิ่งชัน, กรุงเทพมหานคร, กระทุ่มล้ม, 10170, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 6.4 km지도에 표시 · 자동차 경로 계산 →",
+          "5. สตาร์บัคส์สตาร์บัคส์, 990, ถนนพระรามที่ 4, แขวงลุมพินี, เขตปทุมวัน, กรุงเทพมหานคร, 10500, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 5.1 km지도에 표시 · 자동차 경로 계산 →",
+          "6. สตาร์บัคส์สตาร์บัคส์, ถนนสุขุมวิท, สมาหาร, แขวงคลองเตย, เขตคลองเตย, กรุงเทพมหานคร, 10110, ประเทศไทย카페 · OSM / Nominatim내 위치에서 직선 약 6.5 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 5130.282808011633
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=th-TH%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Starbucks+Bangkok",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/100.5018,13.756;100.534,13.746?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51067/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51066/30239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51067/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51067/30239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51066/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51066/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51065/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51065/30239.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51065/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12766/7560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12767/7559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12767/7560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12766/7559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12768/7559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12768/7560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12765/7560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/12765/7559.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25530/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15118.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25534/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25534/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25532/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25531/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25534/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25533/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25535/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25535/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25535/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25536/15120.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25536/15119.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/25536/15121.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30241.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51070/30240.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51069/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51068/30242.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/51071/30240.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 525,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Go straight · ถนนบำรุงเมือง",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.25430796728253,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1034.8023605741846,
+          "label": "1035m",
+          "timeout": false,
+          "waitMs": 433,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · ถนนพระรามที่ 1",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.6483042892943225,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2069.604721148369,
+          "label": "2070m",
+          "timeout": false,
+          "waitMs": 327,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continue straight · ถนนพระรามที่ 1",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.8034429684340259,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3104.407081722554,
+          "label": "3104m",
+          "timeout": false,
+          "waitMs": 321,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.596798628418941,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4089.2094422967384,
+          "label": "4089m",
+          "timeout": false,
+          "waitMs": 311,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.9064200712542185,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4139.209442296738,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 337,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 23.47551087829089,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 4139.209442296738,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 542,
+          "visible": 16,
+          "decoded": 16,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 23.47551087829089,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 4140.4,
+        "geometryMeters": 4139.209442296738,
+        "durationSeconds": 425.8,
+        "points": 182,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "ถนนดินสอ",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 459.8734674359795,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "ถนนบำรุงเมือง",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2203.6923587789192,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "ถนนพระรามที่ 1",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4101.42751052463,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 4139.209442296738,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 10.601897775885352,
+        "destinationSnapMeters": 10.041525074302884
+      },
+      "drivingStartedAt": "2026-10-23T17:34:12.557Z",
+      "drivingWallSeconds": 423.033,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 3651.9671974016574,
+        "originReady": false,
+        "destinationAccessMeters": 10.041525072780278,
+        "revision": 4,
+        "destination": "좌표 목적지 13.746000, 100.534000",
+        "remainingMeters": 20.005752583204966,
+        "remainingSeconds": 2.057397703103245,
+        "language": "th-TH",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999836109,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 13.746013,
+          "longitude": 100.533908,
+          "accuracy": 5,
+          "timestamp": 1792777277038
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 441,
+      "finishedAt": "2026-10-23T17:41:23.896Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 422
+    }
+  ]
+}

@@ -1,0 +1,901 @@
+{
+  "observedAt": "2026-10-23T18:18:47.815Z",
+  "sourceCommit": "4707be392a81dc881a908f82e1202b9927ee84d8",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T18:18:47.824Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "new-york",
+      "label": "뉴욕",
+      "country": "US",
+      "continent": "North America",
+      "language": "en-US",
+      "start": [
+        40.758,
+        -73.9855
+      ],
+      "end": [
+        40.735,
+        -73.99
+      ],
+      "query": "Katz Delicatessen New York",
+      "result": "passed",
+      "startedAt": "2026-10-23T18:18:47.946Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 356880504,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 1915398676,
+            "lat": "40.7223431",
+            "lon": "-73.9873530",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 0.41783763285244574,
+            "addresstype": "amenity",
+            "name": "Katz's Delicatessen",
+            "display_name": "Katz's Delicatessen, 205, East Houston Street, Manhattan Community Board 3, Manhattan, New York County, New York, 10002, United States",
+            "address": {
+              "amenity": "Katz's Delicatessen",
+              "house_number": "205",
+              "road": "East Houston Street",
+              "neighbourhood": "Manhattan Community Board 3",
+              "suburb": "Manhattan",
+              "city_district": "New York County",
+              "city": "New York",
+              "state": "New York",
+              "ISO3166-2-lvl4": "US-NY",
+              "postcode": "10002",
+              "country": "United States",
+              "country_code": "us"
+            },
+            "extratags": {
+              "phone": "+1-212-254-2246",
+              "cuisine": "deli",
+              "website": "https://www.katzsdelicatessen.com",
+              "wikidata": "Q2611788",
+              "wikipedia": "en:Katz's Delicatessen",
+              "diet:kosher": "yes",
+              "reservation": "yes",
+              "payment:cash": "yes",
+              "opening_hours": "Mo-Th 08:00-22:15; Fr 08:00-24:00; Sa 00:00-24:00; Su 00:00-22:15",
+              "contact:twitter": "https://twitter.com/KatzsDeli",
+              "contact:facebook": "https://www.facebook.com/katzsdeli",
+              "contact:instagram": "https://www.instagram.com/katzsdeli/",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Katz's Delicatessen",
+              "name:en": "Katz's Delicatessen",
+              "alt_name": "Katz's of New York City",
+              "short_name": "Katz's Deli"
+            },
+            "boundingbox": [
+              "40.7222931",
+              "40.7223931",
+              "-73.9874030",
+              "-73.9873030"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Katz's DelicatessenKatz's Delicatessen, 205, East Houston Street, Manhattan Community Board 3, Manhattan, New York County, New York, 10002, United States식당 · OSM / Nominatim내 위치에서 직선 약 4.0 km전화 +1-212-254-2246등록 영업시간 Mo-Th 08:00-22:15; Fr 08:00-24:00; Sa 00:00-24:00; Su 00:00-22:15 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 3967.938669144536
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/9648/12313.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9649/12315.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9651/12313.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9649/12314.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9650/12313.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9650/12314.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9648/12314.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9650/12315.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9649/12313.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9651/12314.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9648/12315.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9651/12315.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-US%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Katz+Delicatessen+New+York",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-73.9855,40.758;-73.99,40.735?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2411/3078.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2412/3078.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2410/3078.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2411/3079.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2412/3079.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2410/3079.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2413/3078.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/13/2413/3079.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24630.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24630.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24630.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24630.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19301/24630.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19301/24631.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19301/24632.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24633.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19300/24636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24636.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38598/49269.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38595/49270.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38596/49269.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38598/49270.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38597/49269.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38597/49270.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38596/49270.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/38595/49269.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19298/24635.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19299/24634.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19297/24635.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 632,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · West 36th Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8806382781666011,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 914.1590189242347,
+          "label": "914m",
+          "timeout": false,
+          "waitMs": 336,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · 5th Avenue",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6444730932352245,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1828.3180378484694,
+          "label": "1828m",
+          "timeout": false,
+          "waitMs": 303,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a slight left",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6693644845831777,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2742.477056772704,
+          "label": "2742m",
+          "timeout": false,
+          "waitMs": 301,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn left · East 16th Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.1843411586756766,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3606.636075696939,
+          "label": "3607m",
+          "timeout": false,
+          "waitMs": 333,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Union Square East",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7461154948609486,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3656.636075696939,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 501,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.698066692995393,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3656.636075696939,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 876,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.698066692995393,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3657.3,
+        "geometryMeters": 3656.636075696939,
+        "durationSeconds": 485.3,
+        "points": 175,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "7th Avenue",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 726.4286064448617,
+            "type": "turn",
+            "modifier": "left",
+            "road": "West 36th Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1311.767981570747,
+            "type": "turn",
+            "modifier": "right",
+            "road": "5th Avenue",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2131.6344677831485,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2358.141217616057,
+            "type": "turn",
+            "modifier": "left",
+            "road": "East 23rd Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2621.100143599717,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Park Avenue South",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3156.82485285525,
+            "type": "turn",
+            "modifier": "left",
+            "road": "East 16th Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3318.120861830737,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Irving Place",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3486.739550506492,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "East 14th Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3592.5746356864197,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Union Square East",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3656.636075696939,
+            "type": "arrive",
+            "road": "Union Square East",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 0.5521317692417677,
+        "destinationSnapMeters": 2.782683136054866
+      },
+      "drivingStartedAt": "2026-10-23T18:18:54.993Z",
+      "drivingWallSeconds": 374.62,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2585.0565478933972,
+        "originReady": false,
+        "destinationAccessMeters": 2.7826831384481867,
+        "revision": 4,
+        "destination": "좌표 목적지 40.735000, -73.990000",
+        "remainingMeters": 20.003631338814056,
+        "remainingSeconds": 2.654352196627693,
+        "language": "en-US",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.99999999966394,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 40.735001,
+          "longitude": -73.98996699999998,
+          "accuracy": 5,
+          "timestamp": 1792779911264
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 393,
+      "finishedAt": "2026-10-23T18:25:19.362Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 374
+    }
+  ]
+}

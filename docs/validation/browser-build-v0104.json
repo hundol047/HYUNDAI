@@ -1,0 +1,60 @@
+{
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "suites": [
+    {
+      "suite": "verify",
+      "exitCode": 0,
+      "seconds": 20.67
+    },
+    {
+      "suite": "verify-map",
+      "exitCode": 0,
+      "seconds": 21.96
+    },
+    {
+      "suite": "verify-navigation",
+      "exitCode": 0,
+      "seconds": 28.95
+    },
+    {
+      "suite": "verify-appearance",
+      "exitCode": 0,
+      "seconds": 10.52
+    },
+    {
+      "suite": "verify-place-search",
+      "exitCode": 0,
+      "seconds": 48.53
+    },
+    {
+      "suite": "verify-navigation-detail",
+      "exitCode": 0,
+      "seconds": 45.27
+    },
+    {
+      "suite": "verify-road-tiles",
+      "exitCode": 0,
+      "seconds": 28.33
+    },
+    {
+      "suite": "verify-date-line",
+      "exitCode": 0,
+      "seconds": 12.86
+    },
+    {
+      "suite": "verify-gps",
+      "exitCode": 0,
+      "seconds": 40.66
+    },
+    {
+      "suite": "verify-voice-navigation",
+      "exitCode": 0,
+      "seconds": 36.79
+    },
+    {
+      "suite": "verify-map-performance",
+      "exitCode": 0,
+      "seconds": 40.41
+    }
+  ]
+}

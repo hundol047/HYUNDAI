@@ -1,0 +1,714 @@
+{
+  "observedAt": "2026-10-23T15:28:02.199Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:28:02.210Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "wellington",
+      "label": "웰링턴",
+      "country": "NZ",
+      "continent": "Oceania",
+      "language": "en-NZ",
+      "start": [
+        -41.284,
+        174.776
+      ],
+      "end": [
+        -41.297,
+        174.775
+      ],
+      "query": "Fidel Cafe Wellington",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:28:02.511Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-NZ%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Fidel+Cafe+Wellington",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/174.776,-41.284;174.775,-41.297?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16145/10258.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16146/10257.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16146/10259.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16144/10257.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16147/10259.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16147/10258.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16147/10257.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16144/10258.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16144/10259.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16146/10258.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16145/10257.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/16145/10259.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32294/20516.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32294/20515.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32294/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20518.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20518.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20518.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32294/20518.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20519.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20519.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32294/20519.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20519.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/20519.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32290/20518.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64585/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64584/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41036.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64583/41035.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/64586/41037.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32292/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32291/20517.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/32293/20517.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 1094,
+          "visible": 9,
+          "decoded": 9,
+          "instruction": "Turn right · Featherston Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2961857978810094,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 325.4764018126945,
+          "label": "325m",
+          "timeout": false,
+          "waitMs": 350,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Keep left at the fork · Hunter Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.0392943707456757,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 470.54160878160457,
+          "label": "471m",
+          "timeout": false,
+          "waitMs": 383,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Cable Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.0645096827597698,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 941.0832175632091,
+          "label": "941m",
+          "timeout": false,
+          "waitMs": 361,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Taranaki Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.207369330787125,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1411.6248263448138,
+          "label": "1412m",
+          "timeout": false,
+          "waitMs": 618,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Abel Smith Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.2416912565360796,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1832.1664351264183,
+          "label": "1832m",
+          "timeout": false,
+          "waitMs": 468,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.6202405169151046,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1882.1664351264183,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 432,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 25.405307925136338,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1882.1664351264183,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 543,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 25.405307925136338,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 1882,
+        "geometryMeters": 1882.1664351264183,
+        "durationSeconds": 273.5,
+        "points": 128,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "Panama Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 47.23429001204536,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Featherston Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 202.89559416493668,
+            "type": "new name",
+            "modifier": "slight left",
+            "road": "Hunter Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 325.4764018126945,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Hunter Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 371.30560087308857,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Jervois Quay",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 832.9217577045349,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Cable Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 952.0055431896674,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Taranaki Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1741.6908868868657,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Abel Smith Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1800.138197496669,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1817.0849915670383,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1857.628737784735,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1882.1664351264183,
+            "type": "arrive",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 10.47242076536001,
+        "destinationSnapMeters": 6.335610014699142
+      },
+      "drivingStartedAt": "2026-10-23T15:28:11.441Z",
+      "drivingWallSeconds": 198.461,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1451.9143016942319,
+        "originReady": false,
+        "destinationAccessMeters": 6.33561001557646,
+        "revision": 4,
+        "destination": "좌표 목적지 -41.297000, 174.775000",
+        "remainingMeters": 19.998231450496043,
+        "remainingSeconds": 2.9062254525561464,
+        "language": "en-NZ",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 0,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -41.296948,
+          "longitude": 174.775031,
+          "accuracy": 5,
+          "timestamp": 1792769491460
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 220,
+      "finishedAt": "2026-10-23T15:31:39.233Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 198
+    }
+  ]
+}

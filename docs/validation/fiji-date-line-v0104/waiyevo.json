@@ -1,0 +1,95 @@
+[
+  {
+    "place_id": 105911,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 6705147885,
+    "lat": "-16.7961930",
+    "lon": "-179.9980874",
+    "category": "amenity",
+    "type": "fire_station",
+    "place_rank": 30,
+    "importance": 9.99999999995449e-06,
+    "addresstype": "amenity",
+    "name": "Waiyevo Fire Station",
+    "display_name": "Waiyevo Fire Station, Govt Station Road, Cakaudrove, Northern, Viti",
+    "address": {
+      "amenity": "Waiyevo Fire Station",
+      "road": "Govt Station Road",
+      "county": "Cakaudrove",
+      "ISO3166-2-lvl6": "FJ-03",
+      "state": "Northern",
+      "ISO3166-2-lvl4": "FJ-N",
+      "country": "Viti",
+      "country_code": "fj"
+    },
+    "boundingbox": [
+      "-16.7962430",
+      "-16.7961430",
+      "-179.9981374",
+      "-179.9980374"
+    ]
+  },
+  {
+    "place_id": 108673,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 6705147489,
+    "lat": "-16.7924130",
+    "lon": "-179.9987073",
+    "category": "amenity",
+    "type": "post_office",
+    "place_rank": 30,
+    "importance": 9.99999999995449e-06,
+    "addresstype": "amenity",
+    "name": "Waiyevo Post Office",
+    "display_name": "Waiyevo Post Office, West Coast Road, Cakaudrove, Northern, Viti",
+    "address": {
+      "amenity": "Waiyevo Post Office",
+      "road": "West Coast Road",
+      "county": "Cakaudrove",
+      "ISO3166-2-lvl6": "FJ-03",
+      "state": "Northern",
+      "ISO3166-2-lvl4": "FJ-N",
+      "country": "Viti",
+      "country_code": "fj"
+    },
+    "boundingbox": [
+      "-16.7924630",
+      "-16.7923630",
+      "-179.9987573",
+      "-179.9986573"
+    ]
+  },
+  {
+    "place_id": 108398,
+    "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 4949562421,
+    "lat": "-16.7955767",
+    "lon": "-179.9964181",
+    "category": "office",
+    "type": "government",
+    "place_rank": 30,
+    "importance": 9.99999999995449e-06,
+    "addresstype": "office",
+    "name": "Waiyevo Police Station",
+    "display_name": "Waiyevo Police Station, Govt Station Road, Cakaudrove, Northern, Viti",
+    "address": {
+      "office": "Waiyevo Police Station",
+      "road": "Govt Station Road",
+      "county": "Cakaudrove",
+      "ISO3166-2-lvl6": "FJ-03",
+      "state": "Northern",
+      "ISO3166-2-lvl4": "FJ-N",
+      "country": "Viti",
+      "country_code": "fj"
+    },
+    "boundingbox": [
+      "-16.7956267",
+      "-16.7955267",
+      "-179.9964681",
+      "-179.9963681"
+    ]
+  }
+]

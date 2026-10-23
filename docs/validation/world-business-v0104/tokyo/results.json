@@ -1,0 +1,1212 @@
+{
+  "observedAt": "2026-10-23T14:35:51.200Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "82802f73e492a0ba4b6da4d64900464308d2495dfa8fc19049b0d51ebe20d6c7",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:35:51.206Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "tokyo",
+      "label": "도쿄",
+      "country": "JP",
+      "continent": "Asia",
+      "language": "ja-JP",
+      "start": [
+        35.669,
+        139.703
+      ],
+      "end": [
+        35.647024,
+        139.7221081
+      ],
+      "query": "Starbucks Shibuya Tokyo",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:35:51.339Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 265446825,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6385156574,
+            "lat": "35.6470240",
+            "lon": "139.7221081",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 回生橋, 恵比寿二丁目, 恵比寿, 渋谷区, 東京, 150-0012, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "road": "回生橋",
+              "neighbourhood": "恵比寿二丁目",
+              "quarter": "恵比寿",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "150-0012",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6469740",
+              "35.6470740",
+              "139.7220581",
+              "139.7221581"
+            ]
+          },
+          {
+            "place_id": 264979929,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 701818213,
+            "lat": "35.6670002",
+            "lon": "139.7067806",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 2, 神宮前五丁目, 神宮前, 渋谷区, 東京, 150-0001, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "2",
+              "administrative": "神宮前五丁目",
+              "quarter": "神宮前",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "150-0001",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "branch": "表参道B-SIDE店",
+              "cuisine": "coffee_shop",
+              "website": "https://www.starbucks.co.jp/",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "operator": "スターバックスコーヒージャパン",
+              "takeaway": "yes",
+              "drive_through": "no",
+              "opening_hours": "Mo-Su 08:00-22:00",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ja:スターバックス",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ja_rm": "Sutah-bakkusu",
+              "official_name": "スターバックスコーヒー",
+              "addr:housename": "B-SIDE",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6669502",
+              "35.6670502",
+              "139.7067306",
+              "139.7068306"
+            ]
+          },
+          {
+            "place_id": 265055227,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2376680007,
+            "lat": "35.6461674",
+            "lon": "139.7079139",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 10, 恵比寿南一丁目, 恵比寿南, 渋谷区, 東京, 150-0022, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "10",
+              "administrative": "恵比寿南一丁目",
+              "quarter": "恵比寿南",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "150-0022",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "level": "0",
+              "phone": "+81 3-5722-5051",
+              "branch": "恵比寿ユニオンビル店",
+              "cuisine": "coffee_shop",
+              "website": "https://www.starbucks.co.jp/",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "operator": "スターバックスコーヒージャパン",
+              "takeaway": "yes",
+              "drive_through": "no",
+              "opening_hours": "Mo-Fr 06:30-22:30; Sa-Su,PH 07:00-22:30",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ja:スターバックス",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ja_rm": "Sutābakkusu",
+              "official_name": "スターバックスコーヒー",
+              "addr:housename": "エビス ユニオンビル",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6461174",
+              "35.6462174",
+              "139.7078639",
+              "139.7079639"
+            ]
+          },
+          {
+            "place_id": 264897140,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 13298521476,
+            "lat": "35.6614154",
+            "lon": "139.7006238",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 3, 神南一丁目, 神南, 渋谷区, 東京, 150-0041, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "3",
+              "administrative": "神南一丁目",
+              "quarter": "神南",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "150-0041",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "branch": "渋谷モディ店",
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6613654",
+              "35.6614654",
+              "139.7005738",
+              "139.7006738"
+            ]
+          },
+          {
+            "place_id": 265184134,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6805664786,
+            "lat": "35.6883419",
+            "lon": "139.7008013",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, バスタ新宿;4階;A2のりば, 千駄ヶ谷五丁目, 千駄ヶ谷, 渋谷区, 東京, 151-0051, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "road": "バスタ新宿;4階;A2のりば",
+              "neighbourhood": "千駄ヶ谷五丁目",
+              "quarter": "千駄ヶ谷",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "151-0051",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ja:スターバックス"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "official_name": "スターバックスコーヒー",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6882919",
+              "35.6883919",
+              "139.7007513",
+              "139.7008513"
+            ]
+          },
+          {
+            "place_id": 264901104,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3306922506,
+            "lat": "35.6472060",
+            "lon": "139.7145806",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.593499656667457e-05,
+            "addresstype": "amenity",
+            "name": "スターバックス",
+            "display_name": "スターバックス, 14, 恵比寿一丁目, 恵比寿, 渋谷区, 東京, 150-0013, 日本",
+            "address": {
+              "amenity": "スターバックス",
+              "house_number": "14",
+              "administrative": "恵比寿一丁目",
+              "quarter": "恵比寿",
+              "city": "渋谷区",
+              "ISO3166-2-lvl4": "JP-13",
+              "postcode": "150-0013",
+              "country": "日本",
+              "country_code": "jp"
+            },
+            "extratags": {
+              "phone": "+81 3-5791-1611",
+              "branch": "恵比寿ファーストスクエア店",
+              "cuisine": "coffee_shop",
+              "website": "https://www.starbucks.co.jp/",
+              "brand:en": "Starbucks",
+              "brand:ja": "スターバックス",
+              "operator": "スターバックスコーヒージャパン",
+              "takeaway": "yes",
+              "drive_through": "no",
+              "opening_hours": "Mo-Fr 07:00-21:00; Sa-Su,PH 08:00-20:00",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "ja:スターバックス",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "スターバックス",
+              "brand": "スターバックス",
+              "name:en": "Starbucks",
+              "name:ja": "スターバックス",
+              "name:ja_rm": "Sutābakkusu",
+              "official_name": "スターバックスコーヒー",
+              "addr:housename": "恵比寿ファーストスクエア",
+              "official_name:en": "Starbucks Coffee",
+              "official_name:ja": "スターバックスコーヒー"
+            },
+            "boundingbox": [
+              "35.6471560",
+              "35.6472560",
+              "139.7145306",
+              "139.7146306"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. スターバックススターバックス, 回生橋, 恵比寿二丁目, 恵比寿, 渋谷区, 東京, 150-0012, 日本카페 · OSM / Nominatim내 위치에서 직선 약 3.0 km지도에 표시 · 자동차 경로 계산 →",
+          "2. スターバックススターバックス, 2, 神宮前五丁目, 神宮前, 渋谷区, 東京, 150-0001, 日本카페 · OSM / Nominatim내 위치에서 직선 약 408 m등록 영업시간 Mo-Su 08:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. スターバックススターバックス, 10, 恵比寿南一丁目, 恵比寿南, 渋谷区, 東京, 150-0022, 日本카페 · OSM / Nominatim내 위치에서 직선 약 2.6 km전화 +81 3-5722-5051등록 영업시간 Mo-Fr 06:30-22:30; Sa-Su,PH 07:00-22:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "4. スターバックススターバックス, 3, 神南一丁目, 神南, 渋谷区, 東京, 150-0041, 日本카페 · OSM / Nominatim내 위치에서 직선 약 870 m지도에 표시 · 자동차 경로 계산 →",
+          "5. スターバックススターバックス, バスタ新宿;4階;A2のりば, 千駄ヶ谷五丁目, 千駄ヶ谷, 渋谷区, 東京, 151-0051, 日本카페 · OSM / Nominatim내 위치에서 직선 약 2.2 km지도에 표시 · 자동차 경로 계산 →",
+          "6. スターバックススターバックス, 14, 恵比寿一丁目, 恵比寿, 渋谷区, 東京, 150-0013, 日本카페 · OSM / Nominatim내 위치에서 직선 약 2.6 km전화 +81 3-5791-1611등록 영업시간 Mo-Fr 07:00-21:00; Sa-Su,PH 08:00-20:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 407.5360816947079
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/29100/12904.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29101/12903.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29098/12904.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29100/12903.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29099/12905.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29098/12905.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29098/12903.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29101/12904.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29101/12905.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29100/12905.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29099/12903.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29099/12904.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ja-JP%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Starbucks+Shibuya+Tokyo",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/139.703,35.669;139.7221081,35.647024?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25809.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25809.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25808.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25808.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58198/25809.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25808.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25809.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58198/25810.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58198/25808.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58198/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58198/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25811.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58200/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58199/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25812.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58201/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25815.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58205/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116407/51628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116406/51629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116407/51627.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116405/51628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116408/51628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116408/51629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116408/51627.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116406/51627.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116405/51629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116405/51627.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116407/51629.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/116406/51628.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58203/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25813.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58202/25814.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/58204/25814.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14549/6452.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14550/6452.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14549/6453.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14550/6453.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14548/6452.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14551/6452.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14548/6453.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14551/6453.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 671,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "左折です",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.928641660502075,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 961.1323359541668,
+          "label": "961m",
+          "timeout": false,
+          "waitMs": 339,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "右折です · 明治通り",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1946146403719633,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1922.2646719083336,
+          "label": "1922m",
+          "timeout": false,
+          "waitMs": 385,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "右折です · 新豊沢橋",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.2532870955359747,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2883.3970078625007,
+          "label": "2883m",
+          "timeout": false,
+          "waitMs": 788,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "右折です · 新豊沢橋",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.0356107847699918,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3794.5293438166673,
+          "label": "3795m",
+          "timeout": false,
+          "waitMs": 451,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.7212801790614316,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3844.5293438166673,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 312,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地に到着しました。目的地は前方です",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.652862206648308,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3844.5293438166673,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 2726,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "目的地に到着しました。目的地は前方です",
+          "instructionLanguage": "ja",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.652862206648308,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "coordinateEndpoint": [
+        35.6595,
+        139.7005
+      ],
+      "selectedPlace": {
+        "name": "スターバックス",
+        "latitude": 35.647024,
+        "longitude": 139.7221081,
+        "id": "265446825",
+        "address": "スターバックス, 回生橋, 恵比寿二丁目, 恵比寿, 渋谷区, 東京, 150-0012, 日本",
+        "category": "카페",
+        "phone": "",
+        "website": "",
+        "openingHours": "",
+        "source": "OSM / Nominatim"
+      },
+      "destinationMode": "provider-search-result",
+      "route": {
+        "distanceMeters": 3844,
+        "geometryMeters": 3844.5293438166673,
+        "durationSeconds": 465.7,
+        "points": 167,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 104.85025930601212,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 318.0496855533586,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "ファイアー通り",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 697.6152701981944,
+            "type": "turn",
+            "modifier": "right",
+            "road": "神宮通り",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 835.4066066969825,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 963.5405117536573,
+            "type": "turn",
+            "modifier": "right",
+            "road": "明治通り",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3570.3883016369705,
+            "type": "turn",
+            "modifier": "right",
+            "road": "新豊沢橋",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3632.7587659763076,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3691.9277940181955,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3732.0223177061675,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3844.5293438166673,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 36.562184095238095,
+        "destinationSnapMeters": 12.910265132672995
+      },
+      "drivingStartedAt": "2026-10-23T14:35:58.405Z",
+      "drivingWallSeconds": 394.757,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2949.2131798478426,
+        "originReady": false,
+        "destinationAccessMeters": 12.91026513383411,
+        "revision": 3,
+        "destination": "スターバックス",
+        "remainingMeters": 19.997246253612484,
+        "remainingSeconds": 2.4226632623067985,
+        "language": "ja-JP",
+        "instructionLanguage": "ja",
+        "instruction": "目的地に到着しました。目的地は前方です",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000004428784,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 35.647135,
+          "longitude": 139.72215,
+          "accuracy": 5,
+          "timestamp": 1792766554591
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 415,
+      "finishedAt": "2026-10-23T14:42:43.649Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 394
+    }
+  ]
+}

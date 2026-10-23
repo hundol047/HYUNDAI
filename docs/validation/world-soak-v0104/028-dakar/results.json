@@ -1,0 +1,757 @@
+{
+  "observedAt": "2026-10-23T16:13:18.422Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:13:18.433Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "dakar",
+      "label": "다카르",
+      "country": "SN",
+      "continent": "Africa",
+      "language": "fr-SN",
+      "start": [
+        14.669,
+        -17.433
+      ],
+      "end": [
+        14.681,
+        -17.442
+      ],
+      "query": "Cafe de Rome Dakar",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:13:18.556Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 299805317,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 554250991,
+            "lat": "14.6654204",
+            "lon": "-17.4358946",
+            "category": "amenity",
+            "type": "restaurant",
+            "place_rank": 30,
+            "importance": 7.103913939111952e-05,
+            "addresstype": "amenity",
+            "name": "Café de Rome",
+            "display_name": "Café de Rome, 30, Avenue de la République, Commune de Dakar-Plateau, Arrondissement de Dakar-Plateau, Dakar, Région de Dakar, 99341, Sénégal",
+            "address": {
+              "amenity": "Café de Rome",
+              "house_number": "30",
+              "road": "Avenue de la République",
+              "suburb": "Commune de Dakar-Plateau",
+              "city_district": "Arrondissement de Dakar-Plateau",
+              "city": "Dakar",
+              "state": "Région de Dakar",
+              "ISO3166-2-lvl4": "SN-DK",
+              "postcode": "99341",
+              "country": "Sénégal",
+              "country_code": "sn"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Café de Rome"
+            },
+            "boundingbox": [
+              "14.6653704",
+              "14.6654704",
+              "-17.4359446",
+              "-17.4358446"
+            ]
+          },
+          {
+            "place_id": 298209119,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10939709788,
+            "lat": "14.6655480",
+            "lon": "-17.4358303",
+            "category": "tourism",
+            "type": "hotel",
+            "place_rank": 30,
+            "importance": 7.103913939111952e-05,
+            "addresstype": "tourism",
+            "name": "Café de Rome",
+            "display_name": "Café de Rome, Rue Joseph Gomis, Commune de Dakar-Plateau, Arrondissement de Dakar-Plateau, Dakar, Région de Dakar, 99341, Sénégal",
+            "address": {
+              "tourism": "Café de Rome",
+              "road": "Rue Joseph Gomis",
+              "suburb": "Commune de Dakar-Plateau",
+              "city_district": "Arrondissement de Dakar-Plateau",
+              "city": "Dakar",
+              "state": "Région de Dakar",
+              "ISO3166-2-lvl4": "SN-DK",
+              "postcode": "99341",
+              "country": "Sénégal",
+              "country_code": "sn"
+            },
+            "extratags": {
+              "website": "https://www.cafederome.com/en/"
+            },
+            "namedetails": {
+              "name": "Café de Rome"
+            },
+            "boundingbox": [
+              "14.6654980",
+              "14.6655980",
+              "-17.4358803",
+              "-17.4357803"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Café de RomeCafé de Rome, 30, Avenue de la République, Commune de Dakar-Plateau, Arrondissement de Dakar-Plateau, Dakar, Région de Dakar, 99341, Sénégal식당 · OSM / Nominatim내 위치에서 직선 약 505 m지도에 표시 · 자동차 경로 계산 →",
+          "2. Café de RomeCafé de Rome, Rue Joseph Gomis, Commune de Dakar-Plateau, Arrondissement de Dakar-Plateau, Dakar, Région de Dakar, 99341, Sénégalhotel · OSM / Nominatim내 위치에서 직선 약 490 m지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 489.9309380426877
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/14796/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14796/15034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14797/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14795/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14797/15034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14798/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14798/15034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14795/15034.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=fr-SN%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+de+Rome+Dakar",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-17.433,14.669;-17.442,14.681?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14796/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14797/15033.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14797/15032.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14795/15032.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14796/15034.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14796/15032.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/14798/15032.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29595/30067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29595/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29595/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30067.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29595/30068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30068.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29594/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30064.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29591/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59187/60131.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59186/60131.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59186/60130.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59185/60131.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59184/60132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59186/60132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59187/60132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59184/60131.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59185/60130.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59185/60132.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59187/60130.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/59184/60130.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30065.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29592/30066.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/29593/30066.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 825,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Tourner à droite · Rue El Hadji Amadou Assane Ndoye",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8838502796025414,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 636.6708180662922,
+          "label": "637m",
+          "timeout": false,
+          "waitMs": 352,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Prendre le giratoire et prendre la troisième sortie · A 1",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.7167230740919874,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1273.3416361325844,
+          "label": "1273m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Prendre le giratoire et prendre la troisième sortie · A 1",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.447111453559456,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1761.176246798788,
+          "label": "1761m",
+          "timeout": false,
+          "waitMs": 311,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Prendre le giratoire et prendre la troisième sortie · A 1",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.0132042111171369,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1910.0124541988766,
+          "label": "1910m",
+          "timeout": false,
+          "waitMs": 302,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Tourner légèrement à droite",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9463252706945894,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2145.3816596389875,
+          "label": "2145m",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Prendre le giratoire et prendre la troisième sortie · Avenue Cheikh Seydi El Hadji Malick Sy",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7079537731846147,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2496.683272265169,
+          "label": "2497m",
+          "timeout": false,
+          "waitMs": 329,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7751042761931857,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2546.683272265169,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 325,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vous êtes arrivé à votre destination, droit devant",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 21.085181314688295,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2546.683272265169,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1094,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vous êtes arrivé à votre destination, droit devant",
+          "instructionLanguage": "fr",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 21.085181314688295,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2539,
+        "geometryMeters": 2546.683272265169,
+        "durationSeconds": 227.1,
+        "points": 95,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Rue Saint Michel",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 52.57036077175974,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rue El Hadji Amadou Assane Ndoye",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 112.49907698489656,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rue Wagane Diouf",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 217.93609368700825,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Avenue George Pompidou",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 584.170386924121,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Avenue du Président Lamine Gueye",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1761.176246798788,
+            "type": "roundabout",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 1815.9876347000757,
+            "type": "exit roundabout",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 1895.8900252174983,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2145.3816596389875,
+            "type": "roundabout",
+            "modifier": "straight",
+            "road": "Avenue Cheikh Seydi El Hadji Malick Sy",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 2212.988478344933,
+            "type": "exit roundabout",
+            "modifier": "straight",
+            "road": "Avenue Cheikh Seydi El Hadji Malick Sy",
+            "drivingSide": "right",
+            "exit": 3
+          },
+          {
+            "atMeters": 2422.575609008451,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2477.6751235495303,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2546.683272265169,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 32.54124795839283,
+        "destinationSnapMeters": 23.60281945233601
+      },
+      "drivingStartedAt": "2026-10-23T16:13:25.757Z",
+      "drivingWallSeconds": 263.453,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1654.715275890252,
+        "originReady": false,
+        "destinationAccessMeters": 23.60281945085727,
+        "revision": 4,
+        "destination": "좌표 목적지 14.681000, -17.442000",
+        "remainingMeters": 14.954745418315701,
+        "remainingSeconds": 1.3376221679793208,
+        "language": "fr-SN",
+        "instructionLanguage": "fr",
+        "instruction": "Vous êtes arrivé à votre destination, droit devant",
+        "turnSymbol": "●",
+        "turnMeters": 14.999999999189185,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 14.681161,
+          "longitude": -17.442142999999987,
+          "accuracy": 5,
+          "timestamp": 1792772270645
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 285,
+      "finishedAt": "2026-10-23T16:17:58.016Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 263
+    }
+  ]
+}

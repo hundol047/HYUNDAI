@@ -1,0 +1,630 @@
+{
+  "observedAt": "2026-10-23T13:36:19.932Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9e0cebec55f791cef968108e91ec28f17a82a9c9907586a4656808cb570e02bb",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T13:36:19.939Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "daegu",
+      "label": "대구",
+      "country": "KR",
+      "continent": "Asia",
+      "language": "ko-KR",
+      "start": [
+        35.8714,
+        128.6014
+      ],
+      "end": [
+        35.8586,
+        128.5995
+      ],
+      "query": "스타벅스 대구 반월당",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:36:20.071Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28091/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28091/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4+%EB%8C%80%EA%B5%AC+%EB%B0%98%EC%9B%94%EB%8B%B9",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/128.6014,35.8714;128.5995,35.8586?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25764.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25764.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25764.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25764.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14044/6441.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14045/6441.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14043/6441.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14045/6440.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14044/6440.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14044/6442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14046/6442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14046/6441.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14046/6440.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14043/6440.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14045/6442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/14043/6442.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28091/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28091/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28087/12881.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28087/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28087/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12884.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28087/12884.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12884.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12884.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56179/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25767.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25766.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56178/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56180/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/56177/25765.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28089/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12882.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28088/12883.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/28090/12883.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 502,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "좌회전 · 공평로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.028202367914738,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 375.67173541679597,
+          "label": "376m",
+          "timeout": false,
+          "waitMs": 316,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "직진 · 이천로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.7648855283780542,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 751.3434708335919,
+          "label": "751m",
+          "timeout": false,
+          "waitMs": 511,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "직진 · 이천로",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.3652329154723637,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1127.015206250388,
+          "label": "1127m",
+          "timeout": false,
+          "waitMs": 524,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "좌회전 · 대봉로43안길",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.3340823793316345,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1452.6869416671839,
+          "label": "1453m",
+          "timeout": false,
+          "waitMs": 818,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "목적지 · 대봉로43안길",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.314821028781176,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1502.6869416671839,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 475,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 29.064004759337667,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1502.6869416671839,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 678,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다.",
+          "instructionLanguage": "ko",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 29.064004759337667,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 1499.9,
+        "geometryMeters": 1502.6869416671839,
+        "durationSeconds": 141,
+        "points": 59,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "경상감영길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 57.521702109709416,
+            "type": "turn",
+            "modifier": "left",
+            "road": "공평로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 886.134961925796,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "이천로",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1389.0683809202637,
+            "type": "turn",
+            "modifier": "left",
+            "road": "대봉로43안길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1399.0874581813637,
+            "type": "continue",
+            "modifier": "right",
+            "road": "대봉로43안길",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1502.6869416671839,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "대봉로43안길",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 25.002870719841372,
+        "destinationSnapMeters": 30.319240294438057
+      },
+      "drivingStartedAt": "2026-10-23T13:36:26.600Z",
+      "drivingWallSeconds": 158.456,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1418.8197753933412,
+        "originReady": false,
+        "destinationAccessMeters": 30.319240291873708,
+        "revision": 4,
+        "destination": "좌표 목적지 35.858600, 128.599500",
+        "remainingMeters": 24.95363402689006,
+        "remainingSeconds": 2.3457979850600026,
+        "language": "ko-KR",
+        "instructionLanguage": "ko",
+        "instruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다.",
+        "turnSymbol": "●",
+        "turnMeters": 24.99999999953934,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 35.858543,
+          "longitude": 128.599171,
+          "accuracy": 5,
+          "timestamp": 1792762746648
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "finishedAt": "2026-10-23T13:39:15.364Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 158
+    }
+  ]
+}

@@ -1,0 +1,606 @@
+{
+  "type": "Offline shared production JS tracker replay of captured live-provider geometry and all original synthetic 1Hz positions. No new provider or map-rendering claim.",
+  "observedAt": "2026-10-23T18:27:13.840Z",
+  "expectedCases": 50,
+  "harnessSha256": "4dd7fc2e4a91fdad3d385e7237f0e48cae539a0d0d58ed3299358c29c2630c87",
+  "engineSha256": "9ad2d874293f9ee71b2834d94bfb72cec33309ad7cd32482cef033918180b546",
+  "cases": [
+    {
+      "id": "lisbon",
+      "result": "passed",
+      "samples": 132,
+      "finalLegSamples": 16,
+      "maxProgressDeltaMeters": 5.001251200951112,
+      "maxPreArrivalDeltaMeters": 9.866624850474182e-9,
+      "upcomingInstructions": [
+        "Destino · Avenida 24 de Julho"
+      ],
+      "arrivalInstruction": "Chegou ao seu destino, em frente"
+    },
+    {
+      "id": "toronto",
+      "result": "passed",
+      "samples": 218,
+      "finalLegSamples": 18,
+      "maxProgressDeltaMeters": 5.000099465746635,
+      "maxPreArrivalDeltaMeters": 9.142866019828944e-9,
+      "upcomingInstructions": [
+        "Destination · Freeland Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 52 m"
+    },
+    {
+      "id": "seoul",
+      "result": "passed",
+      "samples": 202,
+      "finalLegSamples": 8,
+      "maxProgressDeltaMeters": 4.996656651732405,
+      "maxPreArrivalDeltaMeters": 1.0011660833697533e-8,
+      "upcomingInstructions": [
+        "목적지"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 52미터 남았습니다."
+    },
+    {
+      "id": "daegu",
+      "result": "passed",
+      "samples": 158,
+      "finalLegSamples": 11,
+      "maxProgressDeltaMeters": 4.990726807028906,
+      "maxPreArrivalDeltaMeters": 9.913946996675804e-9,
+      "upcomingInstructions": [
+        "목적지 · 대봉로43안길"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 30미터 남았습니다."
+    },
+    {
+      "id": "montreal",
+      "result": "passed",
+      "samples": 278,
+      "finalLegSamples": 4,
+      "maxProgressDeltaMeters": 5.004860016542157,
+      "maxPreArrivalDeltaMeters": 8.224105840781704e-9,
+      "upcomingInstructions": [
+        "Destination · Rue Notre-Dame Est"
+      ],
+      "arrivalInstruction": "Vous êtes arrivé à votre destination, droit devant"
+    },
+    {
+      "id": "dubai",
+      "result": "passed",
+      "samples": 335,
+      "finalLegSamples": 39,
+      "maxProgressDeltaMeters": 4.993872194937241,
+      "maxPreArrivalDeltaMeters": 1.1424248214098043e-8,
+      "upcomingInstructions": [
+        "الوجهة"
+      ],
+      "arrivalInstruction": "نهاية مسار السيارة · الوجهة: ≈ 43 m"
+    },
+    {
+      "id": "marrakesh",
+      "result": "passed",
+      "samples": 324,
+      "finalLegSamples": 17,
+      "maxProgressDeltaMeters": 5.001960168605795,
+      "maxPreArrivalDeltaMeters": 1.0767962521640584e-8,
+      "upcomingInstructions": [
+        "الوجهة · Avenue Houman El Fetouaki"
+      ],
+      "arrivalInstruction": "لقد وصلت إلى الوجهة ، مباشرة أمامك"
+    },
+    {
+      "id": "sao-paulo",
+      "result": "passed",
+      "samples": 383,
+      "finalLegSamples": 12,
+      "maxProgressDeltaMeters": 4.994569438617702,
+      "maxPreArrivalDeltaMeters": 1.1486918083392084e-8,
+      "upcomingInstructions": [
+        "Destino · Passagem Subterrânea Daher Elias Cutait"
+      ],
+      "arrivalInstruction": "Você chegou ao seu destino, em frente"
+    },
+    {
+      "id": "santiago",
+      "result": "passed",
+      "samples": 114,
+      "finalLegSamples": 61,
+      "maxProgressDeltaMeters": 4.997865372472507,
+      "maxPreArrivalDeltaMeters": 1.0462940736033488e-8,
+      "upcomingInstructions": [
+        "Destino · Teatinos"
+      ],
+      "arrivalInstruction": "Fin de la ruta en coche · Destino: ≈ 52 m"
+    },
+    {
+      "id": "furka",
+      "result": "passed",
+      "samples": 942,
+      "finalLegSamples": 938,
+      "maxProgressDeltaMeters": 10.018159029822787,
+      "maxPreArrivalDeltaMeters": 8.706138032721356e-9,
+      "upcomingInstructions": [
+        "Ziel · Furkastrasse"
+      ],
+      "arrivalInstruction": "Sie haben Ihr Ziel erreicht, es befindet sich geradeaus"
+    },
+    {
+      "id": "melbourne",
+      "result": "passed",
+      "samples": 238,
+      "finalLegSamples": 11,
+      "maxProgressDeltaMeters": 9.530594979878515e-9,
+      "maxPreArrivalDeltaMeters": 9.530594979878515e-9,
+      "upcomingInstructions": [
+        "Destination · Collins Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "queenstown",
+      "result": "passed",
+      "samples": 1991,
+      "finalLegSamples": 4,
+      "maxProgressDeltaMeters": 1.7273123376071453e-8,
+      "maxPreArrivalDeltaMeters": 1.7273123376071453e-8,
+      "upcomingInstructions": [
+        "Destination · Berkshire Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 51 m"
+    },
+    {
+      "id": "amsterdam",
+      "result": "passed",
+      "samples": 587,
+      "finalLegSamples": 11,
+      "maxProgressDeltaMeters": 7.734342943876982e-9,
+      "maxPreArrivalDeltaMeters": 7.734342943876982e-9,
+      "upcomingInstructions": [
+        "Bestemming"
+      ],
+      "arrivalInstruction": "Eindpunt van de autoroute · Bestemming: ≈ 49 m"
+    },
+    {
+      "id": "osaka",
+      "result": "passed",
+      "samples": 190,
+      "finalLegSamples": 108,
+      "maxProgressDeltaMeters": 1.0257735993945971e-8,
+      "maxPreArrivalDeltaMeters": 1.0257735993945971e-8,
+      "upcomingInstructions": [
+        "目的地 · 御堂筋"
+      ],
+      "arrivalInstruction": "目的地に到着しました。目的地は前方です"
+    },
+    {
+      "id": "san-francisco",
+      "result": "passed",
+      "samples": 230,
+      "finalLegSamples": 47,
+      "maxProgressDeltaMeters": 9.865175343293231e-9,
+      "maxPreArrivalDeltaMeters": 9.865175343293231e-9,
+      "upcomingInstructions": [
+        "Destination · Stockton Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "accra",
+      "result": "passed",
+      "samples": 387,
+      "finalLegSamples": 18,
+      "maxProgressDeltaMeters": 1.2540112948045135e-8,
+      "maxPreArrivalDeltaMeters": 1.2540112948045135e-8,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 32 m"
+    },
+    {
+      "id": "lima",
+      "result": "passed",
+      "samples": 242,
+      "finalLegSamples": 12,
+      "maxProgressDeltaMeters": 1.2339569366304204e-8,
+      "maxPreArrivalDeltaMeters": 1.2339569366304204e-8,
+      "upcomingInstructions": [
+        "Destino · Calle Los Dalias"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "wellington",
+      "result": "passed",
+      "samples": 198,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 8.778357596384012e-9,
+      "maxPreArrivalDeltaMeters": 8.778357596384012e-9,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "rome",
+      "result": "passed",
+      "samples": 130,
+      "finalLegSamples": 49,
+      "maxProgressDeltaMeters": 9.122686606133357e-9,
+      "maxPreArrivalDeltaMeters": 9.122686606133357e-9,
+      "upcomingInstructions": [
+        "Destinazione · Largo Corrado Ricci"
+      ],
+      "arrivalInstruction": "Fine del percorso in auto · Destinazione: ≈ 162 m"
+    },
+    {
+      "id": "taipei",
+      "result": "passed",
+      "samples": 314,
+      "finalLegSamples": 9,
+      "maxProgressDeltaMeters": 1.1376414477126673e-8,
+      "maxPreArrivalDeltaMeters": 1.1376414477126673e-8,
+      "upcomingInstructions": [
+        "Destination · 麗水街"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "vancouver",
+      "result": "passed",
+      "samples": 174,
+      "finalLegSamples": 102,
+      "maxProgressDeltaMeters": 5.995730134600308e-9,
+      "maxPreArrivalDeltaMeters": 5.995730134600308e-9,
+      "upcomingInstructions": [
+        "Destination · West Georgia Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "kigali",
+      "result": "passed",
+      "samples": 363,
+      "finalLegSamples": 2,
+      "maxProgressDeltaMeters": 1.2524196790764108e-8,
+      "maxPreArrivalDeltaMeters": 1.2524196790764108e-8,
+      "upcomingInstructions": [
+        "Destination · Route KN 7"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "rio",
+      "result": "passed",
+      "samples": 234,
+      "finalLegSamples": 7,
+      "maxProgressDeltaMeters": 1.125090065556833e-8,
+      "maxPreArrivalDeltaMeters": 9.979430615203455e-9,
+      "upcomingInstructions": [
+        "Destino · Rua Djalma Ulrich"
+      ],
+      "arrivalInstruction": "Você chegou ao seu destino, em frente"
+    },
+    {
+      "id": "hobart",
+      "result": "passed",
+      "samples": 170,
+      "finalLegSamples": 9,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Logan Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 40 m"
+    },
+    {
+      "id": "helsinki",
+      "result": "passed",
+      "samples": 262,
+      "finalLegSamples": 16,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Määränpää · Tähtitorninkatu"
+      ],
+      "arrivalInstruction": "Autoreitin päätepiste · Määränpää: ≈ 30 m"
+    },
+    {
+      "id": "kuala-lumpur",
+      "result": "passed",
+      "samples": 478,
+      "finalLegSamples": 44,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Lorong Kuda"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "los-angeles",
+      "result": "passed",
+      "samples": 194,
+      "finalLegSamples": 9,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "dakar",
+      "result": "passed",
+      "samples": 263,
+      "finalLegSamples": 8,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vous êtes arrivé à votre destination, droit devant"
+    },
+    {
+      "id": "bogota",
+      "result": "passed",
+      "samples": 190,
+      "finalLegSamples": 2,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destino"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "christchurch",
+      "result": "passed",
+      "samples": 206,
+      "finalLegSamples": 94,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Tuam Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 33 m"
+    },
+    {
+      "id": "stockholm",
+      "result": "passed",
+      "samples": 210,
+      "finalLegSamples": 26,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Stadsgårdsleden"
+      ],
+      "arrivalInstruction": "Du är framme vid din destination, rakt fram"
+    },
+    {
+      "id": "jakarta",
+      "result": "passed",
+      "samples": 358,
+      "finalLegSamples": 83,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Tujuan · Jalan Jenderal Sudirman"
+      ],
+      "arrivalInstruction": "Anda telah tiba di tujuan ke-, lurus saja"
+    },
+    {
+      "id": "honolulu",
+      "result": "passed",
+      "samples": 242,
+      "finalLegSamples": 14,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Dukes Lane"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "addis-ababa",
+      "result": "passed",
+      "samples": 227,
+      "finalLegSamples": 12,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Taitu Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 86 m"
+    },
+    {
+      "id": "quito",
+      "result": "passed",
+      "samples": 226,
+      "finalLegSamples": 2,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destino · Avenida 10 de Agosto"
+      ],
+      "arrivalInstruction": "Has llegado a tu destino, en frente"
+    },
+    {
+      "id": "perth",
+      "result": "passed",
+      "samples": 234,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "busan",
+      "result": "passed",
+      "samples": 271,
+      "finalLegSamples": 36,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 마린시티3로"
+      ],
+      "arrivalInstruction": "자동차 도착 지점입니다. 목적지까지 약 38미터 남았습니다."
+    },
+    {
+      "id": "daejeon",
+      "result": "passed",
+      "samples": 562,
+      "finalLegSamples": 9,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 중교로73번길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "jeju",
+      "result": "passed",
+      "samples": 449,
+      "finalLegSamples": 7,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "목적지 · 중앙로13길"
+      ],
+      "arrivalInstruction": "목적지에 도착했습니다."
+    },
+    {
+      "id": "tokyo",
+      "result": "passed",
+      "samples": 130,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "目的地 · 道玄坂"
+      ],
+      "arrivalInstruction": "目的地に到着しました。目的地は前方です"
+    },
+    {
+      "id": "beijing",
+      "result": "passed",
+      "samples": 526,
+      "finalLegSamples": 14,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "目的地"
+      ],
+      "arrivalInstruction": "您已经到达您的个目的地，目的地在您正前方"
+    },
+    {
+      "id": "singapore",
+      "result": "passed",
+      "samples": 455,
+      "finalLegSamples": 5,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Flint Street"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 40 m"
+    },
+    {
+      "id": "bangkok",
+      "result": "passed",
+      "samples": 422,
+      "finalLegSamples": 0,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "delhi",
+      "result": "passed",
+      "samples": 510,
+      "finalLegSamples": 17,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 227 m"
+    },
+    {
+      "id": "istanbul",
+      "result": "passed",
+      "samples": 514,
+      "finalLegSamples": 3,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Varış noktası · Sıraselviler Caddesi"
+      ],
+      "arrivalInstruction": " hedefinize ulaştınız, hedefiniz karşınızdadır"
+    },
+    {
+      "id": "london",
+      "result": "passed",
+      "samples": 238,
+      "finalLegSamples": 28,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Davies Street"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "berlin",
+      "result": "passed",
+      "samples": 250,
+      "finalLegSamples": 8,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Ziel"
+      ],
+      "arrivalInstruction": "Endpunkt der Fahrtroute · Ziel: ≈ 61 m"
+    },
+    {
+      "id": "nairobi",
+      "result": "passed",
+      "samples": 271,
+      "finalLegSamples": 19,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Chiromo Road"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    },
+    {
+      "id": "cape-town",
+      "result": "passed",
+      "samples": 333,
+      "finalLegSamples": 18,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination"
+      ],
+      "arrivalInstruction": "Vehicle route endpoint · Destination: ≈ 32 m"
+    },
+    {
+      "id": "new-york",
+      "result": "passed",
+      "samples": 374,
+      "finalLegSamples": 5,
+      "maxProgressDeltaMeters": 0,
+      "maxPreArrivalDeltaMeters": 0,
+      "upcomingInstructions": [
+        "Destination · Union Square East"
+      ],
+      "arrivalInstruction": "You have arrived at your destination, straight ahead"
+    }
+  ],
+  "complete": true
+}

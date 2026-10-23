@@ -1,0 +1,890 @@
+{
+  "observedAt": "2026-10-23T14:21:06.964Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:21:06.971Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "melbourne",
+      "label": "멜버른",
+      "country": "AU",
+      "continent": "Oceania",
+      "language": "en-AU",
+      "start": [
+        -37.8165,
+        144.9567
+      ],
+      "end": [
+        -37.8136,
+        144.973
+      ],
+      "query": "Market Lane Coffee Melbourne",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:21:07.098Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 22501514,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 7025225233,
+            "lat": "-37.8328479",
+            "lon": "144.9573083",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, 305, Coventry Street, South Melbourne, Melbourne, Victoria, 3205, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "house_number": "305",
+              "road": "Coventry Street",
+              "suburb": "South Melbourne",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3205",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "website": "https://marketlane.com.au/"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.8328979",
+              "-37.8327979",
+              "144.9572583",
+              "144.9573583"
+            ]
+          },
+          {
+            "place_id": 22305487,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6919633713,
+            "lat": "-37.7683591",
+            "lon": "144.9617647",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, 383, Sydney Road, Brunswick, Melbourne, Victoria, 3056, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "house_number": "383",
+              "road": "Sydney Road",
+              "suburb": "Brunswick",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3056",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "website": "https://marketlane.com.au/pages/brunswick-sydney-road-cafe",
+              "check_date": "2026-01-30",
+              "wheelchair": "yes",
+              "payment:cash": "yes",
+              "opening_hours": "07:00-17:00",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.7684091",
+              "-37.7683091",
+              "144.9617147",
+              "144.9618147"
+            ]
+          },
+          {
+            "place_id": 22661851,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 8015742747,
+            "lat": "-37.8458338",
+            "lon": "144.9929721",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, Elizabeth Street, South Yarra, Melbourne, Victoria, 3141, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "road": "Elizabeth Street",
+              "suburb": "South Yarra",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3141",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "colour": "green",
+              "covered": "yes",
+              "check_date": "2024-10-20"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.8458838",
+              "-37.8457838",
+              "144.9929221",
+              "144.9930221"
+            ]
+          },
+          {
+            "place_id": 22359353,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6642218184,
+            "lat": "-37.8062752",
+            "lon": "144.9579591",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, 83-85, Victoria Street, Melbourne, Victoria, 3000, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "house_number": "83-85",
+              "road": "Victoria Street",
+              "suburb": "Melbourne",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3000",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "website": "https://marketlane.com.au",
+              "check_date": "2026-07-28",
+              "wheelchair": "yes",
+              "payment:cash": "yes",
+              "opening_hours": "Mo-Th 07:00-16:00; Fr-Sa 07:00-17:00; Su 08:00-17:00",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.8063252",
+              "-37.8062252",
+              "144.9579091",
+              "144.9580091"
+            ]
+          },
+          {
+            "place_id": 22284324,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 9863043017,
+            "lat": "-37.8066911",
+            "lon": "144.9590838",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, Deli Lane, Melbourne, Victoria, 3000, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "road": "Deli Lane",
+              "suburb": "Melbourne",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3000",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "check_date": "2026-10-04"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.8067411",
+              "-37.8066411",
+              "144.9590338",
+              "144.9591338"
+            ]
+          },
+          {
+            "place_id": 22408699,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4971977992,
+            "lat": "-37.7986545",
+            "lon": "144.9685130",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.045242999919154e-05,
+            "addresstype": "amenity",
+            "name": "Market Lane Coffee",
+            "display_name": "Market Lane Coffee, 176, Faraday Street, Carlton, Melbourne, Victoria, 3053, Australia",
+            "address": {
+              "amenity": "Market Lane Coffee",
+              "house_number": "176",
+              "road": "Faraday Street",
+              "suburb": "Carlton",
+              "city": "Melbourne",
+              "state": "Victoria",
+              "ISO3166-2-lvl4": "AU-VIC",
+              "postcode": "3053",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "website": "https://marketlane.com.au/",
+              "opening_hours": "Mo-Sa 07:00-16:00; Su 08:00-16:00",
+              "outdoor_seating": "yes",
+              "internet_access:fee": "no"
+            },
+            "namedetails": {
+              "name": "Market Lane Coffee"
+            },
+            "boundingbox": [
+              "-37.7987045",
+              "-37.7986045",
+              "144.9684630",
+              "144.9685630"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Market Lane CoffeeMarket Lane Coffee, 305, Coventry Street, South Melbourne, Melbourne, Victoria, 3205, Australia카페 · OSM / Nominatim내 위치에서 직선 약 1.8 km지도에 표시 · 자동차 경로 계산 →",
+          "2. Market Lane CoffeeMarket Lane Coffee, 383, Sydney Road, Brunswick, Melbourne, Victoria, 3056, Australia카페 · OSM / Nominatim내 위치에서 직선 약 5.4 km등록 영업시간 07:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "3. Market Lane CoffeeMarket Lane Coffee, Elizabeth Street, South Yarra, Melbourne, Victoria, 3141, Australia카페 · OSM / Nominatim내 위치에서 직선 약 4.6 km지도에 표시 · 자동차 경로 계산 →",
+          "4. Market Lane CoffeeMarket Lane Coffee, 83-85, Victoria Street, Melbourne, Victoria, 3000, Australia카페 · OSM / Nominatim내 위치에서 직선 약 1.1 km등록 영업시간 Mo-Th 07:00-16:00; Fr-Sa 07:00-17:00; Su 08:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "5. Market Lane CoffeeMarket Lane Coffee, Deli Lane, Melbourne, Victoria, 3000, Australia카페 · OSM / Nominatim내 위치에서 직선 약 1.1 km지도에 표시 · 자동차 경로 계산 →",
+          "6. Market Lane CoffeeMarket Lane Coffee, 176, Faraday Street, Carlton, Melbourne, Victoria, 3053, Australia카페 · OSM / Nominatim내 위치에서 직선 약 2.2 km등록 영업시간 Mo-Sa 07:00-16:00; Su 08:00-16:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 1110.6210664937257
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29576/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29576/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29579/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29576/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29579/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29579/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-AU%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Market+Lane+Coffee+Melbourne",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59161/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59161/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/144.9567,-37.8165;144.973,-37.8136?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29579/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29579/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29580/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29580/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29578/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20108.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29580/20107.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/29577/20106.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59157/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59157/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59156/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59157/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59156/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59156/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59155/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59155/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59155/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59154/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59154/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59154/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40215.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59161/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59161/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59161/40212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40212.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118318/80426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118317/80428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118319/80428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118319/80427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118319/80426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118320/80427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118318/80427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118318/80428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118320/80426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118317/80426.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118320/80428.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/118317/80427.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59159/40214.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59160/40213.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/59158/40214.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 862,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn right · Little Collins Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8142203858598894,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 575.8986283894553,
+          "label": "576m",
+          "timeout": false,
+          "waitMs": 308,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continue straight · Macarthur Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.7108731397230799,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1151.7972567789107,
+          "label": "1152m",
+          "timeout": false,
+          "waitMs": 323,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continue straight · Macarthur Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1516176861999057,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1727.695885168366,
+          "label": "1728m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue straight · Macarthur Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.26862289135525935,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2253.5945135578213,
+          "label": "2254m",
+          "timeout": false,
+          "waitMs": 341,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destination · Collins Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1117855140895048,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2303.5945135578213,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 330,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 25.0348634509182,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2303.5945135578213,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 2808,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 25.0348634509182,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2306,
+        "geometryMeters": 2303.5945135578213,
+        "durationSeconds": 312.9,
+        "points": 141,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Gallaghers Place",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 75.43747053996647,
+            "type": "end of road",
+            "modifier": "right",
+            "road": "Little Collins Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 121.6972712611491,
+            "type": "turn",
+            "modifier": "left",
+            "road": "King Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 232.13934355303581,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Collins Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1847.5396175662283,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Macarthur Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2019.6455811362869,
+            "type": "continue",
+            "modifier": "uturn",
+            "road": "Macarthur Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2196.756740990908,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Collins Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2303.5945135578213,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Collins Street",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 23.787360613858755,
+        "destinationSnapMeters": 5.911456719507798
+      },
+      "drivingStartedAt": "2026-10-23T14:21:15.473Z",
+      "drivingWallSeconds": 238.681,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1491.704048056352,
+        "originReady": false,
+        "destinationAccessMeters": 5.911456718692318,
+        "revision": 4,
+        "destination": "좌표 목적지 -37.813600, 144.973000",
+        "remainingMeters": 20.020884637665496,
+        "remainingSeconds": 2.7166239389095983,
+        "language": "en-AU",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 20.000000003531113,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -37.813651,
+          "longitude": 144.973019,
+          "accuracy": 5,
+          "timestamp": 1792765515616
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 260,
+      "finishedAt": "2026-10-23T14:25:25.470Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 238
+    }
+  ]
+}

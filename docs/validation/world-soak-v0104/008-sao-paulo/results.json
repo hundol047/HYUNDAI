@@ -1,0 +1,762 @@
+{
+  "observedAt": "2026-10-23T13:56:00.738Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "165e79d12e246ed0b71333c5b8e6d22dd94c9a6d9ba7e3098f7a39e5badcf7bf",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T13:56:00.749Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "sao-paulo",
+      "label": "상파울루",
+      "country": "BR",
+      "continent": "South America",
+      "language": "pt-BR",
+      "start": [
+        -23.5505,
+        -46.6333
+      ],
+      "end": [
+        -23.5614,
+        -46.6559
+      ],
+      "query": "Padaria Bella Paulista Sao Paulo",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:56:01.042Z",
+      "search": {
+        "providerResults": [],
+        "uiCount": 0,
+        "notice": "등록된 검색 결과가 없습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+        "results": [],
+        "result": "empty",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": null
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=pt-BR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Padaria+Bella+Paulista+Sao+Paulo",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-46.6333,-23.5505;-46.6559,-23.5614?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37181.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24277/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24277/37181.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24278/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24278/37181.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37181.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6068/9295.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6069/9295.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6069/9294.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6068/9294.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6069/9296.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6067/9295.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6068/9296.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6067/9296.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6070/9296.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6070/9295.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12140/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12136/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12136/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12136/18589.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12139/18592.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12136/18592.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18592.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18592.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12135/18592.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12135/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12135/18590.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37183.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24274/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24276/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24275/37182.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/24273/37184.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12137/18591.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/12138/18591.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6067/9294.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/6070/9294.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 534,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à esquerda · Rua Venceslau Brás · Prefeitura, Gabinete",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 3.8359896191561433,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 939.2701531755075,
+          "label": "939m",
+          "timeout": false,
+          "waitMs": 407,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Pegue a rampa à direita · Parque Anhangabau",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 4.311269764797565,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1071.1749420481622,
+          "label": "1071m",
+          "timeout": false,
+          "waitMs": 345,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Pegue a rampa à direita · Parque Anhangabau",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 4.034292603020302,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1878.540306351015,
+          "label": "1879m",
+          "timeout": false,
+          "waitMs": 483,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Siga suave à esquerda · Viaduto Doutor Plínio de Queiroz",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.8072378035791077,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2817.8104595265227,
+          "label": "2818m",
+          "timeout": false,
+          "waitMs": 317,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Continue em frente · Avenida Nove de Julho",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 3.728889048616567,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3707.08061270203,
+          "label": "3707m",
+          "timeout": false,
+          "waitMs": 370,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destino · Passagem Subterrânea Daher Elias Cutait",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.8780234445571247,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3757.08061270203,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 319,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Você chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 30.63532779636599,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3757.08061270203,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 593,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "Você chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-BR",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 30.63532779636599,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 3753,
+        "geometryMeters": 3757.08061270203,
+        "durationSeconds": 408.8,
+        "points": 161,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "straight",
+            "road": "Rua Irmã Simpliciana",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 67.35736758365958,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Rua Venceslau Brás",
+            "destinations": "Prefeitura, Gabinete",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 173.7070073958379,
+            "type": "continue",
+            "modifier": "left",
+            "road": "Praça da Sé",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 391.94008781133675,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua Senador Feijó",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 615.1105145397404,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "Rua Cristóvão Colombo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 672.7027895971835,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua Riachuelo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 891.5253144729213,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Praça da Bandeira",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1071.1749420481622,
+            "type": "on ramp",
+            "modifier": "slight right",
+            "road": "Parque Anhangabau",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1218.5576382826118,
+            "type": "continue",
+            "modifier": "left",
+            "road": "Parque Anhangabau",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1355.4258020942198,
+            "type": "merge",
+            "modifier": "slight left",
+            "road": "Parque Anhangabau",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1379.9283866364774,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "Avenida Nove de Julho",
+            "destinations": "Avenida 9 de Julho, Bela Vista, Jardins",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2381.3477550957923,
+            "type": "turn",
+            "modifier": "slight left",
+            "road": "Viaduto Doutor Plínio de Queiroz",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3295.4614956078744,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Avenida Nove de Julho",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3637.432073856635,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Passagem Subterrânea Daher Elias Cutait",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3757.08061270203,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Passagem Subterrânea Daher Elias Cutait",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 63.972287543925766,
+        "destinationSnapMeters": 9.498906213977163
+      },
+      "drivingStartedAt": "2026-10-23T13:56:08.120Z",
+      "drivingWallSeconds": 383.703,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 2657.6565839997565,
+        "originReady": false,
+        "destinationAccessMeters": 9.49890621516158,
+        "revision": 4,
+        "destination": "좌표 목적지 -23.561400, -46.655900",
+        "remainingMeters": 24.972847184953732,
+        "remainingSeconds": 2.720197156730372,
+        "language": "pt-BR",
+        "instructionLanguage": "pt-BR",
+        "instruction": "Você chegou ao seu destino, em frente",
+        "turnSymbol": "●",
+        "turnMeters": 25.000000000301043,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -23.561437,
+          "longitude": -46.655816,
+          "accuracy": 5,
+          "timestamp": 1792764153257
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 403,
+      "finishedAt": "2026-10-23T14:02:40.244Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 383
+    }
+  ]
+}

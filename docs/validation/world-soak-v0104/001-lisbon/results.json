@@ -1,0 +1,668 @@
+{
+  "observedAt": "2026-10-23T13:26:09.619Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "realtime": true,
+  "startedAt": "2026-10-23T13:26:09.627Z",
+  "scope": "Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic 1Hz 5m/s GPS. Shared tracker processes every position; map renders only at bounded checkpoints. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "lisbon",
+      "label": "리스본",
+      "country": "PT",
+      "continent": "Europe",
+      "language": "pt-PT",
+      "start": [
+        38.7137,
+        -9.1394
+      ],
+      "end": [
+        38.7063,
+        -9.1453
+      ],
+      "query": "A Brasileira Lisboa",
+      "result": "passed",
+      "startedAt": "2026-10-23T13:26:09.750Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 297105278,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 489736332,
+            "lat": "38.7106819",
+            "lon": "-9.1420119",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 0.36107739355702545,
+            "addresstype": "amenity",
+            "name": "A Brasileira",
+            "display_name": "A Brasileira, 120/122, Rua Garrett, Chiado, Santa Maria Maior, Madalena, Lisboa, 1200-273, Portugal",
+            "address": {
+              "amenity": "A Brasileira",
+              "house_number": "120/122",
+              "road": "Rua Garrett",
+              "neighbourhood": "Chiado",
+              "suburb": "Santa Maria Maior",
+              "village": "Madalena",
+              "city": "Lisboa",
+              "county": "Lisboa",
+              "ISO3166-2-lvl6": "PT-11",
+              "postcode": "1200-273",
+              "country": "Portugal",
+              "country_code": "pt"
+            },
+            "extratags": {
+              "phone": "+351 21 346 9541",
+              "cuisine": "portuguese;coffee_shop",
+              "wikidata": "Q2547006",
+              "architect": "Manuel Joaquim Norte Júnior",
+              "wikipedia": "pt:Café A Brasileira (Lisboa)",
+              "wheelchair": "yes",
+              "opening_hours": "Mo-Su 08:00-02:00",
+              "indoor_seating": "yes",
+              "diet:vegetarian": "yes",
+              "outdoor_seating": "yes",
+              "wikimedia_commons": "Category:Café A Brasileira (Lisbon)"
+            },
+            "namedetails": {
+              "name": "A Brasileira",
+              "name:el": "Καφέ Μπραζιλέιρα",
+              "name:ja": "カフェ・ア・ブラジレイラ",
+              "name:pt": "A Brasileira",
+              "name:zh": "巴西人咖啡馆",
+              "name:zh-Hans": "巴西人咖啡馆",
+              "name:zh-Hant": "巴西人咖啡館"
+            },
+            "boundingbox": [
+              "38.7106319",
+              "38.7107319",
+              "-9.1420619",
+              "-9.1419619"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. A BrasileiraA Brasileira, 120/122, Rua Garrett, Chiado, Santa Maria Maior, Madalena, Lisboa, 1200-273, Portugal카페 · OSM / Nominatim전화 +351 21 346 9541등록 영업시간 Mo-Su 08:00-02:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "nearestResultMeters": 404.9482103171123
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/15553/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15553/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15553/12555.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15550/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15550/12555.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12555.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15550/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12555.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=pt-PT%2Cen&namedetails=1&addressdetails=1&extratags=1&q=A+Brasileira+Lisboa",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-9.1394,38.7137;-9.1453,38.7063?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12556.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25113.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15550/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31105/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25113.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25113.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31105/25113.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15553/12557.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31105/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25112.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31105/25112.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31104/25112.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25112.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25113.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62206/50229.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62207/50230.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62205/50230.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62206/50230.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62205/50231.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62205/50229.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62206/50231.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62204/50229.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62207/50231.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62204/50231.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62207/50229.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/62204/50230.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25114.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31102/25115.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31103/25115.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15551/12558.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15552/12558.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15550/12558.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/15553/12558.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/31101/25115.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 585,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Saia da rotunda · Rua Áurea",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4463999687670419,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 452.3118128752758,
+          "label": "452m",
+          "timeout": false,
+          "waitMs": 326,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à direita · Rua da Conceição",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.943188461735024,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 904.6236257505516,
+          "label": "905m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Vire à direita · Rua de São Paulo",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6914270088962855,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1356.9354386258274,
+          "label": "1357m",
+          "timeout": false,
+          "waitMs": 411,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vire à esquerda · Rua da Moeda",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.578332643221414,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1759.2472515011032,
+          "label": "1759m",
+          "timeout": false,
+          "waitMs": 303,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destino · Avenida 24 de Julho",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.8599756095385269,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1809.2472515011032,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 314,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.656670417427005,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1809.2472515011032,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1052,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Chegou ao seu destino, em frente",
+          "instructionLanguage": "pt-PT",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.656670417427005,
+          "captureArchived": false
+        }
+      ],
+      "route": {
+        "distanceMeters": 1809.7,
+        "geometryMeters": 1809.2472515011032,
+        "durationSeconds": 213.1,
+        "points": 124,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Praça Dom Pedro IV",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 41.48355385922538,
+            "type": "exit rotary",
+            "modifier": "straight",
+            "road": "Rua Áurea",
+            "drivingSide": "right",
+            "exit": 1
+          },
+          {
+            "atMeters": 491.7699721519067,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua da Conceição",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 567.7907961986043,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Calçada de São Francisco",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 847.2879890922771,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Calçada do Ferragial",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1045.7106808684607,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Rua de São Paulo",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1413.2252510650274,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Rua da Moeda",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1520.200291771308,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Praça Dom Luís I",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1635.7634197780128,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Avenida 24 de Julho",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1809.2472515011032,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "Avenida 24 de Julho",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 21.336268166895493,
+        "destinationSnapMeters": 10.89848463489993
+      },
+      "drivingStartedAt": "2026-10-23T13:26:15.573Z",
+      "drivingWallSeconds": 132.224,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 943.4883762408907,
+        "originReady": false,
+        "destinationAccessMeters": 10.898484635399777,
+        "revision": 4,
+        "destination": "좌표 목적지 38.706300, -9.145300",
+        "remainingMeters": 20.005004823536098,
+        "remainingSeconds": 2.355675818033675,
+        "language": "pt-PT",
+        "instructionLanguage": "pt-PT",
+        "instruction": "Chegou ao seu destino, em frente",
+        "turnSymbol": "●",
+        "turnMeters": 19.999999995716962,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 38.706398,
+          "longitude": -9.145298,
+          "accuracy": 5,
+          "timestamp": 1792762109222
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "finishedAt": "2026-10-23T13:28:38.387Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 132
+    }
+  ]
+}

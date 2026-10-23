@@ -1,0 +1,778 @@
+{
+  "observedAt": "2026-10-23T15:56:47.992Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:56:47.999Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "helsinki",
+      "label": "헬싱키",
+      "country": "FI",
+      "continent": "Europe",
+      "language": "fi-FI",
+      "start": [
+        60.17,
+        24.941
+      ],
+      "end": [
+        60.161,
+        24.951
+      ],
+      "query": "Cafe Ekberg Helsinki",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:56:48.119Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 167768406,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 151006533,
+            "lat": "60.1647366",
+            "lon": "24.9377736",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 0.3415289282979405,
+            "addresstype": "amenity",
+            "name": "Cafe Ekberg",
+            "display_name": "Cafe Ekberg, 9, Bulevardi, Kamppi, Eteläinen suurpiiri, Helsinki, Helsingin seutukunta, Uusimaa, Manner-Suomi, 00120, Suomi",
+            "address": {
+              "amenity": "Cafe Ekberg",
+              "house_number": "9",
+              "road": "Bulevardi",
+              "suburb": "Kamppi",
+              "city_district": "Eteläinen suurpiiri",
+              "city": "Helsinki",
+              "municipality": "Helsingin seutukunta",
+              "state": "Uusimaa",
+              "ISO3166-2-lvl4": "FI-18",
+              "region": "Manner-Suomi",
+              "postcode": "00120",
+              "country": "Suomi",
+              "country_code": "fi"
+            },
+            "extratags": {
+              "website": "https://www.ekberg.fi/",
+              "wikidata": "Q11857235",
+              "wikipedia": "fi:Ekbergin kahvila",
+              "diet:halal": "no",
+              "wheelchair": "limited",
+              "diet:kosher": "no",
+              "opening_hours": "Mo-Fr 07:30-19:00; Sa 09:00-17:00; Su 09:00-17:00",
+              "indoor_seating": "yes",
+              "diet:vegetarian": "yes",
+              "outdoor_seating": "yes",
+              "payment:debit_cards": "yes",
+              "payment:credit_cards": "yes"
+            },
+            "namedetails": {
+              "name": "Cafe Ekberg"
+            },
+            "boundingbox": [
+              "60.1646866",
+              "60.1647866",
+              "24.9377236",
+              "24.9378236"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Cafe EkbergCafe Ekberg, 9, Bulevardi, Kamppi, Eteläinen suurpiiri, Helsinki, Helsingin seutukunta, Uusimaa, Manner-Suomi, 00120, Suomi카페 · OSM / Nominatim내 위치에서 직선 약 612 m등록 영업시간 Mo-Fr 07:30-19:00; Sa 09:00-17:00; Su 09:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 611.8702718556824
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/18654/9483.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18655/9484.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18654/9485.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18653/9484.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18652/9483.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18652/9484.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18652/9485.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18654/9484.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18655/9485.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=fi-FI%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+Ekberg+Helsinki",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/24.941,60.17;24.951,60.161?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9326/4742.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9327/4741.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9326/4741.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9327/4742.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9327/4743.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9326/4743.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9325/4742.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9328/4742.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9328/4741.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9325/4743.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9328/4743.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9325/4741.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37307/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37306/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37306/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37306/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18969.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18968.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18967.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18970.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18971.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18973.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18974.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18974.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37311/18974.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37308/18974.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74620/37945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74619/37945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74621/37946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74619/37946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74621/37945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74618/37945.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74618/37946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/74620/37946.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37309/18972.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/37310/18973.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18653/9483.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18653/9485.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18655/9483.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 676,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Jatka suoraan eteenpäin · Kaisaniemenkatu",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7304598504084887,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 638.351451966356,
+          "label": "638m",
+          "timeout": false,
+          "waitMs": 319,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Käänny oikeaan · Unioninkatu",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.39543630164372956,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1276.702903932712,
+          "label": "1277m",
+          "timeout": false,
+          "waitMs": 482,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Käänny oikeaan · Pohjoinen Makasiinikatu",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.46638427386119496,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1915.054355899068,
+          "label": "1915m",
+          "timeout": false,
+          "waitMs": 498,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Käänny vasempaan · Tähtitorninkatu",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.36860238457599764,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2503.405807865424,
+          "label": "2503m",
+          "timeout": false,
+          "waitMs": 303,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Määränpää · Tähtitorninkatu",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.1256605158833071,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2553.405807865424,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 325,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Autoreitin päätepiste · Määränpää: ≈ 30 m",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 24.940160724856568,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2553.405807865424,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 2738,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Autoreitin päätepiste · Määränpää: ≈ 30 m",
+          "instructionLanguage": "fi",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 24.940160724856568,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2559.6,
+        "geometryMeters": 2553.405807865424,
+        "durationSeconds": 395.6,
+        "points": 185,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "Kaivokatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 240.2720625466254,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Kaisaniemenkatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 695.532575882754,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Unioninkatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1611.029204955825,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Pohjoinen Makasiinikatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1804.845878846469,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "Kasarmikatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2394.6642859487074,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Tähtitorninkatu",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2553.405807865424,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Tähtitorninkatu",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 33.397020133666906,
+        "destinationSnapMeters": 30.049696270245192
+      },
+      "drivingStartedAt": "2026-10-23T15:56:54.027Z",
+      "drivingWallSeconds": 262.443,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1203.1806246196577,
+        "originReady": false,
+        "destinationAccessMeters": 30.049696269885228,
+        "revision": 4,
+        "destination": "좌표 목적지 60.161000, 24.951000",
+        "remainingMeters": 20.048517099796438,
+        "remainingSeconds": 3.098606565353755,
+        "language": "fi-FI",
+        "instructionLanguage": "fi",
+        "instruction": "Autoreitin päätepiste · Määränpää: ≈ 30 m",
+        "turnSymbol": "●",
+        "turnMeters": 20.00000000072123,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": 60.160744,
+          "longitude": 24.951173999999924,
+          "accuracy": 5,
+          "timestamp": 1792771277912
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 282,
+      "finishedAt": "2026-10-23T16:01:26.975Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 262
+    }
+  ]
+}

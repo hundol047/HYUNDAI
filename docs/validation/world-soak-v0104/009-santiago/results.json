@@ -1,0 +1,531 @@
+{
+  "observedAt": "2026-10-23T14:02:45.812Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "165e79d12e246ed0b71333c5b8e6d22dd94c9a6d9ba7e3098f7a39e5badcf7bf",
+  "roadTilesSha256": "b51d160056129504f10becb6331039ae8b9f1b7c31c782fb5d8c20f5d57dca36",
+  "navigationSha256": "dfcdc75d9c724503ba7f9f476c61cd874c42cb34792a50ab10005864bcecad1e",
+  "engineSha256": "0fa3144fc7df176938f1998aefcfc576612c31efa4e0a2ad3ed8a8351cde12b6",
+  "siteManifest": null,
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T14:02:45.819Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Business searches are independent of coordinate destinations. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "santiago",
+      "label": "산티아고",
+      "country": "CL",
+      "continent": "South America",
+      "language": "es-CL",
+      "start": [
+        -33.4378,
+        -70.6504
+      ],
+      "end": [
+        -33.4431,
+        -70.6539
+      ],
+      "query": "Cafe Haiti Santiago",
+      "result": "passed",
+      "startedAt": "2026-10-23T14:02:45.946Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 1631958,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4455378513,
+            "lat": "-33.4414466",
+            "lon": "-70.6493627",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.597695887689048e-05,
+            "addresstype": "amenity",
+            "name": "Cafe Haiti",
+            "display_name": "Cafe Haiti, Estado, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile",
+            "address": {
+              "amenity": "Cafe Haiti",
+              "road": "Estado",
+              "neighbourhood": "Santiago",
+              "city": "Santiago",
+              "county": "Provincia de Santiago",
+              "state": "Región Metropolitana de Santiago",
+              "ISO3166-2-lvl4": "CL-RM",
+              "postcode": "8320000",
+              "country": "Chile",
+              "country_code": "cl"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Cafe Haiti"
+            },
+            "boundingbox": [
+              "-33.4414966",
+              "-33.4413966",
+              "-70.6494127",
+              "-70.6493127"
+            ]
+          },
+          {
+            "place_id": 1634656,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4452560977,
+            "lat": "-33.4421269",
+            "lon": "-70.6476316",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.597695887689048e-05,
+            "addresstype": "amenity",
+            "name": "Café Haití",
+            "display_name": "Café Haití, San Antonio, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile",
+            "address": {
+              "amenity": "Café Haití",
+              "road": "San Antonio",
+              "neighbourhood": "Santiago",
+              "city": "Santiago",
+              "county": "Provincia de Santiago",
+              "state": "Región Metropolitana de Santiago",
+              "ISO3166-2-lvl4": "CL-RM",
+              "postcode": "8320000",
+              "country": "Chile",
+              "country_code": "cl"
+            },
+            "extratags": null,
+            "namedetails": {
+              "name": "Café Haití"
+            },
+            "boundingbox": [
+              "-33.4421769",
+              "-33.4420769",
+              "-70.6476816",
+              "-70.6475816"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Cafe HaitiCafe Haiti, Estado, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile카페 · OSM / Nominatim지도에 표시 · 자동차 경로 계산 →",
+          "2. Café HaitíCafé Haití, San Antonio, Santiago, Provincia de Santiago, Región Metropolitana de Santiago, 8320000, Chile카페 · OSM / Nominatim지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 416.75024975811624
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/9953/19616.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9952/19615.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9953/19615.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9951/19616.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9952/19617.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9951/19617.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9954/19616.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9952/19616.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9954/19617.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9954/19615.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9951/19615.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/9953/19617.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=es-CL%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+Haiti+Santiago",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19905/39234.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19906/39234.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19905/39233.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19905/39235.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19906/39233.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19904/39234.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19907/39234.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19904/39233.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19907/39233.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19906/39235.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19907/39235.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19904/39235.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/-70.6504,-33.4378;-70.6539,-33.4431?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19904/39232.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19905/39232.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19906/39232.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/19907/39232.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39811/78469.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39811/78468.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39810/78468.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39812/78468.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39809/78469.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39810/78469.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39812/78469.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/39809/78468.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 579,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Continúa recto · Catedral",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.2475816490915346,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 268.88979595170537,
+          "label": "269m",
+          "timeout": false,
+          "waitMs": 299,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Gira a la izquierda · Teatinos",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.7728216057613954,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 537.7795919034107,
+          "label": "538m",
+          "timeout": false,
+          "waitMs": 302,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destino · Teatinos",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6939506017041481,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 806.6693878551162,
+          "label": "807m",
+          "timeout": false,
+          "waitMs": 292,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Destino · Teatinos",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9755857920867186,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1025.5591838068215,
+          "label": "1026m",
+          "timeout": false,
+          "waitMs": 300,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destino · Teatinos",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6983686222217116,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1075.5591838068215,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 304,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Has llegado a tu destino, en frente · 52 m",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 30.400308578732712,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1075.5591838068215,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 835,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Has llegado a tu destino, en frente · 52 m",
+          "instructionLanguage": "es",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 30.400308578732712,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "route": {
+        "distanceMeters": 1075.1,
+        "geometryMeters": 1075.5591838068215,
+        "durationSeconds": 115,
+        "points": 35,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Plaza de Armas",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 74.59754218136781,
+            "type": "new name",
+            "modifier": "straight",
+            "road": "Catedral",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 471.08108774507264,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Teatinos",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1075.5591838068215,
+            "type": "arrive",
+            "modifier": "left",
+            "road": "Teatinos",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 61.54284035987691,
+        "destinationSnapMeters": 52.555810970997655
+      },
+      "drivingStartedAt": "2026-10-23T14:02:52.835Z",
+      "drivingWallSeconds": 114.18,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 754.1008443690481,
+        "originReady": false,
+        "destinationAccessMeters": 52.55581096582451,
+        "revision": 4,
+        "destination": "좌표 목적지 -33.443100, -70.653900",
+        "remainingMeters": 24.98932685997704,
+        "remainingSeconds": 2.673028173097721,
+        "language": "es-CL",
+        "instructionLanguage": "es",
+        "instruction": "Has llegado a tu destino, en frente · 52 m",
+        "turnSymbol": "●",
+        "turnMeters": 25.00000000157206,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -33.443171,
+          "longitude": -70.65446,
+          "accuracy": 5,
+          "timestamp": 1792764288430
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 133,
+      "finishedAt": "2026-10-23T14:04:56.366Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 114
+    }
+  ]
+}

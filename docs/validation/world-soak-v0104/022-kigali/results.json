@@ -1,0 +1,673 @@
+{
+  "observedAt": "2026-10-23T15:43:02.482Z",
+  "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+  "harnessSha256": "497608b3a5c9196cf14143ef4d3e4201afccc75ffc609083367b5f29ae195b71",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "4df143072e8a458f7d9d5f23ece831fd7138c09b6f1414744d39ac7b691be3f8",
+  "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+  "siteManifest": {
+    "label": "0.10.4 navigation candidate",
+    "createdAt": "2026-10-23T14:18:41.364800+00:00",
+    "engineSha256": "b4828a7966ed3e643cc330708662c24e262f3e21d65d3cb45857358b51da82fa",
+    "navigationSourceSha256": "e6bad5a4a83aa84c6b9e0e21f107cfa82abef1c346cfe25a1fd8548619021639",
+    "validation": "78 noisy/lost-GPS conditions + 12 varied-course conditions; 26 baseline route replays passed. Overall 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T15:43:02.490Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "kigali",
+      "label": "키갈리",
+      "country": "RW",
+      "continent": "Africa",
+      "language": "en-RW",
+      "start": [
+        -1.944,
+        30.062
+      ],
+      "end": [
+        -1.956,
+        30.075
+      ],
+      "query": "Question Coffee Kigali",
+      "result": "passed",
+      "startedAt": "2026-10-23T15:43:02.602Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 38582342,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 5518185403,
+            "lat": "-1.9544946",
+            "lon": "30.1046537",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 6.428702220183136e-05,
+            "addresstype": "amenity",
+            "name": "Question Coffee",
+            "display_name": "Question Coffee, 8, KG 8 Avenue, Kibagabaga, Gasabo District, City of Kigali, Rwanda",
+            "address": {
+              "amenity": "Question Coffee",
+              "house_number": "8",
+              "road": "KG 8 Avenue",
+              "suburb": "Kibagabaga",
+              "city_district": "Gasabo District",
+              "city": "City of Kigali",
+              "ISO3166-2-lvl4": "RW-01",
+              "country": "Rwanda",
+              "country_code": "rw"
+            },
+            "extratags": {
+              "check_date": "2023-04-07"
+            },
+            "namedetails": {
+              "name": "Question Coffee"
+            },
+            "boundingbox": [
+              "-1.9545446",
+              "-1.9544446",
+              "30.1046037",
+              "30.1047037"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Question CoffeeQuestion Coffee, 8, KG 8 Avenue, Kibagabaga, Gasabo District, City of Kigali, Rwanda카페 · OSM / Nominatim내 위치에서 직선 약 4.9 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 4881.659697204571
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/19118/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19118/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19119/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19119/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-RW%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Question+Coffee+Kigali",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/30.062,-1.944;30.075,-1.956?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9560/8280.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9560/8279.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9561/8280.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9559/8280.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9559/8279.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9560/8281.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9559/8281.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9561/8279.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9561/8281.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19119/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19118/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19118/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19119/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16560.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19119/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19123/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19123/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16563.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16563.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16563.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19123/16563.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33124.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33124.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33123.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33123.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38244/33124.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33125.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33124.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38244/33123.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33123.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33125.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38244/33125.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33125.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19121/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16561.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19120/16562.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/19122/16562.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38244/33123.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38244/33124.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33123.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33123.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33122.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33122.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38241/33124.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38242/33124.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38240/33123.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33123.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38240/33122.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33122.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38240/33124.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/38243/33124.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 486,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Exit the roundabout · NR4",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.4201003128948721,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 885.8218085193322,
+          "label": "886m",
+          "timeout": false,
+          "waitMs": 347,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 2nd exit · KN 3 Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.264742693955716,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1771.6436170386644,
+          "label": "1772m",
+          "timeout": false,
+          "waitMs": 305,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Enter the roundabout and take the 2nd exit · KN 3 Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.0226835061132336,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2292.835488033938,
+          "label": "2293m",
+          "timeout": false,
+          "waitMs": 306,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 2nd exit · KN 3 Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 3.5730918214171425,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2657.4654255579967,
+          "label": "2657m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a U-turn · KN3 Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.8624473067854304,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3499.0544769043563,
+          "label": "3499m",
+          "timeout": false,
+          "waitMs": 331,
+          "visible": 6,
+          "decoded": 6,
+          "instruction": "Take the ramp on the right · Route KN 7",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.491888206494798,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3543.287234077329,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 301,
+          "visible": 6,
+          "decoded": 6,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 25.145773293902216,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3543.287234077329,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 930,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 25.145773293902216,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3534,
+        "geometryMeters": 3543.287234077329,
+        "durationSeconds": 346.5,
+        "points": 139,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 248.20934119678023,
+            "type": "exit roundabout",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right",
+            "exit": 6
+          },
+          {
+            "atMeters": 2292.835488033938,
+            "type": "roundabout",
+            "modifier": "right",
+            "road": "KN 3 Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2344.56040847774,
+            "type": "exit roundabout",
+            "modifier": "slight right",
+            "road": "KN 3 Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2945.58774521761,
+            "type": "continue",
+            "modifier": "uturn",
+            "road": "KN3 Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3499.0544769043563,
+            "type": "off ramp",
+            "modifier": "slight right",
+            "road": "",
+            "destinations": "Route KN 7",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3543.287234077329,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "destinations": "Route KN 7",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 35.29130380700004,
+        "destinationSnapMeters": 5.119849165692901
+      },
+      "drivingStartedAt": "2026-10-23T15:43:08.522Z",
+      "drivingWallSeconds": 363.653,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1952.5215519392216,
+        "originReady": false,
+        "destinationAccessMeters": 5.11984916676173,
+        "revision": 4,
+        "destination": "좌표 목적지 -1.956000, 30.075000",
+        "remainingMeters": 19.18234660499716,
+        "remainingSeconds": 1.8807818615256129,
+        "language": "en-RW",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 19.232757171582307,
+        "offRoute": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -1.956021,
+          "longitude": 30.074959,
+          "accuracy": 5,
+          "timestamp": 1792770553594
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 382,
+      "finishedAt": "2026-10-23T15:49:20.812Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 363
+    }
+  ]
+}

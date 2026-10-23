@@ -1,0 +1,35 @@
+{
+  "type": "deterministic UI/protocol checks; provider and geolocation fixtures, not live data validation",
+  "results": [
+    {
+      "name": "real map SDK, attribution and honest reference position are present",
+      "result": "passed"
+    },
+    {
+      "name": "map selection updates the shared return budget",
+      "result": "passed"
+    },
+    {
+      "name": "category filters apply to shared recommendations and markers",
+      "result": "passed"
+    },
+    {
+      "name": "geolocation denial does not fabricate or replace a position",
+      "result": "passed"
+    },
+    {
+      "name": "OSM response coordinates enter the shared engine and reject distant points",
+      "result": "passed"
+    },
+    {
+      "name": "manual map center clears outdated recommendations and return reservation",
+      "result": "passed"
+    },
+    {
+      "name": "localized-only names survive while pronunciation metadata is not a business name",
+      "result": "failed",
+      "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ []\n- [\n-   'Café enregistré',\n-   '喫茶店'\n- ]\n"
+    }
+  ],
+  "pageErrors": []
+}

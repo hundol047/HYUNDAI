@@ -1,0 +1,676 @@
+{
+  "observedAt": "2026-10-23T16:47:59.517Z",
+  "sourceCommit": "7afb9dd52be1f76374c8b06b1f716effd531a014",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:47:59.524Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "perth",
+      "label": "퍼스",
+      "country": "AU",
+      "continent": "Oceania",
+      "language": "en-AU",
+      "start": [
+        -31.952,
+        115.852
+      ],
+      "end": [
+        -31.955,
+        115.868
+      ],
+      "query": "London Court Perth",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:47:59.641Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 427821673,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 1168779520,
+            "lat": "-31.9548224",
+            "lon": "115.8589424",
+            "category": "highway",
+            "type": "footway",
+            "place_rank": 27,
+            "importance": 0.21337448257116948,
+            "addresstype": "road",
+            "name": "London Court",
+            "display_name": "London Court, Perth, Western Australia, 6000, Australia",
+            "address": {
+              "road": "London Court",
+              "city_district": "Perth",
+              "city": "Perth",
+              "state": "Western Australia",
+              "ISO3166-2-lvl4": "AU-WA",
+              "postcode": "6000",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "foot": "yes",
+              "horse": "no",
+              "level": "0",
+              "bicycle": "no",
+              "covered": "no",
+              "incline": "up",
+              "surface": "paving_stones",
+              "wikidata": "Q14935851",
+              "wikipedia": "en:London Court",
+              "motor_vehicle": "no",
+              "opening_hours": "Mo-Fr 07:00-21:00; Sa 07:00-17:00; Su 11:00-17:00"
+            },
+            "namedetails": {
+              "name": "London Court"
+            },
+            "boundingbox": [
+              "-31.9551727",
+              "-31.9544688",
+              "115.8587699",
+              "115.8591080"
+            ]
+          },
+          {
+            "place_id": 33881111,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 10868960283,
+            "lat": "-31.9552072",
+            "lon": "115.8586814",
+            "category": "shop",
+            "type": "newsagent",
+            "place_rank": 30,
+            "importance": 7.485389486529362e-05,
+            "addresstype": "shop",
+            "name": "London Court News & Lotteries",
+            "display_name": "London Court News & Lotteries, 58, St Georges Terrace, Perth, Western Australia, 6000, Australia",
+            "address": {
+              "shop": "London Court News & Lotteries",
+              "house_number": "58",
+              "road": "St Georges Terrace",
+              "city_district": "Perth",
+              "city": "Perth",
+              "state": "Western Australia",
+              "ISO3166-2-lvl4": "AU-WA",
+              "postcode": "6000",
+              "country": "Australia",
+              "country_code": "au"
+            },
+            "extratags": {
+              "level": "0",
+              "phone": "+61 8 9218 9575",
+              "check_date": "2026-09-16",
+              "opening_hours": "Mo-Fr 06:00-17:30",
+              "name:etymology:wikidata": "Q14935851",
+              "name:etymology:wikipedia": "en:London Court"
+            },
+            "namedetails": {
+              "name": "London Court News & Lotteries",
+              "name:en": "London Court News & Lotteries",
+              "addr:housename": "London Court"
+            },
+            "boundingbox": [
+              "-31.9552572",
+              "-31.9551572",
+              "115.8586314",
+              "115.8587314"
+            ]
+          }
+        ],
+        "uiCount": 2,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. London CourtLondon Court, Perth, Western Australia, 6000, Australiafootway · OSM / Nominatim내 위치에서 직선 약 726 m등록 영업시간 Mo-Fr 07:00-21:00; Sa 07:00-17:00; Su 11:00-17:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+          "2. London Court News & LotteriesLondon Court News & Lotteries, 58, St Georges Terrace, Perth, Western Australia, 6000, Australianewsagent · OSM / Nominatim내 위치에서 직선 약 724 m전화 +61 8 9218 9575등록 영업시간 Mo-Fr 06:00-17:30 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 724.2525053920263
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/26927/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26927/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-AU%2Cen&namedetails=1&addressdetails=1&extratags=1&q=London+Court+Perth",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/115.852,-31.952;115.868,-31.955?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26931/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26931/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26927/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26927/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19454.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26927/19454.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19454.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19454.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19457.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26928/19457.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19457.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26931/19457.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26932/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26932/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26932/19457.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53859/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38911.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53861/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53860/38912.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/53862/38913.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26930/19456.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19455.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26929/19456.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 481,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Milligan Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.9871127845786553,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 563.0722675610515,
+          "label": "563m",
+          "timeout": false,
+          "waitMs": 306,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Make a U-turn · Wellington Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 0.6736298514791623,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1126.144535122103,
+          "label": "1126m",
+          "timeout": false,
+          "waitMs": 355,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Make a U-turn · Wellington Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 2.3419080920100854,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1689.2168026831546,
+          "label": "1689m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Make a U-turn · Wellington Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.7006258238359921,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2202.289070244206,
+          "label": "2202m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 1.4655427915331247,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2252.289070244206,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 322,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 15,
+          "centerGap": 23.023975308843706,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2252.289070244206,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 555,
+          "visible": 18,
+          "decoded": 18,
+          "instruction": "You have arrived at your destination, straight ahead",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 16,
+          "centerGap": 23.023975308843706,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 2253.9,
+        "geometryMeters": 2252.289070244206,
+        "durationSeconds": 269.6,
+        "points": 97,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "left",
+            "road": "Hay Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 35.66973947080962,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Milligan Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 319.46014604441416,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Wellington Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2060.6546955046906,
+            "type": "continue",
+            "modifier": "uturn",
+            "road": "Wellington Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2192.7805264061694,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2252.289070244206,
+            "type": "arrive",
+            "modifier": "straight",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 7.762126599910815,
+        "destinationSnapMeters": 20.54412230403787
+      },
+      "drivingStartedAt": "2026-10-23T16:48:05.941Z",
+      "drivingWallSeconds": 234.354,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1565.0614854672226,
+        "originReady": false,
+        "destinationAccessMeters": 20.544122299155713,
+        "revision": 4,
+        "destination": "좌표 목적지 -31.955000, 115.868000",
+        "remainingMeters": 25.01788102719882,
+        "remainingSeconds": 2.9925110807634776,
+        "language": "en-AU",
+        "instructionLanguage": "en",
+        "instruction": "You have arrived at your destination, straight ahead",
+        "turnSymbol": "●",
+        "turnMeters": 24.999999998996827,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -31.955069,
+          "longitude": 115.868202,
+          "accuracy": 5,
+          "timestamp": 1792774321738
+        }
+      },
+      "parkedZoom": 15,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 253,
+      "finishedAt": "2026-10-23T16:52:08.589Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 234
+    }
+  ]
+}

@@ -1,0 +1,1006 @@
+{
+  "observedAt": "2026-10-23T16:29:08.928Z",
+  "sourceCommit": "6cf6e02ab09074a452f275402e67a206c4f806ad",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T16:29:08.934Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "jakarta",
+      "label": "자카르타",
+      "country": "ID",
+      "continent": "Asia",
+      "language": "id-ID",
+      "start": [
+        -6.186,
+        106.822
+      ],
+      "end": [
+        -6.196,
+        106.823
+      ],
+      "query": "Starbucks Jakarta",
+      "result": "passed",
+      "startedAt": "2026-10-23T16:29:09.066Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 30796975,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 499213757,
+            "lat": "-6.1953211",
+            "lon": "106.8915128",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, Jalan Paus, RW 08, Jati, Pulo Gadung, Jakarta Timur, Daerah Khusus Ibukota Jakarta, 10710, Indonesia",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "Jalan Paus",
+              "city_block": "RW 08",
+              "village": "Jati",
+              "suburb": "Pulo Gadung",
+              "city_district": "Jakarta Timur",
+              "city": "Daerah Khusus Ibukota Jakarta",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "10710",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "branch": "Rawamangun Paus",
+              "cuisine": "coffee_shop",
+              "building": "yes",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:id": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.1953864",
+              "-6.1952557",
+              "106.8914174",
+              "106.8916082"
+            ]
+          },
+          {
+            "place_id": 30765557,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 11429353238,
+            "lat": "-6.2007042",
+            "lon": "106.8224542",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, Jalan Tanjung Karang, RW 02, Kebon Melati, Tanah Abang, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, 10230, Indonesia",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "Jalan Tanjung Karang",
+              "city_block": "RW 02",
+              "village": "Kebon Melati",
+              "suburb": "Tanah Abang",
+              "city_district": "Jakarta Pusat",
+              "city": "Daerah Khusus Ibukota Jakarta",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "10230",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "delivery": "yes",
+              "operator": "PT Sari Coffee Indonesia",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:id": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.2007542",
+              "-6.2006542",
+              "106.8224042",
+              "106.8225042"
+            ]
+          },
+          {
+            "place_id": 30660671,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4253813460,
+            "lat": "-6.1161554",
+            "lon": "106.7573977",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, 1, Jalan Pantai Indah Utara 2, Pantai Indah Kapuk, Kapuk Muara, Penjaringan, Jakarta Utara, Daerah Khusus Ibukota Jakarta, 14450, Indonesia",
+            "address": {
+              "amenity": "Starbucks",
+              "house_number": "1",
+              "road": "Jalan Pantai Indah Utara 2",
+              "neighbourhood": "Pantai Indah Kapuk",
+              "village": "Kapuk Muara",
+              "suburb": "Penjaringan",
+              "city": "Jakarta Utara",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "14450",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "branch": "PIK",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:id": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.1162054",
+              "-6.1161054",
+              "106.7573477",
+              "106.7574477"
+            ]
+          },
+          {
+            "place_id": 30707913,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2185108537,
+            "lat": "-6.1855314",
+            "lon": "106.8218550",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, Jalan Kampung Bali XXXIII, RW 10, Kampung Bali, Tanah Abang, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, 10250, Indonesia",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "Jalan Kampung Bali XXXIII",
+              "city_block": "RW 10",
+              "village": "Kampung Bali",
+              "suburb": "Tanah Abang",
+              "city_district": "Jakarta Pusat",
+              "city": "Daerah Khusus Ibukota Jakarta",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "10250",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks",
+              "internet_access": "yes"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:id": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.1855814",
+              "-6.1854814",
+              "106.8218050",
+              "106.8219050"
+            ]
+          },
+          {
+            "place_id": 30763083,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 13038504173,
+            "lat": "-6.2438480",
+            "lon": "106.7830405",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks Gandaria City",
+            "display_name": "Starbucks Gandaria City, Jalan Sultan Iskandar Muda, Gandaria City, Kebayoran Lama Utara, Kebayoran Lama, Jakarta Selatan, Daerah Khusus Ibukota Jakarta, 12240, Indonesia",
+            "address": {
+              "amenity": "Starbucks Gandaria City",
+              "road": "Jalan Sultan Iskandar Muda",
+              "city_block": "Gandaria City",
+              "village": "Kebayoran Lama Utara",
+              "suburb": "Kebayoran Lama",
+              "city_district": "Jakarta Selatan",
+              "city": "Daerah Khusus Ibukota Jakarta",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "12240",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "brand:wikidata": "Q37158"
+            },
+            "namedetails": {
+              "name": "Starbucks Gandaria City",
+              "brand": "Starbucks",
+              "name:id": "Starbucks Gandaria City",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.2438980",
+              "-6.2437980",
+              "106.7829905",
+              "106.7830905"
+            ]
+          },
+          {
+            "place_id": 30782300,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 6389027548,
+            "lat": "-6.2240888",
+            "lon": "106.8225877",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 8.313649195082044e-05,
+            "addresstype": "amenity",
+            "name": "Starbucks",
+            "display_name": "Starbucks, Jalan Profesor Doktor Satrio, RW 04, Karet Kuningan, Setiabudi, Jakarta Selatan, Daerah Khusus Ibukota Jakarta, 12930, Indonesia",
+            "address": {
+              "amenity": "Starbucks",
+              "road": "Jalan Profesor Doktor Satrio",
+              "city_block": "RW 04",
+              "village": "Karet Kuningan",
+              "city_district": "Jakarta Selatan",
+              "city": "Daerah Khusus Ibukota Jakarta",
+              "ISO3166-2-lvl4": "ID-JK",
+              "postcode": "12930",
+              "country": "Indonesia",
+              "country_code": "id"
+            },
+            "extratags": {
+              "level": "0",
+              "cuisine": "coffee_shop",
+              "takeaway": "yes",
+              "check_date": "2023-10-13",
+              "wheelchair": "limited",
+              "brand:wikidata": "Q37158",
+              "brand:wikipedia": "en:Starbucks"
+            },
+            "namedetails": {
+              "name": "Starbucks",
+              "brand": "Starbucks",
+              "name:id": "Starbucks",
+              "official_name": "Starbucks Coffee"
+            },
+            "boundingbox": [
+              "-6.2241388",
+              "-6.2240388",
+              "106.8225377",
+              "106.8226377"
+            ]
+          }
+        ],
+        "uiCount": 6,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. StarbucksStarbucks, Jalan Paus, RW 08, Jati, Pulo Gadung, Jakarta Timur, Daerah Khusus Ibukota Jakarta, 10710, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 7.8 km지도에 표시 · 자동차 경로 계산 →",
+          "2. StarbucksStarbucks, Jalan Tanjung Karang, RW 02, Kebon Melati, Tanah Abang, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, 10230, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 1.6 km지도에 표시 · 자동차 경로 계산 →",
+          "3. StarbucksStarbucks, 1, Jalan Pantai Indah Utara 2, Pantai Indah Kapuk, Kapuk Muara, Penjaringan, Jakarta Utara, Daerah Khusus Ibukota Jakarta, 14450, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 10.6 km지도에 표시 · 자동차 경로 계산 →",
+          "4. StarbucksStarbucks, Jalan Kampung Bali XXXIII, RW 10, Kampung Bali, Tanah Abang, Jakarta Pusat, Daerah Khusus Ibukota Jakarta, 10250, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 55 m지도에 표시 · 자동차 경로 계산 →",
+          "5. Starbucks Gandaria CityStarbucks Gandaria City, Jalan Sultan Iskandar Muda, Gandaria City, Kebayoran Lama Utara, Kebayoran Lama, Jakarta Selatan, Daerah Khusus Ibukota Jakarta, 12240, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 7.7 km지도에 표시 · 자동차 경로 계산 →",
+          "6. StarbucksStarbucks, Jalan Profesor Doktor Satrio, RW 04, Karet Kuningan, Setiabudi, Jakarta Selatan, Daerah Khusus Ibukota Jakarta, 12930, Indonesia카페 · OSM / Nominatim내 위치에서 직선 약 4.2 km지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 54.515783311281304
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/15/26105/16947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26106/16948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26108/16948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26107/16947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26107/16948.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26108/16947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26106/16947.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26105/16948.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=id-ID%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Starbucks+Jakarta",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26106/16949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26105/16949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26108/16949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/26107/16949.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/106.822,-6.186;106.823,-6.196?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13054/8475.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13054/8473.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13054/8474.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13053/8475.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13053/8474.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13053/8473.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13055/8474.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13052/8474.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13052/8473.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13055/8473.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13055/8475.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/13052/8475.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33896.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33895.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33899.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33899.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33899.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33899.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33900.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33900.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33900.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33900.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33900.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52212/33899.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104427/67796.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104427/67795.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104427/67797.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104430/67795.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104429/67795.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104428/67797.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104428/67796.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104428/67795.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104429/67797.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104430/67796.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104430/67797.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/104429/67796.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52214/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33897.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52213/33898.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52215/33898.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/52216/33897.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 639,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Belok kiri",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.31319647253987754,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 876.865820844571,
+          "label": "877m",
+          "timeout": false,
+          "waitMs": 328,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Masuk bundaran dan ambil jalan keluar 2 · Jalan Jenderal Sudirman",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 2.3529698207113645,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1126.7223227438521,
+          "label": "1127m",
+          "timeout": false,
+          "waitMs": 313,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Masuk bundaran dan ambil jalan keluar 2 · Jalan Jenderal Sudirman",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.196406699026224,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1753.731641689142,
+          "label": "1754m",
+          "timeout": false,
+          "waitMs": 322,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Belok kiri · Jalan Galunggung",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.9854459775275133,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2630.597462533713,
+          "label": "2631m",
+          "timeout": false,
+          "waitMs": 308,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Lurus · Jalan Jenderal Sudirman",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1937805677261768,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3457.463283378284,
+          "label": "3457m",
+          "timeout": false,
+          "waitMs": 436,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Tujuan · Jalan Jenderal Sudirman",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.745233180664321,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3507.463283378284,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 343,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Anda telah tiba di tujuan ke-, lurus saja",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 19.02503739995183,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3507.463283378284,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 1028,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Anda telah tiba di tujuan ke-, lurus saja",
+          "instructionLanguage": "id",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 19.02503739995183,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3490.9,
+        "geometryMeters": 3507.463283378284,
+        "durationSeconds": 258,
+        "points": 214,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 41.857757444801464,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 64.30328998162922,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 134.917085401268,
+            "type": "end of road",
+            "modifier": "left",
+            "road": "Jalan Kyai Haji Wahid Hasyim",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 231.75630653209117,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Jalan Mohammad Husni Thamrin",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1126.7223227438521,
+            "type": "roundabout",
+            "modifier": "straight",
+            "road": "Jalan Jenderal Sudirman",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 1219.7872913044175,
+            "type": "exit roundabout",
+            "modifier": "straight",
+            "road": "Jalan Jenderal Sudirman",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2260.346675921226,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Jalan Galunggung",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2528.590230785979,
+            "type": "turn",
+            "modifier": "left",
+            "road": "",
+            "destinations": "Jalan Jend. Sudirman",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2691.7390646306217,
+            "type": "turn",
+            "modifier": "straight",
+            "road": "Jalan Jenderal Sudirman",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3507.463283378284,
+            "type": "arrive",
+            "road": "Jalan Jenderal Sudirman",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 1.556728973043897,
+        "destinationSnapMeters": 1.1054538150611575
+      },
+      "drivingStartedAt": "2026-10-23T16:29:15.952Z",
+      "drivingWallSeconds": 358.823,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1115.7727867167246,
+        "originReady": false,
+        "destinationAccessMeters": 1.1054538134902128,
+        "revision": 4,
+        "destination": "좌표 목적지 -6.196000, 106.823000",
+        "remainingMeters": 14.929165545258204,
+        "remainingSeconds": 1.1033615144165163,
+        "language": "id-ID",
+        "instructionLanguage": "id",
+        "instruction": "Anda telah tiba di tujuan ke-, lurus saja",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000000267391,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -6.196,
+          "longitude": 106.82299,
+          "accuracy": 5,
+          "timestamp": 1792773316229
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 379,
+      "finishedAt": "2026-10-23T16:35:23.616Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 358
+    }
+  ]
+}

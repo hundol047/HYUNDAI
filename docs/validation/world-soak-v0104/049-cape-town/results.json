@@ -1,0 +1,835 @@
+{
+  "observedAt": "2026-10-23T18:12:52.760Z",
+  "sourceCommit": "706d4e9204bed0382b291ae1f4a2bae1b0a052aa",
+  "harnessSha256": "9b04cc550cd6617e7e44c0f093271c94d2e3d9d7b06fb424131309a204b1d2fc",
+  "roadTilesSha256": "e34273c1ebfab24b7fe3b8326f8ad2a01135978170859e1017d8beb816054d36",
+  "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+  "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+  "siteManifest": {
+    "label": "0.10.4 release candidate incl. date-line overlays",
+    "createdAt": "2026-10-23T15:56:06.360240+00:00",
+    "sourceCommit": "8dfefe21717d8e52e8eef7a328358edae23c5c4d",
+    "workingTreeChanges": true,
+    "engineSha256": "6f8eac655e0dea5c825d67f22d795dad414398da205dc86f54bb65d89eff4268",
+    "navigationSha256": "0c191146c32a04b67a3ef66c5a0202bf38b0623dbf06796b5881b425e826521d",
+    "nearbyMapSha256": "6988f9cb1dd487253d78017f559539f172d18bd91701b3d10fbc2964e93956e8",
+    "apkSha256": "674f8f0ab7f8f9e3850ab31e3c077db1796be9c62cf9e952f7630cca113af9d3",
+    "validation": "178 JVM/Android tests, 123 existing browser checks + 6 date-line checks; changed map/navigation/performance suites rerun; exact engine passed 246 GPS conditions. 5-hour audit still running."
+  },
+  "realtime": true,
+  "paceMetersPerSecond": 10,
+  "startedAt": "2026-10-23T18:12:52.769Z",
+  "scope": "Paced browser GPS every wall-clock second, continuous UI/map rendering. Provider queries and visible tiles are live. Selected urban, mountain and high-latitude routes, six inhabited continents; live providers, UI coordinate route selection, synthetic GPS. Shared tracker processes every supplied position. Destination selection is recorded per case: an explicit coordinate or an actual returned business. No exhaustive business catalog, real GPS, traffic or real driving verification.",
+  "scenarios": [
+    {
+      "id": "cape-town",
+      "label": "케이프타운",
+      "country": "ZA",
+      "continent": "Africa",
+      "language": "en-ZA",
+      "start": [
+        -33.925,
+        18.424
+      ],
+      "end": [
+        -33.908,
+        18.419
+      ],
+      "query": "Truth Coffee Cape Town",
+      "result": "passed",
+      "startedAt": "2026-10-23T18:12:52.913Z",
+      "search": {
+        "providerResults": [
+          {
+            "place_id": 34208674,
+            "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 3733793199,
+            "lat": "-33.9282267",
+            "lon": "18.4227333",
+            "category": "amenity",
+            "type": "cafe",
+            "place_rank": 30,
+            "importance": 7.441443503466877e-05,
+            "addresstype": "amenity",
+            "name": "Truth Coffee Roasting",
+            "display_name": "Truth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa",
+            "address": {
+              "amenity": "Truth Coffee Roasting",
+              "road": "Buitenkant Street",
+              "suburb": "Cape Town Ward 115",
+              "city": "Cape Town",
+              "county": "City of Cape Town",
+              "state": "Western Cape",
+              "ISO3166-2-lvl4": "ZA-WC",
+              "postcode": "7925",
+              "country": "South Africa",
+              "country_code": "za"
+            },
+            "extratags": {
+              "phone": "+27212000440",
+              "cuisine": "coffee_shop;breakfast;burger;cake;chicken;hot_dog;international;local;pasta;sandwich;tea",
+              "website": "http://truthcoffee.com",
+              "diet:vegan": "yes",
+              "diet:vegetarian": "yes",
+              "internet_access": "wlan"
+            },
+            "namedetails": {
+              "name": "Truth Coffee Roasting"
+            },
+            "boundingbox": [
+              "-33.9282767",
+              "-33.9281767",
+              "18.4226833",
+              "18.4227833"
+            ]
+          }
+        ],
+        "uiCount": 1,
+        "notice": "가게명·주소·출처를 확인하고 선택하세요. 검색 결과는 전체 가게 목록이 아닙니다.",
+        "results": [
+          "1. Truth Coffee RoastingTruth Coffee Roasting, Buitenkant Street, Cape Town Ward 115, Cape Town, City of Cape Town, Western Cape, 7925, South Africa카페 · OSM / Nominatim내 위치에서 직선 약 377 m전화 +27212000440지도에 표시 · 자동차 경로 계산 →"
+        ],
+        "result": "returned-results",
+        "outsideExpectedCountry": [],
+        "distantResults": [],
+        "nearestResultMeters": 377.34740755496784
+      },
+      "responses": [
+        {
+          "url": "https://tile.openstreetmap.org/2/0/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/2.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/0.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/1.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18060/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18059/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18062/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18061/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18062/19669.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18061/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18059/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/15/18060/19670.png",
+          "status": 200
+        },
+        {
+          "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=en-ZA%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Truth+Coffee+Cape+Town",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://router.project-osrm.org/route/v1/driving/18.424,-33.925;18.419,-33.908?overview=full&geometries=geojson&steps=true&alternatives=false",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9029/9834.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9029/9835.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39339.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39340.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39338.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36123/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36119/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36118/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36118/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36118/39337.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36122/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72241/78671.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72241/78672.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78673.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78673.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72240/78672.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72240/78671.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78671.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78672.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72240/78673.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72243/78671.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72241/78673.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/17/72242/78672.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39335.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36120/39336.png",
+          "status": 200
+        },
+        {
+          "url": "https://tile.openstreetmap.org/16/36121/39336.png",
+          "status": 200
+        }
+      ],
+      "requestFailures": [
+        {
+          "url": "https://tile.openstreetmap.org/2/1/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/1/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/2/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/1.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/0/0.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/2/3/2.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9030/9834.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9029/9833.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9030/9833.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9030/9835.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9028/9834.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9031/9834.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9028/9833.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9031/9833.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9028/9835.png",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://tile.openstreetmap.org/14/9031/9835.png",
+          "error": "net::ERR_ABORTED"
+        }
+      ],
+      "pageErrors": [],
+      "checkpoints": [
+        {
+          "atMeters": 0,
+          "label": "출발",
+          "timeout": false,
+          "waitMs": 797,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Turn right · Lower Plein Street",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.37543446664707175,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 797.8883286300531,
+          "label": "798m",
+          "timeout": false,
+          "waitMs": 734,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Keep left at the fork · Hans Strijdom Avenue",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 1.1333516708374676,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 1622.1316127460952,
+          "label": "1622m",
+          "timeout": false,
+          "waitMs": 303,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Turn left · Dock Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.36713522120257325,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2093.4467127064677,
+          "label": "2093m",
+          "timeout": false,
+          "waitMs": 318,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Enter the roundabout and take the 2nd exit · Dock Road",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.4618838945869598,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 2433.197419119143,
+          "label": "2433m",
+          "timeout": false,
+          "waitMs": 354,
+          "visible": 8,
+          "decoded": 8,
+          "instruction": "Make a slight right",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6081756898433999,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3194.2632254921905,
+          "label": "3194m",
+          "timeout": false,
+          "waitMs": 407,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Destination",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": false,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 0.6405983042215854,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3244.2632254921905,
+          "label": "도착",
+          "timeout": false,
+          "waitMs": 386,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 32 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": true,
+          "dragEnabled": false,
+          "zoom": 16,
+          "centerGap": 19.591922900111218,
+          "captureArchived": false
+        },
+        {
+          "atMeters": 3244.2632254921905,
+          "label": "주차 후 확대",
+          "timeout": false,
+          "waitMs": 877,
+          "visible": 12,
+          "decoded": 12,
+          "instruction": "Vehicle route endpoint · Destination: ≈ 32 m",
+          "instructionLanguage": "en",
+          "tracking": true,
+          "offRoute": false,
+          "arrived": true,
+          "planningHidden": false,
+          "dragEnabled": true,
+          "zoom": 17,
+          "centerGap": 19.591922900111218,
+          "captureArchived": false
+        }
+      ],
+      "mapCoverageGaps": [],
+      "destinationMode": "explicit-coordinate",
+      "route": {
+        "distanceMeters": 3243.5,
+        "geometryMeters": 3244.2632254921905,
+        "durationSeconds": 321.6,
+        "points": 183,
+        "steps": [
+          {
+            "atMeters": 0,
+            "type": "depart",
+            "modifier": "right",
+            "road": "Darling Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 113.42807847080306,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Lower Plein Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 314.1230503357707,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Strand Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 457.2505515141612,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Adderley Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 797.8883286300531,
+            "type": "fork",
+            "modifier": "slight left",
+            "road": "Hans Strijdom Avenue",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1362.0458622401313,
+            "type": "turn",
+            "modifier": "right",
+            "road": "Buitengracht Street",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1574.5251286897349,
+            "type": "turn",
+            "modifier": "left",
+            "road": "Dock Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 1872.4133081110624,
+            "type": "continue",
+            "modifier": "left",
+            "road": "Dock Road",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 2093.4467127064677,
+            "type": "roundabout",
+            "modifier": "slight left",
+            "road": "Dock Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 2122.208149224167,
+            "type": "exit roundabout",
+            "modifier": "straight",
+            "road": "Dock Road",
+            "drivingSide": "right",
+            "exit": 2
+          },
+          {
+            "atMeters": 3049.0212127880905,
+            "type": "turn",
+            "modifier": "slight right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3086.5691503891685,
+            "type": "turn",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          },
+          {
+            "atMeters": 3244.2632254921905,
+            "type": "arrive",
+            "modifier": "right",
+            "road": "",
+            "drivingSide": "right"
+          }
+        ],
+        "originSnapMeters": 10.787174427995357,
+        "destinationSnapMeters": 32.94704421804061
+      },
+      "drivingStartedAt": "2026-10-23T18:12:59.945Z",
+      "drivingWallSeconds": 333.608,
+      "finalState": {
+        "active": false,
+        "tracking": true,
+        "arrived": true,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 1983.897391239386,
+        "originReady": false,
+        "destinationAccessMeters": 32.94704421924812,
+        "revision": 4,
+        "destination": "좌표 목적지 -33.908000, 18.419000",
+        "remainingMeters": 14.996471197935437,
+        "remainingSeconds": 1.4869323685081044,
+        "language": "en-ZA",
+        "instructionLanguage": "en",
+        "instruction": "Vehicle route endpoint · Destination: ≈ 32 m",
+        "turnSymbol": "●",
+        "turnMeters": 15.000000006027221,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "차량 경로 도착 · 안내 종료",
+        "safetyHeld": true,
+        "fix": {
+          "latitude": -33.907739,
+          "longitude": 18.41883100000007,
+          "accuracy": 5,
+          "timestamp": 1792779515055
+        }
+      },
+      "parkedZoom": 16,
+      "zoomInOutVerified": true,
+      "gpsCallbacks": 353,
+      "finishedAt": "2026-10-23T18:18:42.252Z",
+      "samplesFile": "samples.jsonl.gz",
+      "movingGpsSamples": 333
+    }
+  ]
+}
