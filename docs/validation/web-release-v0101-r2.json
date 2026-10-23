@@ -1,0 +1,8 @@
+{
+  "path": "web-release/CabinOS_ONE_web_v0.10.1-r2.zip",
+  "bytes": 48129206,
+  "sha256": "0d9e86ab345066d332adb6b17db49dfe7968da73ba4bc6bf235162ea49d75c70",
+  "androidVersion": "0.10.1",
+  "webRevision": "r2",
+  "sourceAndBundledArtifactsMatch": true
+}

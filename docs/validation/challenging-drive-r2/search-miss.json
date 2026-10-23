@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-10-23T09:27:00Z",
+  "timestampPrecision": "minute; probe console/file capture",
+  "type": "Actual bounded Nominatim requests made before route selection; not an exhaustive catalog audit",
+  "queries": [
+    {
+      "query": "Cafe Onion Anguk Seoul",
+      "results": []
+    },
+    {
+      "query": "어니언 안국",
+      "resultCount": 0,
+      "evidence": "probe console output; no raw capture for this second query"
+    }
+  ],
+  "resolvedAlternative": "Blue Bottle Samcheong Seoul"
+}

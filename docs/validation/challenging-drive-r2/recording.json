@@ -1,0 +1,22 @@
+{
+  "type": "Actual Playwright browser video captured continuously during execution; synthetic GPS only, live provider responses; no still-image slideshow",
+  "clips": [
+    {
+      "scenario": "seoul",
+      "startSeconds": 0,
+      "durationSeconds": 57.52
+    },
+    {
+      "scenario": "paris",
+      "startSeconds": 57.52,
+      "durationSeconds": 55.84
+    },
+    {
+      "scenario": "sf",
+      "startSeconds": 113.36000000000001,
+      "durationSeconds": 52.52
+    }
+  ],
+  "totalSeconds": 165.88000000000002,
+  "audioRecorded": false
+}

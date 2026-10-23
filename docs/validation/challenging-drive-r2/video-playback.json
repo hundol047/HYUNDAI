@@ -1,0 +1,25 @@
+{
+  "result": "passed",
+  "type": "Actual Chromium HTMLVideoElement decode, playback, three seeks and HTTP range support for the new captured driving MP4",
+  "observedAt": "2026-10-23T09:45:34.919Z",
+  "duration": 165.88,
+  "width": 1440,
+  "height": 1050,
+  "seeks": [
+    {
+      "atSeconds": 30,
+      "result": "passed"
+    },
+    {
+      "atSeconds": 85,
+      "result": "passed"
+    },
+    {
+      "atSeconds": 130,
+      "result": "passed"
+    }
+  ],
+  "rangeStatus": 206,
+  "bytes": 15240843,
+  "sha256": "dbc2491acd88ccc3d2744f21cf62ad63fea48911d1bd5355572e11e6cab5f241"
+}

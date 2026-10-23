@@ -1,0 +1,8 @@
+{
+  "type": "One actual bounded nearby-business request at a public Seoul landmark; not all-business coverage",
+  "observedAt": "2026-10-23T09:38:57.094694+00:00",
+  "host": "overpass-api.de",
+  "result": "unavailable",
+  "reason": "The read operation timed out",
+  "elapsedMs": 18185.2
+}

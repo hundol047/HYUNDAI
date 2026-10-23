@@ -21,7 +21,9 @@ shutil.copy2(root/'scripts/web/node_modules/leaflet/LICENSE',out/'vendor/leaflet
 for p in (root/'apk').glob('*'):
  if p.suffix=='.apk' or p.name=='SHA256SUMS':shutil.copy2(p,out/'apk'/p.name)
 shutil.copytree(root/'docs/screenshots',out/'images')
-if (root/'docs/video/CabinOS_ONE_demo.mp4').exists():
- (out/'videos').mkdir();shutil.copy2(root/'docs/video/CabinOS_ONE_demo.mp4',out/'videos/CabinOS_ONE_demo.mp4')
+videos=list((root/'docs/video').glob('*.mp4'))
+if videos:
+ (out/'videos').mkdir()
+ for video in videos:shutil.copy2(video,out/'videos'/video.name)
 print('Static site:',out)
 PY

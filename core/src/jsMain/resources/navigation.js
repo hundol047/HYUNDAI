@@ -113,6 +113,21 @@
  }
 
  async function reroute(){if(!nav?.active||!destination||busy||failures>=3||!state.network||document.hidden||!bridge.navReroute())return;await request(async id=>{try{lastRoute=Date.now();const raw=await get(routeUrl(destination));if(id!==generation||!nav.active)return;if(!bridge.navReplace(raw))throw Error('재탐색 경로를 적용하지 못했습니다. GPS를 확인하세요.');failures=0;spoken='';notice='경로를 다시 계산했습니다.';nav=JSON.parse(bridge.navState());speak()}catch(e){if(e.name!=='AbortError')failures++;throw e}})}
+ // Draw maneuvers independently of the device's font coverage. Some browsers
+ // render the Unicode turn arrows as a missing-glyph box while driving.
+ const maneuverPaths={
+  '↑':'M24 42V7M12 19 24 7l12 12',
+  '↰':'M35 42V23a9 9 0 0 0-9-9H8m12-10L8 14l12 10',
+  '↱':'M13 42V23a9 9 0 0 1 9-9h18M28 4l12 10-12 10',
+  '↶':'M36 42V18a12 12 0 0 0-24 0v13m-8-9 8 9 8-9',
+  '⟳':'M33 10a16 16 0 1 0 6 22M33 10h10V0',
+ };
+ function renderManeuver(symbol){
+  const e=$('nav-symbol');if(!e||e.dataset.symbol===symbol)return;
+  e.dataset.symbol=symbol;e.setAttribute('aria-hidden','true');
+  const shape=symbol==='●'?'<circle cx="24" cy="24" r="14"/>':`<path d="${maneuverPaths[symbol]||maneuverPaths['↑']}"/>`;
+  e.innerHTML=`<svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" focusable="false">${shape}</svg>`;
+ }
  function renderGuidance(planAllowed){
   const confirm=planAllowed&&nav.destinationAccessMeters>100;
   const layout=[nav.hasRoute,planAllowed,confirm,nav.active&&!nav.tracking,nav.offRoute,Boolean(selection),gpsState].join('|');
@@ -122,7 +137,7 @@
   }
   if(!nav.hasRoute){text('nav-empty',planAllowed?'국가 제한 없이 검색합니다. 정확한 기기 GPS로 출발 위치를 정해 주세요.':'목적지 설정은 안전한 주차 확인 후 가능합니다.');return}
   text('nav-destination',nav.destination);text('nav-destination-address',selection?.address||'');$('nav-destination-address').hidden=!selection?.address;text('nav-instruction',nav.active?(nav.tracking&&!nav.offRoute?nav.instruction:'위치·경로 확인 중'):nav.arrived?nav.instruction:'자동차 경로 미리보기');
-  $('nav-turn').hidden=!(nav.active&&nav.tracking&&!nav.offRoute);text('nav-symbol',nav.turnSymbol||'↑');text('nav-turn-distance',distance(nav.turnMeters)+' 앞');
+  $('nav-turn').hidden=!(nav.active&&nav.tracking&&!nav.offRoute);renderManeuver(nav.turnSymbol||'↑');text('nav-turn-distance',distance(nav.turnMeters)+' 앞');
   text('nav-remaining',distance(nav.remainingMeters));text('nav-eta',nav.arrived?'차량 경로 도착 · 안내 종료':nav.active&&(!nav.tracking||nav.offRoute)?'도착 예상 갱신 중지':`약 ${Math.max(1,Math.ceil(nav.remainingSeconds/60))}분 · ${etaFormat.format(new Date(Date.now()+nav.remainingSeconds*1000))} 도착 예상`);
   $('nav-access').hidden=!(nav.destinationAccessMeters>30);text('nav-access',`차량 접근 지점에서 목적지까지 직선 약 ${distance(nav.destinationAccessMeters)} · 주차장·진입로를 확인하세요.`);
   text('nav-origin-access',nav.originAccessMeters>45?`출발 GPS와 연결도로 시작점이 약 ${distance(nav.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다.`:'출발 위치의 정확하고 최신인 GPS를 확인해 주세요.');$('nav-origin-access').hidden=!planAllowed||nav.originReady;

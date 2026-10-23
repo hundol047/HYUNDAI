@@ -28,7 +28,7 @@
 
 **0.10.0 음성 길찾기:** 내비의 음성 버튼 → 목적지 → 결과 번호 → 안내 시작. 길 안내 번역 31개 언어/지역 팩과 BCP 47 인식 언어 선택을 제공합니다. 지원하지 않는 번역은 영어로 대체하며 실제 STT/TTS는 기기 서비스·언어팩에 따릅니다. [사용법·언어 범위·실행 근거](docs/VOICE_NAVIGATION_KO.md).
 
-**배포 파일:** [0.10.1 r1 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.1-r1)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.1-r1.zip`](web-release/CabinOS_ONE_web_v0.10.1-r1.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
+**배포 파일:** [0.10.1 r2 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.1-r2)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.1-r2.zip`](web-release/CabinOS_ONE_web_v0.10.1-r2.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
 
 ## 구현된 기능
 
@@ -138,3 +138,5 @@ node scripts/web/record-demo.cjs
 공식 공모전: https://appdevchallenge.auto-hmg.io/guide/submission
 
 지도 범위·조작·성능: [6개 대륙 실경로·확대/축소·GPS 갱신 점검](docs/MAP_PERFORMANCE_KO.md). 152개 JVM/Android 테스트와 115개 브라우저 검사를 기준으로 하며 실기기 FPS·실도로 정확도는 별도 검증 대상입니다.
+
+복잡한 도로 모의 주행: [실제 서버·합성 GPS로 3개 도시 주행, 화면 검토와 수정](docs/CHALLENGING_DRIVE_KO.md). [직접 실행 녹화 MP4](docs/video/CabinOS_ONE_challenging_drive_v0101r2.mp4).

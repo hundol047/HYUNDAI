@@ -1,0 +1,297 @@
+{
+  "scope": "Focused regressions rerun for web r2 after the maneuver SVG fix and addition of the live-driving recording link; Android code/APK unchanged",
+  "totalPassed": 61,
+  "suites": {
+    "basic": {
+      "passed": 15,
+      "report": {
+        "results": [
+          {
+            "name": "unified parked dashboard and shared Kotlin engine",
+            "result": "passed"
+          },
+          {
+            "name": "driving removes parked controls and rejects injected unsafe commands",
+            "result": "passed"
+          },
+          {
+            "name": "one tap hazard response does not open a driving dialog",
+            "result": "passed"
+          },
+          {
+            "name": "traffic stop at zero speed keeps safety restrictions",
+            "result": "passed"
+          },
+          {
+            "name": "parking must debounce before both services activate",
+            "result": "passed"
+          },
+          {
+            "name": "task submit buttons and Enter work without losing entered text",
+            "result": "passed"
+          },
+          {
+            "name": "charging updates shorten the same active session",
+            "result": "passed"
+          },
+          {
+            "name": "pause freezes session but keeps departure countdown active",
+            "result": "passed"
+          },
+          {
+            "name": "assistant text submission and motion while dialog is open obey restrictions",
+            "result": "passed"
+          },
+          {
+            "name": "settings form applies preferences through the shared engine",
+            "result": "passed"
+          },
+          {
+            "name": "unavailable real source never fabricates a parked vehicle",
+            "result": "passed"
+          },
+          {
+            "name": "offline browser keeps local sessions and shared countdown running",
+            "result": "passed"
+          },
+          {
+            "name": "actual Android gallery and downloadable APK are reachable",
+            "result": "passed"
+          },
+          {
+            "name": "execution video is playable and seeks correctly",
+            "result": "passed"
+          },
+          {
+            "name": "mobile portrait has no horizontal overflow",
+            "result": "passed"
+          }
+        ],
+        "pageErrors": []
+      }
+    },
+    "navigation": {
+      "passed": 13,
+      "report": {
+        "type": "deterministic navigation UI/protocol tests with synthetic GPS/OSRM fixtures; not live provider or real-road validation",
+        "results": [
+          {
+            "name": "global address search is explicit, validates results and caches repeated queries",
+            "result": "passed"
+          },
+          {
+            "name": "actual road geometry and international destination enter shared Kotlin engine",
+            "result": "passed"
+          },
+          {
+            "name": "start enables GPS guidance, locks parked controls and suppresses simulated hazards",
+            "result": "passed"
+          },
+          {
+            "name": "GPS progression updates remaining distance rather than fixed demo counters",
+            "result": "passed"
+          },
+          {
+            "name": "sustained off-route GPS triggers throttled route recalculation",
+            "result": "passed"
+          },
+          {
+            "name": "GPS timeout stops guidance and holds safety lock",
+            "result": "passed"
+          },
+          {
+            "name": "NoRoute response cannot produce a fabricated line or start button",
+            "result": "passed"
+          },
+          {
+            "name": "Tokyo route uses worldwide coordinates without a Korea bounding box",
+            "result": "passed"
+          },
+          {
+            "name": "existing route and GPS can continue offline while online requests stop",
+            "result": "passed"
+          },
+          {
+            "name": "location denied does not substitute the demo Pangyo position",
+            "result": "passed"
+          },
+          {
+            "name": "late route response after driving starts cannot enable planning",
+            "result": "passed"
+          },
+          {
+            "name": "distant building access is disclosed and requires parked confirmation",
+            "result": "passed"
+          },
+          {
+            "name": "navigation layout fits mobile screen",
+            "result": "passed"
+          }
+        ],
+        "pageErrors": []
+      }
+    },
+    "navigationDetail": {
+      "passed": 12,
+      "report": {
+        "type": "deterministic Chromium controls/lifecycle/GPS/request checks; synthetic providers and location, not device or live service verification",
+        "results": [
+          {
+            "name": "editing a pending search cancels it and late results cannot replace the new query",
+            "result": "passed"
+          },
+          {
+            "name": "explicit cancellation frees controls promptly and leaves no old result",
+            "result": "passed"
+          },
+          {
+            "name": "changing nearby scope while waiting invalidates the old response",
+            "result": "passed"
+          },
+          {
+            "name": "regular GPS updates preserve route errors in their separate status region",
+            "result": "passed"
+          },
+          {
+            "name": "poor GPS immediately disables start and an older good fix cannot restore it",
+            "result": "passed"
+          },
+          {
+            "name": "replan uses the latest real GPS input instead of the old route origin",
+            "result": "passed"
+          },
+          {
+            "name": "map coordinate transfer cannot mutate the navigation engine road",
+            "result": "passed"
+          },
+          {
+            "name": "duplicate stationary fixes cannot release the motion safety latch",
+            "result": "passed"
+          },
+          {
+            "name": "backgrounding retires the old GPS callback and resumes a fresh subscription",
+            "result": "passed"
+          },
+          {
+            "name": "a GPS-free selected pin can be cleared without erasing the search list",
+            "result": "passed"
+          },
+          {
+            "name": "pending controls and GPS status fit a narrow mobile viewport",
+            "result": "passed"
+          },
+          {
+            "name": "a provider timeout reports the timeout and releases the pending controls",
+            "result": "passed"
+          }
+        ],
+        "timings": {
+          "cancelControlsAvailableMs": 50.67895800000042
+        },
+        "pageErrors": []
+      }
+    },
+    "roadTiles": {
+      "passed": 7,
+      "report": {
+        "type": "actual Chromium lifecycle execution with explicit synthetic bitmap/provider/GPS inputs; real-road rendering is verified separately",
+        "results": [
+          {
+            "name": "all visible decoded bitmap tiles are required before the map reports ready",
+            "result": "passed"
+          },
+          {
+            "name": "failed basemap is explicit and GPS success cannot disguise an empty map",
+            "result": "passed"
+          },
+          {
+            "name": "tile retry recovers roads without clearing the entered destination",
+            "result": "passed"
+          },
+          {
+            "name": "old viewport tiles cannot mark a newly failed viewport as ready",
+            "result": "passed"
+          },
+          {
+            "name": "offline state retains already displayed roads and labels its limitation",
+            "result": "passed"
+          },
+          {
+            "name": "leaving and reopening the map retires old health callbacks",
+            "result": "passed"
+          },
+          {
+            "name": "failed-map help and retry fit a narrow mobile viewport",
+            "result": "passed"
+          }
+        ],
+        "pageErrors": []
+      }
+    },
+    "voice": {
+      "passed": 14,
+      "report": {
+        "type": "Chromium API/UI execution with synthetic speech recognition, voices, GPS and provider responses; not acoustic or physical device validation",
+        "results": [
+          {
+            "name": "voice destination, numbered selection and explicit start work through microphone callbacks",
+            "result": "passed"
+          },
+          {
+            "name": "driving destination changes are blocked but stop remains available without a permission prompt",
+            "result": "passed"
+          },
+          {
+            "name": "unconfirmed microphone permission while driving never starts recognition",
+            "result": "passed"
+          },
+          {
+            "name": "language selection localizes route text, synthesis and provider request headers",
+            "result": "passed"
+          },
+          {
+            "name": "all 31 packs expose native names and unsupported translation uses an explicit English fallback",
+            "result": "passed"
+          },
+          {
+            "name": "selected language restores after reload and personal reset removes it",
+            "result": "passed"
+          },
+          {
+            "name": "permission denial produces recovery help and no destination request",
+            "result": "passed"
+          },
+          {
+            "name": "recognition constructor/start errors leave a usable cancel/retry control",
+            "result": "passed"
+          },
+          {
+            "name": "interim and low-confidence results cannot select destinations",
+            "result": "passed"
+          },
+          {
+            "name": "background/cancel retires callbacks and prevents delayed searches",
+            "result": "passed"
+          },
+          {
+            "name": "language and recognition provider failures never become shop searches",
+            "result": "passed"
+          },
+          {
+            "name": "a missing voice is reported without falsely claiming speech playback",
+            "result": "passed"
+          },
+          {
+            "name": "microphone has a bounded 30 second session",
+            "result": "passed"
+          },
+          {
+            "name": "voice controls fit mobile and no recognition service offers a clear fallback",
+            "result": "passed"
+          }
+        ],
+        "pageErrors": []
+      }
+    }
+  }
+}
