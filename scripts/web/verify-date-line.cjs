@@ -12,7 +12,7 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,process.env.CABIN_
   await page.evaluate(start=>{
    window.dateMaps={};const create=L.map;L.map=function(...a){return dateMaps[typeof a[0]==='string'?a[0]:a[0].id]=create.apply(this,a)};
    Object.defineProperty(navigator,'geolocation',{configurable:true,value:{
-    watchPosition(success){success({coords:{latitude:start[0],longitude:start[1],accuracy:5,speed:0},timestamp:Date.now()});return 1},
+    watchPosition(success){window.dateLineGPS=success;success({coords:{latitude:start[0],longitude:start[1],accuracy:5,speed:0},timestamp:Date.now()});return 1},
     clearWatch(){},
     getCurrentPosition(success){success({coords:{latitude:start[0],longitude:start[1],accuracy:5},timestamp:Date.now()})}
    }});
@@ -32,6 +32,21 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,process.env.CABIN_
     await page.evaluate(()=>{const m=dateMaps['navigation-map'];m.stop();m.panTo([m.getCenter().lat,m.getCenter().lng+(m.getCenter().lng>0?-360:360)],{animate:false});cabinDemo.render()});
     const pins=await positions('navigation-map');assert.ok(pins.every(p=>p.visible),JSON.stringify(pins));
     assert.ok(await page.evaluate(()=>{const m=dateMaps['navigation-map'],line=Object.values(m._layers).find(x=>x instanceof L.Polyline);return Math.abs(line.getBounds().getCenter().lng-m.getCenter().lng)<.01}));
+   });
+   await test(`navigation ${direction} follows moving GPS across the boundary without losing pins or tracking`,async()=>{
+    await page.locator('[data-nav="start"]').click();
+    const states=await page.evaluate(({start,end})=>{
+     const now=Date.now.bind(Date);let offset=0;Date.now=()=>now()+offset;const records=[];
+     const delta=(end[1]-start[1]+540)%360-180;
+     for(let i=1;i<=46;i++){
+      offset+=1000;const t=Math.min(1,i/44),lon=((start[1]+delta*t+540)%360)-180;
+      dateLineGPS({coords:{latitude:start[0],longitude:lon,accuracy:5,speed:i>44?0:5,heading:delta>0?90:270},timestamp:Date.now()});cabinDemo.render();
+      const n=JSON.parse(CabinOS.navState()),map=dateMaps['navigation-map'],box=map.getSize();
+      records.push({tracking:n.tracking,offRoute:n.offRoute,arrived:n.arrived,pinCount:Object.values(map._layers).filter(x=>x instanceof L.CircleMarker).length,pinsVisible:Object.values(map._layers).filter(x=>x instanceof L.CircleMarker).every(pin=>{const p=map.latLngToContainerPoint(pin.getLatLng());return p.x>=-12&&p.y>=-12&&p.x<=box.x+12&&p.y<=box.y+12})});
+     }
+     return records;
+    },{start,end});
+    assert.ok(states.every(s=>s.tracking&&!s.offRoute&&s.pinCount===2&&s.pinsVisible),JSON.stringify(states));assert.equal(states.at(-1).arrived,true);
    });
    await test(`nearby ${direction} displays cafes across the date line and after world-copy panning`,async()=>{
     await fresh();await page.locator('aside [data-page="nearby"]').click();await page.locator('[data-nearby="locate"]').click();await page.locator('[data-nearby="search"]').click();await page.waitForFunction(()=>document.querySelector('#nearby-list').textContent.includes('Date line cafe fixture'));
