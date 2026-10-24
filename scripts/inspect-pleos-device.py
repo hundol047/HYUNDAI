@@ -37,6 +37,9 @@ def run(*args, timeout=30, check=True):
     return subprocess.run(adb+list(args), text=True, capture_output=True, timeout=timeout, check=check)
 
 def notice(title, value):
+    # GitHub caps workflow-command annotations per step. Preserve decisive failures.
+    if title in ('Installed Pleos services', 'Console scenario input failed', 'Pleos actual visible text'):
+        return
     text=json.dumps(value,ensure_ascii=False) if not isinstance(value,str) else value
     text=text.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
     print('::notice title='+title+'::'+text[:5500],flush=True)
