@@ -1,14 +1,22 @@
 package io.cabinos.one.platform
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.test.*
 import org.junit.Assert.*
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class PleosVehicleReaderTest {
     private class FakeClient : PleosBrakeClient {
         var initialized=false
         var released=false
         var reads=0
+        var brakeChecks=0
+        var energyChecks=0
+        var switchChecks=0
+        var energyReads=0
+        var switchReads=0
+        var readFailure: Exception? = null
         var capability: Boolean? = true
         var result: Boolean? = false
         var failure: Exception? = null
@@ -17,17 +25,18 @@ class PleosVehicleReaderTest {
         var energy: Int? = null
         var chargeSwitch: Boolean? = null
         var switchSupported=true
-        override fun canReadChargeSwitch(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = onComplete(switchSupported)
-        override fun readChargeSwitch(onComplete:(Boolean?)->Unit,onFailed:(Exception)->Unit) = onComplete(chargeSwitch)
-        override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = onComplete(true)
-        override fun readEnergy(onComplete:(Int?)->Unit,onFailed:(Exception)->Unit) = onComplete(energy)
+        override fun canReadChargeSwitch(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = run { switchChecks++;onComplete(switchSupported) }
+        override fun readChargeSwitch(onComplete:(Boolean?)->Unit,onFailed:(Exception)->Unit) = run { switchReads++;readFailure?.let { onFailed(it);return };onComplete(chargeSwitch) }
+        override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = run { energyChecks++;onComplete(true) }
+        override fun readEnergy(onComplete:(Int?)->Unit,onFailed:(Exception)->Unit) = run { energyReads++;readFailure?.let { onFailed(it);return };onComplete(energy) }
         override fun initialize(){initialized=true}
         override fun canRead(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) {
+            brakeChecks++
             failure?.let {onFailed(it);return}
             capability?.let(onComplete)
         }
         override fun read(onComplete:(Boolean?)->Unit,onFailed:(Exception)->Unit) {
-            reads++;if(deferred)pending=onComplete else onComplete(result)
+            reads++;readFailure?.let { onFailed(it);return };if(deferred)pending=onComplete else onComplete(result)
         }
         override fun release(){released=true}
     }
@@ -105,5 +114,43 @@ class PleosVehicleReaderTest {
                 reader.stop();assertNull(reader.energy.value.percent)
             } finally {scope.cancel()}
         }
+    }
+    @Test fun tenSuccessfulReadsCheckCapabilitiesOncePerConnection() = runTest {
+        val client=FakeClient().apply { energy=68;chargeSwitch=true }
+        val reader=PleosVehicleReader({client},backgroundScope,{testScheduler.currentTime})
+        reader.start();runCurrent();advanceTimeBy(9000);runCurrent()
+        assertEquals(listOf(10,10,10),listOf(client.reads,client.energyReads,client.switchReads))
+        assertEquals(listOf(1,1,1),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        reader.stop();runCurrent();reader.start();runCurrent()
+        assertEquals(listOf(2,2,2),listOf(client.brakeChecks,client.energyChecks,client.switchChecks));reader.stop()
+    }
+    @Test fun readFailureInvalidatesEachCapabilityAndClearsValues() = runTest {
+        val client=FakeClient().apply { energy=68;chargeSwitch=true }
+        val reader=PleosVehicleReader({client},backgroundScope)
+        reader.start();runCurrent();client.readFailure=SecurityException("denied")
+        advanceTimeBy(1000);runCurrent()
+        assertNull(reader.state.value.brakePressed);assertNull(reader.energy.value.percent);assertNull(reader.energy.value.chargeSwitchOn)
+        assertEquals(listOf(1,1,1),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        client.readFailure=null;advanceTimeBy(1000);runCurrent()
+        assertEquals(listOf(2,2,2),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        assertEquals(68,reader.energy.value.percent);reader.stop()
+    }
+    @Test fun unsupportedCapabilityIsCachedWithoutPollingItAgain() = runTest {
+        val client=FakeClient().apply { capability=false;switchSupported=false }
+        val reader=PleosVehicleReader({client},backgroundScope)
+        reader.start();runCurrent();advanceTimeBy(9000);runCurrent()
+        assertEquals(1,client.brakeChecks);assertEquals(1,client.switchChecks)
+        assertEquals(0,client.reads);assertEquals(0,client.switchReads);reader.stop()
+    }
+    @Test fun timedOutReadRechecksCapabilityAndIgnoresLateReply() = runTest {
+        val client=FakeClient().apply { energy=68;chargeSwitch=true }
+        val reader=PleosVehicleReader({client},backgroundScope)
+        reader.start();runCurrent();client.deferred=true
+        advanceTimeBy(1000);runCurrent();val late=client.pending!!
+        advanceTimeBy(3000);runCurrent()
+        assertNull(reader.state.value.brakePressed);assertEquals(1,client.brakeChecks)
+        late(true);assertNull(reader.state.value.brakePressed)
+        client.deferred=false;advanceTimeBy(1000);runCurrent()
+        assertEquals(2,client.brakeChecks);assertEquals(false,reader.state.value.brakePressed);reader.stop()
     }
 }
