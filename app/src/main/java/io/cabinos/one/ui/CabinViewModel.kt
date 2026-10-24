@@ -40,6 +40,7 @@ class CabinViewModel @Inject constructor(
     private val mutableScenario=MutableStateFlow(simulator.selected)
     val scenario=mutableScenario.asStateFlow()
     val vehicleStatus=vehicle.status
+    val signalDiagnostics=vehicle.diagnostics
     val pleosState=pleos.state
     val pleosEnergy=pleos.energy
     val automotive=vehicle.automotive

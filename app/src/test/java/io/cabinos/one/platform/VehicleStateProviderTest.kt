@@ -47,4 +47,24 @@ class VehicleStateProviderTest {
             } finally {scope.cancel()}
         }
     }
+    @Test fun diagnosticTimingIsThrottledAndCannotRefreshOldSpeed() {
+        val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)
+        var time=10_000_000_000L
+        val transport=FakeTransport();val logs=mutableListOf<String>()
+        try {
+            val provider=VehicleStateProvider(true,{transport},scope,{time/1_000_000},{time},{logs+=it})
+            provider.start();transport.park()
+            repeat(20) { transport.listener.timing(time,time);transport.listener.speed(0f,10_000_000_000) }
+            assertEquals(1,logs.size)
+            time+=4_000_000_000
+            transport.listener.timing(time,time);transport.listener.speed(0f,10_000_000_000);transport.listener.gear(4,10_000_000_000)
+            assertEquals(4000L,provider.diagnostics.value.speedAgeMs)
+            assertEquals(14000L,provider.diagnostics.value.lastPollSuccessMs)
+            assertEquals(2,logs.size);assertTrue(logs.last().contains("speedAgeMs=4000"))
+            assertFalse(provider.samples.value.connected)
+            provider.stop();transport.listener.timing(time,time)
+            assertNull(provider.diagnostics.value.lastPollSuccessMs)
+            assertNull(provider.diagnostics.value.speedAgeMs)
+        } finally {scope.cancel()}
+    }
 }

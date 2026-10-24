@@ -97,3 +97,15 @@ python3 scripts/inspect-pleos-device.py --serial emulator-5554 \
 ```
 
 `identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Console의 **AVD Enabled** 선택기도 확인하세요. 공개 UI가 호출하는 `PUT /vehicle/hvac/mode?mode=subscribe_hvac_base` 역시 현재 runner에서는 503이었습니다. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·배포 기본 메모리 설정으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.
+
+## 정차 중 속도 만료 진단
+
+```bash
+adb logcat -s CabinVehicle
+```
+
+`speedAgeMs`는 VHAL 속도 이벤트 timestamp의 나이입니다. `lastSpeedCallbackElapsedMs`와 `lastPollSuccessElapsedMs`는 각각 마지막 속도 onChangeEvent 수신 및 필수 속성 poll 성공 시각(부팅 후 경과 ms)입니다. `gearAgeMs`는 기어 이벤트 나이, `gearReadAgeMs`는 마지막 유효 기어 재조회 나이입니다. Log.d는 최대 초당 한 번 기록하며, 미수신은 null입니다. 앱의 차량 상태 창에서도 “속도 신호 나이”를 확인할 수 있습니다.
+
+P/0 정차 중 콜백·poll 시각과 `speedAgeMs`를 함께 비교하세요. poll이 계속 성공하는데 속도 나이만 3000ms를 넘고 잠긴다면, VHAL의 정지 값 timestamp 갱신 방식과 연관됐는지 확인할 근거가 됩니다. 로그만으로 원인을 확정하지 않습니다.
+
+**대안 검토만:** 구독 상태가 확인되고 poll이 STATUS_AVAILABLE이며 유효한 P/0일 때 수신 시각을 인정하는 설계를 검토할 수 있습니다. 다만 살아 있는 구독을 어떻게 입증할지, 캐시된 poll 값·차량 버스 단절·권한 상실을 어떻게 구분할지 OEM 보장과 별도 안전 시험이 필요합니다. 이번 수정은 이를 적용하지 않았으며 기존 속도 timestamp 기준 3초 만료·P/0 1.5초 확인을 유지합니다.

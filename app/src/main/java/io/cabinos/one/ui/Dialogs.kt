@@ -58,6 +58,7 @@ import io.cabinos.core.*
 @Composable fun SimulatorDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onLocation:()->Unit,onVehiclePermissions:()->Unit={}) {
     val selected by vm.scenario.collectAsStateWithLifecycle()
     val vehicleStatus by vm.vehicleStatus.collectAsStateWithLifecycle()
+    val signalDiagnostics by vm.signalDiagnostics.collectAsStateWithLifecycle()
     val pleosState by vm.pleosState.collectAsStateWithLifecycle()
     val energyState by vm.pleosEnergy.collectAsStateWithLifecycle()
     val running by vm.demoRunning.collectAsStateWithLifecycle()
@@ -82,6 +83,7 @@ import io.cabinos.core.*
                 }
                 }
                 if(selected=="실차 연결") {
+                    Text("속도 신호 나이: ${signalDiagnostics.speedAgeMs?.let { "$it ms" } ?: "미수신"}",fontSize=12.sp,color=Muted)
                     if(!vm.automotive) ActionButton("데모로 돌아가기",{vm.selectScenario("충전")},Modifier.fillMaxWidth(),Amber)
                     Text(energyState.message + (energyState.percent?.let { " · $it%" } ?: ""),fontSize=12.sp,color=Muted)
                     Text(pleosState.message,fontSize=12.sp,color=if(pleosState.brakePressed!=null)Mint else Amber)

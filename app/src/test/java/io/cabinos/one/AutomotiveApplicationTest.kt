@@ -71,4 +71,10 @@ class AutomotiveApplicationTest {
         compose.onNodeWithText(vm.vehicleStatus.value).assertIsDisplayed()
         compose.onNodeWithText("차량 읽기 권한 허용").assertIsDisplayed().assertHeightIsAtLeast(48.dp)
     }
+    @Test fun vehicleDiagnosticsDisplaysSpeedSignalAge() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
+        compose.onNodeWithText("차량 상태").performClick()
+        compose.onNodeWithText("속도 신호 나이",substring=true).assertIsDisplayed()
+    }
 }

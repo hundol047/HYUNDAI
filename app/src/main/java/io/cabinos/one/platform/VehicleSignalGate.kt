@@ -6,6 +6,9 @@ import kotlin.math.roundToInt
 
 internal enum class EnergyProperty { LEVEL_WH, CAPACITY_WH, CHARGE_STATE, REMAINING_SECONDS }
 
+data class VehicleSignalDiagnostics(val speedAgeMs: Long? = null, val gearAgeMs: Long? = null,
+    val gearReadAgeMs: Long? = null, val lastSpeedCallbackMs: Long? = null, val lastPollSuccessMs: Long? = null)
+
 /** Read-only AAOS signal validation. All calls belong to one dispatcher.
  * Speed is CONTINUOUS; gear is ON_CHANGE and is re-read to confirm its current value.
  * Vehicle timestamps are elapsed-realtime nanoseconds, never wall-clock milliseconds.
@@ -72,6 +75,11 @@ internal class VehicleSignalGate(
     }
     private fun energyValue(property: EnergyProperty, now: Long): Double? = energy[property]
         ?.takeIf { now - it.confirmedNs in 0..3_000_000_000L }?.value
+    fun diagnostics(): VehicleSignalDiagnostics {
+        val now=elapsedNs()
+        fun age(value:Long)=value.takeIf { it>0 && it<=now }?.let { (now-it)/1_000_000 }
+        return VehicleSignalDiagnostics(age(speedNs),age(gearNs),age(gearReadNs))
+    }
     fun sample(): VehicleSample {
         val now = elapsedNs()
         val valid = ready && speed != null && gear != null && gear != Gear.UNKNOWN &&
