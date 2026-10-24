@@ -1,0 +1,34 @@
+{
+  "version": "0.11.0",
+  "versionCode": 17,
+  "officialSdkIncluded": true,
+  "sdk": {
+    "Vehicle": "2.3.2",
+    "NaviHelper": "3.0.5"
+  },
+  "apkSha256": "56d94d7433944c1cb566cc810e80969c1b863c1bfebcfbc13bf91710f991dabb",
+  "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
+  "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
+  "buildResult": "SUCCESS",
+  "tests": {
+    "core": {
+      "total": 129,
+      "failures": 0
+    },
+    "android": {
+      "total": 101,
+      "failures": 0
+    }
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 4
+  },
+  "pleosEmulator": {
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": null
+  },
+  "submissionReady": false
+}

@@ -19,9 +19,23 @@ import time
 def evaluate(events):
     real = [e for e in events if e.get("event") == "vehicle_read_state" and e.get("source") == "VEHICLE"]
     connected = [e for e in real if e.get("connected") is True]
-    brake = [e for e in real if e.get("pleosSdkIncluded") is True and
-             type(e.get("brakePressed")) is bool and type(e.get("sdkReadAtMs")) is int and
-             0 <= e.get("atMs", 0) - e["sdkReadAtMs"] <= 4000]
+    energy = [e for e in real if e.get("pleosSdkIncluded") is True and
+              type(e.get("sdkBatteryPercent")) is int and 0 <= e["sdkBatteryPercent"] <= 100 and
+              type(e.get("sdkBatteryReadAtMs")) is int and
+              0 <= e.get("atMs", 0) - e["sdkBatteryReadAtMs"] <= 3000]
+    charge = [e for e in real if type(e.get("sdkChargeSwitch")) is bool and
+              type(e.get("sdkChargeReadAtMs")) is int and
+              0 <= e.get("atMs", 0) - e["sdkChargeReadAtMs"] <= 3000]
+    candidate = None
+    debounce_ok = True
+    for e in real:
+        eligible = e.get("connected") is True and e.get("gear") == "PARK" and e.get("speedKph") == 0
+        if not eligible:
+            candidate = None
+        elif candidate is None:
+            candidate = e.get("atMs", 0)
+        if e.get("parkedAllowed") is True and (candidate is None or e.get("atMs", 0)-candidate < 1500):
+            debounce_ok = False
     unsafe = [e for e in real if e.get("parkedAllowed") is True and
               (e.get("connected") is not True or e.get("gear") != "PARK" or e.get("speedKph") != 0)]
     return {
@@ -31,8 +45,12 @@ def evaluate(events):
         "driveAtZeroLocked": any(e.get("gear") == "DRIVE" and e.get("speedKph") == 0 and e.get("parkedAllowed") is False for e in connected),
         "movingLocked": any(e.get("speedKph", 0) > 0 and e.get("parkedAllowed") is False for e in connected),
         "unknownLocked": any(e.get("connected") is False and e.get("parkedAllowed") is False for e in real),
-        "officialSdkReadObserved": bool(brake),
-        "brakeBothStatesObserved": {e["brakePressed"] for e in brake} == {False, True},
+        "officialSdkReadObserved": bool(energy),
+        "sdkSocChanged": len({e["sdkBatteryPercent"] for e in energy}) >= 2,
+        "sdkChargeStateChanged": {e["sdkChargeSwitch"] for e in charge} == {False, True},
+        "sdkSocUsedInPlan": any(e.get("sdkSocUsed") is True and e.get("planSource") == "Pleos SOC 목표 도달"
+                                and e.get("availableSeconds") == 0 for e in energy),
+        "parkingDebounceObserved": debounce_ok and any(e.get("parkedAllowed") is True for e in real),
         "noUnsafeParkingObserved": not unsafe,
     }
 
@@ -83,7 +101,7 @@ def main():
     if own_forward:
         run("forward", "tcp:8088", "tcp:8088")
     print("Use the official Virtual Console at http://localhost:8088 during recording.", flush=True)
-    print("Sequence: P + 0 speed; brake on/off; D + 0; D + moving; P + 0; background/resume.", flush=True)
+    print("Sequence: P + 0; D + 0; D + moving; P + 0; set SOC target 80%; SOC 68 -> 80 and charge switch ON/OFF; background/resume.", flush=True)
     log_process = None
     app_pid = None
     started = dt.datetime.now(dt.timezone.utc).isoformat()

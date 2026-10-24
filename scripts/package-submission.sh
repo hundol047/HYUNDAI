@@ -4,37 +4,24 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/env.sh
-PLEOS_FLAGS=()
-if [ "${CABINOS_PLEOS_SDK:-false}" = "true" ]; then
-    PLEOS_FLAGS=(-PpleosSdk=true)
-else
-    printf 'Building AAOS/base profile: official Pleos SDK is NOT included. Use CABINOS_PLEOS_SDK=true for the SDK submission candidate.\n'
+if [ "${CABINOS_PLEOS_SDK:-true}" != "true" ]; then
+    printf 'Submission packaging requires the official SDK profile; use Gradle directly for base development builds.\n' >&2
+    exit 1
+fi
+PLEOS_FLAGS=(-PpleosSdk=true)
+SIGNING_DIR="${CABINOS_SIGNING_DIR:?Set CABINOS_SIGNING_DIR to the existing team key directory outside the repository}"
+SIGNING_DIR="$(realpath "$SIGNING_DIR")"
+case "$SIGNING_DIR/" in "$PWD/"*) printf 'Signing material must stay outside the repository.\n' >&2; exit 1;; esac
+KEYSTORE="$SIGNING_DIR/release.p12"
+PASSWORD_FILE="$SIGNING_DIR/password"
+if [ ! -f "$KEYSTORE" ] || [ ! -f "$PASSWORD_FILE" ]; then
+    printf 'Restore the existing team release.p12 and password files; do not silently rotate the signing key.\n' >&2
+    exit 1
 fi
 # Keep release compilation and lint analysis in separate invocations (K2/UAST stability).
 ./gradlew :core:test :app:testDebugUnitTest --console=plain "${PLEOS_FLAGS[@]}"
 ./gradlew :app:assembleRelease --console=plain "${PLEOS_FLAGS[@]}"
 ./gradlew :app:lintDebug --console=plain "${PLEOS_FLAGS[@]}"
-SIGNING_DIR="${CABINOS_SIGNING_DIR:-/workspace/.signing/cabinos-one}"
-mkdir -p "$SIGNING_DIR"
-chmod 700 "$SIGNING_DIR"
-KEYSTORE="$SIGNING_DIR/release.p12"
-PASSWORD_FILE="$SIGNING_DIR/password"
-if [ ! -f "$KEYSTORE" ] && [ ! -f "$PASSWORD_FILE" ]; then
-    python3 - "$PASSWORD_FILE" <<'PY'
-import os, secrets, sys
-fd=os.open(sys.argv[1],os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
-with os.fdopen(fd,'w') as f:f.write(secrets.token_urlsafe(48))
-PY
-    keytool -genkeypair -keystore "$KEYSTORE" -storetype PKCS12 -alias cabinosone \
-        -storepass:file "$PASSWORD_FILE" -keypass:file "$PASSWORD_FILE" \
-        -keyalg RSA -keysize 3072 -validity 10000 \
-        -dname 'CN=CabinOS ONE Release, OU=FutureLabs Team, C=KR'
-    chmod 600 "$KEYSTORE"
-fi
-if [ ! -f "$KEYSTORE" ] || [ ! -f "$PASSWORD_FILE" ]; then
-    printf 'Signing directory is incomplete; restore both the existing key and password file.\n' >&2
-    exit 1
-fi
 mkdir -p apk
 APK_PATH='apk/퓨처랩스_CabinOS_ONE_release.apk'
 SIGNER="$ANDROID_HOME/build-tools/35.0.0/apksigner"
