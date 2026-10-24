@@ -75,4 +75,34 @@ class ContextEngineTest {
         send(charging=true,remaining=300);assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
         send(Gear.DRIVE,60.0);assertTrue(engine.state.value.echoRoadActive);assertFalse(engine.state.value.cabinActive)
     }
+    @Test fun drivingClearsPreviousParkingDeadlines() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(70);now+=1600;real(70);engine.setChargeTarget(80);engine.setWaitingMinutes(30)
+        real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+        real(80,Gear.DRIVE,30.0);assertNull(engine.state.value.schedule.departureAtMs)
+        real(60);now+=1600;real(60);engine.setWaitingMinutes(30)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        assertNotEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
+        assertEquals(80,engine.state.value.chargeTargetPercent)
+    }
+    @Test fun restoreRejectsPastDeparture() {
+        engine.restore(Preferences(),null,emptyList(),now-1)
+        assertNull(engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun trafficStopAndUnknownPreserveParkingPlan() {
+        park();engine.setWaitingMinutes(30);val deadline=engine.state.value.schedule.departureAtMs
+        send(Gear.DRIVE,0.0);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        send(connected=false);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun explicitWaitingPlanReplacesExpiredSocAndRouteDeadlines() {
+        fun real() = engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real();now+=1600;real();engine.setChargeTarget(80);engine.setArrivalInMinutes(10)
+        engine.updateNavigationEstimate(900,1000,now)
+        repeat(301) { now+=1000;real() }
+        assertTrue(engine.setWaitingMinutes(30));assertTrue(engine.state.value.schedule.availableSeconds>0)
+    }
+    @Test fun drivingDiscardsPastArrivalTarget() {
+        park();engine.setArrivalInMinutes(1);now+=61000;send(Gear.DRIVE,20.0)
+        assertNull(engine.state.value.arrivalTargetMs)
+    }
 }

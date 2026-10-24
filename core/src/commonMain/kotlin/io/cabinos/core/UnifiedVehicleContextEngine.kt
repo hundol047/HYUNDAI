@@ -32,6 +32,7 @@ class UnifiedVehicleContextEngine(
     private var lastTickMs = clock()
     private var eventId = 0L
     private var departureAnnounced = false
+    private var driving = false
 
     private var navigationLock=false
     fun setNavigationLock(locked:Boolean) {
@@ -87,6 +88,14 @@ class UnifiedVehicleContextEngine(
             parkCandidateAt = null // Wake/resume and clock jumps require fresh parking confirmation.
         }
         lastTickMs = now
+        if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
+        val vehicleContext = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
+        if (vehicleContext == VehicleContext.DRIVING && !driving) {
+            socDeadlineMs=null; manualDepartureAtMs=null; chargeDeadlineMs=null; lastChargeEstimate=null
+            routeDeadlineMs=null; routeReadAtMs=null; departureAnnounced=false; scheduleLabel="시간 미설정"
+            if (old.arrivalTargetMs?.let { it < now } == true) mutable.value=state.value.copy(arrivalTargetMs=null)
+        }
+        driving = vehicleContext == VehicleContext.DRIVING
         val routeFresh = routeReadAtMs?.let { now - it in 0..10_000 } == true
         val constraints = listOfNotNull(
             manualDepartureAtMs?.let { it to "사용자 설정" },
@@ -98,7 +107,7 @@ class UnifiedVehicleContextEngine(
             ?: run { departureAtMs=null }
         val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel)
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
-        val physical = if(navigationLock)VehicleContext.DRIVING else decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
+        val physical = if(navigationLock)VehicleContext.DRIVING else vehicleContext
         val allowed = physical == VehicleContext.PARKED || physical == VehicleContext.CHARGING
         var session = old.session
         if (!allowed && session?.status == SessionStatus.RUNNING) {
@@ -146,7 +155,10 @@ class UnifiedVehicleContextEngine(
 
     fun setWaitingMinutes(minutes: Int): Boolean {
         if (!parkedNow()) return reject()
-        manualDepartureAtMs = clock() + minutes.coerceIn(1, 240) * 60_000L
+        val now=clock()
+        if (socDeadlineMs?.let { it < now } == true) socDeadlineMs=null
+        if (routeDeadlineMs?.let { it < now } == true) { routeDeadlineMs=null;routeReadAtMs=null }
+        manualDepartureAtMs = now + minutes.coerceIn(1, 240) * 60_000L
         departureAtMs = manualDepartureAtMs
         scheduleLabel = "사용자 설정"; departureAnnounced = false
         event("DepartureTimeChanged", "출발까지 ${minutes.coerceIn(1,240)}분으로 설정했습니다."); tick(); return true
@@ -231,7 +243,9 @@ class UnifiedVehicleContextEngine(
         mutable.value = state.value.copy(preferences = preferences, session = session?.let {
             if (it.status == SessionStatus.RUNNING) it.copy(status = SessionStatus.PAUSED) else it
         }, history = history.take(100))
-        departureAtMs = departure; manualDepartureAtMs = departure; scheduleLabel = "저장된 출발 계획"; tick()
+        val restored=departure?.takeIf { it >= clock() }
+        departureAtMs = restored; manualDepartureAtMs = restored
+        scheduleLabel = if(restored!=null) "저장된 출발 계획" else "시간 미설정"; tick()
     }
     fun setConnectivity(network: Boolean = state.value.networkAvailable, location: Boolean = state.value.locationAvailable) {
         mutable.value = state.value.copy(networkAvailable = network, locationAvailable = location)
