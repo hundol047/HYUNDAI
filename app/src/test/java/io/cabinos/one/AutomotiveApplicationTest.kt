@@ -82,18 +82,50 @@ class AutomotiveApplicationTest {
         compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
         val initial=shadowOf(compose.activity).lastRequestedPermission!!
         compose.runOnIdle {
-            compose.activity.onRequestPermissionsResult(initial.requestCode,initial.requestedPermissions,
-                IntArray(initial.requestedPermissions.size) { PackageManager.PERMISSION_DENIED })
+            assertTrue(compose.activity.activityResultRegistry.dispatchResult(initial.requestCode,
+                initial.requestedPermissions.associateWith { false }))
+            shadowOf(compose.activity.packageManager).setShouldShowRequestPermissionRationale("android.car.permission.CAR_SPEED",true)
             shadowOf(compose.activity.application).grantPermissions("android.car.permission.CAR_ENERGY")
         }
         compose.onNodeWithText("차량 읽기 권한 허용").performClick()
         val request=shadowOf(compose.activity).lastRequestedPermission!!
         val invalidations=vm.state.value.events.count { it.name=="TelemetryInvalidated" }
         compose.runOnIdle {
-            compose.activity.onRequestPermissionsResult(request.requestCode,request.requestedPermissions,
-                request.requestedPermissions.map { if(it.endsWith("CAR_ENERGY")) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED }.toIntArray())
+            assertTrue(compose.activity.activityResultRegistry.dispatchResult(request.requestCode,
+                request.requestedPermissions.associateWith { it.endsWith("CAR_ENERGY") }))
         }
         compose.runOnIdle { assertEquals(invalidations,vm.state.value.events.count { it.name=="TelemetryInvalidated" }) }
+    }
+    @Test fun grantedPermissionAfterRecreationReconnectsAndKeepsSafetyLocked() {
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();shadowOf(compose.activity).lastRequestedPermission!=null }
+        val request=shadowOf(compose.activity).lastRequestedPermission!!
+        compose.activityRule.scenario.recreate()
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
+        val before=vm.state.value.events.count { it.name=="TelemetryInvalidated" }
+        compose.runOnIdle {
+            shadowOf(compose.activity.application).grantPermissions("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY")
+            assertTrue(compose.activity.activityResultRegistry.dispatchResult(request.requestCode,
+                mapOf("android.car.permission.CAR_SPEED" to true,"android.car.permission.CAR_ENERGY" to true)))
+        }
+        compose.runOnIdle { assertEquals(before+1,vm.state.value.events.count { it.name=="TelemetryInvalidated" }) }
+        assertFalse(vm.state.value.parkedAllowed)
+    }
+    @Test fun permanentlyDeniedPermissionButtonOpensAppSettings() {
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();shadowOf(compose.activity).lastRequestedPermission!=null }
+        val request=shadowOf(compose.activity).lastRequestedPermission!!
+        compose.runOnIdle {
+            shadowOf(compose.activity.packageManager).setShouldShowRequestPermissionRationale("android.car.permission.CAR_SPEED",false)
+            assertTrue(compose.activity.activityResultRegistry.dispatchResult(request.requestCode,
+                mapOf("android.car.permission.CAR_SPEED" to false,"android.car.permission.CAR_ENERGY" to false)))
+        }
+        compose.runOnIdle { while(shadowOf(compose.activity).nextStartedActivity!=null) {} }
+        compose.onNodeWithText("차량 읽기 권한 허용").performClick()
+        compose.runOnIdle {
+            val intent=shadowOf(compose.activity).nextStartedActivity
+            assertEquals(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,intent?.action)
+            assertEquals("package:io.cabinos.one",intent?.dataString)
+        }
     }
     @Test fun deniedVehiclePermissionDoesNotPromptAgainOnForegroundReturn() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
@@ -102,8 +134,9 @@ class AutomotiveApplicationTest {
         assertTrue(io.cabinos.one.platform.RuntimePreferences(compose.activity).vehiclePermissionRequested)
         val invalidations=vm.state.value.events.count { it.name=="TelemetryInvalidated" }
         compose.runOnIdle {
-            compose.activity.onRequestPermissionsResult(request.requestCode,request.requestedPermissions,
-                IntArray(request.requestedPermissions.size) { PackageManager.PERMISSION_DENIED })
+            assertTrue(compose.activity.activityResultRegistry.dispatchResult(request.requestCode,
+                request.requestedPermissions.associateWith { false }))
+            shadowOf(compose.activity.packageManager).setShouldShowRequestPermissionRationale("android.car.permission.CAR_SPEED",true)
         }
         compose.runOnIdle { assertEquals(invalidations,vm.state.value.events.count { it.name=="TelemetryInvalidated" }) }
         compose.runOnIdle {

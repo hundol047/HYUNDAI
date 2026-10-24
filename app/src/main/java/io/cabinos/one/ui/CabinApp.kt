@@ -66,14 +66,24 @@ import java.util.*
     var permissionAsked by rememberSaveable { mutableStateOf(permissionPreferences.vehiclePermissionRequested) }
     var permissionInFlight by rememberSaveable { mutableStateOf(false) }
     var speedPermissionMissing by remember { mutableStateOf(context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED) }
-    var permissionsBeforeRequest by remember { mutableStateOf<Map<String,Boolean>>(emptyMap()) }
+    var permissionsBeforeRequest by rememberSaveable { mutableStateOf<Map<String,Boolean>>(emptyMap()) }
     val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         permissionInFlight=false
         speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
         if(io.cabinos.one.platform.vehiclePermissionChanged(permissionsBeforeRequest,result)) vm.selectScenario("실차 연결")
     }
-    val requestVehiclePermissions:()->Unit = {
-        if (!permissionInFlight) {
+    val requestVehiclePermissions:(Boolean)->Unit = { manual ->
+        val activity=context as? android.app.Activity
+        val openSettings=manual && permissionAsked && speedPermissionMissing && activity!=null &&
+            !androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale(activity,"android.car.permission.CAR_SPEED")
+        if (!permissionInFlight && openSettings) {
+            try {
+                context.startActivity(android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    android.net.Uri.parse("package:${context.packageName}")))
+            } catch (_: android.content.ActivityNotFoundException) {
+                android.widget.Toast.makeText(context,"시스템 설정에서 CabinOS ONE의 차량 읽기 권한을 허용해 주세요.",android.widget.Toast.LENGTH_LONG).show()
+            }
+        } else if (!permissionInFlight) {
             permissionPreferences.vehiclePermissionRequested=true
             permissionAsked=true;permissionInFlight=true
             val requested=arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY")
@@ -83,7 +93,7 @@ import java.util.*
     }
     val checkVehiclePermissions:()->Unit = {
         speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
-        if(vm.automotive && speedPermissionMissing && !permissionAsked) requestVehiclePermissions()
+        if(vm.automotive && speedPermissionMissing && !permissionAsked) requestVehiclePermissions(false)
     }
     val currentPermissionCheck by rememberUpdatedState(checkVehiclePermissions)
     DisposableEffect(lifecycle,vm) {
@@ -138,7 +148,7 @@ import java.util.*
                         Box(Modifier.weight(1f)) {
                             if(vm.automotive && (navigationOpen || route=="nearby")) VehicleNavigationPanel(s,vm)
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
-                            else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,requestVehiclePermissions)
+                            else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,{requestVehiclePermissions(true)})
                             else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true})
                             else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
                         }
@@ -156,7 +166,7 @@ import java.util.*
             if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED || !s.parkedAllowed) vm.listen()
             else microphone.launch(Manifest.permission.RECORD_AUDIO)
         })
-        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions=requestVehiclePermissions)
+        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions={requestVehiclePermissions(true)})
     }
 }
 @Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit) {
