@@ -1,0 +1,34 @@
+package io.cabinos.one
+
+import androidx.activity.compose.setContent
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.unit.dp
+import io.cabinos.one.ui.*
+import org.junit.Assert.*
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk=[29],application=CabinApplication::class,qualifiers="w1280dp-h800dp-land-mdpi")
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+class ParkedUxTest {
+    @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Test fun focusPresetsAreAccessibleAndDisabledOutsideParking() {
+        var added=""
+        fun show(parked:Boolean) { compose.runOnIdle { compose.activity.setContent { CabinTheme { FocusTaskPresets(parked) { added=it } } } } }
+        show(true)
+        compose.onNodeWithText("메일 확인").assertHeightIsAtLeast(48.dp).performClick()
+        assertEquals("메일 확인",added)
+        show(false);compose.onNodeWithText("메일 확인").assertIsNotEnabled()
+    }
+    @Test fun arrivalWithoutRouteExplainsDisabledControls() {
+        compose.runOnIdle { compose.activity.setContent { CabinTheme { ArrivalClockControls(10000,false) {} } } }
+        compose.onNodeWithText("차량 내비에서 목적지를 먼저 설정하세요").assertIsDisplayed()
+        compose.onNodeWithText("도착 시각 적용").assertIsNotEnabled().assertHeightIsAtLeast(48.dp)
+    }
+}

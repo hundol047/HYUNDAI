@@ -60,10 +60,11 @@ import java.util.*
         SurfacePanel(Modifier.weight(.42f).height(280.dp)) {
             if(session.kind==SessionKind.FOCUS) {
                 Row {SectionLabel("나의 할 일",color=Blue);Spacer(Modifier.weight(1f));Text("${tasks.count{it.done}} / ${tasks.size}",color=Muted,fontSize=11.sp)}
+                FocusTaskPresets(s.parkedAllowed,vm::addTask)
                 Spacer(Modifier.height(10.dp))
                 Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
-                    OutlinedTextField(value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
-                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
+                    OutlinedTextField(enabled=s.parkedAllowed,value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
+                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=s.parkedAllowed&&taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                     if(tasks.isEmpty()) Text("작은 목표 하나를 적어보세요.\n완료한 일은 다음에도 기억해요.",fontSize=12.sp,color=Muted,modifier=Modifier.padding(top=20.dp))
@@ -152,4 +153,12 @@ import java.util.*
 }
 @Composable private fun SettingStepper(label:String,value:Int,options:List<Int>,onSelect:(Int)->Unit) {
     Column {Text(label,color=White,fontSize=13.sp);Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){ options.forEach { n ->FilterChip(selected=value==n,onClick={onSelect(n)},label={Text("${n}분",fontSize=12.sp)}) } };Spacer(Modifier.height(12.dp))}
+}
+
+@Composable internal fun FocusTaskPresets(parked:Boolean,onAdd:(String)->Unit) {
+    Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+        listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
+            OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
+        }
+    }
 }
