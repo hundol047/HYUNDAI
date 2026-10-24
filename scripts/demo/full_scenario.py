@@ -30,12 +30,18 @@ def verdict(step, rows):
         return False
     def parked(r): return r.get('connected') and r.get('gear')=='PARK' and r.get('speedKph')==0
     if step in ('park','repark'):
-        # Missing/interrupted evidence cannot prove a continuous stationary interval.
-        return all(parked(r) for r in rows) and rows[-1].get('parkedAllowed') is True and \
-            rows[-1]['atMs']-rows[0]['atMs']>=3000 and all(0<=b['atMs']-a['atMs']<=1500 for a,b in zip(rows,rows[1:]))
+        tail=[]
+        for row in rows:
+            if parked(row): tail.append(row)
+            else: tail=[]
+        first_unlock=next((r for r in tail if r.get('parkedAllowed')),None)
+        return bool(tail and first_unlock and not tail[0].get('parkedAllowed') and
+            first_unlock['atMs']-tail[0]['atMs']>=1500 and tail[-1].get('parkedAllowed') and
+            tail[-1]['atMs']-tail[0]['atMs']>=3000 and
+            all(0<=b['atMs']-a['atMs']<=1500 for a,b in zip(tail,tail[1:])))
     if step=='focus': return any(r.get('sessionKind')=='FOCUS' and r.get('sessionDurationSeconds')==900 and r.get('sessionStatus')=='RUNNING' and r.get('parkedAllowed') for r in rows)
-    if step=='traffic': return any(r.get('gear')=='DRIVE' and r.get('speedKph')==0 and r.get('context')=='STOPPED_IN_TRAFFIC' and r.get('sessionStatus')=='PAUSED' and not r.get('parkedAllowed') for r in rows)
-    if step=='drive': return any(r.get('gear')=='DRIVE' and r.get('speedKph',0)>0 and r.get('context')=='DRIVING' and not r.get('parkedAllowed') and 'departureAtMs' in r and r['departureAtMs'] is None for r in rows)
+    if step=='traffic': return any(r.get('connected') and r.get('gear')=='DRIVE' and r.get('speedKph')==0 and r.get('context')=='STOPPED_IN_TRAFFIC' and r.get('sessionStatus')=='PAUSED' and not r.get('parkedAllowed') for r in rows)
+    if step=='drive': return any(r.get('connected') and r.get('gear')=='DRIVE' and r.get('speedKph',0)>0 and r.get('context')=='DRIVING' and not r.get('parkedAllowed') and 'departureAtMs' in r and r['departureAtMs'] is None for r in rows)
     if step=='soc':
         for i,a in enumerate(rows):
             target=a.get('chargeTargetPercent')
@@ -44,6 +50,10 @@ def verdict(step, rows):
         return False
     if step=='arrival': return any(r.get('arrivalTargetMs') and r.get('navigationReadAtMs') and 0<=r['atMs']-r['navigationReadAtMs']<=3000 and 'NaviHelper' in r.get('planSource','') and r.get('departureAtMs') is not None for r in rows)
     return False
+
+
+def recording_ok(code,duration,last_step,size):
+    return code==0 and size>0 and 60<=duration<=121 and duration>=last_step
 
 
 def main():
@@ -65,22 +75,27 @@ def main():
     log=(out/'vehicle.log').open('w');capture=subprocess.Popen(adb+['logcat','-v','threadtime','-s','CabinVehicle:D','*:S'],stdout=log)
     remote='/sdcard/cabinos-full-scenario.mp4'
     recording=subprocess.Popen(adb+['shell','screenrecord','--time-limit','120',remote])
-    started=time.monotonic();results={};offset=0
+    started=time.monotonic();results={};offset=0;last_step=0;video_ok=False
     try:
         run('shell','am','force-stop','io.cabinos.one');run('shell','am','start','-n','io.cabinos.one/.MainActivity')
         print('Open http://localhost:8088. Console endpoints are unconfirmed: perform all vehicle changes manually. Recording ends at 120 seconds.')
         for step,instruction in STEPS.items():
             input(f'{step}: {instruction}. Press Enter AFTER the action; evidence determines the verdict. ')
             text=(out/'vehicle.log').read_text();rows=events(text[offset:]);offset=len(text)
+            last_step=time.monotonic()-started
             ok=bool(verdict(step,rows)) and time.monotonic()-started<=120 and recording.poll() is None
             results[step]=dict(passed=ok,eventCount=len(rows),reason='log evidence matched' if ok else 'missing/mismatched evidence or recording expired')
             (out/f'{step}.json').write_text(json.dumps(rows,indent=2));print(results[step])
     finally:
         # Complete the single recording; never concatenate screenshots or clips.
         recording.wait();capture.terminate();capture.wait();log.close()
-        run('pull',remote,str(out/'continuous.mp4'))
+        try:
+            run('pull',remote,str(out/'continuous.mp4'))
+            duration=float(subprocess.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','default=noprint_wrappers=1:nokey=1',str(out/'continuous.mp4')],text=True).strip())
+            video_ok=recording_ok(recording.returncode,duration,last_step,(out/'continuous.mp4').stat().st_size)
+        except (OSError,ValueError,subprocess.CalledProcessError): video_ok=False
         for step in STEPS: results.setdefault(step,dict(passed=False,reason='step not executed'))
-        (out/'verdict.json').write_text(json.dumps(dict(steps=results,allPassed=all(x['passed'] for x in results.values()),apkHash=digest),indent=2))
-    return 0 if all(x['passed'] for x in results.values()) else 1
+        (out/'verdict.json').write_text(json.dumps(dict(steps=results,allPassed=video_ok and all(x['passed'] for x in results.values()),recordingVerified=video_ok,apkHash=digest),indent=2))
+    return 0 if video_ok and all(x['passed'] for x in results.values()) else 1
 
 if __name__=='__main__': raise SystemExit(main())
