@@ -115,4 +115,5 @@ jobs:
           retention-days: 7
       - name: Stop emulator
         if: always()
-        run: "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 emu kill || true
+        run: |
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 emu kill || true
