@@ -8,6 +8,8 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertHeightIsAtLeast
+import androidx.compose.ui.unit.dp
 import io.cabinos.core.*
 import io.cabinos.one.ui.CabinViewModel
 import org.junit.Assert.*
@@ -30,6 +32,7 @@ class AutomotiveApplicationTest {
     private val automotiveFeature=object:ExternalResource(){
         override fun before(){
             val context=ApplicationProvider.getApplicationContext<Context>()
+            shadowOf(context as android.app.Application).denyPermissions("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY")
             shadowOf(context.packageManager).setSystemFeature(PackageManager.FEATURE_AUTOMOTIVE,true)
             // This JVM has no vehicle services. Robolectric's default successful bind passes
             // null ComponentName/IBinder into the real SDK, which cannot represent a real bind.
@@ -59,5 +62,13 @@ class AutomotiveApplicationTest {
         compose.runOnIdle{vm.setForeground(false);vm.setForeground(true)}
         assertFalse(vm.state.value.parkedAllowed)
         assertEquals(DataSource.VEHICLE,vm.state.value.sample?.source)
+    }
+    @Test fun missingVehiclePermissionShowsCauseAndAccessibleRequestButton() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
+        assertTrue(vm.automotive);assertFalse(vm.state.value.parkedAllowed)
+        assertNotNull(shadowOf(compose.activity).lastRequestedPermission)
+        compose.onNodeWithText(vm.vehicleStatus.value).assertIsDisplayed()
+        compose.onNodeWithText("차량 읽기 권한 허용").assertIsDisplayed().assertHeightIsAtLeast(48.dp)
     }
 }

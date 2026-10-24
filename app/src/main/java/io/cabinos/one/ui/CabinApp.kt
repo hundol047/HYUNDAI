@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +33,7 @@ import java.util.*
 
 @Composable fun CabinApp(vm:CabinViewModel=hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
+    val vehicleStatus by vm.vehicleStatus.collectAsStateWithLifecycle()
     val appearance by vm.appearance.collectAsStateWithLifecycle()
     val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
     var navigationOpen by remember { mutableStateOf(false) }
@@ -59,7 +61,40 @@ import java.util.*
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
-    val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.selectScenario("실차 연결")}
+    var permissionAsked by rememberSaveable { mutableStateOf(false) }
+    var permissionInFlight by rememberSaveable { mutableStateOf(false) }
+    var speedPermissionMissing by remember { mutableStateOf(context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED) }
+    val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        permissionInFlight=false
+        speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
+        vm.selectScenario("실차 연결")
+    }
+    val requestVehiclePermissions:()->Unit = {
+        if (!permissionInFlight) {
+            permissionAsked=true;permissionInFlight=true
+            vehiclePermission.launch(arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY"))
+        }
+    }
+    val checkVehiclePermissions:()->Unit = {
+        speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
+        if(vm.automotive && speedPermissionMissing && !permissionAsked) requestVehiclePermissions()
+    }
+    val currentPermissionCheck by rememberUpdatedState(checkVehiclePermissions)
+    DisposableEffect(lifecycle,vm) {
+        val observer=LifecycleEventObserver { _,event ->
+            if(event==Lifecycle.Event.ON_START) currentPermissionCheck()
+            // The permission dialog itself must not start another automatic request.
+            if(event==Lifecycle.Event.ON_STOP && !permissionInFlight) permissionAsked=false
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+    LaunchedEffect(lifecycle,vm) {
+        if(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) currentPermissionCheck()
+    }
+    LaunchedEffect(vehicleStatus) {
+        speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
+    }
     val navigationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.liveNavigation.locate()}
     val requestNavigationLocation:()->Unit = {
         if(vm.state.value.parkedAllowed) {
@@ -98,7 +133,7 @@ import java.util.*
                         Box(Modifier.weight(1f)) {
                             if(vm.automotive && (navigationOpen || route=="nearby")) VehicleNavigationPanel(s,vm)
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
-                            else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s)
+                            else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,requestVehiclePermissions)
                             else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true})
                             else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
                         }
@@ -116,9 +151,7 @@ import java.util.*
             if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED || !s.parkedAllowed) vm.listen()
             else microphone.launch(Manifest.permission.RECORD_AUDIO)
         })
-        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions={
-            vehiclePermission.launch(arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY"))
-        })
+        if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions=requestVehiclePermissions)
     }
 }
 @Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit) {
@@ -174,12 +207,14 @@ import java.util.*
     }
 }
 
-@Composable private fun VehicleParkedNotice(s:AppState) {
+@Composable private fun VehicleParkedNotice(s:AppState,status:String,permissionMissing:Boolean,onPermission:()->Unit) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Text("안전한 정차를 기다립니다",color=White,fontSize=26.sp)
         SurfacePanel(Modifier.fillMaxWidth(),accent=Amber) {
             Text(if(s.sample?.connected==true) "P 기어와 완전한 정지를 확인해 주세요." else "차량 속도·기어 신호를 확인하고 있습니다.",color=White,fontSize=20.sp)
             Spacer(Modifier.height(12.dp))
+            Text(status,color=Amber,fontSize=14.sp)
+            if(permissionMissing) Button(onClick=onPermission,modifier=Modifier.heightIn(min=48.dp)) {Text("차량 읽기 권한 허용")}
             Text("주행 중에는 차량 기본 내비게이션을 사용하세요. CabinOS의 집중·휴식·설정은 안전한 주차 확인 후 열립니다.",color=Muted,fontSize=14.sp)
         }
     }

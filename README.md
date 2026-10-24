@@ -13,9 +13,11 @@
 
 ```bash
 sha256sum -c apk/SHA256SUMS
-adb install -r "apk/퓨처랩스_CabinOS_ONE_release.apk"
+adb install -r -g "apk/퓨처랩스_CabinOS_ONE_release.apk"
 adb shell am start -n io.cabinos.one/.MainActivity
 ```
+
+`-g`는 에뮬레이터 시험 설치 시 런타임 권한을 부여합니다. `-g` 없이 설치하면 앱 안에서 차량 읽기 권한을 허용해야 합니다. OEM 권한 정책은 별도로 적용됩니다.
 
 - **차량:** 차량 읽기 권한을 허용하고 유효한 속도 0 + P를 1.5초 확인해야 열립니다. D/0·신호 소실 시 잠급니다. 앱 내부 데모 조작판은 숨깁니다.
 - **충전 계획:** 실제 충전 잔여 시간 또는 수동 출발 시간을 설정하세요. SOC 계획 목표에 도달하면 활동을 종료합니다. 차량의 충전 목표 자체는 변경하지 않습니다.
