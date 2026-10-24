@@ -62,8 +62,9 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             ActionButton(if(audio==name) "$name 중지" else name,{vm.toggleAudio(name)},Modifier.fillMaxWidth(),enabled=session.status==SessionStatus.RUNNING)
         }
         if(session.kind==SessionKind.FOCUS) {
-            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),label={Text("이번 시간에 할 일")},singleLine=true)
-            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=task.isNotBlank())
+            FocusTaskPresets(s.parkedAllowed,vm::addTask)
+            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed,label={Text("이번 시간에 할 일")},singleLine=true)
+            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=s.parkedAllowed&&task.isNotBlank())
             tasks.forEach { item ->
                 Row(Modifier.fillMaxWidth()) {
                     Checkbox(item.done,{vm.toggleTask(item)})

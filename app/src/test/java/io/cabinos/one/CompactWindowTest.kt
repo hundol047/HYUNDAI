@@ -45,6 +45,7 @@ class CompactWindowTest {
         compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed();capture("portrait-parked")
         compose.onNodeWithText("집중 시작").performScrollTo().performClick()
         compose.onNodeWithText("집중 세션").performScrollTo().assertIsDisplayed();capture("portrait-focus")
+        compose.onNodeWithText("메일 확인").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("할 일 추가").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("설정").performClick()
         compose.onNodeWithText("웜 샌드").performScrollTo().performClick()
