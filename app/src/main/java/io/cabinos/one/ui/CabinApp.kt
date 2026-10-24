@@ -61,16 +61,18 @@ import java.util.*
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
-    var permissionAsked by rememberSaveable { mutableStateOf(false) }
+    val permissionPreferences=remember(context) { io.cabinos.one.platform.RuntimePreferences(context) }
+    var permissionAsked by rememberSaveable { mutableStateOf(permissionPreferences.vehiclePermissionRequested) }
     var permissionInFlight by rememberSaveable { mutableStateOf(false) }
     var speedPermissionMissing by remember { mutableStateOf(context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED) }
-    val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+    val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         permissionInFlight=false
         speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
-        vm.selectScenario("실차 연결")
+        if(result.values.any { it }) vm.selectScenario("실차 연결")
     }
     val requestVehiclePermissions:()->Unit = {
         if (!permissionInFlight) {
+            permissionPreferences.vehiclePermissionRequested=true
             permissionAsked=true;permissionInFlight=true
             vehiclePermission.launch(arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY"))
         }
@@ -83,8 +85,7 @@ import java.util.*
     DisposableEffect(lifecycle,vm) {
         val observer=LifecycleEventObserver { _,event ->
             if(event==Lifecycle.Event.ON_START) currentPermissionCheck()
-            // The permission dialog itself must not start another automatic request.
-            if(event==Lifecycle.Event.ON_STOP && !permissionInFlight) permissionAsked=false
+            // Returning to the app refreshes permission status, never repeats a denied prompt.
         }
         lifecycle.addObserver(observer)
         onDispose { lifecycle.removeObserver(observer) }

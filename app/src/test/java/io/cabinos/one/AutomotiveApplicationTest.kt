@@ -77,4 +77,27 @@ class AutomotiveApplicationTest {
         compose.onNodeWithText("차량 상태").performClick()
         compose.onNodeWithText("속도 신호 나이",substring=true).assertIsDisplayed()
     }
+    @Test fun deniedVehiclePermissionDoesNotPromptAgainOnForegroundReturn() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
+        val request=shadowOf(compose.activity).lastRequestedPermission!!
+        assertTrue(io.cabinos.one.platform.RuntimePreferences(compose.activity).vehiclePermissionRequested)
+        val invalidations=vm.state.value.events.count { it.name=="TelemetryInvalidated" }
+        compose.runOnIdle {
+            compose.activity.onRequestPermissionsResult(request.requestCode,request.requestedPermissions,
+                IntArray(request.requestedPermissions.size) { PackageManager.PERMISSION_DENIED })
+        }
+        compose.runOnIdle { assertEquals(invalidations,vm.state.value.events.count { it.name=="TelemetryInvalidated" }) }
+        compose.runOnIdle {
+            val lifecycle=compose.activity.lifecycle as androidx.lifecycle.LifecycleRegistry
+            lifecycle.handleLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_PAUSE)
+            lifecycle.handleLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_STOP)
+            lifecycle.handleLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_START)
+            lifecycle.handleLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_RESUME)
+        }
+        compose.runOnIdle { assertSame(request,shadowOf(compose.activity).lastRequestedPermission) }
+        assertFalse(vm.state.value.parkedAllowed)
+        compose.onNodeWithText("차량 읽기 권한 허용").performClick()
+        compose.runOnIdle { assertNotSame(request,shadowOf(compose.activity).lastRequestedPermission) }
+    }
 }
