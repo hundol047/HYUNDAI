@@ -51,3 +51,13 @@ Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 �
 운전석 좌우를 알려 주는 API는 확인하지 못했으므로 앞좌석 1개만 점유하면 동승자로 단정하지 않습니다.
 벨트 체결만으로 점유를 추정하지 않습니다. 미지원·null·3초 시간 초과는 숨기며 백그라운드에서 구독을 중단합니다.
 이 정보는 정차 허용 판정에 사용하지 않으며 차량 제어 API를 호출하지 않습니다.
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 휴식 전 문 확인 | Door.checkDoorPositionCapabilities / getCurrentDoorPosition | pleos.car.permission.CAR_DOORS | [Door](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/door/get-current-door-position) | 아니요 |
+| 휴식 전 창문 확인 | Window.checkWindowPositionCapabilities / getCurrentWindowPosition | pleos.car.permission.CAR_WINDOWS | [Window](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/window/get-current-window-position) | 아니요 |
+| 실내 온도·공조 상태 | HVAC.checkHvacTemperatureCurrentCapabilities / getHvacTemperatureCurrent(CELSIUS), checkHvacPowerCapabilities / getHvacPowerState | pleos.car.permission.CAR_CLIMATE | [온도](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-temperature-current), [공조](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-power-state) | 아니요 |
+
+문·창문은 0을 포함하는 capability 범위 내 위치만 사용합니다. 0 이외의 위치를 열림으로 표시하며,
+실제 기기의 영역별 값과 방향은 시연에서 확인해야 합니다. 온도는 명시적으로 섭씨로 요청합니다.
+모든 안내는 읽기 전용이며 장치 동작을 바꾸지 않습니다.

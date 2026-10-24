@@ -2,7 +2,9 @@ package io.cabinos.one.platform
 
 import android.content.Context
 import ai.pleos.playground.vehicle.Vehicle
-import ai.pleos.playground.vehicle.api.model.area.SeatArea
+import ai.pleos.playground.vehicle.api.model.area.*
+import ai.pleos.playground.vehicle.api.model.capability.AreaBounds
+import ai.pleos.playground.vehicle.constant.unit.TemperatureUnit
 import ai.pleos.playground.vehicle.api.model.capability.AccessType
 import kotlinx.coroutines.suspendCancellableCoroutine
 
@@ -49,5 +51,47 @@ private class SdkCabinClient(context:Context):PleosCabinClient {
             }
         }
         return false
+    }
+    // https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/door/get-current-door-position
+    // https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/window/get-current-window-position
+    // https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-temperature-current
+    // https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-power-state
+    override suspend fun readiness():List<String>? {
+        val messages=mutableListOf<String>()
+        val door=vehicle.getDoor()
+        val doors=supported<Map<DoorArea,AreaBounds<Int>>>("door") { done,failed ->
+            door.checkDoorPositionCapabilities(onComplete={config,areas -> done(areas.takeIf { readable(config.accessType) && it.isNotEmpty() })},onFailed=failed)
+        }
+        for((area,bounds) in doors.orEmpty()) {
+            val position=await<Int?> { done,failed -> door.getCurrentDoorPosition(area,onComplete=done,onFailed=failed) }
+            if(position==null)cache.remove("door")
+            if(position!=null && 0 in bounds.minValue..bounds.maxValue && position in bounds.minValue..bounds.maxValue && position!=0) messages+="문이 열려 있어요"
+        }
+        val window=vehicle.getWindow()
+        val windows=supported<Map<WindowArea,AreaBounds<Int>>>("window") { done,failed ->
+            window.checkWindowPositionCapabilities(onComplete={config,areas -> done(areas.takeIf { readable(config.accessType) && it.isNotEmpty() })},onFailed=failed)
+        }
+        for((area,bounds) in windows.orEmpty()) {
+            val position=await<Int?> { done,failed -> window.getCurrentWindowPosition(area,onComplete=done,onFailed=failed) }
+            if(position==null)cache.remove("window")
+            if(position!=null && 0 in bounds.minValue..bounds.maxValue && position in bounds.minValue..bounds.maxValue && position!=0) messages+="창문이 열려 있어요"
+        }
+        val hvac=vehicle.getHVAC()
+        val temperatures=supported<List<SeatArea>>("temperature") { done,failed ->
+            hvac.checkHvacTemperatureCurrentCapabilities(onComplete={config,areas -> done(areas.takeIf { readable(config.accessType) && it.isNotEmpty() })},onFailed=failed)
+        }
+        for(area in temperatures.orEmpty()) {
+            val temperature=await<Float?> { done,failed -> hvac.getHvacTemperatureCurrent(area,TemperatureUnit.CELSIUS,onComplete=done,onFailed=failed) }
+            if(temperature==null)cache.remove("temperature")
+            if(temperature!=null && temperature.isFinite() && temperature in -50f..80f) messages+="실내 온도 ${temperature.toInt()}°C"
+        }
+        val powers=supported<List<SeatArea>>("power") { done,failed ->
+            hvac.checkHvacPowerCapabilities(onComplete={config,areas -> done(areas.takeIf { readable(config.accessType) && it.isNotEmpty() })},onFailed=failed)
+        }
+        for(area in powers.orEmpty()) {
+            val power=await<Boolean?> { done,failed -> hvac.getHvacPowerState(area,onComplete=done,onFailed=failed) }
+            if(power==null)cache.remove("power") else messages+=if(power)"공조 켜짐" else "공조 꺼짐"
+        }
+        return messages.distinct().takeIf { it.isNotEmpty() }
     }
 }
