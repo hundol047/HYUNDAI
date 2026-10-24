@@ -153,6 +153,22 @@ if nodes:
         status=ET.parse(a.output/'vehicle-status.xml')
         notice('Pleos vehicle diagnostics text',[node.get('text') for node in status.iter('node') if node.get('text')][:45])
 (a.output/'crashes.txt').write_text(run('logcat','-d','-b','crash').stdout)
-(a.output/'package.txt').write_text(run('shell','dumpsys','package','io.cabinos.one').stdout)
+package=run('shell','dumpsys','package','io.cabinos.one').stdout
+(a.output/'package.txt').write_text(package)
+notice('Actual vehicle permission grants','\n'.join(line.strip() for line in package.splitlines() if 'pleos.car.permission' in line or 'android.car.permission' in line))
+packages=run('shell','pm','list','packages','-f').stdout
+related=[line for line in packages.splitlines() if any(word in line.lower() for word in ['pleos','vehicle','navi','sdv'])]
+notice('Installed Pleos services',related[:40])
+log=run('logcat','-d','-v','threadtime','-t','3000').stdout
+(a.output/'runtime-logcat.txt').write_text(log)
+app_errors=[];native_errors=[]
+for line in log.splitlines():
+    columns=line.split()
+    if len(columns)>2 and columns[2]==app_pid and any(word in line.lower() for word in ['vehicle','evbattery','navihelper','permission']):
+        app_errors.append(line[:500])
+    if any(word in line.lower() for word in ['panicked at','app_framework','dds unavailable','failed to initialize','failed to connect','connect error']):
+        native_errors.append(line[:500])
+notice('Actual SDK app log', '\n'.join(app_errors[-12:]))
+notice('Actual native service errors', '\n'.join(native_errors[-8:]))
 (a.output/'identity.json').write_text(json.dumps({'fingerprint':identity,'diagnosticSeconds':round(time.monotonic()-start),'consoleScenarioReady':scenario_ready,'submissionReady':False},indent=2))
 print('APK installed and actual display/vehicle logs collected. Runtime acceptance still requires review.',flush=True)
