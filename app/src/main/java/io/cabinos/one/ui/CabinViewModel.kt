@@ -138,6 +138,11 @@ class CabinViewModel @Inject constructor(
             engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
         }
     }
+    fun arrivalAt(target:Long) {
+        val nav=pleosNavigation.state.value
+        if(nav.readAtMs?.let { System.currentTimeMillis()-it in 0..10_000 } != true)return
+        if(engine.setArrivalAt(target))engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
+    }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
     fun command(text:String) { mutableReply.value=engine.assistant(text);if(state.value.preferences.voiceEnabled) speech.speak(mutableReply.value) }

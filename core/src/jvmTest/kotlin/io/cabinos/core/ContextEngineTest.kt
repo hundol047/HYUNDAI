@@ -155,4 +155,10 @@ class ContextEngineTest {
         assertEquals(0L,engine.state.value.schedule.returnSeconds)
         assertEquals(2100L,engine.state.value.schedule.availableSeconds)
     }
+    @Test fun absoluteArrivalTargetPreservesClockTimeAndRejectsPastOrDriving() {
+        park();val target=now+3_650_000
+        assertTrue(engine.setArrivalAt(target));assertEquals(target,engine.state.value.arrivalTargetMs)
+        assertFalse(engine.setArrivalAt(now-1));assertEquals(target,engine.state.value.arrivalTargetMs)
+        send(Gear.DRIVE,40.0);assertFalse(engine.setArrivalAt(target))
+    }
 }

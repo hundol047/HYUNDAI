@@ -179,9 +179,11 @@ class UnifiedVehicleContextEngine(
         state.value.sample?.let { acceptVehicle(it) } ?: tick()
         return true
     }
-    fun setArrivalInMinutes(minutes: Int?): Boolean {
+    fun setArrivalInMinutes(minutes: Int?): Boolean = setArrivalAt(minutes?.coerceIn(1,1440)?.let { clock()+it*60_000L })
+    fun setArrivalAt(targetMs:Long?):Boolean {
         if (!parkedNow()) return reject()
-        mutable.value=state.value.copy(arrivalTargetMs=minutes?.coerceIn(1,1440)?.let { clock()+it*60_000L })
+        if(targetMs!=null && targetMs-clock() !in 1..172_800_000)return false
+        mutable.value=state.value.copy(arrivalTargetMs=targetMs)
         routeDeadlineMs=null; routeReadAtMs=null; routePlanOverridden=false; tick(); return true
     }
     /** Seconds/meters from DestinationInfo, not route geometry or an assumed driving speed.
