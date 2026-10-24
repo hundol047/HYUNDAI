@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Collect actual official-emulator diagnostics; never marks a submission complete."""
 import argparse
+import hashlib
 import json
 import os
 import shutil
@@ -120,6 +121,15 @@ for endpoint in ['/vehicle/controls?speed=0&accelerator=0&brake=0','/vehicle/gea
         scenario_ready=False
         notice('Console scenario input failed',endpoint+': '+str(error))
 run('install','-r','-g',str(a.apk),timeout=120)
+installed=run('shell','pm','path','io.cabinos.one').stdout.strip().splitlines()
+base=next((line.removeprefix('package:') for line in installed if line.endswith('/base.apk')),None)
+if not base:raise RuntimeError('Installed base APK was not found')
+installed_apk=a.output/'installed-release.apk'
+run('pull',base,str(installed_apk),timeout=120)
+apk_sha=hashlib.sha256(a.apk.read_bytes()).hexdigest()
+if hashlib.sha256(installed_apk.read_bytes()).hexdigest()!=apk_sha:raise RuntimeError('Installed APK hash mismatch')
+installed_apk.unlink()
+notice('Installed APK SHA-256',apk_sha)
 run('shell','setprop','log.tag.CabinVehicle','INFO')
 run('shell','am','start','-W','-n','io.cabinos.one/.MainActivity',timeout=90)
 time.sleep(8)
@@ -175,5 +185,5 @@ for endpoint in ['/vehicle/gear?gear=Park','/vehicle/ev-battery?field=soc&value=
     try: console_request(endpoint,'PUT')
     except urllib.error.HTTPError as error:
         notice('Console error response', endpoint+': '+error.read(1500).decode(errors='replace'))
-(a.output/'identity.json').write_text(json.dumps({'fingerprint':identity,'diagnosticSeconds':round(time.monotonic()-start),'consoleScenarioReady':scenario_ready,'submissionReady':False},indent=2))
+(a.output/'identity.json').write_text(json.dumps({'fingerprint':identity,'diagnosticSeconds':round(time.monotonic()-start),'apkSha256':apk_sha,'installedApkHashMatched':True,'consoleScenarioReady':scenario_ready,'submissionReady':False},indent=2))
 print('APK installed and actual display/vehicle logs collected. Runtime acceptance still requires review.',flush=True)
