@@ -33,11 +33,19 @@ sha256sum "apk/퓨처랩스_CabinOS_ONE_release.apk" > apk/SHA256SUMS
 sha256sum -c apk/SHA256SUMS
 ```
 
-4. 같은 파일을 `adb install -r -g`로 설치하고 기기에서 가져온 base.apk 해시와 대조합니다.
-5. 같은 APK의 실제 전체 시나리오 60~120초 연속 영상을 녹화합니다. **새 영상 링크: [실제 검증 후 입력]**.
-6. 모든 시연 판정 통과 후 새 GitHub Release에 APK·체크섬·영상·검증 결과를 등록합니다.
+4. 별도로 확인한 팀 인증서 SHA-256을 `CABINOS_TEAM_CERT_SHA256`에 설정하고 배포 파일 검사를 실행합니다. 후보 APK에서 지문을 추출해 그대로 신뢰값으로 사용하지 마세요.
+
+```bash
+python3 scripts/verify-release-candidate.py --certificate-sha256 "$CABINOS_TEAM_CERT_SHA256"
+```
+
+검사 종료 코드가 0일 때만 다음 단계로 진행합니다. 버전·패키지·debug 여부·SDK 빌드 표시·서명·체크섬을 검사하며 APK를 변경하거나 업로드하지 않습니다. 현재 저장소의 0.11.0 APK는 소스와 버전이 달라 이 검사에 실패하는 것이 정상입니다. SDK 표시가 있다는 것만으로 실제 차량 동작을 보장하지 않습니다.
+
+5. 같은 파일을 `adb install -r -g`로 설치하고 기기에서 가져온 base.apk 해시와 대조합니다.
+6. 같은 APK의 실제 전체 시나리오 60~120초 연속 영상을 녹화합니다. **새 영상 링크: [실제 검증 후 입력]**.
+7. 모든 시연 판정 통과 후 새 GitHub Release에 APK·체크섬·영상·검증 결과를 등록합니다.
    제목은 `CabinOS ONE 0.11.1`로 하고, 진단 영상을 전체 성공 영상으로 바꿔 표시하지 않습니다.
-7. README 대표 영상, APK 버전, 제출 검토표의 해시를 새 검증 결과로 갱신합니다. 소스 링크는 병합 후 main 기준입니다.
+8. README 대표 영상, APK 버전, 제출 검토표의 해시를 새 검증 결과로 갱신합니다. 소스 링크는 병합 후 main 기준입니다.
 
 이 작업에서는 APK 교체·새 서명·Release 게시를 수행하지 않았습니다.
 
