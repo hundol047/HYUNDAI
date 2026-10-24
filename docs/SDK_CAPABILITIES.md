@@ -61,3 +61,14 @@ Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 �
 문·창문은 0을 포함하는 capability 범위 내 위치만 사용합니다. 0 이외의 위치를 열림으로 표시하며,
 실제 기기의 영역별 값과 방향은 시연에서 확인해야 합니다. 온도는 명시적으로 섭씨로 요청합니다.
 모든 안내는 읽기 전용이며 장치 동작을 바꾸지 않습니다.
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 워셔액 점검 카드 | Safety.checkLowWasherFluidWarningStateCapabilities / hasLowWasherFluidWarning | pleos.car.permission.CAR_SAFETY | [워셔액](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/has-low-washer-fluid-warning) | 아니요 |
+| 차량 표시등 확인 카드 | Safety.checkTelltalesCapabilities / getTelltalesInfo | pleos.car.permission.CAR_SAFETY | [표시등](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/get-telltales-info) | 아니요 |
+
+`ON`/`BLINK` 표시등 수와 TPMS 표시등을 그대로 안내하며 모든 표시등을 고장으로 단정하지 않습니다.
+Tire.getLowTirePressure는 공식 2.3.2 AAR에서 Float 반환이며 Boolean 저압 경고 API가 아닙니다.
+따라서 독자 저압 플래그는 구현하지 않았고 임계값·단위도 추정하지 않습니다.
+[해당 공식 메서드](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/tire/get-low-tire-pressure).
+TPMS 표시등도 저압 확정이 아니라 차량에서 확인할 정보로 표시합니다.

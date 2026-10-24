@@ -8,10 +8,11 @@ internal interface PleosCabinClient {
     fun initialize()
     suspend fun passenger():Boolean?
     suspend fun readiness():List<String>? = null
+    suspend fun care():List<String>? = null
     fun invalidate() {}
     fun release()
 }
-data class CabinAdvice(val passengerDetected:Boolean?=null,val readiness:List<String>?=null)
+data class CabinAdvice(val passengerDetected:Boolean?=null,val readiness:List<String>?=null,val care:List<String>?=null)
 
 /** Optional comfort advice never participates in the parking safety decision. */
 class PleosCabinReader internal constructor(private val factory:(()->PleosCabinClient)?,
@@ -28,6 +29,7 @@ class PleosCabinReader internal constructor(private val factory:(()->PleosCabinC
                 val active=client
                 coroutineScope {
                     launch { poll(active,{active.passenger()}) { mutable.value=mutable.value.copy(passengerDetected=it) } }
+                    launch { poll(active,{active.care()}) { mutable.value=mutable.value.copy(care=it) } }
                     launch { poll(active,{active.readiness()}) { mutable.value=mutable.value.copy(readiness=it) } }
                 }
             } catch(e:CancellationException) { throw e }

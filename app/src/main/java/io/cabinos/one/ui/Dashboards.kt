@@ -83,6 +83,10 @@ import kotlin.math.min
             Text("휴식 전 실내 확인 · 차량 제공 정보",color=Mint)
             cabin.readiness.orEmpty().forEach { Text(it,color=White) }
         }
+        if(s.parkedAllowed && !cabin.care.isNullOrEmpty()) SurfacePanel(Modifier.fillMaxWidth()) {
+            Text("정차 중 차량 점검 · 차량 제공 정보",color=Amber)
+            cabin.care.orEmpty().forEach { Text(it,color=White) }
+        }
         VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=11.sp,modifier=Modifier.padding(bottom=5.dp))
     }

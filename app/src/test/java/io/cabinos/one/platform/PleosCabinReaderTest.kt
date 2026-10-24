@@ -9,6 +9,8 @@ import org.junit.Test
 class PleosCabinReaderTest {
     private class Client: PleosCabinClient {
         var passenger:Boolean?=true
+        var care:List<String>?=listOf("워셔액 부족 경고를 확인하세요")
+        override suspend fun care()=care
         var readiness:List<String>?=listOf("창문이 열려 있어요","실내 온도 29°C")
         override suspend fun readiness()=readiness
         var reads=0;var released=false;var stalled=false
@@ -35,5 +37,11 @@ class PleosCabinReaderTest {
         client.readiness=null;advanceTimeBy(1000);runCurrent()
         assertNull(reader.state.value.readiness);assertEquals(true,reader.state.value.passengerDetected)
         reader.stop();assertNull(reader.state.value.readiness)
+    }
+    @Test fun careCardShowsOnlyVehicleValuesAndClearsOnLoss()=runTest {
+        val client=Client();val reader=PleosCabinReader({client},backgroundScope)
+        reader.start();runCurrent();assertEquals(listOf("워셔액 부족 경고를 확인하세요"),reader.state.value.care)
+        client.care=null;advanceTimeBy(1000);runCurrent();assertNull(reader.state.value.care)
+        reader.stop();assertNull(reader.state.value.care)
     }
 }
