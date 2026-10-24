@@ -50,13 +50,28 @@ def boot_diagnostics():
         notice('Pleos boot diagnostics','ADB crash read timed out')
 
 start = time.monotonic()
+console_initialized=False
 while time.monotonic()-start < 600:
     try:
         if run('shell','getprop','sys.boot_completed',timeout=10,check=False).stdout.strip() == '1':
             break
     except subprocess.TimeoutExpired:
         pass
-    pidfile=Path(os.environ.get('RUNNER_TEMP','/tmp'))/'pleos-emulator.pid'
+    # The official Console can become ready before Android boot completes.
+    # Supply the requested P/0 initial scenario through its public UI endpoints.
+    if not console_initialized:
+        try:
+            fingerprint=run('shell','getprop','ro.build.fingerprint',timeout=8,check=False).stdout.strip()
+            if fingerprint.startswith('Pleos/') and 'release_connect_v2.1.0' in fingerprint:
+                run('forward','tcp:8088','tcp:8088',timeout=8)
+                for endpoint in ['/vehicle/controls?speed=0&accelerator=0&brake=0','/vehicle/gear?gear=Park']:
+                    with urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:8088'+endpoint,method='PUT'),timeout=5) as response:
+                        response.read()
+                console_initialized=True
+                notice('Official Console initialized','P / 0 submitted to official emulator before app launch')
+        except (OSError,subprocess.TimeoutExpired,subprocess.CalledProcessError):
+            pass
+    pidfile=Path(os.environ.get('RUNNER_TEMP','/tmp'))/'pleos-emulator.pid' 
     if pidfile.exists():
         pid=pidfile.read_text().strip()
         process=Path('/proc')/pid/'stat'
