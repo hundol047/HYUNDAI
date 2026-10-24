@@ -30,6 +30,7 @@
     <application android:name=".CabinApplication" android:label="CabinOS ONE"
         android:icon="@drawable/ic_cabin" android:theme="@style/Theme.CabinOS"
         android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true" android:usesCleartextTraffic="false">
+        <meta-data android:name="io.cabinos.one.PLEOS_SDK_ENABLED" android:value="${pleosSdkEnabled}" />
         <uses-library android:name="android.car" android:required="false" />
         <receiver android:name=".platform.DepartureReminderReceiver" android:exported="false" />
         <!-- Parked activity: do not claim distractionOptimized for task editing, video or search. -->
