@@ -23,10 +23,11 @@ def main():
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline:
             t=tree()
-            nodes=[n for n in t.iter('node') if n.get('text')==label or n.get('content-desc')==label]
+            nodes=[n for n in t.iter('node') if ' '.join(n.get('text','').split())==' '.join(label.split()) or n.get('content-desc')==label]
             if nodes:return nodes[-1]
             time.sleep(.5)
-        raise AssertionError('UI not found: '+label)
+        visible=' | '.join(n.get('text','') or n.get('content-desc','') for n in t.iter('node'))
+        raise AssertionError('UI not found: '+label+'; visible: '+visible[:6000])
     def tap(label):
         node=wait(label);x1,y1,x2,y2=map(int,re.findall(r'\d+',node.get('bounds','')))
         adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.8)
