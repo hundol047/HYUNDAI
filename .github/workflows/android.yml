@@ -132,7 +132,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test "$GITHUB_REF_NAME" = feat/pleos-vehicle-state
+          test "$GITHUB_REF_NAME" = main
           python3 - <<'PY'
           import json
           from pathlib import Path
