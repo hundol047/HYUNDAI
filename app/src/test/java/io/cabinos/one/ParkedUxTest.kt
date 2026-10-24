@@ -37,4 +37,16 @@ class ParkedUxTest {
         compose.onNodeWithText("말하기").assertDoesNotExist()
         compose.onNodeWithText("25분 집중 모드 켜줘").assertIsDisplayed()
     }
+    @Test fun cabinAdviceIsVisibleOnlyAfterParkingConfirmation() {
+        val advice=io.cabinos.one.platform.CabinAdvice(true,listOf("창문이 열려 있어요"),listOf("워셔액 부족 경고를 확인하세요"))
+        fun show(parked:Boolean) { compose.runOnIdle { compose.activity.setContent { CabinTheme {
+            CabinAdvicePanel(io.cabinos.core.AppState(parkedAllowed=parked),advice) {}
+        } } } }
+        show(true)
+        compose.onNodeWithText("동승자 감지").assertIsDisplayed()
+        compose.onNodeWithText("창문이 열려 있어요").assertIsDisplayed()
+        compose.onNodeWithText("워셔액 부족 경고를 확인하세요").assertIsDisplayed()
+        show(false);compose.onNodeWithText("동승자 감지").assertDoesNotExist()
+        compose.onNodeWithText("창문이 열려 있어요").assertDoesNotExist()
+    }
 }

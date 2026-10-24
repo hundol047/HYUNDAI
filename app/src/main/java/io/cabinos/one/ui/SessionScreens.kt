@@ -157,7 +157,7 @@ import java.util.*
 }
 
 @Composable internal fun FocusTaskPresets(parked:Boolean,onAdd:(String)->Unit) {
-    Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+    FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
         listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
             OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
         }
