@@ -31,4 +31,10 @@ class ParkedUxTest {
         compose.onNodeWithText("차량 내비에서 목적지를 먼저 설정하세요").assertIsDisplayed()
         compose.onNodeWithText("도착 시각 적용").assertIsNotEnabled().assertHeightIsAtLeast(48.dp)
     }
+    @Test fun missingVoiceServicesShowCommandsWithoutMicrophone() {
+        val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.runOnIdle { compose.activity.setContent { CabinTheme { AssistantDialog(io.cabinos.core.AppState(parkedAllowed=true),vm,{}, {}) } } }
+        compose.onNodeWithText("말하기").assertDoesNotExist()
+        compose.onNodeWithText("25분 집중 모드 켜줘").assertIsDisplayed()
+    }
 }

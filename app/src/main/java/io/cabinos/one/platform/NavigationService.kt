@@ -142,6 +142,7 @@ data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlac
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
+    val voiceAvailable=speech.voiceAvailable
     private val tracker=NavigationTracker(clock)
     private val preferences=RuntimePreferences(context)
     private var language=preferences.navigationLanguage

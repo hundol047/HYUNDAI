@@ -61,6 +61,7 @@ import java.util.*
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
+    val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
     val permissionPreferences=remember(context) { io.cabinos.one.platform.RuntimePreferences(context) }
     var permissionAsked by rememberSaveable { mutableStateOf(permissionPreferences.vehiclePermissionRequested) }
     var permissionInFlight by rememberSaveable { mutableStateOf(false) }
@@ -128,7 +129,7 @@ import java.util.*
                 val selected=if(navigationOpen||navigationState.guidance.active) "navigation" else route
                 val navigate:(String)->Unit = { if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} }
                 Row(Modifier.fillMaxSize()) {
-                    if(!compact) NavigationRailPanel(selected,s.parkedAllowed,navigate,{assistantOpen=true},{simulatorOpen=true},vm.automotive)
+                    if(!compact) NavigationRailPanel(selected,s.parkedAllowed,navigate,{assistantOpen=true},{simulatorOpen=true},vm.automotive,voiceAvailable)
                     Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=if(compact)12.dp else 24.dp)) {
                         if(compact) Row(Modifier.fillMaxWidth().heightIn(min=52.dp),verticalAlignment=Alignment.CenterVertically) {
                             Text("CabinOS ONE",color=White,fontSize=23.sp,modifier=Modifier.weight(1f))
@@ -145,8 +146,8 @@ import java.util.*
                             listOf("홈" to "dashboard","내비" to "navigation","지도" to "nearby","기록" to "history","설정" to "settings").forEach { (label,key) ->
                                 TextButton(onClick={navigate(key)},enabled=s.parkedAllowed||key in listOf("dashboard","navigation"),modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text(label,color=if(selected==key)Mint else Muted)}
                             }
-                            TextButton(onClick={assistantOpen=true},modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text("음성")}
-                        } else BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true})
+                            TextButton(onClick={assistantOpen=true},modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text(if(voiceAvailable)"음성" else "명령")}
+                        } else BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true},voiceAvailable=voiceAvailable)
                     }
                 }
             }
@@ -167,7 +168,7 @@ import java.util.*
         composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
     }
 }
-@Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit,automotive:Boolean) {
+@Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit,automotive:Boolean,voiceAvailable:Boolean) {
     Column(Modifier.width(76.dp).fillMaxHeight().background(Night).border(1.dp,Line.copy(alpha=.4f)).padding(vertical=23.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(15.dp)) {
         Icon(Icons.Outlined.Hexagon,"CabinOS ONE",tint=Mint,modifier=Modifier.size(30.dp))
         Spacer(Modifier.height(24.dp))
@@ -176,7 +177,7 @@ import java.util.*
         RailItem(Icons.Outlined.Map,"지도",route=="nearby",parked){onNavigate("nearby")}
         RailItem(Icons.Outlined.History,"기록",route=="history",parked){onNavigate("history")}
         RailItem(Icons.Outlined.Tune,"설정",route=="settings",parked){onNavigate("settings")}
-        RailItem(Icons.Outlined.MicNone,"음성",false,true,onAssistant)
+        RailItem(if(voiceAvailable)Icons.Outlined.MicNone else Icons.Outlined.TouchApp,if(voiceAvailable)"음성" else "명령",false,true,onAssistant)
         Spacer(Modifier.weight(1f))
         RailItem(Icons.Outlined.Science,if(automotive)"차량 상태" else "데모",false,true,onDemo)
         Text("ONE",fontSize=10.sp,color=Muted,letterSpacing=3.sp)
@@ -199,14 +200,14 @@ import java.util.*
         Text(SimpleDateFormat("a h:mm",Locale.KOREA).format(Date(s.nowMs)),fontSize=14.sp,color=White)
     }
 }
-@Composable private fun BottomBar(s:AppState,onVoice:()->Unit,onSimulator:()->Unit) {
+@Composable private fun BottomBar(s:AppState,onVoice:()->Unit,onSimulator:()->Unit,voiceAvailable:Boolean) {
     Row(Modifier.fillMaxWidth().height(66.dp),verticalAlignment=Alignment.CenterVertically) {
         TextButton(onClick=onSimulator) {Icon(Icons.Outlined.Science,null,Modifier.size(15.dp),tint=Amber);Spacer(Modifier.width(6.dp));Text(if(s.sample?.source==DataSource.VEHICLE)if(s.sample?.connected==true)"차량 속도·기어 연결 · 읽기 전용" else "차량 신호 미확인 · 안전 제한" else "데모 모드 — 시뮬레이션 데이터",fontSize=11.sp,color=Amber)}
         Spacer(Modifier.weight(1f))
         Text(if(!s.locationAvailable)"위치 사용 불가" else if(!s.networkAvailable)"오프라인 · 로컬 실행" else "모든 순간, 하나의 경험",color=Muted,fontSize=11.sp)
         Spacer(Modifier.width(18.dp))
         OutlinedButton(onClick=onVoice,shape=RoundedCornerShape(50),border=BorderStroke(1.dp,Blue.copy(alpha=.45f)),contentPadding=PaddingValues(horizontal=16.dp,vertical=8.dp)) {
-            Icon(Icons.Outlined.MicNone,null,Modifier.size(18.dp),tint=Blue);Spacer(Modifier.width(8.dp));Text("무엇을 도와드릴까요?",fontSize=12.sp,color=White)
+            Icon(if(voiceAvailable)Icons.Outlined.MicNone else Icons.Outlined.TouchApp,null,Modifier.size(18.dp),tint=Blue);Spacer(Modifier.width(8.dp));Text("무엇을 도와드릴까요?",fontSize=12.sp,color=White)
         }
     }
 }

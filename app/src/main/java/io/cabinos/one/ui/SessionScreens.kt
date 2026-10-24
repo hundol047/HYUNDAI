@@ -109,6 +109,7 @@ import java.util.*
 @Composable fun SettingsScreen(s:AppState,vm:CabinViewModel,onNotifications:()->Unit) {
     var confirmDeletion by remember { mutableStateOf(false) }
     val storage by vm.storageStatus.collectAsStateWithLifecycle()
+    val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
     if(confirmDeletion) AlertDialog(onDismissRequest={confirmDeletion=false},
         title={Text("개인 데이터를 삭제할까요?")},
         text={Text("할 일, 세션 기록, 개인 설정, 출발 계획을 삭제합니다. 진행 중인 세션도 종료됩니다. 차량 데이터 모드 선택은 유지합니다.")},
@@ -127,7 +128,7 @@ import java.util.*
             }
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
-                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(if(voiceAvailable)vm.speech.status else "음성 서비스 사용 불가 · 명령 버튼으로 이용하세요",color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
                 Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)

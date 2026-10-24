@@ -77,7 +77,15 @@ class AndroidNavigationProvider(private val context:Context, private val locatio
         return try { context.startActivity(intent);true } catch (_:Exception) { false }
     }
 }
+internal fun voiceServicesAvailable(context:Context):Boolean = runCatching {
+    context.packageManager.queryIntentServices(Intent("android.intent.action.TTS_SERVICE"),0).isNotEmpty() &&
+        SpeechRecognizer.isRecognitionAvailable(context)
+}.getOrDefault(false)
+
 class AndroidSpeechProvider(private val context:Context):SpeechProvider {
+    private val mutableVoiceAvailable=MutableStateFlow(false)
+    val voiceAvailable=mutableVoiceAvailable.asStateFlow()
+    fun refreshVoiceAvailability() { mutableVoiceAvailable.value=initialized && voiceServicesAvailable(context) }
     private var initialized=false
     private var pending:String?=null
     var status="음성 엔진 준비 중"; private set
@@ -89,6 +97,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     init {
         tts=TextToSpeech(context) { result ->
             initialized=result==TextToSpeech.SUCCESS
+            refreshVoiceAvailability()
             status=if(initialized)"음성 엔진 준비됨 · 언어팩은 언어별 확인" else "TTS 사용 불가 · 화면 안내 사용"
             pending?.let {if(initialized)speak(it)};pending=null
         }

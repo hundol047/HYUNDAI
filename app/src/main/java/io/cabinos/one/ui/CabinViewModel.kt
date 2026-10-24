@@ -169,6 +169,7 @@ class CabinViewModel @Inject constructor(
         if(mutableAudio.value==preset) {audio.stop();mutableAudio.value=null} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
     }
     fun setForeground(active: Boolean) {
+        if(active)speech.refreshVoiceAvailability()
         liveNavigation.setForeground(active)
         if (foreground == active) return
         foreground=active

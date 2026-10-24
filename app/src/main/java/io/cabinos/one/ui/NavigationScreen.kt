@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
@@ -42,6 +43,7 @@ import java.util.Locale
     var routeEndpoint by remember {mutableStateOf(nav.service.routeEndpoint)}
     var settingsError by remember {mutableStateOf("")}
     var accessToken by remember {mutableStateOf("")}
+    val voiceAvailable by nav.voiceAvailable.collectAsStateWithLifecycle()
     val canPlan=s.parkedAllowed&&!g.active
     Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.SpaceBetween) {
@@ -56,7 +58,7 @@ import java.util.Locale
             TextButton(onClick={nav.openLocationSettings(true)}){Text("앱 권한 설정",color=Blue)}
         }
         Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){
-            ActionButton(if(ui.voiceListening)"음성 입력 취소" else "🎙 음성 길찾기",{
+            if(voiceAvailable)ActionButton(if(ui.voiceListening)"음성 입력 취소" else "🎙 음성 길찾기",{
                 if(ui.voiceListening)nav.cancelVoice()
                 else if(context.checkSelfPermission(android.Manifest.permission.RECORD_AUDIO)==android.content.pm.PackageManager.PERMISSION_GRANTED)nav.listenDestination()
                 else if(canPlan)microphone.launch(android.Manifest.permission.RECORD_AUDIO)
@@ -64,7 +66,8 @@ import java.util.Locale
             },color=if(ui.voiceListening)Amber else Blue)
             Text(ui.voiceNotice,color=Muted,fontSize=12.sp,modifier=Modifier.weight(1f))
         }
-        if(canPlan)Text("음성: 목적지 → 1번~6번 → 안내 시작 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
+        if(!voiceAvailable)Text("음성 서비스 사용 불가 · 목적지 검색과 안내 버튼을 사용하세요",color=Muted,fontSize=12.sp)
+        if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 → 안내 시작 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
             Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},if(compact)Modifier.width(240.dp) else Modifier.widthIn(min=260.dp,max=500.dp),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
