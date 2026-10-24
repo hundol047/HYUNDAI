@@ -25,7 +25,14 @@ class StorageRecoveryTest {
     private class Fixture(dao:(CabinDao)->CabinDao):AutoCloseable {
         val context=ApplicationProvider.getApplicationContext<Context>()
         val db=Room.inMemoryDatabaseBuilder(context,CabinDatabase::class.java).allowMainThreadQueries().build()
-        val engine=UnifiedVehicleContextEngine()
+        var now=System.currentTimeMillis()
+        val engine=UnifiedVehicleContextEngine({now})
+        fun park() {
+            engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+            now+=1600
+            engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+            assertTrue(engine.state.value.parkedAllowed)
+        }
         val speech=AndroidSpeechProvider(context)
         val location=AndroidLocationProvider(context)
         val store=ViewModelStore()
@@ -36,6 +43,46 @@ class StorageRecoveryTest {
             NearbyPlaces(context),LiveNavigation(context,engine,speech),preferences)
         init {store.put("test",vm)}
         override fun close() {store.clear();speech.close();db.close()}
+    }
+    @Test fun taskRecoveryCannotHideAnUnrecoveredPlanReadFailure()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        var attempts=0
+        try {
+            Fixture {delegate -> object:CabinDao by delegate {
+                override suspend fun checkpoint():CheckpointRecord?=throw SQLiteException("unreadable plan")
+                override fun tasks():Flow<List<TaskRecord>> = flow {
+                    if(++attempts==1)throw SQLiteException("temporary task failure")
+                    emit(emptyList())
+                }
+            }}.use {f->
+                backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {f.vm.tasks.collect()}
+                runCurrent();advanceTimeBy(5000);runCurrent()
+                assertTrue(f.vm.storageStatus.value?.contains("저장된 계획") == true)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+    @Test fun failedDeletionStopsAutomaticWritesAndRetryCanComplete()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        var writes=0;var failDelete=true
+        try {
+            Fixture {delegate -> object:CabinDao by delegate {
+                override suspend fun checkpoint():CheckpointRecord?=null
+                override suspend fun preferences():PreferenceRecord?=null
+                override suspend fun history()=emptyList<SessionRecord>()
+                override suspend fun saveState(state:AppState) {writes++}
+                override suspend fun clearPersonalData() {if(failDelete)throw SQLiteException("delete failed")}
+            }}.use {f->
+                runCurrent();f.park();f.vm.waiting(30);runCurrent()
+                val before=writes
+                f.vm.clearPersonalData();runCurrent()
+                assertEquals(before,writes)
+                assertTrue(f.vm.storageStatus.value?.contains("삭제") == true)
+                f.vm.waiting(40);runCurrent();assertEquals(before,writes)
+                failDelete=false;f.vm.clearPersonalData();runCurrent()
+                assertTrue(writes>before)
+                assertTrue(f.vm.storageStatus.value?.contains("실패") != true)
+            }
+        } finally {Dispatchers.resetMain()}
     }
     @Test fun unreadableCheckpointDoesNotCrashOrOverwriteSavedDataAndVehicleMonitoringContinues()=runTest {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))

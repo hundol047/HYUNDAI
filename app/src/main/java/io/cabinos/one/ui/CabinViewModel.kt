@@ -37,10 +37,10 @@ class CabinViewModel @Inject constructor(
     val state=engine.state
     private val taskReadFailure="할 일을 읽지 못했습니다. 저장 공간을 확인해 주세요. 잠시 후 다시 시도합니다."
     val tasks=dao.tasks().onEach {
-        if(mutableStorageStatus.value==taskReadFailure)mutableStorageStatus.value=null
+        mutableTaskReadFailure.value=null
     }.retryWhen { error,_ ->
         if(error is CancellationException)throw error
-        mutableStorageStatus.value=taskReadFailure;delay(5000);true
+        mutableTaskReadFailure.value=taskReadFailure;delay(5000);true
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
     val reply=mutableReply.asStateFlow()
@@ -73,7 +73,11 @@ class CabinViewModel @Inject constructor(
     private val vehicleDiagnostics=VehicleDiagnostics()
     private var storageRestored=false
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
-    val storageStatus = mutableStorageStatus.asStateFlow()
+    private val mutableRestoreFailure=MutableStateFlow<String?>(null)
+    private val mutableTaskReadFailure=MutableStateFlow<String?>(null)
+    val storageStatus=combine(mutableRestoreFailure,mutableTaskReadFailure,mutableStorageStatus) { restore,tasks,operation ->
+        restore ?: tasks ?: operation
+    }.stateIn(viewModelScope,SharingStarted.Eagerly,null)
     init {
         viewModelScope.launch {
             try {
@@ -82,7 +86,7 @@ class CabinViewModel @Inject constructor(
                 storageRestored=true
             } catch(error:Exception) {
                 if(error is CancellationException)throw error
-                mutableStorageStatus.value="저장된 계획을 읽지 못해 변경 사항 저장을 중지했습니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요."
+                mutableRestoreFailure.value="저장된 계획을 읽지 못해 변경 사항 저장을 중지했습니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요."
             }
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
@@ -249,12 +253,20 @@ class CabinViewModel @Inject constructor(
         if (!state.value.parkedAllowed) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!engine.clearPersonalData()) return@withLock
-                runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
-                demoJob?.cancel();mutableDemoRunning.value=false
-                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
-                try { dao.clearPersonalData();dao.saveState(state.value);storageRestored=true;mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
-                catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
+                val wasRestored=storageRestored
+                storageRestored=false // Never autosave the in-memory reset if disk deletion fails.
+                if (!engine.clearPersonalData()) {storageRestored=wasRestored;return@withLock}
+                try {
+                    demoJob?.cancel();mutableDemoRunning.value=false
+                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
+                    dao.clearPersonalData();dao.saveState(state.value)
+                    runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
+                    storageRestored=true;mutableRestoreFailure.value=null
+                    mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다."
+                } catch (error: Exception) {
+                    if(error is CancellationException) throw error
+                    mutableRestoreFailure.value="데이터 삭제를 완료하지 못해 자동 저장을 중지했습니다. 다시 삭제하거나 앱을 재시작해 주세요."
+                }
             }
         }
     }
