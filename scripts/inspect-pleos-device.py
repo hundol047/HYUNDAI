@@ -128,6 +128,18 @@ try:
 except (OSError,ValueError):
     console_state={}
 if not console_state.get('controls',{}).get('emulator_active',False):
+    # Exact request made by the official Console's visible AVD Enabled selector
+    # (bindHvacModeControl / subscribe_hvac_base), after verified image identity.
+    try:
+        response=console_request('/vehicle/hvac/mode?mode=subscribe_hvac_base','PUT')
+        notice('Official Console AVD Enabled',response.decode(errors='replace')[:1200])
+        time.sleep(3)
+        console_state=json.loads(console_request('/vehicle/state'))
+        (a.output/'console-enabled-state.json').write_text(json.dumps(console_state,indent=2))
+        notice('Official Console emulator active',console_state.get('controls',{}).get('emulator_active'))
+    except OSError as error:
+        notice('Official Console activation failed',str(error))
+if not console_state.get('controls',{}).get('emulator_active',False):
     resolved=run('shell','cmd','package','resolve-activity','--brief','-a','android.intent.action.MAIN',
                  '-c','android.intent.category.LAUNCHER','ai.pleos.hardware.vehicle.emulator',check=False).stdout.strip()
     component=next((line for line in resolved.splitlines() if line.startswith('ai.pleos.hardware.vehicle.emulator/')),None)
