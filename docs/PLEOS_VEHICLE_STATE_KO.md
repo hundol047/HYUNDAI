@@ -80,7 +80,7 @@ CABINOS_PLEOS_SDK=true bash scripts/package-submission.sh
 sha256sum -c apk/SHA256SUMS
 ```
 
-서명된 파일로 3~4단계를 다시 실행해야 합니다. 최종 파일명은 `apk/퓨처랩스_CabinOS_ONE_release.apk`입니다. PR의 CI와 공개 영상·APK 해시를 확인한 후에만 main 병합을 검토합니다. 병합은 별도 승인 대상입니다.
+서명된 파일로 3~4단계를 다시 실행해야 합니다. 최종 파일명은 `apk/퓨처랩스_CabinOS_ONE_release.apk`입니다. 0.11.0은 PR #1로 main에 병합되었습니다. 이후 APK를 갱신할 때도 CI와 공개 영상·APK 해시를 먼저 확인합니다.
 
 
 ## 6. Console 503 / SDK 값 누락 재현 시
