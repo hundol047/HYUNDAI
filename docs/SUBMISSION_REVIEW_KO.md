@@ -33,7 +33,7 @@
 
 현재 작업 브랜치의 `apk/`는 **0.11.0-rc1 (versionCode 16), AAOS 기본 프로필, SDK 미포함**입니다. 기존 팀 인증서로 서명했고 서명·정렬 검사를 통과했습니다. 공식 SDK 포함 최종 제출본은 서버 접근 복구 후 다시 생성해야 합니다.
 
-APK SHA-256: `ac125146b0be6efbca171e5aa080ba750c698c3eb289207e13b0ebe6ef82a02e`. [기계 판독 검사 결과](validation/submission-rc1.json).
+APK SHA-256: `5e8ef1f7ee4db2905814e938d71e423e80706052184552dc9d6ac73bdcb6b657`. [기계 판독 검사 결과](validation/submission-rc1.json).
 
 ## 공식 근거 및 남은 외부 조건
 
@@ -47,3 +47,11 @@ APK SHA-256: `ac125146b0be6efbca171e5aa080ba750c698c3eb289207e13b0ebe6ef82a02e`.
 - 로컬의 일반 Android 35 에뮬레이터는 소프트웨어 모드에서 약 251초 만에 부팅했습니다. APK 시작 후 ADB/UI 응답 시간 초과가 발생해 매끄러운 실행·녹화를 완료했다고 판정하지 않았습니다. 앱 처리 속도와 소프트웨어 에뮬레이션 속도를 혼동하지 않습니다.
 - GitHub Actions의 별도 `android-device` 작업은 KVM이 있는 일반 Android 35에 저장소의 **서명 APK 자체**를 설치하고 설치 APK의 SHA-256까지 대조합니다. `adb shell screenrecord`로 연속 녹화하며 스크린샷을 연결해 동영상으로 만들지 않습니다. 영상 속 차량 신호는 앱 내부 데모입니다.
 - 공식 Pleos 이미지는 확보하지 못했습니다. 일반 Android 영상이 생성되어도 Pleos 서비스 검증/시연을 완료한 것으로 표시하지 않습니다.
+
+## 첫 실제 APK 실행에서 발견한 수정
+
+일반 Android CI의 최초 실패는 시스템 전체 화면 안내창(`Viewing full screen / Got it`)이 앱을 가린 것이었습니다. `MainActivity`의 강제 immersive 호출을 제거하고 safeDrawing insets로 시스템/차량 창을 존중하도록 수정했습니다. 녹화 도구도 시스템 안내가 복원된 경우에만 해당 창을 닫습니다. 실제 APK를 다시 설치해 검사하며 테스트 실패를 앱 성공으로 바꾸어 기록하지 않습니다.
+
+## 블라인드 안내의 원문
+
+[공식 접수양식 DOCX](https://appdevchallenge.auto-hmg.io/downloads/contest-application-consent.docx)에는 “공유 링크와 첨부자료에도 개인정보·계정정보·개발자 실명이 노출되지 않도록 확인하세요”라고 적혀 있습니다. 개인 저장소 주소와 커밋 이력은 여전히 식별 가능하므로, 계정명 노출의 허용 범위를 확인하기 전까지 블라인드 대응 완료로 표시하지 않습니다. 기존 이력을 강제 삭제하거나 새로운 서비스 계정을 대신 생성하지 않았습니다.

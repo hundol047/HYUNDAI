@@ -23,6 +23,11 @@ def main():
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline:
             t=tree()
+            # Handle an OS walkthrough if the emulator image restores immersive-mode UI.
+            coach=[n for n in t.iter('node') if n.get('text')=='Got it' and n.get('package')=='com.android.systemui']
+            if coach:
+                x1,y1,x2,y2=map(int,re.findall(r'\d+',coach[0].get('bounds','')))
+                adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.5);continue
             nodes=[n for n in t.iter('node') if ' '.join(n.get('text','').split())==' '.join(label.split()) or n.get('content-desc')==label]
             if nodes:return nodes[-1]
             time.sleep(.5)

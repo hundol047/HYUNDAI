@@ -3,7 +3,7 @@
   "versionCode": 16,
   "profile": "AAOS base candidate; Pleos SDK not included",
   "apk": "apk/퓨처랩스_CabinOS_ONE_release.apk",
-  "sha256": "ac125146b0be6efbca171e5aa080ba750c698c3eb289207e13b0ebe6ef82a02e",
+  "sha256": "5e8ef1f7ee4db2905814e938d71e423e80706052184552dc9d6ac73bdcb6b657",
   "signedRelease": true,
   "coreTests": 122,
   "androidTests": 99,
@@ -13,5 +13,6 @@
   "lintWarnings": 4,
   "pleosSdkCompiled": false,
   "pleosEmulatorValidated": false,
-  "androidDeviceCi": "pending"
+  "androidDeviceCi": "pending",
+  "firstLaunchOverlayFixed": true
 }
