@@ -47,7 +47,7 @@ cd HYUNDAI
 2. [SDK 지원 범위](docs/SDK_CAPABILITIES.md): 실제 신호·Pleos 포함 프로필·데모 구분.
 3. [오픈소스 및 데이터 출처](docs/THIRD_PARTY.md): 사용 라이선스와 서비스 정책.
 
-[대표 브라우저 실행 영상](docs/video/CabinOS_ONE_search_recovery_v0105.mp4)은 **기존 0.10.5 브라우저 녹화**입니다. APK/Pleos 실행 영상으로 표시하지 않습니다. [기존 웹 데모](https://hundol047.github.io/HYUNDAI/)도 0.10.5이며 이 브랜치의 차량 변경과 구분합니다. [이전 자료](docs/ARCHIVE.md)는 별도 색인으로 모았습니다.
+**[대표 APK 실행 영상·증거 ZIP](https://github.com/hundol047/HYUNDAI/actions/runs/40081991243/artifacts/12555302325)** — 서명된 0.11.0-rc1을 일반 Android 35 에뮬레이터에서 실제 조작·연속 녹화했습니다. 차량 신호는 데모이며 Pleos 시연이 아닙니다. [기존 브라우저 영상](docs/video/CabinOS_ONE_search_recovery_v0105.mp4)은 0.10.5입니다. [기존 웹 데모](https://hundol047.github.io/HYUNDAI/)도 0.10.5이며 이 브랜치의 차량 변경과 구분합니다. [이전 자료](docs/ARCHIVE.md)는 별도 색인으로 모았습니다.
 
 ## 오픈소스 라이선스
 

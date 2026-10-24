@@ -13,7 +13,7 @@
 | 5. 공용 서버 | 차량 UI의 내비·주변 찾기는 NaviHelper로 연결. 정차 시간·집중·할 일·오디오는 네트워크 없이 동작. 일반 Android/웹은 체험용 공개 서버와 설정 가능한 자체 서버를 유지 | 계약 서비스 자격 증명은 미제공. 공용 서버 SLA·전세계 가게 완전성은 보장 불가 |
 | 6. README | 필수 4항목을 처음 표로 정리, 일반 개발 환경 명령, 라이선스·대표 문서 3개 제시 | 없음 |
 | 7. 저장소 크기 | 옛 웹 ZIP 7개와 과거 검사 PNG를 현재 트리에서 제거. v0.10.5 태그 원본과 Git blob 일치를 검사 후 다운로드 링크 제공 | `uploads.github.com` 차단으로 Releases asset 이전은 미완료. 전체 Git 이력은 보존 |
-| 8. 영상 | 대표 기존 영상 1개 지정. 브라우저·합성 GPS 사실 명시. APK의 실제 연속 화면 녹화 도구 유지 | 공식 Pleos 영상 미생성. 일반 Android KVM CI 실행·녹화 결과는 아래 기록으로 구분 |
+| 8. 영상 | 대표 기존 영상 1개 지정. 브라우저·합성 GPS 사실 명시. APK의 실제 연속 화면 녹화 도구 유지 | 공식 Pleos 영상 미생성. 일반 Android KVM CI 실행·녹화 통과; 원본 다운로드 제한으로 프레임 직접 검토는 미완료 |
 | 9. 블라인드 | 앱 User-Agent에서 개인 저장소 링크 제거, 앱 이름·버전·팀 식별자 유지 | 저장소 소유 계정·커밋 이력 허용 범위는 운영진 확인 필요. 계정 생성/이력 재작성은 수행하지 않음 |
 | 10. 문서 | README에서 검토 문서 3개만 연결. 과거 원본 JSON/GZIP은 `test-fixtures/validation`으로 이동, 옛 화면은 릴리스 태그 링크 | 원본 검증 자료는 재현성을 위해 보존 |
 | 11. 테스트 | 이 작업 환경에는 JDK 21·Android SDK 35가 설치되어 있어 실제 Gradle 빌드·Robolectric 테스트 실행 | Robolectric과 실제 차량/에뮬레이터 검증은 별개 |
@@ -55,3 +55,13 @@ APK SHA-256: `5e8ef1f7ee4db2905814e938d71e423e80706052184552dc9d6ac73bdcb6b657`.
 ## 블라인드 안내의 원문
 
 [공식 접수양식 DOCX](https://appdevchallenge.auto-hmg.io/downloads/contest-application-consent.docx)에는 “공유 링크와 첨부자료에도 개인정보·계정정보·개발자 실명이 노출되지 않도록 확인하세요”라고 적혀 있습니다. 개인 저장소 주소와 커밋 이력은 여전히 식별 가능하므로, 계정명 노출의 허용 범위를 확인하기 전까지 블라인드 대응 완료로 표시하지 않습니다. 기존 이력을 강제 삭제하거나 새로운 서비스 계정을 대신 생성하지 않았습니다.
+
+## 최신 실제 APK 실행 결과
+
+**[일반 Android APK 실행 영상·증거 ZIP](https://github.com/hundol047/HYUNDAI/actions/runs/40081991243/artifacts/12555302325)** · [실행 작업](https://github.com/hundol047/HYUNDAI/actions/runs/40081991243). APK SHA-256은 위 후보 파일과 대조 후 설치·실행했습니다. `android-device` 작업은 통과했습니다.
+
+- Android 35 기본 x86_64 + KVM에서 서명된 release APK를 설치했습니다. Pleos/Automotive 이미지가 아닙니다.
+- 6개 화면 검사를 통과했습니다: 정차 대시보드, 집중 세션, 충전 예상 변경 후 세션, 주행 시 정차 조작 제한, D/0 신호 대기 잠금, 설정 화면. 색상 선택·홈 복귀도 실제 터치했습니다.
+- 영상은 `adb shell screenrecord`의 연속 기기 프레임이며 사진 슬라이드쇼가 아닙니다. 차량 신호는 앱의 명시적인 데모입니다. 실제 GPS·실차·공식 Pleos 서비스 검증으로 쓰지 않습니다.
+- ZIP 안의 `CabinOS_ONE_android_apk_v0110rc1.mp4`, `evidence.json`, 실행 화면 PNG를 함께 확인할 수 있습니다. GitHub 로그인이 필요할 수 있으며 Actions 보관 기간이 적용됩니다.
+- 이 클라우드에서는 GitHub artifact 저장소 다운로드가 HTTP 403으로 거절되어 **영상 프레임 직접 검토는 완료하지 못했습니다**. CI의 UI 자동 검사·녹화 성공과 수동 영상 검토를 구분합니다. 첫 실행 안내창 문제는 실제 실패 기록을 토대로 수정한 뒤 새 APK로 재검사했습니다.
