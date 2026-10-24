@@ -10,6 +10,12 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NearbyPlacesTest {
+    @Test fun providerRuntimeErrorsNeverEraseExistingPlacesAsAnEmptySuccess() {
+        for(elements in listOf("[]","[{\"type\":\"node\",\"id\":1}]")) {
+            try {NearbyPlaces.parse("""{"remark":"runtime error: Query timed out","elements":$elements}""",MapPosition());fail("Partial provider response must fail")}
+            catch(_:IllegalStateException){}
+        }
+    }
     @Test fun localizedOnlyNamesAreNotDroppedByTheAndroidParser() {
         val raw="""{"elements":[
           {"type":"node","id":20,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name:fr":"Café enregistré"}},

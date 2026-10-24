@@ -13,7 +13,9 @@ object NearbyGeometry {
         require(origin.valid())
         val named="[~\"^(name|name:[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8})*)$\"~\".\"]"
         val around="(around:1200,${origin.latitude},${origin.longitude})"
-        return "[out:json][timeout:12];(nwr[amenity~\"^(cafe|restaurant|fast_food)$\"]$named$around;nwr[leisure=park]$named$around;nwr[shop~\"^(convenience|supermarket|mall)$\"]$named$around;);out center tags 60;"
+        // Materialize the spatial set before matching name keys. Otherwise the
+        // provider can scan worldwide tag keys before applying the small radius.
+        return "[out:json][timeout:12];nwr$around->.local;(nwr.local[amenity~\"^(cafe|restaurant|fast_food)$\"]$named;nwr.local[leisure=park]$named;nwr.local[shop~\"^(convenience|supermarket|mall)$\"]$named;);out center tags 60;"
     }
     fun placeName(korean:String,local:String,english:String):String =
         listOf(korean,local,english).map {value->value.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(100)}.firstOrNull {it.isNotBlank()} ?: ""

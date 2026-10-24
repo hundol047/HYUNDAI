@@ -91,7 +91,7 @@ class Gateway:
                 lat, lon = float(raw["lat"]), float(raw["lon"])
                 if not math.isfinite(lat) or not math.isfinite(lon) or not -90 <= lat <= 90 or not -180 <= lon <= 180:
                     raise ValueError()
-                if float(raw.get("radius", "20000")) != 20000:
+                if not 500 <= float(raw.get("radius", "20000")) <= 20000:
                     raise ValueError()
                 box = [float(x) for x in raw["viewbox"].split(",")]
                 if len(box) != 4 or not all(math.isfinite(x) for x in box) or not -180 <= box[0] <= box[2] <= 180 or not -90 <= box[3] <= box[1] <= 90:
@@ -106,7 +106,7 @@ class Gateway:
     def search(self, raw):
         q, excluded, near, lat, lon, language = self.parameters(raw)
         kakao = bool(self.config.kakao_key and near and 33 <= lat <= 39 and 124 <= lon <= 132)
-        key = json.dumps([kakao, q, raw.get("viewbox"), lat, lon, excluded, language], ensure_ascii=False)
+        key = json.dumps([kakao, q, raw.get("viewbox"), lat, lon, raw.get("radius", "20000"), excluded, language], ensure_ascii=False)
         with self.lock:
             cached = self.cache.get(key)
             if cached and time.monotonic() - cached[0] < 60:
@@ -119,7 +119,7 @@ class Gateway:
                 # A client page has six rows; Kakao pages have fifteen. Fill a
                 # client page across the boundary rather than stopping at row 15.
                 for page in range(min(3, 1 + len(excluded) // 15), 4):
-                    body = self.fetch("dapi.kakao.com", "/v2/local/search/keyword.json", {"query": q, "x": lon, "y": lat, "radius": 20000, "sort": "distance", "size": 15, "page": page}, {"Authorization": "KakaoAK " + self.config.kakao_key})
+                    body = self.fetch("dapi.kakao.com", "/v2/local/search/keyword.json", {"query": q, "x": lon, "y": lat, "radius": int(float(raw.get("radius", "20000"))), "sort": "distance", "size": 15, "page": page}, {"Authorization": "KakaoAK " + self.config.kakao_key})
                     if not isinstance(body, dict) or not isinstance(body.get("documents"), list):
                         raise GatewayError(502, "Invalid place provider response.")
                     for p in body["documents"]:

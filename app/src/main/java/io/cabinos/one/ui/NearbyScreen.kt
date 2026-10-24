@@ -40,7 +40,8 @@ import org.osmdroid.views.overlay.*
             ActionButton(if(busy)"확인 중…" else "내 위치 사용",onLocate,color=Blue,enabled=!busy&&s.locationAvailable,icon=Icons.Outlined.MyLocation)
             ActionButton("지도 중심 사용",{map?.mapCenter?.let {vm.mapOrigin(MapPosition(it.latitude,it.longitude,"직접 고른 지도 기준점 · 차량 위치 아님"))}},color=Muted,enabled=!busy)
             ActionButton("주변 검색",{vm.searchNearby()},color=Mint,enabled=!busy&&s.networkAvailable&&s.locationAvailable,icon=Icons.Outlined.Search)
-            ActionButton("예시 초기화",{vm.mapExamples()},color=Muted,enabled=!busy)
+            if(busy)ActionButton("검색 취소",{vm.cancelNearbySearch()},color=Amber)
+            if(!busy)ActionButton("예시 초기화",{vm.mapExamples()},color=Muted)
         }
         Text(if(!s.networkAvailable) "오프라인 · 새 지도와 장소를 불러올 수 없습니다." else if(!s.locationAvailable) "위치 사용 제한 · 온라인 지도·검색을 중단했습니다." else status,color=if(s.networkAvailable)Muted else Amber,fontSize=11.sp)
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {

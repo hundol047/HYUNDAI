@@ -13,6 +13,14 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
   if(u.searchParams.get('q')==='missing shop'||u.searchParams.get('q')==='스타벅스 원주무실'||u.searchParams.get('q').startsWith('없는가게'))rows=[];
   if(u.searchParams.get('q')==='corner shops')rows=excluded.size&&excluded.has('100')?[shops[6]]:shops.slice(0,6).map(p=>({...p,lat:'37.57',lon:'127.3312'}));
   if(u.searchParams.get('q')==='nearby shop')rows=[shops[0],{...shops[1],place_id:999,lat:'40.7',lon:'-74.0'}];
+  const q=u.searchParams.get('q');
+  if(['Balzacs Toronto','Balzacs','Starbucks Dubai Mall','Cafe Paris','Cafe Pending','스타벅스 Toronto'].includes(q))rows=[];
+  if(q==='스타벅스')rows=[{place_id:2991,name:'스타벅스',type:'cafe',lat:'43.67',lon:'-79.38'}];
+  if(q==='Toronto')rows=[{place_id:2000,name:'토론토',type:'city',namedetails:{'name:en':'Toronto'},lat:'43.65',lon:'-79.38'}];
+  if(q==='Balzac')rows=[{place_id:2001,name:"Balzac's Coffee",type:'cafe',display_name:'Fixture branch, Toronto',lat:'43.651',lon:'-79.38'}];
+  if(q==='Dubai Mall')rows=[{place_id:2002,name:'Dubai Mall',type:'mall',lat:'25.197',lon:'55.279'}];
+  if(q==='Starbucks')rows=u.searchParams.get('lat')==='43.65'?[{place_id:2992,name:'Starbucks',type:'cafe',lat:'43.6501',lon:'-79.38'}]:[{place_id:2003,name:'Starbucks',type:'cafe',display_name:'Fixture Dubai branch',lat:'25.198',lon:'55.279'},{...shops[0],place_id:2004}];
+  if(q==='Paris')rows=[{place_id:2005,name:'Paris',type:'city',lat:'48.85',lon:'2.35'},{place_id:2006,name:'Paris',type:'city',lat:'33.66',lon:'-95.55'}];
   return r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(rows)})
  });
  async function road(r){routeRequests++;assert.equal(r.request().headers().authorization,undefined);const [a,b]=new URL(r.request().url()).pathname.split('/').at(-1).split(';').map(p=>p.split(',').map(Number));return r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({code:'Ok',routes:[{distance:1000,duration:180,geometry:{coordinates:[a,[a[0],(a[1]+b[1])/2],b]},legs:[{steps:[{maneuver:{type:'depart',location:a}},{maneuver:{type:'arrive',location:b}}]}]}]})})}
@@ -43,6 +51,51 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
   await test('offline shop selection keeps the returned pin and does not invent an online route',async()=>{await fresh();await search();const before=routeRequests;await page.context().setOffline(true);await page.waitForFunction(()=>!window.cabinDemo.state.network);await page.locator('[data-nav-place="0"]').click();assert.match(await page.locator('#nav-notice').textContent(),/온라인 연결/);assert.equal(routeRequests,before);assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);await page.context().setOffline(false)});
   await test('recorded real cross-ocean OSRM success is rejected because its origin is thousands of kilometres away',async()=>{await fresh();const raw=fs.readFileSync(path.join(root,'app/src/test/resources/shop-live/route-ocean.json'),'utf8');const result=await page.evaluate(raw=>{CabinOS.navFix(40.7484,-73.9857,5,Date.now(),0,-1);return CabinOS.navPreview(raw,'London',51.5074,-.1278)},raw);assert.match(result,/출발 위치/);assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false)});
   await test('route provider HTTP rejection leaves the selected shop pin without a fabricated road',async()=>{await fresh();await page.unroute('https://router.project-osrm.org/route/v1/driving/**');const raw=fs.readFileSync(path.join(root,'app/src/test/resources/shop-live/route-origin-snap.json'),'utf8');await page.route('https://router.project-osrm.org/route/v1/driving/**',r=>r.fulfill({status:400,contentType:'application/json',body:raw}));await page.locator('[data-nav="locate"]').click();await search();await page.locator('[data-nav-place="0"]').click();await page.waitForFunction(()=>document.querySelector('#nav-notice').textContent.includes('400'));assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);assert.equal(await page.locator('[data-nav="start"]').count(),0)});
+  await test('explicit regional recovery preserves the original input and labels broader candidates without planning a route',async()=>{
+   await fresh();const start=requests.length;await search('Balzacs Toronto');assert.equal(requests.length,start+1);assert.equal(await page.locator('[data-nav-place]').count(),0);
+   await page.locator('#nav-regional-search').click();await page.waitForFunction(()=>!document.querySelector('#nav-search').disabled);
+   assert.deepEqual(requests.slice(start).map(u=>u.searchParams.get('q')),['Balzacs Toronto','Toronto','Balzacs','Balzac']);
+   assert.equal(await page.locator('#nav-query').inputValue(),'Balzacs Toronto');assert.match(await page.locator('#nav-notice').textContent(),/20km.*주변 후보/);
+   assert.match(await page.locator('#nav-results').textContent(),/Balzac's Coffee/);assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);
+   assert.equal(requests.at(-1).searchParams.get('bounded'),'1');assert.match(requests.at(-1).searchParams.get('viewbox'),/-79/);
+  });
+  await test('localized and registered brand names both contribute candidates ranked near the requested region',async()=>{
+   await fresh();await search('스타벅스 Toronto');await page.locator('#nav-regional-search').click();await page.waitForFunction(()=>!document.querySelector('#nav-search').disabled);
+   assert.equal(await page.locator('[data-nav-place]').count(),2);assert.match(await page.locator('[data-nav-place="0"]').textContent(),/Starbucks/);assert.match(await page.locator('[data-nav-place="1"]').textContent(),/스타벅스/);
+  });
+  await test('multiword landmarks bound candidate searches and reject a distant same-brand branch',async()=>{
+   await fresh();await search('Starbucks Dubai Mall');const start=requests.length;await page.locator('#nav-regional-search').click();await page.waitForFunction(()=>!document.querySelector('#nav-search').disabled);
+   assert.deepEqual(requests.slice(start).map(u=>u.searchParams.get('q')),['Dubai Mall','Starbucks']);assert.equal(requests.at(-1).searchParams.get('radius'),'1200');assert.equal(await page.locator('[data-nav-place]').count(),1);assert.match(await page.locator('#nav-results').textContent(),/Dubai branch/);
+  });
+  await test('ambiguous regions without nearby GPS evidence never silently choose a country',async()=>{
+   await fresh();await search('Cafe Paris');const start=requests.length;await page.locator('#nav-regional-search').click();await page.waitForFunction(()=>!document.querySelector('#nav-search').disabled);
+   assert.deepEqual(requests.slice(start).map(u=>u.searchParams.get('q')),['Paris']);assert.equal(await page.locator('[data-nav-place]').count(),0);assert.match(await page.locator('#nav-notice').textContent(),/지역을 하나로 확인하지 못/);
+  });
+  await test('unregistered destinations can be picked on the map without inventing a shop name or changing GPS',async()=>{
+   await fresh();await page.evaluate(()=>shopMap.setView([48.86,2.35],16,{animate:false}));const before=routeRequests;
+   await page.locator('#nav-map-pick').click();assert.equal(routeRequests,before);assert.match(await page.locator('#nav-notice').textContent(),/GPS/);assert.match(await page.locator('#nav-guidance').textContent(),/직접 고른 지도 지점/);
+   assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);
+   await page.locator('#scenarios [data-vehicle="주행"]').click();assert.equal(await page.locator('#nav-map-pick').isVisible(),false);
+   const chosen=await page.evaluate(()=>JSON.parse(CabinOS.placeMapPoint(-16.5,180.2)));assert.ok(Math.abs(chosen.longitude+179.8)<.0001);assert.match(chosen.source,/미확인/);
+  });
+  await test('same-named city and station resolve locally and a bakery query excludes unrelated businesses',async()=>{
+   await fresh();const region=await page.evaluate(()=>JSON.parse(CabinOS.regionalRegion(JSON.stringify([
+    {name:'Kuala Lumpur',type:'station',lat:'3.1407803',lon:'101.6939423'},
+    {name:'Kuala Lumpur',type:'administrative',lat:'3.1516964',lon:'101.6942371'}]),'Kuala Lumpur',3.15,101.69)));
+   assert.equal(region.latitude,3.1516964);assert.equal(region.radius,20000);
+   const accepted=await page.evaluate(()=>[{name:'Bella Paulista',category:'newsagent'},{name:'La Bella',category:'베이커리'},{name:'Bella Paulista Casa dos Pães',category:'베이커리'}].filter(p=>CabinOS.regionalAccepts('Padaria Bella Paulista',p.category)&&CabinOS.regionalMatches('Padaria Bella Paulista',p.name,'')));
+   assert.deepEqual(accepted.map(p=>p.name),['Bella Paulista Casa dos Pães']);
+  });
+  await test('regional voice recovery works while parked and is blocked during driving',async()=>{
+   await fresh();await search('Balzacs Toronto');await page.evaluate(()=>EchoNavigation.voiceCommand('지역 나눠 찾기'));assert.equal(await page.locator('[data-nav-place]').count(),1);
+   await page.locator('#scenarios [data-vehicle="주행"]').click();const start=requests.length;await page.evaluate(()=>EchoNavigation.voiceCommand('지역 나눠 찾기'));assert.equal(requests.length,start);
+  });
+  await test('cancelled regional lookup cannot replace the newer business results',async()=>{
+   await fresh();await search('Cafe Pending');let release;const pending=new Promise(r=>release=r);const matcher=u=>u.hostname==='nominatim.openstreetmap.org'&&u.searchParams.get('q')==='Pending';
+   await page.route(matcher,async r=>{await pending;try{await r.fulfill({status:200,contentType:'application/json',body:JSON.stringify([{place_id:3000,name:'Pending',type:'city',lat:'37.39',lon:'127.11'}])})}catch{}});
+   await page.locator('#nav-regional-search').click();await page.waitForRequest(u=>new URL(u.url()).searchParams.get('q')==='Pending');await page.locator('#nav-cancel').click();await search('검사용 카페');release();await page.waitForTimeout(300);
+   assert.equal(await page.locator('[data-nav-place]').count(),6);assert.match(await page.locator('#nav-results').textContent(),/검사용 카페/);await page.unroute(matcher);
+  });
   await page.screenshot({path:path.join(out,'shop-search.png'),fullPage:true});assert.deepEqual(errors,[]);
  }finally{fs.writeFileSync(path.join(out,'results.json'),JSON.stringify({type:'deterministic shop/gateway/UI protocol checks with synthetic data and recorded real OSRM failures; not live commercial provider verification',results,pageErrors:errors},null,2));await browser.close()}
 })().catch(e=>{console.error(e);process.exitCode=1});

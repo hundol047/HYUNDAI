@@ -5,6 +5,11 @@ import kotlin.math.*
 data class PlaceSearchPage(val places:List<NavPlace>,val seenIds:List<String>,val hasMore:Boolean)
 /** Explicit searches only. Nearby bounds never become a country restriction. */
 object PlaceSearch {
+    fun mapPoint(latitude:Double,longitude:Double):NavPlace? {
+        if(!latitude.isFinite()||!longitude.isFinite())return null
+        val wrapped=((longitude%360)+540)%360-180
+        return place("직접 고른 지도 지점",latitude,wrapped,source="지도에서 직접 지정 · 상호·주소 미확인")
+    }
     const val pageSize=6
     const val maxResults=18
     const val radiusMeters=20_000.0
@@ -45,7 +50,7 @@ object PlaceSearch {
         val seen=(excluded+places.map {it.id}.filter {it.isNotBlank()}).distinct().take(maxResults)
         return PlaceSearchPage(results(places,origin,nearby),seen,places.size>=pageSize&&seen.size>excluded.size&&seen.size<maxResults)
     }
-    fun requests(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList(),language:String="ko"):List<Map<String,String>> {
+    fun requests(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList(),language:String="ko",radius:Double=radiusMeters):List<Map<String,String>> {
         require(NavigationLanguages.validTag(language))
         val q=clean(query,180);require(q.length>=2){"가게 이름·지점·도시 또는 주소를 2자 이상 입력하세요."}
         val ids=excluded.take(maxResults).filter {it.length in 1..160&&it.all {c->c.isLetterOrDigit()||c in "._:-"}}.distinct()
@@ -53,10 +58,11 @@ object PlaceSearch {
         if(ids.isNotEmpty()){base["exclude_ids"]=ids.joinToString(",");val numeric=ids.filter {it.all(Char::isDigit)};if(numeric.isNotEmpty())base["exclude_place_ids"]=numeric.joinToString(",")}
         if(!nearby)return listOf(base)
         require(origin?.valid()==true){"주변 가게 검색은 정확한 내 위치를 먼저 받아 주세요."}
-        val p=origin!!;val latDelta=radiusMeters/111195.0;val lonDelta=latDelta/cos(p.latitude*PI/180).coerceAtLeast(.00001)
+        require(radius.isFinite()&&radius in 500.0..radiusMeters)
+        val p=origin!!;val latDelta=radius/111195.0;val lonDelta=latDelta/cos(p.latitude*PI/180).coerceAtLeast(.00001)
         val north=(p.latitude+latDelta).coerceAtMost(90.0);val south=(p.latitude-latDelta).coerceAtLeast(-90.0)
         val west=p.longitude-lonDelta;val east=p.longitude+lonDelta
         val ranges=when {lonDelta>=180->listOf(-180.0 to 180.0);west< -180->listOf(west+360 to 180.0,-180.0 to east);east>180->listOf(west to 180.0,-180.0 to east-360);else->listOf(west to east)}
-        return ranges.map {(w,e)->base.toMutableMap().apply {put("viewbox","$w,$north,$e,$south");put("bounded","1");put("lat","${p.latitude}");put("lon","${p.longitude}");put("radius","${radiusMeters.toInt()}")}}
+        return ranges.map {(w,e)->base.toMutableMap().apply {put("viewbox","$w,$north,$e,$south");put("bounded","1");put("lat","${p.latitude}");put("lon","${p.longitude}");put("radius","${radius.toInt()}")}}
     }
 }

@@ -24,6 +24,41 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test fun regionalCandidatesRequireExplicitActionAndNeverAutomaticallyStartGuidance() {
+        var calls=0
+        val service=object:NavigationService(){override suspend fun regionalSearch(query:String,origin:NavPoint?):RegionalSearchResult {
+            calls++;return RegionalSearchResult(listOf(destination),"Paris","Cafe")
+        }}
+        Fixture(service).use {f->
+            assertEquals(0,calls);f.nav.searchRegional("Cafe Paris");f.idle()
+            assertEquals(1,calls);assertEquals(destination,f.nav.state.value.places.single())
+            assertTrue(f.nav.state.value.notice.contains("주변 후보"));assertFalse(f.nav.state.value.hasMore)
+            assertNull(f.nav.state.value.guidance.route);assertNull(f.nav.state.value.selectedPlace)
+            f.engine.acceptVehicle(VehicleSample(speedKph=35.0,gear=Gear.DRIVE,timestampMs=f.now));f.idle()
+            f.nav.searchRegional("Cafe Paris");f.idle();assertEquals(1,calls)
+        }
+    }
+    @Test fun cancellingRegionalRecoveryRejectsLateResultsFromTheOldRequest() {
+        val pending=CompletableDeferred<RegionalSearchResult>()
+        val service=object:NavigationService(){
+            override suspend fun regionalSearch(query:String,origin:NavPoint?)=withContext(NonCancellable){pending.await()}
+            override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>)=PlaceSearchPage(listOf(destination.copy(name="새 가게")),emptyList(),false)
+        }
+        Fixture(service).use {f->
+            f.nav.searchRegional("Cafe Paris");f.idle();assertTrue(f.nav.state.value.busy)
+            f.nav.cancelPending();f.nav.search("새 가게");f.idle()
+            pending.complete(RegionalSearchResult(listOf(destination),"Paris","Cafe"));f.idle()
+            assertEquals("새 가게",f.nav.state.value.places.single().name)
+        }
+    }
+    @Test fun regionParserUsesRegisteredAliasesAndRejectsShopsOrInvalidCoordinates() {
+        val raw="""[
+          {"place_id":1,"name":"토론토","namedetails":{"name:en":"Toronto"},"lat":"43.65","lon":"-79.38","type":"administrative"},
+          {"place_id":2,"name":"Toronto","lat":"43.65","lon":"-79.38","type":"cafe"},
+          {"place_id":3,"name":"Toronto","lat":"NaN","lon":"-79.38","type":"city"}
+        ]"""
+        assertEquals(listOf("1"),NavigationService.parseRegions(raw,"Toronto").map {it.id})
+    }
     @Test fun emptyBusinessSearchRetriesSpacingOnceAndMoreUsesTheResolvedQuery() {
         val calls=mutableListOf<Pair<String,List<String>>>()
         val service=object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {

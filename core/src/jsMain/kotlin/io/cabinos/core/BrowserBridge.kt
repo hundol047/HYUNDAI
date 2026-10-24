@@ -101,6 +101,30 @@ fun main() {
     bridge.navVoiceCommand={raw:String -> val c=NavigationVoice.parse(raw);JSON.stringify(json("action" to c.action.name,"query" to c.query,"index" to c.index))}
     bridge.navSpoken={distance:String,instruction:String -> NavigationLanguages.spoken(navigationLanguage,distance,instruction)}
     bridge.placeSpacingSuggestion={query:String ->PlaceSearch.spacingSuggestion(query)}
+    bridge.placeMapPoint={lat:Double,lon:Double ->
+        val p=PlaceSearch.mapPoint(lat,lon)
+        if(p==null)"null" else JSON.stringify(json("name" to p.name,"latitude" to p.point.latitude,"longitude" to p.point.longitude,"source" to p.source))
+    }
+    bridge.regionalSplits={query:String ->JSON.stringify(RegionalPlaceSearch.splits(query).map {json("name" to it.name,"region" to it.region)}.toTypedArray())}
+    bridge.regionalNames={name:String ->JSON.stringify(RegionalPlaceSearch.names(name).toTypedArray())}
+    bridge.regionalNotice={region:String,query:String,count:Int,radius:Int ->RegionalPlaceSearch.notice(region,query,count>0,radius)}
+    bridge.regionalAccepts={query:String,category:String ->RegionalPlaceSearch.acceptsCategory(query,category)}
+    bridge.regionalMatches={query:String,name:String,regionAddress:String ->RegionalPlaceSearch.matchesName(query,name,regionAddress)}
+    bridge.regionalRequests={query:String,lat:Double,lon:Double,radius:Int ->
+        JSON.stringify(PlaceSearch.requests(query,NavPoint(lat,lon),true,language=navigationLanguage,radius=radius.toDouble()).map {json(*it.entries.map {e->e.key to e.value}.toTypedArray())}.toTypedArray())
+    }
+    bridge.regionalRegion={raw:String,query:String,lat:Double,lon:Double ->
+        fun text(v:dynamic):String=if(jsTypeOf(v)=="string")v as String else ""
+        val candidates=JSON.parse<Array<dynamic>>(raw).take(6).mapNotNull {o->
+            if(o==null)null else {
+                val names=mutableListOf(text(o.name));val details=o.namedetails
+                if(details!=null&&jsTypeOf(details)=="object") (js("Object.keys(details)") as Array<String>).filter {RegionalPlaceSearch.aliasKey(it)}.forEach {names.addAll(text(details[it]).split(';'))}
+                if(!RegionalPlaceSearch.regionMatches(query,names,text(o.type)))null else PlaceSearch.place(text(o.name),text(o.lat).toDoubleOrNull() ?: Double.NaN,text(o.lon).toDoubleOrNull() ?: Double.NaN,text(o.place_id),text(o.display_name),text(o.type))
+            }
+        }
+        val chosen=RegionalPlaceSearch.chooseRegion(candidates,NavPoint(lat,lon).takeIf {it.valid()})
+        if(chosen==null)if(candidates.isEmpty())"null" else "{\"ambiguous\":true}" else JSON.stringify(json("name" to chosen.name,"latitude" to chosen.point.latitude,"longitude" to chosen.point.longitude,"address" to chosen.address,"radius" to RegionalPlaceSearch.radius(chosen.category)))
+    }
     bridge.placeLocationHint={lat:Double,lon:Double,targetLat:Double,targetLon:Double ->
         PlaceSearch.locationHint(NavPoint(lat,lon),NavPoint(targetLat,targetLon))
     }

@@ -50,7 +50,8 @@ class CabinViewModel @Inject constructor(
     private var nearbyJob:Job?=null
     private var lastNearbySearch=0L
     private var nearbyGeneration=0
-    private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();mutableNearbyBusy.value=false}
+    private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
+    fun cancelNearbySearch(){cancelNearby();mutableNearbyStatus.value="주변 검색을 취소했습니다. 기존 표시를 유지합니다."}
     fun mapUnavailable(){mutableNearbyStatus.value="지도 앱이나 브라우저가 설치되어 있지 않습니다."}
     private var foreground = true
     private val persistenceMutex = Mutex()
@@ -182,7 +183,7 @@ class CabinViewModel @Inject constructor(
                 }
             } catch(error:Exception) {
                 if(error is CancellationException)throw error
-                mutableNearbyStatus.value="장소 검색에 연결하지 못했습니다. 기존 표시를 유지합니다. 네트워크를 확인해 주세요."
+                if(generation==nearbyGeneration)mutableNearbyStatus.value="장소 검색을 완료하지 못했습니다. 기존 표시를 유지합니다. 잠시 후 다시 시도해 주세요."
             } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
         }
     }

@@ -74,7 +74,7 @@ import java.util.Locale
             Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix) }
+            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix,!ui.busy,{nav.plan(it)}) }
             Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEachIndexed { index,place ->
@@ -92,10 +92,21 @@ import java.util.Locale
                 }
                 if(canPlan&&ui.hasMore&&submittedQuery==query&&submittedNearby==nearby)ActionButton("다른 결과 더 보기 (최대 18개)",{nav.search(query,nearby,true)},Modifier.fillMaxWidth(),Blue,!ui.busy)
                 if(canPlan&&query.isNotBlank())TextButton(onClick={nav.externalSearch(query)}){Text("Google Maps에서 추가 검색 ↗",color=Blue,fontSize=11.sp)}
-                if(canPlan&&ui.places.isEmpty())Text("가게명에 지점·도시를 함께 입력해 보세요. 현지어와 영문 검색 결과가 다를 수 있습니다.",color=Muted,fontSize=11.sp)
+                if(canPlan&&ui.places.isEmpty()) {
+                    Text("가게명에 지점·도시를 함께 입력해 보세요. 현지어와 영문 검색 결과가 다를 수 있습니다.",color=Muted,fontSize=11.sp)
+                    if(RegionalPlaceSearch.splits(query).isNotEmpty())ActionButton("지역을 나눠 주변 후보 찾기",{nav.searchRegional(query)},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
+                }
+                if(g.route==null)ui.selectedPlace?.let {p->
+                    SurfacePanel(Modifier.fillMaxWidth(),accent=Blue) {
+                        Text(p.name,color=White,fontSize=15.sp)
+                        if(p.address.isNotBlank())Text(p.address,color=Muted,fontSize=11.sp)
+                        Text(p.source,color=Muted,fontSize=11.sp)
+                    }
+                }
                 g.route?.let {r->
                     SurfacePanel(Modifier.fillMaxWidth(),accent=Blue) {
                         Text(r.destination.name,color=White,fontSize=15.sp)
+                        Text(r.destination.source,color=Muted,fontSize=11.sp)
                         if(r.destination.address.isNotBlank())Text(r.destination.address,color=Muted,fontSize=11.sp)
                         Spacer(Modifier.height(9.dp))
                         if(g.active) {
@@ -143,7 +154,7 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?) {
+@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
@@ -163,6 +174,10 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
             view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
             renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking)
         })
+        if(interactive) {
+            Text("+",color=White,fontSize=32.sp,modifier=Modifier.align(androidx.compose.ui.Alignment.Center))
+            ActionButton("지도 중심을 목적지로",{val c=map.mapCenter;PlaceSearch.mapPoint(c.latitude,c.longitude)?.let(onPick)},Modifier.align(androidx.compose.ui.Alignment.BottomCenter).padding(12.dp),Blue,pickEnabled)
+        }
         if(health.status!=RoadMapStatus.READY)Column(Modifier.align(androidx.compose.ui.Alignment.TopCenter).padding(10.dp).clip(RoundedCornerShape(12.dp)).background(Panel.copy(alpha=.96f)).padding(10.dp)) {
             Text(health.message,color=if(health.status in listOf(RoadMapStatus.UNAVAILABLE,RoadMapStatus.OFFLINE))Amber else Muted,fontSize=12.sp)
             if(health.status==RoadMapStatus.UNAVAILABLE&&interactive)TextButton(onClick={map.retryRoads()}){Text("도로 지도 다시 불러오기",color=Blue)}

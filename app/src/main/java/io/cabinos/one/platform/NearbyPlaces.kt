@@ -17,6 +17,8 @@ import kotlin.coroutines.resume
 
 /** Only called by explicit parked UI actions. Coordinates are not persisted. */
 class NearbyPlaces(private val context:Context) {
+    @Volatile private var activeConnection:HttpURLConnection?=null
+    fun cancel(){activeConnection?.disconnect()}
     suspend fun locate():MapPosition? {
         if(context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED &&
             context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)return null
@@ -47,19 +49,29 @@ class NearbyPlaces(private val context:Context) {
     suspend fun search(origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())
         val query=NearbyGeometry.query(origin)
-        val connection=URL("https://overpass-api.de/api/interpreter?data="+URLEncoder.encode(query,"UTF-8")).openConnection() as HttpURLConnection
+        val connection=URL("https://overpass-api.de/api/interpreter").openConnection() as HttpURLConnection
+        activeConnection=connection
+        val deadline=launch(Dispatchers.Default) {try{delay(35_000)}finally{connection.disconnect()}}
         try {
-            connection.connectTimeout=12_000;connection.readTimeout=18_000
+            // The provider may queue a 12-second query before executing it.
+            connection.connectTimeout=8_000;connection.readTimeout=35_000
+            connection.requestMethod="POST";connection.doOutput=true
+            connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
             connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)")
             connection.setRequestProperty("Accept","application/json")
+            currentCoroutineContext().ensureActive()
+            val form=("data="+URLEncoder.encode(query,"UTF-8")).toByteArray(Charsets.UTF_8)
+            connection.setFixedLengthStreamingMode(form.size);connection.outputStream.use {it.write(form)}
             check(connection.responseCode==200) {"장소 검색 서버가 응답하지 않습니다 (${connection.responseCode})."}
             val bytes=connection.inputStream.use { it.readBytesLimited(2_000_000) }
             parse(String(bytes,Charsets.UTF_8),origin)
-        } finally { connection.disconnect() }
+        } finally { deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null }
     }
     companion object {
         fun parse(json:String,origin:MapPosition):List<NearbyActivity> {
-            val elements=JSONObject(json).getJSONArray("elements")
+            val response=JSONObject(json)
+            check(response.optString("remark").isBlank()) {"주변 검색 서버가 검색을 완료하지 못했습니다. 기존 표시를 유지합니다."}
+            val elements=response.getJSONArray("elements")
             return (0 until elements.length()).mapNotNull { index ->
                 val item=elements.optJSONObject(index) ?: return@mapNotNull null
                 val tags=item.optJSONObject("tags") ?: return@mapNotNull null

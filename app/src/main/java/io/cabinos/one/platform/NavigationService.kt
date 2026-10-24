@@ -28,7 +28,7 @@ open class NavigationService {
     private var searchAccessToken=""
     private var lastSearch=0L
     private var lastRoute=0L
-    private val cache=linkedMapOf<String,PlaceSearchPage>()
+    private val cache=linkedMapOf<String,Pair<Long,PlaceSearchPage>>()
     fun configure(search:String,route:String,accessToken:String="") {
         fun valid(s:String):Boolean=runCatching {val u=URL(s);u.protocol=="https"&&u.host.isNotBlank()&&u.userInfo==null&&u.query==null&&u.ref==null}.getOrDefault(false)
         require(valid(search)&&valid(route)) {"HTTPS 서비스 기본 주소를 입력해 주세요."}
@@ -52,7 +52,10 @@ open class NavigationService {
     }
     open suspend fun search(query:String,origin:NavPoint?=null,nearby:Boolean=false,excluded:List<String> = emptyList()):PlaceSearchPage {
         val requests=PlaceSearch.requests(query,origin,nearby,excluded,language)
-        val key=language+"|"+requests.toString();cache[key]?.let {return it}
+        return searchPage(requests,origin,nearby,excluded)
+    }
+    private suspend fun searchPage(requests:List<Map<String,String>>,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+        val key=language+"|"+requests.toString();cache[key]?.let {if(System.currentTimeMillis()-it.first in 0..59_999)return it.second else cache.remove(key)}
         val places=mutableListOf<NavPlace>()
         for(params in requests) {
             delay((1500-(System.currentTimeMillis()-lastSearch)).coerceAtLeast(0));currentCoroutineContext().ensureActive();lastSearch=System.currentTimeMillis()
@@ -61,7 +64,27 @@ open class NavigationService {
             places+=withContext(Dispatchers.Default){parsePlaces(raw)}
         }
         val result=PlaceSearch.page(places,origin,nearby,excluded)
-        if(cache.size>=30)cache.remove(cache.keys.first());cache[key]=result;return result
+        if(cache.size>=30)cache.remove(cache.keys.first());cache[key]=System.currentTimeMillis() to result;return result
+    }
+    open suspend fun regionalSearch(query:String,origin:NavPoint?):RegionalSearchResult {
+        for(split in RegionalPlaceSearch.splits(query)) {
+            delay((1500-(System.currentTimeMillis()-lastSearch)).coerceAtLeast(0));currentCoroutineContext().ensureActive();lastSearch=System.currentTimeMillis()
+            val params=PlaceSearch.requests(split.region,language=language).single()
+            val encoded=params.entries.joinToString("&"){URLEncoder.encode(it.key,"UTF-8")+"="+URLEncoder.encode(it.value,"UTF-8")}
+            val raw=get("$searchEndpoint/search?$encoded",searchAccessToken)
+            val candidates=parseRegions(raw,split.region)
+            if(candidates.isEmpty())continue
+            val region=RegionalPlaceSearch.chooseRegion(candidates,origin) ?: return RegionalSearchResult(emptyList())
+            val radius=RegionalPlaceSearch.radius(region.category)
+            val collected=mutableListOf<NavPlace>()
+            for(name in RegionalPlaceSearch.names(split.name)) {
+                val page=searchPage(PlaceSearch.requests(name,region.point,true,language=language,radius=radius.toDouble()),region.point,true,emptyList())
+                val accepted=page.places.filter {RegionalPlaceSearch.acceptsCategory(split.name,it.category)&&RegionalPlaceSearch.matchesName(split.name,it.name,region.address)&&NavigationGeometry.distance(region.point,it.point)<=radius}
+                collected+=accepted
+            }
+            return RegionalSearchResult(PlaceSearch.results(collected,region.point,true),region.name,split.name,radius)
+        }
+        return RegionalSearchResult(emptyList())
     }
     open suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {
         require(origin.valid()&&destination.point.valid())
@@ -75,6 +98,16 @@ open class NavigationService {
         return route
     }
     companion object {
+        fun parseRegions(raw:String,query:String):List<NavPlace> {
+            val rows=JSONArray(raw)
+            return (0 until minOf(6,rows.length())).mapNotNull {i->
+                val row=rows.optJSONObject(i) ?: return@mapNotNull null
+                val details=row.optJSONObject("namedetails")
+                val names=listOf(row.optString("name"))+details?.keys()?.asSequence()?.filter {RegionalPlaceSearch.aliasKey(it)}?.flatMap {details.optString(it).split(';').asSequence()}?.toList().orEmpty()
+                if(!RegionalPlaceSearch.regionMatches(query,names,row.optString("type")))return@mapNotNull null
+                PlaceSearch.place(row.optString("name"),row.optDouble("lat",Double.NaN),row.optDouble("lon",Double.NaN),row.optString("place_id"),row.optString("display_name"),row.optString("type"))
+            }
+        }
         fun parsePlaces(raw:String):List<NavPlace> {
             val array=JSONArray(raw)
             return (0 until minOf(6,array.length())).mapNotNull { i ->val o=array.optJSONObject(i) ?: return@mapNotNull null
@@ -197,12 +230,25 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             if(engine.state.value.preferences.voiceEnabled&&combined.isNotEmpty())speech.speakNavigation(combined.take(6).mapIndexed {i,p->"${i+1}. ${p.name}"}.joinToString(". "),language)
         }}
     }
+    fun searchRegional(query:String) {
+        if(!canPlan()||mutable.value.busy||!engine.state.value.networkAvailable||RegionalPlaceSearch.splits(query).isEmpty())return
+        val center=fix?.takeIf {tracker.usable(it)}?.point
+        cancelRequest();tracker.stop();publish();lastQuery=query;seenPlaceIds=emptyList()
+        mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="지역과 상호를 나눠 주변 후보를 확인합니다…")
+        request {current->
+            val result=service.regionalSearch(query,center)
+            if(current()&&canPlan()) {
+                mutable.value=mutable.value.copy(places=result.places,hasMore=false,notice=result.notice)
+                if(engine.state.value.preferences.voiceEnabled&&result.places.isNotEmpty())speech.speakNavigation("주변 후보입니다. 주소와 지점을 확인하세요. "+result.places.mapIndexed {i,p->"${i+1}. ${p.name}"}.joinToString(". "),language)
+            }
+        }
+    }
     fun plan(destination:NavPlace) {
         if(!canPlan())return
         cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=destination)
-        if(!engine.state.value.networkAvailable){mutable.value=mutable.value.copy(notice="선택한 가게 위치는 표시합니다. 새 자동차 경로는 온라인 연결이 필요합니다.");return}
+        if(!engine.state.value.networkAvailable){mutable.value=mutable.value.copy(notice="선택한 지점 위치는 표시합니다. 새 자동차 경로는 온라인 연결이 필요합니다.");return}
         val f=fix
-        if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(notice="선택한 가게를 지도에 표시했습니다. 자동차 경로는 내 위치를 먼저 받아 주세요.");return}
+        if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(notice="선택한 지점을 지도에 표시했습니다. 자동차 경로는 내 위치를 먼저 받아 주세요.");return}
         request {current->val r=service.route(f.point,destination);if(current()&&canPlan()){tracker.preview(r.localized(language));publish();if(engine.state.value.preferences.voiceEnabled)speech.speakNavigation(destination.name,language);mutable.value=mutable.value.copy(notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")}}
     }
     fun start(accessConfirmed:Boolean=false) {
@@ -283,6 +329,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
                 if(!canPlan()){voiceError("새 목적지·결과 선택·안내 시작은 안전한 주차 확인 후 가능합니다. 주행 중에는 안내 반복·종료를 말하세요.");return}
                 when(c.action){
                     NavigationVoiceAction.SEARCH->if(c.query.isNotBlank())search(c.query) else voiceError("목적지를 조금 더 자세히 말씀해 주세요.")
+                    NavigationVoiceAction.REGIONAL->searchRegional(lastQuery)
                     NavigationVoiceAction.SELECT->mutable.value.places.getOrNull(c.index)?.let {plan(it)} ?: voiceError("검색 결과에 있는 번호를 말씀해 주세요.")
                     NavigationVoiceAction.START->if(tracker.state.route==null||mutable.value.busy)voiceError("먼저 결과 번호를 말하고 경로 계산을 기다려 주세요.") else start()
                     else->Unit

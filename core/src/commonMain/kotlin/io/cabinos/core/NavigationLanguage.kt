@@ -35,13 +35,14 @@ object NavigationLanguages {
 }
 fun DrivingRoute.localized(tag:String):DrivingRoute=copy(language=NavigationLanguages.resolve(tag),steps=steps.map {s->s.maneuver?.let {s.copy(instruction=NavigationLanguages.instruction(it,tag))} ?: s})
 
-enum class NavigationVoiceAction { SEARCH, SELECT, START, STOP, REPEAT, CANCEL }
+enum class NavigationVoiceAction { SEARCH, REGIONAL, SELECT, START, STOP, REPEAT, CANCEL }
 data class NavigationVoiceCommand(val action:NavigationVoiceAction,val query:String="",val index:Int=-1)
 /** Exact short commands never consume a shop name that merely contains a command word. */
 object NavigationVoice {
     fun parse(raw:String):NavigationVoiceCommand {
         val t=raw.trim().take(180).lowercase().trimEnd('.','!','?','。','！','？')
         val phrases=mapOf(
+            NavigationVoiceAction.REGIONAL to listOf("지역 나눠 찾기","지역을 나눠 찾아줘","주변 후보 찾아줘","search regional candidates"),
             NavigationVoiceAction.START to listOf("안내 시작","길 안내 시작","출발","start navigation","start guidance","start","iniciar navegación","démarrer la navigation","navigation starten","案内開始","导航开始","بدء الملاحة","начать навигацию"),
             NavigationVoiceAction.STOP to listOf("안내 종료","길 안내 종료","stop navigation","end navigation","stop","detener navegación","arrêter la navigation","navigation beenden","案内終了","停止导航","إيقاف الملاحة","остановить навигацию"),
             NavigationVoiceAction.REPEAT to listOf("안내 반복","다시 말해줘","다시 말해 줘","repeat","repeat directions","repetir","répéter","wiederholen","もう一度","重复","كرر","повтори"),

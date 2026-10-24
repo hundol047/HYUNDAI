@@ -26,3 +26,5 @@ body{background:radial-gradient(ellipse at 80% 0%,var(--panel) 0,transparent 38%
 .nav-map-wrap{position:relative;min-width:0;min-height:420px}.nav-map-wrap #navigation-map{height:100%;min-height:420px}#nav-road-health{position:absolute;top:12px;left:50px;right:12px;z-index:450;padding:10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-size:12px;color:var(--muted)}#nav-road-health[hidden]{display:none}#nav-tiles-retry{margin-top:8px;min-height:44px}@media(max-width:700px){.nav-map-wrap,.nav-map-wrap #navigation-map{min-height:320px}}
 
 #nav-results .nav-place-distance{color:var(--amber)}
+
+#nav-map-crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:600;color:#fff;font-size:32px;line-height:1;text-shadow:0 1px 4px #000}#nav-map-pick{position:absolute;bottom:16px;left:16px;z-index:600;min-height:48px;max-width:calc(100% - 32px)}

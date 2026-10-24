@@ -16,6 +16,18 @@ class Response(io.BytesIO):
 
 
 class GatewayTests(unittest.TestCase):
+    def test_landmark_radius_reaches_kakao_and_does_not_share_a_broader_cache(self):
+        from urllib.parse import urlsplit, parse_qs
+        radii=[]
+        def opener(request, **_):
+            radii.append(parse_qs(urlsplit(request.full_url).query)['radius'][0])
+            return Response({'documents':[{'id':'1','place_name':'Fixture','x':'127.1','y':'37.4'}], 'meta':{'is_end':True}})
+        g=Gateway(self.config('fixture-key'),opener,interval=0)
+        base=dict(q='shop',bounded='1',lat='37.4',lon='127.1',viewbox='127.08,37.42,127.12,37.38')
+        g.search({**base,'radius':'1200'});g.search({**base,'radius':'20000'})
+        self.assertEqual(['1200','20000'],radii)
+        for radius in ['NaN','0','20001']:
+            with self.assertRaises(GatewayError):g.search({**base,'radius':radius})
     def test_expired_location_query_cache_is_removed_without_another_search(self):
         # A fresh CI VM may have a monotonic clock below sixty seconds.
         # Use ages relative to an explicit clock, not an assumed expired zero.

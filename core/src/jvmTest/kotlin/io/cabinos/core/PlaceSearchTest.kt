@@ -4,6 +4,12 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PlaceSearchTest {
+    @Test fun userPickedMapPointsWrapWorldCopiesAndNeverInventBusinessMetadata() {
+        val point=PlaceSearch.mapPoint(-16.5,180.2)!!
+        assertEquals(-179.8,point.point.longitude,0.00001)
+        assertTrue(point.name.contains("직접 고른"));assertTrue(point.source.contains("미확인"));assertEquals("",point.address)
+        assertNull(PlaceSearch.mapPoint(91.0,0.0));assertNull(PlaceSearch.mapPoint(0.0,Double.NaN))
+    }
     @Test fun namesakeLocationHintExposesDistantResultsWithoutRemovingGlobalSearchResults() {
         val origin=NavPoint(37.6868,128.7550)
         val restaurant=PlaceSearch.place("대관령 옛길",37.5073769,127.1056803,"namesake",category="식당")!!
