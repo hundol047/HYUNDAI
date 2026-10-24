@@ -164,11 +164,16 @@ log=run('logcat','-d','-v','threadtime','-t','3000').stdout
 app_errors=[];native_errors=[]
 for line in log.splitlines():
     columns=line.split()
-    if len(columns)>2 and columns[2]==app_pid and any(word in line.lower() for word in ['vehicle','evbattery','navihelper','permission']):
+    if len(columns)>4 and columns[2]==app_pid and columns[4] in ('W','E','F') and 'CabinVehicle:' not in line:
         app_errors.append(line[:500])
     if any(word in line.lower() for word in ['panicked at','app_framework','dds unavailable','failed to initialize','failed to connect','connect error']):
         native_errors.append(line[:500])
 notice('Actual SDK app log', '\n'.join(app_errors[-12:]))
 notice('Actual native service errors', '\n'.join(native_errors[-8:]))
+boot_diagnostics()
+for endpoint in ['/vehicle/gear?gear=Park','/vehicle/ev-battery?field=soc&value=68']:
+    try: console_request(endpoint,'PUT')
+    except urllib.error.HTTPError as error:
+        notice('Console error response', endpoint+': '+error.read(1500).decode(errors='replace'))
 (a.output/'identity.json').write_text(json.dumps({'fingerprint':identity,'diagnosticSeconds':round(time.monotonic()-start),'consoleScenarioReady':scenario_ready,'submissionReady':False},indent=2))
 print('APK installed and actual display/vehicle logs collected. Runtime acceptance still requires review.',flush=True)
