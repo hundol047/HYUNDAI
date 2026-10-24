@@ -7,8 +7,6 @@ import ai.pleos.playground.vehicle.api.model.capability.AreaBounds
 import ai.pleos.playground.vehicle.constant.unit.TemperatureUnit
 import ai.pleos.playground.vehicle.api.model.capability.AccessType
 import kotlinx.coroutines.suspendCancellableCoroutine
-import ai.pleos.playground.vehicle.api.model.telltale.Telltales
-import ai.pleos.playground.vehicle.constant.telltale.TelltaleState
 
 /** Signatures inspected in official Vehicle 2.3.2; read-only optional comfort signals. */
 internal object PleosCabinFactory {
@@ -109,16 +107,8 @@ private class SdkCabinClient(context:Context):PleosCabinClient {
             if(low==null)cache.remove("washer")
             if(low==true)messages+="워셔액 부족 경고를 확인하세요"
         }
-        val telltales=supported<Boolean>("telltales") { done,failed ->
-            safety.checkTelltalesCapabilities(onComplete={config -> done(true.takeIf { readable(config.accessType) })},onFailed=failed)
-        }
-        if(telltales==true) {
-            val values=await<Telltales?> { done,failed -> safety.getTelltalesInfo(onComplete=done,onFailed=failed) }
-            if(values==null)cache.remove("telltales")
-            val active=values?.telltales.orEmpty().filter { it.state==TelltaleState.ON || it.state==TelltaleState.BLINK }
-            if(active.isNotEmpty())messages+="계기판 표시등 ${active.size}개 켜짐 · 차량 안내를 확인하세요"
-            if(active.any { it.type.name=="TPMS" })messages+="타이어 공기압 계통 표시등을 확인하세요"
-        }
+        // The official AAR requires PRIVATE_CAR_SAFETY for checkTelltalesCapabilities.
+        // Public-app eligibility is unverified; do not request private access or skip capability checks.
         // Tire.getLowTirePressure returns Float, not a Boolean warning flag. Do not invent one.
         return messages.takeIf { it.isNotEmpty() }
     }

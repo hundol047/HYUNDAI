@@ -65,10 +65,12 @@ Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 �
 | 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
 |---|---|---|---|---|
 | 워셔액 점검 카드 | Safety.checkLowWasherFluidWarningStateCapabilities / hasLowWasherFluidWarning | pleos.car.permission.CAR_SAFETY | [워셔액](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/has-low-washer-fluid-warning) | 아니요 |
-| 차량 표시등 확인 카드 | Safety.checkTelltalesCapabilities / getTelltalesInfo | pleos.car.permission.CAR_SAFETY | [표시등](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/get-telltales-info) | 아니요 |
+| 표시등 확인: 사용 제외 | Safety.checkTelltalesCapabilities / getTelltalesInfo | capability: pleos.car.permission.PRIVATE_CAR_SAFETY / getter: CAR_SAFETY | [표시등](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/get-telltales-info) | 아니요 |
 
-`ON`/`BLINK` 표시등 수와 TPMS 표시등을 그대로 안내하며 모든 표시등을 고장으로 단정하지 않습니다.
+공식 AAR에서 표시등 getter는 CAR_SAFETY를 요구하지만 capability 메서드는 PRIVATE_CAR_SAFETY를 요구합니다.
+SDK 포함 lint에서 이를 확인했습니다. 일반 공모전 앱에 비공개 권한이 허용된다는 근거가 없어 표시등·TPMS 읽기를 제외했습니다.
+capability 확인을 우회하거나 비공개 권한을 요청하지 않습니다.
 Tire.getLowTirePressure는 공식 2.3.2 AAR에서 Float 반환이며 Boolean 저압 경고 API가 아닙니다.
 따라서 독자 저압 플래그는 구현하지 않았고 임계값·단위도 추정하지 않습니다.
 [해당 공식 메서드](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/tire/get-low-tire-pressure).
-TPMS 표시등도 저압 확정이 아니라 차량에서 확인할 정보로 표시합니다.
+TPMS 표시등도 현재 구현에서 사용하지 않습니다.

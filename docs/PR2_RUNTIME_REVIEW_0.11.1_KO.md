@@ -17,7 +17,7 @@
 | 2c 버전 | `app/build.gradle.kts`, README, 제출 검토표 | 0.11.1/20 소스와 0.11.0/19 APK 구분; apk diff 없음 | APK 변경 없음 |
 | 3a 동승자 제안 | `PleosCabinReader.kt`, 양쪽 SDK factory, `CabinAdvicePanel.kt`, DI·ViewModel | `passengerReadIsOptionalAndClearedWhenBackgrounded`, `unsupportedOrTimedOutPassengerDoesNotInventOccupancy`, `cabinAdviceIsVisibleOnlyAfterParkingConfirmation` 통과 | 아니요 |
 | 3b 실내 확인 | SDK cabin factory·reader·Manifest·카드 | `readinessClearsOnUnsupportedAndStopWithoutBlockingPassenger` 및 카드 UI 테스트 통과 | 아니요 |
-| 3c 차량 점검 | SDK cabin factory·reader·Manifest·카드 | `careCardShowsOnlyVehicleValuesAndClearsOnLoss` 통과 | 아니요 |
+| 3c 워셔액 점검 (표시등 제외) | SDK cabin factory·reader·Manifest·카드 | `careCardShowsOnlyVehicleValuesAndClearsOnLoss` 통과 | 아니요 |
 | 4a 웹 정차 중심 | `index.html`, `web.js`, `app.css`, 웹 검증 조작 단계 | `parked story is primary and supplementary demos start collapsed` 포함 기본 16개·지도 16개 통과 | 브라우저 데모 |
 | 4b 폰 데모 표기 | `Dashboards.kt`, `NavigationScreen.kt` | `activityLaunchAndDrivingSafetyAreRendered`, `navigationNamesakeShowsActualDistanceAndHidesItWithoutUsableGps` 보강 통과 | Robolectric만 |
 | 5a 도착 시각 | 엔진, ViewModel, `ArrivalClockControls.kt`, 차량 내비 화면 | `absoluteArrivalTargetPreservesClockTimeAndRejectsPastOrDriving`, `ArrivalClockTest` 2개, `arrivalWithoutRouteExplainsDisabledControls` 통과 | 아니요 |
@@ -49,8 +49,9 @@ sha256sum -c apk/SHA256SUMS
 ## 구현 범위와 남은 위험
 
 - Console 제어 URL의 공식 문서 근거가 확인되지 않아 HTTP 제어를 자동화하지 않았습니다. 공식 Console UI 수동 조작 후 **실제 로그**로 단계별 판정합니다.
-- Tire.getLowTirePressure의 실제 반환은 Float입니다. Boolean 저압 플래그를 만들지 않았고, 실제 Safety의 TPMS 표시등만 확인 정보로 표시합니다.
+- Tire.getLowTirePressure의 실제 반환은 Float입니다. Boolean 저압 플래그를 만들지 않았고, 표시등 capability가 PRIVATE_CAR_SAFETY를 요구하므로 TPMS 표시등도 사용하지 않습니다.
 - 운전석 좌우 식별 API를 확인하지 못해 앞좌석 한 개만 점유한 경우 동승자로 단정하지 않습니다. 벨트만으로 좌석 점유를 추정하지 않습니다.
+- SDK 포함 lint에서 Safety.checkTelltalesCapabilities의 PRIVATE_CAR_SAFETY 요구를 재현했습니다. 비공개 권한을 요청하지 않고 해당 기능을 제외했습니다. 공개 CAR_SAFETY로 가능한 워셔액 읽기만 유지합니다.
 - 새 실내 정보의 실제 권한·영역·응답, 분할 창, SOC 목표 변화·실제 목적지 ETA는 공식 기기에서 추가 검증해야 합니다.
 - 속도 수신 시각 대안은 꺼져 있습니다. 실제 로그에서 타임스탬프 정지와 계속된 poll/콜백이 입증된 뒤에만 검토합니다.
 - 블라인드 계정·커밋 작성자 노출과 팀 키 서명·동일 APK 새 영상·Release 게시는 사람이 완료해야 합니다.

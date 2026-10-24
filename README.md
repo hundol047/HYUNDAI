@@ -63,7 +63,7 @@ cd HYUNDAI
 | 도착 목표 → 출발 계획 | NaviHelper.getDestinationInfo / onDestinationInfo | 실제 경로 ETA 전체 시연 필요 |
 | 동승자 → 함께 휴식·오디오 제안 | Seat.getCurrentSeatOccupancy | 0.11.1 SDK 컴파일·단위 테스트; 기기 미검증 |
 | 휴식 전 문·창문·공조 확인 | Door / Window / HVAC 읽기 | 0.11.1 SDK 컴파일·단위 테스트; 기기 미검증 |
-| 정차 중 워셔액·표시등 확인 | Safety.hasLowWasherFluidWarning / getTelltalesInfo | 0.11.1 SDK 컴파일·단위 테스트; 기기 미검증 |
+| 정차 중 워셔액 확인 | Safety.hasLowWasherFluidWarning | 0.11.1 SDK 컴파일·단위 테스트; 기기 미검증 |
 
 정확한 메서드·권한·공식 문서·미지원 범위는 [SDK 매핑표](docs/SDK_CAPABILITIES.md)를 참고하세요.
 [전체 시연 실행 절차](scripts/demo/pleos-full-scenario.md)와 [0.11.1 배포 준비](docs/RELEASE_NOTES_0.11.1.md)는 사람의 서명·실제 기기 검증 이후 완료해야 합니다.
