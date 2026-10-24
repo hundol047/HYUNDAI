@@ -27,4 +27,4 @@ body{background:radial-gradient(ellipse at 80% 0%,var(--panel) 0,transparent 38%
 
 #nav-results .nav-place-distance{color:var(--amber)}
 
-#nav-map-crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:600;color:#fff;font-size:32px;line-height:1;text-shadow:0 1px 4px #000}#nav-map-pick{position:absolute;bottom:16px;left:16px;z-index:600;min-height:48px;max-width:calc(100% - 32px)}
+#nav-map-crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:600;color:#fff;font-size:32px;line-height:1;text-shadow:0 1px 4px #000}.nav-map-wrap #nav-map-pick{position:absolute;bottom:16px;left:16px;z-index:600;min-height:48px;max-width:calc(100% - 32px)}
