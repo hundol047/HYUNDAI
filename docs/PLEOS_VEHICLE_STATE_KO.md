@@ -109,3 +109,13 @@ adb logcat -s CabinVehicle
 P/0 정차 중 콜백·poll 시각과 `speedAgeMs`를 함께 비교하세요. poll이 계속 성공하는데 속도 나이만 3000ms를 넘고 잠긴다면, VHAL의 정지 값 timestamp 갱신 방식과 연관됐는지 확인할 근거가 됩니다. 로그만으로 원인을 확정하지 않습니다.
 
 **대안 검토만:** 구독 상태가 확인되고 poll이 STATUS_AVAILABLE이며 유효한 P/0일 때 수신 시각을 인정하는 설계를 검토할 수 있습니다. 다만 살아 있는 구독을 어떻게 입증할지, 캐시된 poll 값·차량 버스 단절·권한 상실을 어떻게 구분할지 OEM 보장과 별도 안전 시험이 필요합니다. 이번 수정은 이를 적용하지 않았으며 기존 속도 timestamp 기준 3초 만료·P/0 1.5초 확인을 유지합니다.
+
+### 전체 시연과 신호 나이 분석
+
+KVM PC의 [전체 시연 절차](../scripts/demo/pleos-full-scenario.md)를 따라 수집한 로그를 분석합니다.
+`python3 scripts/demo/analyze-signal-log.py artifacts/full-scenario/vehicle.log`
+원시 P/0 구간만 분석하며 UNKNOWN 화면을 정차의 근거로 사용하지 않습니다.
+`maxSpeedAgeMs`, 기어 이벤트/재조회 나이, 오래된 속도 값 동안 poll·callback 수신 시각의 증가를 보고합니다.
+자료 부족은 성공 근거가 아니며 `sufficientEvidence=false`로 표시됩니다.
+`VHAL speed timestamp not refreshed while parked` 진단과 `fallbackEvidence=true`가 실제 기기에서
+확인된 경우에만 별도 검토 후 수신 시각 기반 대안을 활성화할 수 있습니다. 합성 테스트는 그 근거가 아닙니다.

@@ -91,7 +91,7 @@ class VehicleStateProvider internal constructor(
         val now=elapsedNs()
         if (active && automotive && (lastDebugNs==null || now-lastDebugNs!!>=1_000_000_000)) {
             lastDebugNs=now
-            debugLog("speedAgeMs=${timing.speedAgeMs} lastSpeedCallbackElapsedMs=${timing.lastSpeedCallbackMs} lastPollSuccessElapsedMs=${timing.lastPollSuccessMs} gearAgeMs=${timing.gearAgeMs} gearReadAgeMs=${timing.gearReadAgeMs}")
+            debugLog("speedAgeMs=${timing.speedAgeMs} lastSpeedCallbackElapsedMs=${timing.lastSpeedCallbackMs} lastPollSuccessElapsedMs=${timing.lastPollSuccessMs} gearAgeMs=${timing.gearAgeMs} gearReadAgeMs=${timing.gearReadAgeMs} gear=${timing.rawGear} speedKph=${timing.rawSpeedKph}")
         }
     }
     fun stop() {

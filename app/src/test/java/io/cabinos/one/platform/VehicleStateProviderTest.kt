@@ -61,6 +61,7 @@ class VehicleStateProviderTest {
             assertEquals(4000L,provider.diagnostics.value.speedAgeMs)
             assertEquals(14000L,provider.diagnostics.value.lastPollSuccessMs)
             assertEquals(2,logs.size);assertTrue(logs.last().contains("speedAgeMs=4000"))
+            assertTrue(logs.last().contains("gear=PARK speedKph=0.0"))
             assertFalse(provider.samples.value.connected)
             provider.stop();transport.listener.timing(time,time)
             assertNull(provider.diagnostics.value.lastPollSuccessMs)
