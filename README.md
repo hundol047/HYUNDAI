@@ -66,6 +66,8 @@ cd HYUNDAI
 | 정차 중 워셔액 확인 | Safety.hasLowWasherFluidWarning | 0.11.1 SDK 컴파일·단위 테스트; 기기 미검증 |
 
 정확한 메서드·권한·공식 문서·미지원 범위는 [SDK 매핑표](docs/SDK_CAPABILITIES.md)를 참고하세요.
+저장된 계획을 읽지 못하면 화면에 오류를 표시하고 자동 저장을 중지합니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요. [배포 전 오류 점검](docs/PREDEPLOY_RUNTIME_AUDIT_KO.md)에 재현 결과를 정리했습니다.
+
 [전체 시연 실행 절차](scripts/demo/pleos-full-scenario.md)와 [0.11.1 배포 준비](docs/RELEASE_NOTES_0.11.1.md)는 사람의 서명·실제 기기 검증 이후 완료해야 합니다.
 
 ## 제한 사항
