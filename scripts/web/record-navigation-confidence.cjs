@@ -21,7 +21,7 @@ function at(route,meters){let i=0;while(i<route.points.length-2&&route.cum[i+1]<
  async function begin(route,caption){
   current=route;await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>cabinDemo?.state.parked);
   await page.evaluate(origin=>{window.proofTime=Date.now();const RealDate=Date;window.Date=class extends RealDate{constructor(...args){super(...(args.length?args:[proofTime]))}static now(){return proofTime}};window.proofCoords={latitude:origin[0],longitude:origin[1],accuracy:5,speed:0,heading:-1};const create=L.map;L.map=function(...args){return window.proofMap=create.apply(this,args)}},route.points[0]);
-  await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();await page.locator('aside [data-page="navigation"]').click();await banner(caption);
+  await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await banner(caption);
   await page.locator('[data-nav="locate"]').click();await page.evaluate(()=>{EchoNavigation.setLanguage('en-NZ');cabinDemo.render()});
   await page.locator('#nav-query').fill(route.row.end.join(','));await page.locator('#nav-search').click();await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]');if(await page.locator('#nav-access-confirm').count())await page.locator('#nav-access-confirm').check();await page.locator('[data-nav="start"]').click();
  }

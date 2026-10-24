@@ -55,17 +55,34 @@ class AndroidLocationProvider(private val context:Context) : LocationProvider {
     private val mutable=MutableStateFlow(false)
     override val available=mutable.asStateFlow()
     var lastLocation:Location?=null; private set
-    private val listener=object:LocationListener {
-        override fun onLocationChanged(location:Location) { lastLocation=location;mutable.value=true }
-        override fun onProviderDisabled(provider:String) { mutable.value=false }
-    }
+    private var listener:LocationListener?=null
+    private var generation=0L
+    private fun permitted()=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED ||
+        context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
     override fun start() {
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED) { mutable.value=false;return }
+        stop()
+        if (!permitted()) return
+        val token=generation
+        val current=object:LocationListener {
+            override fun onLocationChanged(location:Location) {
+                if(token!=generation)return
+                if(!permitted()) { stop();return }
+                lastLocation=location;mutable.value=true
+            }
+            override fun onProviderDisabled(provider:String) {
+                if(token==generation) {lastLocation=null;mutable.value=false}
+            }
+        }
+        listener=current
         try {
-            manager.getProviders(true).forEach { provider -> manager.requestLocationUpdates(provider,2000L,5f,listener,Looper.getMainLooper()) }
-        } catch (_:SecurityException) { mutable.value=false }
+            manager.getProviders(true).forEach { provider -> manager.requestLocationUpdates(provider,2000L,5f,current,Looper.getMainLooper()) }
+        } catch (_:SecurityException) { stop() }
     }
-    override fun stop() { manager.removeUpdates(listener);mutable.value=false }
+    override fun stop() {
+        ++generation
+        val previous=listener;listener=null;lastLocation=null;mutable.value=false
+        try { previous?.let {manager.removeUpdates(it)} } catch (_:SecurityException) { /* Revoked permission cannot retain a fix. */ }
+    }
 }
 class AndroidNavigationProvider(private val context:Context, private val location:AndroidLocationProvider):NavigationProvider {
     override val route=MutableStateFlow(Route(id="unavailable")).asStateFlow()
@@ -77,7 +94,15 @@ class AndroidNavigationProvider(private val context:Context, private val locatio
         return try { context.startActivity(intent);true } catch (_:Exception) { false }
     }
 }
+internal fun voiceServicesAvailable(context:Context):Boolean = runCatching {
+    context.packageManager.queryIntentServices(Intent("android.intent.action.TTS_SERVICE"),0).isNotEmpty() &&
+        SpeechRecognizer.isRecognitionAvailable(context)
+}.getOrDefault(false)
+
 class AndroidSpeechProvider(private val context:Context):SpeechProvider {
+    private val mutableVoiceAvailable=MutableStateFlow(false)
+    val voiceAvailable=mutableVoiceAvailable.asStateFlow()
+    fun refreshVoiceAvailability() { mutableVoiceAvailable.value=initialized && voiceServicesAvailable(context) }
     private var initialized=false
     private var pending:String?=null
     var status="음성 엔진 준비 중"; private set
@@ -89,6 +114,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     init {
         tts=TextToSpeech(context) { result ->
             initialized=result==TextToSpeech.SUCCESS
+            refreshVoiceAvailability()
             status=if(initialized)"음성 엔진 준비됨 · 언어팩은 언어별 확인" else "TTS 사용 불가 · 화면 안내 사용"
             pending?.let {if(initialized)speak(it)};pending=null
         }

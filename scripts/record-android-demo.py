@@ -13,7 +13,7 @@ def main():
     a.output.mkdir(parents=True,exist_ok=False)
     base=['adb','-s',a.serial]
     def adb(*args,timeout=45,check=True):return subprocess.run(base+list(args),capture_output=True,check=check,timeout=timeout).stdout
-    checks=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();video=None;recorder=None
+    checks=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();video=None;recorder=None;log_reader=None;log_output=None
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
     def tree():
@@ -61,6 +61,10 @@ def main():
         installed.unlink()
         adb('shell','wm','size','1280x800');adb('shell','wm','density','160')
         adb('shell','settings','put','system','accelerometer_rotation','0')
+        # Collect while ADB is healthy: a later device disconnect must not erase
+        # the startup failure evidence or require another responsive shell.
+        log_output=(a.output/'startup-logcat.txt').open('wb')
+        log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','AndroidRuntime:E','ActivityManager:I','*:S'],stdout=log_output,stderr=subprocess.STDOUT)
         adb('shell','am','force-stop','io.cabinos.one')
         adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
@@ -85,6 +89,10 @@ def main():
         detail=str(error)+((': '+error.stderr.decode(errors='replace')) if isinstance(error,subprocess.CalledProcessError) and error.stderr else '')
         message=detail.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
         print('::error title=Android APK execution::'+message,flush=True)
+        captured=a.output/'startup-logcat.txt'
+        if captured.exists():
+            early=captured.read_text(errors='replace')[-6000:]
+            if early.strip():print('::error title=Captured APK startup::'+early.replace('%','%25').replace('\r','%0D').replace('\n','%0A'),flush=True)
         try:
             crash=adb('logcat','-d','-t','150','-s','AndroidRuntime:E',check=False).decode(errors='replace')
             (a.output/'android-runtime.txt').write_text(crash)
@@ -94,6 +102,11 @@ def main():
             print('::warning title=Device diagnostics::'+str(diagnostics_error),flush=True)
         raise
     finally:
+        if log_reader is not None:
+            log_reader.terminate()
+            try:log_reader.wait(timeout=5)
+            except subprocess.TimeoutExpired:log_reader.kill();log_reader.wait(timeout=5)
+        if log_output is not None:log_output.close()
         if recorder is not None:
             if recorder.poll() is None:
                 ids=adb('shell','pidof','screenrecord',check=False).decode().split()
@@ -102,7 +115,8 @@ def main():
                 try:recorder.wait(timeout=20)
                 except subprocess.TimeoutExpired:recorder.terminate();recorder.wait(timeout=10)
             adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
-        fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False).decode().strip()
+        try:fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False,timeout=10).decode().strip()
+        except (subprocess.SubprocessError,OSError):fingerprint='unavailable: device connection lost'
         result={'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',

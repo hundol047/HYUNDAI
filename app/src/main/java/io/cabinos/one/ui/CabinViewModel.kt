@@ -20,6 +20,7 @@ class CabinViewModel @Inject constructor(
     private val vehicle:VehicleStateProvider,
     private val pleos:PleosVehicleReader,
     val pleosNavigation:PleosNavigation,
+    val cabin:PleosCabinReader,
     private val dao:CabinDao,
     val speech:AndroidSpeechProvider,
     private val location:AndroidLocationProvider,
@@ -34,12 +35,19 @@ class CabinViewModel @Inject constructor(
     val appearance=mutableAppearance.asStateFlow()
     fun appearance(value:AppearanceSettings){if(state.value.parkedAllowed){val normalized=AppearanceCatalog.normalize(value);runtimePreferences.appearance=normalized;mutableAppearance.value=normalized}}
     val state=engine.state
-    val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
+    private val taskReadFailure="할 일을 읽지 못했습니다. 저장 공간을 확인해 주세요. 잠시 후 다시 시도합니다."
+    val tasks=dao.tasks().onEach {
+        mutableTaskReadFailure.value=null
+    }.retryWhen { error,_ ->
+        if(error is CancellationException)throw error
+        mutableTaskReadFailure.value=taskReadFailure;delay(5000);true
+    }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
     val reply=mutableReply.asStateFlow()
     private val mutableScenario=MutableStateFlow(simulator.selected)
     val scenario=mutableScenario.asStateFlow()
     val vehicleStatus=vehicle.status
+    val signalDiagnostics=vehicle.diagnostics
     val pleosState=pleos.state
     val pleosEnergy=pleos.energy
     val automotive=vehicle.automotive
@@ -63,12 +71,23 @@ class CabinViewModel @Inject constructor(
     private var foreground = true
     private val persistenceMutex = Mutex()
     private val vehicleDiagnostics=VehicleDiagnostics()
+    private var storageRestored=false
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
-    val storageStatus = mutableStorageStatus.asStateFlow()
+    private val mutableRestoreFailure=MutableStateFlow<String?>(null)
+    private val mutableTaskReadFailure=MutableStateFlow<String?>(null)
+    val storageStatus=combine(mutableRestoreFailure,mutableTaskReadFailure,mutableStorageStatus) { restore,tasks,operation ->
+        restore ?: tasks ?: operation
+    }.stateIn(viewModelScope,SharingStarted.Eagerly,null)
     init {
         viewModelScope.launch {
-            val checkpoint=dao.checkpoint()
-            engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+            try {
+                val checkpoint=dao.checkpoint()
+                engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+                storageRestored=true
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                mutableRestoreFailure.value="저장된 계획을 읽지 못해 변경 사항 저장을 중지했습니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요."
+            }
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
             launch { combine(vehicle.samples,pleos.energy) { sample,energy ->
@@ -82,10 +101,10 @@ class CabinViewModel @Inject constructor(
             launch { pleosNavigation.state.collect { nav ->
                 if(foreground && simulator.realMode) engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
             } }
-            launch { combine(state,pleos.state,pleos.energy) { app,sdk,energy -> Triple(app,sdk,energy) }.collect { (app,sdk,energy) ->
-                if(foreground)vehicleDiagnostics.record(app,sdk,energy)
-            } }
-            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};location.start();engine.setConnectivity(location=false) }
+            launch { combine(state,pleos.state,pleos.energy,pleosNavigation.state) { app,sdk,energy,nav ->
+                if(foreground)vehicleDiagnostics.record(app,sdk,energy,nav)
+            }.collect {} }
+            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
                 if (foreground) { if(!simulator.realMode) simulator.heartbeat();engine.tick();liveNavigation.tick() }
@@ -102,7 +121,7 @@ class CabinViewModel @Inject constructor(
                     persistenceMutex.withLock {
                         val latest = state.value
                         val f = listOf(latest.preferences,latest.session,latest.history,latest.schedule.departureAtMs)
-                        if(f != fingerprint) {
+                        if(storageRestored && f != fingerprint) {
                             try { dao.saveState(latest);fingerprint=f;mutableStorageStatus.value=null }
                             catch (error: Exception) { if (error is CancellationException) throw error;mutableStorageStatus.value="저장 공간을 확인해 주세요. 최근 변경 사항을 저장하지 못했습니다." }
                         }
@@ -126,15 +145,20 @@ class CabinViewModel @Inject constructor(
         simulator.select(name);mutableScenario.value=name
         if(simulator.realMode) {
             engine.acceptVehicle(vehicle.samples.value.copy(connected=false,parkingReliable=false))
-            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();pleos.start();pleosNavigation.start()};location.start()}
+            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();cabin.stop();pleos.start();pleosNavigation.start();cabin.start()};location.start()}
             engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
-        } else {pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
+        } else {pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
     }
     fun arrival(minutes:Int?) {
         if(engine.setArrivalInMinutes(minutes)) {
             val nav=pleosNavigation.state.value
             engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
         }
+    }
+    fun arrivalAt(target:Long) {
+        val nav=pleosNavigation.state.value
+        if(nav.readAtMs?.let { System.currentTimeMillis()-it in 0..10_000 } != true)return
+        if(engine.setArrivalAt(target))engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
     }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
@@ -144,10 +168,10 @@ class CabinViewModel @Inject constructor(
         speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it})
     }
     private fun writeTask(action:suspend ()->Unit) {
-        if (!state.value.parkedAllowed) return
+        if (!state.value.parkedAllowed || !storageRestored) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!state.value.parkedAllowed) return@withLock
+                if (!state.value.parkedAllowed || !storageRestored) return@withLock
                 try { action() }
                 catch(error:Exception) { if(error is CancellationException)throw error;mutableStorageStatus.value="할 일 변경 사항을 저장하지 못했습니다. 저장 공간을 확인해 주세요." }
             }
@@ -162,6 +186,7 @@ class CabinViewModel @Inject constructor(
         if(mutableAudio.value==preset) {audio.stop();mutableAudio.value=null} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
     }
     fun setForeground(active: Boolean) {
+        if(active)speech.refreshVoiceAvailability()
         liveNavigation.setForeground(active)
         if (foreground == active) return
         foreground=active
@@ -169,9 +194,9 @@ class CabinViewModel @Inject constructor(
             demoJob?.cancel();mutableDemoRunning.value=false
             audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();cancelNearby()
+            pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();cancelNearby()
         } else {
-            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
+            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
             else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
     }
@@ -228,12 +253,20 @@ class CabinViewModel @Inject constructor(
         if (!state.value.parkedAllowed) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!engine.clearPersonalData()) return@withLock
-                runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
-                demoJob?.cancel();mutableDemoRunning.value=false
-                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
-                try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
-                catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
+                val wasRestored=storageRestored
+                storageRestored=false // Never autosave the in-memory reset if disk deletion fails.
+                if (!engine.clearPersonalData()) {storageRestored=wasRestored;return@withLock}
+                try {
+                    demoJob?.cancel();mutableDemoRunning.value=false
+                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
+                    dao.clearPersonalData();dao.saveState(state.value)
+                    runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
+                    storageRestored=true;mutableRestoreFailure.value=null
+                    mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다."
+                } catch (error: Exception) {
+                    if(error is CancellationException) throw error
+                    mutableRestoreFailure.value="데이터 삭제를 완료하지 못해 자동 저장을 중지했습니다. 다시 삭제하거나 앱을 재시작해 주세요."
+                }
             }
         }
     }
@@ -256,5 +289,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { pleos.stop();pleosNavigation.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
+    override fun onCleared() { pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

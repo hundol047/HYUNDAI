@@ -24,6 +24,8 @@ class UnifiedVehicleContextEngine(
     private var lastChargeEstimate: Long? = null
     private var chargeDeadlineMs: Long? = null
     private var socDeadlineMs: Long? = null
+    private var socGoalConsumed = false
+    private var routePlanOverridden = false
     private var routeDeadlineMs: Long? = null
     private var routeReadAtMs: Long? = null
     private var returnSeconds = 0L
@@ -32,6 +34,7 @@ class UnifiedVehicleContextEngine(
     private var lastTickMs = clock()
     private var eventId = 0L
     private var departureAnnounced = false
+    private var driving = false
 
     private var navigationLock=false
     fun setNavigationLock(locked:Boolean) {
@@ -52,13 +55,15 @@ class UnifiedVehicleContextEngine(
             if (parkCandidateAt == null) parkCandidateAt = now
         } else parkCandidateAt = null
         if (sample.charging && sample.chargeRemainingSeconds != null && sample.chargeRemainingSeconds != lastChargeEstimate) {
-            // The provider reports a remaining duration at this timestamp; do not slide the deadline on each tick.
             val chargeDeadline = now + sample.chargeRemainingSeconds.coerceAtLeast(0) * 1000
-            chargeDeadlineMs = chargeDeadline
-            scheduleLabel = if (sample.source == DataSource.SIMULATION) "시뮬레이션 충전 예상" else "차량 충전 예상"
+            // A countdown is not a revised estimate. Keep the deadline through small jitter.
+            if (chargeDeadlineMs == null || kotlin.math.abs(chargeDeadline-chargeDeadlineMs!!) >= 60_000) {
+                chargeDeadlineMs = chargeDeadline
+                scheduleLabel = if (sample.source == DataSource.SIMULATION) "시뮬레이션 충전 예상" else "차량 충전 예상"
+                departureAnnounced = false
+                event("ChargingUpdated", "충전 예상 시간이 변경되었습니다.")
+            }
             lastChargeEstimate = sample.chargeRemainingSeconds
-            departureAnnounced = false
-            event("ChargingUpdated", "충전 예상 시간이 변경되었습니다.")
         }
         if (sample.source == DataSource.VEHICLE && lastChargeEstimate != null &&
             (!sample.charging || sample.chargeRemainingSeconds == null)) {
@@ -70,9 +75,13 @@ class UnifiedVehicleContextEngine(
         if (!sample.charging) { lastChargeEstimate = null; chargeDeadlineMs = null }
         val target = state.value.chargeTargetPercent
         if (target != null && sample.source == DataSource.VEHICLE && sample.connected && sample.pleosSoc &&
-            now - sample.timestampMs in 0..3_000 && sample.batteryPercent in target..100 && socDeadlineMs == null) {
+            now-sample.timestampMs in 0..3_000 && sample.batteryPercent in 0 until target) socGoalConsumed=false
+        if (target != null && sample.source == DataSource.VEHICLE && sample.connected && sample.pleosSoc &&
+            sample.parkingReliable && sample.gear == Gear.PARK && sample.speedKph == 0.0 &&
+            now - sample.timestampMs in 0..3_000 && sample.batteryPercent in target..100 && socDeadlineMs == null && !socGoalConsumed) {
             // A measured SOC threshold ends the activity now and reserves preparation time.
             // Never extrapolate a charging curve or write a target to the vehicle.
+            socGoalConsumed=true
             socDeadlineMs = now + state.value.preferences.departureBufferMinutes * 60_000L
             event("ChargeTargetReached", "Pleos SOC가 계획 목표에 도달했습니다. 출발을 준비하세요.")
         }
@@ -87,6 +96,15 @@ class UnifiedVehicleContextEngine(
             parkCandidateAt = null // Wake/resume and clock jumps require fresh parking confirmation.
         }
         lastTickMs = now
+        if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
+        val vehicleContext = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
+        if (vehicleContext == VehicleContext.DRIVING && !driving) {
+            returnSeconds=0;mutable.value=state.value.copy(selectedActivityId=null)
+            socDeadlineMs=null; manualDepartureAtMs=null; chargeDeadlineMs=null; lastChargeEstimate=null
+            routeDeadlineMs=null; routeReadAtMs=null; routePlanOverridden=false; departureAnnounced=false; scheduleLabel="시간 미설정"
+            if (old.arrivalTargetMs?.let { it < now } == true) mutable.value=state.value.copy(arrivalTargetMs=null)
+        }
+        driving = vehicleContext == VehicleContext.DRIVING
         val routeFresh = routeReadAtMs?.let { now - it in 0..10_000 } == true
         val constraints = listOfNotNull(
             manualDepartureAtMs?.let { it to "사용자 설정" },
@@ -98,7 +116,7 @@ class UnifiedVehicleContextEngine(
             ?: run { departureAtMs=null }
         val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel)
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
-        val physical = if(navigationLock)VehicleContext.DRIVING else decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
+        val physical = if(navigationLock)VehicleContext.DRIVING else vehicleContext
         val allowed = physical == VehicleContext.PARKED || physical == VehicleContext.CHARGING
         var session = old.session
         if (!allowed && session?.status == SessionStatus.RUNNING) {
@@ -146,7 +164,10 @@ class UnifiedVehicleContextEngine(
 
     fun setWaitingMinutes(minutes: Int): Boolean {
         if (!parkedNow()) return reject()
-        manualDepartureAtMs = clock() + minutes.coerceIn(1, 240) * 60_000L
+        val now=clock()
+        if (socDeadlineMs?.let { it < now } == true) socDeadlineMs=null
+        if (routeDeadlineMs?.let { it < now } == true) { routeDeadlineMs=null;routeReadAtMs=null;routePlanOverridden=true }
+        manualDepartureAtMs = now + minutes.coerceIn(1, 240) * 60_000L
         departureAtMs = manualDepartureAtMs
         scheduleLabel = "사용자 설정"; departureAnnounced = false
         event("DepartureTimeChanged", "출발까지 ${minutes.coerceIn(1,240)}분으로 설정했습니다."); tick(); return true
@@ -154,18 +175,21 @@ class UnifiedVehicleContextEngine(
     fun setChargeTarget(percent: Int?): Boolean {
         if (!parkedNow() || (percent != null && percent !in 50..100)) return false
         mutable.value = state.value.copy(chargeTargetPercent=percent)
-        socDeadlineMs=null
+        socDeadlineMs=null;socGoalConsumed=false
         state.value.sample?.let { acceptVehicle(it) } ?: tick()
         return true
     }
-    fun setArrivalInMinutes(minutes: Int?): Boolean {
+    fun setArrivalInMinutes(minutes: Int?): Boolean = setArrivalAt(minutes?.coerceIn(1,1440)?.let { clock()+it*60_000L })
+    fun setArrivalAt(targetMs:Long?):Boolean {
         if (!parkedNow()) return reject()
-        mutable.value=state.value.copy(arrivalTargetMs=minutes?.coerceIn(1,1440)?.let { clock()+it*60_000L })
-        routeDeadlineMs=null; routeReadAtMs=null; tick(); return true
+        if(targetMs!=null && targetMs-clock() !in 1..172_800_000)return false
+        mutable.value=state.value.copy(arrivalTargetMs=targetMs)
+        routeDeadlineMs=null; routeReadAtMs=null; routePlanOverridden=false; tick(); return true
     }
     /** Seconds/meters from DestinationInfo, not route geometry or an assumed driving speed.
      * A missing/stale route retains the earlier conservative deadline until the user replans. */
     fun updateNavigationEstimate(seconds: Int?, meters: Int?, readAtMs: Long?) {
+        if(routePlanOverridden) return // Explicit manual replanning supersedes the expired arrival plan.
         val arrival=state.value.arrivalTargetMs ?: return
         if(seconds == null || meters == null || readAtMs == null || seconds !in 0..604800 || meters < 0 ||
             clock()-readAtMs !in 0..10_000) { routeReadAtMs=null; tick(); return }
@@ -231,7 +255,9 @@ class UnifiedVehicleContextEngine(
         mutable.value = state.value.copy(preferences = preferences, session = session?.let {
             if (it.status == SessionStatus.RUNNING) it.copy(status = SessionStatus.PAUSED) else it
         }, history = history.take(100))
-        departureAtMs = departure; manualDepartureAtMs = departure; scheduleLabel = "저장된 출발 계획"; tick()
+        val restored=departure?.takeIf { it >= clock() }
+        departureAtMs = restored; manualDepartureAtMs = restored
+        scheduleLabel = if(restored!=null) "저장된 출발 계획" else "시간 미설정"; tick()
     }
     fun setConnectivity(network: Boolean = state.value.networkAvailable, location: Boolean = state.value.locationAvailable) {
         mutable.value = state.value.copy(networkAvailable = network, locationAvailable = location)
@@ -274,7 +300,7 @@ class UnifiedVehicleContextEngine(
     fun clearPersonalData(): Boolean {
         if (!parkedNow()) return reject()
         departureAtMs = null; manualDepartureAtMs = null; lastChargeEstimate = null
-        chargeDeadlineMs=null; socDeadlineMs=null; routeDeadlineMs=null; routeReadAtMs=null
+        chargeDeadlineMs=null; socDeadlineMs=null; socGoalConsumed=false; routePlanOverridden=false; routeDeadlineMs=null; routeReadAtMs=null
         sessionDeadlineMs = null; returnSeconds = 0; departureAnnounced = false; scheduleLabel = "시간 미설정"
         nearbyActivities=null
         mutable.value = state.value.copy(preferences = Preferences(), chargeTargetPercent=null, arrivalTargetMs=null, session = null, history = emptyList(), events = emptyList(),activityOrigin=MapPosition(),selectedActivityId=null,nearbyRevision=state.value.nearbyRevision+1)

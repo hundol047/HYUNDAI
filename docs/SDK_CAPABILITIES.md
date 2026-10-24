@@ -39,3 +39,38 @@ Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 �
 - [Pleos Connect Emulator 2.1.0/API 34](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator)
 
 공식 문서의 Dokka 본문과 실제 AAR 시그니처를 대조했습니다. `RouteStateInfo`에 없는 ETA 필드를 만들지 않았으며 `DestinationInfo`를 사용합니다. 최종 OEM 인증·공모전 승인과는 별개입니다.
+
+### 0.11.1 선택적 실내 제안 (실제 에뮬레이터 미검증)
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 동승자 감지 → 함께 휴식·오디오 추천 | Seat.checkSeatOccupancyCapabilities / getCurrentSeatOccupancy | pleos.car.permission.CAR_SEATS | [좌석 점유](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/seat/get-current-seat-occupancy) | 아니요 |
+
+공식 Vehicle 2.3.2 AAR의 실제 메서드와 권한 주석을 확인했습니다. capability가 READ/READ_WRITE인
+단일 좌석 영역만 읽습니다. 뒷좌석 점유 또는 서로 다른 좌석 2개 이상 점유일 때 동승자를 표시합니다.
+운전석 좌우를 알려 주는 API는 확인하지 못했으므로 앞좌석 1개만 점유하면 동승자로 단정하지 않습니다.
+벨트 체결만으로 점유를 추정하지 않습니다. 미지원·null·3초 시간 초과는 숨기며 백그라운드에서 구독을 중단합니다.
+이 정보는 정차 허용 판정에 사용하지 않으며 차량 제어 API를 호출하지 않습니다.
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 휴식 전 문 확인 | Door.checkDoorPositionCapabilities / getCurrentDoorPosition | pleos.car.permission.CAR_DOORS | [Door](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/door/get-current-door-position) | 아니요 |
+| 휴식 전 창문 확인 | Window.checkWindowPositionCapabilities / getCurrentWindowPosition | pleos.car.permission.CAR_WINDOWS | [Window](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/window/get-current-window-position) | 아니요 |
+| 실내 온도·공조 상태 | HVAC.checkHvacTemperatureCurrentCapabilities / getHvacTemperatureCurrent(CELSIUS), checkHvacPowerCapabilities / getHvacPowerState | pleos.car.permission.CAR_CLIMATE | [온도](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-temperature-current), [공조](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/h-v-a-c/get-hvac-power-state) | 아니요 |
+
+문·창문은 0을 포함하는 capability 범위 내 위치만 사용합니다. 0 이외의 위치를 열림으로 표시하며,
+실제 기기의 영역별 값과 방향은 시연에서 확인해야 합니다. 온도는 명시적으로 섭씨로 요청합니다.
+모든 안내는 읽기 전용이며 장치 동작을 바꾸지 않습니다.
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 워셔액 점검 카드 | Safety.checkLowWasherFluidWarningStateCapabilities / hasLowWasherFluidWarning | pleos.car.permission.CAR_SAFETY | [워셔액](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/has-low-washer-fluid-warning) | 아니요 |
+| 표시등 확인: 사용 제외 | Safety.checkTelltalesCapabilities / getTelltalesInfo | capability: pleos.car.permission.PRIVATE_CAR_SAFETY / getter: CAR_SAFETY | [표시등](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/safety/get-telltales-info) | 아니요 |
+
+공식 AAR에서 표시등 getter는 CAR_SAFETY를 요구하지만 capability 메서드는 PRIVATE_CAR_SAFETY를 요구합니다.
+SDK 포함 lint에서 이를 확인했습니다. 일반 공모전 앱에 비공개 권한이 허용된다는 근거가 없어 표시등·TPMS 읽기를 제외했습니다.
+capability 확인을 우회하거나 비공개 권한을 요청하지 않습니다.
+Tire.getLowTirePressure는 공식 2.3.2 AAR에서 Float 반환이며 Boolean 저압 경고 API가 아닙니다.
+따라서 독자 저압 플래그는 구현하지 않았고 임계값·단위도 추정하지 않습니다.
+[해당 공식 메서드](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/tire/get-low-tire-pressure).
+TPMS 표시등도 현재 구현에서 사용하지 않습니다.

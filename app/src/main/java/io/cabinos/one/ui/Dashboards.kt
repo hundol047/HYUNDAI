@@ -66,6 +66,8 @@ import kotlin.math.min
             }
             ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
+        val cabin by vm.cabin.state.collectAsState()
+        CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)
         if(active) ActiveSessionPanel(s,vm) else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
             ModeCard("집중 모드","작은 몰입이 만드는 큰 차이",min(s.preferences.focusMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.CenterFocusStrong,Blue,Modifier.weight(1f)){vm.start(SessionKind.FOCUS,s.preferences.focusMinutes)}
@@ -146,6 +148,7 @@ import kotlin.math.min
 @Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
     if(LocalCompactWindow.current) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
             Text(if(s.context==VehicleContext.UNKNOWN) "차량 상태를 확인할 수 없습니다." else "안전한 여정, 함께할게요.",color=White,fontSize=25.sp)
             Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Amber)
             SurfacePanel(Modifier.fillMaxWidth()) {
@@ -160,6 +163,7 @@ import kotlin.math.min
         return
     }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
         Row(verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(if(s.context==VehicleContext.UNKNOWN)"안전한 연결을 기다립니다." else "안전한 여정, 함께할게요.",fontSize=27.sp,fontWeight=FontWeight.SemiBold,color=White)

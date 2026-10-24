@@ -35,7 +35,8 @@ open class NavigationService {
         require(accessToken.isEmpty()||(accessToken.length in 12..256&&accessToken.all {it in '!'..'~'}&&URL(search).host.lowercase().trimEnd('.')!="nominatim.openstreetmap.org")){"접근키는 자체 검색 서버에만 사용하며 12~256자의 공백 없는 값이어야 합니다."}
         searchEndpoint=search.trimEnd('/');routeEndpoint=route.trimEnd('/');searchAccessToken=accessToken;cache.clear()
     }
-    fun clearCache(){cache.clear();searchAccessToken=""}
+    fun clearCache(){cache.clear()}
+    fun clearPersonalData(){clearCache();searchAccessToken=""}
     fun cancel(){connection?.disconnect()}
     private suspend fun get(url:String,accessToken:String=""):String=withContext(Dispatchers.IO) {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
@@ -142,6 +143,7 @@ data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlac
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
+    val voiceAvailable=speech.voiceAvailable
     private val tracker=NavigationTracker(clock)
     private val preferences=RuntimePreferences(context)
     private var language=preferences.navigationLanguage
@@ -160,6 +162,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private fun listenerFor(epoch:Int)=object:LocationListener {
         override fun onLocationChanged(location:Location) {
             if(epoch!=locationGeneration||!foreground||!listening)return
+            if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한이 해제됐습니다. 앱 권한 설정을 확인해 주세요.");return}
             val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null,if(location.hasBearing())location.bearing.toDouble() else null)
             // A coarse Wi-Fi/cell update must not interrupt a fresh precise GPS
             // stream. A poor GPS update itself still invalidates readiness.
@@ -349,6 +352,6 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val uri=android.net.Uri.parse("https://www.google.com/maps/search/?api=1&query="+android.net.Uri.encode(query.take(180)))
         runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,uri).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {mutable.value=mutable.value.copy(notice="외부 지도를 열 수 없습니다. 브라우저 설치를 확인하세요.")}
     }
-    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearCache();lastQuery="";resolvedSearchQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
+    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearPersonalData();lastQuery="";resolvedSearchQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
     fun close(){cancelVoice();cancelRequest();stopLocation();scope.cancel()}
 }

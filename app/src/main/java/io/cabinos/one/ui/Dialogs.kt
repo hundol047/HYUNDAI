@@ -34,6 +34,7 @@ import io.cabinos.core.*
 }
 @Composable fun AssistantDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onMicrophone:()->Unit) {
     val reply by vm.reply.collectAsStateWithLifecycle()
+    val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
     var input by remember { mutableStateOf("") }
     val commands=if(s.parkedAllowed) listOf("충전 얼마나 남았어?","25분 집중 모드 켜줘","15분 휴식 모드 시작해 줘","근처 쉴 곳 추천해 줘","출발 5분 전에 알려줘","이제 출발할게") else listOf("앞에 위험 구간 있어?","현재 주행 상황 알려줘")
     Dialog(onDismissRequest=onClose,properties=DialogProperties(usePlatformDefaultWidth=false)) {
@@ -50,7 +51,7 @@ import io.cabinos.core.*
                     IconButton(onClick={vm.command(input);input=""},enabled=input.isNotBlank()){Icon(Icons.AutoMirrored.Outlined.Send,"명령 실행",tint=Blue)}
                 }
             }
-            Spacer(Modifier.height(12.dp));ActionButton("말하기",onMicrophone,Modifier.fillMaxWidth(),Blue,icon=Icons.Outlined.MicNone)
+            if(voiceAvailable) { Spacer(Modifier.height(12.dp));ActionButton("말하기",onMicrophone,Modifier.fillMaxWidth(),Blue,icon=Icons.Outlined.MicNone) }
             Text("${vm.speech.status} · 음성 인식 서비스가 없으면 명령 버튼을 사용하세요.",fontSize=10.sp,color=Muted,modifier=Modifier.padding(top=9.dp))
         }
     }
@@ -58,6 +59,7 @@ import io.cabinos.core.*
 @Composable fun SimulatorDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onLocation:()->Unit,onVehiclePermissions:()->Unit={}) {
     val selected by vm.scenario.collectAsStateWithLifecycle()
     val vehicleStatus by vm.vehicleStatus.collectAsStateWithLifecycle()
+    val signalDiagnostics by vm.signalDiagnostics.collectAsStateWithLifecycle()
     val pleosState by vm.pleosState.collectAsStateWithLifecycle()
     val energyState by vm.pleosEnergy.collectAsStateWithLifecycle()
     val running by vm.demoRunning.collectAsStateWithLifecycle()
@@ -82,6 +84,7 @@ import io.cabinos.core.*
                 }
                 }
                 if(selected=="실차 연결") {
+                    Text("속도 신호 나이: ${signalDiagnostics.speedAgeMs?.let { "$it ms" } ?: "미수신"}",fontSize=12.sp,color=Muted)
                     if(!vm.automotive) ActionButton("데모로 돌아가기",{vm.selectScenario("충전")},Modifier.fillMaxWidth(),Amber)
                     Text(energyState.message + (energyState.percent?.let { " · $it%" } ?: ""),fontSize=12.sp,color=Muted)
                     Text(pleosState.message,fontSize=12.sp,color=if(pleosState.brakePressed!=null)Mint else Amber)

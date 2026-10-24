@@ -28,6 +28,8 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             Text("활동 ${s.schedule.availableSeconds/60}분 · 출발 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint)
             ActionButton("시간 설정",{timeDialog=true},Modifier.fillMaxWidth())
         }
+        val cabin by vm.cabin.state.collectAsStateWithLifecycle()
+        CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         val session=s.session?.takeIf {it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED}
         if(session!=null) CompactSession(s,vm,session) else {
             listOf(SessionKind.FOCUS to s.preferences.focusMinutes,SessionKind.RELAX to s.preferences.relaxMinutes,SessionKind.AUDIO to 15).forEach { (kind,minutes) ->
@@ -62,8 +64,9 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             ActionButton(if(audio==name) "$name 중지" else name,{vm.toggleAudio(name)},Modifier.fillMaxWidth(),enabled=session.status==SessionStatus.RUNNING)
         }
         if(session.kind==SessionKind.FOCUS) {
-            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),label={Text("이번 시간에 할 일")},singleLine=true)
-            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=task.isNotBlank())
+            FocusTaskPresets(s.parkedAllowed,vm::addTask)
+            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed,label={Text("이번 시간에 할 일")},singleLine=true)
+            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=s.parkedAllowed&&task.isNotBlank())
             tasks.forEach { item ->
                 Row(Modifier.fillMaxWidth()) {
                     Checkbox(item.done,{vm.toggleTask(item)})

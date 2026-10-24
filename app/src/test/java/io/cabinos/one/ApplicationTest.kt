@@ -32,6 +32,18 @@ import org.robolectric.annotation.Config
 class ApplicationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @Test fun activeGuidanceKeepsRerouteConnectionFailureVisible() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val error="내비게이션 서버에 연결하지 못했습니다. 네트워크·서비스 주소를 확인해 주세요."
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            NavigationScreen(AppState(networkAvailable=false),NavigationUi(
+                guidance=Guidance(active=true,offRoute=true,status="경로 이탈 · 재탐색 대기"),notice=error),vm.liveNavigation,{})
+        }}}
+        compose.onNodeWithText("경로 이탈 · 재탐색 대기").assertIsDisplayed()
+        compose.onNodeWithText(error).assertIsDisplayed()
+        compose.onNodeWithText("검색").assertDoesNotExist()
+    }
+
     @Test fun navigationNamesakeShowsActualDistanceAndHidesItWithoutUsableGps() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         val origin=NavFix(NavPoint(37.6868,128.7550),5.0,System.currentTimeMillis(),0.0)
@@ -42,6 +54,7 @@ class ApplicationTest {
                 gpsConnection=if(ready)io.cabinos.one.platform.GpsConnection.READY else io.cabinos.one.platform.GpsConnection.STALE),vm.liveNavigation,{})
         }}}}
         show(true)
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.onNodeWithText(hint).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("식당 · OSM / Nominatim").assertIsDisplayed()
         capture("navigation-namesake")
@@ -58,6 +71,7 @@ class ApplicationTest {
         }
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.runOnIdle { vm.selectScenario("신호 대기") }
         compose.onNodeWithText("신호 대기 중").assertIsDisplayed()
         assertFalse(vm.state.value.parkedAllowed)

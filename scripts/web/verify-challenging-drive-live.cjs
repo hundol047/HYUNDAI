@@ -49,7 +49,7 @@ function bearing(a,b){const p=radians(a[0]),q=radians(b[0]),l=radians(b[1]-a[1])
     await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);
     await page.evaluate(()=>{const f=L.map;L.map=function(...a){return window.driveMap=f.apply(this,a)}});
     await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();
-    await page.locator('aside [data-page="navigation"]').click();
+    await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();
     await page.evaluate(label=>{const p=document.createElement('p');p.id='drive-proof';p.textContent=label+' · 실제 지도·가게·경로 / 합성 GPS 약 6배속 · 실차 주행 아님';p.style.cssText='color:#ffcb7a;font-size:15px';document.querySelector('#navigation-panel h2').after(p)},scenario.label);
     await page.evaluate(()=>window.scrollTo(0,document.querySelector('.device').offsetTop-12));
     await page.locator('[data-nav="locate"]').click();await page.locator('#nav-query').fill(scenario.query);await page.locator('#nav-search').click();

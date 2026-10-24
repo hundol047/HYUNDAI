@@ -60,10 +60,11 @@ import java.util.*
         SurfacePanel(Modifier.weight(.42f).height(280.dp)) {
             if(session.kind==SessionKind.FOCUS) {
                 Row {SectionLabel("나의 할 일",color=Blue);Spacer(Modifier.weight(1f));Text("${tasks.count{it.done}} / ${tasks.size}",color=Muted,fontSize=11.sp)}
+                FocusTaskPresets(s.parkedAllowed,vm::addTask)
                 Spacer(Modifier.height(10.dp))
                 Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
-                    OutlinedTextField(value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
-                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
+                    OutlinedTextField(enabled=s.parkedAllowed,value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
+                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=s.parkedAllowed&&taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                     if(tasks.isEmpty()) Text("작은 목표 하나를 적어보세요.\n완료한 일은 다음에도 기억해요.",fontSize=12.sp,color=Muted,modifier=Modifier.padding(top=20.dp))
@@ -108,6 +109,7 @@ import java.util.*
 @Composable fun SettingsScreen(s:AppState,vm:CabinViewModel,onNotifications:()->Unit) {
     var confirmDeletion by remember { mutableStateOf(false) }
     val storage by vm.storageStatus.collectAsStateWithLifecycle()
+    val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
     if(confirmDeletion) AlertDialog(onDismissRequest={confirmDeletion=false},
         title={Text("개인 데이터를 삭제할까요?")},
         text={Text("할 일, 세션 기록, 개인 설정, 출발 계획을 삭제합니다. 진행 중인 세션도 종료됩니다. 차량 데이터 모드 선택은 유지합니다.")},
@@ -126,7 +128,7 @@ import java.util.*
             }
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
-                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(if(voiceAvailable)vm.speech.status else "음성 서비스 사용 불가 · 명령 버튼으로 이용하세요",color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
                 Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)
@@ -146,10 +148,18 @@ import java.util.*
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
             SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))
-            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: 선택 빌드의 브레이크 읽기 · 대상 기기 검증 미완료\n충전·배터리: 데모 / 실차 미연동\nPleos FusedLocation · NaviHelper: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
+            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: SOC·충전 상태·선택적 실내 정보 읽기\n충전·배터리: 차량 제공 값 / 일반 기기 데모\nNaviHelper: 기본 내비 연결·도착 계획 / FusedLocation: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
         }
     }
 }
 @Composable private fun SettingStepper(label:String,value:Int,options:List<Int>,onSelect:(Int)->Unit) {
     Column {Text(label,color=White,fontSize=13.sp);Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){ options.forEach { n ->FilterChip(selected=value==n,onClick={onSelect(n)},label={Text("${n}분",fontSize=12.sp)}) } };Spacer(Modifier.height(12.dp))}
+}
+
+@Composable internal fun FocusTaskPresets(parked:Boolean,onAdd:(String)->Unit) {
+    FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+        listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
+            OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
+        }
+    }
 }

@@ -75,4 +75,90 @@ class ContextEngineTest {
         send(charging=true,remaining=300);assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
         send(Gear.DRIVE,60.0);assertTrue(engine.state.value.echoRoadActive);assertFalse(engine.state.value.cabinActive)
     }
+    @Test fun drivingClearsPreviousParkingDeadlines() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(70);now+=1600;real(70);engine.setChargeTarget(80);engine.setWaitingMinutes(30)
+        real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+        real(80,Gear.DRIVE,30.0);assertNull(engine.state.value.schedule.departureAtMs)
+        real(60);now+=1600;real(60);engine.setWaitingMinutes(30)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        assertNotEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
+        assertEquals(80,engine.state.value.chargeTargetPercent)
+    }
+    @Test fun restoreRejectsPastDeparture() {
+        engine.restore(Preferences(),null,emptyList(),now-1)
+        assertNull(engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun trafficStopAndUnknownPreserveParkingPlan() {
+        park();engine.setWaitingMinutes(30);val deadline=engine.state.value.schedule.departureAtMs
+        send(Gear.DRIVE,0.0);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        send(connected=false);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun explicitWaitingPlanReplacesExpiredSocAndRouteDeadlines() {
+        fun real() = engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real();now+=1600;real();engine.setChargeTarget(80);engine.setArrivalInMinutes(10)
+        engine.updateNavigationEstimate(900,1000,now)
+        repeat(301) { now+=1000;real() }
+        assertTrue(engine.setWaitingMinutes(30));assertTrue(engine.state.value.schedule.availableSeconds>0)
+        now+=1000;real();assertTrue(engine.state.value.schedule.availableSeconds>0)
+    }
+    @Test fun drivingDiscardsPastArrivalTarget() {
+        park();engine.setArrivalInMinutes(1);now+=61000;send(Gear.DRIVE,20.0)
+        assertNull(engine.state.value.arrivalTargetMs)
+    }
+    @Test fun chargingCountdownDoesNotRepeatDepartureAnnouncements() {
+        send(charging=true,remaining=300)
+        repeat(10) { now+=1000;send(charging=true,remaining=299L-it) }
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+        assertEquals(1,engine.state.value.events.count { it.name=="DepartureApproaching" })
+    }
+    @Test fun materialChargeEstimateJumpAnnouncesOnceMore() {
+        send(charging=true,remaining=1200);now+=1000;send(charging=true,remaining=1199)
+        send(charging=true,remaining=2100)
+        assertEquals(2,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
+    @Test fun repeatedDrivingSamplesDoNotRecreateParkingSocDeadline() {
+        park();engine.setChargeTarget(80)
+        repeat(3) {
+            now+=1000
+            engine.acceptVehicle(VehicleSample(gear=Gear.DRIVE,speedKph=30.0,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+            assertNull(engine.state.value.schedule.departureAtMs)
+        }
+    }
+    @Test fun reachedSocGoalDoesNotBlockNextStopUntilRearmed() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(80);now+=1600;real(80);engine.setChargeTarget(80)
+        real(80,Gear.DRIVE,20.0);real(80);now+=1600;real(80)
+        engine.setWaitingMinutes(30);now+=1000;real(80)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        real(70);real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun expiredRouteDoesNotOverrideExplicitWaitingOnNextNavigationRead() {
+        park();engine.setArrivalInMinutes(10);engine.updateNavigationEstimate(900,1000,now)
+        engine.setWaitingMinutes(30);now+=1000;send();engine.updateNavigationEstimate(900,1000,now)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        engine.setArrivalInMinutes(20);engine.updateNavigationEstimate(1000,1000,now)
+        assertEquals(0L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun unchangedChargeEstimateDoesNotSlideAfterOneMinute() {
+        send(charging=true,remaining=1200);val deadline=engine.state.value.schedule.departureAtMs
+        repeat(61) { now+=1000;send(charging=true,remaining=1200) }
+        assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
+    @Test fun drivingClearsOldWalkingReservationBeforeNextStop() {
+        park();engine.setWaitingMinutes(40);assertTrue(engine.selectActivity("cafe"))
+        assertTrue(engine.state.value.schedule.returnSeconds>0)
+        send(Gear.DRIVE,0.0);assertNotNull(engine.state.value.selectedActivityId)
+        send(Gear.DRIVE,40.0);park();engine.setWaitingMinutes(40)
+        assertNull(engine.state.value.selectedActivityId)
+        assertEquals(0L,engine.state.value.schedule.returnSeconds)
+        assertEquals(2100L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun absoluteArrivalTargetPreservesClockTimeAndRejectsPastOrDriving() {
+        park();val target=now+3_650_000
+        assertTrue(engine.setArrivalAt(target));assertEquals(target,engine.state.value.arrivalTargetMs)
+        assertFalse(engine.setArrivalAt(now-1));assertEquals(target,engine.state.value.arrivalTargetMs)
+        send(Gear.DRIVE,40.0);assertFalse(engine.setArrivalAt(target))
+    }
 }
