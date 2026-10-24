@@ -105,4 +105,15 @@ class ContextEngineTest {
         park();engine.setArrivalInMinutes(1);now+=61000;send(Gear.DRIVE,20.0)
         assertNull(engine.state.value.arrivalTargetMs)
     }
+    @Test fun chargingCountdownDoesNotRepeatDepartureAnnouncements() {
+        send(charging=true,remaining=300)
+        repeat(10) { now+=1000;send(charging=true,remaining=299L-it) }
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+        assertEquals(1,engine.state.value.events.count { it.name=="DepartureApproaching" })
+    }
+    @Test fun materialChargeEstimateJumpAnnouncesOnceMore() {
+        send(charging=true,remaining=1200);now+=1000;send(charging=true,remaining=1199)
+        send(charging=true,remaining=2100)
+        assertEquals(2,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
 }
