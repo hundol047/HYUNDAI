@@ -47,12 +47,14 @@ def install(archive, sdk, avd_home):
     avd.mkdir(parents=True, exist_ok=True)
     (avd_home / "CabinOS_Pleos_21.ini").write_text(
         f"avd.ini.encoding=UTF-8\npath={avd}\ntarget=android-34\n")
+    # Official source.properties specifies avd_config_ini.hw.ramSize=8192.
+    # 4 GiB runs observed UIAutomator exit 137; retain the image default here.
     (avd / "config.ini").write_text(f"""AvdId=CabinOS_Pleos_21
 avd.ini.encoding=UTF-8
 abi.type=x86_64
 hw.cpu.arch=x86_64
 hw.cpu.ncore=4
-hw.ramSize=4096
+hw.ramSize=8192
 hw.device.name=Pleos_Connect_v2_0
 hw.device.manufacturer=42dot
 hw.lcd.width=2560

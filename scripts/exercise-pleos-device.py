@@ -41,8 +41,14 @@ def main():
             r.read()
         note('Official Console: '+endpoint)
     def tree():
-        adb('shell','uiautomator','dump','/sdcard/cabinos-record.xml')
-        return ET.fromstring(adb('shell','cat','/sdcard/cabinos-record.xml'))
+        for attempt in range(3):
+            adb('shell','rm','-f','/sdcard/cabinos-record.xml')
+            try:
+                adb('shell','uiautomator','dump','--compressed','/sdcard/cabinos-record.xml')
+                return ET.fromstring(adb('shell','cat','/sdcard/cabinos-record.xml'))
+            except subprocess.CalledProcessError as error:
+                if error.returncode not in (1,137) or attempt==2:raise
+                time.sleep(1)
     def bounds(node):
         return list(map(int,re.findall(r'\d+',node.get('bounds',''))))
     def wait(label,seconds=20):

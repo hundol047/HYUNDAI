@@ -55,8 +55,14 @@ def note(text):
     actions.append({'seconds':round(time.monotonic()-start,2),'action':text})
     print(text,flush=True)
 def tree():
-    adb('shell','uiautomator','dump','/sdcard/cabinos-preview.xml',timeout=40)
-    return ET.fromstring(adb('shell','cat','/sdcard/cabinos-preview.xml'))
+    for attempt in range(3):
+        adb('shell','rm','-f','/sdcard/cabinos-preview.xml')
+        try:
+            adb('shell','uiautomator','dump','--compressed','/sdcard/cabinos-preview.xml',timeout=40)
+            return ET.fromstring(adb('shell','cat','/sdcard/cabinos-preview.xml'))
+        except subprocess.CalledProcessError as error:
+            if error.returncode not in (1,137) or attempt==2:raise
+            time.sleep(1)
 def bounds(node):return list(map(int,re.findall(r'\d+',node.get('bounds',''))))
 def tap_node(node):
     box=bounds(node)
