@@ -2,6 +2,9 @@
 """Collect actual official-emulator diagnostics; never marks a submission complete."""
 import argparse
 import json
+import os
+import shutil
+import sys
 import subprocess
 import time
 import urllib.request
@@ -13,7 +16,15 @@ p.add_argument('--apk', type=Path, required=True)
 p.add_argument('--output', type=Path, required=True)
 a = p.parse_args()
 a.output.mkdir(parents=True, exist_ok=True)
-adb = ['adb', '-s', a.serial]
+adb_path = shutil.which('adb') or str(Path(os.environ.get('ANDROID_HOME',''))/'platform-tools/adb')
+if not Path(adb_path).is_file():
+    raise SystemExit('::error::ADB executable unavailable; set ANDROID_HOME/platform-tools on PATH')
+adb = [adb_path, '-s', a.serial]
+def report_error(kind, value, trace):
+    message=(kind.__name__+': '+str(value)).replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+    print('::error::'+message[:1500],flush=True)
+    sys.__excepthook__(kind,value,trace)
+sys.excepthook=report_error
 def run(*args, timeout=30, check=True):
     return subprocess.run(adb+list(args), text=True, capture_output=True, timeout=timeout, check=check)
 

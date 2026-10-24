@@ -18,11 +18,13 @@ Deterministic UI fixtures use synthetic protocol/GPS data; live-recorded route/s
 
 ## 앱의 주요 오픈소스 의존성
 
-- **Kotlin / kotlinx.coroutines** — Apache-2.0. https://github.com/JetBrains/kotlin , https://github.com/Kotlin/kotlinx.coroutines . Kotlin 컴파일러·표준 라이브러리와 코루틴을 사용합니다.
+- **Kotlin / kotlinx.coroutines / kotlinx.serialization** — Apache-2.0. https://github.com/JetBrains/kotlin , https://github.com/Kotlin/kotlinx.coroutines , https://github.com/Kotlin/kotlinx.serialization . Kotlin 컴파일러·표준 라이브러리와 코루틴을 사용합니다.
 - **AndroidX (Activity, Core, Lifecycle, Navigation, Compose, Room)** — Apache-2.0. https://android.googlesource.com/platform/frameworks/support/ . UI·수명 관리·로컬 DB를 사용합니다.
 - **Dagger / Hilt** — Apache-2.0. https://github.com/google/dagger . 의존성 주입에 사용합니다.
 - **osrm-text-instructions** — BSD-2-Clause. `third_party/osrm-text-instructions/LICENSE.txt` 및 출처 README를 포함합니다. 길 안내 번역 생성에 사용합니다.
 - **JUnit / Robolectric / Playwright** — 테스트·개발 도구이며 APK 런타임 구성요소와 구분합니다. JUnit 4는 EPL-1.0, Robolectric과 Playwright는 Apache-2.0입니다.
-- **Pleos Vehicle 2.3.2 / NaviHelper 3.0.5** — 선택 프로필의 제공자 SDK입니다. Pleos Playground 이용 조건·배포 조건이 적용되며 오픈소스 Apache/BSD 라이선스로 재허가하지 않습니다. 공식 AAR를 확보하지 못한 상태로 해당 SDK의 NOTICE 검사를 완료했다고 주장하지 않습니다.
+- **Pleos Vehicle 2.3.2 / NaviHelper 3.0.5** — 선택 프로필의 제공자 SDK입니다. Pleos Playground 이용 조건·배포 조건이 적용되며 오픈소스 Apache/BSD 라이선스로 재허가하지 않습니다. 공식 AAR(Vehicle, NaviHelper 및 vehicle/navi data·aidl 전이 의존성) 내부의 LICENSE/NOTICE 이름 항목은 없음을 확인했습니다. 이것이 제공자 배포 조건의 면제를 의미하지 않습니다.
 
 Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`에 포함합니다. 웹 Leaflet 및 번역 라이선스는 각 배포 자산의 원문을 유지합니다. 데이터 출처 표시는 앱 지도에서도 유지합니다.
+
+- **Gson** — Apache-2.0. https://github.com/google/gson . 공식 Vehicle SDK의 전이 런타임 의존성입니다.

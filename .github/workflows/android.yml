@@ -87,6 +87,7 @@ jobs:
           sudo udevadm trigger --name-match=kvm
           test -r /dev/kvm
       - uses: actions/cache@v4
+        id: pleos-image
         with:
           path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
           key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
@@ -94,8 +95,14 @@ jobs:
         run: |
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" emulator platform-tools
           python3 scripts/install-pleos-emulator.py --archive "$RUNNER_TEMP/pleos-connect-2.1.0.zip" --sdk "$ANDROID_HOME" --avd-home "$ANDROID_AVD_HOME"
+      - uses: actions/cache/save@v4
+        if: steps.pleos-image.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
+          key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
       - name: Boot official image with hardware acceleration
         run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
           mkdir -p artifacts/pleos-device
           "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
           echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
@@ -108,4 +115,4 @@ jobs:
           retention-days: 7
       - name: Stop emulator
         if: always()
-        run: adb -s emulator-5554 emu kill || true
+        run: "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 emu kill || true
