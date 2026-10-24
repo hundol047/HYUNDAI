@@ -87,6 +87,18 @@ jobs:
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk "${{ matrix.apk }}" --output artifacts/android-device-demo
+      - name: Report runner resource failures
+        if: failure()
+        shell: bash
+        run: |
+          free -m
+          ps -eo pid,comm,rss --sort=-rss | head -12 || true
+          diagnostic="$(sudo dmesg | grep -Ei 'out of memory|oom-kill|killed process' | tail -8 || true)"
+          if [ -n "$diagnostic" ]; then
+            diagnostic="${diagnostic//'%'/'%25'}"
+            diagnostic="${diagnostic//$'\n'/'%0A'}"
+            echo "::error title=Runner memory diagnostics::$diagnostic"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
