@@ -148,7 +148,7 @@ import java.util.*
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
             SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))
-            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: 선택 빌드의 브레이크 읽기 · 대상 기기 검증 미완료\n충전·배터리: 데모 / 실차 미연동\nPleos FusedLocation · NaviHelper: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
+            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: SOC·충전 상태·선택적 실내 정보 읽기\n충전·배터리: 차량 제공 값 / 일반 기기 데모\nNaviHelper: 기본 내비 연결·도착 계획 / FusedLocation: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
         }
     }
 }
