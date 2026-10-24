@@ -48,7 +48,15 @@ jobs:
             app/build/screenshots/
   android-device:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: stored-release
+            apk: apk/퓨처랩스_CabinOS_ONE_release.apk
+          - profile: current-source-debug
+            apk: app/build/outputs/apk/debug/app-debug.apk
     # The ordinary Android emulator validates APK execution, not Pleos services.
     if: github.event_name == 'push'
     steps:
@@ -57,12 +65,19 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        if: matrix.profile == 'current-source-debug'
+      - name: Build current source with official SDK for device smoke testing
+        if: matrix.profile == 'current-source-debug'
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
+          ./gradlew -PpleosSdk=true :app:assembleDebug --console=plain
       - name: Enable runner KVM access
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Install and record the exact signed candidate APK
+      - name: Install and record the selected APK (debug is test-only)
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 35
@@ -70,11 +85,11 @@ jobs:
           target: default
           disable-animations: true
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/android-device-demo
+          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk "${{ matrix.apk }}" --output artifacts/android-device-demo
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: CabinOS-Android-APK-device-video
+          name: CabinOS-Android-APK-device-video-${{ matrix.profile }}
           path: artifacts/android-device-demo/
   pleos-device:
     name: Official Pleos boot diagnostics

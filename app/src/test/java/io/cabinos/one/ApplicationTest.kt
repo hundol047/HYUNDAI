@@ -32,6 +32,18 @@ import org.robolectric.annotation.Config
 class ApplicationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @Test fun activeGuidanceKeepsRerouteConnectionFailureVisible() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val error="내비게이션 서버에 연결하지 못했습니다. 네트워크·서비스 주소를 확인해 주세요."
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            NavigationScreen(AppState(networkAvailable=false),NavigationUi(
+                guidance=Guidance(active=true,offRoute=true,status="경로 이탈 · 재탐색 대기"),notice=error),vm.liveNavigation,{})
+        }}}
+        compose.onNodeWithText("경로 이탈 · 재탐색 대기").assertIsDisplayed()
+        compose.onNodeWithText(error).assertIsDisplayed()
+        compose.onNodeWithText("검색").assertDoesNotExist()
+    }
+
     @Test fun navigationNamesakeShowsActualDistanceAndHidesItWithoutUsableGps() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         val origin=NavFix(NavPoint(37.6868,128.7550),5.0,System.currentTimeMillis(),0.0)

@@ -67,3 +67,15 @@ sha256sum -c apk/SHA256SUMS
 실제 브라우저 서버 연결은 환경 프록시 CA를 신뢰하지 않아 실패했습니다. CA 등록은 명시적 승인 없는 신뢰 범위 변경이라는 사유로 자동 승인 검토에서 거절됐으며, TLS 검증을 끄거나 우회하지 않았습니다. 대신 기존 인증서 검증을 유지하는 HTTPS 요청과 실제 Android 지도 경로를 확인했습니다.
 
 처음 식별 정보 없는 지도 타일 검사에서는 PNG 형식의 접근 차단 안내를 받았습니다. PNG 디코딩만으로 도로 표시 성공이라고 판단하지 않았고, 앱의 실제 User-Agent를 사용한 동일 서울 타일을 다시 요청해 도로·지명·건물을 이미지로 확인했습니다. 공식 Pleos 기본 내비의 실제 목적지 전달·ETA, 기기 GPS·음성 엔진, 미등록 상호와 모든 국가의 도로 정확도는 여전히 미검증입니다.
+
+## 내비게이션 예외 처리와 최신 APK 실행 범위 보완
+
+- `LiveNavigationTest.languageChangeKeepsSearchCredentialUntilPersonalDataIsCleared`: 언어 변경 시 검색 캐시와 함께 자체 서버 접근키가 삭제되는 결함을 재현했습니다. 캐시 비우기와 개인정보 삭제를 분리했습니다. 언어 변경은 접근키를 유지하며, 개인정보 삭제는 접근키도 제거합니다. 테스트 문자열은 가짜 키입니다.
+- `LiveNavigationTest.queuedGpsAfterPermissionRevocationCannotRestoreNavigationReadiness`: 권한 취소 직후 대기 중이던 위치 콜백이 수신 가능 상태를 다시 표시하는 결함을 재현했습니다. 콜백 진입 시 정확한 위치 권한을 확인하고, 상실 시 구독을 끊고 위치·준비 상태를 무효화합니다. 기존 세대의 콜백도 재사용되지 않습니다.
+- 위 두 테스트는 수정 전 3개 중 2개 실패, 수정 후 3개 모두 통과했습니다. 차량의 P·정지 1.5초 및 신호 만료 기준은 변경하지 않았습니다.
+- `ApplicationTest.activeGuidanceKeepsRerouteConnectionFailureVisible`: 안내 중 재탐색 연결 실패 사유와 경로 이탈 상태가 동시에 보이고 검색 조작은 숨겨지는지 확인했습니다. 기존 화면이 통과하므로 제품 변경 없이 검사만 추가했습니다.
+- `./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:lintDebug :app:assembleRelease` 통과: core 144 + Android 145 = **289개, 실패 0개, 제외 0개**, lint 오류 0개·기존 경고 4개. release는 unsigned 빌드 검증이며 팀 서명·배포 검증이 아닙니다.
+- Python 녹화·패키징 검사 30개, 서버 검사 11개 통과했습니다.
+- 기존 CI 에뮬레이터 검사는 `apk/`의 이전 제출 APK만 실행했습니다. 이를 유지하면서 `current-source-debug` 검사를 추가해 현재 커밋을 공식 SDK 포함 debug APK로 빌드·설치하고 실제 화면을 연속 녹화하도록 했습니다. 두 결과는 별도 artifact에 보관합니다. debug 실행은 최신 코드의 일반 Android 동작 검증이며 정식 서명·Pleos 서비스·실차 검증을 대신하지 않습니다. 실행 결과는 해당 커밋의 GitHub Actions에서 확인합니다.
+
+이번 변경으로 `apk/` 제출 파일·체크섬은 갱신하지 않았습니다. 실제 기기 GPS·음성·Pleos 내비 전달과 팀 서명 후보의 전체 시연은 계속 별도 확인이 필요합니다.
