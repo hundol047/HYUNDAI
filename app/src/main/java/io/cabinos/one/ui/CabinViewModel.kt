@@ -35,7 +35,13 @@ class CabinViewModel @Inject constructor(
     val appearance=mutableAppearance.asStateFlow()
     fun appearance(value:AppearanceSettings){if(state.value.parkedAllowed){val normalized=AppearanceCatalog.normalize(value);runtimePreferences.appearance=normalized;mutableAppearance.value=normalized}}
     val state=engine.state
-    val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
+    private val taskReadFailure="할 일을 읽지 못했습니다. 저장 공간을 확인해 주세요. 잠시 후 다시 시도합니다."
+    val tasks=dao.tasks().onEach {
+        if(mutableStorageStatus.value==taskReadFailure)mutableStorageStatus.value=null
+    }.retryWhen { error,_ ->
+        if(error is CancellationException)throw error
+        mutableStorageStatus.value=taskReadFailure;delay(5000);true
+    }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
     val reply=mutableReply.asStateFlow()
     private val mutableScenario=MutableStateFlow(simulator.selected)
@@ -65,12 +71,19 @@ class CabinViewModel @Inject constructor(
     private var foreground = true
     private val persistenceMutex = Mutex()
     private val vehicleDiagnostics=VehicleDiagnostics()
+    private var storageRestored=false
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
     val storageStatus = mutableStorageStatus.asStateFlow()
     init {
         viewModelScope.launch {
-            val checkpoint=dao.checkpoint()
-            engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+            try {
+                val checkpoint=dao.checkpoint()
+                engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+                storageRestored=true
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                mutableStorageStatus.value="저장된 계획을 읽지 못해 변경 사항 저장을 중지했습니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요."
+            }
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
             launch { combine(vehicle.samples,pleos.energy) { sample,energy ->
@@ -104,7 +117,7 @@ class CabinViewModel @Inject constructor(
                     persistenceMutex.withLock {
                         val latest = state.value
                         val f = listOf(latest.preferences,latest.session,latest.history,latest.schedule.departureAtMs)
-                        if(f != fingerprint) {
+                        if(storageRestored && f != fingerprint) {
                             try { dao.saveState(latest);fingerprint=f;mutableStorageStatus.value=null }
                             catch (error: Exception) { if (error is CancellationException) throw error;mutableStorageStatus.value="저장 공간을 확인해 주세요. 최근 변경 사항을 저장하지 못했습니다." }
                         }
@@ -151,10 +164,10 @@ class CabinViewModel @Inject constructor(
         speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it})
     }
     private fun writeTask(action:suspend ()->Unit) {
-        if (!state.value.parkedAllowed) return
+        if (!state.value.parkedAllowed || !storageRestored) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!state.value.parkedAllowed) return@withLock
+                if (!state.value.parkedAllowed || !storageRestored) return@withLock
                 try { action() }
                 catch(error:Exception) { if(error is CancellationException)throw error;mutableStorageStatus.value="할 일 변경 사항을 저장하지 못했습니다. 저장 공간을 확인해 주세요." }
             }
@@ -240,7 +253,7 @@ class CabinViewModel @Inject constructor(
                 runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
                 demoJob?.cancel();mutableDemoRunning.value=false
                 audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
-                try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
+                try { dao.clearPersonalData();dao.saveState(state.value);storageRestored=true;mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
                 catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
             }
         }

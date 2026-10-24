@@ -34,6 +34,7 @@ import java.util.*
 @Composable fun CabinApp(vm:CabinViewModel=hiltViewModel()) {
     val s by vm.state.collectAsStateWithLifecycle()
     val vehicleStatus by vm.vehicleStatus.collectAsStateWithLifecycle()
+    val storageStatus by vm.storageStatus.collectAsStateWithLifecycle()
     val appearance by vm.appearance.collectAsStateWithLifecycle()
     val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
     var navigationOpen by remember { mutableStateOf(false) }
@@ -145,6 +146,7 @@ import java.util.*
                             Text("CabinOS ONE",color=White,fontSize=23.sp,modifier=Modifier.weight(1f))
                             TextButton(onClick={simulatorOpen=true}){Text(if(vm.automotive) "차량 상태" else "연결 / 데모")}
                         } else BrandHeader(s)
+                        storageStatus?.let { Text(it,color=Amber,fontSize=12.sp,modifier=Modifier.fillMaxWidth().padding(vertical=4.dp)) }
                         Box(Modifier.weight(1f)) {
                             if(vm.automotive && (navigationOpen || route=="nearby")) VehicleNavigationPanel(s,vm)
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
