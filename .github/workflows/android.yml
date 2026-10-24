@@ -71,7 +71,8 @@ jobs:
         if: matrix.profile == 'current-source-debug'
         run: |
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
-          ./gradlew -PpleosSdk=true :app:assembleDebug --console=plain
+          # Release the compiler/Gradle heap before starting a memory-heavy emulator.
+          ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleDebug --console=plain
       - name: Enable runner KVM access
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

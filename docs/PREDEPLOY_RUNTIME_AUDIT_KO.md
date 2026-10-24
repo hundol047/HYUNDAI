@@ -79,3 +79,5 @@ sha256sum -c apk/SHA256SUMS
 - 기존 CI 에뮬레이터 검사는 `apk/`의 이전 제출 APK만 실행했습니다. 이를 유지하면서 `current-source-debug` 검사를 추가해 현재 커밋을 공식 SDK 포함 debug APK로 빌드·설치하고 실제 화면을 연속 녹화하도록 했습니다. 두 결과는 별도 artifact에 보관합니다. debug 실행은 최신 코드의 일반 Android 동작 검증이며 정식 서명·Pleos 서비스·실차 검증을 대신하지 않습니다. 실행 결과는 해당 커밋의 GitHub Actions에서 확인합니다.
 
 이번 변경으로 `apk/` 제출 파일·체크섬은 갱신하지 않았습니다. 실제 기기 GPS·음성·Pleos 내비 전달과 팀 서명 후보의 전체 시연은 계속 별도 확인이 필요합니다.
+
+최신 debug APK의 첫 CI 기기 실행과 새 runner 재실행은 모두 UIAutomator 조회 실패(exit 255), 이어진 logcat 45초 시간 초과로 실패했습니다. 기존 제출 APK 작업과 빌드·단위 검사는 통과했습니다. 이 환경에서는 Actions 로그·artifact 다운로드가 Forbidden이므로 상세 기기 로그/영상은 열람하지 못했습니다. 원인을 앱 또는 메모리 부족으로 단정하지 않습니다. 최신 기기 작업에서는 빌드 직후 최대 3GB Gradle daemon이 남을 수 있어 `--no-daemon` 및 Kotlin in-process 컴파일로 빌드 프로세스를 종료한 뒤 에뮬레이터를 시작하도록 보완했습니다. 결과는 후속 CI에서 확인하며 첫 실패를 성공으로 간주하지 않습니다.
