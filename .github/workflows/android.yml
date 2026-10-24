@@ -1,5 +1,13 @@
 name: Android verification
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      record_pleos_preview:
+        description: Record a limited actual SDK preview and upload a draft for visual review
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -71,6 +79,8 @@ jobs:
   pleos-device:
     name: Official Pleos boot diagnostics
     if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
@@ -112,11 +122,42 @@ jobs:
           "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
           echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
           python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+      - name: Record actual SDK preview without claiming full scenario acceptance
+        if: inputs.record_pleos_preview
+        run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-preview
+      - name: Upload a draft recording for visual review
+        if: inputs.record_pleos_preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF_NAME" = feat/pleos-vehicle-state
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('artifacts/pleos-preview')
+          evidence=json.loads((p/'preview.json').read_text())
+          (p/'RELEASE.md').write_text('공식 Pleos 2.1.0 / API 34에서 서명 APK를 직접 실행한 연속 화면 녹화입니다.\n\n'
+              'APK SHA-256: `'+evidence['apkSha256']+'`\n\n'
+              '현재는 시각 검토 전 초안이며 제출 완료를 뜻하지 않습니다. preview.json의 mode와 fullScenarioChecks를 확인하세요. '
+              '명령 버튼 조작은 마이크 음성 인식 시연이 아닙니다. preview.json에 실제 관측 결과와 미통과 항목을 보존합니다.\n')
+          (p/'tag.txt').write_text('v0.11.0-pleos-preview-'+evidence['apkSha256'][:8])
+          PY
+          PREVIEW_TAG="$(cat artifacts/pleos-preview/tag.txt)"
+          if gh release view "$PREVIEW_TAG" --json isDraft > "$RUNNER_TEMP/preview-release.json" 2>/dev/null; then
+            python3 -c 'import json,sys; assert json.load(open(sys.argv[1]))["isDraft"], "Never overwrite a published release"' "$RUNNER_TEMP/preview-release.json"
+          else
+            gh release create "$PREVIEW_TAG" --draft --prerelease --target "$GITHUB_SHA" --title 'CabinOS ONE — Pleos SDK 실제 실행 (제한된 검증)' --notes-file artifacts/pleos-preview/RELEASE.md
+          fi
+          gh release upload "$PREVIEW_TAG" artifacts/pleos-preview/take/device-screen.mp4 artifacts/pleos-preview/preview.json --clobber
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: Pleos-actual-device-diagnostics
-          path: artifacts/pleos-device/
+          path: |
+            artifacts/pleos-device/
+            artifacts/pleos-preview/
           retention-days: 7
       - name: Stop emulator
         if: always()
