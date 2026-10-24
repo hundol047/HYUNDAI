@@ -9,13 +9,14 @@ import org.json.JSONObject
  */
 internal class VehicleDiagnostics {
     private var last: List<Any?>? = null
-    fun record(state: AppState, pleos: PleosReadState, energy: PleosEnergyState = PleosEnergyState()) {
+    fun record(state: AppState, pleos: PleosReadState, energy: PleosEnergyState = PleosEnergyState(),
+        navigation: PleosNavigationState = PleosNavigationState(false,message="")) {
         if (!Log.isLoggable("CabinVehicle",Log.INFO)) return
         val sample=state.sample ?: return
         val key=listOf(sample.source,sample.connected,sample.speedKph,sample.gear,state.parkedAllowed,
             pleos.included,pleos.brakePressed,pleos.successfulReadAtMs,energy.percent,energy.readAtMs,
             sample.batteryPercent,sample.charging,sample.chargeRemainingSeconds,energy.chargeSwitchOn,energy.chargeReadAtMs,
-            state.schedule.departureAtMs,state.schedule.availableSeconds,state.chargeTargetPercent,state.session?.status)
+            state.schedule.departureAtMs,state.schedule.availableSeconds,state.chargeTargetPercent,state.session?.status,navigation.readAtMs,state.arrivalTargetMs)
         if(key==last)return
         last=key
         Log.i("CabinVehicle",JSONObject().apply {
@@ -37,6 +38,10 @@ internal class VehicleDiagnostics {
             put("availableSeconds",state.schedule.availableSeconds)
             put("chargeTargetPercent",state.chargeTargetPercent ?: JSONObject.NULL)
             put("planSource",state.schedule.estimateLabel)
+            put("arrivalTargetMs",state.arrivalTargetMs ?: JSONObject.NULL)
+            put("navigationReadAtMs",navigation.readAtMs ?: JSONObject.NULL)
+            put("sessionKind",state.session?.kind?.name ?: JSONObject.NULL)
+            put("sessionDurationSeconds",state.session?.durationSeconds ?: JSONObject.NULL)
             put("sessionStatus",state.session?.status?.name ?: JSONObject.NULL)
         }.toString())
     }

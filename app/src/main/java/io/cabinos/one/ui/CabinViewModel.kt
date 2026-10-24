@@ -83,9 +83,9 @@ class CabinViewModel @Inject constructor(
             launch { pleosNavigation.state.collect { nav ->
                 if(foreground && simulator.realMode) engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
             } }
-            launch { combine(state,pleos.state,pleos.energy) { app,sdk,energy -> Triple(app,sdk,energy) }.collect { (app,sdk,energy) ->
-                if(foreground)vehicleDiagnostics.record(app,sdk,energy)
-            } }
+            launch { combine(state,pleos.state,pleos.energy,pleosNavigation.state) { app,sdk,energy,nav ->
+                if(foreground)vehicleDiagnostics.record(app,sdk,energy,nav)
+            }.collect {} }
             if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
