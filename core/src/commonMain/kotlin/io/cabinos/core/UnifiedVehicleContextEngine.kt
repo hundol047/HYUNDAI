@@ -54,7 +54,7 @@ class UnifiedVehicleContextEngine(
         if (sample.parkingReliable && sample.gear == Gear.PARK && sample.speedKph == 0.0 && sample.connected && now - sample.timestampMs in 0..5_000) {
             if (parkCandidateAt == null) parkCandidateAt = now
         } else parkCandidateAt = null
-        if (sample.charging && sample.chargeRemainingSeconds != null) {
+        if (sample.charging && sample.chargeRemainingSeconds != null && sample.chargeRemainingSeconds != lastChargeEstimate) {
             val chargeDeadline = now + sample.chargeRemainingSeconds.coerceAtLeast(0) * 1000
             // A countdown is not a revised estimate. Keep the deadline through small jitter.
             if (chargeDeadlineMs == null || kotlin.math.abs(chargeDeadline-chargeDeadlineMs!!) >= 60_000) {

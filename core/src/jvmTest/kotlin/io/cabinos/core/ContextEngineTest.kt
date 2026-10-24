@@ -140,4 +140,10 @@ class ContextEngineTest {
         engine.setArrivalInMinutes(20);engine.updateNavigationEstimate(1000,1000,now)
         assertEquals(0L,engine.state.value.schedule.availableSeconds)
     }
+    @Test fun unchangedChargeEstimateDoesNotSlideAfterOneMinute() {
+        send(charging=true,remaining=1200);val deadline=engine.state.value.schedule.departureAtMs
+        repeat(61) { now+=1000;send(charging=true,remaining=1200) }
+        assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
 }
