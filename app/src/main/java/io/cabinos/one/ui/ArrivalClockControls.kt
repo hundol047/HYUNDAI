@@ -11,10 +11,15 @@ import androidx.compose.ui.unit.dp
 import java.time.*
 
 internal fun nextArrivalAt(now:Long,hour:Int,minute:Int,zone:ZoneId=ZoneId.systemDefault()):Long {
-    val current=Instant.ofEpochMilli(now).atZone(zone)
-    var target=current.toLocalDate().atTime(hour,minute).atZone(zone)
-    if(!target.toInstant().isAfter(current.toInstant()))target=target.plusDays(1)
-    return target.toInstant().toEpochMilli()
+    val instant=Instant.ofEpochMilli(now)
+    val date=instant.atZone(zone).toLocalDate()
+    // Choose an actual future occurrence: gaps have no offset, overlaps have two.
+    for(day in 0L..2L) {
+        val local=date.plusDays(day).atTime(hour,minute)
+        val next=zone.rules.getValidOffsets(local).map { local.toInstant(it) }.filter { it.isAfter(instant) }.minOrNull()
+        if(next!=null)return next.toEpochMilli()
+    }
+    error("No valid arrival time within three local dates")
 }
 
 @Composable internal fun ArrivalClockControls(now:Long,enabled:Boolean,onSet:(Long)->Unit) {
@@ -22,7 +27,7 @@ internal fun nextArrivalAt(now:Long,hour:Int,minute:Int,zone:ZoneId=ZoneId.syste
     var hour by rememberSaveable { mutableIntStateOf(initial.hour) }
     var minute by rememberSaveable { mutableIntStateOf(initial.minute) }
     if(!enabled)Text("차량 내비에서 목적지를 먼저 설정하세요",color=Amber)
-    Text("도착 시각 ${"%02d:%02d".format(hour,minute)} · 지난 시각은 내일로 설정",color=White)
+    Text("도착 시각 ${"%02d:%02d".format(hour,minute)} · 다음 가능한 시각으로 설정",color=White)
     Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
         OutlinedButton(onClick={hour=(hour+23)%24},enabled=enabled,modifier=Modifier.sizeIn(minWidth=48.dp,minHeight=48.dp)){Text("시 −")}
         OutlinedButton(onClick={hour=(hour+1)%24},enabled=enabled,modifier=Modifier.sizeIn(minWidth=48.dp,minHeight=48.dp)){Text("시 +")}
