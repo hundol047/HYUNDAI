@@ -28,3 +28,5 @@ body{background:radial-gradient(ellipse at 80% 0%,var(--panel) 0,transparent 38%
 #nav-results .nav-place-distance{color:var(--amber)}
 
 #nav-map-crosshair{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:600;color:#fff;font-size:32px;line-height:1;text-shadow:0 1px 4px #000}.nav-map-wrap #nav-map-pick{position:absolute;bottom:16px;left:16px;z-index:600;min-height:48px;max-width:calc(100% - 32px)}
+
+#parked-host{min-height:480px}.empty-parked-host::before{content:"정차 확인 전에는 정차 기능을 제한합니다. 부가 데모는 아래에서 확인하세요.";display:block;padding:48px;color:var(--muted)}#supplementary{margin:16px 0;padding:16px;border:1px solid var(--line);border-radius:16px}#supplementary>summary{cursor:pointer;min-height:48px;display:list-item;color:var(--muted)}#extra-dashboard-host{min-width:0;max-width:100%;overflow:hidden}#extra-dashboard-host:not(:empty){min-height:560px;padding:16px;background:var(--bg)}.extra-nav button{min-height:48px;margin:12px 0}#extra-dashboard-host #dashboard{min-height:520px}.intro h1{max-width:800px}

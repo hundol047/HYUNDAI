@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/gps-qa'
  async function fresh(mode='good'){
   await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);
   await page.evaluate(mode=>{window.gpsMode=mode;window.gpsRequests=[];window.gpsClears=[];Object.defineProperty(navigator,'geolocation',{configurable:true,value:{watchPosition(success,error){if(gpsMode==='throw')throw new DOMException('fixture only','SecurityError');const id=gpsRequests.length+1;gpsRequests.push({id,success,error});if(gpsMode==='denied')error({code:1});else if(gpsMode==='good')success({coords:{latitude:48.85,longitude:2.35,accuracy:5,speed:0},timestamp:Date.now()});return id},clearWatch(id){gpsClears.push(id)}}})},mode);
-  await page.locator('aside [data-page="navigation"]').click()
+  await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click()
  }
  async function locate(){await page.locator('[data-nav="locate"]').click()}
  async function emit(extra={}){await page.waitForTimeout(15);return page.evaluate(extra=>{const f={coords:{latitude:48.85,longitude:2.35,accuracy:5,speed:0,...extra},timestamp:Date.now()};gpsRequests.at(-1).success(f);return f.timestamp},extra)}
