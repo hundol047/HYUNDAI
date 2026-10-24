@@ -77,6 +77,24 @@ class AutomotiveApplicationTest {
         compose.onNodeWithText("차량 상태").performClick()
         compose.onNodeWithText("속도 신호 나이",substring=true).assertIsDisplayed()
     }
+    @Test fun unchangedGrantedEnergyPermissionDoesNotReconnect() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
+        val initial=shadowOf(compose.activity).lastRequestedPermission!!
+        compose.runOnIdle {
+            compose.activity.onRequestPermissionsResult(initial.requestCode,initial.requestedPermissions,
+                IntArray(initial.requestedPermissions.size) { PackageManager.PERMISSION_DENIED })
+            shadowOf(compose.activity.application).grantPermissions("android.car.permission.CAR_ENERGY")
+        }
+        compose.onNodeWithText("차량 읽기 권한 허용").performClick()
+        val request=shadowOf(compose.activity).lastRequestedPermission!!
+        val invalidations=vm.state.value.events.count { it.name=="TelemetryInvalidated" }
+        compose.runOnIdle {
+            compose.activity.onRequestPermissionsResult(request.requestCode,request.requestedPermissions,
+                request.requestedPermissions.map { if(it.endsWith("CAR_ENERGY")) PackageManager.PERMISSION_GRANTED else PackageManager.PERMISSION_DENIED }.toIntArray())
+        }
+        compose.runOnIdle { assertEquals(invalidations,vm.state.value.events.count { it.name=="TelemetryInvalidated" }) }
+    }
     @Test fun deniedVehiclePermissionDoesNotPromptAgainOnForegroundReturn() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }

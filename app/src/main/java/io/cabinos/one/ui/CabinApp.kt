@@ -65,16 +65,19 @@ import java.util.*
     var permissionAsked by rememberSaveable { mutableStateOf(permissionPreferences.vehiclePermissionRequested) }
     var permissionInFlight by rememberSaveable { mutableStateOf(false) }
     var speedPermissionMissing by remember { mutableStateOf(context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED) }
+    var permissionsBeforeRequest by remember { mutableStateOf<Map<String,Boolean>>(emptyMap()) }
     val vehiclePermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
         permissionInFlight=false
         speedPermissionMissing=context.checkSelfPermission("android.car.permission.CAR_SPEED")!=PackageManager.PERMISSION_GRANTED
-        if(result.values.any { it }) vm.selectScenario("실차 연결")
+        if(io.cabinos.one.platform.vehiclePermissionChanged(permissionsBeforeRequest,result)) vm.selectScenario("실차 연결")
     }
     val requestVehiclePermissions:()->Unit = {
         if (!permissionInFlight) {
             permissionPreferences.vehiclePermissionRequested=true
             permissionAsked=true;permissionInFlight=true
-            vehiclePermission.launch(arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY"))
+            val requested=arrayOf("android.car.permission.CAR_SPEED","android.car.permission.CAR_ENERGY")
+            permissionsBeforeRequest=requested.associateWith { context.checkSelfPermission(it)==PackageManager.PERMISSION_GRANTED }
+            vehiclePermission.launch(requested)
         }
     }
     val checkVehiclePermissions:()->Unit = {
