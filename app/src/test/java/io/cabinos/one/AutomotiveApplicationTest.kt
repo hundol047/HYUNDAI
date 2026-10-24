@@ -25,7 +25,7 @@ import org.robolectric.annotation.GraphicsMode
 
 /** Automotive feature flag only: Robolectric is NOT a Pleos Connect Emulator. */
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk=[29],application=CabinApplication::class,qualifiers="w1280dp-h800dp-land-mdpi")
+@Config(sdk=[29],application=CabinApplication::class,qualifiers="w1280dp-h800dp-land-mdpi",shadows=[UnavailableVehicleBinding::class])
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class AutomotiveApplicationTest {
     private val compose=createAndroidComposeRule<MainActivity>()
@@ -99,5 +99,14 @@ class AutomotiveApplicationTest {
         assertFalse(vm.state.value.parkedAllowed)
         compose.onNodeWithText("차량 읽기 권한 허용").performClick()
         compose.runOnIdle { assertNotSame(request,shadowOf(compose.activity).lastRequestedPermission) }
+    }
+}
+
+/** Keep unavailable bindings deterministic even during SDK worker/fixture teardown races. */
+@org.robolectric.annotation.Implements(android.content.ContextWrapper::class)
+class UnavailableVehicleBinding : org.robolectric.shadows.ShadowContextWrapper() {
+    @org.robolectric.annotation.Implementation
+    protected fun bindService(intent: android.content.Intent, connection: android.content.ServiceConnection, flags: Int): Boolean {
+        throw SecurityException("Vehicle services unavailable in JVM test")
     }
 }
