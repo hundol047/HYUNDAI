@@ -119,3 +119,9 @@ KVM PC의 [전체 시연 절차](../scripts/demo/pleos-full-scenario.md)를 따�
 자료 부족은 성공 근거가 아니며 `sufficientEvidence=false`로 표시됩니다.
 `VHAL speed timestamp not refreshed while parked` 진단과 `fallbackEvidence=true`가 실제 기기에서
 확인된 경우에만 별도 검토 후 수신 시각 기반 대안을 활성화할 수 있습니다. 합성 테스트는 그 근거가 아닙니다.
+
+`BuildConfig.SPEED_RECEIPT_FRESHNESS`는 **false**로 고정되어 있습니다. 현재 배포 동작은 VHAL 3초 기준입니다.
+대안 코드는 P 재조회와 STATUS_AVAILABLE 속도 0 조회가 각각 1초 미만이고, Car 연결 및 속도/기어 구독이
+정상 등록된 경우에만 조회 수신 시각을 인정합니다. 오류 발생 후에는 새 연결 전까지 대안을 금지합니다.
+전진 기어·양수 속도·조회 실패·구독 실패·연결 끊김에는 대안을 적용하지 않습니다. 1.5초 정차 확인도 유지합니다.
+실제 로그 근거를 검토한 뒤에만 app/build.gradle.kts의 상수를 변경하고 전체 안전 테스트와 실제 시연을 재실행하세요.

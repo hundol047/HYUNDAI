@@ -17,6 +17,7 @@ android {
         targetSdk = 35
         versionCode = 19
         versionName = "0.11.0"
+        buildConfigField("boolean", "SPEED_RECEIPT_FRESHNESS", "false")
         buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())
     }
     buildFeatures { compose = true; buildConfig = true }

@@ -13,6 +13,7 @@ internal interface VehiclePropertyTransport {
         fun connected()
         fun speed(value: Float, timestampNs: Long)
         fun gear(value: Int, timestampNs: Long)
+        fun receiptPoll(speed:Float,gear:Int,receivedNs:Long,subscribed:Boolean,connected:Boolean) {}
         fun timing(speedCallbackNs: Long?, pollSuccessNs: Long?) {}
         fun energy(property: EnergyProperty, value: Number?, timestampNs: Long) {}
         fun unavailable(reason: String)
@@ -37,7 +38,7 @@ class VehicleStateProvider internal constructor(
         CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
         debugLog = { android.util.Log.d("CabinVehicle",it) },
     )
-    private val gate = VehicleSignalGate(wallMs, elapsedNs)
+    private val gate = VehicleSignalGate(wallMs, elapsedNs, io.cabinos.one.BuildConfig.SPEED_RECEIPT_FRESHNESS)
     private val mutable = MutableStateFlow(gate.sample())
     override val samples = mutable.asStateFlow()
     private val mutableStatus = MutableStateFlow(gate.problem)
@@ -67,6 +68,7 @@ class VehicleStateProvider internal constructor(
         val listener = object : VehiclePropertyTransport.Listener {
             override fun connected() = accept { clearTiming();gate.connected() }
             override fun timing(speedCallbackNs:Long?,pollSuccessNs:Long?) = accept { callbackNs=speedCallbackNs;pollNs=pollSuccessNs }
+            override fun receiptPoll(speed:Float,gear:Int,receivedNs:Long,subscribed:Boolean,connected:Boolean) = accept { gate.receiptPoll(speed,gear,receivedNs,subscribed,connected) }
             override fun speed(value: Float, timestampNs: Long) = accept { gate.speed(value, timestampNs) }
             override fun gear(value: Int, timestampNs: Long) = accept { gate.gear(value, timestampNs) }
             override fun energy(property: EnergyProperty, value: Number?, timestampNs: Long) = accept { gate.energy(property, value, timestampNs) }

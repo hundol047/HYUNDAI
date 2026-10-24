@@ -17,6 +17,7 @@ data class VehicleSignalDiagnostics(val speedAgeMs: Long? = null, val gearAgeMs:
 internal class VehicleSignalGate(
     private val wallMs: () -> Long,
     private val elapsedNs: () -> Long,
+    private val receiptFreshness: Boolean = false,
 ) {
     private var speed: Double? = null
     private var gear: Gear? = null
@@ -24,18 +25,22 @@ internal class VehicleSignalGate(
     private var gearNs = 0L
     private var gearReadNs = 0L
     private var ready = false
+    private var receiptNs = 0L
+    private var receiptError = false
     private data class EnergyValue(val value: Double, val timestampNs: Long, val confirmedNs: Long)
     private val energy = mutableMapOf<EnergyProperty, EnergyValue>()
     var problem: String = "차량 서비스 연결 대기"
         private set
 
     fun reset(reason: String) {
+        receiptNs=0;receiptError=false
         ready = false; speed = null; gear = null
         speedNs = 0; gearNs = 0; gearReadNs = 0; problem = reason
         energy.clear()
     }
     fun connected() { reset("속도·기어 첫 수신 대기"); ready = true }
     fun unavailable(reason: String) {
+        receiptNs=0;receiptError=true
         speed = null; gear = null; gearReadNs = 0; problem = reason
     }
     fun speed(value: Float, timestampNs: Long) {
@@ -60,6 +65,11 @@ internal class VehicleSignalGate(
         }
         gearNs = timestampNs; gearReadNs = elapsedNs()
     }
+    /** Poll evidence is separate from event timestamps; errors latch until a new connection. */
+    fun receiptPoll(value:Float, selectedGear:Int, receivedNs:Long, subscribed:Boolean, connected:Boolean) {
+        receiptNs=if(ready && !receiptError && subscribed && connected && value==0f && selectedGear==4 &&
+            validTime(receivedNs)) receivedNs else 0
+    }
     private fun validTime(value: Long) = value > 0 && value <= elapsedNs()
     fun energy(property: EnergyProperty, value: Number?, timestampNs: Long) {
         if (!ready) return
@@ -83,8 +93,10 @@ internal class VehicleSignalGate(
     }
     fun sample(): VehicleSample {
         val now = elapsedNs()
+        val receiptValid=receiptFreshness && !receiptError && receiptNs>0 && speed==0.0 && gear==Gear.PARK &&
+            now-receiptNs in 0 until 1_000_000_000L && now-gearReadNs in 0 until 1_000_000_000L
         val valid = ready && speed != null && gear != null && gear != Gear.UNKNOWN &&
-            now - speedNs in 0..3_000_000_000L && now - gearReadNs in 0..3_000_000_000L
+            (now - speedNs in 0..3_000_000_000L || receiptValid) && now - gearReadNs in 0..3_000_000_000L
         if (valid) problem = "AAOS 속도·기어 수신 중"
         else if (ready && speed != null && gear != null) problem = "차량 신호 만료 또는 알 수 없는 기어"
         val level = energyValue(EnergyProperty.LEVEL_WH, now)
