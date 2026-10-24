@@ -9,6 +9,8 @@ internal interface PleosBrakeClient {
     fun initialize()
     fun canRead(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit)
     fun read(onComplete: (Boolean?) -> Unit, onFailed: (Exception) -> Unit)
+    fun canReadEnergy(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) = onComplete(false)
+    fun readEnergy(onComplete: (Int?) -> Unit, onFailed: (Exception) -> Unit) = onComplete(null)
     fun release()
 }
 
@@ -18,6 +20,7 @@ data class PleosReadState(
     val brakePressed: Boolean? = null,
     val successfulReadAtMs: Long? = null,
 )
+data class PleosEnergyState(val percent: Int? = null, val readAtMs: Long? = null, val message: String = "EvBattery 수신 대기")
 
 /** Official SDK brake status is diagnostic only: pressing a pedal never proves P gear. */
 class PleosVehicleReader internal constructor(
@@ -28,6 +31,8 @@ class PleosVehicleReader internal constructor(
     private val mutable = MutableStateFlow(PleosReadState(factory != null,
         if(factory != null) "Pleos Vehicle SDK 2.3.2 · 연결 대기" else "공식 Pleos SDK 미포함 · AAOS 속도·기어만 사용"))
     val state = mutable.asStateFlow()
+    private val mutableEnergy = MutableStateFlow(PleosEnergyState(message=if(factory==null) "Pleos SDK 미포함" else "EvBattery 수신 대기"))
+    val energy = mutableEnergy.asStateFlow()
     private var job: Job? = null
     private var generation = 0
     fun start() {
@@ -38,6 +43,23 @@ class PleosVehicleReader internal constructor(
             try {
                 client = factory.invoke()
                 client.initialize()
+                // Separate timeout/error path: an unavailable Brake domain must not block EvBattery.
+                val energyClient = client
+                launch {
+                    while(isActive && token == generation) {
+                        try {
+                            val percent = withTimeout(3_000) {
+                                if(awaitCallback<Boolean> { done, failed -> energyClient.canReadEnergy(done,failed) })
+                                    awaitCallback<Int?> { done, failed -> energyClient.readEnergy(done,failed) } else null
+                            }
+                            mutableEnergy.value = if(percent != null && percent in 0..100)
+                                PleosEnergyState(percent,clock(),"Pleos EvBattery 수신") else PleosEnergyState(message="EvBattery 미지원 또는 유효한 값 없음")
+                        } catch (_: TimeoutCancellationException) { mutableEnergy.value = PleosEnergyState(message="EvBattery 응답 시간 초과") }
+                        catch(error: CancellationException) { throw error }
+                        catch (_: Exception) { mutableEnergy.value = PleosEnergyState(message="EvBattery 읽기 실패 · 권한/지원 확인") }
+                        delay(1_000)
+                    }
+                }
                 while (isActive && token == generation) {
                     try {
                         val (supported, pressed) = withTimeout(3_000) {
@@ -62,6 +84,7 @@ class PleosVehicleReader internal constructor(
     }
     fun stop() {
         ++generation; job?.cancel(); job = null
+        mutableEnergy.value = PleosEnergyState(message=if(factory==null) "Pleos SDK 미포함" else "EvBattery 구독 중지")
         if(factory != null) mutable.value = PleosReadState(true,"Pleos SDK 구독 중지 · 복귀 후 다시 확인")
     }
     private suspend fun <T> awaitCallback(register: ((T) -> Unit, (Exception) -> Unit) -> Unit): T =

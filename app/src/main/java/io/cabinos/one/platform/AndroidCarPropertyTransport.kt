@@ -21,6 +21,13 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
     private var manager: CarPropertyManager? = null
     private lateinit var listener: VehiclePropertyTransport.Listener
     private val properties = intArrayOf(VehiclePropertyIds.PERF_VEHICLE_SPEED, VehiclePropertyIds.GEAR_SELECTION)
+    private val energyProperties = mapOf(
+        VehiclePropertyIds.EV_BATTERY_LEVEL to EnergyProperty.LEVEL_WH,
+        VehiclePropertyIds.INFO_EV_BATTERY_CAPACITY to EnergyProperty.CAPACITY_WH,
+        VehiclePropertyIds.EV_CHARGE_STATE to EnergyProperty.CHARGE_STATE,
+        VehiclePropertyIds.EV_CHARGE_TIME_REMAINING to EnergyProperty.REMAINING_SECONDS,
+    )
+    private var availableEnergy = emptySet<Int>()
     private var connection = 0L
     private var callback: CarPropertyManager.CarPropertyEventCallback? = null
     private fun onWorker(action: () -> Unit) {
@@ -32,6 +39,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         } }
         override fun onErrorEvent(propertyId: Int, areaId: Int) { onWorker {
             if (!stopped && token == connection && propertyId in properties) listener.unavailable("차량 속성 오류: $propertyId")
+            if (!stopped && token == connection) energyProperties[propertyId]?.let { listener.energy(it, null, 0) }
         } }
     }
     private val poll = object : Runnable {
@@ -44,6 +52,13 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                 }
             } catch (_: SecurityException) { listener.unavailable("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
             catch (_: RuntimeException) { listener.unavailable("차량 속성 읽기 실패") }
+            // Optional energy failures must never discard valid speed/P signals.
+            availableEnergy.forEach { id ->
+                try {
+                    val value = manager?.getProperty<Any>(id, 0)
+                    if(value != null) deliver(value) else listener.energy(energyProperties.getValue(id), null, 0)
+                } catch (_: RuntimeException) { listener.energy(energyProperties.getValue(id), null, 0) }
+            }
             handler.postDelayed(this, 500)
         }
     }
@@ -67,12 +82,17 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                                 detach(); return@post
                             }
                             listener.connected()
+                            availableEnergy = energyProperties.keys.filter { id ->
+                                try { service.getCarPropertyConfig(id)?.access?.let { it == 1 || it == 3 } == true }
+                                catch (_: RuntimeException) { false }
+                            }.toSet()
                             val currentCallback = callbackFor(connection).also { callback = it }
                             properties.forEach { id ->
                                 if (!service.registerCallback(currentCallback, id, CarPropertyManager.SENSOR_RATE_NORMAL)) {
                                     error("Vehicle subscription rejected")
                                 }
                             }
+                            // Read static/ON_CHANGE energy properties every 500 ms. No write permissions.
                             handler.post(poll)
                         } catch (_: SecurityException) { detach(); listener.disconnected("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
                         catch (_: RuntimeException) { detach(); listener.disconnected("차량 속성 구독 실패") }
@@ -84,7 +104,12 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         }
     }
     private fun deliver(value: CarPropertyValue<*>) {
-        if (value.propertyId !in properties || value.areaId != 0) return
+        if (value.areaId != 0) return
+        energyProperties[value.propertyId]?.let { property ->
+            listener.energy(property, if(value.status == CarPropertyValue.STATUS_AVAILABLE) value.value as? Number else null, value.timestamp)
+            return
+        }
+        if (value.propertyId !in properties) return
         if (value.status != CarPropertyValue.STATUS_AVAILABLE) {
             listener.unavailable("차량 속성 사용 불가: ${value.propertyId}"); return
         }
@@ -99,7 +124,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         ++connection
         handler.removeCallbacks(poll)
         try { callback?.let { manager?.unregisterCallback(it) } } catch (_: RuntimeException) { /* Already disconnected. */ }
-        callback = null; manager = null
+        callback = null; manager = null; availableEnergy = emptySet()
     }
     override fun stop() {
         stopped = true

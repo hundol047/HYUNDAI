@@ -14,6 +14,9 @@ class PleosVehicleReaderTest {
         var failure: Exception? = null
         var pending: ((Boolean?) -> Unit)? = null
         var deferred=false
+        var energy: Int? = null
+        override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = onComplete(true)
+        override fun readEnergy(onComplete:(Int?)->Unit,onFailed:(Exception)->Unit) = onComplete(energy)
         override fun initialize(){initialized=true}
         override fun canRead(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) {
             failure?.let {onFailed(it);return}
@@ -70,5 +73,18 @@ class PleosVehicleReaderTest {
         reader.start();assertFalse(reader.state.value.included)
         assertTrue(reader.state.value.message.contains("미포함"));assertNull(reader.state.value.brakePressed)
         reader.stop()
+    }
+    @Test fun evBatteryIsIndependentOfBrakeAndRejectsInvalidPercent() {
+        for(value in listOf(68,0,100,-1,101)) {
+            val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)
+            try {
+                val client=FakeClient().apply { energy=value;failure=SecurityException("brake denied") }
+                val reader=PleosVehicleReader({client},scope,{1234})
+                reader.start()
+                assertEquals(if(value in 0..100) value else null,reader.energy.value.percent)
+                assertNull(reader.state.value.brakePressed)
+                reader.stop();assertNull(reader.energy.value.percent)
+            } finally {scope.cancel()}
+        }
     }
 }

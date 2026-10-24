@@ -13,6 +13,7 @@ internal interface VehiclePropertyTransport {
         fun connected()
         fun speed(value: Float, timestampNs: Long)
         fun gear(value: Int, timestampNs: Long)
+        fun energy(property: EnergyProperty, value: Number?, timestampNs: Long) {}
         fun unavailable(reason: String)
         fun disconnected(reason: String)
     }
@@ -57,6 +58,7 @@ class VehicleStateProvider internal constructor(
             override fun connected() = accept { gate.connected() }
             override fun speed(value: Float, timestampNs: Long) = accept { gate.speed(value, timestampNs) }
             override fun gear(value: Int, timestampNs: Long) = accept { gate.gear(value, timestampNs) }
+            override fun energy(property: EnergyProperty, value: Number?, timestampNs: Long) = accept { gate.energy(property, value, timestampNs) }
             override fun unavailable(reason: String) = accept { gate.unavailable(reason) }
             override fun disconnected(reason: String) = accept { gate.reset(reason) }
         }

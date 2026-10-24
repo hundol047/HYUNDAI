@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+
 package io.cabinos.one.ui
 
 import androidx.compose.foundation.*
@@ -87,7 +89,7 @@ import java.util.*
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Text("나를 위한 시간의 기록",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
         Text("이 기기에만 보관하는 집중·휴식·오디오 세션",color=Muted,fontSize=12.sp)
-        Row(horizontalArrangement=Arrangement.spacedBy(14.dp)) {
+        FlowRow(maxItemsInEachRow=if(LocalCompactWindow.current)1 else 3,horizontalArrangement=Arrangement.spacedBy(14.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             SessionKind.entries.forEach { kind ->SurfacePanel(Modifier.weight(1f)) {
                 Text("${kind.label} 누적",fontSize=12.sp,color=Muted)
                 Spacer(Modifier.height(12.dp));Text("${s.history.filter{it.kind==kind}.sumOf{(it.durationSeconds-it.remainingSeconds).coerceAtLeast(0)}/60}분",fontSize=30.sp,color=if(kind==SessionKind.FOCUS)Blue else if(kind==SessionKind.RELAX)Mint else Purple)
@@ -115,7 +117,7 @@ import java.util.*
         Text("당신에게 맞춘 CabinOS",fontSize=27.sp,color=White,fontWeight=FontWeight.SemiBold)
         Text("개인 설정은 이 기기에 저장됩니다.",color=Muted,fontSize=12.sp)
         AppearanceSettingsPanel(vm)
-        Row(horizontalArrangement=Arrangement.spacedBy(16.dp)) {
+        FlowRow(maxItemsInEachRow=if(LocalCompactWindow.current)1 else 2,horizontalArrangement=Arrangement.spacedBy(16.dp),verticalArrangement=Arrangement.spacedBy(12.dp)) {
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("시간 프리셋",color=Blue);Spacer(Modifier.height(16.dp))
                 SettingStepper("기본 집중 시간",s.preferences.focusMinutes,listOf(15,25,45)){vm.preferences(s.preferences.copy(focusMinutes=it))}

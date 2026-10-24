@@ -15,8 +15,8 @@ android {
         applicationId = "io.cabinos.one"
         minSdk = 29
         targetSdk = 35
-        versionCode = 15
-        versionName = "0.10.5"
+        versionCode = 16
+        versionName = "0.11.0-rc1"
         buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())
     }
     buildFeatures { compose = true; buildConfig = true }
@@ -50,7 +50,10 @@ android {
 }
 ksp { arg("room.schemaLocation", "$projectDir/schemas") }
 dependencies {
-    if (pleosSdkEnabled) implementation("ai.pleos.playground:Vehicle:2.3.2")
+    if (pleosSdkEnabled) {
+        implementation("ai.pleos.playground:Vehicle:2.3.2")
+        implementation("ai.pleos.playground:NaviHelper:3.0.5")
+    }
     implementation(project(":core"))
     implementation("org.osmdroid:osmdroid-android:6.1.20")
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))

@@ -28,7 +28,7 @@ python3 server/places_gateway.py
 
 ## 검증 상태
 
-- 실제 Nominatim 중계·인증: [로컬 통합 결과](../docs/validation/place-gateway-live.json).
+- 실제 Nominatim 중계·인증: [로컬 통합 결과](../test-fixtures/validation/place-gateway-live.json).
 - 카카오 어댑터: 모의 응답 계약 검사. **API 키가 없어 실서버 미검증**, 계정 생성·유료 서비스 활성화를 하지 않았습니다. 운영자는 최신 공식 문서/약관/앱 등록/사용량 제한을 확인해야 합니다.
 - Google Places: 구현하지 않음. 앱의 Google Maps 버튼은 외부 검색 링크입니다.
 - HTTPS 서버 배포·가용 시간·모든 가게 포함을 보장하지 않습니다. `healthz`는 프로세스/설정 유무만 표시하고 공급자 연결 검증을 뜻하지 않습니다.

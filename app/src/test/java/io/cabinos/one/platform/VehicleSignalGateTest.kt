@@ -83,4 +83,32 @@ class VehicleSignalGateTest {
         gate.connected();gate.speed(0f,ns());assertFalse(gate.sample().connected)
         gate.gear(4,ns());engine.acceptVehicle(gate.sample());assertFalse(engine.state.value.parkedAllowed)
     }
+    @Test fun energyUnitsAndChargeStateAreIndependentOfParkingSafety() {
+        gate.connected(); update()
+        gate.energy(EnergyProperty.LEVEL_WH, 40800f, ns())
+        gate.energy(EnergyProperty.CAPACITY_WH, 60000f, ns())
+        gate.energy(EnergyProperty.CHARGE_STATE, 1, ns())
+        gate.energy(EnergyProperty.REMAINING_SECONDS, 2400, ns())
+        assertEquals(68, gate.sample().batteryPercent)
+        assertTrue(gate.sample().charging); assertEquals(2400L, gate.sample().chargeRemainingSeconds)
+        gate.energy(EnergyProperty.CHARGE_STATE, 3, ns())
+        assertFalse(gate.sample().charging); assertNull(gate.sample().chargeRemainingSeconds)
+        gate.energy(EnergyProperty.CAPACITY_WH, null, 0)
+        assertEquals(-1, gate.sample().batteryPercent); assertTrue(gate.sample().connected)
+    }
+    @Test fun badExpiredOrDisconnectedEnergyNeverShowsDemoDefaults() {
+        gate.connected(); update()
+        gate.energy(EnergyProperty.CAPACITY_WH, 60000f, ns())
+        for(value in listOf(-1f, Float.NaN, Float.POSITIVE_INFINITY, 70000f)) {
+            gate.energy(EnergyProperty.LEVEL_WH, value, ns()); assertEquals(-1, gate.sample().batteryPercent)
+        }
+        gate.energy(EnergyProperty.LEVEL_WH, 30000f, ns())
+        gate.energy(EnergyProperty.CHARGE_STATE, 1, ns())
+        gate.energy(EnergyProperty.REMAINING_SECONDS, 1200, ns())
+        time += 3001; update()
+        assertEquals(-1, gate.sample().batteryPercent); assertFalse(gate.sample().charging)
+        assertNull(gate.sample().chargeRemainingSeconds); assertTrue(gate.sample().connected)
+        gate.reset("disconnect"); gate.connected(); update()
+        assertEquals(-1, gate.sample().batteryPercent)
+    }
 }

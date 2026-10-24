@@ -24,6 +24,7 @@ object AppModule {
     @Provides @Singleton fun runtimePreferences(@ApplicationContext context:Context)=RuntimePreferences(context)
     @Provides @Singleton fun vehicle(@ApplicationContext context:Context)=VehicleStateProvider(context)
     @Provides @Singleton fun pleos(@ApplicationContext context:Context)=PleosSdkFactory.create(context)
+    @Provides @Singleton fun pleosNavigation(@ApplicationContext context:Context)=PleosNavigationFactory.create(context)
     @Provides @Singleton fun simulator(preferences:RuntimePreferences,vehicle:VehicleStateProvider)=SimulationVehicleProvider(preferences).apply {
         if(vehicle.automotive) select("실차 연결")
     }

@@ -19,6 +19,7 @@ class CabinViewModel @Inject constructor(
     private val simulator:SimulationVehicleProvider,
     private val vehicle:VehicleStateProvider,
     private val pleos:PleosVehicleReader,
+    val pleosNavigation:PleosNavigation,
     private val dao:CabinDao,
     val speech:AndroidSpeechProvider,
     private val location:AndroidLocationProvider,
@@ -40,6 +41,7 @@ class CabinViewModel @Inject constructor(
     val scenario=mutableScenario.asStateFlow()
     val vehicleStatus=vehicle.status
     val pleosState=pleos.state
+    val pleosEnergy=pleos.energy
     val automotive=vehicle.automotive
     private val mutableAudio=MutableStateFlow<String?>(null)
     val audioPreset=mutableAudio.asStateFlow()
@@ -69,11 +71,14 @@ class CabinViewModel @Inject constructor(
             engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
-            launch { vehicle.samples.collect { if (foreground && simulator.realMode) engine.acceptVehicle(it) } }
-            launch { combine(state,pleos.state) { app,sdk -> app to sdk }.collect { (app,sdk) ->
-                if(foreground)vehicleDiagnostics.record(app,sdk)
+            launch { combine(vehicle.samples,pleos.energy) { sample,energy ->
+                val fresh = energy.readAtMs?.let { System.currentTimeMillis()-it in 0..3_000 } == true
+                if(sample.connected && fresh && energy.percent!=null) sample.copy(batteryPercent=energy.percent) else sample
+            }.collect { if (foreground && simulator.realMode) engine.acceptVehicle(it) } }
+            launch { combine(state,pleos.state,pleos.energy) { app,sdk,energy -> Triple(app,sdk,energy) }.collect { (app,sdk,energy) ->
+                if(foreground)vehicleDiagnostics.record(app,sdk,energy)
             } }
-            if (foreground && simulator.realMode) { vehicle.start();if(automotive)pleos.start();location.start();engine.setConnectivity(location=false) }
+            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
                 if (foreground) { if(!simulator.realMode) simulator.heartbeat();engine.tick();liveNavigation.tick() }
@@ -114,9 +119,9 @@ class CabinViewModel @Inject constructor(
         simulator.select(name);mutableScenario.value=name
         if(simulator.realMode) {
             engine.acceptVehicle(vehicle.samples.value.copy(connected=false,parkingReliable=false))
-            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleos.start()};location.start()}
+            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();pleos.start();pleosNavigation.start()};location.start()}
             engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
-        } else {pleos.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
+        } else {pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
     }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
@@ -151,9 +156,9 @@ class CabinViewModel @Inject constructor(
             demoJob?.cancel();mutableDemoRunning.value=false
             audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            pleos.stop();vehicle.stop();location.stop();cancelNearby()
+            pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();cancelNearby()
         } else {
-            if (simulator.realMode) {vehicle.start();if(automotive)pleos.start();engine.acceptVehicle(vehicle.samples.value);location.start()}
+            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
             else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
     }
@@ -238,5 +243,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { pleos.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
+    override fun onCleared() { pleos.stop();pleosNavigation.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

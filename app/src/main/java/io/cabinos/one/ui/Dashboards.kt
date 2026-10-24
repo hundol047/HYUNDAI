@@ -56,7 +56,7 @@ import kotlin.math.min
                 Spacer(Modifier.height(10.dp))
                 LinearProgressIndicator(progress={ (s.sample?.batteryPercent ?: 0).coerceIn(0,100)/100f },modifier=Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(8.dp)),color=Mint,trackColor=Line)
                 Spacer(Modifier.height(9.dp))
-                Row { Text(if((s.sample?.batteryPercent ?: -1)>=0)"${s.sample?.batteryPercent}%" else "—",color=Mint,fontSize=12.sp,fontWeight=FontWeight.Medium);Text(if(s.sample?.source==DataSource.SIMULATION)"  배터리 · 시뮬레이션" else "  배터리 신호 미연동",color=Muted,fontSize=10.sp);Spacer(Modifier.weight(1f));Text("100%",color=Muted,fontSize=10.sp) }
+                Row { Text(if((s.sample?.batteryPercent ?: -1)>=0)"${s.sample?.batteryPercent}%" else "—",color=Mint,fontSize=12.sp,fontWeight=FontWeight.Medium);Text(if(s.sample?.source==DataSource.SIMULATION)"  배터리 · 시뮬레이션" else if((s.sample?.batteryPercent ?: -1)>=0) "  배터리 · 차량 신호" else "  배터리 정보 없음",color=Muted,fontSize=10.sp);Spacer(Modifier.weight(1f));Text("100%",color=Muted,fontSize=10.sp) }
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line)
                 Spacer(Modifier.height(12.dp))
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
@@ -143,6 +143,21 @@ import kotlin.math.min
 }
 
 @Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
+    if(LocalCompactWindow.current) {
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            Text(if(s.context==VehicleContext.UNKNOWN) "차량 상태를 확인할 수 없습니다." else "안전한 여정, 함께할게요.",color=White,fontSize=25.sp)
+            Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Amber)
+            SurfacePanel(Modifier.fillMaxWidth()) {
+                Text("${s.sample?.speedKph?.toInt() ?: 0} km/h",color=White,fontSize=40.sp)
+                Text(if(s.sample?.source==DataSource.SIMULATION) "데모 차량 신호" else "차량 신호",color=Muted)
+                Text("P 기어와 정지를 확인한 뒤 집중·휴식 기능을 열 수 있습니다.",color=Muted)
+            }
+            ActionButton("내비게이션",onNavigation,Modifier.fillMaxWidth())
+            ActionButton("위험 정보 듣기",onVoice,Modifier.fillMaxWidth())
+            Text(s.message,color=Muted)
+        }
+        return
+    }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {

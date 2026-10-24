@@ -40,14 +40,14 @@
 
 ## 화면·영상·기록
 
-- [실제 실행 녹화 MP4](video/CabinOS_ONE_seoul_yonsei_v0102.mp4): 약 **1분 13초**, 실제 브라우저 녹화. 합성 GPS·가속 지도 점검임을 화면에 표시합니다. 사진 슬라이드가 아니며 음성 녹음은 없습니다. [실제 재생·구간 탐색·SHA-256 검사](validation/seoul-yonsei-v0102/video-playback.json).
+- [실제 실행 녹화 MP4](video/CabinOS_ONE_seoul_yonsei_v0102.mp4): 약 **1분 13초**, 실제 브라우저 녹화. 합성 GPS·가속 지도 점검임을 화면에 표시합니다. 사진 슬라이드가 아니며 음성 녹음은 없습니다. [실제 재생·구간 탐색·SHA-256 검사](../test-fixtures/validation/seoul-yonsei-v0102/video-playback.json).
 - [보정한 실제 상호 검색](screenshots/yonsei-v0102-shop-spacing.png), [캠퍼스 출장소 검색](screenshots/yonsei-v0102-campus-business.png)
 - [서울 출발](screenshots/yonsei-v0102-seoul-start.png), [고속도로 합류](screenshots/yonsei-v0102-ring-road-merge.png), [광주원주고속도로](screenshots/yonsei-v0102-gwangju-wonju-expressway.png)
 - [수정 전 진출 안내](screenshots/yonsei-before-exit.png), [수정 후 남원주IC 표지](screenshots/yonsei-v0102-namwonju-exit.png), [캠퍼스 분기 표지](screenshots/yonsei-v0102-campus-direction.png)
 - [도착](screenshots/yonsei-v0102-arrival.png), [정차 확인 뒤 캠퍼스 확대](screenshots/yonsei-v0102-campus-detail.png)
-- [실검색·53개 지도 점검·최종 도착 기록](validation/seoul-yonsei-v0102/results.json), [원본 자동차 경로](validation/seoul-yonsei-v0102/route.json), [위치 입력별 안내 결과](validation/seoul-yonsei-v0102/gps-samples.jsonl.gz)
-- [브라우저 회귀 집계](validation/seoul-yonsei-v0102/regressions.json), [JVM/Android 결과](validation/test-results.json), [주변 제공자 시간 초과](validation/seoul-yonsei-v0102/nearby-provider.json), [독립 대조 차단](validation/seoul-yonsei-v0102/map-api-audit.json)
+- [실검색·53개 지도 점검·최종 도착 기록](../test-fixtures/validation/seoul-yonsei-v0102/results.json), [원본 자동차 경로](../test-fixtures/validation/seoul-yonsei-v0102/route.json), [위치 입력별 안내 결과](../test-fixtures/validation/seoul-yonsei-v0102/gps-samples.jsonl.gz)
+- [브라우저 회귀 집계](../test-fixtures/validation/seoul-yonsei-v0102/regressions.json), [JVM/Android 결과](../test-fixtures/validation/test-results.json), [주변 제공자 시간 초과](../test-fixtures/validation/seoul-yonsei-v0102/nearby-provider.json), [독립 대조 차단](../test-fixtures/validation/seoul-yonsei-v0102/map-api-audit.json)
 
-별도 합성 100,000점 경로·CPU 4배 지연 검사에서 GPS+화면 갱신 p95는 8.9ms였고 정지 버튼을 유지했습니다. 실기기 FPS·실서버 지연 측정이 아닙니다. [성능 기록](validation/map-performance-v0102.json).
+별도 합성 100,000점 경로·CPU 4배 지연 검사에서 GPS+화면 갱신 p95는 8.9ms였고 정지 버튼을 유지했습니다. 실기기 FPS·실서버 지연 측정이 아닙니다. [성능 기록](../test-fixtures/validation/map-performance-v0102.json).
 
 재현: 사이트 빌드와 내부 서버 실행 후 `node scripts/web/verify-seoul-yonsei-live.cjs`. Chromium·Playwright·FFmpeg가 필요하며 출력은 `artifacts/seoul-yonsei-live/`입니다. 외부 공개 서버를 사용하므로 기본 CI에는 넣지 않았습니다. 도로 데이터와 제공자 가용성이 바뀌면 결과도 달라질 수 있습니다. APK 0.10.2는 기존 퓨처랩스 팀 인증서로 서명해 업데이트할 수 있으며 [배포 파일과 공개 사이트 상태](WEB_DEMO.md)를 확인하세요.

@@ -21,5 +21,14 @@ internal object PleosSdkFactory {
             vehicle.getBrake().getCurrentBrakePedalStatus(onComplete = onComplete, onFailed = onFailed)
         }
         override fun release() = vehicle.release()
+        override fun canReadEnergy(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) {
+            vehicle.getEvBattery().checkEvBatteryStateOfChargeCapabilities(
+                onComplete = { config -> onComplete(config.accessType == AccessType.READ || config.accessType == AccessType.READ_WRITE) },
+                onFailed = onFailed,
+            )
+        }
+        override fun readEnergy(onComplete: (Int?) -> Unit, onFailed: (Exception) -> Unit) {
+            vehicle.getEvBattery().getEvBatteryStateOfCharge(onComplete = onComplete, onFailed = onFailed)
+        }
     } })
 }

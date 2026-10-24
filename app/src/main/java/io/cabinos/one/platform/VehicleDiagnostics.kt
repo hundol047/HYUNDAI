@@ -9,11 +9,12 @@ import org.json.JSONObject
  */
 internal class VehicleDiagnostics {
     private var last: List<Any?>? = null
-    fun record(state: AppState, pleos: PleosReadState) {
+    fun record(state: AppState, pleos: PleosReadState, energy: PleosEnergyState = PleosEnergyState()) {
         if (!Log.isLoggable("CabinVehicle",Log.INFO)) return
         val sample=state.sample ?: return
         val key=listOf(sample.source,sample.connected,sample.speedKph,sample.gear,state.parkedAllowed,
-            pleos.included,pleos.brakePressed,pleos.successfulReadAtMs)
+            pleos.included,pleos.brakePressed,pleos.successfulReadAtMs,energy.percent,energy.readAtMs,
+            sample.batteryPercent,sample.charging,sample.chargeRemainingSeconds)
         if(key==last)return
         last=key
         Log.i("CabinVehicle",JSONObject().apply {
@@ -24,6 +25,10 @@ internal class VehicleDiagnostics {
             put("pleosSdkIncluded",pleos.included)
             put("brakePressed",pleos.brakePressed ?: JSONObject.NULL)
             put("sdkReadAtMs",pleos.successfulReadAtMs ?: JSONObject.NULL)
+            put("batteryPercent",sample.batteryPercent);put("charging",sample.charging)
+            put("chargeRemainingSeconds",sample.chargeRemainingSeconds ?: JSONObject.NULL)
+            put("sdkBatteryPercent",energy.percent ?: JSONObject.NULL)
+            put("sdkBatteryReadAtMs",energy.readAtMs ?: JSONObject.NULL)
         }.toString())
     }
 }

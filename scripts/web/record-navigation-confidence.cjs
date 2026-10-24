@@ -2,7 +2,7 @@
 // Accelerated seeking is explicit; this is not a real-time/physical-drive duration claim.
 const {chromium}=require('playwright'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/navigation-confidence-video');fs.mkdirSync(out,{recursive:true});
-const baseline=path.join(root,'docs/validation/world-drive-v0103'),catalog=JSON.parse(fs.readFileSync(path.join(baseline,'baseline.json'))).scenarios;
+const baseline=path.join(root,'test-fixtures/validation/world-drive-v0103'),catalog=JSON.parse(fs.readFileSync(path.join(baseline,'baseline.json'))).scenarios;
 const rad=x=>x*Math.PI/180;
 function distance(a,b){return 6371000*2*Math.asin(Math.sqrt(Math.sin(rad(b[0]-a[0])/2)**2+Math.cos(rad(a[0]))*Math.cos(rad(b[0]))*Math.sin(rad(b[1]-a[1])/2)**2))}
 function heading(a,b){return (Math.atan2(Math.sin(rad(b[1]-a[1]))*Math.cos(rad(b[0])),Math.cos(rad(a[0]))*Math.sin(rad(b[0]))-Math.sin(rad(a[0]))*Math.cos(rad(b[0]))*Math.cos(rad(b[1]-a[1])))*180/Math.PI+360)%360}

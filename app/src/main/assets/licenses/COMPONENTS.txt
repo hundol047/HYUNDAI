@@ -1,0 +1,9 @@
+CabinOS ONE - Third-party components
+Kotlin and kotlinx.coroutines - Apache License 2.0 - https://github.com/JetBrains/kotlin
+AndroidX: Activity, Core, Lifecycle, Navigation, Compose, Room - Apache License 2.0 - https://android.googlesource.com/platform/frameworks/support/
+Dagger / Hilt - Apache License 2.0 - https://github.com/google/dagger
+osmdroid 6.1.20 - Apache License 2.0 - https://github.com/osmdroid/osmdroid
+Apache license text: osmdroid-Apache-2.0.txt
+OpenStreetMap data: ODbL - (c) OpenStreetMap contributors - https://www.openstreetmap.org/copyright
+osrm-text-instructions: BSD-2-Clause - see the accompanying license file.
+Pleos Vehicle / NaviHelper (optional SDK build only): subject to the provider's SDK terms, not relicensed under Apache/BSD.

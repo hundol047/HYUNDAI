@@ -56,6 +56,13 @@ class UnifiedVehicleContextEngine(
             departureAnnounced = false
             event("ChargingUpdated", "충전 예상 시간이 변경되었습니다.")
         }
+        if (sample.source == DataSource.VEHICLE && lastChargeEstimate != null &&
+            (!sample.charging || sample.chargeRemainingSeconds == null)) {
+            // An expired/unsupported charge estimate must not keep masquerading as live telemetry.
+            departureAtMs = manualDepartureAtMs
+            scheduleLabel = if(manualDepartureAtMs != null) "사용자 설정" else "충전 시간 확인 필요"
+            lastChargeEstimate = null
+        }
         if (!sample.charging) lastChargeEstimate = null
         mutable.value = mutable.value.copy(sample = sample)
         tick()
@@ -103,7 +110,9 @@ class UnifiedVehicleContextEngine(
             echoRoadActive = physical == VehicleContext.DRIVING || physical == VehicleContext.STOPPED_IN_TRAFFIC,
             stopSenseActive = allowed, cabinActive = allowed, schedule = schedule, session = session, history = history,
             hazards = ranked, nowMs = now,
-            activities = if (allowed) TimeOptimizer.recommend(nearbyActivities ?: recommendations.activities(), schedule, old.preferences.preferredCategory) else emptyList(),
+            activities = if (allowed) TimeOptimizer.recommend(
+                (nearbyActivities ?: recommendations.activities()).filter { old.sample?.source != DataSource.VEHICLE || !it.simulated },
+                schedule, old.preferences.preferredCategory) else emptyList(),
         )
         if (context != old.context) event("ContextChanged", "${contextLabel(old.context)} → ${contextLabel(context)}")
         if (allowed && context == VehicleContext.PREPARING_DEPARTURE && !departureAnnounced) {

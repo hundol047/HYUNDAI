@@ -30,13 +30,14 @@ import org.osmdroid.views.overlay.*
     val status by vm.nearbyStatus.collectAsStateWithLifecycle()
     val busy by vm.nearbyBusy.collectAsStateWithLifecycle()
     val selected by vm.mapSelection.collectAsStateWithLifecycle()
+    val compact=LocalCompactWindow.current
     val context=LocalContext.current
     var map by remember { mutableStateOf<MapView?>(null) }
     val chosen=s.activities.firstOrNull { it.activity.id==selected } ?: s.activities.firstOrNull()
-    Column(Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+    Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(10.dp)) {
         Text("멈춘 시간, 어디에서 보낼까요?",color=White,fontSize=24.sp)
         Text(s.activityOrigin.label,color=Mint,fontSize=12.sp)
-        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
             ActionButton(if(busy)"확인 중…" else "내 위치 사용",onLocate,color=Blue,enabled=!busy&&s.locationAvailable,icon=Icons.Outlined.MyLocation)
             ActionButton("지도 중심 사용",{map?.mapCenter?.let {vm.mapOrigin(MapPosition(it.latitude,it.longitude,"직접 고른 지도 기준점 · 차량 위치 아님"))}},color=Muted,enabled=!busy)
             ActionButton("주변 검색",{vm.searchNearby()},color=Mint,enabled=!busy&&s.networkAvailable&&s.locationAvailable,icon=Icons.Outlined.Search)
@@ -44,12 +45,14 @@ import org.osmdroid.views.overlay.*
             if(!busy)ActionButton("예시 초기화",{vm.mapExamples()},color=Muted)
         }
         Text(if(!s.networkAvailable) "오프라인 · 새 지도와 장소를 불러올 수 없습니다." else if(!s.locationAvailable) "위치 사용 제한 · 온라인 지도·검색을 중단했습니다." else status,color=if(s.networkAvailable)Muted else Amber,fontSize=11.sp)
-        Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.weight(.6f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) {
+        ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
+            map = { pane ->
+            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) {
                 OpenStreetMap(s,selected,{vm.mapSelect(it)},{map=it})
             }
-            Column(Modifier.weight(.4f).fillMaxHeight(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Row(horizontalArrangement=Arrangement.spacedBy(5.dp)) {
+            }, details = { pane ->
+            Column(pane,verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(5.dp)) {
                     listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
                         FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.preferences(s.preferences.copy(preferredCategory=category))},label={Text(category,fontSize=11.sp)})
                     }
@@ -84,7 +87,7 @@ import org.osmdroid.views.overlay.*
                     }
                 }
             }
-        }
+            })
         Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Overpass에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
     }
 }

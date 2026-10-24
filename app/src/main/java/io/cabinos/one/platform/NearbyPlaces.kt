@@ -57,7 +57,7 @@ class NearbyPlaces(private val context:Context) {
             connection.connectTimeout=8_000;connection.readTimeout=35_000
             connection.requestMethod="POST";connection.doOutput=true
             connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
-            connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)")
+            connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
             connection.setRequestProperty("Accept","application/json")
             currentCoroutineContext().ensureActive()
             val form=("data="+URLEncoder.encode(query,"UTF-8")).toByteArray(Charsets.UTF_8)

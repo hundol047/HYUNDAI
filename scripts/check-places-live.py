@@ -59,7 +59,7 @@ def main():
  road('New York to London',(40.7484,-73.9857),(51.5074,-.1278),'route-ocean.json','unavailable')
  road('Ocean origin to Paris',(0.0,0.0),(48.8566,2.3522),'route-origin-snap.json','unavailable')
  report={'type':'limited actual business search and road routing sample; not exhaustive coverage or physical GPS testing','timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'searchReplay':args.reuse_search_capture,'searches':searches,'routes':routes,'allRoutesGuaranteed':False,'allBusinessesGuaranteed':False,'commercialProviderLiveValidation':'not performed; account/key not configured'}
- Path('docs/validation/place-route-coverage.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+ Path('test-fixtures/validation/place-route-coverage.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
  print('Finished bounded coverage sample; inspect not_found, unavailable and snap_rejected separately.')
 
 if __name__=="__main__":main()

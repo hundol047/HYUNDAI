@@ -37,17 +37,17 @@
 
 현재 회귀 범위는 **코어 88개 + Android 48개 = 136개**, **브라우저 94개**입니다. 브라우저는 기존 79개와 GPS 15개를 합쳤습니다. 선택적 검색 서버는 별도 9개입니다. 이 숫자는 전체 가능한 경로/입력의 전수 검사나 실차 검증을 뜻하지 않습니다.
 
-- [GPS 브라우저 결과](validation/gps-results.json)
-- [JVM/Android 결과](validation/test-results.json)
-- [실제 제공자 3개 요청](validation/gps-review-live-providers.json)
-- [실제 브라우저 지도·경로 연결](validation/gps-review-live-browser.json) · [화면](screenshots/gps-review-live-guidance.png)
-- [Overpass 실제 실패 응답](validation/gps-review-live-nearby.json)
+- [GPS 브라우저 결과](../test-fixtures/validation/gps-results.json)
+- [JVM/Android 결과](../test-fixtures/validation/test-results.json)
+- [실제 제공자 3개 요청](../test-fixtures/validation/gps-review-live-providers.json)
+- [실제 브라우저 지도·경로 연결](../test-fixtures/validation/gps-review-live-browser.json) · [화면](screenshots/gps-review-live-guidance.png)
+- [Overpass 실제 실패 응답](../test-fixtures/validation/gps-review-live-nearby.json)
 - [Android 권한 복구 UI](screenshots/gps-permission.png): Robolectric 네이티브 Compose 렌더링, 오프라인 지도이며 실기기 화면이 아님
 - [모바일 복구 안내](screenshots/gps-permission-mobile.png): 실제 Chromium, 합성 권한 결과
 
 ## 속도 재확인
 
-CPU 4배 감속·합성 10만 지점 경로·120회 GPS 갱신에서 지도 검사 8개가 통과했습니다. 초기 파싱/표시 약 **0.70초**, GPS 처리·화면 갱신 **p95 10.8ms**, 최대 **15.1ms**였습니다. GPS 상태/도움말을 추가해도 고정 위치에서 불필요하게 중심을 옮기거나 종료 버튼을 재생성하지 않았습니다. [현재 측정](validation/map-performance-v090.json). 이전 0.8.0의 약 0.57초는 그 실행의 관측값이며 모든 실행에서 동일한 수치를 보장하지 않습니다. 타일/경로 서버 지연과 실기기 FPS는 이 CPU 시험에 포함하지 않습니다.
+CPU 4배 감속·합성 10만 지점 경로·120회 GPS 갱신에서 지도 검사 8개가 통과했습니다. 초기 파싱/표시 약 **0.70초**, GPS 처리·화면 갱신 **p95 10.8ms**, 최대 **15.1ms**였습니다. GPS 상태/도움말을 추가해도 고정 위치에서 불필요하게 중심을 옮기거나 종료 버튼을 재생성하지 않았습니다. [현재 측정](../test-fixtures/validation/map-performance-v090.json). 이전 0.8.0의 약 0.57초는 그 실행의 관측값이며 모든 실행에서 동일한 수치를 보장하지 않습니다. 타일/경로 서버 지연과 실기기 FPS는 이 CPU 시험에 포함하지 않습니다.
 
 ## 재현
 

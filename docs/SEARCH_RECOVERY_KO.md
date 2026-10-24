@@ -28,7 +28,7 @@
 | Old Town White Coffee Kuala Lumpur | 쿠알라룸푸르 주변 OldTown/Old Town 지점 후보. 원래 검색은 특정 지점을 지정하지 않았습니다. |
 | Fidel Cafe Wellington | **여전히 검색 결과 없음.** 표기 변형과 업종 검색도 확인했습니다. 지도 중심 지정·주소 검색·외부 검색을 제공하며 등록 여부를 조작하지 않습니다. |
 
-[실제 검색 응답·화면과 결과](validation/search-recovery-v0105/results.json), [주변 추천 실제 응답](validation/nearby-recovery-v0105/results.json)을 보관합니다. 검색 제공자의 데이터·색인·별칭 차이와 순간 가용성 때문에 결과는 달라질 수 있습니다. 상호의 정확한 위치를 얻으려면 제공자 데이터 보완 또는 적법한 상용 데이터 연동이 필요하며, 카카오 실서버 키는 등록되지 않았습니다.
+[실제 검색 응답·화면과 결과](../test-fixtures/validation/search-recovery-v0105/results.json), [주변 추천 실제 응답](../test-fixtures/validation/nearby-recovery-v0105/results.json)을 보관합니다. 검색 제공자의 데이터·색인·별칭 차이와 순간 가용성 때문에 결과는 달라질 수 있습니다. 상호의 정확한 위치를 얻으려면 제공자 데이터 보완 또는 적법한 상용 데이터 연동이 필요하며, 카카오 실서버 키는 등록되지 않았습니다.
 
 주변 POST 실측은 리스본 **24.6초**, 서울 **20.8초**, 웰링턴 **24.3초**였고 각 60개 장소를 반환했습니다. 즉시 응답을 보장하지 않습니다.
 
@@ -36,7 +36,7 @@
 
 브라우저 검사는 실제 Chromium의 조작·취소·주행 차단을 실행합니다. 자동 회귀 검사의 공급자 응답은 fixture이며 실서버 검사는 위 별도 기록을 기준으로 합니다. 최신 수치와 빌드 해시는 [검증 결과](VALIDATION.md)에 있습니다. 이전 [5시간 모의주행](WORLD_SOAK_KO.md)은 당시 기록으로 보존하며 이번 재검사 시간을 더하지 않았습니다.
 
-[새 실행 영상](video/CabinOS_ONE_search_recovery_v0105.mp4)은 실제 브라우저의 검색·주변 추천·경로 계산을 연속 녹화한 것입니다. 사진 슬라이드가 아닙니다. 녹화 후 모바일 확인에서 지도 목적지 버튼이 공통 스타일 때문에 44px로 줄어든 점을 발견했고, 최종 배포에서는 48px로 고친 뒤 390px 화면에서 다시 확인했습니다. 영상은 이 4px 터치 영역 수정 직전 화면입니다. 영상은 **78.28초**이며 GPS는 합성 입력입니다. Android 실기기·실차 녹화가 아닙니다. [녹화 요청·장면 기록](validation/search-recovery-video-v0105/results.json)을 함께 보관합니다.
+[새 실행 영상](video/CabinOS_ONE_search_recovery_v0105.mp4)은 실제 브라우저의 검색·주변 추천·경로 계산을 연속 녹화한 것입니다. 사진 슬라이드가 아닙니다. 녹화 후 모바일 확인에서 지도 목적지 버튼이 공통 스타일 때문에 44px로 줄어든 점을 발견했고, 최종 배포에서는 48px로 고친 뒤 390px 화면에서 다시 확인했습니다. 영상은 이 4px 터치 영역 수정 직전 화면입니다. 영상은 **78.28초**이며 GPS는 합성 입력입니다. Android 실기기·실차 녹화가 아닙니다. [녹화 요청·장면 기록](../test-fixtures/validation/search-recovery-video-v0105/results.json)을 함께 보관합니다.
 
 재현: `node scripts/web/verify-search-recovery-live.cjs`, `node scripts/web/verify-nearby-provider-live.cjs`, `node scripts/web/record-search-recovery.cjs`. 실제 외부 서비스를 쓰므로 CI에서 반복 실행하지 않습니다. 이 클라우드에서 녹화할 때는 `PLAYWRIGHT_BROWSERS_PATH=/workspace/.cache/ms-playwright`를 설정해 설치된 FFmpeg를 사용합니다. 내부 HTTPS 프록시·CA 신뢰를 유지하며 우회 경로나 TLS 검증 해제는 사용하지 않습니다.
 

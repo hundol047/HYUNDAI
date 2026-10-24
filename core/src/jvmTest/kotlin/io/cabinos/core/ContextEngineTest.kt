@@ -22,6 +22,23 @@ class ContextEngineTest {
     @Test fun lossOfConnectionPausesRunningSession() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,25);send(connected=false);assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status);assertFalse(engine.state.value.cabinActive) }
     @Test fun chargingActivatesBothParkedSystems() { park(true);assertEquals(VehicleContext.CHARGING,engine.state.value.context);assertTrue(engine.state.value.cabinActive && engine.state.value.stopSenseActive) }
     @Test fun chargingDoesNotSlideDeadlineOnTelemetryTicks() { park(true);val departure=engine.state.value.schedule.departureAtMs;now+=1000;send(charging=true,remaining=2400);assertEquals(departure,engine.state.value.schedule.departureAtMs) }
+    @Test fun realChargeEstimateLossClearsTelemetryDeadlineButPreservesManualPlan() {
+        fun real(remaining: Long?) = engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,charging=true,chargeRemainingSeconds=remaining,timestampMs=now,source=DataSource.VEHICLE))
+        real(2400);now+=1600;real(2400)
+        assertNotNull(engine.state.value.schedule.departureAtMs)
+        real(null);assertNull(engine.state.value.schedule.departureAtMs)
+        assertEquals("충전 시간 확인 필요",engine.state.value.schedule.estimateLabel)
+        engine.setWaitingMinutes(30);val manual=engine.state.value.schedule.departureAtMs
+        real(600);assertTrue(engine.state.value.schedule.departureAtMs!! < manual!!)
+        real(null);assertEquals(manual,engine.state.value.schedule.departureAtMs)
+        assertEquals("사용자 설정",engine.state.value.schedule.estimateLabel)
+    }
+    @Test fun vehicleModeNeverRecommendsSimulationPlaces() {
+        fun real() = engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now,source=DataSource.VEHICLE))
+        real();now+=1600;real();engine.setWaitingMinutes(40)
+        assertTrue(engine.state.value.parkedAllowed)
+        assertTrue(engine.state.value.activities.isEmpty())
+    }
     @Test fun sharedTimingCapsSessionDuration() { park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,25);assertEquals(900L,engine.state.value.session!!.durationSeconds) }
     @Test fun changingChargeEstimateShortensActiveSession() { park(true);engine.startSession(SessionKind.FOCUS,25);send(charging=true,remaining=600);assertEquals(300L,engine.state.value.session!!.remainingSeconds) }
     @Test fun relaxationKeepsBothServicesActive() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.RELAX,30);assertEquals(VehicleContext.RESTING,engine.state.value.context);assertTrue(engine.state.value.stopSenseActive && engine.state.value.cabinActive) }
