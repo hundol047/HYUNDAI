@@ -31,6 +31,12 @@ class AutomotiveApplicationTest {
         override fun before(){
             val context=ApplicationProvider.getApplicationContext<Context>()
             shadowOf(context.packageManager).setSystemFeature(PackageManager.FEATURE_AUTOMOTIVE,true)
+            // This JVM has no vehicle services. Robolectric's default successful bind passes
+            // null ComponentName/IBinder into the real SDK, which cannot represent a real bind.
+            // Exercise the unavailable-service path; never substitute a successful SDK read.
+            shadowOf(context as android.app.Application).setThrowInBindService(
+                SecurityException("Vehicle services unavailable in JVM test"))
+            shadowOf(context).setUnbindServiceCallsOnServiceDisconnected(false)
             // A previously saved phone/demo P must not override the automotive policy.
             io.cabinos.one.platform.RuntimePreferences(context).scenario="충전"
         }

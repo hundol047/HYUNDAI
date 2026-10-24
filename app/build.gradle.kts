@@ -36,6 +36,9 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
         unitTests.all { test ->
+            // Official SDK service reconnection workers are not reset by Robolectric sandboxes.
+            // Keep JVM classes isolated; this is not an emulated successful vehicle service.
+            if (pleosSdkEnabled) test.forkEvery = 1
             if (!project.hasProperty("liveRoadTiles")) test.exclude("**/RoadMapLiveTest.class")
             test.systemProperty("robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2")
             val testHome = layout.buildDirectory.dir("robolectric-home").get().asFile
