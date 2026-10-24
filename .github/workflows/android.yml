@@ -103,6 +103,9 @@ jobs:
       - name: Boot official image with hardware acceleration
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          # The emulator imports the host ADB key at startup. Generate it before QEMU starts.
+          adb start-server
+          test -f "$HOME/.android/adbkey.pub"
           mkdir -p artifacts/pleos-device
           "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
           echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"

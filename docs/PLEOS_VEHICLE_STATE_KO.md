@@ -27,6 +27,7 @@ Linux x86_64의 재현용 CLI 설치도 제공합니다. 저장 공간은 압축
 python3 scripts/install-pleos-emulator.py \
   --archive "$HOME/.cache/pleos-connect-2.1.0.zip" \
   --sdk "$ANDROID_HOME" --avd-home "$ANDROID_AVD_HOME"
+adb start-server # 에뮬레이터 실행 전에 호스트 인증키 준비
 emulator -avd CabinOS_Pleos_21 -no-snapshot -gpu swiftshader_indirect
 ```
 

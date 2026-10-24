@@ -53,7 +53,10 @@ start = time.monotonic()
 console_initialized=False
 while time.monotonic()-start < 600:
     try:
-        if run('shell','getprop','sys.boot_completed',timeout=10,check=False).stdout.strip() == '1':
+        boot=run('shell','getprop','sys.boot_completed',timeout=10,check=False)
+        if 'unauthorized' in boot.stderr and time.monotonic()-start > 30:
+            raise RuntimeError('ADB host is unauthorized. Start the ADB server before the emulator; do not disable authentication.')
+        if boot.stdout.strip() == '1':
             break
     except subprocess.TimeoutExpired:
         pass
@@ -71,7 +74,7 @@ while time.monotonic()-start < 600:
                 notice('Official Console initialized','P / 0 submitted to official emulator before app launch')
         except (OSError,subprocess.TimeoutExpired,subprocess.CalledProcessError):
             pass
-    pidfile=Path(os.environ.get('RUNNER_TEMP','/tmp'))/'pleos-emulator.pid' 
+    pidfile=Path(os.environ.get('RUNNER_TEMP','/tmp'))/'pleos-emulator.pid'
     if pidfile.exists():
         pid=pidfile.read_text().strip()
         process=Path('/proc')/pid/'stat'
