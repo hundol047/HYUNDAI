@@ -40,20 +40,20 @@ cd HYUNDAI
 - [핵심 기능 ↔ SDK API 매핑](docs/SDK_CAPABILITIES.md): 기획서에 사용할 기능 설명과 지원 범위.
 - [오픈소스·데이터 출처](docs/THIRD_PARTY.md).
 
-**공식 Pleos release 실행 영상은 아직 공개 검증을 마치지 않았습니다.** 기존 브라우저 영상과 일반 Android 데모는 Pleos 실행 증거로 제출하지 않으며, 만료되는 Actions artifact를 대표 영상 링크로 사용하지 않습니다.
+**[공식 Pleos 실제 release 실행 영상 · 96초](https://github.com/hundol047/HYUNDAI/releases/tag/v0.11.0-pleos-preview-7279b860)** — 동일 APK의 ADB 연속 녹화입니다. 실제 SDK SOC 수신과 P/0 화면을 확인할 수 있는 **진단 영상**이며, 신호 만료·Console 오류로 집중 세션과 전체 차량 상태 변경 시연은 미완료입니다. 영상의 미통과 항목도 공개했습니다. 브라우저 영상이나 Actions artifact를 Pleos 실행 증거로 대체하지 않습니다.
 
 ## 오픈소스 라이선스
 
 | 구성요소 | 라이선스·출처 |
 |---|---|
-| Kotlin·coroutines, AndroidX/Compose/Room, Hilt/Dagger, osmdroid | Apache-2.0 · [원문·출처](docs/THIRD_PARTY.md) |
+| Kotlin·coroutines, AndroidX/Compose/Room, Hilt/Dagger, Gson, osmdroid | Apache-2.0 · [원문·출처](docs/THIRD_PARTY.md) |
 | Leaflet, osrm-text-instructions | BSD-2-Clause · [원문·출처](docs/THIRD_PARTY.md) |
 | OpenStreetMap 도로·장소 | ODbL, © OpenStreetMap contributors · [저작권](https://www.openstreetmap.org/copyright) |
 | Pleos Vehicle / NaviHelper | SDK 제공자 이용 조건. 위 오픈소스 라이선스의 적용 대상과 구분 |
 
 ## 제한 사항
 
-- SDK 포함 빌드·서명·JVM 검사와 공식 Pleos에서 SDK 후보 실행을 확인했습니다. 영상 검토 후 시간 선택 버튼과 차량 신호 조회를 보완한 versionCode 19은 재녹화 중입니다. release의 Gson/R8 오류를 수정한 뒤 EvBattery SOC·충전 스위치·Brake 실제 조회와 SDK SOC 사용을 확인했습니다. Console `503 / emulator_inactive` 때문에 P→D·SOC 변화에 따른 전체 시나리오와 공개 연속 영상은 미완료입니다. 목적지 ETA 계획·Pleos 분할 창도 추가 검증이 필요합니다. [검토표](docs/SUBMISSION_REVIEW_KO.md).
+- 공식 SDK 포함 0.11.0 / versionCode 19의 빌드·서명·232개 JVM 테스트와 실제 Pleos SDK 응답을 확인했습니다. release의 Gson/R8 오류를 수정했습니다. Console `503 / emulator_inactive`와 간헐적 정차 신호 만료가 남아 P→D·SOC 변화·집중 자동 종료의 전체 시연은 미완료입니다. 실제 목적지 ETA 계획·Pleos 분할 창도 추가 검증이 필요합니다. [검토표](docs/SUBMISSION_REVIEW_KO.md).
 - main 병합은 승인 대기입니다. 병합 전 변경 소스·APK는 `feat/pleos-vehicle-state` 브랜치에 있고 main은 이전 버전입니다.
 - DO를 선언하지 않은 정차 전용 앱입니다. 기본 내비의 지도·언어·지역 지원 범위를 따릅니다. 모든 도로·가게의 완전성을 보장하지 않습니다.
 - 일반 Android/웹의 공용 Nominatim·OSRM·Overpass 기능은 데모이며 상용 SLA가 없습니다. 기존 웹 데모는 0.10.5입니다.

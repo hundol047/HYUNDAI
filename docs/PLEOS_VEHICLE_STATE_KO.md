@@ -31,6 +31,8 @@ adb start-server # 에뮬레이터 실행 전에 호스트 인증키 준비
 emulator -avd CabinOS_Pleos_21 -no-snapshot -gpu swiftshader_indirect
 ```
 
+CLI AVD는 배포 파일 `source.properties`의 기본값에 맞춰 RAM 8192MB를 사용합니다. 호스트에 충분한 메모리와 하드웨어 가속이 필요합니다.
+
 공식 인덱스의 archive SHA-1: `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`, 크기 4,087,751,964 bytes. 일반 AAOS 이미지를 이름만 바꾼 AVD는 인정하지 않습니다.
 
 ## 3. 같은 서명 release APK 설치
@@ -94,4 +96,4 @@ python3 scripts/inspect-pleos-device.py --serial emulator-5554 \
   --apk "apk/퓨처랩스_CabinOS_ONE_release.apk" --output artifacts/pleos-local-diagnostics
 ```
 
-`identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·4 GB RAM으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.
+`identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Console의 **AVD Enabled** 선택기도 확인하세요. 공개 UI가 호출하는 `PUT /vehicle/hvac/mode?mode=subscribe_hvac_base` 역시 현재 runner에서는 503이었습니다. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·배포 기본 메모리 설정으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.

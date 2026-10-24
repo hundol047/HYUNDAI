@@ -36,9 +36,25 @@
     "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
     "downloadVerified": true,
     "runtimeVerified": false,
-    "publicVideo": null,
-    "installedApkHashMatched": false,
-    "status": "Version code 19 isolates optional energy Binder reads from mandatory speed/gear polling; renewed signed APK recording pending"
+    "publicVideo": "https://github.com/hundol047/HYUNDAI/releases/tag/v0.11.0-pleos-preview-7279b860",
+    "installedApkHashMatched": true,
+    "status": "Actual signed APK launch and SDK reads verified; continuous diagnostic video reviewed and published; full scenarios remain incomplete",
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "sdkEnergyReadVerified": true,
+    "sdkSocUsed": true,
+    "observedSdkSoc": 100,
+    "observedSdkChargeSwitch": false,
+    "observedSdkBrake": false,
+    "kvmDiagnosticRun": 40094004618,
+    "checkRun": 120872359016,
+    "aaosParkZeroObserved": true,
+    "sustainedParkingSignalsVerified": false,
+    "sdkGoalCompletionObserved": false,
+    "naviEtaPlanningVerified": false,
+    "consoleScenarioVerified": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleError": "emulator_inactive"
   },
   "submissionReady": false,
   "previousCandidateRuntime": {
@@ -86,5 +102,56 @@
     "consoleError": "emulator_inactive",
     "consoleScenarioVerified": false,
     "naviEtaPlanningVerified": false
+  },
+  "video": {
+    "mode": "initial_sdk_preview",
+    "captureMethod": "adb shell screenrecord (continuous device frames)",
+    "apkSha256": "7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543",
+    "fingerprint": "Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys",
+    "recordingSecondsRequested": 110,
+    "uiError": "RuntimeError: Actual UI control unavailable: 45분",
+    "sdkSocReadObserved": true,
+    "sdkGoalCompletionObserved": false,
+    "fullRecorderExitCode": 1,
+    "fullScenarioChecks": {
+      "realSourceObserved": true,
+      "noSimulationObserved": true,
+      "parkUnlockObserved": true,
+      "driveAtZeroLocked": false,
+      "movingLocked": false,
+      "unknownLocked": true,
+      "officialSdkReadObserved": true,
+      "sdkSocChanged": false,
+      "sdkChargeStateChanged": false,
+      "sdkSocUsedInPlan": false,
+      "parkingDebounceObserved": true,
+      "noUnsafeParkingObserved": true
+    },
+    "submissionReady": false,
+    "limitations": [
+      "Console returned emulator_inactive; no successful P/D or SOC-change injection is claimed",
+      "Initial SDK SOC is read from the official emulator; setting a planning goal does not change vehicle SOC",
+      "Voice command button is a touch action, not a microphone/STT demonstration"
+    ],
+    "visualReview": {
+      "reviewed": true,
+      "result": "diagnostic recording only; not an accepted full scenario demonstration",
+      "actualDurationSeconds": 95.9932,
+      "resolution": "2560x1440",
+      "decodeErrors": 0,
+      "observations": [
+        "Official launcher, actual APK dashboard and SDK diagnostics are visible",
+        "SDK SOC 100%, PARK and speed 0 are visible",
+        "UNKNOWN safety lock recurs; sustained parking operation remains unverified",
+        "Time setting sequence did not complete; focus start and SOC goal completion were not demonstrated"
+      ],
+      "videoSha256": "493366767d4f2eab2afcf071d48b85dd9f850ed723fe8abc40d65228f03746b6"
+    }
+  },
+  "ci": {
+    "sourceCommit": "dd15b3a6e87888a8af573c8f2e5ea9bd0f2ac476",
+    "pushRun": 40094004076,
+    "pullRequestRun": 40094007815,
+    "conclusion": "success"
   }
 }
