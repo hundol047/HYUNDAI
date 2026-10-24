@@ -20,6 +20,7 @@ class CabinViewModel @Inject constructor(
     private val vehicle:VehicleStateProvider,
     private val pleos:PleosVehicleReader,
     val pleosNavigation:PleosNavigation,
+    val cabin:PleosCabinReader,
     private val dao:CabinDao,
     val speech:AndroidSpeechProvider,
     private val location:AndroidLocationProvider,
@@ -86,7 +87,7 @@ class CabinViewModel @Inject constructor(
             launch { combine(state,pleos.state,pleos.energy,pleosNavigation.state) { app,sdk,energy,nav ->
                 if(foreground)vehicleDiagnostics.record(app,sdk,energy,nav)
             }.collect {} }
-            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};location.start();engine.setConnectivity(location=false) }
+            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
                 if (foreground) { if(!simulator.realMode) simulator.heartbeat();engine.tick();liveNavigation.tick() }
@@ -127,9 +128,9 @@ class CabinViewModel @Inject constructor(
         simulator.select(name);mutableScenario.value=name
         if(simulator.realMode) {
             engine.acceptVehicle(vehicle.samples.value.copy(connected=false,parkingReliable=false))
-            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();pleos.start();pleosNavigation.start()};location.start()}
+            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();cabin.stop();pleos.start();pleosNavigation.start();cabin.start()};location.start()}
             engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
-        } else {pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
+        } else {pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
     }
     fun arrival(minutes:Int?) {
         if(engine.setArrivalInMinutes(minutes)) {
@@ -170,9 +171,9 @@ class CabinViewModel @Inject constructor(
             demoJob?.cancel();mutableDemoRunning.value=false
             audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();cancelNearby()
+            pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();cancelNearby()
         } else {
-            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
+            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
             else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
     }
@@ -257,5 +258,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { pleos.stop();pleosNavigation.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
+    override fun onCleared() { pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

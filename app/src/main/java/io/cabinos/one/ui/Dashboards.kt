@@ -66,6 +66,12 @@ import kotlin.math.min
             }
             ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
+        val cabin by vm.cabin.state.collectAsState()
+        if(s.parkedAllowed && cabin.passengerDetected==true) SurfacePanel(Modifier.fillMaxWidth()) {
+            Text("동승자 감지",color=Mint)
+            Text("함께하는 휴식·오디오 세션을 추천해요",color=White)
+            ActionButton("함께 휴식",{vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)},color=Mint)
+        }
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)
         if(active) ActiveSessionPanel(s,vm) else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
             ModeCard("집중 모드","작은 몰입이 만드는 큰 차이",min(s.preferences.focusMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.CenterFocusStrong,Blue,Modifier.weight(1f)){vm.start(SessionKind.FOCUS,s.preferences.focusMinutes)}

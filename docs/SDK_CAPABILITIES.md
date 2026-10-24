@@ -39,3 +39,15 @@ Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 �
 - [Pleos Connect Emulator 2.1.0/API 34](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator)
 
 공식 문서의 Dokka 본문과 실제 AAR 시그니처를 대조했습니다. `RouteStateInfo`에 없는 ETA 필드를 만들지 않았으며 `DestinationInfo`를 사용합니다. 최종 OEM 인증·공모전 승인과는 별개입니다.
+
+### 0.11.1 선택적 실내 제안 (실제 에뮬레이터 미검증)
+
+| 기능 | SDK 도메인·메서드 | 읽기 권한 | 공식 문서 | 에뮬레이터 검증 |
+|---|---|---|---|---|
+| 동승자 감지 → 함께 휴식·오디오 추천 | Seat.checkSeatOccupancyCapabilities / getCurrentSeatOccupancy | pleos.car.permission.CAR_SEATS | [좌석 점유](https://document.pleos.ai/docs/pleos-only/connect-sdk-pleos/Vehicle/vehicle/ai.pleos.playground.vehicle.api/seat/get-current-seat-occupancy) | 아니요 |
+
+공식 Vehicle 2.3.2 AAR의 실제 메서드와 권한 주석을 확인했습니다. capability가 READ/READ_WRITE인
+단일 좌석 영역만 읽습니다. 뒷좌석 점유 또는 서로 다른 좌석 2개 이상 점유일 때 동승자를 표시합니다.
+운전석 좌우를 알려 주는 API는 확인하지 못했으므로 앞좌석 1개만 점유하면 동승자로 단정하지 않습니다.
+벨트 체결만으로 점유를 추정하지 않습니다. 미지원·null·3초 시간 초과는 숨기며 백그라운드에서 구독을 중단합니다.
+이 정보는 정차 허용 판정에 사용하지 않으며 차량 제어 API를 호출하지 않습니다.
