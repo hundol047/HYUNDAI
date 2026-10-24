@@ -67,3 +67,45 @@ jobs:
         with:
           name: CabinOS-Android-APK-device-video
           path: artifacts/android-device-demo/
+  pleos-device:
+    name: Official Pleos boot diagnostics
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      ANDROID_AVD_HOME: ${{ runner.temp }}/pleos-avd
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Enable runner KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          test -r /dev/kvm
+      - uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
+          key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
+      - name: Install checksum-verified official Pleos image
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" emulator platform-tools
+          python3 scripts/install-pleos-emulator.py --archive "$RUNNER_TEMP/pleos-connect-2.1.0.zip" --sdk "$ANDROID_HOME" --avd-home "$ANDROID_AVD_HOME"
+      - name: Boot official image with hardware acceleration
+        run: |
+          mkdir -p artifacts/pleos-device
+          "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
+          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Pleos-actual-device-diagnostics
+          path: artifacts/pleos-device/
+          retention-days: 7
+      - name: Stop emulator
+        if: always()
+        run: adb -s emulator-5554 emu kill || true
