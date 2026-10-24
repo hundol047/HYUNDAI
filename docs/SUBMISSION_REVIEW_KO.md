@@ -1,6 +1,6 @@
 # 제출 검토표 — 0.11.0
 
-현재 **공식 SDK 포함 release APK의 빌드·서명과 현재 APK의 공식 Pleos 실행·SDK 응답은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
+현재 **공식 SDK 포함 release APK의 빌드·서명과 이전 SDK 후보의 공식 Pleos 실행·SDK 응답은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
 
 ## 완료된 항목
 
@@ -11,12 +11,12 @@
 | 안전 제한 | 0 + P 1.5초, 신호 만료 시 잠금, D/0 잠금. 차량 기기 데모 거부. DO 미선언 |
 | 테스트 | 공통 131/131, Android 101/101, 녹화 검사 5/5, 선택적 장소 게이트웨이 11/11. 실제 차량 신호 시험과 구분 |
 | 린트 | 오류 0, 기존 경고 4 |
-| release | versionName 0.11.0 / versionCode 17, 최적화·비디버그 APK, 기존 팀 키 서명·zipalign 검사 |
+| release | versionName 0.11.0 / versionCode 18, 최적화·비디버그 APK, 기존 팀 키 서명·zipalign 검사 |
 | 파일 | `apk/퓨처랩스_CabinOS_ONE_release.apk`, `apk/SHA256SUMS` |
 | 문서 | README 필수 4항목·라이선스 표·main clone, SDK 핵심 기능 표, 로컬 PC 실행·녹화 명령 |
 | 공식 이미지 | Pleos Connect 2.1.0 / API 34 다운로드, 배포 인덱스 SHA-1 대조·설치 완료 |
 
-APK SHA-256: `079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5`.
+APK SHA-256: `a757d1c9d48775d73dd68c1c8b9667a60f1f3ffd184ef91aee3cafa37ff0b4ff`.
 
 팀 서명 인증서 SHA-256: `33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0`. 키·비밀번호는 저장소에 포함하지 않습니다.
 
@@ -33,7 +33,11 @@ JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 
 
 ## release 최적화 오류 수정
 
-이전 후보(`050b9949…`)의 실제 Pleos 로그에서 Gson `TypeToken must be created with a type argument` 오류를 확인했습니다. Gson 공식 R8 설정에 따라 TypeToken 제네릭 정보와 Vehicle 데이터 모델 필드를 보존하도록 수정했습니다. SDK 전체 빌드 명령은 2분 12초에 성공했고 기존 팀 키로 다시 서명했습니다. 재서명한 현재 APK를 공식 Pleos에서 다시 실행해 SOC 100%, 충전 스위치 false, Brake false의 실제 SDK 응답과 `sdkSocUsed=true`를 확인했습니다. 설치 APK를 다시 pull해 위 SHA-256과 일치함을 확인했습니다. 실제 앱 오류 로그에서 이전 TypeToken 오류는 재현되지 않았습니다. 실행 ID `40089489317`, check `120859078635`입니다.
+이전 후보(`050b9949…`)의 실제 Pleos 로그에서 Gson `TypeToken must be created with a type argument` 오류를 확인했습니다. Gson 공식 R8 설정에 따라 TypeToken 제네릭 정보와 Vehicle 데이터 모델 필드를 보존하도록 수정했습니다. SDK 전체 빌드 명령은 2분 12초에 성공했고 기존 팀 키로 다시 서명했습니다. versionCode 17 후보(`079108b2…`)를 공식 Pleos에서 다시 실행해 SOC 100%, 충전 스위치 false, Brake false의 실제 SDK 응답과 `sdkSocUsed=true`를 확인했습니다. 설치 APK를 다시 pull해 해당 후보 SHA-256과 일치함을 확인했습니다. 실제 앱 오류 로그에서 이전 TypeToken 오류는 재현되지 않았습니다. 실행 ID `40089489317`, check `120859078635`입니다.
+
+## 실제 영상 검토 후 UI 보완
+
+첫 연속 영상에서 녹화 자동 조작이 슬라이더를 변경하지 못해 대기 시간이 5분으로 남았습니다. versionCode 18에는 15/30/45/60분 선택 버튼(최소 높이 48dp)을 추가했습니다. 녹화도 실제 45분 버튼을 사용하고 SOC 칩의 자식 텍스트를 터치하도록 수정했습니다. 새 APK의 전체 빌드 명령은 3분 27초에 성공했습니다. 첫 영상은 초안으로 유지하고 새 APK를 재녹화합니다.
 
 ## 이전 후보의 문제 진단 — 2026-10-24
 

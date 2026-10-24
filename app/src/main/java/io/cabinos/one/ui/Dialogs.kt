@@ -22,6 +22,12 @@ import io.cabinos.core.*
     AlertDialog(onDismissRequest=onDismiss,title={Text("나의 정차 시간")},text={Column {
         Text("출발까지 남은 시간을 설정하세요. 차량 충전·도착 계획과 비교해 더 이른 마감을 사용합니다.",fontSize=13.sp,color=Muted)
         Spacer(Modifier.height(20.dp));Text("${minutes}분",color=Mint,fontSize=36.sp)
+        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+            listOf(15,30,45,60).forEach { preset ->
+                FilterChip(selected=minutes==preset,onClick={minutes=preset},
+                    label={Text("${preset}분")},modifier=Modifier.weight(1f).heightIn(min=48.dp))
+            }
+        }
         Slider(value=minutes.toFloat(),onValueChange={minutes=it.toInt()},valueRange=5f..120f,steps=22)
         Text("출발 준비 ${s.preferences.departureBufferMinutes}분을 제외하고 세션을 추천합니다.",fontSize=12.sp,color=Muted)
     }},confirmButton={TextButton(onClick={onSet(minutes)}){Text("적용")}},dismissButton={TextButton(onClick=onDismiss){Text("취소")}})

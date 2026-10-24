@@ -62,7 +62,9 @@ def main():
         for _ in range(5):
             root=tree()
             if any(n.get('text')==label for n in root.iter('node')):return
-            box=bounds(root.find('node'))
+            app_nodes=[n for n in root.iter('node') if n.get('package')=='io.cabinos.one' and len(bounds(n))==4]
+            if not app_nodes:raise RuntimeError('Actual app window unavailable')
+            box=max((bounds(n) for n in app_nodes),key=lambda b:(b[2]-b[0])*(b[3]-b[1]))
             x=(box[0]+box[2])//2
             adb('shell','input','swipe',str(x),str(int(box[3]*.8)),str(x),str(int(box[3]*.35)),'400')
         raise RuntimeError('Planning control is not reachable: '+label)
@@ -84,10 +86,7 @@ def main():
         adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity')
         wait('이 시간을, 나답게.')
         tap('시간 설정')
-        slider=next((n for n in tree().iter('node') if n.get('class')=='android.widget.SeekBar'),None)
-        if slider is None:raise RuntimeError('Actual waiting-time slider not found')
-        box=bounds(slider)
-        adb('shell','input','tap',str(round(box[0]+(box[2]-box[0])*.31)),str((box[1]+box[3])//2))
+        tap('45분')
         tap('적용')
         scroll_to('80%');tap('80%')
         tap('음성');tap('25분 집중 모드 켜줘');tap('닫기')

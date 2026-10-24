@@ -1,12 +1,12 @@
 {
   "version": "0.11.0",
-  "versionCode": 17,
+  "versionCode": 18,
   "officialSdkIncluded": true,
   "sdk": {
     "Vehicle": "2.3.2",
     "NaviHelper": "3.0.5"
   },
-  "apkSha256": "079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5",
+  "apkSha256": "a757d1c9d48775d73dd68c1c8b9667a60f1f3ffd184ef91aee3cafa37ff0b4ff",
   "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
   "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
   "buildResult": "SUCCESS",
@@ -37,23 +37,8 @@
     "downloadVerified": true,
     "runtimeVerified": false,
     "publicVideo": null,
-    "sdkEnergyReadVerified": true,
-    "installedApkHashMatched": true,
-    "status": "Actual SDK read and APK hash verified; Console state-change scenarios and public continuous video remain incomplete",
-    "kvmDiagnosticRun": 40089489317,
-    "checkRun": 120859078635,
-    "androidBootVerified": true,
-    "apkLaunchVerified": true,
-    "aaosParkZeroObserved": true,
-    "sdkSocUsed": true,
-    "observedSdkSoc": 100,
-    "observedSdkChargeSwitch": false,
-    "observedSdkBrake": false,
-    "r8TypeTokenFailureReproduced": false,
-    "consoleScenarioHttpStatus": 503,
-    "consoleError": "emulator_inactive",
-    "consoleScenarioVerified": false,
-    "naviEtaPlanningVerified": false
+    "installedApkHashMatched": false,
+    "status": "Version code 18 adds 48dp time presets after actual video review; renewed signed APK recording pending"
   },
   "submissionReady": false,
   "previousCandidateRuntime": {
@@ -77,5 +62,29 @@
     "sdkFailure": "Gson TypeToken generic signature removed by R8",
     "consoleError": "emulator_inactive"
   },
-  "releaseFix": "Preserve Gson TypeToken signatures and Vehicle wire model fields using Gson official R8 guidance"
+  "releaseFix": "Preserve Gson TypeToken signatures and Vehicle wire model fields using Gson official R8 guidance",
+  "previousSdkVerifiedCandidate": {
+    "apkSha256": "079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5",
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": null,
+    "sdkEnergyReadVerified": true,
+    "installedApkHashMatched": true,
+    "status": "Actual SDK read and APK hash verified; Console state-change scenarios and public continuous video remain incomplete",
+    "kvmDiagnosticRun": 40089489317,
+    "checkRun": 120859078635,
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "aaosParkZeroObserved": true,
+    "sdkSocUsed": true,
+    "observedSdkSoc": 100,
+    "observedSdkChargeSwitch": false,
+    "observedSdkBrake": false,
+    "r8TypeTokenFailureReproduced": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleError": "emulator_inactive",
+    "consoleScenarioVerified": false,
+    "naviEtaPlanningVerified": false
+  }
 }

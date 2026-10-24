@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Record actual Pleos SDK reads and normal UI, without claiming Console scenario coverage.
+"""Record official Console scenarios when active, otherwise a limited actual SDK preview.
 
 Uses the strict recorder unchanged. Its missing D/SOC-change checks remain failures.
 This is a limited preview, never a substitute for the required full vehicle recording.
@@ -75,22 +75,32 @@ try:
     time.sleep(8)
     tap('차량 상태');time.sleep(8);tap('대시보드로 돌아가기')
     tap('시간 설정')
-    slider=next((n for n in tree().iter('node') if n.get('class')=='android.widget.SeekBar'),None)
-    if slider is None:raise RuntimeError('Actual time slider unavailable')
-    b=bounds(slider)
-    adb('shell','input','tap',str(round(b[0]+(b[2]-b[0])*.31)),str((b[1]+b[3])//2))
-    note('Actual UI: set manual departure using slider')
+    tap('45분')
     tap('적용');tap('음성');tap('25분 집중 모드 켜줘');tap('닫기')
     time.sleep(12)
     tap('홈')
     for _ in range(4):
         root=tree()
-        chips=[n for n in root.iter('node') if n.get('text')=='100%' and n.get('clickable')=='true']
+        headings=[n for n in root.iter('node') if n.get('text')=='충전 후 출발 계획']
+        heading_y=min((bounds(n)[1] for n in headings if len(bounds(n))==4),default=10**9)
+        chips=[n for n in root.iter('node') if n.get('text')=='100%' and n.get('package')=='io.cabinos.one'
+               and len(bounds(n))==4 and bounds(n)[1]>heading_y]
         if chips:
-            tap_node(chips[-1]);note('Actual UI: select SOC planning target 100%');break
-        b=bounds(root.find('node'))
+            tap_node(chips[-1]);note('Actual UI: select SOC planning target 100%')
+            time.sleep(2)
+            pid=adb('shell','pidof','io.cabinos.one').decode().strip()
+            observed=adb('logcat','--pid='+pid,'-d','-v','raw','-t','20','CabinVehicle:I','*:S').decode(errors='replace')
+            actual=[]
+            for line in observed.splitlines():
+                try:actual.append(json.loads(line))
+                except ValueError:pass
+            if any(e.get('chargeTargetPercent')==100 and e.get('sdkSocUsed') and e.get('planSource')=='Pleos SOC 목표 도달' for e in actual):break
+            continue
+        app_nodes=[n for n in root.iter('node') if n.get('package')=='io.cabinos.one' and len(bounds(n))==4]
+        if not app_nodes:raise RuntimeError('Actual app window unavailable')
+        b=max((bounds(n) for n in app_nodes),key=lambda b:(b[2]-b[0])*(b[3]-b[1]))
         adb('shell','input','swipe',str((b[0]+b[2])//2),str(round(b[3]*.8)),str((b[0]+b[2])//2),str(round(b[3]*.4)),'400')
-    else:raise RuntimeError('SOC target chip was not visible; no alternative value injected')
+    else:raise RuntimeError('SDK goal was not observed after actual UI taps; no alternative value injected')
     time.sleep(8)
     tap('차량 상태');time.sleep(8);tap('대시보드로 돌아가기')
 except Exception as error:
