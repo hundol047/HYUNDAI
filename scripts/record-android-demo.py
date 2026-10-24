@@ -115,7 +115,8 @@ def main():
                 try:recorder.wait(timeout=20)
                 except subprocess.TimeoutExpired:recorder.terminate();recorder.wait(timeout=10)
             adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
-        fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False).decode().strip()
+        try:fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False,timeout=10).decode().strip()
+        except (subprocess.SubprocessError,OSError):fingerprint='unavailable: device connection lost'
         result={'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',
