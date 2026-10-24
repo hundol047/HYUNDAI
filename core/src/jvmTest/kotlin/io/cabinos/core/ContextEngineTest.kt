@@ -116,4 +116,12 @@ class ContextEngineTest {
         send(charging=true,remaining=2100)
         assertEquals(2,engine.state.value.events.count { it.name=="ChargingUpdated" })
     }
+    @Test fun repeatedDrivingSamplesDoNotRecreateParkingSocDeadline() {
+        park();engine.setChargeTarget(80)
+        repeat(3) {
+            now+=1000
+            engine.acceptVehicle(VehicleSample(gear=Gear.DRIVE,speedKph=30.0,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+            assertNull(engine.state.value.schedule.departureAtMs)
+        }
+    }
 }

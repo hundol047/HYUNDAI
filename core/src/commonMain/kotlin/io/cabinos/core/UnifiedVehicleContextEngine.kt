@@ -73,6 +73,7 @@ class UnifiedVehicleContextEngine(
         if (!sample.charging) { lastChargeEstimate = null; chargeDeadlineMs = null }
         val target = state.value.chargeTargetPercent
         if (target != null && sample.source == DataSource.VEHICLE && sample.connected && sample.pleosSoc &&
+            sample.parkingReliable && sample.gear == Gear.PARK && sample.speedKph == 0.0 &&
             now - sample.timestampMs in 0..3_000 && sample.batteryPercent in target..100 && socDeadlineMs == null) {
             // A measured SOC threshold ends the activity now and reserves preparation time.
             // Never extrapolate a charging curve or write a target to the vehicle.
