@@ -53,7 +53,7 @@ cd HYUNDAI
 
 ## 제한 사항
 
-- SDK 포함 빌드·서명·JVM 검사와 이전 후보의 공식 Pleos APK 실행을 확인했습니다. 장치에서 발견한 Gson/R8 오류를 수정해 현재 APK를 재서명했으며 재검증 중입니다. AAOS P/0 수신과 NaviHelper 콜백은 확인했지만, EvBattery 조회 실패·Virtual Console 503 때문에 SOC 변화/계획 갱신과 공개 연속 영상은 미완료입니다. Pleos 분할 창도 미검증입니다. 최신 결과는 검토표를 확인하세요. OEM 인증을 뜻하지 않습니다.
+- SDK 포함 빌드·서명·JVM 검사와 공식 Pleos에서 현재 APK 실행을 확인했습니다. release의 Gson/R8 오류를 수정한 뒤 EvBattery SOC·충전 스위치·Brake 실제 조회와 SDK SOC 사용을 확인했습니다. Console `503 / emulator_inactive` 때문에 P→D·SOC 변화에 따른 전체 시나리오와 공개 연속 영상은 미완료입니다. 목적지 ETA 계획·Pleos 분할 창도 추가 검증이 필요합니다. [검토표](docs/SUBMISSION_REVIEW_KO.md).
 - main 병합은 승인 대기입니다. 병합 전 변경 소스·APK는 `feat/pleos-vehicle-state` 브랜치에 있고 main은 이전 버전입니다.
 - DO를 선언하지 않은 정차 전용 앱입니다. 기본 내비의 지도·언어·지역 지원 범위를 따릅니다. 모든 도로·가게의 완전성을 보장하지 않습니다.
 - 일반 Android/웹의 공용 Nominatim·OSRM·Overpass 기능은 데모이며 상용 SLA가 없습니다. 기존 웹 데모는 0.10.5입니다.

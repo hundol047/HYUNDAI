@@ -1,6 +1,6 @@
 # 제출 검토표 — 0.11.0
 
-현재 **공식 SDK 포함 release APK의 빌드·서명과 이전 후보의 공식 Pleos 실행은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
+현재 **공식 SDK 포함 release APK의 빌드·서명과 현재 APK의 공식 Pleos 실행·SDK 응답은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
 
 ## 완료된 항목
 
@@ -33,11 +33,11 @@ JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 
 
 ## release 최적화 오류 수정
 
-이전 후보(`050b9949…`)의 실제 Pleos 로그에서 Gson `TypeToken must be created with a type argument` 오류를 확인했습니다. Gson 공식 R8 설정에 따라 TypeToken 제네릭 정보와 Vehicle 데이터 모델 필드를 보존하도록 수정했습니다. SDK 전체 빌드 명령은 2분 12초에 성공했고 기존 팀 키로 다시 서명했습니다. 아래 장치 관측은 이전 후보의 기록이며, 현재 APK의 SDK 실제 응답은 재검증 대상입니다.
+이전 후보(`050b9949…`)의 실제 Pleos 로그에서 Gson `TypeToken must be created with a type argument` 오류를 확인했습니다. Gson 공식 R8 설정에 따라 TypeToken 제네릭 정보와 Vehicle 데이터 모델 필드를 보존하도록 수정했습니다. SDK 전체 빌드 명령은 2분 12초에 성공했고 기존 팀 키로 다시 서명했습니다. 재서명한 현재 APK를 공식 Pleos에서 다시 실행해 SOC 100%, 충전 스위치 false, Brake false의 실제 SDK 응답과 `sdkSocUsed=true`를 확인했습니다. 설치 APK를 다시 pull해 위 SHA-256과 일치함을 확인했습니다. 실제 앱 오류 로그에서 이전 TypeToken 오류는 재현되지 않았습니다. 실행 ID `40089489317`, check `120859078635`입니다.
 
-## 공식 Pleos 실제 실행 결과 — 2026-10-24
+## 이전 후보의 문제 진단 — 2026-10-24
 
-공식 이미지 `Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys`를 KVM runner에서 부팅하여 제출 APK를 설치·실행했습니다.
+이전 후보(`050b9949…`)는 공식 이미지 `Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys`를 KVM runner에서 부팅하여 제출 APK를 설치·실행했습니다.
 
 - AAOS 속도 0 / PARK 수신 및 `parkedAllowed=true` 기록을 확인했습니다. 신호가 끊길 때 UNKNOWN/잠금으로 돌아오는 현상도 관측됐습니다. 지속적인 정상 수신 검증은 남아 있습니다.
 - `CAR_ENERGY`, `CAR_DRIVE`, `NAVI_ROUTE`, `NAVI_CUSTOM_MAP` 등 요청한 차량 권한의 `granted=true`를 확인했습니다.
@@ -46,7 +46,7 @@ JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 
 - 공식 Virtual Console의 속도·기어·SOC·충전 스위치 PUT 요청 모두 HTTP 503이었습니다. 오류 본문은 `{"error":"emulator_inactive"}`였습니다. P→D 및 SOC 변화 입력이 성공하지 않았으므로 전체 안전 시나리오를 통과로 표시하지 않습니다.
 - CI 진단 job의 성공은 수집 스크립트 완료를 뜻합니다. `submissionReady=false`를 유지하며 영상 검증 성공으로 계산하지 않습니다.
 
-장치 진단 실행 ID: `40087571128` / check `120853522514`. 같은 소스의 push CI `40087571319`, PR CI `40087574637`는 성공했습니다. 최신 변경의 CI 결과는 PR checks를 확인하세요.
+장치 진단 실행 ID: `40087571128` / check `120853522514`. 같은 소스의 push CI `40087571319`, PR CI `40087574637`는 성공했습니다. 이후 현재 APK에서 SDK 응답은 위와 같이 확인했지만 Console의 `emulator_inactive`는 계속 재현됐습니다. 최신 변경의 CI 결과는 PR checks를 확인하세요.
 
 ## 아직 제출 완료로 표시하지 않는 조건
 
