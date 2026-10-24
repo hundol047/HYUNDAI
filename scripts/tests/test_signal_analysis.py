@@ -22,3 +22,7 @@ class SignalAnalysisTest(unittest.TestCase):
     def test_gear_reread_expiry_does_not_prove_safe_fallback(self):
         text='\n'.join([self.line(4000,5000,5000),self.line(5000,6000,6000)]).replace('gearReadAgeMs=100','gearReadAgeMs=4000')
         self.assertFalse(analysis.analyze(text)['fallbackEvidence'])
+
+    def test_separate_parking_periods_cannot_prove_continuous_receipts(self):
+        text='\n'.join([self.line(4000,5000,5000),self.line(100,5500,5500,'DRIVE'),self.line(5000,6000,6000)])
+        self.assertFalse(analysis.analyze(text)['fallbackEvidence'])
