@@ -1,12 +1,12 @@
 {
   "version": "0.11.0",
-  "versionCode": 18,
+  "versionCode": 19,
   "officialSdkIncluded": true,
   "sdk": {
     "Vehicle": "2.3.2",
     "NaviHelper": "3.0.5"
   },
-  "apkSha256": "a757d1c9d48775d73dd68c1c8b9667a60f1f3ffd184ef91aee3cafa37ff0b4ff",
+  "apkSha256": "7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543",
   "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
   "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
   "buildResult": "SUCCESS",
@@ -38,7 +38,7 @@
     "runtimeVerified": false,
     "publicVideo": null,
     "installedApkHashMatched": false,
-    "status": "Version code 18 adds 48dp time presets after actual video review; renewed signed APK recording pending"
+    "status": "Version code 19 isolates optional energy Binder reads from mandatory speed/gear polling; renewed signed APK recording pending"
   },
   "submissionReady": false,
   "previousCandidateRuntime": {

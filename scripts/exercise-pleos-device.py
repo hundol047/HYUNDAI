@@ -55,7 +55,7 @@ def main():
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline:
             root=tree()
-            nodes=[n for n in root.iter('node') if n.get('text')==label or n.get('content-desc')==label]
+            nodes=[n for n in root.iter('node') if n.get('package')=='io.cabinos.one' and (n.get('text')==label or n.get('content-desc')==label)]
             if nodes:return nodes[-1]
             time.sleep(.5)
         visible=[n.get('text') for n in root.iter('node') if n.get('text')]

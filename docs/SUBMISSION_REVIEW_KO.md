@@ -11,12 +11,12 @@
 | 안전 제한 | 0 + P 1.5초, 신호 만료 시 잠금, D/0 잠금. 차량 기기 데모 거부. DO 미선언 |
 | 테스트 | 공통 131/131, Android 101/101, 녹화 검사 5/5, 선택적 장소 게이트웨이 11/11. 실제 차량 신호 시험과 구분 |
 | 린트 | 오류 0, 기존 경고 4 |
-| release | versionName 0.11.0 / versionCode 18, 최적화·비디버그 APK, 기존 팀 키 서명·zipalign 검사 |
+| release | versionName 0.11.0 / versionCode 19, 최적화·비디버그 APK, 기존 팀 키 서명·zipalign 검사 |
 | 파일 | `apk/퓨처랩스_CabinOS_ONE_release.apk`, `apk/SHA256SUMS` |
 | 문서 | README 필수 4항목·라이선스 표·main clone, SDK 핵심 기능 표, 로컬 PC 실행·녹화 명령 |
 | 공식 이미지 | Pleos Connect 2.1.0 / API 34 다운로드, 배포 인덱스 SHA-1 대조·설치 완료 |
 
-APK SHA-256: `a757d1c9d48775d73dd68c1c8b9667a60f1f3ffd184ef91aee3cafa37ff0b4ff`.
+APK SHA-256: `7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543`.
 
 팀 서명 인증서 SHA-256: `33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0`. 키·비밀번호는 저장소에 포함하지 않습니다.
 
@@ -60,3 +60,5 @@ JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 
 - GitHub 소유 계정이 주소에 표시되는 블라인드 제출 문제는 별도 주최 측 확인 필요. 계정 이전·기존 커밋 이력 재작성은 하지 않음.
 
 현재 작업 클라우드는 `/dev/kvm`이 없어 로컬 소프트웨어 실행에 한계가 있습니다. 별도 KVM runner에서는 공식 Android 부팅과 APK 실행까지 확인했지만 Vehicle 서비스/Console 오류가 남았습니다. 원인을 해결하기 전 가짜 입력·권한 검사 우회·안전 잠금 해제로 대체하지 않습니다. [로컬 PC 재현 명령](PLEOS_VEHICLE_STATE_KO.md).
+
+versionCode 19는 느린 부가 배터리 Binder 조회가 필수 속도·기어 폴링을 막지 않도록 조회 작업을 분리했습니다. 신호 만료·P/0 확인 시간은 유지합니다. 전체 SDK 빌드는 3분 30초에 성공했습니다(232개 JVM 테스트, 실패 0). 설치 APK 연속 영상은 재검증 중입니다.

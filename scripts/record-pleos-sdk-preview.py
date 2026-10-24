@@ -70,7 +70,7 @@ def tap_node(node):
     adb('shell','input','tap',str((box[0]+box[2])//2),str((box[1]+box[3])//2))
 def tap(label):
     for _ in range(3):
-        nodes=[n for n in tree().iter('node') if n.get('text')==label or n.get('content-desc')==label]
+        nodes=[n for n in tree().iter('node') if n.get('package')=='io.cabinos.one' and (n.get('text')==label or n.get('content-desc')==label)]
         if nodes:tap_node(nodes[-1]);note('Actual UI: '+label);return
         time.sleep(1)
     raise RuntimeError('Actual UI control unavailable: '+label)

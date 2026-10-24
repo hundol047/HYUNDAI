@@ -15,7 +15,9 @@ import android.os.Looper
  */
 internal class AndroidCarPropertyTransport(private val context: Context) : VehiclePropertyTransport {
     private val thread = HandlerThread("CabinVehicleState")
+    private val energyThread = HandlerThread("CabinVehicleEnergy")
     private lateinit var handler: Handler
+    private lateinit var energyHandler: Handler
     @Volatile private var stopped = false
     private var car: Car? = null
     private var manager: CarPropertyManager? = null
@@ -28,7 +30,8 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         VehiclePropertyIds.EV_CHARGE_TIME_REMAINING to EnergyProperty.REMAINING_SECONDS,
     )
     private var availableEnergy = emptySet<Int>()
-    private var connection = 0L
+    @Volatile private var connection = 0L
+    private var energyPoll: Runnable? = null
     private var callback: CarPropertyManager.CarPropertyEventCallback? = null
     private fun onWorker(action: () -> Unit) {
         if(Looper.myLooper()==handler.looper) action() else handler.post { action() }
@@ -52,19 +55,36 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                 }
             } catch (_: SecurityException) { listener.unavailable("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
             catch (_: RuntimeException) { listener.unavailable("차량 속성 읽기 실패") }
-            // Optional energy failures must never discard valid speed/P signals.
-            availableEnergy.forEach { id ->
-                try {
-                    val value = manager?.getProperty<Any>(id, 0)
-                    if(value != null) deliver(value) else listener.energy(energyProperties.getValue(id), null, 0)
-                } catch (_: RuntimeException) { listener.energy(energyProperties.getValue(id), null, 0) }
-            }
             handler.postDelayed(this, 500)
         }
+    }
+    private fun startEnergyPoll(service: CarPropertyManager) {
+        val token = connection
+        val ids = availableEnergy.toList()
+        val task = object : Runnable {
+            override fun run() {
+                if (stopped || token != connection) return
+                for (id in ids) {
+                    if (stopped || token != connection) return
+                    val value = try { service.getProperty<Any>(id, 0) } catch (_: RuntimeException) { null }
+                    // A late optional Binder response must not revive an old connection.
+                    onWorker {
+                        if (!stopped && token == connection) {
+                            if (value != null) deliver(value)
+                            else listener.energy(energyProperties.getValue(id), null, 0)
+                        }
+                    }
+                }
+                if (!stopped && token == connection) energyHandler.postDelayed(this, 500)
+            }
+        }
+        energyPoll = task
+        energyHandler.post(task)
     }
     override fun start(listener: VehiclePropertyTransport.Listener) {
         this.listener = listener
         thread.start(); handler = Handler(thread.looper)
+        energyThread.start(); energyHandler = Handler(energyThread.looper)
         handler.post {
             if (stopped) return@post
             try {
@@ -92,8 +112,10 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                                     error("Vehicle subscription rejected")
                                 }
                             }
-                            // Read static/ON_CHANGE energy properties every 500 ms. No write permissions.
+                            // Optional Binder reads may block on unsupported/slow OEM properties.
+                            // Keep speed/gear polling and callbacks on their own worker.
                             handler.post(poll)
+                            startEnergyPoll(service)
                         } catch (_: SecurityException) { detach(); listener.disconnected("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
                         catch (_: RuntimeException) { detach(); listener.disconnected("차량 속성 구독 실패") }
                     }
@@ -123,6 +145,8 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
     private fun detach() {
         ++connection
         handler.removeCallbacks(poll)
+        energyPoll?.let { energyHandler.removeCallbacks(it) }
+        energyPoll = null
         try { callback?.let { manager?.unregisterCallback(it) } } catch (_: RuntimeException) { /* Already disconnected. */ }
         callback = null; manager = null; availableEnergy = emptySet()
     }
@@ -132,7 +156,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         handler.post {
             detach()
             try { car?.disconnect() } catch (_: RuntimeException) { /* Already disconnected. */ }
-            car = null; thread.quitSafely()
+            car = null; energyThread.quitSafely(); thread.quitSafely()
         }
     }
 }
