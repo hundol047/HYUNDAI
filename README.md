@@ -36,6 +36,8 @@ cd HYUNDAI
 ./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug
 ```
 
+PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issues` 브랜치를 사용하세요. 마켓 개인 계정 등록은 보류하고, 계정 등록과 별개인 [퓨처랩스 서명 후보 생성·검증](docs/RELEASE_NOTES_0.11.1.md)을 먼저 진행할 수 있습니다.
+
 공식 Maven 접근 실패 시 중지하며 SDK 없는 빌드로 대체하지 않습니다. Gradle release 출력은 서명 전 파일입니다. 팀 키 서명·공식 이미지 설치·Virtual Console·동일 APK 녹화 명령은 [실행 가이드](docs/PLEOS_VEHICLE_STATE_KO.md)를 따릅니다.
 
 ## 심사용 문서·영상

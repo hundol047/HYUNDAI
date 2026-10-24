@@ -22,31 +22,51 @@
 
 [배포 전 추가 점검 보고](PREDEPLOY_RUNTIME_AUDIT_KO.md)
 
-## 사람이 완료할 배포 절차
+## 계정 등록 없이 준비할 수 있는 범위
 
-1. KVM PC에서 [전체 시연](../scripts/demo/pleos-full-scenario.md)을 실행합니다. 실패 항목을 그대로 남깁니다.
-2. 공식 SDK 포함 release를 팀 키로 서명합니다. 키·비밀번호는 저장소 밖에 둡니다.
-3. 서명 APK를 `apk/퓨처랩스_CabinOS_ONE_release.apk`에 넣고 다음 명령으로 체크섬을 생성·확인합니다.
+팀명은 **퓨처랩스**입니다. Pleos App Market Console 개인 등록은 현재 보류합니다. 마켓 등록과 SDK 포함 빌드·직접 APK 설치·서명 준비는 별개입니다. 이 환경에서는 공식 SDK 빌드가 가능하지만 KVM이 없어 공식 에뮬레이터 전체 시연을 완료하지 못했습니다.
 
-```bash
-sha256sum "apk/퓨처랩스_CabinOS_ONE_release.apk" > apk/SHA256SUMS
-sha256sum -c apk/SHA256SUMS
-```
+## 검증된 후보 만들기
 
-4. 별도로 확인한 팀 인증서 SHA-256을 `CABINOS_TEAM_CERT_SHA256`에 설정하고 배포 파일 검사를 실행합니다. 후보 APK에서 지문을 추출해 그대로 신뢰값으로 사용하지 마세요.
+기존 팀 키 폴더와 별도로 확인한 인증서 SHA-256을 준비합니다. 키 폴더에는 기존 `release.p12`와 `password` 파일이 필요하며 저장소 밖에 두어야 합니다. 비밀번호를 명령줄이나 채팅에 쓰지 마세요. 새 키를 임의로 만들거나 후보 APK에서 얻은 지문을 신뢰값으로 사용하지 않습니다.
+
+`CABINOS_SIGNING_DIR`, `CABINOS_TEAM_CERT_SHA256`를 설정한 뒤, 커밋된 깨끗한 소스에서 실행합니다.
 
 ```bash
-python3 scripts/verify-release-candidate.py --certificate-sha256 "$CABINOS_TEAM_CERT_SHA256"
+bash scripts/package-submission.sh
 ```
 
-검사 종료 코드가 0일 때만 다음 단계로 진행합니다. 버전·패키지·debug 여부·SDK 빌드 표시·서명·체크섬을 검사하며 APK를 변경하거나 업로드하지 않습니다. 현재 저장소의 0.11.0 APK는 소스와 버전이 달라 이 검사에 실패하는 것이 정상입니다. SDK 표시가 있다는 것만으로 실제 차량 동작을 보장하지 않습니다.
+이 명령은 SDK 포함 테스트·release 빌드·lint 후 별도 임시 폴더에서 서명·정렬·인증서·체크섬 검사를 수행합니다. 모두 통과한 경우에만 `artifacts/submission-candidate/`를 만듭니다. 기존 폴더는 덮어쓰지 않으며 다른 폴더가 필요하면 `CABINOS_CANDIDATE_DIR`을 지정합니다.
 
-5. 같은 파일을 `adb install -r -g`로 설치하고 기기에서 가져온 base.apk 해시와 대조합니다.
-6. 같은 APK의 실제 전체 시나리오 60~120초 연속 영상을 녹화합니다. **새 영상 링크: [실제 검증 후 입력]**.
-7. 모든 시연 판정 통과 후 새 GitHub Release에 APK·체크섬·영상·검증 결과를 등록합니다.
-   제목은 `CabinOS ONE 0.11.1`로 하고, 진단 영상을 전체 성공 영상으로 바꿔 표시하지 않습니다.
-8. README 대표 영상, APK 버전, 제출 검토표의 해시를 새 검증 결과로 갱신합니다. 소스 링크는 병합 후 main 기준입니다.
+후보 폴더에는 다음 파일이 있습니다.
 
-이 작업에서는 APK 교체·새 서명·Release 게시를 수행하지 않았습니다.
+- `퓨처랩스_CabinOS_ONE_release.apk`: 검증된 팀 서명 후보
+- `SHA256SUMS`: 후보 APK 체크섬
+- `verification.json`: 바이너리 검사 결과
+- `candidate.json`: 팀명·소스 커밋·해시 및 기기 검증/게시 미완료 표시
+
+**스크립트는 저장소의 apk/ 파일을 교체하거나 GitHub·마켓에 게시하지 않습니다.** 실패한 후보는 제거합니다. 실제 서명은 기존 팀 키가 준비된 뒤 수행하며, 자동화 검증의 가짜 테스트 키·산출물을 실제 APK 증거로 사용하지 않습니다.
+
+## 같은 후보로 실제 검증하기
+
+```bash
+adb install -r -g "artifacts/submission-candidate/퓨처랩스_CabinOS_ONE_release.apk"
+python3 scripts/verify-release-candidate.py \
+  --apk "artifacts/submission-candidate/퓨처랩스_CabinOS_ONE_release.apk" \
+  --checksums artifacts/submission-candidate/SHA256SUMS \
+  --certificate-sha256 "$CABINOS_TEAM_CERT_SHA256"
+scripts/demo/run-full-scenario.sh "artifacts/submission-candidate/퓨처랩스_CabinOS_ONE_release.apk" artifacts/full-scenario
+```
+
+공식 Pleos 환경에서 P/0·D/0·D/주행·SOC/충전 변화·출발 계획·세션 종료를 확인합니다. [전체 시연 절차](../scripts/demo/pleos-full-scenario.md)에 따라 동일 APK 해시를 대조하고 60~120초 연속 영상을 남깁니다. **새 영상 링크는 실제 검증 후 입력합니다.** 바이너리 검사 통과는 차량 동작이나 배포 승인을 의미하지 않습니다.
+
+## 제출·게시 전 남은 작업
+
+1. 승인된 PR을 main에 반영합니다. 현재 0.11.1 변경은 PR #2 브랜치에 있습니다.
+2. 전체 실제 시연을 통과한 동일 후보를 `apk/퓨처랩스_CabinOS_ONE_release.apk`에 반영하고 저장소 기준 체크섬을 생성합니다.
+3. README·제출 검토표의 버전·해시·대표 영상 링크를 동일 파일 기준으로 갱신합니다.
+4. 승인된 배포 범위에서 GitHub Release/공모전 제출을 진행합니다. Pleos App Market 등록은 개인 계정 지원 여부가 해결된 이후 별도로 진행합니다.
+
+현재 저장소의 0.11.0 APK는 최신 소스와 버전이 달라 배포 검사에 실패하는 것이 정상입니다. 이 작업에서는 APK 교체·팀 키 서명·Release 게시를 수행하지 않았습니다.
 
 표시등·TPMS는 capability 확인의 비공개 권한 요구로 제외했습니다. Tire의 Float API를 저압 Boolean으로 해석하지 않습니다.
