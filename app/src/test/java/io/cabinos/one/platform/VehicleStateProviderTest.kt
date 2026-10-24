@@ -9,9 +9,35 @@ class VehicleStateProviderTest {
     private class FakeTransport : VehiclePropertyTransport {
         lateinit var listener: VehiclePropertyTransport.Listener
         var stopped=false
-        override fun start(listener:VehiclePropertyTransport.Listener){this.listener=listener}
-        override fun stop(){stopped=true}
+        var startFailure=false;var stopFailure=false
+        override fun start(listener:VehiclePropertyTransport.Listener){this.listener=listener;if(startFailure)throw SecurityException("denied during setup")}
+        override fun stop(){stopped=true;if(stopFailure)throw IllegalStateException("service already gone")}
         fun park(){listener.connected();listener.speed(0f,10_000_000_000);listener.gear(4,10_000_000_000)}
+    }
+    @Test fun teardownFailureStillImmediatelyInvalidatesSignalsAndAllowsReconnect() {
+        val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)
+        val transports=mutableListOf<FakeTransport>()
+        try {
+            val provider=VehicleStateProvider(true,{FakeTransport().also {transports+=it}},scope,{10_000},{10_000_000_000})
+            provider.start();transports[0].park();assertTrue(provider.samples.value.connected)
+            transports[0].stopFailure=true
+            provider.stop()
+            assertFalse(provider.samples.value.connected);assertEquals(Gear.UNKNOWN,provider.samples.value.gear)
+            transports[0].park();assertFalse(provider.samples.value.connected)
+            provider.start();assertFalse(provider.samples.value.connected)
+            transports[1].park();assertTrue(provider.samples.value.connected)
+            provider.stop()
+        } finally {scope.cancel()}
+    }
+    @Test fun partiallyStartedTransportIsReleasedAndLateCallbacksStayInvalid() {
+        val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)
+        val transport=FakeTransport().apply {startFailure=true}
+        try {
+            val provider=VehicleStateProvider(true,{transport},scope,{10_000},{10_000_000_000})
+            provider.start();assertTrue(transport.stopped)
+            transport.park();assertFalse(provider.samples.value.connected)
+            provider.stop()
+        } finally {scope.cancel()}
     }
     @Test fun phoneNeverLoadsCarLibraryAndDoesNotFallBackToSimulation() {
         val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)

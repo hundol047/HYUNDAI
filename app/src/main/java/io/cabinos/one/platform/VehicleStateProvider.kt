@@ -76,10 +76,11 @@ class VehicleStateProvider internal constructor(
             override fun disconnected(reason: String) = accept { clearTiming();gate.reset(reason) }
         }
         try {
-            transport = transportFactory().also { it.start(listener) }
-        } catch (_: LinkageError) { gate.reset("차량 API 라이브러리 없음"); publish() }
-        catch (_: SecurityException) { gate.reset("차량 읽기 권한 없음"); publish() }
-        catch (_: RuntimeException) { gate.reset("차량 서비스 연결 실패"); publish() }
+            transport = transportFactory()
+            transport!!.start(listener)
+        } catch (_: LinkageError) { connectionFailed("차량 API 라이브러리 없음") }
+        catch (_: SecurityException) { connectionFailed("차량 읽기 권한 없음") }
+        catch (_: RuntimeException) { connectionFailed("차량 서비스 연결 실패") }
         monitor = scope.launch { while (isActive) { delay(250); publish() } }
     }
     private fun publish() {
@@ -98,9 +99,20 @@ class VehicleStateProvider internal constructor(
     }
     fun stop() {
         active = false; ++epoch; monitor?.cancel(); monitor = null
-        transport?.stop(); transport = null
         clearTiming()
         gate.reset("차량 신호 구독 중지 · 복귀 후 다시 확인"); publish()
+        releaseTransport()
+    }
+    private fun connectionFailed(reason:String) {
+        ++epoch // Reject callbacks from a partially initialized transport.
+        clearTiming();gate.reset(reason);publish()
+        releaseTransport()
+    }
+    private fun releaseTransport() {
+        val previous=transport;transport=null
+        try { previous?.stop() }
+        catch (_:RuntimeException) { /* Safety state is already invalidated. */ }
+        catch (_:LinkageError) { /* Optional car library may be unavailable. */ }
     }
     fun reconnect() { stop(); start() }
 }
