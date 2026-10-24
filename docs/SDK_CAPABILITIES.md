@@ -14,7 +14,7 @@
 | 내비 정보 소실 처리 | 목적지 변경·취소·종료·오류 콜백, 2초 조회/10초 만료 | 목적지/ETA 표시를 지우고 이전 마감을 보수적으로 유지해 세션이 자동 연장되지 않도록 함. 사용자가 도착 목표를 다시 설정/해제해 재계획. 요청을 보냈다는 이유만으로 경로 성공 표시하지 않음 |
 | 정차 중 목적지·주변 충전소 검색 | `requestNavigationScreen`: `SearchPlace`, `NearbyChargingStations`, `RecentDestinations`, `Foreground` | P·정지 확인 후 차량 기본 내비게이션으로 전환. 검색 결과·도로·교통·주행 안내는 설치된 내비 서비스의 지원 범위. CabinOS에서 기본 내비의 가게 목록을 임의 재정렬했다고 주장하지 않음 |
 
-**기술 활용성 설명:** CabinOS ONE은 Pleos EvBattery의 실제 SOC를 활동 종료 조건으로, NaviHelper의 목적지 잔여 시간을 출발 계획의 입력으로 사용한다. StopSense의 활동 가능 시간과 CabinOS 집중·휴식 세션이 하나의 시간표를 공유해 차량 상태와 다음 일정에 맞춰 함께 조정된다. 충전 잔여 시간과 안전한 정차 확인은 AAOS 공개 속성을 조합한다.
+**구현 설명(장치 전체 검증 후 기획서에 확정):** CabinOS ONE은 Pleos EvBattery의 실제 SOC를 활동 종료 조건으로, NaviHelper의 목적지 잔여 시간을 출발 계획의 입력으로 사용한다. StopSense의 활동 가능 시간과 CabinOS 집중·휴식 세션이 하나의 시간표를 공유해 차량 상태와 다음 일정에 맞춰 함께 조정된다. 충전 잔여 시간과 안전한 정차 확인은 AAOS 공개 속성을 조합한다.
 
 Brake의 `checkBrakePedalStatusCapabilities` / `getCurrentBrakePedalStatus`는 진단 표시입니다. 핵심 기능·정차 판정·필수 영상 통과 조건에 포함하지 않습니다. Capability가 READ/READ_WRITE일 때만 Get을 호출하고, null·오류·시간 초과를 성공 값으로 바꾸지 않습니다.
 

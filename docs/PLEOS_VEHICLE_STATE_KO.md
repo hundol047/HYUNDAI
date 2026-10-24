@@ -79,3 +79,19 @@ sha256sum -c apk/SHA256SUMS
 ```
 
 서명된 파일로 3~4단계를 다시 실행해야 합니다. 최종 파일명은 `apk/퓨처랩스_CabinOS_ONE_release.apk`입니다. PR의 CI와 공개 영상·APK 해시를 확인한 후에만 main 병합을 검토합니다. 병합은 별도 승인 대상입니다.
+
+
+## 6. Console 503 / SDK 값 누락 재현 시
+
+공식 이미지가 부팅되고 APK가 실행돼도 차량 데이터 서비스가 정상이라는 뜻은 아닙니다. 이 작업의 KVM 실행에서는 권한 부여와 AAOS P/0 수신은 확인했지만 Console 503·EvBattery 읽기 실패가 남았습니다. 다음 명령으로 로컬 PC의 동일 이미지와 비교하세요.
+
+```bash
+adb start-server
+adb -s emulator-5554 forward tcp:8088 tcp:8088
+curl --fail-with-body http://localhost:8088/vehicle/state
+curl --fail-with-body -X PUT 'http://localhost:8088/vehicle/gear?gear=Park'
+python3 scripts/inspect-pleos-device.py --serial emulator-5554 \
+  --apk "apk/퓨처랩스_CabinOS_ONE_release.apk" --output artifacts/pleos-local-diagnostics
+```
+
+`identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·4 GB RAM으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.

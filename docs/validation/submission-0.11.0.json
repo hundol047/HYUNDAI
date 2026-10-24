@@ -38,7 +38,16 @@
     "runtimeVerified": false,
     "publicVideo": null,
     "softwareExecution": "official fingerprint and Virtual Console HTTP 200; vehicle services repeatedly aborted; Android boot not completed",
-    "kvmDiagnosticRun": 40085750712
+    "kvmDiagnosticRun": 40087571128,
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "aaosParkZeroObserved": true,
+    "sustainedParkingSignalsVerified": false,
+    "naviDestinationCallbackObserved": true,
+    "naviEtaPlanningVerified": false,
+    "sdkEnergyReadVerified": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleScenarioVerified": false
   },
   "submissionReady": false
 }
