@@ -1,0 +1,157 @@
+{
+  "version": "0.11.0",
+  "versionCode": 19,
+  "officialSdkIncluded": true,
+  "sdk": {
+    "Vehicle": "2.3.2",
+    "NaviHelper": "3.0.5"
+  },
+  "apkSha256": "7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543",
+  "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
+  "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
+  "buildResult": "SUCCESS",
+  "tests": {
+    "core": {
+      "total": 131,
+      "failures": 0
+    },
+    "android": {
+      "total": 101,
+      "failures": 0
+    },
+    "recorder": {
+      "total": 5,
+      "failures": 0
+    },
+    "gateway": {
+      "total": 11,
+      "failures": 0
+    }
+  },
+  "lint": {
+    "errors": 0,
+    "warnings": 4
+  },
+  "pleosEmulator": {
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": "https://github.com/hundol047/HYUNDAI/releases/tag/v0.11.0-pleos-preview-7279b860",
+    "installedApkHashMatched": true,
+    "status": "Actual signed APK launch and SDK reads verified; continuous diagnostic video reviewed and published; full scenarios remain incomplete",
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "sdkEnergyReadVerified": true,
+    "sdkSocUsed": true,
+    "observedSdkSoc": 100,
+    "observedSdkChargeSwitch": false,
+    "observedSdkBrake": false,
+    "kvmDiagnosticRun": 40094004618,
+    "checkRun": 120872359016,
+    "aaosParkZeroObserved": true,
+    "sustainedParkingSignalsVerified": false,
+    "sdkGoalCompletionObserved": false,
+    "naviEtaPlanningVerified": false,
+    "consoleScenarioVerified": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleError": "emulator_inactive"
+  },
+  "submissionReady": false,
+  "previousCandidateRuntime": {
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": null,
+    "softwareExecution": "official fingerprint and Virtual Console HTTP 200; vehicle services repeatedly aborted; Android boot not completed",
+    "kvmDiagnosticRun": 40088801025,
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "aaosParkZeroObserved": true,
+    "sustainedParkingSignalsVerified": false,
+    "naviDestinationCallbackObserved": true,
+    "naviEtaPlanningVerified": false,
+    "sdkEnergyReadVerified": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleScenarioVerified": false,
+    "apkSha256": "050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4",
+    "installedApkHashMatched": true,
+    "sdkFailure": "Gson TypeToken generic signature removed by R8",
+    "consoleError": "emulator_inactive"
+  },
+  "releaseFix": "Preserve Gson TypeToken signatures and Vehicle wire model fields using Gson official R8 guidance",
+  "previousSdkVerifiedCandidate": {
+    "apkSha256": "079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5",
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": null,
+    "sdkEnergyReadVerified": true,
+    "installedApkHashMatched": true,
+    "status": "Actual SDK read and APK hash verified; Console state-change scenarios and public continuous video remain incomplete",
+    "kvmDiagnosticRun": 40089489317,
+    "checkRun": 120859078635,
+    "androidBootVerified": true,
+    "apkLaunchVerified": true,
+    "aaosParkZeroObserved": true,
+    "sdkSocUsed": true,
+    "observedSdkSoc": 100,
+    "observedSdkChargeSwitch": false,
+    "observedSdkBrake": false,
+    "r8TypeTokenFailureReproduced": false,
+    "consoleScenarioHttpStatus": 503,
+    "consoleError": "emulator_inactive",
+    "consoleScenarioVerified": false,
+    "naviEtaPlanningVerified": false
+  },
+  "video": {
+    "mode": "initial_sdk_preview",
+    "captureMethod": "adb shell screenrecord (continuous device frames)",
+    "apkSha256": "7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543",
+    "fingerprint": "Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys",
+    "recordingSecondsRequested": 110,
+    "uiError": "RuntimeError: Actual UI control unavailable: 45분",
+    "sdkSocReadObserved": true,
+    "sdkGoalCompletionObserved": false,
+    "fullRecorderExitCode": 1,
+    "fullScenarioChecks": {
+      "realSourceObserved": true,
+      "noSimulationObserved": true,
+      "parkUnlockObserved": true,
+      "driveAtZeroLocked": false,
+      "movingLocked": false,
+      "unknownLocked": true,
+      "officialSdkReadObserved": true,
+      "sdkSocChanged": false,
+      "sdkChargeStateChanged": false,
+      "sdkSocUsedInPlan": false,
+      "parkingDebounceObserved": true,
+      "noUnsafeParkingObserved": true
+    },
+    "submissionReady": false,
+    "limitations": [
+      "Console returned emulator_inactive; no successful P/D or SOC-change injection is claimed",
+      "Initial SDK SOC is read from the official emulator; setting a planning goal does not change vehicle SOC",
+      "Voice command button is a touch action, not a microphone/STT demonstration"
+    ],
+    "visualReview": {
+      "reviewed": true,
+      "result": "diagnostic recording only; not an accepted full scenario demonstration",
+      "actualDurationSeconds": 95.9932,
+      "resolution": "2560x1440",
+      "decodeErrors": 0,
+      "observations": [
+        "Official launcher, actual APK dashboard and SDK diagnostics are visible",
+        "SDK SOC 100%, PARK and speed 0 are visible",
+        "UNKNOWN safety lock recurs; sustained parking operation remains unverified",
+        "Time setting sequence did not complete; focus start and SOC goal completion were not demonstrated"
+      ],
+      "videoSha256": "493366767d4f2eab2afcf071d48b85dd9f850ed723fe8abc40d65228f03746b6"
+    }
+  },
+  "ci": {
+    "sourceCommit": "dd15b3a6e87888a8af573c8f2e5ea9bd0f2ac476",
+    "pushRun": 40094004076,
+    "pullRequestRun": 40094007815,
+    "conclusion": "success"
+  }
+}

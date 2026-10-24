@@ -2,7 +2,7 @@
 """Explicit small live provider smoke check. Never substitutes synthetic responses."""
 import argparse,datetime,hashlib,json,time,urllib.request,urllib.parse
 from pathlib import Path
-parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');parser.add_argument('--output',default='docs/validation/live-navigation-results.json');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');parser.add_argument('--output',default='test-fixtures/validation/live-navigation-results.json');args=parser.parse_args()
 artifact_dir=Path('artifacts/navigation-live');artifact_dir.mkdir(parents=True,exist_ok=True)
 headers={'User-Agent':'CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
 rows=[];blocked=False

@@ -21,7 +21,7 @@ internal data class RoadMapHealth(val status:RoadMapStatus=RoadMapStatus.LOADING
     }
 }
 internal fun configureRoadTiles(context:Context) {Configuration.getInstance().apply {
-    userAgentValue="CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)"
+    userAgentValue="CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)"
     osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
 }}
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */

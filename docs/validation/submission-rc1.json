@@ -1,0 +1,31 @@
+{
+  "version": "0.11.0-rc1",
+  "versionCode": 16,
+  "profile": "AAOS base candidate; Pleos SDK not included",
+  "apk": "apk/퓨처랩스_CabinOS_ONE_release.apk",
+  "sha256": "5e8ef1f7ee4db2905814e938d71e423e80706052184552dc9d6ac73bdcb6b657",
+  "signedRelease": true,
+  "coreTests": 122,
+  "androidTests": 99,
+  "recordingEvidenceTests": 4,
+  "gatewayTests": 11,
+  "lintErrors": 0,
+  "lintWarnings": 4,
+  "pleosSdkCompiled": false,
+  "pleosEmulatorValidated": false,
+  "androidDeviceCi": {
+    "status": "passed",
+    "run": "https://github.com/hundol047/HYUNDAI/actions/runs/40081991243",
+    "jobId": 120837270571,
+    "artifact": "https://github.com/hundol047/HYUNDAI/actions/runs/40081991243/artifacts/12555302325",
+    "image": "Android 35 default x86_64 with KVM; not Pleos",
+    "checks": 6,
+    "capture": "continuous adb shell screenrecord",
+    "vehicleSignals": "app simulation",
+    "installedApkSha256Verified": true
+  },
+  "firstLaunchOverlayFixed": true,
+  "videoVisualReview": "not completed: artifact-storage download denied with HTTP 403 in this environment",
+  "codeCommit": "f45893d47601b57cde14f3c6fd1ead7ecfcbb83f",
+  "artifactExpiresAtUtc": "2027-01-22T09:27:00Z"
+}

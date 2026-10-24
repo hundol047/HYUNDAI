@@ -54,9 +54,9 @@ import kotlin.math.min
                     CarIllustration(Modifier.width(126.dp).height(75.dp))
                 }
                 Spacer(Modifier.height(10.dp))
-                LinearProgressIndicator(progress={ (s.sample?.batteryPercent ?: 0)/100f },modifier=Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(8.dp)),color=Mint,trackColor=Line)
+                LinearProgressIndicator(progress={ (s.sample?.batteryPercent ?: 0).coerceIn(0,100)/100f },modifier=Modifier.fillMaxWidth().height(5.dp).clip(RoundedCornerShape(8.dp)),color=Mint,trackColor=Line)
                 Spacer(Modifier.height(9.dp))
-                Row { Text("${s.sample?.batteryPercent ?: 0}%",color=Mint,fontSize=12.sp,fontWeight=FontWeight.Medium);Text("  배터리 · 시뮬레이션",color=Muted,fontSize=10.sp);Spacer(Modifier.weight(1f));Text("100%",color=Muted,fontSize=10.sp) }
+                Row { Text(if((s.sample?.batteryPercent ?: -1)>=0)"${s.sample?.batteryPercent}%" else "—",color=Mint,fontSize=12.sp,fontWeight=FontWeight.Medium);Text(if(s.sample?.source==DataSource.SIMULATION)"  배터리 · 시뮬레이션" else if((s.sample?.batteryPercent ?: -1)>=0) "  배터리 · 차량 신호" else "  배터리 정보 없음",color=Muted,fontSize=10.sp);Spacer(Modifier.weight(1f));Text("100%",color=Muted,fontSize=10.sp) }
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line)
                 Spacer(Modifier.height(12.dp))
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
@@ -72,7 +72,8 @@ import kotlin.math.min
             ModeCard("휴식 모드","다음 여정을 위한 재충전",min(s.preferences.relaxMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Spa,Mint,Modifier.weight(1f)){vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
             ModeCard("오디오 모드","좋아하는 소리와 함께하는 시간",min(15L,s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Headphones,Purple,Modifier.weight(1f)){vm.start(SessionKind.AUDIO,15)}
         }
-        if(s.context==VehicleContext.PREPARING_DEPARTURE) SurfacePanel(accent=Amber) {Text("출발 준비 시간입니다",color=Amber,fontSize=18.sp);Text("활동을 정리하고 주변을 확인해 주세요. 주행을 시작하면 EchoRoad로 자동 전환됩니다.",color=White,fontSize=13.sp)}
+        if(s.context==VehicleContext.PREPARING_DEPARTURE) SurfacePanel(accent=Amber) {Text("출발 준비 시간입니다",color=Amber,fontSize=18.sp);Text("활동을 정리하고 주변을 확인해 주세요. 출발 후에는 차량 기본 내비게이션의 안내를 따라 주세요.",color=White,fontSize=13.sp)}
+        VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=11.sp,modifier=Modifier.padding(bottom=5.dp))
     }
     if(waitingOpen) WaitingDialog(s,onDismiss={waitingOpen=false},onSet={vm.waiting(it);waitingOpen=false})
@@ -143,6 +144,21 @@ import kotlin.math.min
 }
 
 @Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
+    if(LocalCompactWindow.current) {
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            Text(if(s.context==VehicleContext.UNKNOWN) "차량 상태를 확인할 수 없습니다." else "안전한 여정, 함께할게요.",color=White,fontSize=25.sp)
+            Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Amber)
+            SurfacePanel(Modifier.fillMaxWidth()) {
+                Text("${s.sample?.speedKph?.toInt() ?: 0} km/h",color=White,fontSize=40.sp)
+                Text(if(s.sample?.source==DataSource.SIMULATION) "데모 차량 신호" else "차량 신호",color=Muted)
+                Text("P 기어와 정지를 확인한 뒤 집중·휴식 기능을 열 수 있습니다.",color=Muted)
+            }
+            ActionButton("내비게이션",onNavigation,Modifier.fillMaxWidth())
+            ActionButton("위험 정보 듣기",onVoice,Modifier.fillMaxWidth())
+            Text(s.message,color=Muted)
+        }
+        return
+    }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
         Row(verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
@@ -160,7 +176,7 @@ import kotlin.math.min
                 Spacer(Modifier.height(12.dp))
                 Text("현재 속도와 기어, 경로를 표시할 수 없어 정차용 조작을 제한합니다.",color=Muted,fontSize=15.sp)
                 Spacer(Modifier.height(10.dp))
-                Text(if(s.sample?.source==DataSource.VEHICLE) "이 버전은 Pleos 실차 SDK와 연결되지 않습니다." else "차량 신호가 복구되면 안전 상태를 다시 확인합니다.",color=Amber,fontSize=13.sp)
+                Text(if(s.sample?.source==DataSource.VEHICLE) "차량 상태에서 서비스 연결·속도/기어 읽기 권한을 확인하세요." else "차량 신호가 복구되면 안전 상태를 다시 확인합니다.",color=Amber,fontSize=13.sp)
                 Spacer(Modifier.weight(1f))
             }
             return@Column
@@ -170,7 +186,7 @@ import kotlin.math.min
                 RouteScene(Modifier.fillMaxSize())
                 Column(Modifier.padding(20.dp)) {
                     Pill("EchoRoad · ${if(s.echoRoadActive)"활성" else "안전 제한"}",Blue)
-                    Spacer(Modifier.height(12.dp));Text("${s.sample?.speedKph?.toInt() ?: 0}",fontSize=48.sp,fontWeight=FontWeight.Light,color=White);Text("km/h · 시뮬레이션",fontSize=11.sp,color=Muted)
+                    Spacer(Modifier.height(12.dp));Text("${s.sample?.speedKph?.toInt() ?: 0}",fontSize=48.sp,fontWeight=FontWeight.Light,color=White);Text(if(s.sample?.source==DataSource.VEHICLE)"km/h · 차량 신호" else "km/h · 시뮬레이션",fontSize=11.sp,color=Muted)
                 }
                 SurfacePanel(Modifier.align(Alignment.TopEnd).padding(18.dp).width(155.dp),accent=Blue) {
                     Icon(Icons.Outlined.TurnRight,null,tint=Blue,modifier=Modifier.size(28.dp));Text("3.2 km",fontSize=23.sp,color=White);Text("판교IC · 데모 경로",fontSize=11.sp,color=Muted)

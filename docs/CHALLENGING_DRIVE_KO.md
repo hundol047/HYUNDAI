@@ -16,24 +16,24 @@
 
 세 목적지는 실서버 검색 결과의 가게명·주소·출처를 표시했고, 그 좌표의 목적지 핀과 실제 도로 접근 지점까지의 경로를 만들었습니다. 화면을 직접 확인해 주변 가게 이름과 POI 아이콘이 타일 위에 보이는 것도 확인했습니다. 파리의 Pharmacie de l'Étoile·Bowling Foch, 샌프란시스코의 Grant & Green 등의 표시는 지도 확대 수준과 가시 영역에 따릅니다. 이미지의 모든 상호를 OCR로 대조하거나 전체 가게 목록과 비교한 검사는 아닙니다.
 
-**모든 가게가 검색·표시되는 것은 아닙니다.** 사전 실검색에서 `Cafe Onion Anguk Seoul`과 `어니언 안국`은 결과가 없었습니다. 이름·주소·현지어를 바꾸거나 앱의 외부 지도 추가 검색을 사용할 수 있습니다. 같은 날 서울 기준점의 별도 주변 추천 제공자 Overpass는 **18초 시간 초과**였으므로, 자동 주변 가게 추천의 실데이터 연결 성공으로 보고하지 않습니다. 기존 예시 장소를 실제 조회 성공으로 바꾸지 않았습니다. [검색 누락](validation/challenging-drive-r2/search-miss.json), [주변 제공자 결과](validation/challenging-drive-r2/nearby-provider.json).
+**모든 가게가 검색·표시되는 것은 아닙니다.** 사전 실검색에서 `Cafe Onion Anguk Seoul`과 `어니언 안국`은 결과가 없었습니다. 이름·주소·현지어를 바꾸거나 앱의 외부 지도 추가 검색을 사용할 수 있습니다. 같은 날 서울 기준점의 별도 주변 추천 제공자 Overpass는 **18초 시간 초과**였으므로, 자동 주변 가게 추천의 실데이터 연결 성공으로 보고하지 않습니다. 기존 예시 장소를 실제 조회 성공으로 바꾸지 않았습니다. [검색 누락](../test-fixtures/validation/challenging-drive-r2/search-miss.json), [주변 제공자 결과](../test-fixtures/validation/challenging-drive-r2/nearby-provider.json).
 
 ## 녹화 검토에서 고친 부분
 
 첫 시험 영상에서 좌·우회전 문자 화살표가 브라우저 글꼴에 따라 네모로 깨졌습니다. 웹 안내의 회전 아이콘을 글꼴과 무관한 로컬 SVG로 바꿨습니다. 화면의 회전 설명은 접근성 텍스트로 유지하고 중복 아이콘은 스크린리더에서 숨깁니다. GPS 갱신 때 같은 아이콘 DOM을 계속 만들지 않습니다.
 
-[수정 전 화면](screenshots/drive-before-arrow.png)과 [수정 후 서울 화면](screenshots/drive-r2-seoul-middle.png). 수정 후 세 구간을 모두 다시 실행해 좌·우회전·회전교차로·도착 SVG를 확인했습니다. 기본 15개·내비게이션 13개·상세 조작 12개·도로 타일 7개·음성/언어 14개, 총 61개의 관련 회귀 검사도 통과했습니다. [집계](validation/challenging-drive-r2/regressions.json). 시험 하네스에는 SVG 도형 존재와 지도 중심 추적 검사를 넣었습니다.
+[수정 전 화면](screenshots/drive-before-arrow.png)과 [수정 후 서울 화면](screenshots/drive-r2-seoul-middle.png). 수정 후 세 구간을 모두 다시 실행해 좌·우회전·회전교차로·도착 SVG를 확인했습니다. 기본 15개·내비게이션 13개·상세 조작 12개·도로 타일 7개·음성/언어 14개, 총 61개의 관련 회귀 검사도 통과했습니다. [집계](../test-fixtures/validation/challenging-drive-r2/regressions.json). 시험 하네스에는 SVG 도형 존재와 지도 중심 추적 검사를 넣었습니다.
 
 ## 직접 실행한 영상과 원본 근거
 
-[모의 주행 MP4](video/CabinOS_ONE_challenging_drive_v0101r2.mp4)는 Playwright가 실행 중인 브라우저 화면을 연속 녹화한 영상입니다. 사진 슬라이드나 생성 영상이 아닙니다. 세 녹화 클립을 순서대로 연결하고 MP4로 인코딩했습니다. 가속 GPS라는 안내가 화면에 표시되며 약 **2분 46초**, 음성 녹음은 없습니다. 장면별 챕터를 포함합니다. Chromium에서 실제 재생, 30·85·130초 탐색, HTTP 부분 요청도 확인했습니다. [재생 검사](validation/challenging-drive-r2/video-playback.json). Android 실기기 영상으로 표기하지 않습니다.
+[모의 주행 MP4](video/CabinOS_ONE_challenging_drive_v0101r2.mp4)는 Playwright가 실행 중인 브라우저 화면을 연속 녹화한 영상입니다. 사진 슬라이드나 생성 영상이 아닙니다. 세 녹화 클립을 순서대로 연결하고 MP4로 인코딩했습니다. 가속 GPS라는 안내가 화면에 표시되며 약 **2분 46초**, 음성 녹음은 없습니다. 장면별 챕터를 포함합니다. Chromium에서 실제 재생, 30·85·130초 탐색, HTTP 부분 요청도 확인했습니다. [재생 검사](../test-fixtures/validation/challenging-drive-r2/video-playback.json). Android 실기기 영상으로 표기하지 않습니다.
 
 - [서울 도심 교차로](screenshots/drive-r2-seoul-middle.png)
 - [파리 회전교차로](screenshots/drive-r2-paris-middle.png)
 - [Lombard 연속 급커브](screenshots/drive-r2-sf-hairpins.png)
 - [가게 목적지 도착](screenshots/drive-r2-sf-finish.png)
-- [전체 GPS·타일·지연·실제 요청 기록](validation/challenging-drive-r2/results.json), 같은 폴더의 원본 검색·경로 JSON
-- [연속 녹화 클립 시간](validation/challenging-drive-r2/recording.json)
+- [전체 GPS·타일·지연·실제 요청 기록](../test-fixtures/validation/challenging-drive-r2/results.json), 같은 폴더의 원본 검색·경로 JSON
+- [연속 녹화 클립 시간](../test-fixtures/validation/challenging-drive-r2/recording.json)
 
 시험 중 GPS 처리+화면 갱신 p95는 서울 3.9ms, 파리 3.3ms, 샌프란시스코 3.7ms였습니다. 이 클라우드 Chromium의 해당 짧은 경로 측정값이며 실기기 FPS나 네트워크 응답 시간을 뜻하지 않습니다. 기존 대형 경로 스트레스 검사는 [별도 문서](MAP_PERFORMANCE_KO.md)를 참고하세요.
 

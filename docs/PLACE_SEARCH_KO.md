@@ -16,7 +16,7 @@ EchoRoad 내비게이션에서 상호·지점·도시·주소 또는 `위도,경
 
 ## 이번 실제 요청 결과
 
-[원본 요청 요약](validation/place-route-coverage.json)은 2026-10-22의 제한된 표본입니다. 전수 검사가 아닙니다.
+[원본 요청 요약](../test-fixtures/validation/place-route-coverage.json)은 2026-10-22의 제한된 표본입니다. 전수 검사가 아닙니다.
 
 | 범위 | 실제 관찰 |
 |---|---|
@@ -27,7 +27,7 @@ EchoRoad 내비게이션에서 상호·지점·도시·주소 또는 `위도,경
 | 뉴욕→런던 | 서버 HTTP 200/Ok인데 출발점을 약 5,388km 떨어진 도로에 연결. 앱의 출발점 검증으로 거부 |
 | `0,0`→파리 | 서버 HTTP 400/InvalidUrl. 요청 거부로 기록하며 NoRoute/NoSegment로 바꿔 해석하지 않음 |
 
-실제 Chromium에서도 `스타벅스 판교`의 6개 검색 결과, GPS 없이 핀 표시, 주변 검색, 더 보기 후 12개 결과, 실제 OSRM 미리보기·안내를 확인했습니다. [결과](validation/place-search-live-browser.json), [검색 화면](screenshots/shop-live-search.png), [안내 화면](screenshots/shop-live-guidance.png). 판교 기준점은 도로에서 약 121m 떨어져 시작 버튼이 잠겼습니다. 테스트가 **합성 GPS 입력만 반환 도로 시작점으로 명시적으로 이동**한 후 안내를 시작했습니다. 앱이 실제 GPS를 옮긴 것이 아니며 물리 GPS·실차 주행 검증이 아닙니다.
+실제 Chromium에서도 `스타벅스 판교`의 6개 검색 결과, GPS 없이 핀 표시, 주변 검색, 더 보기 후 12개 결과, 실제 OSRM 미리보기·안내를 확인했습니다. [결과](../test-fixtures/validation/place-search-live-browser.json), [검색 화면](screenshots/shop-live-search.png), [안내 화면](screenshots/shop-live-guidance.png). 판교 기준점은 도로에서 약 121m 떨어져 시작 버튼이 잠겼습니다. 테스트가 **합성 GPS 입력만 반환 도로 시작점으로 명시적으로 이동**한 후 안내를 시작했습니다. 앱이 실제 GPS를 옮긴 것이 아니며 물리 GPS·실차 주행 검증이 아닙니다.
 
 `스타벅스`만으로 반경 검색했을 때 제공자는 영역 안이지만 원형 20km 밖인 서울 결과 하나를 반환했습니다. 앱은 이를 제외했습니다. `스타벅스 판교`로 지역을 명시한 다음 검색은 성공했습니다. 검색어별 결과 누락을 데이터가 있는 것처럼 채우지 않습니다.
 
@@ -37,7 +37,7 @@ EchoRoad 내비게이션에서 상호·지점·도시·주소 또는 `위도,경
 
 현재 상용 API 계정/키가 없어 **카카오 실서버는 미검증**입니다. 어댑터의 응답 변환·15개 공급자 페이지와 6개 앱 페이지의 경계·키 비노출은 프로토콜 fixture로 검사했습니다. Google Places 어댑터는 제공하지 않습니다. 외부 지도 링크와 구분해 주세요. 카카오 공식 문서 접근은 현재 클라우드 CONNECT 403으로 차단되어 운영 전 최신 문서·이용 조건·허용량을 추가 대조해야 합니다.
 
-자체 서버의 실제 Nominatim 중계는 인증을 포함한 로컬 HTTP 통합 요청에서 성공했습니다. [근거](validation/place-gateway-live.json). 이는 공용 HTTPS 서버의 배포/24시간 운영이나 카카오 성공을 뜻하지 않습니다. 앱의 서버 접근키는 공급자 REST API 키와 다르며, 검색 서버에만 전송하고 파일/설정에 저장하지 않습니다.
+자체 서버의 실제 Nominatim 중계는 인증을 포함한 로컬 HTTP 통합 요청에서 성공했습니다. [근거](../test-fixtures/validation/place-gateway-live.json). 이는 공용 HTTPS 서버의 배포/24시간 운영이나 카카오 성공을 뜻하지 않습니다. 앱의 서버 접근키는 공급자 REST API 키와 다르며, 검색 서버에만 전송하고 파일/설정에 저장하지 않습니다.
 
 ## 재현
 

@@ -40,9 +40,9 @@ Android 앱과 브라우저 데모 모두에서 목적지 음성 입력 → 결�
 ## 검증 근거
 
 - 코어 **93개**, Android **54개**, 총 **147개**. 언어 31팩의 방향/유형/회전교차로 조합, 원래 좌표 유지, 언어 대체, 명령 구분, Android 실제 SpeechRecognizer API Intent/콜백·권한 거부·오류·타임아웃·배경 전환·언어 저장·주행 제한 검사.
-- 새 Chromium 음성 검사 **14개**: 마이크 API 콜백에서 검색/번호/시작까지 실행, 주행 제한, 언어별 실제 렌더링·TTS 디스패치·요청 헤더, 복원/초기화, 인식 실패/늦은 콜백/낮은 신뢰도/타임아웃/모바일 배치. [결과](validation/voice-navigation-results.json).
+- 새 Chromium 음성 검사 **14개**: 마이크 API 콜백에서 검색/번호/시작까지 실행, 주행 제한, 언어별 실제 렌더링·TTS 디스패치·요청 헤더, 복원/초기화, 인식 실패/늦은 콜백/낮은 신뢰도/타임아웃/모바일 배치. [결과](../test-fixtures/validation/voice-navigation-results.json).
 - 기존 GPS 검사 **15개**도 통과했습니다. 전체 회귀의 최종 결과는 [검증 문서](VALIDATION.md)를 기준으로 확인합니다.
-- [현재 실제 외부 지도·주소·경로 요청](validation/voice-review-live-providers.json)은 OSM·Nominatim·OSRM 모두 HTTP 200입니다. 음향 인식·실기기 GPS 결과가 아닙니다.
+- [현재 실제 외부 지도·주소·경로 요청](../test-fixtures/validation/voice-review-live-providers.json)은 OSM·Nominatim·OSRM 모두 HTTP 200입니다. 음향 인식·실기기 GPS 결과가 아닙니다.
 - 공개 배포는 [상태 및 필요한 저장소 설정](WEB_DEMO.md)으로 구분합니다. APK 다운로드 성공과 공개 사이트 배포 성공은 별도입니다.
 
 ```bash
@@ -53,8 +53,8 @@ source scripts/env.sh
 node scripts/web/verify-voice-navigation.cjs
 ```
 
-현재 0.10.0 지도 부하 시험은 CPU 4배 감속·10만 지점 경로·120개 합성 GPS 입력에서 초기 처리 628ms, p95 8.8ms, 최대 17.5ms였습니다. 실기기 FPS·네트워크 지연을 의미하지 않습니다. [측정](validation/map-performance-v0100.json) · [모바일 음성 복구 UI](screenshots/voice-mobile.png).
+현재 0.10.0 지도 부하 시험은 CPU 4배 감속·10만 지점 경로·120개 합성 GPS 입력에서 초기 처리 628ms, p95 8.8ms, 최대 17.5ms였습니다. 실기기 FPS·네트워크 지연을 의미하지 않습니다. [측정](../test-fixtures/validation/map-performance-v0100.json) · [모바일 음성 복구 UI](screenshots/voice-mobile.png).
 
-실제 Chromium에서도 TLS 검증을 유지한 OSM 타일·Nominatim 검색·OSRM 경로·확대/축소·드래그·안내 시작을 통과했습니다. [네트워크/조작 기록](validation/voice-review-live-browser.json) · [현재 화면](screenshots/voice-review-live-guidance.png). GPS는 공개 장소의 합성 좌표입니다. 환경 재시작으로 바뀐 기존 OS 공개 CA가 Chromium에 반영되지 않던 문제는 인증서 내용별 이름으로 등록하도록 시작 스크립트를 수정해 해결했습니다. TLS 검증을 끄지 않았습니다.
+실제 Chromium에서도 TLS 검증을 유지한 OSM 타일·Nominatim 검색·OSRM 경로·확대/축소·드래그·안내 시작을 통과했습니다. [네트워크/조작 기록](../test-fixtures/validation/voice-review-live-browser.json) · [현재 화면](screenshots/voice-review-live-guidance.png). GPS는 공개 장소의 합성 좌표입니다. 환경 재시작으로 바뀐 기존 OS 공개 CA가 Chromium에 반영되지 않던 문제는 인증서 내용별 이름으로 등록하도록 시작 스크립트를 수정해 해결했습니다. TLS 검증을 끄지 않았습니다.
 
 선택적 검색 게이트웨이도 언어 매개변수와 캐시를 언어별로 구분하도록 보완했으며 Python 검사 10개가 통과했습니다. 카카오 실서버 키·운영 HTTPS 서버 배포는 별도이며 Nominatim 언어 요청 전달과 구분합니다.

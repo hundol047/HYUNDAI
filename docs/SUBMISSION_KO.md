@@ -17,8 +17,9 @@ APK가 GitHub 일반 파일 제한보다 작으면 `apk/`에 직접 포함합니
 ## 재빌드·재서명
 
 ```bash
-cd /workspace/HYUNDAI
-source scripts/env.sh
+cd HYUNDAI
+# JDK 21 / ANDROID_HOME 설정 후, 기존 팀 키를 저장소 밖의 경로에 복원
+export CABINOS_SIGNING_DIR=/your/private/signing-directory
 ./scripts/package-submission.sh
 ```
 
@@ -27,7 +28,7 @@ source scripts/env.sh
 ## 제출 전 남은 확인
 
 - APK를 실제 심사 환경/기기에 설치하고 실행할 수 있는지 확인.
-- Pleos SDK·실차 연동 범위와 공모전 지원 환경 확인. 현재 APK는 명시적인 시뮬레이션 기반이며 해당 연동은 미완료.
+- Pleos SDK·실차 연동 범위와 공모전 지원 환경 확인. 작업 브랜치의 후보 APK에는 AAOS 읽기 어댑터가 있으며 Pleos SDK 포함 최종본은 미완료. [최신 검사](SUBMISSION_REVIEW_KO.md).
 - 음성팩/인식 서비스가 없을 때 명령 버튼으로 조작 가능. 실제 한국어 TTS/STT는 해당 서비스가 있는 기기에서 확인 필요.
 - [최신 시연 영상과 녹화 근거](SEARCH_RECOVERY_KO.md)는 실제 브라우저 실행을 연속 녹화했습니다. 위치는 합성 GPS이며 실차·Android 실기기 녹화가 아닙니다. 실제 APK/차량 실행 영상이 추가로 필요한지는 공식 안내에서 확인. 사업계획서 등 별도 자료도 확인.
 - Private 저장소라면 심사용 계정 초대와 권한 확인은 계정 소유자가 진행.

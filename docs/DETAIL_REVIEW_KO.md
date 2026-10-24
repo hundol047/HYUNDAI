@@ -29,7 +29,7 @@
 
 수정 전 첫 표시 측정값은 유효하지만, 이어진 지도 확대가 오래 걸려 시뮬레이션 차량 신호가 만료됐습니다. 안전 엔진이 시작을 거부한 것이므로 **그때의 GPS 갱신 수치는 비교에서 제외**했습니다. 검사 도구는 정상 P 재확인을 기다린 후 새 GPS로 시작하게 수정했습니다. 앱의 신호 만료·P 확인 제한을 완화하지 않았습니다. 반복 횟수가 작아 모든 기기·상황에서 같은 개선율을 보장하지 않습니다.
 
-[수정 전 원본](validation/map-performance-v080-before.json) · [수정 후 원본](validation/map-performance-v080.json) · [세부 브라우저 검사 12개](validation/navigation-detail-results.json).
+[수정 전 원본](../test-fixtures/validation/map-performance-v080-before.json) · [수정 후 원본](../test-fixtures/validation/map-performance-v080.json) · [세부 브라우저 검사 12개](../test-fixtures/validation/navigation-detail-results.json).
 
 ## Android 화면과 검사 범위
 

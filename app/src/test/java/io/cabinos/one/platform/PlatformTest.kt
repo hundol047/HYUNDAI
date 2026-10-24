@@ -16,6 +16,14 @@ import org.robolectric.Shadows.shadowOf
 @Config(sdk=[29])
 class PlatformTest {
     private fun context(): Context = ApplicationProvider.getApplicationContext()
+    @Test fun switchingBackToPhoneDemoDoesNotRetainUnknownRealBattery() {
+        val provider=SimulationVehicleProvider()
+        provider.select("실차 연결")
+        assertEquals(-1,provider.samples.value.batteryPercent)
+        provider.select("충전")
+        assertEquals(DataSource.SIMULATION,provider.samples.value.source)
+        assertEquals(68,provider.samples.value.batteryPercent)
+    }
     @Test @Config(sdk=[33]) fun deniedNotificationsDoNotClaimAnAlertWasPosted() {
         val c=context()
         shadowOf(c as android.app.Application).denyPermissions(android.Manifest.permission.POST_NOTIFICATIONS)

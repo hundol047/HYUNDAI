@@ -2,7 +2,7 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const root=path.resolve(__dirname,'../..'),out=path.join(root,process.env.CABIN_GPS_STRESS_OUT||'artifacts/world-gps-stress.json');
-const baseline=path.join(root,'docs/validation/world-drive-v0103'),cases=JSON.parse(fs.readFileSync(path.join(baseline,'baseline.json'))).scenarios;
+const baseline=path.join(root,'test-fixtures/validation/world-drive-v0103'),cases=JSON.parse(fs.readFileSync(path.join(baseline,'baseline.json'))).scenarios;
 const phase=Number(process.env.CABIN_GPS_PHASE||0),headingJitter=Number(process.env.CABIN_GPS_HEADING_JITTER||0),noHeading=process.env.CABIN_GPS_NO_HEADING==='1',noSpeed=process.env.CABIN_GPS_NO_SPEED==='1',stationarySamples=Number(process.env.CABIN_GPS_STATIONARY_SAMPLES||0);
 const rad=x=>x*Math.PI/180;
 // Interpolate the short arc across ±180°, never through longitude zero.

@@ -25,6 +25,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
+    val compact=LocalCompactWindow.current
     val context=LocalContext.current
     DisposableEffect(nav){onDispose {nav.cancelVoice()}}
     val g=ui.guidance
@@ -42,8 +43,8 @@ import java.util.Locale
     var settingsError by remember {mutableStateOf("")}
     var accessToken by remember {mutableStateOf("")}
     val canPlan=s.parkedAllowed&&!g.active
-    Column(Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
+    Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.SpaceBetween) {
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
             if(canPlan)Row {TextButton(onClick={languageDialog=true}){Text("언어 · ${ui.language}",color=Mint)};TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}}
         }
@@ -65,17 +66,19 @@ import java.util.Locale
         }
         if(canPlan)Text("음성: 목적지 → 1번~6번 → 안내 시작 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
-            Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.weight(1f),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+            Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},if(compact)Modifier.width(240.dp) else Modifier.widthIn(min=260.dp,max=500.dp),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
                 ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
                 ActionButton("내 위치 사용",onLocate,color=Mint,enabled=!ui.busy)
                 if(ui.busy)ActionButton("요청 취소",{nav.cancelPending()},color=Amber)
             }
             Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
-        Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
-            Box(Modifier.weight(.62f).fillMaxHeight().clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix,!ui.busy,{nav.plan(it)}) }
-            Column(Modifier.weight(.38f).fillMaxHeight().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+        ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
+            map = { pane ->
+            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix,!ui.busy,{nav.plan(it)}) }
+            }, details = { pane ->
+            Column(pane.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEachIndexed { index,place ->
                     SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){nav.plan(place)},accent=Blue) {
@@ -133,7 +136,7 @@ import java.util.Locale
                 Text(ui.notice,color=Muted,fontSize=11.sp)
                 if(!s.networkAvailable)Text("오프라인 · 새 지도·검색·재탐색 불가. 받아 둔 경로와 GPS 안내만 유지합니다.",color=Amber,fontSize=12.sp)
             }
-        }
+            })
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
     }
     if(languageDialog&&canPlan)AlertDialog(onDismissRequest={languageDialog=false},title={Text("길 안내·목적지 음성 언어")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)){

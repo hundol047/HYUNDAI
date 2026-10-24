@@ -1,9 +1,18 @@
 name: Android verification
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      record_pleos_preview:
+        description: Record a limited actual SDK preview and upload a draft for visual review
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   verify:
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5
@@ -16,15 +25,17 @@ jobs:
           node-version: '22'
       - name: Verify optional place gateway without live provider calls
         run: python3 -m unittest discover -s server -v
+      - name: Verify vehicle recording evidence checks
+        run: python3 -m unittest discover -s scripts/tests -v
       # ubuntu-24.04 already includes the Android SDK and accepted SDK licenses.
       - name: Install pinned Android platform and build tools
         run: |
           test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug --console=plain
-      - run: ./gradlew :app:assembleRelease --console=plain
-      - run: ./gradlew :app:lintDebug --console=plain
+      - run: ./gradlew -PpleosSdk=true :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug --console=plain
+      - run: ./gradlew -PpleosSdk=true :app:assembleRelease --console=plain
+      - run: ./gradlew -PpleosSdk=true :app:lintDebug --console=plain
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -35,3 +46,120 @@ jobs:
             core/build/reports/tests/jvmTest/
             app/build/reports/tests/testDebugUnitTest/
             app/build/screenshots/
+  android-device:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    # The ordinary Android emulator validates APK execution, not Pleos services.
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Enable runner KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Install and record the exact signed candidate APK
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: default
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/android-device-demo
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: CabinOS-Android-APK-device-video
+          path: artifacts/android-device-demo/
+  pleos-device:
+    name: Official Pleos boot diagnostics
+    if: github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      ANDROID_AVD_HOME: /tmp/cabinos-pleos-avd
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Enable runner KVM access
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo udevadm settle --timeout=30
+          if ! test -r /dev/kvm; then echo "::error::Runner KVM is unavailable; APK diagnostics were not executed"; exit 1; fi
+      - uses: actions/cache@v4
+        id: pleos-image
+        with:
+          path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
+          key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
+      - name: Install checksum-verified official Pleos image
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" emulator platform-tools
+          python3 scripts/install-pleos-emulator.py --archive "$RUNNER_TEMP/pleos-connect-2.1.0.zip" --sdk "$ANDROID_HOME" --avd-home "$ANDROID_AVD_HOME"
+      - uses: actions/cache/save@v4
+        if: steps.pleos-image.outputs.cache-hit != 'true'
+        with:
+          path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
+          key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
+      - name: Boot official image with hardware acceleration
+        run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          # The emulator imports the host ADB key at startup. Generate it before QEMU starts.
+          adb start-server
+          test -f "$HOME/.android/adbkey.pub"
+          mkdir -p artifacts/pleos-device
+          "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
+          echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
+          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+      - name: Record actual SDK preview without claiming full scenario acceptance
+        if: inputs.record_pleos_preview
+        run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-preview
+      - name: Upload a draft recording for visual review
+        if: inputs.record_pleos_preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          test "$GITHUB_REF_NAME" = feat/pleos-vehicle-state
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('artifacts/pleos-preview')
+          evidence=json.loads((p/'preview.json').read_text())
+          (p/'RELEASE.md').write_text('공식 Pleos 2.1.0 / API 34에서 서명 APK를 직접 실행한 연속 화면 녹화입니다.\n\n'
+              'APK SHA-256: `'+evidence['apkSha256']+'`\n\n'
+              '현재는 시각 검토 전 초안이며 제출 완료를 뜻하지 않습니다. preview.json의 mode와 fullScenarioChecks를 확인하세요. '
+              '명령 버튼 조작은 마이크 음성 인식 시연이 아닙니다. preview.json에 실제 관측 결과와 미통과 항목을 보존합니다.\n')
+          (p/'tag.txt').write_text('v0.11.0-pleos-preview-'+evidence['apkSha256'][:8])
+          PY
+          PREVIEW_TAG="$(cat artifacts/pleos-preview/tag.txt)"
+          if gh release view "$PREVIEW_TAG" --json isDraft > "$RUNNER_TEMP/preview-release.json" 2>/dev/null; then
+            python3 -c 'import json,sys; assert json.load(open(sys.argv[1]))["isDraft"], "Never overwrite a published release"' "$RUNNER_TEMP/preview-release.json"
+          else
+            gh release create "$PREVIEW_TAG" --draft --prerelease --target "$GITHUB_SHA" --title 'CabinOS ONE — Pleos SDK 실제 실행 (제한된 검증)' --notes-file artifacts/pleos-preview/RELEASE.md
+          fi
+          gh release upload "$PREVIEW_TAG" artifacts/pleos-preview/take/device-screen.mp4 artifacts/pleos-preview/preview.json --clobber
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Pleos-actual-device-diagnostics
+          path: |
+            artifacts/pleos-device/
+            artifacts/pleos-preview/
+          retention-days: 7
+      - name: Stop emulator
+        if: always()
+        run: |
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 emu kill || true

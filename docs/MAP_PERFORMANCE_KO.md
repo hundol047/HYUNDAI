@@ -1,6 +1,6 @@
 # 지도 범위·확대/축소·이동 성능 점검
 
-**최신 0.10.4:** 같은 10만 지점·120회 위치 갱신·CPU 4배 감속 조건에서 초기 파싱·표시 **518.7ms**, GPS 처리와 렌더 갱신 **p50 8.2ms / p95 9.7ms / 최대 18.1ms**를 관측했습니다. 지도 조작·객체 유지 등 8개 검사가 통과했습니다. [현재 결과](validation/map-performance-results.json). 날짜변경선의 양방향 이동·주변 핀도 [별도 8개](validation/date-line-results.json)를 통과했습니다. 이 CPU 검사는 합성 경로·타일 요청 차단 조건이며 기기 FPS나 실서버 지연을 뜻하지 않습니다. 실제 지역별 주행은 [5시간 검사](WORLD_SOAK_KO.md)에서 별도로 기록합니다.
+**최신 0.10.4:** 같은 10만 지점·120회 위치 갱신·CPU 4배 감속 조건에서 초기 파싱·표시 **518.7ms**, GPS 처리와 렌더 갱신 **p50 8.2ms / p95 9.7ms / 최대 18.1ms**를 관측했습니다. 지도 조작·객체 유지 등 8개 검사가 통과했습니다. [현재 결과](../test-fixtures/validation/map-performance-results.json). 날짜변경선의 양방향 이동·주변 핀도 [별도 8개](../test-fixtures/validation/date-line-results.json)를 통과했습니다. 이 CPU 검사는 합성 경로·타일 요청 차단 조건이며 기기 FPS나 실서버 지연을 뜻하지 않습니다. 실제 지역별 주행은 [5시간 검사](WORLD_SOAK_KO.md)에서 별도로 기록합니다.
 
 아래의 0.6.0 전후 비교와 외부 응답 시간은 해당 버전에서 측정한 과거 기록입니다.
 
@@ -20,7 +20,7 @@
 | Cape Town South Africa | 3.21 km | 0.42초 |
 | Sydney Australia | 8.75 km | 0.35초 |
 
-검색은 explicit submit 시에만 수행하고, 반복 검색은 캐시하며 공개 제공자 요청 간격을 제한합니다. 응답 시간은 이번 단일 관측값이며 SLA·최악 지연·항상 동일한 성능을 의미하지 않습니다. [원본 결과](validation/live-navigation-results.json).
+검색은 explicit submit 시에만 수행하고, 반복 검색은 캐시하며 공개 제공자 요청 간격을 제한합니다. 응답 시간은 이번 단일 관측값이며 SLA·최악 지연·항상 동일한 성능을 의미하지 않습니다. [원본 결과](../test-fixtures/validation/live-navigation-results.json).
 
 ## 확대·축소·이동
 
@@ -37,7 +37,7 @@
 | zoom out button and visible live tiles | 0.497초 |
 | drag pan and visible live tiles | 0.403초 |
 
-타일 요청은 화면 이동 중 불필요해지면 취소될 수 있습니다. 보이는 타일의 완전 로딩을 검사했으며, 화면 밖 타일을 미리 수집하지 않았습니다. 브라우저 테스트용 CA 등록은 기존 공개 OS 인증서만 사용했습니다. [실제 브라우저 기록](validation/live-browser-results.json).
+타일 요청은 화면 이동 중 불필요해지면 취소될 수 있습니다. 보이는 타일의 완전 로딩을 검사했으며, 화면 밖 타일을 미리 수집하지 않았습니다. 브라우저 테스트용 CA 등록은 기존 공개 OS 인증서만 사용했습니다. [실제 브라우저 기록](../test-fixtures/validation/live-browser-results.json).
 
 ## 찾아서 고친 성능 문제
 
@@ -61,7 +61,7 @@
 
 이번 수정 후에도 100,000개 지점의 매우 큰 경로를 처음 파싱하고 표시하는 데 약 1.03초가 걸렸습니다(4배 CPU 감속). 경로 수신·초기 표시 비용을 숨기거나 모든 화면이 끊김 없다고 주장하지 않습니다. 작은 도시 경로와 이 합성 스트레스 경로는 별도입니다.
 
-[수정 전 기록](validation/map-performance-baseline.json) · [0.6.0 수정 후 기록](validation/map-performance-v060.json). Android는 Robolectric에서 50,001개 지점의 선 객체를 100회 GPS 갱신 뒤에도 재사용하고, 경로 교체·GPS 중단·줌·중심 유지가 작동하는지 검사했습니다. 실제 APK의 저사양 기기·Pleos 디스플레이 FPS, 장시간 발열·주행·열악한 통신 상태의 체감 성능은 미검증입니다.
+[수정 전 기록](../test-fixtures/validation/map-performance-baseline.json) · [0.6.0 수정 후 기록](../test-fixtures/validation/map-performance-v060.json). Android는 Robolectric에서 50,001개 지점의 선 객체를 100회 GPS 갱신 뒤에도 재사용하고, 경로 교체·GPS 중단·줌·중심 유지가 작동하는지 검사했습니다. 실제 APK의 저사양 기기·Pleos 디스플레이 FPS, 장시간 발열·주행·열악한 통신 상태의 체감 성능은 미검증입니다.
 
 ## 재현
 
@@ -78,7 +78,7 @@ node scripts/web/verify-navigation-live.cjs
 
 ## 0.7.0 가게 검색 추가 후 회귀
 
-같은 10만 지점/120개 GPS/CPU 4배 감속 검사 8개가 통과했습니다. 초기 파싱·표시는 약 1.30초, GPS 처리·렌더 갱신 p95 11.6ms, 최대 25.5ms였습니다. [별도 결과](validation/map-performance-v070.json). 위 0.6.0 전후 비교와 구분하며, 실기기·실차 FPS를 뜻하지 않습니다. 가게 검색·경로의 실제 표본과 실패 사례는 [가게 검색 안내](PLACE_SEARCH_KO.md)에 있습니다.
+같은 10만 지점/120개 GPS/CPU 4배 감속 검사 8개가 통과했습니다. 초기 파싱·표시는 약 1.30초, GPS 처리·렌더 갱신 p95 11.6ms, 최대 25.5ms였습니다. [별도 결과](../test-fixtures/validation/map-performance-v070.json). 위 0.6.0 전후 비교와 구분하며, 실기기·실차 FPS를 뜻하지 않습니다. 가게 검색·경로의 실제 표본과 실패 사례는 [가게 검색 안내](PLACE_SEARCH_KO.md)에 있습니다.
 
 
 0.8.0의 요청 취소·최신 GPS로 재계산·복귀/오류 문구 보완과 초기 경로 처리 개선은 [세부 재점검](DETAIL_REVIEW_KO.md)에 기록했습니다. 기존 0.6/0.7 성능 관측은 해당 버전의 과거 근거입니다.

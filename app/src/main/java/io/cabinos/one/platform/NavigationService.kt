@@ -41,7 +41,7 @@ open class NavigationService {
         val c=URL(url).openConnection() as HttpURLConnection;connection=c
         try {
             c.connectTimeout=12_000;c.readTimeout=20_000;c.instanceFollowRedirects=false
-            c.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (+https://github.com/hundol047/HYUNDAI)")
+            c.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
             if(accessToken.isNotEmpty())c.setRequestProperty("Authorization","Bearer $accessToken")
             c.setRequestProperty("Accept","application/json");c.setRequestProperty("Accept-Language",language+",en;q=0.7")
             check(c.responseCode==200) {if(c.responseCode==429)"서비스 요청 한도를 넘었습니다. 잠시 후 재시도하세요." else if(url.contains("/route/v1/driving/")&&c.responseCode in listOf(400,404,422))"경로 요청을 처리하지 못했습니다 (${c.responseCode}). 좌표·도로 연결·서버 주소를 확인하세요." else "내비게이션 서버 연결 실패 (${c.responseCode})"}

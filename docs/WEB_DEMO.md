@@ -14,7 +14,7 @@
 
 2026-10-24 16:18 KST에 실제 HTTPS 사이트를 Chromium으로 확인했습니다. 같은 페이지에서 **직접 체험하기**, **Android 앱 화면 안내**, **서명 APK 다운로드**, **실행 영상**을 사용할 수 있습니다. Android 앱 화면 안내는 Compose 갤러리이며, APK를 브라우저 안에서 실행하는 기능은 아닙니다.
 
-소유자의 Pages 활성화 후 [기존 검증된 배포 작업의 두 번째 실행](https://github.com/hundol047/HYUNDAI/actions/runs/40062127227)이 성공했습니다. 실제 배포한 앱 소스는 `e94616ab2a2b9f227f5c30f35bda9ad97a249c36`입니다. 데모 주행/주차 조작, Android 내비 이미지, 실제 지도 타일, 390px 모바일 배치, APK 바이트 일치, 78.28초 영상 재생·65초 탐색을 확인했습니다. [공개 사이트 검증 기록](validation/pages-v0105.json).
+소유자의 Pages 활성화 후 [기존 검증된 배포 작업의 두 번째 실행](https://github.com/hundol047/HYUNDAI/actions/runs/40062127227)이 성공했습니다. 실제 배포한 앱 소스는 `e94616ab2a2b9f227f5c30f35bda9ad97a249c36`입니다. 데모 주행/주차 조작, Android 내비 이미지, 실제 지도 타일, 390px 모바일 배치, APK 바이트 일치, 78.28초 영상 재생·65초 탐색을 확인했습니다. [공개 사이트 검증 기록](../test-fixtures/validation/pages-v0105.json).
 
 이전 Pages 미활성화·연동 앱 권한 부족으로 인한 배포 실패는 해결됐습니다. 이후 앱 변경은 main 푸시 또는 [배포 워크플로](https://github.com/hundol047/HYUNDAI/actions/workflows/pages.yml) 실행으로 배포할 수 있습니다. 이번 문서 갱신은 앱 코드를 바꾸지 않으므로 검증된 사이트를 다시 빌드하지 않습니다.
 

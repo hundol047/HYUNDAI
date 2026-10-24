@@ -41,9 +41,9 @@ class SimulationVehicleProvider(private val preferences: RuntimePreferences? = n
             "충전 15분" -> old.copy(speedKph=0.0,gear=Gear.PARK,charging=true,chargeRemainingSeconds=900,connected=true,parkingReliable=true,source=DataSource.SIMULATION)
             "출발 준비" -> old.copy(speedKph=0.0,gear=Gear.PARK,charging=true,chargeRemainingSeconds=300,connected=true,parkingReliable=true,source=DataSource.SIMULATION)
             "SDK 끊김" -> old.copy(connected=false,source=DataSource.SIMULATION)
-            "실차 연결" -> VehicleSample(timestampMs=System.currentTimeMillis(),connected=false,source=DataSource.VEHICLE)
+            "실차 연결" -> VehicleSample(timestampMs=System.currentTimeMillis(),connected=false,batteryPercent=-1,source=DataSource.VEHICLE)
             else -> old
-        }.copy(timestampMs=System.currentTimeMillis())
+        }.copy(timestampMs=System.currentTimeMillis(),batteryPercent=if(realMode)-1 else 68)
         remaining.value=mutable.value.chargeRemainingSeconds
     }
     fun heartbeat() { mutable.value=mutable.value.copy(timestampMs=System.currentTimeMillis()) }

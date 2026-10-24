@@ -16,7 +16,7 @@
 
 - 실제 `NavigationService`에서 OSRM 경로를 요청했습니다. 서울역 주변 → 서울시청 경로의 도로 형상은 **102개 좌표**입니다.
 - 실제 Android Compose의 MapView가 OSM 타일을 요청·디코딩·렌더링했습니다. 현재 화면의 **16개 타일 모두 표시**된 뒤 화면을 캡처했습니다. 제공한 비트맵 fixture나 HTML 지도 이미지를 Android 화면에 붙인 결과가 아닙니다.
-- [실행 결과 JSON](validation/roads-native-live.json) · [Android 화면](screenshots/navigation-roads.png).
+- [실행 결과 JSON](../test-fixtures/validation/roads-native-live.json) · [Android 화면](screenshots/navigation-roads.png).
 - **Robolectric 네이티브 그래픽 모드의 Android UI 실행**입니다. 물리 기기/차량 캡처가 아니며 GPS는 공개 장소의 시험 좌표입니다. 실기기 GPS·실차 동작 검증을 대신하지 않습니다.
 
 ```bash
@@ -37,9 +37,9 @@ node scripts/web/verify-navigation-live.cjs
 
 서명된 새 APK로 업데이트해야 Android 수정이 반영됩니다. 웹 ZIP도 같은 버전으로 다시 배포해야 합니다. GitHub Pages 활성화와 Release 첨부 업로드의 환경 제한은 [배포 안내](WEB_DEMO.md)에 별도로 기록합니다.
 
-최종 기본 회귀: 코어 93개 + Android 59개 = 152개, 브라우저 115개 통과. Android 실서버 지도 검사는 위 별도 1개입니다. CPU 4배 감속·10만 지점 경로·120개 GPS 입력의 웹 측정은 초기 표시 606.9ms, 갱신 p95 14.8ms, 최대 29.7ms였습니다. 실기기 FPS나 네트워크 지연을 뜻하지 않습니다. [측정](validation/map-performance-v0101.json).
+최종 기본 회귀: 코어 93개 + Android 59개 = 152개, 브라우저 115개 통과. Android 실서버 지도 검사는 위 별도 1개입니다. CPU 4배 감속·10만 지점 경로·120개 GPS 입력의 웹 측정은 초기 표시 606.9ms, 갱신 p95 14.8ms, 최대 29.7ms였습니다. 실기기 FPS나 네트워크 지연을 뜻하지 않습니다. [측정](../test-fixtures/validation/map-performance-v0101.json).
 
-현재 웹도 실제 OSM·Nominatim·OSRM 연결과 확대/축소·드래그·안내 시작을 통과했습니다. [실제 브라우저 기록](validation/roads-web-live.json) · [화면](screenshots/roads-web-live-guidance.png). 브라우저 GPS는 공개 장소 시험 좌표입니다.
+현재 웹도 실제 OSM·Nominatim·OSRM 연결과 확대/축소·드래그·안내 시작을 통과했습니다. [실제 브라우저 기록](../test-fixtures/validation/roads-web-live.json) · [화면](screenshots/roads-web-live-guidance.png). 브라우저 GPS는 공개 장소 시험 좌표입니다.
 
 ## 웹 화면 크기 전환 추가 수정 · r1
 
@@ -47,4 +47,4 @@ GitHub Chromium 검사에서 주변 지도를 모바일 크기로 바꾸면 SVG 
 
 내비·주변 지도 모두 ResizeObserver 한 곳에서 크기를 처리하고 먼저 이동 애니메이션을 정리하도록 수정했습니다. 이동 중 화면 크기를 바꾸는 실제 Chromium 검사에서 핀과 지도 중심이 유지됐고, 기존 확대/축소·터치·성능 검사도 통과했습니다. Android 소스와 APK는 같은 0.10.1입니다. 웹 배포 파일만 `0.10.1-r1`로 구분합니다.
 
-웹 r1의 재현/핀 좌표 기록: [JSON](validation/road-resize-r1.json) · [모바일 화면](screenshots/map-resize-r1.png). 실제 지도 연결도 다시 통과했습니다: [웹 기록](validation/roads-web-live-r1.json). 같은 CPU 4배 부하에서 초기 표시 629.8ms, GPS 처리·화면 갱신 p95 10.3ms, 최대 13.8ms를 관찰했습니다. [r1 측정](validation/map-performance-v0101-r1.json).
+웹 r1의 재현/핀 좌표 기록: [JSON](../test-fixtures/validation/road-resize-r1.json) · [모바일 화면](screenshots/map-resize-r1.png). 실제 지도 연결도 다시 통과했습니다: [웹 기록](../test-fixtures/validation/roads-web-live-r1.json). 같은 CPU 4배 부하에서 초기 표시 629.8ms, GPS 처리·화면 갱신 p95 10.3ms, 최대 13.8ms를 관찰했습니다. [r1 측정](../test-fixtures/validation/map-performance-v0101-r1.json).

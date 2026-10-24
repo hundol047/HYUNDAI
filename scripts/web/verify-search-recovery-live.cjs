@@ -3,7 +3,7 @@
 const {chromium}=require('playwright');
 const fs=require('fs'),path=require('path'),crypto=require('crypto');
 const root=path.resolve(__dirname,'../..'),out=path.resolve(root,process.env.CABIN_RECOVERY_OUT||'artifacts/search-recovery-live-v0105');fs.mkdirSync(out,{recursive:true});
-const summary=JSON.parse(fs.readFileSync(path.join(root,'docs/validation/world-soak-v0104/summary.json')));
+const summary=JSON.parse(fs.readFileSync(path.join(root,'test-fixtures/validation/world-soak-v0104/summary.json')));
 const selected=process.env.CABIN_RECOVERY_IDS?.split(',');const cases=summary.cases.filter(x=>x.searchResult==='empty'&&(!selected||selected.includes(x.id)));
 (async()=>{const proxy=process.env.HTTPS_PROXY||process.env.HTTP_PROXY;const browser=await chromium.launch({executablePath:process.env.CABIN_CHROME||'/usr/bin/chromium',headless:true,args:['--no-sandbox','--disable-dev-shm-usage'],...(proxy?{proxy:{server:proxy,bypass:'localhost,127.0.0.1'}}:{})});const report={observedAt:new Date().toISOString(),engineSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'build/site/engine.js'))).digest('hex'),scope:'Actual explicit Nominatim requests, live visible OSM tiles, synthetic public GPS. Regional candidates are not certified exact branches or complete coverage.',cases:[]};
 try{for(const c of cases){const dir=path.join(out,c.id);fs.mkdirSync(dir,{recursive:true});const page=await browser.newPage({viewport:{width:1440,height:1120},userAgent:'CabinOS_ONE/0.10.5 (+https://github.com/hundol047/HYUNDAI)'});const row={id:c.id,query:c.query,country:c.country,requests:[],responses:[],pageErrors:[],result:'unresolved'};const pending=[];

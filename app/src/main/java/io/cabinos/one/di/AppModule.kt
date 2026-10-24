@@ -22,7 +22,12 @@ object AppModule {
         return UnifiedVehicleContextEngine(hazards=hazards)
     }
     @Provides @Singleton fun runtimePreferences(@ApplicationContext context:Context)=RuntimePreferences(context)
-    @Provides @Singleton fun simulator(preferences:RuntimePreferences)=SimulationVehicleProvider(preferences)
+    @Provides @Singleton fun vehicle(@ApplicationContext context:Context)=VehicleStateProvider(context)
+    @Provides @Singleton fun pleos(@ApplicationContext context:Context)=PleosSdkFactory.create(context)
+    @Provides @Singleton fun pleosNavigation(@ApplicationContext context:Context)=PleosNavigationFactory.create(context)
+    @Provides @Singleton fun simulator(preferences:RuntimePreferences,vehicle:VehicleStateProvider)=SimulationVehicleProvider(preferences).apply {
+        if(vehicle.automotive) select("실차 연결")
+    }
     @Provides @Singleton fun reminders(@ApplicationContext context:Context)=DepartureReminders(context)
     @Provides @Singleton fun speech(@ApplicationContext context:Context)=AndroidSpeechProvider(context)
     @Provides @Singleton fun location(@ApplicationContext context:Context)=AndroidLocationProvider(context)
