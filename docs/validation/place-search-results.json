@@ -64,6 +64,38 @@
     {
       "name": "route provider HTTP rejection leaves the selected shop pin without a fabricated road",
       "result": "passed"
+    },
+    {
+      "name": "explicit regional recovery preserves the original input and labels broader candidates without planning a route",
+      "result": "passed"
+    },
+    {
+      "name": "localized and registered brand names both contribute candidates ranked near the requested region",
+      "result": "passed"
+    },
+    {
+      "name": "multiword landmarks bound candidate searches and reject a distant same-brand branch",
+      "result": "passed"
+    },
+    {
+      "name": "ambiguous regions without nearby GPS evidence never silently choose a country",
+      "result": "passed"
+    },
+    {
+      "name": "unregistered destinations can be picked on the map without inventing a shop name or changing GPS",
+      "result": "passed"
+    },
+    {
+      "name": "same-named city and station resolve locally and a bakery query excludes unrelated businesses",
+      "result": "passed"
+    },
+    {
+      "name": "regional voice recovery works while parked and is blocked during driving",
+      "result": "passed"
+    },
+    {
+      "name": "cancelled regional lookup cannot replace the newer business results",
+      "result": "passed"
     }
   ],
   "pageErrors": []

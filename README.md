@@ -2,13 +2,15 @@
 
 **차량의 상황을 이해하고, 이동의 모든 순간을 연결하다.**
 
-**팀명: 퓨처랩스** · **버전: 0.10.4** · 차량의 주행·정차 상황에 맞춰 위험 안내, 대기 시간 활용, 집중·휴식을 연결하는 통합 차량용 앱.
+**팀명: 퓨처랩스** · **버전: 0.10.5** · 차량의 주행·정차 상황에 맞춰 위험 안내, 대기 시간 활용, 집중·휴식을 연결하는 통합 차량용 앱.
 
 **제출 APK:** [`apk/퓨처랩스_CabinOS_ONE_release.apk`](apk/퓨처랩스_CabinOS_ONE_release.apk)
 
 **저장소:** https://github.com/hundol047/HYUNDAI
 
-**실행 영상:** [실제 가게 검색→모의주행 MP4](docs/video/CabinOS_ONE_world_shop_v0104.mp4) · [GPS 불확실성·차량 접근 안내 MP4](docs/video/CabinOS_ONE_gps_access_v0104.mp4) · [영상 근거와 재검토](docs/VIDEO_REVIEW_V0104.md)
+**최신 실행 영상:** [검색 복구·주변 추천·지도 목적지 지정](docs/video/CabinOS_ONE_search_recovery_v0105.mp4) · [녹화 근거](docs/SEARCH_RECOVERY_KO.md)
+
+**이전 실행 영상:** [실제 가게 검색→모의주행 MP4](docs/video/CabinOS_ONE_world_shop_v0104.mp4) · [GPS 불확실성·차량 접근 안내 MP4](docs/video/CabinOS_ONE_gps_access_v0104.mp4) · [영상 근거와 재검토](docs/VIDEO_REVIEW_V0104.md)
 
 **브라우저 체험:** [배포 안내와 접속 상태](docs/WEB_DEMO.md) — 같은 페이지에서 인터랙티브 데모·Android UI·APK 다운로드 제공.
 
@@ -28,9 +30,11 @@
 
 **0.10.0 음성 길찾기:** 내비의 음성 버튼 → 목적지 → 결과 번호 → 안내 시작. 길 안내 번역 31개 언어/지역 팩과 BCP 47 인식 언어 선택을 제공합니다. 지원하지 않는 번역은 영어로 대체하며 실제 STT/TTS는 기기 서비스·언어팩에 따릅니다. [사용법·언어 범위·실행 근거](docs/VOICE_NAVIGATION_KO.md).
 
-**배포 파일:** [0.10.4 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.4)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.4.zip`](web-release/CabinOS_ONE_web_v0.10.4.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
+**배포 파일:** [0.10.5 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.5)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.5.zip`](web-release/CabinOS_ONE_web_v0.10.5.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
 
 0.10.4: [5시간 글로벌 모의주행 검사](docs/WORLD_SOAK_KO.md). GPS 흔들림·경로 복귀·도착 판정·동명 장소·날짜변경선 표시를 보완했습니다. 실제 5시간 동안 35개국 50개 경로를 완료했으며, 미완료·검색 누락은 검사 보고서에 별도 기록했습니다.
+
+**0.10.5 검색·주변 추천 보완:** 빈 상호 9건 중 8건에서 지역 후보를 받았습니다. 동명 업종·지역 혼동을 걸러내며, 정확한 지점 보증과 구분합니다. 주변 추천은 리스본·서울·웰링턴 실제 응답을 확인했고, 미등록 목적지는 지도에서 직접 고를 수 있습니다. [수정·검사와 남은 데이터 제한](docs/SEARCH_RECOVERY_KO.md).
 
 ## 구현된 기능
 
@@ -139,7 +143,7 @@ node scripts/web/record-demo.cjs
 
 공식 공모전: https://appdevchallenge.auto-hmg.io/guide/submission
 
-지도 범위·조작·성능: [6개 대륙 실경로·확대/축소·GPS 갱신 점검](docs/MAP_PERFORMANCE_KO.md). 180개 JVM/Android 테스트와 132개 브라우저 검사를 기준으로 하며 실기기 FPS·실도로 정확도는 별도 검증 대상입니다.
+지도 범위·조작·성능: [6개 대륙 실경로·확대/축소·GPS 갱신 점검](docs/MAP_PERFORMANCE_KO.md). 192개 JVM/Android 테스트와 143개 브라우저 검사를 기준으로 하며 실기기 FPS·실도로 정확도는 별도 검증 대상입니다.
 
 복잡한 도로 모의 주행: [실제 서버·합성 GPS로 3개 도시 주행, 화면 검토와 수정](docs/CHALLENGING_DRIVE_KO.md). [직접 실행 녹화 MP4](docs/video/CabinOS_ONE_challenging_drive_v0101r2.mp4).
 

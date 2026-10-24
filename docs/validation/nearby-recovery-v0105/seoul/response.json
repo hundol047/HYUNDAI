@@ -1,0 +1,1208 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-24T04:04:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 368665249,
+  "lat": 37.5725930,
+  "lon": 126.9877310,
+  "tags": {
+    "name": "드럼마트",
+    "name:en": "Deureom Mart",
+    "name:ko": "드럼마트",
+    "name:ko-Latn": "Deureommateu",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 368666230,
+  "lat": 37.5732884,
+  "lon": 126.9867221,
+  "tags": {
+    "name": "한지마트",
+    "name:en": "Hanji Mart",
+    "name:ko": "한지마트",
+    "name:ko-Latn": "Hanjimateu",
+    "shop": "supermarket"
+  }
+},
+{
+  "type": "node",
+  "id": 1553878207,
+  "lat": 37.5698428,
+  "lon": 126.9790229,
+  "tags": {
+    "amenity": "cafe",
+    "brand": "The Coffee Bean & Tea Leaf",
+    "brand:wikidata": "Q1141384",
+    "cuisine": "coffee_shop",
+    "name": "The Coffee Bean & Tea Leaf",
+    "source": "gps",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2418921964,
+  "lat": 37.5771689,
+  "lon": 126.9726386,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "6",
+    "addr:postcode": "03044",
+    "addr:street": "자하문로4길",
+    "addr:subdistrict": "통의동",
+    "amenity": "cafe",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:wikidata": "Q37158",
+    "cuisine": "coffee_shop",
+    "int_name": "Starbucks",
+    "name": "스타벅스 경복궁역점",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks Gyeongbokgung Palace Branch",
+    "name:ja": "スターバックス景福宮店",
+    "name:ko": "스타벅스",
+    "name:ru": "Старбакс",
+    "name:zh": "星巴克",
+    "official_name": "스타벅스 경복궁역점",
+    "operator": "(주)스타벅스커피 코리아",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "phone": "+82 02-758-8359",
+    "smoking": "no",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 2471444664,
+  "lat": 37.5746610,
+  "lon": 126.9852825,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "14-5",
+    "addr:postcode": "03146",
+    "addr:street": "인사동12길",
+    "addr:subdistrict": "관훈동",
+    "amenity": "restaurant",
+    "cuisine": "Korean,_Vegetable_Cuisine;불구이쌈밥;두개장정식;중화볶음우동;순두부강된장비빔밥",
+    "diet:vegan": "only",
+    "name": "오세계향",
+    "name:en": "Osegyehyang",
+    "name:ko": "오세계향",
+    "opening_hours": "Fr-We 11:30-16:00, 17:00-21:00",
+    "phone": "02-735-7171",
+    "website": "http://go5.co.kr/default/"
+  }
+},
+{
+  "type": "node",
+  "id": 2929389552,
+  "lat": 37.5704914,
+  "lon": 126.9891034,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:street": "종로",
+    "amenity": "cafe",
+    "cuisine": "coffee_shop",
+    "internet_access": "yes",
+    "name": "Culcom Cafe 24 Hour Coffee Shop",
+    "note": "Bitpay POS",
+    "opening_hours": "24/7",
+    "phone": "+82 2 1577 0553",
+    "website": "http://www.culcom.co.kr/"
+  }
+},
+{
+  "type": "node",
+  "id": 3031738833,
+  "lat": 37.5727689,
+  "lon": 126.9694653,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "39",
+    "addr:postcode": "03176",
+    "addr:street": "경희궁길",
+    "addr:subdistrict": "신문로2가",
+    "amenity": "cafe",
+    "cuisine": "coffee_shop",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "name": "커피스트",
+    "name:en": "Coffeest",
+    "phone": "+82 02-725-5557",
+    "website": "coffeest.com"
+  }
+},
+{
+  "type": "node",
+  "id": 3528033993,
+  "lat": 37.5712050,
+  "lon": 126.9762911,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "167",
+    "addr:postcode": "03183",
+    "addr:street": "세종대로",
+    "addr:subdistrict": "세종로",
+    "amenity": "cafe",
+    "branch": "광화문R점",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:ko": "스타벅스",
+    "brand:wikidata": "Q37158",
+    "cuisine": "coffee_shop",
+    "indoor_seating": "yes",
+    "int_name": "Starbucks",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스",
+    "name:ru": "Старбакс",
+    "name:zh": "星巴克",
+    "operator": "(주)스타벅스커피 코리아",
+    "outdoor_seating": "no",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "phone": "+82 02-758-8036",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 3611823884,
+  "lat": 37.5632601,
+  "lon": 126.9825093,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "피자모레",
+    "name:en": "Pizza Mole",
+    "name:ja": "ピザ モーレ",
+    "name:ko": "피자모레"
+  }
+},
+{
+  "type": "node",
+  "id": 3611826195,
+  "lat": 37.5633555,
+  "lon": 126.9834991,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "Braised_Spicy_Chicken_with_Vegetables",
+    "name": "봉가안동찜닭",
+    "name:en": "Bong Ga Andong Jjimdak"
+  }
+},
+{
+  "type": "node",
+  "id": 3611826196,
+  "lat": 37.5632186,
+  "lon": 126.9835357,
+  "tags": {
+    "amenity": "cafe",
+    "name": "소호"
+  }
+},
+{
+  "type": "node",
+  "id": 3612037861,
+  "lat": 37.5642773,
+  "lon": 126.9845413,
+  "tags": {
+    "amenity": "cafe",
+    "name": "오설록",
+    "name:en": "O'Sullok",
+    "name:ja": "オソロック"
+  }
+},
+{
+  "type": "node",
+  "id": 3612037872,
+  "lat": 37.5641806,
+  "lon": 126.9849113,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "명동 조개구이찜"
+  }
+},
+{
+  "type": "node",
+  "id": 3612037883,
+  "lat": 37.5644755,
+  "lon": 126.9844376,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "김가네",
+    "name:en": "Gimgane",
+    "name:ja": "kimugane"
+  }
+},
+{
+  "type": "node",
+  "id": 3612046494,
+  "lat": 37.5643917,
+  "lon": 126.9846978,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "왕비집",
+    "name:zh": "王妃家1號店"
+  }
+},
+{
+  "type": "node",
+  "id": 3612082971,
+  "lat": 37.5631484,
+  "lon": 126.9836998,
+  "tags": {
+    "amenity": "cafe",
+    "name": "램프",
+    "name:ja": "ランプ",
+    "name:ko": "램프"
+  }
+},
+{
+  "type": "node",
+  "id": 3612103009,
+  "lat": 37.5634741,
+  "lon": 126.9841003,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "30-1",
+    "addr:postcode": "04536",
+    "addr:street": "명동길",
+    "addr:subdistrict": "명동2가",
+    "amenity": "restaurant",
+    "name": "진사댁"
+  }
+},
+{
+  "type": "node",
+  "id": 3612103010,
+  "lat": 37.5633710,
+  "lon": 126.9841267,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "백제삼계탕",
+    "name:ja": "百済 参鶏湯",
+    "name:ko": "백제삼계탕"
+  }
+},
+{
+  "type": "node",
+  "id": 3612318394,
+  "lat": 37.5755985,
+  "lon": 126.9837416,
+  "tags": {
+    "amenity": "cafe",
+    "name": "인사동찻집"
+  }
+},
+{
+  "type": "node",
+  "id": 3614348303,
+  "lat": 37.5694295,
+  "lon": 126.9860235,
+  "tags": {
+    "brand": "세븐일레븐",
+    "brand:en": "7-Eleven",
+    "brand:ko": "세븐일레븐",
+    "brand:wikidata": "Q259340",
+    "int_name": "7-Eleven",
+    "name": "세븐일레븐",
+    "name:en": "7-Eleven",
+    "name:ja": "セブンイレブン",
+    "name:ko": "세븐일레븐",
+    "operator": "코리아세븐",
+    "operator:en": "KOREA SEVEN",
+    "payment:american_express": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "shop": "convenience",
+    "smoking": "no",
+    "website": "http://www.7-eleven.co.kr/"
+  }
+},
+{
+  "type": "node",
+  "id": 3634793877,
+  "lat": 37.5628923,
+  "lon": 126.9772111,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "41",
+    "addr:postcode": "04526",
+    "addr:street": "남대문로1길",
+    "addr:subdistrict": "북창동",
+    "amenity": "restaurant",
+    "cuisine": "돼지구이",
+    "name": "남매집"
+  }
+},
+{
+  "type": "node",
+  "id": 3806615940,
+  "lat": 37.5754258,
+  "lon": 126.9731148,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "130",
+    "addr:postcode": "03170",
+    "addr:street": "사직로",
+    "addr:street:ko-Latn": "Donhwamun-ro",
+    "addr:subdistrict": "적선동",
+    "amenity": "cafe",
+    "contact:website": "beautifulcoffee.org",
+    "cuisine": "coffee_shop",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "internet_access:password": "yes",
+    "name": "커피빈 하나은행경복궁역점",
+    "name:en": "Coffee Bean",
+    "name:ko": "커피빈 하나은행경복궁역점",
+    "phone": "+82 02-733-5188",
+    "smoking": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3824379468,
+  "lat": 37.5746625,
+  "lon": 126.9896717,
+  "tags": {
+    "brand": "CU",
+    "brand:wikidata": "Q12580836",
+    "name": "CU",
+    "operator": "BGF리테일",
+    "operator:en": "BGF Retail",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "shop": "convenience",
+    "smoking": "no",
+    "website": "https://cu.bgfretail.com/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 3851429737,
+  "lat": 37.5647394,
+  "lon": 126.9766574,
+  "tags": {
+    "alt_name": "Dunkin' Donuts",
+    "amenity": "fast_food",
+    "brand": "Dunkin'",
+    "brand:en": "Dunkin' Donuts",
+    "brand:wikidata": "Q847743",
+    "brand:wikipedia": "ko:던킨 도너츠",
+    "cuisine": "donut;coffee_shop",
+    "level": "1",
+    "name": "Dunkin'",
+    "name:en": "Dunkin'",
+    "name:ja": "ダンキンドーナツ",
+    "name:ko": "던킨도너츠",
+    "name:zh": "唐恩都乐",
+    "operator": "비알코리아(주)",
+    "operator:en": "BR Korea Inc.",
+    "payment:american_express": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "shop": "bakery",
+    "takeaway": "yes",
+    "website": "https://www.dunkindonuts.co.kr/",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 3851429738,
+  "lat": 37.5647424,
+  "lon": 126.9764110,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "pizza",
+    "level": "1",
+    "name": "Made in Chicago Pizza",
+    "name:ko": "메이드인시카고피자",
+    "opening_hours": "Mo-Su 11:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 3851434675,
+  "lat": 37.5647888,
+  "lon": 126.9762524,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "복성각"
+  }
+},
+{
+  "type": "node",
+  "id": 4161109803,
+  "lat": 37.5636516,
+  "lon": 126.9760949,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "136",
+    "addr:postcode": "04514",
+    "addr:street": "서소문로",
+    "addr:subdistrict": "태평로2가",
+    "amenity": "fast_food",
+    "branch": "광화문점",
+    "branch:en": "Gwanghwamun",
+    "branch:ko": "광화문점",
+    "brand": "버거킹",
+    "brand:en": "Burger King",
+    "brand:ko": "버거킹",
+    "brand:wikidata": "Q177054",
+    "brand:wikipedia": "ko:버거킹",
+    "cuisine": "burger",
+    "int_name": "Burger King",
+    "name": "버거킹",
+    "name:en": "Burger King",
+    "name:ja": "バーガーキング",
+    "name:ko": "버거킹",
+    "name:zh": "漢堡王",
+    "operator": "비케이알",
+    "operator:en": "BKR",
+    "payment:american_express": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "takeaway": "yes",
+    "website": "https://www.burgerking.co.kr/"
+  }
+},
+{
+  "type": "node",
+  "id": 4172216309,
+  "lat": 37.5686637,
+  "lon": 126.9759429,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "전주전남식당",
+    "name:en": "Jeonju-Jeonnam Restaurant",
+    "name:ja": "全州全南会館",
+    "name:ja-Hira": "ちょんじゅ ぷんなむ ふぇぐぁん",
+    "name:ko": "전주전남식당",
+    "name:ko-Latn": "Jeonjujeonnamsikdang"
+  }
+},
+{
+  "type": "node",
+  "id": 4287052192,
+  "lat": 37.5642196,
+  "lon": 126.9834877,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "摩休頓納年糕鍋"
+  }
+},
+{
+  "type": "node",
+  "id": 4290864489,
+  "lat": 37.5631823,
+  "lon": 126.9822322,
+  "tags": {
+    "amenity": "cafe",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:ko": "스타벅스",
+    "brand:wikidata": "Q37158",
+    "brand:wikipedia": "en:Starbucks",
+    "cuisine": "coffee_shop",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스",
+    "official_name": "Starbucks Coffee",
+    "operator": "(주)스타벅스커피 코리아",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 4294392493,
+  "lat": 37.5629830,
+  "lon": 126.9728339,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "고려삼계탕",
+    "name:ja": "高麗参鶏湯"
+  }
+},
+{
+  "type": "node",
+  "id": 4295223253,
+  "lat": 37.5642029,
+  "lon": 126.9798015,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "106",
+    "addr:postcode": "04533",
+    "addr:street": "소공로",
+    "addr:subdistrict": "소공동",
+    "amenity": "restaurant",
+    "name": "스시조",
+    "name:en": "Sushi Cho",
+    "name:ko": "스시조"
+  }
+},
+{
+  "type": "node",
+  "id": 4295285005,
+  "lat": 37.5749056,
+  "lon": 126.9693003,
+  "tags": {
+    "amenity": "fast_food",
+    "cuisine": "sandwich",
+    "name": "더샌드위치"
+  }
+},
+{
+  "type": "node",
+  "id": 4295285216,
+  "lat": 37.5749410,
+  "lon": 126.9691230,
+  "tags": {
+    "brand": "GS25",
+    "brand:wikidata": "Q624041",
+    "brand:wikipedia": "ko:GS25",
+    "name": "GS25",
+    "name:en": "GS25",
+    "name:ko": "GS25",
+    "operator": "GS리테일",
+    "operator:en": "GS Retail",
+    "payment:american_express": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "shop": "convenience",
+    "website": "http://gs25.gsretail.com/gscvs/ko/main"
+  }
+},
+{
+  "type": "node",
+  "id": 4315672693,
+  "lat": 37.5668059,
+  "lon": 126.9830913,
+  "tags": {
+    "amenity": "cafe",
+    "cuisine": "coffee_shop",
+    "name": "커피빈",
+    "name:en": "The Coffee Bean",
+    "name:ja": "コーヒービーン"
+  }
+},
+{
+  "type": "node",
+  "id": 4322626690,
+  "lat": 37.5740511,
+  "lon": 126.9902980,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "curry;korean;buschenschank",
+    "name": "익선동121"
+  }
+},
+{
+  "type": "node",
+  "id": 4327823695,
+  "lat": 37.5643384,
+  "lon": 126.9844487,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "김가네 명동",
+    "name:ja": "キムガネ明洞"
+  }
+},
+{
+  "type": "node",
+  "id": 4331635090,
+  "lat": 37.5636996,
+  "lon": 126.9843945,
+  "tags": {
+    "amenity": "cafe",
+    "name": "Cafe m"
+  }
+},
+{
+  "type": "node",
+  "id": 4349494491,
+  "lat": 37.5642042,
+  "lon": 126.9760683,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "139-1",
+    "addr:postcode": "04515",
+    "addr:street": "서소문로",
+    "addr:subdistrict": "서소문동",
+    "amenity": "restaurant",
+    "name": "유림면"
+  }
+},
+{
+  "type": "node",
+  "id": 4362459096,
+  "lat": 37.5733325,
+  "lon": 126.9863762,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "5-26",
+    "addr:postcode": "03148",
+    "addr:street": "인사동4길",
+    "addr:subdistrict": "인사동",
+    "amenity": "restaurant",
+    "cuisine": "korean;게장",
+    "name": "툇마루집된장예술",
+    "phone": "02-739-5683"
+  }
+},
+{
+  "type": "node",
+  "id": 4370763291,
+  "lat": 37.5769441,
+  "lon": 126.9859744,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "61",
+    "addr:street": "삼일대로32길",
+    "brand": "GS25",
+    "brand:wikidata": "Q624041",
+    "brand:wikipedia": "ko:GS25",
+    "name": "GS25",
+    "name:en": "GS25 Jongroanguk Branch",
+    "name:ko": "GS25 종로안국점",
+    "operator": "GS리테일",
+    "operator:en": "GS Retail",
+    "payment:american_express": "yes",
+    "payment:cash": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "phone": "+82 02-764-0711",
+    "shop": "convenience",
+    "website": "http://gs25.gsretail.com/gscvs/ko/main"
+  }
+},
+{
+  "type": "node",
+  "id": 4397339690,
+  "lat": 37.5642164,
+  "lon": 126.9841371,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "13",
+    "addr:street": "명동7가길",
+    "amenity": "restaurant",
+    "brand": "Din Tai Fung",
+    "brand:en": "Din Tai Fung",
+    "brand:wikidata": "Q699142",
+    "brand:zh": "鼎泰豐",
+    "cuisine": "taiwanese",
+    "name": "Din Tai Fung",
+    "name:en": "Din Tai Fung",
+    "name:ja": "鼎泰豊",
+    "name:zh": "鼎泰豐",
+    "phone": "+82 2 3789 2778"
+  }
+},
+{
+  "type": "node",
+  "id": 4401168689,
+  "lat": 37.5645857,
+  "lon": 126.9836685,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:floor": "1;2",
+    "addr:housename": "명동증권빌딩",
+    "addr:housenumber": "13",
+    "addr:postcode": "04534",
+    "addr:street": "명동7길",
+    "addr:subdistrict": "명동1가",
+    "amenity": "cafe",
+    "name": "YG Republique",
+    "name:ko": "YG Republique",
+    "phone": "+82 2 318 3892"
+  }
+},
+{
+  "type": "node",
+  "id": 4409032490,
+  "lat": 37.5805157,
+  "lon": 126.9848549,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "41",
+    "addr:postcode": "03055",
+    "addr:street": "북촌로",
+    "addr:subdistrict": "가회동",
+    "amenity": "restaurant",
+    "name": "백년토종삼계탕 북촌점",
+    "name:en": "Korean Ginseng Chicken Soup",
+    "name:zh": "韩国鸡汤餐厅（炸鸡推荐）",
+    "phone": "+82 02-747-5535"
+  }
+},
+{
+  "type": "node",
+  "id": 4428378690,
+  "lat": 37.5639563,
+  "lon": 126.9834945,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "59-3",
+    "addr:street": "명동길",
+    "amenity": "restaurant",
+    "name:zh": "明洞炸豬排",
+    "opening_hours": "Mo-Sa 11:00-21:30; Su 11:00-21:00"
+  }
+},
+{
+  "type": "node",
+  "id": 4435278389,
+  "lat": 37.5754455,
+  "lon": 126.9806886,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "6",
+    "addr:postcode": "03142",
+    "addr:street": "율곡로",
+    "addr:subdistrict": "중학동",
+    "amenity": "cafe",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:wikidata": "Q37158",
+    "cuisine": "coffee_shop",
+    "drive_through": "no",
+    "int_name": "Starbucks",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스 경복궁사거리점",
+    "name:ru": "Старбакс",
+    "name:zh": "星巴克",
+    "operator": "(주)스타벅스커피 코리아",
+    "outdoor_seating": "no",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "phone": "+82 02-758-8386",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 4455281404,
+  "lat": 37.5745558,
+  "lon": 126.9854755,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "11-4",
+    "addr:postcode": "03146",
+    "addr:street": "인사동10길",
+    "addr:subdistrict": "관훈동",
+    "amenity": "cafe",
+    "name": "전통다원",
+    "name:en": "전통다원 Traditional Tea House",
+    "opening_hours": "Mo-Su 10:00-22:50"
+  }
+},
+{
+  "type": "node",
+  "id": 4459966889,
+  "lat": 37.5726950,
+  "lon": 126.9838600,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "38-13",
+    "addr:postcode": "03149",
+    "addr:street": "우정국로",
+    "addr:subdistrict": "견지동",
+    "amenity": "restaurant",
+    "cuisine": "korean;noodles;breakfast;local",
+    "name": "이문설농탕",
+    "name:en": "Imun Seolleongtang",
+    "name:ja": "里門ソルノンタン",
+    "name:ko": "이문설농탕",
+    "name:zh": "里門雪濃湯",
+    "phone": "+82 02-733-6526",
+    "website": "https://imun.modoo.at/"
+  }
+},
+{
+  "type": "node",
+  "id": 4501569394,
+  "lat": 37.5637691,
+  "lon": 126.9787950,
+  "tags": {
+    "amenity": "cafe",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:ko": "스타벅스",
+    "brand:wikidata": "Q37158",
+    "brand:wikipedia": "ko:스타벅스",
+    "cuisine": "coffee_shop",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스",
+    "official_name": "Starbucks Coffee",
+    "operator": "(주)스타벅스커피 코리아",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 4518433289,
+  "lat": 37.5790681,
+  "lon": 126.9825367,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "종로구",
+    "addr:housenumber": "74-7",
+    "addr:postcode": "03061",
+    "addr:street": "율곡로3길",
+    "addr:subdistrict": "화동",
+    "amenity": "restaurant",
+    "cuisine": "fast_food",
+    "name": "먹쉬돈나",
+    "name:en": "Mukshidonna Restaurant",
+    "name:zh": "三清洞摩西起司年糕鍋",
+    "phone": "+82 02-723-8089",
+    "website": "www.mukshidonna.com"
+  }
+},
+{
+  "type": "node",
+  "id": 4571349490,
+  "lat": 37.5680884,
+  "lon": 126.9767105,
+  "tags": {
+    "addr:city": "서울특별시",
+    "addr:district": "중구",
+    "addr:housenumber": "135",
+    "addr:postcode": "04519",
+    "addr:street": "세종대로",
+    "addr:subdistrict": "태평로1가",
+    "brand": "CU",
+    "brand:wikidata": "Q12580836",
+    "brand:wikipedia": "ko:CU (편의점)",
+    "name": "CU",
+    "name:ko": "CU",
+    "opening_hours": "24/7",
+    "operator": "BGF리테일",
+    "operator:en": "BGF Retail",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "shop": "convenience",
+    "smoking": "no",
+    "website": "https://cu.bgfretail.com/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 4571383393,
+  "lat": 37.5692510,
+  "lon": 126.9812626,
+  "tags": {
+    "amenity": "cafe",
+    "name:en": "Osulloc Jeju Tea Garden"
+  }
+},
+{
+  "type": "node",
+  "id": 4571403490,
+  "lat": 37.5690334,
+  "lon": 126.9844972,
+  "tags": {
+    "amenity": "cafe",
+    "branch": "빽다방 종로관철점",
+    "brand": "빽다방",
+    "brand:en": "Paik's Coffee",
+    "brand:ko": "빽다방",
+    "brand:wikidata": "Q55730575",
+    "cuisine": "coffee_shop",
+    "name": "빽다방",
+    "name:en": "Paik's Coffee",
+    "name:ko": "빽다방",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4571403991,
+  "lat": 37.5692588,
+  "lon": 126.9815403,
+  "tags": {
+    "alt_name": "Kentucky Fried Chicken",
+    "amenity": "fast_food",
+    "brand": "KFC",
+    "brand:wikidata": "Q524757",
+    "brand:wikipedia": "en:KFC",
+    "cuisine": "chicken",
+    "name": "KFC",
+    "name:en": "KFC",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4571423092,
+  "lat": 37.5692880,
+  "lon": 126.9811472,
+  "tags": {
+    "amenity": "cafe",
+    "name": "퀸카페"
+  }
+},
+{
+  "type": "node",
+  "id": 4571424289,
+  "lat": 37.5694144,
+  "lon": 126.9787892,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "라그릴리아",
+    "name:en": "La Grillia"
+  }
+},
+{
+  "type": "node",
+  "id": 4571464990,
+  "lat": 37.5684708,
+  "lon": 126.9807197,
+  "tags": {
+    "amenity": "cafe",
+    "branch": "예금보험공사점",
+    "brand": "투썸플레이스",
+    "brand:en": "A Twosome Place",
+    "brand:ko": "투썸플레이스",
+    "brand:wikidata": "Q12621301",
+    "cuisine": "coffee_shop",
+    "name": "투썸플레이스",
+    "name:en": "A Twosome Place",
+    "name:ko": "투썸플레이스",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 4571465089,
+  "lat": 37.5672346,
+  "lon": 126.9779957,
+  "tags": {
+    "amenity": "cafe",
+    "branch": "한국프레스센터점",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:ko": "스타벅스",
+    "brand:wikidata": "Q37158",
+    "brand:wikipedia": "ko:스타벅스",
+    "check_date": "2023-11-30",
+    "cuisine": "coffee_shop",
+    "int_name": "Starbucks",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스",
+    "name:ru": "Старбакс",
+    "name:zh": "星巴克",
+    "operator": "(주)스타벅스커피 코리아",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+},
+{
+  "type": "node",
+  "id": 4604869895,
+  "lat": 37.5643778,
+  "lon": 126.9848361,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "원당",
+    "name:en": "Wongdang Gamjatang, spicy pork bone soup",
+    "name:ja": "元堂",
+    "name:ko": "원당"
+  }
+},
+{
+  "type": "node",
+  "id": 4646288890,
+  "lat": 37.5644264,
+  "lon": 126.9791049,
+  "tags": {
+    "amenity": "cafe",
+    "brand": "스타벅스",
+    "brand:en": "Starbucks",
+    "brand:ko": "스타벅스",
+    "brand:wikidata": "Q37158",
+    "brand:wikipedia": "ko:스타벅스",
+    "cuisine": "coffee_shop",
+    "internet_access": "wlan",
+    "name": "스타벅스",
+    "name:de": "Starbucks",
+    "name:en": "Starbucks",
+    "name:ja": "スターバックス",
+    "name:ko": "스타벅스",
+    "name:ru": "Starbucks Reserve",
+    "official_name": "Starbucks Coffee",
+    "operator": "(주)스타벅스커피 코리아",
+    "payment:american_express": "yes",
+    "payment:coins": "yes",
+    "payment:diners_club": "yes",
+    "payment:discover_card": "yes",
+    "payment:jcb": "yes",
+    "payment:mastercard": "yes",
+    "payment:notes": "yes",
+    "payment:unionpay": "yes",
+    "payment:visa": "yes",
+    "phone": "+82 2 758 8140",
+    "smoking": "no",
+    "takeaway": "yes",
+    "website": "http://www.istarbucks.co.kr/index.do"
+  }
+}
+
+  ]
+}

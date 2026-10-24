@@ -1,6 +1,6 @@
 # 검증 결과
 
-팀 **퓨처랩스** · CabinOS ONE `0.10.4`.
+팀 **퓨처랩스** · CabinOS ONE `0.10.5`.
 
 [0.10.0 음성 기능·지원 언어·기기 한계](VOICE_NAVIGATION_KO.md)와 [실제 제공자 요청](validation/voice-review-live-providers.json)을 함께 확인하세요.
 
@@ -14,12 +14,14 @@
 
 [0.10.4 장시간 모의주행](WORLD_SOAK_KO.md)와 [실행 영상 재검토](VIDEO_REVIEW_V0104.md)를 추가했습니다. 동일 최종 엔진으로 246개 GPS 오차·방향 누락·정지·신호 끊김 조건도 검사했습니다. 날짜변경선 표시는 [8개 브라우저 검사](validation/date-line-results.json)와 Android 실제 지도 선·핀 좌표 검사로 검증했습니다. 장시간 검사는 별도 보고서의 완료 상태를 확인하세요.
 
+0.10.5: [검색 누락·주변 추천 후속 수정](SEARCH_RECOVERY_KO.md). 동명 업종·지역 혼동, 지역 후보·직접 지도 목적지·취소·늦은 응답을 보완했습니다. 최신 [빌드 해시](validation/build-v0105.json)와 [기록 경로 50개 재생](validation/replay-soak-v0105.json)은 이번 빌드의 검사입니다. 과거 246개 GPS 오차 조건과 5시간 실서버 검사는 위 0.10.4 기록으로 구분합니다.
+
 ## 최종 통과
 
 | 검사 | 결과 | 범위 |
 |---|---|---|
-| `:core:test` | **112개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
-| `:app:testDebugUnitTest` | **68개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
+| `:core:test` | **120개 통과, 실패/스킵 0** | 상태/충돌/주차 디바운스/오래된 신호/신호 복구/출처 변경/역순 신호, 공유 일정, 세션 중단·복원, 위험 점수·필터·쿨다운, 한국어 명령 안전 제한, 백그라운드 신뢰 초기화·삭제 제한·통합 시나리오 |
+| `:app:testDebugUnitTest` | **72개 통과, 실패/스킵 0** | 실제 Android Activity의 Compose 전환·정차/신호 대기 제한·설정 화면 유지·집중 시작·주행 복귀, Room 트랜잭션/설정/이력/일시정지 체크포인트 복원, 모드 복원, 알림 토큰·권한·취소, 이력 보관·삭제 |
 | `:app:assembleDebug` | 통과 | 개발용 APK 생성 |
 | `:app:assembleRelease` | 통과 | R8 코드 최적화·리소스 축소, release 변형 |
 | `:app:lintDebug` | 통과 | 오류 0, 경고 5건 (`DiscouragedApi` 1, 기존 동기식 SharedPreferences 기록 관련 `ApplySharedPref` 3, 코드에서 생성하는 RoadMapView의 XML 도구용 생성자 관련 `ViewConstructor` 1) |
@@ -27,7 +29,7 @@
 | `zipalign -c -P 16 4` | 통과 | APK ZIP 정렬. 별도 실차/모든 native ELF 페이지 크기 호환성 검증을 뜻하지 않음 |
 | APK manifest 확인 | 통과 | `io.cabinos.one`, minSdk 29, targetSdk 35, **debuggable=false** |
 
-총 **180개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 13개·내비게이션 14개·색상 8개·가게 검색 16개·조작/수명/지연 12개·GPS 15개·음성/언어 15개·도로 타일 8개·지도 조작/성능 8개·날짜변경선 8개, 총 132개가 통과했습니다.** Python 선택적 검색 서버는 별도 [10개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
+총 **192개 JVM/Android 테스트 통과**. **브라우저 기본 15개·주변 지도 16개·내비게이션 14개·색상 8개·가게 검색 24개·조작/수명/지연 12개·GPS 15개·음성/언어 15개·도로 타일 8개·지도 조작/성능 8개·날짜변경선 8개, 총 143개가 통과했습니다.** Python 선택적 검색 서버는 별도 [11개가 통과](validation/place-gateway-tests.json)했습니다. 최종 결과는 아래 JSON 증거 파일과 대조합니다. 상세 집계는 [test-results.json](validation/test-results.json), APK 크기/체크섬/인증서는 [apk.json](validation/apk.json), 파일 체크섬은 [apk/SHA256SUMS](../apk/SHA256SUMS)에 있습니다.
 
 브라우저 검사는 실제 Chromium에서 공유 Kotlin/JS 엔진을 로드해 실행했습니다. 입력 제출/Enter·문자 이스케이프, 주행 명령 차단, D 기어 정지, 주차 디바운스, 일정 단축, 일시정지와 출발 타이머 분리, 어시스턴트 열린 중 주행 전환, 설정 적용, 미연결 실차 UNKNOWN, 실제 브라우저 오프라인, APK 다운로드 바이트 일치, 390px 모바일 배치, 실제 MP4 재생과 탐색을 확인했습니다. 결과: [browser-results.json](validation/browser-results.json).
 
@@ -80,7 +82,7 @@ Compose 실제 화면을 Robolectric 네이티브 그래픽 모드(API 29, 1280�
 
 ## 실행 영상과 재점검
 
-최신 0.10.4의 두 실행 영상과 재검토 근거는 [별도 보고서](VIDEO_REVIEW_V0104.md)에 있습니다. 아래 내용은 초기 영상에서 발견한 문제의 수정 기록입니다.
+최신 0.10.5의 실행 영상·재검토 근거는 [검색 복구 보고서](SEARCH_RECOVERY_KO.md)에 있습니다. 이전 0.10.4의 두 영상은 [당시 보고서](VIDEO_REVIEW_V0104.md)에 보존했습니다. 아래 내용은 초기 영상에서 발견한 문제의 수정 기록입니다.
 
 [0.5.0 MP4](video/CabinOS_ONE_demo.mp4)는 실제 Chromium 조작을 CDP로 녹화하고 한국어 자막을 넣었습니다. 그림을 이어 붙인 모형 영상이 아닙니다. 초안 영상에서 할 일 버튼 제출 실패를 확인했고 관련 폼 처리, 주행 상태 문구, 한 번 조작하는 위험 안내와 연결 미확인 화면을 수정한 뒤 다시 촬영했습니다. [영상 검토 내역](VIDEO_REVIEW.md)에 근거와 수정 사항을 기록했습니다. 영상의 Android 화면은 실제 Compose 렌더링을 보여주는 갤러리이며 APK의 실기기 실행 영상은 아닙니다.
 

@@ -1,0 +1,1062 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-24T04:16:01Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 301267561,
+  "lat": 38.7116756,
+  "lon": -9.1405786,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "2",
+    "addr:street": "Largo do Carmo",
+    "amenity": "cafe",
+    "check_date": "2024-05-06",
+    "contact:instagram": "https://www.instagram.com/leitaria.academica/",
+    "name": "Leitaria Académica",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 376811896,
+  "lat": 38.7166133,
+  "lon": -9.1417570,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:street": "Praça dos Restauradores",
+    "air_conditioning": "yes",
+    "amenity": "restaurant",
+    "branch": "Lisboa",
+    "brand": "Hard Rock Cafe",
+    "brand:wikidata": "Q918151",
+    "check_date": "2026-02-07",
+    "cuisine": "american",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "Hard Rock Cafe",
+    "opening_hours": "Mo-Su 11:30-02:00",
+    "outdoor_seating": "no",
+    "smoking": "no",
+    "source": "knowledge",
+    "wheelchair": "yes",
+    "wikidata": "Q1092410",
+    "wikimedia_commons": "Category:Hard Rock Cafe Lisbon",
+    "wikipedia": "de:Cinema Condes"
+  }
+},
+{
+  "type": "node",
+  "id": 474976351,
+  "lat": 38.7109037,
+  "lon": -9.1383316,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "88",
+    "addr:postcode": "1100-571",
+    "addr:street": "Rua da Vitória",
+    "amenity": "cafe",
+    "cuisine": "steak_house;burger",
+    "internet_access": "wlan",
+    "name": "Brown's Bistro",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 489668425,
+  "lat": 38.7098191,
+  "lon": -9.1418387,
+  "tags": {
+    "addr:housenumber": "23",
+    "addr:street": "Largo de São Carlos",
+    "amenity": "cafe",
+    "name": "Café Lisboa"
+  }
+},
+{
+  "type": "node",
+  "id": 489736331,
+  "lat": 38.7107186,
+  "lon": -9.1418086,
+  "tags": {
+    "addr:housenumber": "104",
+    "addr:street": "Rua Garrett",
+    "amenity": "cafe",
+    "check_date": "2026-09-30",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "internet_access": "wlan",
+    "level": "0",
+    "name": "Pastelaria Bénard",
+    "opening_hours": "Mo-Sa 08:00-23:00",
+    "outdoor_seating": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "phone": "+351 21 347 3133",
+    "website": "https://www.benard.pt/",
+    "wheelchair": "yes",
+    "wikidata": "Q126903058"
+  }
+},
+{
+  "type": "node",
+  "id": 489736332,
+  "lat": 38.7106819,
+  "lon": -9.1420119,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "120/122",
+    "addr:postcode": "1200-273",
+    "addr:street": "Rua Garrett",
+    "amenity": "cafe",
+    "architect": "Manuel Joaquim Norte Júnior",
+    "cuisine": "portuguese;coffee_shop",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "A Brasileira",
+    "name:el": "Καφέ Μπραζιλέιρα",
+    "name:ja": "カフェ・ア・ブラジレイラ",
+    "name:zh": "巴西人咖啡馆",
+    "name:zh-Hans": "巴西人咖啡馆",
+    "name:zh-Hant": "巴西人咖啡館",
+    "opening_hours": "Mo-Su 08:00-02:00",
+    "outdoor_seating": "yes",
+    "phone": "+351 21 346 9541",
+    "wheelchair": "yes",
+    "wikidata": "Q2547006",
+    "wikimedia_commons": "Category:Café A Brasileira (Lisbon)",
+    "wikipedia": "pt:Café A Brasileira (Lisboa)"
+  }
+},
+{
+  "type": "node",
+  "id": 489793044,
+  "lat": 38.7119452,
+  "lon": -9.1417003,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "18A",
+    "addr:postcode": "1200-468",
+    "addr:street": "Rua da Trindade",
+    "amenity": "restaurant",
+    "cuisine": "seafood",
+    "name": "Aqui há Peixe",
+    "opening_hours": "Tu-Sa 12:00-22:30",
+    "phone": "+351 910 161 444",
+    "toilets": "yes",
+    "website": "https://aquihapeixe.pt/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 490185689,
+  "lat": 38.7129747,
+  "lon": -9.1416319,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:country": "PT",
+    "addr:housenumber": "52",
+    "addr:street": "Rua da Condessa",
+    "amenity": "restaurant",
+    "name": "Adega da Condessa"
+  }
+},
+{
+  "type": "node",
+  "id": 491102939,
+  "lat": 38.7121651,
+  "lon": -9.1434568,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "69",
+    "addr:street": "Rua das Gáveas",
+    "amenity": "restaurant",
+    "name": "Lisboà Noite",
+    "website": "https://www.lisboanoite.com/en/homepage/"
+  }
+},
+{
+  "type": "node",
+  "id": 491102945,
+  "lat": 38.7122671,
+  "lon": -9.1433503,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurante 560"
+  }
+},
+{
+  "type": "node",
+  "id": 491133053,
+  "lat": 38.7123643,
+  "lon": -9.1433546,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurante Osignal"
+  }
+},
+{
+  "type": "node",
+  "id": 491133061,
+  "lat": 38.7130399,
+  "lon": -9.1435865,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Mojito company - Tosca Cubana"
+  }
+},
+{
+  "type": "node",
+  "id": 491133062,
+  "lat": 38.7130853,
+  "lon": -9.1437763,
+  "tags": {
+    "amenity": "cafe",
+    "indoor_seating": "yes",
+    "name": "Café Luso",
+    "outdoor_seating": "no",
+    "website": "https://www.cafeluso.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 491204130,
+  "lat": 38.7137566,
+  "lon": -9.1444802,
+  "tags": {
+    "amenity": "restaurant",
+    "indoor_seating": "yes",
+    "name": "Restaurante Indiano",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1131783095,
+  "lat": 38.7156957,
+  "lon": -9.1410127,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:country": "PT",
+    "addr:housenumber": "66;68",
+    "addr:postcode": "1250-188",
+    "addr:street": "Praça dos Restauradores",
+    "amenity": "cafe",
+    "brand": "A Padaria Portuguesa",
+    "brand:wikidata": "Q113951278",
+    "check_date": "2024-05-04",
+    "name": "A Padaria Portuguesa",
+    "old_name": "Santander Totta",
+    "shop": "bakery"
+  }
+},
+{
+  "type": "node",
+  "id": 1194934441,
+  "lat": 38.7146586,
+  "lon": -9.1448577,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "100 Maneiras",
+    "website": "https://www.restaurante100maneiras.com"
+  }
+},
+{
+  "type": "node",
+  "id": 1194935014,
+  "lat": 38.7147816,
+  "lon": -9.1449251,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Adega do Teixeira"
+  }
+},
+{
+  "type": "node",
+  "id": 1194938018,
+  "lat": 38.7109783,
+  "lon": -9.1448924,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:country": "PT",
+    "addr:street": "Rua de Atalaia",
+    "amenity": "restaurant",
+    "name": "1º de Maio"
+  }
+},
+{
+  "type": "node",
+  "id": 1302891311,
+  "lat": 38.7071167,
+  "lon": -9.1528598,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housename": "17-25",
+    "addr:postcode": "1200-676",
+    "addr:street": "Av. D Carlos I",
+    "alt_name": "McDonald's Dom Carlos I",
+    "amenity": "fast_food",
+    "branch": "Dom Carlos I",
+    "brand": "McDonald's",
+    "brand:wikidata": "Q38076",
+    "brand:wikipedia": "pt:McDonald's",
+    "contact:facebook": "McDonaldsPortugal",
+    "contact:instagram": "mcdonaldsportugal",
+    "contact:linkedin": "https://www.linkedin.com/company/mcdonald's-corporation/",
+    "contact:phone": "+351 213 958 691",
+    "contact:tiktok": "mcdonalds.pt",
+    "contact:youtube": "https://www.youtube.com/McDonaldsPortugal",
+    "cuisine": "burger",
+    "internet_access": "wlan",
+    "name": "McDonald's",
+    "opening_hours": "Mo-Su 08:00-06:00",
+    "ref": "43b17dd5-4b9c-54d9-aff0-2186b63a63c6",
+    "source:contact": "website",
+    "takeaway": "yes",
+    "website": "https://www.mcdonalds.pt/restaurantes/d-carlos-i/"
+  }
+},
+{
+  "type": "node",
+  "id": 1312317217,
+  "lat": 38.7111788,
+  "lon": -9.1437928,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "17-19",
+    "addr:postcode": "1200-283",
+    "addr:street": "Rua do Norte",
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "name": "Calcuta",
+    "phone": "+351 213 428295",
+    "website": "http://www.restaurantcalcuta.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 1353611423,
+  "lat": 38.7121870,
+  "lon": -9.1349528,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "name": "Chão do Loureiro",
+    "operational_status": "closed"
+  }
+},
+{
+  "type": "node",
+  "id": 1423154465,
+  "lat": 38.7101441,
+  "lon": -9.1564929,
+  "tags": {
+    "addr:postcode": "1200-781",
+    "branch": "São Bento",
+    "brand": "Pingo Doce",
+    "brand:wikidata": "Q1575057",
+    "brand:wikipedia": "pt:Pingo Doce",
+    "contact:facebook": "pingodoce",
+    "contact:instagram": "pingodoce",
+    "contact:linkedin": "https://www.linkedin.com/company/pingo-doce",
+    "contact:phone": "+351 938 870 000",
+    "contact:tiktok": "pingodoce",
+    "contact:youtube": "pingodocept",
+    "name": "Pingo Doce",
+    "opening_hours": "Mo-Su 08:00-21:00; easter 08:00-14:00",
+    "ref": "457",
+    "shop": "supermarket",
+    "source:contact": "website",
+    "source:opening_hours": "website",
+    "website": "https://www.pingodoce.pt/lojas/sao-bento/"
+  }
+},
+{
+  "type": "node",
+  "id": 1431495863,
+  "lat": 38.7078941,
+  "lon": -9.1555841,
+  "tags": {
+    "addr:street": "Rua da Esperança",
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "diet:vegetarian": "no",
+    "name": "O Caldo Verde"
+  }
+},
+{
+  "type": "node",
+  "id": 1599340097,
+  "lat": 38.7156913,
+  "lon": -9.1454595,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "18-20",
+    "addr:postcode": "1250-094",
+    "addr:street": "Rua Dom Pedro V",
+    "amenity": "restaurant",
+    "check_date": "2025-04-13",
+    "check_date:currency:XBT": "2025-08-17",
+    "contact:facebook": "lapaparrucha",
+    "contact:instagram": "lapaparrucha_restaurante",
+    "cuisine": "argentinian",
+    "currency:XBT": "yes",
+    "email": "reservas@lapaparrucha.com",
+    "name": "La Paparrucha",
+    "payment:lightning": "no",
+    "payment:lightning_contactless": "no",
+    "payment:onchain": "yes",
+    "phone": "+351 213 425 333",
+    "source": "knowledge",
+    "website": "https://www.lapaparrucha.com"
+  }
+},
+{
+  "type": "node",
+  "id": 1683095127,
+  "lat": 38.7116274,
+  "lon": -9.1403926,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "46-44",
+    "addr:postcode": "1200-394",
+    "addr:street": "Calçada do Sacramento",
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "indoor_seating": "yes",
+    "name": "O Sacramento",
+    "outdoor_seating": "no",
+    "website": "https://www.sacramentodochiado.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 1720612783,
+  "lat": 38.7110225,
+  "lon": -9.1460560,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-06-29",
+    "name": "O Insolente"
+  }
+},
+{
+  "type": "node",
+  "id": 1720708074,
+  "lat": 38.7151060,
+  "lon": -9.1513027,
+  "tags": {
+    "amenity": "cafe",
+    "check_date": "2024-11-05",
+    "name": "Quiosque de Refresco",
+    "name:pt": "Quiosque de Refresco",
+    "opening_hours": "Mo-Su 08:30-02:00"
+  }
+},
+{
+  "type": "node",
+  "id": 1801869568,
+  "lat": 38.7155485,
+  "lon": -9.1446181,
+  "tags": {
+    "air_conditioning": "no",
+    "amenity": "cafe",
+    "check_date": "2024-05-05",
+    "indoor_seating": "no",
+    "name": "Quiosque Miradouro",
+    "outdoor_seating": "yes",
+    "takeaway": "yes",
+    "toilets": "yes",
+    "toilets:access": "customers",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1801876321,
+  "lat": 38.7140059,
+  "lon": -9.1409360,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "indoor_seating": "yes",
+    "name": "cozinha da Estaçāo",
+    "outdoor_seating": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1802158713,
+  "lat": 38.7102050,
+  "lon": -9.1453687,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:country": "PT",
+    "addr:housenumber": "23",
+    "addr:postcode": "1200-106",
+    "addr:street": "Rua das Chagas",
+    "amenity": "restaurant",
+    "cuisine": "indian",
+    "diet:vegan": "yes",
+    "name": "Sanskar Nepal",
+    "opening_hours": "Mo-Sa 11:45-15:00, 18:30-23:00",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1802158803,
+  "lat": 38.7106718,
+  "lon": -9.1410704,
+  "tags": {
+    "addr:housenumber": "69",
+    "addr:postcode": "1200-203",
+    "addr:street": "Rua Garret",
+    "amenity": "restaurant",
+    "name": "Vitaminas Garrett",
+    "website": "https://www.vitaminas.com.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 1805470973,
+  "lat": 38.7149701,
+  "lon": -9.1519567,
+  "tags": {
+    "addr:housenumber": "25-29",
+    "addr:postcode": "1200-192",
+    "addr:street": "Praça das Flores",
+    "amenity": "cafe",
+    "cuisine": "regional",
+    "name": "Pão de Canela",
+    "opening_hours": "Mo-Su 08:30-24:00",
+    "shop": "bakery;patisserie",
+    "website": "https://www.paodecanela.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 1846900654,
+  "lat": 38.7145606,
+  "lon": -9.1408850,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:postcode": "1200-147",
+    "amenity": "cafe",
+    "brand": "Starbucks",
+    "brand:wikidata": "Q37158",
+    "brand:wikipedia": "pt:Starbucks",
+    "check_date": "2024-05-01",
+    "contact:email": "starbucks@starbucks.pt",
+    "contact:facebook": "StarbucksPortugal",
+    "contact:instagram": "starbucksptg",
+    "contact:phone": "+351 210 079 093",
+    "contact:tiktok": "starbucksportugal",
+    "contact:twitter": "starbucksPTG",
+    "cuisine": "coffee_shop",
+    "name": "Starbucks",
+    "official_name": "Starbucks Coffee",
+    "opening_hours": "Mo-Su 07:00-00:00",
+    "ref": "3892-138433",
+    "source:contact": "website",
+    "source:opening_hours": "website",
+    "takeaway": "yes",
+    "website": "https://www.starbucks.pt/",
+    "wheelchair": "limited",
+    "wheelchair:description": "Ist gleichzeitig eine Möglichkeit barrierearm in den Bahnhof zu kommen."
+  }
+},
+{
+  "type": "node",
+  "id": 1916909276,
+  "lat": 38.7104158,
+  "lon": -9.1526588,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "11",
+    "addr:postcode": "1200-815",
+    "addr:street": "Rua de São Bento",
+    "branch": "São Bento - Lisboa",
+    "brand": "My Auchan",
+    "brand:wikidata": "Q115800307",
+    "brand:wikipedia": "pt:Auchan",
+    "contact:email": "apoiocliente@auchan.pt",
+    "contact:facebook": "AuchanPortugal",
+    "contact:instagram": "auchan_pt",
+    "contact:phone": "+351 210 403 270",
+    "contact:tiktok": "auchan_pt",
+    "contact:youtube": "https://www.youtube.com/channel/UC6FSI7tYO9ISV11U2PHBBYQ",
+    "name": "My Auchan",
+    "old_name": "Minipreço",
+    "opening_hours": "Mo-Su 08:00-22:00",
+    "ref": "A35",
+    "shop": "convenience",
+    "source:contact": "website",
+    "source:opening_hours": "website",
+    "website": "https://www.auchan.pt/pt/loja?StoreID=A35"
+  }
+},
+{
+  "type": "node",
+  "id": 1916919644,
+  "lat": 38.7108145,
+  "lon": -9.1513345,
+  "tags": {
+    "addr:housenumber": "84",
+    "addr:postcode": "1200",
+    "addr:street": "Rua dos Poiais de São Bento",
+    "amenity": "cafe",
+    "name": "Alva",
+    "wifi": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1918951159,
+  "lat": 38.7153015,
+  "lon": -9.1397756,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Gambrinus"
+  }
+},
+{
+  "type": "node",
+  "id": 1929175965,
+  "lat": 38.7120310,
+  "lon": -9.1345862,
+  "tags": {
+    "addr:housenumber": "1",
+    "addr:street": "Calçada do Marquês de Tancos",
+    "amenity": "restaurant",
+    "check_date": "2026-09-29",
+    "check_date:opening_hours": "2026-09-29",
+    "cuisine": "portuguese",
+    "email": "Saojorge@grupochamp.pt",
+    "indoor_seating": "yes",
+    "level": "0",
+    "name": "São Jorge",
+    "opening_hours": "Mo-Su 12:00-23:00",
+    "outdoor_seating": "yes",
+    "phone": "+351 965 515 200",
+    "website": "https://grupochamp.pt/sao-jorge/"
+  }
+},
+{
+  "type": "node",
+  "id": 1929175968,
+  "lat": 38.7121460,
+  "lon": -9.1351122,
+  "tags": {
+    "addr:postcode": "1100-145",
+    "addr:street": "Largo do Chão do Loureiro",
+    "branch": "Chão do Loureiro",
+    "brand": "Pingo Doce",
+    "brand:wikidata": "Q1575057",
+    "brand:wikipedia": "pt:Pingo Doce",
+    "contact:facebook": "pingodoce",
+    "contact:instagram": "pingodoce",
+    "contact:linkedin": "https://www.linkedin.com/company/pingo-doce",
+    "contact:phone": "+351 938 040 058",
+    "contact:tiktok": "pingodoce",
+    "contact:youtube": "pingodocept",
+    "name": "Pingo Doce",
+    "opening_hours": "Mo-Su 08:00-21:00; easter 08:00-14:00",
+    "ref": "486",
+    "shop": "supermarket",
+    "source:contact": "website",
+    "source:opening_hours": "website",
+    "website": "https://www.pingodoce.pt/lojas/chao-do-loureiro/"
+  }
+},
+{
+  "type": "node",
+  "id": 1929176002,
+  "lat": 38.7114797,
+  "lon": -9.1338737,
+  "tags": {
+    "addr:housenumber": "7",
+    "addr:street": "Costa do Castelo",
+    "amenity": "restaurant",
+    "name": "Chapitô à Mesa",
+    "opening_hours": "Mo-Fr 12:00-00:00; Sa-Su 19:30-00:00",
+    "phone": "+351218875077",
+    "website": "http://www.facebook.com/chapitoamesa",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1948762109,
+  "lat": 38.7159853,
+  "lon": -9.1477194,
+  "tags": {
+    "addr:housenumber": "242",
+    "addr:street": "Rua de O Século",
+    "air_conditioning": "yes",
+    "amenity": "restaurant",
+    "cuisine": "portuguese",
+    "diet:vegetarian": "no",
+    "indoor_seating": "yes",
+    "name": "Tascardoso",
+    "opening_hours": "Mo-Sa 12:00-15:00, 19:00-23:00",
+    "outdoor_seating": "no",
+    "phone": "+351 21 342 7578",
+    "smoking": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1952693681,
+  "lat": 38.7159634,
+  "lon": -9.1474955,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "A Cevicheria",
+    "opening_hours": "Mo-Su 12:30-24:00"
+  }
+},
+{
+  "type": "node",
+  "id": 1952693734,
+  "lat": 38.7154936,
+  "lon": -9.1477839,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Restaurante Alto do Século"
+  }
+},
+{
+  "type": "node",
+  "id": 2003507824,
+  "lat": 38.7050802,
+  "lon": -9.1567013,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:postcode": "1200-109",
+    "addr:street": "Cais da Viscondessa",
+    "alt_name": "Kais Restaurante Bar",
+    "amenity": "restaurant",
+    "indoor_seating": "yes",
+    "name": "Kais",
+    "outdoor_seating": "yes",
+    "phone": "+351 21 393 2930",
+    "website": "https://grupo-k.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 2003731538,
+  "lat": 38.7075357,
+  "lon": -9.1352072,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-02-06",
+    "name": "Terra Nova by Populi",
+    "opening_hours": "09:30-02:00",
+    "phone": "+351 218 877 395",
+    "website": "https://populi.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 2003731539,
+  "lat": 38.7075360,
+  "lon": -9.1377089,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "20",
+    "addr:street": "Praça do Comércio",
+    "amenity": "restaurant",
+    "changing_table": "yes",
+    "cuisine": "italian",
+    "entrance:kerb:height": "15cm",
+    "entrance:ramp": "yes",
+    "entrance:step_count": "1",
+    "entrance:width": "162cm",
+    "name": "Squisito",
+    "toilets:fee": "no",
+    "toilets:level": "0",
+    "toilets:wheelchair": "yes",
+    "wheelchair:turning_circle": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2003731541,
+  "lat": 38.7081204,
+  "lon": -9.1354935,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Ministerium Cantina",
+    "payment:credit_cards": "yes",
+    "website": "http://www.ministerium.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 2003731545,
+  "lat": 38.7079633,
+  "lon": -9.1354229,
+  "tags": {
+    "addr:postcode": "1100-148",
+    "addr:street": "Praça do Comércio",
+    "amenity": "restaurant",
+    "check_date": "2026-02-06",
+    "cuisine": "ice_cream;italian",
+    "name": "Nosolo Italia",
+    "payment:cash": "only",
+    "website": "https://nosoloitalia.com"
+  }
+},
+{
+  "type": "node",
+  "id": 2097320635,
+  "lat": 38.7081205,
+  "lon": -9.1550012,
+  "tags": {
+    "addr:housenumber": "112",
+    "addr:postcode": "1200",
+    "addr:street": "Rua da Esperança",
+    "amenity": "restaurant",
+    "cuisine": "portuguese",
+    "name": "Taberna da Esperança",
+    "phone": "+351 925 059 289",
+    "self_service": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2218255392,
+  "lat": 38.7141363,
+  "lon": -9.1405141,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-05-01",
+    "name": "Leão d'Ouro"
+  }
+},
+{
+  "type": "node",
+  "id": 2261569819,
+  "lat": 38.7096448,
+  "lon": -9.1421414,
+  "tags": {
+    "addr:city": "Lisboa / Encarnação",
+    "addr:country": "PT",
+    "addr:housenumber": "10a",
+    "addr:postcode": "1200-623",
+    "addr:street": "Largo do Picadeiro",
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "name": "Café no Chiado",
+    "operator": "Sandra Sousa Coutinho Lda.",
+    "phone": "+351 213 460501",
+    "website": "https://www.cafenochiado.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 2295966865,
+  "lat": 38.7099386,
+  "lon": -9.1414711,
+  "tags": {
+    "addr:housenumber": "10",
+    "addr:postcode": "1200-410",
+    "addr:street": "Largo de São Carlos",
+    "amenity": "restaurant",
+    "cuisine": "fine_dining",
+    "diet:vegetarian": "yes",
+    "name": "Encanto",
+    "opening_hours": "Tu-Sa 19:00-22:30",
+    "phone": "+351 21 162 6310",
+    "website": "https://www.encantojoseavillez.pt/"
+  }
+},
+{
+  "type": "node",
+  "id": 2305795082,
+  "lat": 38.7086891,
+  "lon": -9.1358477,
+  "tags": {
+    "addr:housenumber": "3",
+    "addr:postcode": "1100-148",
+    "addr:street": "Praça do Comércio",
+    "amenity": "cafe",
+    "cuisine": "regional;local;seafood;portuguese",
+    "historic": "cafe",
+    "image": "File:Café Martinho da Arcada - 2014 (3).JPG",
+    "internet_access": "wlan",
+    "name": "Martinho da Arcada",
+    "opening_hours": "Mo-Sa 07:00-23:00",
+    "phone": "+351 21 887 9259",
+    "wikidata": "Q10326949",
+    "wikimedia_commons": "Category:Café Martinho da Arcada",
+    "wikipedia": "fr:Martinho da Arcada"
+  }
+},
+{
+  "type": "node",
+  "id": 2329873203,
+  "lat": 38.7104844,
+  "lon": -9.1400929,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "italian",
+    "name": "Mezzogiorno"
+  }
+},
+{
+  "type": "node",
+  "id": 2357964138,
+  "lat": 38.7110687,
+  "lon": -9.1434052,
+  "tags": {
+    "addr:housenumber": "29-33",
+    "addr:street": "Rua das Gaveas",
+    "amenity": "restaurant",
+    "name": "Stasha",
+    "opening_hours": "Mo-Th 12:00-15:00,18:00-23:00; Fr 12:00-15:00,18:00-23:30; Sa 18:00-23:30; Su off",
+    "website": "http://www.restaurantebarstasha.com"
+  }
+},
+{
+  "type": "node",
+  "id": 2372779129,
+  "lat": 38.7119999,
+  "lon": -9.1397576,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Casa Portuguesa do Pastel de Bacalhau"
+  }
+},
+{
+  "type": "node",
+  "id": 2452739430,
+  "lat": 38.7110588,
+  "lon": -9.1390688,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "104",
+    "addr:postcode": "1100-044",
+    "addr:street": "Rua do Crucifixo",
+    "amenity": "restaurant",
+    "cuisine": "regional;portuguese;european;mediterranean",
+    "email": "daniel.magalhaes227@gmail.com",
+    "internet_access": "wlan",
+    "name": "O Chiado",
+    "opening_hours": "Mo-Sa 18:30-22:30",
+    "phone": "+351 213 422086"
+  }
+},
+{
+  "type": "node",
+  "id": 2472200247,
+  "lat": 38.7143462,
+  "lon": -9.1389538,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:country": "PT",
+    "addr:housenumber": "81-83",
+    "addr:postcode": "1100-202",
+    "addr:street": "Praça Dom Pedro IV",
+    "alt_name": "McDonald's Rossie",
+    "amenity": "fast_food",
+    "branch": "Rossio",
+    "brand": "McDonald's",
+    "brand:wikidata": "Q38076",
+    "brand:wikipedia": "pt:McDonald's",
+    "check_date": "2026-09-27",
+    "check_date:diet:vegetarian": "2026-09-27",
+    "contact:facebook": "McDonaldsPortugal",
+    "contact:instagram": "mcdonaldsportugal",
+    "contact:linkedin": "https://www.linkedin.com/company/mcdonald's-corporation/",
+    "contact:phone": "+351 213 211 277",
+    "contact:tiktok": "mcdonalds.pt",
+    "contact:youtube": "https://www.youtube.com/McDonaldsPortugal",
+    "cuisine": "burger",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "internet_access": "wlan",
+    "name": "McDonald's",
+    "opening_hours": "Mo-Su,PH 08:30-03:45",
+    "outdoor_seating": "no",
+    "ref": "e7f7641a-38de-58f9-860d-6e00e3bfabd3",
+    "source:contact": "website",
+    "takeaway": "yes",
+    "website": "https://www.mcdonalds.pt/restaurantes/rossio/",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2493312080,
+  "lat": 38.7153142,
+  "lon": -9.1403107,
+  "tags": {
+    "addr:housenumber": "11",
+    "addr:postcode": "1170-128",
+    "addr:street": "Travessa do Forno",
+    "amenity": "restaurant",
+    "cuisine": "regional",
+    "name": "O Marques",
+    "phone": "+351 21 346 8070"
+  }
+},
+{
+  "type": "node",
+  "id": 2503325885,
+  "lat": 38.7083819,
+  "lon": -9.1356141,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "62–65",
+    "addr:postcode": "1100-148",
+    "amenity": "restaurant",
+    "check_date": "2026-02-06",
+    "contact:booking": "mailto:reservas@museudacerveja.pt",
+    "email": "info@museudacerveja.pt",
+    "fee": "yes",
+    "indoor_seating": "yes",
+    "name": "Museu da Cerveja",
+    "opening_hours": "Mo-Su 10:00-00:00",
+    "outdoor_seating": "yes",
+    "phone": "+351 210 987 656",
+    "start_date": "2012",
+    "website": "https://www.museudacerveja.pt/",
+    "wheelchair": "limited",
+    "wikidata": "Q48869091",
+    "wikimedia_commons": "Category:Museu da Cerveja (Lisbon)",
+    "wikipedia:es": "Museu da Cerveja",
+    "wikipedia:pt": "Museu da Cerveja (Lisboa)"
+  }
+},
+{
+  "type": "node",
+  "id": 2503339361,
+  "lat": 38.7106073,
+  "lon": -9.1442434,
+  "tags": {
+    "addr:city": "Lisboa",
+    "addr:housenumber": "21",
+    "addr:postcode": "1200-241",
+    "addr:street": "Rua do Loreto",
+    "alt_name": "Sea Me Peixaria Moderna",
+    "amenity": "restaurant",
+    "cuisine": "seafood",
+    "name": "SeaMe Peixaria Moderna",
+    "phone": "+351 21 346 1564; +351 21 346 1565",
+    "website": "https://www.peixariamoderna.com/"
+  }
+}
+
+  ]
+}

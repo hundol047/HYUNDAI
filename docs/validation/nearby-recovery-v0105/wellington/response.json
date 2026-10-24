@@ -1,0 +1,1147 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-24T04:05:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 268175780,
+  "lat": -41.2942323,
+  "lon": 174.7831061,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "7",
+    "addr:postcode": "6011",
+    "addr:street": "Courtenay Place",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "contact:website": "https://magic-kitchen.tuckerfox.co.nz/",
+    "cuisine": "asian",
+    "diet:vegetarian": "no",
+    "name": "Magic Kitchen",
+    "opening_hours": "Mo-Su 11:30-21:00",
+    "opening_hours:signed": "no",
+    "takeaway": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 279428317,
+  "lat": -41.2800870,
+  "lon": 174.7755008,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Dumpling'd",
+    "opening_hours": "Mo-Fr 10:00-16:00",
+    "website": "https://dumplingd.co.nz"
+  }
+},
+{
+  "type": "node",
+  "id": 279428355,
+  "lat": -41.2878945,
+  "lon": 174.7752506,
+  "tags": {
+    "addr:city": "Wellington Central, Wellington",
+    "addr:floor": "G",
+    "addr:housenumber": "68-70",
+    "addr:postcode": "6011",
+    "addr:street": "Willis Street",
+    "air_conditioning": "yes",
+    "branch": "Willis Street Metro",
+    "brand": "New World",
+    "brand:wikidata": "Q7012488",
+    "brand:wikipedia": "en:New World (supermarket)",
+    "check_date": "2025-11-18",
+    "diet:gluten_free": "yes",
+    "diet:halal": "yes",
+    "diet:meat": "yes",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "internet_access": "wlan",
+    "internet_access:fee": "no",
+    "level": "0",
+    "name": "New World",
+    "opening_hours": "Mo-Fr 07:00-22:00; Sa-Su 08:00-22:00",
+    "operator": "New World",
+    "organic": "yes",
+    "payment:cash": "yes",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "phone": "+64 4 471 6580",
+    "shop": "supermarket",
+    "source": "local knowledge",
+    "stroller": "yes",
+    "toilets": "no",
+    "toilets:wheelchair": "no",
+    "website": "https://newworld.co.nz",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 281359712,
+  "lat": -41.2937047,
+  "lon": 174.7814789,
+  "tags": {
+    "name": "Eight 8 Mart",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 281359714,
+  "lat": -41.2956140,
+  "lon": 174.7826046,
+  "tags": {
+    "addr:housenumber": "36",
+    "addr:street": "Cambridge Terrace",
+    "amenity": "fast_food",
+    "brand": "Domino's",
+    "brand:wikidata": "Q839466",
+    "brand:wikipedia": "en:Domino's Pizza",
+    "cuisine": "pizza",
+    "delivery": "yes",
+    "name": "Domino's",
+    "opening_hours": "Mo-We 11:00-23:00; Th,Fr 11:00-24:00; Sa 00:00-01:00,11:00-24:00; Su 00:00-01:00,11:00-23:00",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 281368796,
+  "lat": -41.2911617,
+  "lon": 174.7803280,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:country": "NZ",
+    "addr:housenumber": "15",
+    "addr:postcode": "6011",
+    "addr:street": "Taranaki Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "fast_food",
+    "branch": "Taranaki Street",
+    "brand": "McDonald's",
+    "brand:wikidata": "Q38076",
+    "check_date": "2026-01-17",
+    "cuisine": "burger",
+    "drive_through": "yes",
+    "name": "McDonald's",
+    "opening_hours": "24/7",
+    "operator": "McDonald's",
+    "ref:linz:address_id": "364188",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 288070925,
+  "lat": -41.2928649,
+  "lon": 174.7788397,
+  "tags": {
+    "addr:housenumber": "101",
+    "addr:street": "Courtenay Place",
+    "amenity": "fast_food",
+    "brand": "BurgerFuel",
+    "brand:wikidata": "Q4998537",
+    "brand:wikipedia": "en:Burger Fuel",
+    "check_date": "2026-01-10",
+    "cuisine": "burger",
+    "diet:vegan": "yes",
+    "indoor_seating": "yes",
+    "name": "BurgerFuel",
+    "opening_hours": "Su-Th 11:00-22:00; Fr 11:00-24:00; Sa 11:00-23:00",
+    "outdoor_seating": "yes",
+    "takeaway": "yes",
+    "website": "https://www.burgerfuel.com/nz/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 356515483,
+  "lat": -41.2840959,
+  "lon": 174.7752266,
+  "tags": {
+    "addr:street": "Lambton Quay",
+    "amenity": "fast_food",
+    "brand": "McDonald's",
+    "brand:wikidata": "Q38076",
+    "brand:wikipedia": "en:McDonald's",
+    "check_date": "2026-01-06",
+    "cuisine": "burger",
+    "indoor_seating": "yes",
+    "level": "1",
+    "name": "McDonald's",
+    "operator": "McDonald's",
+    "outdoor_seating": "no",
+    "takeaway": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 446062247,
+  "lat": -41.2952675,
+  "lon": 174.7669641,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "90",
+    "addr:postcode": "6021",
+    "addr:street": "Aro Street",
+    "addr:suburb": "Aro Valley",
+    "amenity": "cafe",
+    "check_date": "2026-01-05",
+    "check_date:diet:vegan": "2026-01-05",
+    "check_date:diet:vegetarian": "2026-01-05",
+    "check_date:opening_hours": "2025-03-01",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "Aro Cafe",
+    "opening_hours": "Tu-Fr 07:30-16:00; Sa,Su 08:00-16:00",
+    "outdoor_seating": "yes",
+    "ref:linz:address_id": "1668451",
+    "source_ref": "http://www.arocoffee.co.nz/"
+  }
+},
+{
+  "type": "node",
+  "id": 583471968,
+  "lat": -41.2831260,
+  "lon": 174.7773590,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Contra"
+  }
+},
+{
+  "type": "node",
+  "id": 583471988,
+  "lat": -41.2819302,
+  "lon": 174.7776334,
+  "tags": {
+    "amenity": "cafe",
+    "diet:vegetarian": "yes",
+    "name": "Petit Bordeaux",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 587559641,
+  "lat": -41.2954419,
+  "lon": 174.7670672,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "85",
+    "addr:postcode": "6021",
+    "addr:street": "Aro Street",
+    "addr:suburb": "Aro Valley",
+    "amenity": "fast_food",
+    "check_date": "2026-01-05",
+    "drive_through": "no",
+    "indoor_seating": "yes",
+    "name": "Te Aro Fish Supply",
+    "outdoor_seating": "yes",
+    "phone": "+64 4 385 8306",
+    "ref:linz:address_id": "358555"
+  }
+},
+{
+  "type": "node",
+  "id": 587560369,
+  "lat": -41.2963286,
+  "lon": 174.7705291,
+  "tags": {
+    "addr:housenumber": "308",
+    "addr:street": "Willis Street",
+    "addr:suburb": "Aro Valley",
+    "check_date": "2026-01-04",
+    "check_date:opening_hours": "2023-09-02",
+    "name": "Shalimar Mini Market - Four Square",
+    "opening_hours": "Mo-Su 07:00-22:00",
+    "ref:linz:address_id": "1742296",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 587560506,
+  "lat": -41.2952238,
+  "lon": 174.7664758,
+  "tags": {
+    "name": "Aro Valley Foodmarket",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 610646678,
+  "lat": -41.2897806,
+  "lon": 174.7740446,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "142",
+    "addr:street": "Willis Street",
+    "amenity": "restaurant",
+    "cuisine": "japanese;sushi",
+    "name": "Miyabi Sushi",
+    "opening_hours": "Mo-Fr 11:30-14:30,17:30-23:00; Sa 12:00-14:30,17:30-23:00",
+    "phone": "+64 4 801 9688",
+    "website": "https://miyabisushi.co.nz/"
+  }
+},
+{
+  "type": "node",
+  "id": 610646680,
+  "lat": -41.2916429,
+  "lon": 174.7795849,
+  "tags": {
+    "addr:city": "Te Aro, Wellington",
+    "addr:housenumber": "25",
+    "addr:street": "Taranaki Street",
+    "amenity": "restaurant",
+    "cuisine": "british",
+    "name": "Bitters & Love"
+  }
+},
+{
+  "type": "node",
+  "id": 610646684,
+  "lat": -41.2895005,
+  "lon": 174.7743588,
+  "tags": {
+    "addr:floor": "G",
+    "addr:housenumber": "132",
+    "addr:street": "Willis Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "cafe",
+    "changing_table": "no",
+    "check_date": "2025-08-30",
+    "check_date:opening_hours": "2025-08-30",
+    "diet:meat": "yes",
+    "diet:vegetarian": "yes",
+    "email": "info@neocafe.co.nz",
+    "highchair": "yes",
+    "indoor_seating": "yes",
+    "internet_access": "yes",
+    "internet_access:fee": "no",
+    "internet_access:type": "wlan",
+    "level": "0",
+    "name": "Cafe Neo",
+    "opening_hours": "Mo-Fr 07:30-15:00; Sa,Su 08:00-15:00",
+    "outdoor_seating": "no",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "phone": "+64 4 385 9553",
+    "ref:linz:address_id": "356903",
+    "toilets:wheelchair": "yes",
+    "website": "https://www.neocafe.co.nz/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 809086712,
+  "lat": -41.2861668,
+  "lon": 174.7762462,
+  "tags": {
+    "addr:city": "Wellington Central, Wellington",
+    "addr:housenumber": "237",
+    "addr:postcode": "6011",
+    "addr:street": "Lambton Quay",
+    "amenity": "cafe",
+    "check_date": "2026-01-07",
+    "cuisine": "coffee_shop",
+    "name": "Mojo Old Bank",
+    "phone": "+64 4 473 2327",
+    "website": "https://mojo.coffee/collections/locations/products/old-bank",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 967436190,
+  "lat": -41.2906858,
+  "lon": 174.7758944,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:country": "NZ",
+    "addr:housenumber": "64",
+    "addr:postcode": "6011",
+    "addr:street": "Manners Street",
+    "amenity": "fast_food",
+    "brand": "McDonald's",
+    "brand:wikidata": "Q38076",
+    "brand:wikipedia": "en:McDonald's",
+    "check_date": "2026-06-11",
+    "cuisine": "burger",
+    "drive_in": "no",
+    "drive_through": "no",
+    "level": "0",
+    "name": "McDonald's",
+    "opening_hours": "24/7",
+    "operator": "McDonald's",
+    "self_service": "yes",
+    "takeaway": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1163043003,
+  "lat": -41.2937289,
+  "lon": 174.7811345,
+  "tags": {
+    "addr:housenumber": "45",
+    "addr:street": "Tory Street",
+    "addr:suburb": "Te Aro",
+    "air_conditioning": "yes",
+    "amenity": "restaurant",
+    "check_date": "2025-08-30",
+    "check_date:opening_hours": "2025-08-30",
+    "cuisine": "asian",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "Chow",
+    "opening_hours": "Mo-Su 12:00-24:00",
+    "outdoor_seating": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "ref:linz:address_id": "364459",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1166098693,
+  "lat": -41.2917414,
+  "lon": 174.7789891,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-01-17",
+    "cuisine": "japanese",
+    "name": "Fujiyama Teppanyaki"
+  }
+},
+{
+  "type": "node",
+  "id": 1166098702,
+  "lat": -41.2912395,
+  "lon": 174.7793271,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-01-03",
+    "name": "Green Parrot Cafe",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 1280243023,
+  "lat": -41.2809590,
+  "lon": 174.7693947,
+  "tags": {
+    "amenity": "cafe",
+    "check_date": "2024-10-26",
+    "name": "Botanic Garden Café"
+  }
+},
+{
+  "type": "node",
+  "id": 1791339532,
+  "lat": -41.2928951,
+  "lon": 174.7789725,
+  "tags": {
+    "addr:housenumber": "101",
+    "addr:street": "Courtenay Place",
+    "check_date": "2026-10-15",
+    "name": "7 Mart",
+    "opening_hours": "24/7",
+    "shop": "convenience",
+    "website": "https://courtenayclinic.co.nz/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1791447841,
+  "lat": -41.2925918,
+  "lon": 174.7795719,
+  "tags": {
+    "addr:housenumber": "120",
+    "addr:street": "Courtenay Place",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "brand": "Nando's",
+    "brand:wikidata": "Q3472954",
+    "building:flats": "66",
+    "check_date": "2025-08-30",
+    "check_date:opening_hours": "2025-08-30",
+    "cuisine": "chicken;portuguese",
+    "indoor_seating": "yes",
+    "name": "Nando's",
+    "opening_hours": "11:00-22:00",
+    "outdoor_seating": "no",
+    "payment:cash": "no",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "ref:linz:address_id": "364092",
+    "website": "https://www.nandos.co.nz/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1793901024,
+  "lat": -41.2903147,
+  "lon": 174.7755185,
+  "tags": {
+    "amenity": "cafe",
+    "check_date": "2026-10-13",
+    "cuisine": "coffee_shop",
+    "name": "mucho mucho",
+    "opening_hours": "Mo-Fr 07:00-15:00",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1793907829,
+  "lat": -41.2910353,
+  "lon": 174.7757265,
+  "tags": {
+    "addr:floor": "G",
+    "addr:housenumber": "125",
+    "addr:postcode": "6011",
+    "addr:street": "Victoria Street",
+    "air_conditioning": "yes",
+    "check_date": "2023-10-23",
+    "contact:facebook": "https://www.facebook.com/haeremaiandwellmart/",
+    "currency:NZD": "yes",
+    "diet:meat": "yes",
+    "diet:non-vegetarian": "yes",
+    "diet:vegetarian": "yes",
+    "internet_access": "no",
+    "level": "0",
+    "name": "Haere Mai Asian Food Market",
+    "opening_hours": "Mo-Fr 09:00-19:00; Sa-Su 10:00-18:00; PH 12:00-18:00",
+    "payment:cash": "yes",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "phone": "+64 4 385 8342",
+    "shop": "supermarket",
+    "source": "local knowledge",
+    "toilets": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1793908759,
+  "lat": -41.2912311,
+  "lon": 174.7746480,
+  "tags": {
+    "addr:floor": "G, 1",
+    "addr:housenumber": "97",
+    "addr:postcode": "6011",
+    "addr:street": "Dixon Street",
+    "amenity": "restaurant",
+    "check_date": "2023-11-12",
+    "cuisine": "korean",
+    "level": "0",
+    "mobile": "+64 20 438 4270",
+    "name": "Newkor Korean BBQ Restaurant",
+    "opening_hours": "16:00-21:00",
+    "outdoor_seating": "no",
+    "payment:cash": "yes",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "reservation": "yes",
+    "takeaway": "yes",
+    "website": "https://www.newkorwellington.co.nz",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1793949808,
+  "lat": -41.2911598,
+  "lon": 174.7744399,
+  "tags": {
+    "addr:housenumber": "101",
+    "addr:street": "Dixon Street",
+    "amenity": "restaurant",
+    "check_date": "2023-11-12",
+    "diet:vegetarian": "yes",
+    "name": "Siem Reap Cambodian Restaurant",
+    "opening_hours": "Mo-Tu,Su off; We-Sa 17:00-21:00",
+    "outdoor_seating": "no",
+    "payment:cash": "yes",
+    "payment:mastercard": "yes",
+    "payment:visa": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2063998207,
+  "lat": -41.2931069,
+  "lon": 174.7806102,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "70",
+    "addr:postcode": "6011",
+    "addr:street": "Courtenay Place",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "contact:phone": "+64 4 803 3995",
+    "cuisine": "asian",
+    "name": "Dragonfly",
+    "opening_hours": "Mo-Sa 16:30-23:00",
+    "ref:linz:address_id": "364568",
+    "source": "http://www.dragon-fly.co.nz/",
+    "website": "http://www.dragon-fly.co.nz/"
+  }
+},
+{
+  "type": "node",
+  "id": 2187836534,
+  "lat": -41.2942184,
+  "lon": 174.7799219,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Tiger Restaurant & KTV"
+  }
+},
+{
+  "type": "node",
+  "id": 2187867860,
+  "lat": -41.2934597,
+  "lon": 174.7806645,
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "Zambrero",
+    "brand:wikidata": "Q18636431",
+    "cuisine": "mexican",
+    "indoor_seating": "yes",
+    "name": "Zambrero",
+    "outdoor_seating": "no",
+    "takeaway": "yes",
+    "website": "https://www.zambrero.co.nz/locations/courtenay"
+  }
+},
+{
+  "type": "node",
+  "id": 2187867863,
+  "lat": -41.2935401,
+  "lon": 174.7809005,
+  "tags": {
+    "addr:housenumber": "57",
+    "addr:street": "Courtenay Place",
+    "brand": "Night 'n Day",
+    "brand:wikidata": "Q111955183",
+    "check_date": "2024-01-03",
+    "name": "Night 'n Day",
+    "opening_hours": "24/7",
+    "shop": "convenience",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2189457827,
+  "lat": -41.2934413,
+  "lon": 174.7816514,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2024-01-05",
+    "cuisine": "japanese",
+    "name": "The Catch Sushi Bar"
+  }
+},
+{
+  "type": "node",
+  "id": 2189483807,
+  "lat": -41.2929255,
+  "lon": 174.7836055,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "1",
+    "addr:postcode": "6011",
+    "addr:street": "Blair Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2026-06-06",
+    "check_date:opening_hours": "2026-06-06",
+    "cuisine": "thai",
+    "email": "wellington@thaichef.co.nz",
+    "name": "Thai Chefs Restaurant",
+    "opening_hours": "Mo 17:00-23:00; Tu-Fr 12:00-14:00,17:00-23:00; Sa 17:00-23:00; Su 12:00-14:00,22:00-23:00",
+    "phone": "+64 4 385 4535",
+    "ref:linz:address_id": "25003",
+    "website": "https://thaichef.co.nz/wellington/",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2189483812,
+  "lat": -41.2932609,
+  "lon": 174.7834404,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-06-06",
+    "cuisine": "italian",
+    "name": "Fratelli",
+    "opening_hours:signed": "no",
+    "website": "https://www.fratelli.net.nz/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2189501714,
+  "lat": -41.2930030,
+  "lon": 174.7831803,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "12",
+    "addr:postcode": "6011",
+    "addr:street": "Blair Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "cuisine": "asian",
+    "email": "wellington@monsoonpoon.co.nz",
+    "name": "Monsoon Poon",
+    "opening_hours": "Mo-Fr 12:00-23:00; Sa-Su 17:00-23:00",
+    "phone": "+64 4 803 3555",
+    "ref:linz:address_id": "1972965",
+    "website": "https://www.monsoonpoon.co.nz/wellington-about/"
+  }
+},
+{
+  "type": "node",
+  "id": 2189501718,
+  "lat": -41.2931441,
+  "lon": 174.7830971,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-04-25",
+    "cuisine": "indian",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Little India",
+    "opening_hours:signed": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2189566942,
+  "lat": -41.2945776,
+  "lon": 174.7748834,
+  "tags": {
+    "addr:housenumber": "178",
+    "addr:postcode": "6011",
+    "addr:street": "Cuba Street",
+    "amenity": "cafe",
+    "check_date": "2026-07-22",
+    "contact:facebook": "https://www.facebook.com/midnightespressowlg/",
+    "cuisine": "coffee_shop",
+    "internet_access": "no",
+    "name": "Midnight Espresso",
+    "name:en": "Midnight Espresso",
+    "opening_hours": "Mo-Fr 07:30-01:00; Sa-Su 08:00-01:00",
+    "payment:cash": "yes",
+    "payment:debit_cards": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2189566949,
+  "lat": -41.2948332,
+  "lon": 174.7746896,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "name": "Logan Brown",
+    "ref:nz:heritage": "3634",
+    "website": "https://www.loganbrown.co.nz/",
+    "wikidata": "Q5470104"
+  }
+},
+{
+  "type": "node",
+  "id": 2189566950,
+  "lat": -41.2946553,
+  "lon": 174.7747619,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "182",
+    "addr:postcode": "6011",
+    "addr:street": "Cuba Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2026-07-22",
+    "email": "wellington@flyingburritobrothers.co.nz",
+    "indoor_seating": "yes",
+    "name": "The Flying Burrito Brothers",
+    "opening_hours": "Tu-Su 17:00-00:00",
+    "outdoor_seating": "no",
+    "phone": "+64 4 385 8811",
+    "website": "https://www.flyingburritobrothers.co.nz/"
+  }
+},
+{
+  "type": "node",
+  "id": 2189582909,
+  "lat": -41.2932469,
+  "lon": 174.7786592,
+  "tags": {
+    "name": "Kiwi Mart",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2189586394,
+  "lat": -41.2914594,
+  "lon": 174.7774604,
+  "tags": {
+    "addr:housenumber": "101",
+    "addr:street": "Manners Street",
+    "addr:suburb": "Te Aro",
+    "check_date": "2026-01-05",
+    "name": "City Stop",
+    "ref:linz:address_id": "1723236",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2189622249,
+  "lat": -41.2923469,
+  "lon": 174.7781477,
+  "tags": {
+    "addr:housenumber": "17",
+    "addr:street": "Dixon Street",
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "brand:wikipedia": "en:Subway (restaurant)",
+    "check_date": "2024-01-03",
+    "cuisine": "sandwich",
+    "indoor_seating": "yes",
+    "name": "Subway",
+    "opening_hours": "07:30-21:30",
+    "outdoor_seating": "no",
+    "takeaway": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2189625880,
+  "lat": -41.2948955,
+  "lon": 174.7756652,
+  "tags": {
+    "addr:floor": "G",
+    "addr:housenumber": "140",
+    "addr:street": "Vivian Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "brand:wikipedia": "en:Subway (restaurant)",
+    "check_date": "2026-01-07",
+    "cuisine": "sandwich",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "level": "0",
+    "name": "Subway",
+    "opening_hours": "Mo-Su 07:30-21:30",
+    "outdoor_seating": "no",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "ref:linz:address_id": "1753127",
+    "takeaway": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2189625881,
+  "lat": -41.2945933,
+  "lon": 174.7751398,
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "BurgerFuel",
+    "brand:wikidata": "Q4998537",
+    "brand:wikipedia": "en:Burger Fuel",
+    "check_date": "2026-06-29",
+    "cuisine": "burger",
+    "indoor_seating": "yes",
+    "name": "BurgerFuel",
+    "outdoor_seating": "no",
+    "takeaway": "yes",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2195230825,
+  "lat": -41.2927670,
+  "lon": 174.7823941,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "12",
+    "addr:street": "Allen Street",
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "cuisine": "indian",
+    "name": "Masala",
+    "opening_hours": "Mo-Th 11:15-14:30,17:00-21:30; Fr 11:15-14:30,17:00-22:30; Sa 16:30-22:30; Su 16:30-21:00",
+    "phone": "+64 4 385 2012",
+    "website": "https://masala.gen.nz"
+  }
+},
+{
+  "type": "node",
+  "id": 2195230831,
+  "lat": -41.2928003,
+  "lon": 174.7827078,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "chinese",
+    "name": "Big Thumb"
+  }
+},
+{
+  "type": "node",
+  "id": 2195230854,
+  "lat": -41.2930028,
+  "lon": 174.7822559,
+  "tags": {
+    "addr:housenumber": "18",
+    "addr:street": "Allen Street",
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "cuisine": "vietnamese",
+    "email": "rockyard.restaurant@hotmail.com",
+    "name": "Rock Yard",
+    "opening_hours": "Su-Th 17:00-22:00; Fr-Sa 17:00-23:30",
+    "phone": "+64 4 381 3930"
+  }
+},
+{
+  "type": "node",
+  "id": 2195230857,
+  "lat": -41.2930785,
+  "lon": 174.7822002,
+  "tags": {
+    "amenity": "restaurant",
+    "cuisine": "ethiopian",
+    "name": "Blue Nile",
+    "website": "http://bluenilewellington.com/"
+  }
+},
+{
+  "type": "node",
+  "id": 2195231153,
+  "lat": -41.2926723,
+  "lon": 174.7827910,
+  "tags": {
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "cuisine": "malaysian",
+    "indoor_seating": "yes",
+    "name": "Istana Malaysia",
+    "outdoor_seating": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2245473268,
+  "lat": -41.2843879,
+  "lon": 174.7751045,
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "brand:wikipedia": "en:Subway (restaurant)",
+    "check_date": "2026-10-15",
+    "cuisine": "sandwich",
+    "name": "Subway",
+    "takeaway": "yes",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2245497464,
+  "lat": -41.2818620,
+  "lon": 174.7757812,
+  "tags": {
+    "amenity": "fast_food",
+    "brand": "Subway",
+    "brand:wikidata": "Q244457",
+    "brand:wikipedia": "en:Subway (restaurant)",
+    "cuisine": "sandwich",
+    "name": "Subway",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2467561719,
+  "lat": -41.2952356,
+  "lon": 174.7799879,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:floor": "G",
+    "addr:housenumber": "88",
+    "addr:postcode": "6011",
+    "addr:street": "Tory Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2024-09-14",
+    "cuisine": "french",
+    "level": "0",
+    "name": "Le Bouillon Bel Air",
+    "opening_hours": "We-Su 12:00-15:00,17:00-22:00",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "phone": "+64 4 282 1021",
+    "ref:linz:address_id": "365769",
+    "website": "https://lebelair.nz/",
+    "website:menu": "https://lebelair.nz/menu/",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2467561724,
+  "lat": -41.2950413,
+  "lon": 174.7800641,
+  "tags": {
+    "addr:housenumber": "84",
+    "addr:street": "Tory Street",
+    "amenity": "restaurant",
+    "check_date": "2024-12-31",
+    "cuisine": "chinese",
+    "name": "Grand Century",
+    "opening_hours": "Mo-Su 11:30-14:30, 17:00-22:00",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2576465453,
+  "lat": -41.2882803,
+  "lon": 174.7683226,
+  "tags": {
+    "amenity": "fast_food",
+    "name": "Krishna Food"
+  }
+},
+{
+  "type": "node",
+  "id": 2577799235,
+  "lat": -41.2942699,
+  "lon": 174.7832370,
+  "tags": {
+    "addr:housenumber": "5",
+    "addr:street": "Courtenay Place",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2026-01-05",
+    "check_date:diet:gluten_free": "2026-01-05",
+    "check_date:diet:vegan": "2026-01-05",
+    "check_date:diet:vegetarian": "2026-01-05",
+    "cuisine": "Southern_US",
+    "diet:gluten_free": "yes",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "indoor_seating": "yes",
+    "name": "Sweet Mother's Kitchen",
+    "opening_hours": "Mo-Su 08:30-21:00",
+    "opening_hours:signed": "no",
+    "outdoor_seating": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "phone": "+64 4 385 4444",
+    "ref:linz:address_id": "364511",
+    "website": "https://sweetmotherskitchen.co.nz/"
+  }
+},
+{
+  "type": "node",
+  "id": 2577799318,
+  "lat": -41.2961856,
+  "lon": 174.7803426,
+  "tags": {
+    "addr:housenumber": "27",
+    "addr:street": "College Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "cafe",
+    "diet:vegan": "yes",
+    "diet:vegetarian": "yes",
+    "name": "Caffe L’affare",
+    "opening_hours": "Mo-Fr 07:00-15:00; Sa 08:00-15:30; Su 09:00-15:30",
+    "ref:linz:address_id": "365219",
+    "website": "https://www.laffare.co.nz/index.aspx?ID=2",
+    "wheelchair": "limited"
+  }
+},
+{
+  "type": "node",
+  "id": 2584440809,
+  "lat": -41.2888286,
+  "lon": 174.7715474,
+  "tags": {
+    "name": "Mena' Store",
+    "shop": "convenience"
+  }
+},
+{
+  "type": "node",
+  "id": 2586034177,
+  "lat": -41.2939057,
+  "lon": 174.7755558,
+  "tags": {
+    "addr:city": "Wellington",
+    "addr:housenumber": "161",
+    "addr:postcode": "6011",
+    "addr:street": "Cuba Street",
+    "addr:suburb": "Te Aro",
+    "amenity": "restaurant",
+    "check_date": "2026-07-22",
+    "contact:phone": "+64 4 381 2212",
+    "indoor_seating": "yes",
+    "name": "Floriditas",
+    "opening_hours": "Mo 07:00-15:00; Tu-Sa 07:00-15:00,17:30-22:00; Su 07:00-15:00",
+    "outdoor_seating": "no",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "ref:linz:address_id": "1585067",
+    "website": "https://floriditas.co.nz z",
+    "wheelchair": "yes"
+  }
+}
+
+  ]
+}

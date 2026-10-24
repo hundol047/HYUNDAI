@@ -1,0 +1,1001 @@
+{
+  "observedAt": "2026-10-24T04:09:57.107Z",
+  "engineSha256": "fe42ab4609f7f0f0de6ddd912c4c68b90ad8882df8c5921ae44158551d061e63",
+  "scope": "Actual explicit Nominatim requests, live visible OSM tiles, synthetic public GPS. Regional candidates are not certified exact branches or complete coverage.",
+  "cases": [
+    {
+      "id": "toronto",
+      "query": "Balzacs Toronto",
+      "country": "CA",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Balzacs Toronto"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Toronto"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Balzacs",
+          "viewbox": "-79.63252804258782,43.83334590252709,-79.13534135741217,43.47361749747291",
+          "bounded": "1",
+          "lat": "43.6534817",
+          "lon": "-79.3839347",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Balzac",
+          "viewbox": "-79.63252804258782,43.83334590252709,-79.13534135741217,43.47361749747291",
+          "bounded": "1",
+          "lat": "43.6534817",
+          "lon": "-79.3839347",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Balzacs Toronto",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Toronto",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Balzacs",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "Balzac",
+          "status": 200,
+          "file": "response-3.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "토론토 중심 반경 20km · 'Balzacs' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. Balzac's CoffeeBalzac's Coffee, 122, Bond Street, Downtown Yonge East, Toronto Centre, 토론토, 온타리오주, M5B 1W1, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 614 m전화 +1-416-597-1700등록 영업시간 Mo-Fr 07:00-19:00; Sa-Su 08:30-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+        "2. Balzac's CoffeeBalzac's Coffee, 10, Market Street, St Lawrence-East Bayfront-The Islands, Spadina—Fort York, 토론토, 온타리오주, M5E 1M6, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 1.1 km지도에 표시 · 자동차 경로 계산 →",
+        "3. Coffee Balzac's RoastersCoffee Balzac's Roasters, Yonge Street, Rosedale-Moore Park, Downtown, 토론토, 온타리오주, M4W 2H1, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 2.0 km지도에 표시 · 자동차 경로 계산 →",
+        "4. Balzac's CoffeeBalzac's Coffee, 1, Trinity Street, Distillery District, Spadina—Fort York, 토론토, 온타리오주, M5A 3C4, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 2.0 km전화 +1-416-207-1709지도에 표시 · 자동차 경로 계산 →",
+        "5. Balzac’s Coffee RoastersBalzac’s Coffee Roasters, Airport Tunnel, St Lawrence-East Bayfront-The Islands, Spadina—Fort York, 토론토, 온타리오주, M5V 1A1, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 2.7 km지도에 표시 · 자동차 경로 계산 →",
+        "6. Balzac’sBalzac’s, Powerhouse Street, Wallace Emerson, Davenport, 토론토, 온타리오주, M6H 4L1, 캐나다카페 · OSM / Nominatim내 위치에서 직선 약 5.5 km지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 8.191
+    },
+    {
+      "id": "seoul",
+      "query": "스타벅스 광화문",
+      "country": "KR",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "스타벅스 광화문"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "광화문"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "스타벅스",
+          "viewbox": "126.9631993102744,37.58671775215163,126.9904326897256,37.565134047848375",
+          "bounded": "1",
+          "lat": "37.5759259",
+          "lon": "126.976816",
+          "radius": "1200"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Starbucks",
+          "viewbox": "126.9631993102744,37.58671775215163,126.9904326897256,37.565134047848375",
+          "bounded": "1",
+          "lat": "37.5759259",
+          "lon": "126.976816",
+          "radius": "1200"
+        }
+      ],
+      "responses": [
+        {
+          "q": "스타벅스 광화문",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "광화문",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "스타벅스",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "Starbucks",
+          "status": 200,
+          "file": "response-3.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "광화문 중심 반경 1.2km · '스타벅스' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. 스타벅스스타벅스, 종로1길, 종로1가, 중학동, 종로1·2·3·4가동, 종로구, 서울특별시, 03152, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 853 m지도에 표시 · 자동차 경로 계산 →",
+        "2. 스타벅스스타벅스, 율곡로2길, 종로1가, 중학동, 종로1·2·3·4가동, 종로구, 서울특별시, 03143, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 939 m지도에 표시 · 자동차 경로 계산 →",
+        "3. 스타벅스스타벅스, 167, 세종대로, 종로1가, 서린동, 종로1·2·3·4가동, 종로구, 서울특별시, 03183, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 564 m전화 +82 02-758-8036지도에 표시 · 자동차 경로 계산 →",
+        "4. 스타벅스스타벅스, 사직로8길, 도렴동, 사직동, 종로구, 서울특별시, 03174, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.2 km지도에 표시 · 자동차 경로 계산 →",
+        "5. 스타벅스스타벅스, 북촌로, 가회동, 종로구, 서울특별시, 03055, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.4 km지도에 표시 · 자동차 경로 계산 →",
+        "6. 스타벅스스타벅스, 세종대로20길, 무교동, 명동, 중구, 서울특별시, 04520, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 104 m지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 8.07
+    },
+    {
+      "id": "daegu",
+      "query": "스타벅스 대구 반월당",
+      "country": "KR",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "스타벅스 대구 반월당"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "대구 반월당"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "반월당"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "스타벅스 대구",
+          "viewbox": "128.58009291085992,35.87630265215163,128.60672648914007,35.854718947848376",
+          "bounded": "1",
+          "lat": "35.8655108",
+          "lon": "128.5934097",
+          "radius": "1200"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Starbucks 대구",
+          "viewbox": "128.58009291085992,35.87630265215163,128.60672648914007,35.854718947848376",
+          "bounded": "1",
+          "lat": "35.8655108",
+          "lon": "128.5934097",
+          "radius": "1200"
+        }
+      ],
+      "responses": [
+        {
+          "q": "스타벅스 대구 반월당",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "대구 반월당",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "반월당",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "스타벅스 대구",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "Starbucks 대구",
+          "status": 200,
+          "file": "response-4.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "반월당 중심 반경 1.2km · '스타벅스 대구' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. 스타벅스스타벅스, 달구벌대로, 덕산동, 성내2동, 중구, 대구광역시, 41964, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 981 m지도에 표시 · 자동차 경로 계산 →",
+        "2. 스타벅스스타벅스, 달구벌대로, 덕산동, 성내2동, 중구, 대구광역시, 41964, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 981 m지도에 표시 · 자동차 경로 계산 →",
+        "3. 스타벅스스타벅스, 종로, 종로2가, 성내2동, 중구, 대구광역시, 41934, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.0 km지도에 표시 · 자동차 경로 계산 →",
+        "4. 스타벅스스타벅스, 종로, 종로2가, 성내2동, 중구, 대구광역시, 41934, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 1.0 km지도에 표시 · 자동차 경로 계산 →",
+        "5. 스타벅스스타벅스, 남성로, 하서동, 성내2동, 중구, 대구광역시, 41934, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 850 m지도에 표시 · 자동차 경로 계산 →",
+        "6. 스타벅스스타벅스, 남성로, 하서동, 성내2동, 중구, 대구광역시, 41934, 대한민국카페 · OSM / Nominatim내 위치에서 직선 약 850 m지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 8,
+      "seconds": 9.406
+    },
+    {
+      "id": "dubai",
+      "query": "Starbucks Dubai Mall",
+      "country": "AE",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Starbucks Dubai Mall"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Dubai Mall"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Starbucks",
+          "viewbox": "55.26702491174982,25.20783585215163,55.29087828825018,25.186252147848375",
+          "bounded": "1",
+          "lat": "25.197044",
+          "lon": "55.2789516",
+          "radius": "1200"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Starbucks Dubai Mall",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Dubai Mall",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Starbucks",
+          "status": 200,
+          "file": "response-2.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "두바이 몰 중심 반경 1.2km · 'Starbucks' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. StarbucksStarbucks, Financial Center Street, Burj Khalifa, Downtown Dubai, 두바이, 아랍에미리트카페 · OSM / Nominatim내 위치에서 직선 약 2.4 km지도에 표시 · 자동차 경로 계산 →",
+        "2. StarbucksStarbucks, Metro Link, Burj Khalifa, Downtown Dubai, 두바이, 아랍에미리트카페 · OSM / Nominatim내 위치에서 직선 약 2.0 km지도에 표시 · 자동차 경로 계산 →",
+        "3. StarbucksStarbucks, Sheikh Mohammed bin Rashid Boulevard, Burj Khalifa, Downtown Dubai, 두바이, 아랍에미리트카페 · OSM / Nominatim내 위치에서 직선 약 2.8 km지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 6.256
+    },
+    {
+      "id": "sao-paulo",
+      "query": "Padaria Bella Paulista Sao Paulo",
+      "country": "BR",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Padaria Bella Paulista Sao Paulo"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Sao Paulo"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Padaria Bella Paulista",
+          "viewbox": "-46.8295892149,-23.370786497472906,-46.43717558510001,-23.73051490252709",
+          "bounded": "1",
+          "lat": "-23.5506507",
+          "lon": "-46.6333824",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "[bakery] Bella Paulista",
+          "viewbox": "-46.8295892149,-23.370786497472906,-46.43717558510001,-23.73051490252709",
+          "bounded": "1",
+          "lat": "-23.5506507",
+          "lon": "-46.6333824",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Bella Paulista",
+          "viewbox": "-46.8295892149,-23.370786497472906,-46.43717558510001,-23.73051490252709",
+          "bounded": "1",
+          "lat": "-23.5506507",
+          "lon": "-46.6333824",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "PadariaBella Paulista",
+          "viewbox": "-46.8295892149,-23.370786497472906,-46.43717558510001,-23.73051490252709",
+          "bounded": "1",
+          "lat": "-23.5506507",
+          "lon": "-46.6333824",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Padaria Bella Paulista Sao Paulo",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Sao Paulo",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Padaria Bella Paulista",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "[bakery] Bella Paulista",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "Bella Paulista",
+          "status": 200,
+          "file": "response-4.json"
+        },
+        {
+          "q": "PadariaBella Paulista",
+          "status": 200,
+          "file": "response-5.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "상파울루 중심 반경 20km · 'Padaria Bella Paulista' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. Bella Paulista Casa dos PãesBella Paulista Casa dos Pães, 354, Rua Haddock Lobo, Consolação, 상파울루, 남동지방, 01414-000, 브라질베이커리 · OSM / Nominatim내 위치에서 직선 약 2.8 km전화 +55 11 3214-3347등록 영업시간 24/7 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 11.991
+    },
+    {
+      "id": "furka",
+      "query": "Hotel Belvedere Furka",
+      "country": "CH",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Hotel Belvedere Furka"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Belvedere Furka"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Furka"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Hotel Belvedere",
+          "viewbox": "8.16014577418973,46.756420802527096,8.683474825810272,46.39669239747291",
+          "bounded": "1",
+          "lat": "46.5765566",
+          "lon": "8.4218103",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "[hotel] Belvedere",
+          "viewbox": "8.16014577418973,46.756420802527096,8.683474825810272,46.39669239747291",
+          "bounded": "1",
+          "lat": "46.5765566",
+          "lon": "8.4218103",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Belvedere",
+          "viewbox": "8.16014577418973,46.756420802527096,8.683474825810272,46.39669239747291",
+          "bounded": "1",
+          "lat": "46.5765566",
+          "lon": "8.4218103",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "HotelBelvedere",
+          "viewbox": "8.16014577418973,46.756420802527096,8.683474825810272,46.39669239747291",
+          "bounded": "1",
+          "lat": "46.5765566",
+          "lon": "8.4218103",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Hotel Belvedere Furka",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Belvedere Furka",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Furka",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "Hotel Belvedere",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "[hotel] Belvedere",
+          "status": 200,
+          "file": "response-4.json"
+        },
+        {
+          "q": "Belvedere",
+          "status": 200,
+          "file": "response-5.json"
+        },
+        {
+          "q": "HotelBelvedere",
+          "status": 200,
+          "file": "response-6.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "Furka 중심 반경 20km · 'Hotel Belvedere' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. BelvedereBelvedere, 378, Furkastrasse, Obergoms, Goms, Oberwallis, 발레, 3999, 스위스hotel · OSM / Nominatim내 위치에서 직선 약 3.4 km지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 13.319
+    },
+    {
+      "id": "queenstown",
+      "query": "The Remarkables Sweet Shop Arrowtown",
+      "country": "NZ",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "The Remarkables Sweet Shop Arrowtown"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Shop Arrowtown"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Arrowtown"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "The Remarkables Sweet Shop",
+          "viewbox": "168.58097316905742,-44.76069849747291,169.0891790309426,-45.12042690252709",
+          "bounded": "1",
+          "lat": "-44.9405627",
+          "lon": "168.8350761",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Remarkable Sweet",
+          "viewbox": "168.58097316905742,-44.76069849747291,169.0891790309426,-45.12042690252709",
+          "bounded": "1",
+          "lat": "-44.9405627",
+          "lon": "168.8350761",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "TheRemarkables Sweet Shop",
+          "viewbox": "168.58097316905742,-44.76069849747291,169.0891790309426,-45.12042690252709",
+          "bounded": "1",
+          "lat": "-44.9405627",
+          "lon": "168.8350761",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "The Remarkables Sweet Shop Arrowtown",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Shop Arrowtown",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Arrowtown",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "The Remarkables Sweet Shop",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "Remarkable Sweet",
+          "status": 200,
+          "file": "response-4.json"
+        },
+        {
+          "q": "TheRemarkables Sweet Shop",
+          "status": 200,
+          "file": "response-5.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "Arrowtown 중심 반경 20km · 'The Remarkables Sweet Shop' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. The Remarkable Sweet ShopThe Remarkable Sweet Shop, 27, Buckingham Street, Arrowtown, Queenstown-Lakes District, Otago, 9302, 뉴질랜드confectionery · OSM / Nominatim내 위치에서 직선 약 16.9 km지도에 표시 · 자동차 경로 계산 →",
+        "2. Remarkable Sweet ShopRemarkable Sweet Shop, Sir Henry Wigley Drive, Remarkables Park, Frankton, Queenstown-Lakes District, Otago, 9349, 뉴질랜드confectionery · OSM / Nominatim내 위치에서 직선 약 6.2 km지도에 표시 · 자동차 경로 계산 →",
+        "3. The Remarkable Sweet shopThe Remarkable Sweet shop, Beach Street, Boydtown, Queenstown, Queenstown-Lakes District, Otago, 9200, 뉴질랜드confectionery · OSM / Nominatim내 위치에서 직선 약 217 m지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 12,
+      "seconds": 11.813
+    },
+    {
+      "id": "wellington",
+      "query": "Fidel Cafe Wellington",
+      "country": "NZ",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Fidel Cafe Wellington"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Cafe Wellington"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Wellington"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Fidel Cafe",
+          "viewbox": "174.53783712123658,-41.108931097472905,175.01658567876342,-41.46865950252709",
+          "bounded": "1",
+          "lat": "-41.2887953",
+          "lon": "174.7772114",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "[cafe] Fidel",
+          "viewbox": "174.53783712123658,-41.108931097472905,175.01658567876342,-41.46865950252709",
+          "bounded": "1",
+          "lat": "-41.2887953",
+          "lon": "174.7772114",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Fidel",
+          "viewbox": "174.53783712123658,-41.108931097472905,175.01658567876342,-41.46865950252709",
+          "bounded": "1",
+          "lat": "-41.2887953",
+          "lon": "174.7772114",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "FidelCafe",
+          "viewbox": "174.53783712123658,-41.108931097472905,175.01658567876342,-41.46865950252709",
+          "bounded": "1",
+          "lat": "-41.2887953",
+          "lon": "174.7772114",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Fidel Cafe Wellington",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Cafe Wellington",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Wellington",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "Fidel Cafe",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "[cafe] Fidel",
+          "status": 200,
+          "file": "response-4.json"
+        },
+        {
+          "q": "Fidel",
+          "status": 200,
+          "file": "response-5.json"
+        },
+        {
+          "q": "FidelCafe",
+          "status": 200,
+          "file": "response-6.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "unresolved",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "웰링턴 중심 반경 20km · 'Fidel Cafe' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요. 등록된 후보를 찾지 못했습니다. 지도에 없는 가게가 있을 수 있습니다.",
+      "results": [],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 9,
+      "seconds": 12.706
+    },
+    {
+      "id": "kuala-lumpur",
+      "query": "Old Town White Coffee Kuala Lumpur",
+      "country": "MY",
+      "requests": [
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Old Town White Coffee Kuala Lumpur"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Kuala Lumpur"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Old Town White Coffee",
+          "viewbox": "101.51410043537452,3.3315606025270923,101.87437376462547,2.971832197472908",
+          "bounded": "1",
+          "lat": "3.1516964",
+          "lon": "101.6942371",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "Old Town White",
+          "viewbox": "101.51410043537452,3.3315606025270923,101.87437376462547,2.971832197472908",
+          "bounded": "1",
+          "lat": "3.1516964",
+          "lon": "101.6942371",
+          "radius": "20000"
+        },
+        {
+          "format": "jsonv2",
+          "limit": "6",
+          "accept-language": "ko-KR,en",
+          "namedetails": "1",
+          "addressdetails": "1",
+          "extratags": "1",
+          "q": "OldTown White Coffee",
+          "viewbox": "101.51410043537452,3.3315606025270923,101.87437376462547,2.971832197472908",
+          "bounded": "1",
+          "lat": "3.1516964",
+          "lon": "101.6942371",
+          "radius": "20000"
+        }
+      ],
+      "responses": [
+        {
+          "q": "Old Town White Coffee Kuala Lumpur",
+          "status": 200,
+          "file": "response-0.json"
+        },
+        {
+          "q": "Kuala Lumpur",
+          "status": 200,
+          "file": "response-1.json"
+        },
+        {
+          "q": "Old Town White Coffee",
+          "status": 200,
+          "file": "response-2.json"
+        },
+        {
+          "q": "Old Town White",
+          "status": 200,
+          "file": "response-3.json"
+        },
+        {
+          "q": "OldTown White Coffee",
+          "status": 200,
+          "file": "response-4.json"
+        }
+      ],
+      "pageErrors": [],
+      "result": "regional-candidates",
+      "originalCount": 0,
+      "originalNotice": "일치하는 검색 결과를 찾지 못했습니다. 가게명·지점·도시나 현지어를 바꿔 보세요. 누락된 가게가 있을 수 있습니다.",
+      "regionalRequested": true,
+      "notice": "쿠알라룸푸르 중심 반경 20km · 'Old Town White Coffee' 주변 후보 검색입니다. 전체 입력과 정확히 일치하는 지점은 아닐 수 있습니다. 주소·지점을 확인하세요.",
+      "results": [
+        "1. OldTown White CoffeeOldTown White Coffee, Jalan Putra, Chow Kit, Sentul, 쿠알라룸푸르, 50350, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 2.2 km지도에 표시 · 자동차 경로 계산 →",
+        "2. OldTown White CoffeeOldTown White Coffee, Jalan Bangsar, Bangsar, 쿠알라룸푸르, 59100, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 3.8 km등록 영업시간 Mo-Fr 08:00-20:00; Sa,Su 09:00-18:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+        "3. OldTown White CoffeeOldTown White Coffee, Wangsa Walk Mall, 쿠알라룸푸르, 53300, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 7.7 km등록 영업시간 10:00-22:00 · 현재 영업 여부 미확인지도에 표시 · 자동차 경로 계산 →",
+        "4. OldTown White CoffeeOldTown White Coffee, Jalan 13/6, Section 13, Petaling Jaya, Petaling, 슬랑오르, 46400, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 7.2 km지도에 표시 · 자동차 경로 계산 →",
+        "5. Old Town White CoffeeOld Town White Coffee, Jalan 7, Taman Batu Caves, Kampung Indian Settlement Batu Caves, Batu Caves, Selayang Municipal Council, Gombak, 슬랑오르, 68100, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 10.1 km지도에 표시 · 자동차 경로 계산 →",
+        "6. OldTown White CoffeeOldTown White Coffee, Jalan PJU 1A/1, PJU 1A, Ara Damansara, Petaling Jaya, Petaling, 슬랑오르, 47410, 말레이시아카페 · OSM / Nominatim내 위치에서 직선 약 11.6 km지도에 표시 · 자동차 경로 계산 →"
+      ],
+      "routeAutomaticallyCreated": false,
+      "decodedTiles": 9,
+      "seconds": 10.018
+    }
+  ]
+}

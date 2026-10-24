@@ -1,0 +1,13 @@
+{
+  "path": "web-release/CabinOS_ONE_web_v0.10.5.zip",
+  "bytes": 73439090,
+  "sha256": "dfbe1a33997546d935a70392f7d3f0cecebefae40656f393f8ac8057c3ea320e",
+  "apkSha256": "f0656b16778e06c8c5b53edb199abf9622b562f4c598f5d43c7c2a58b008935c",
+  "engineSha256": "fe42ab4609f7f0f0de6ddd912c4c68b90ad8882df8c5921ae44158551d061e63",
+  "checks": [
+    "ZIP integrity",
+    "All public entries have 0644 permissions",
+    "Embedded production scripts, stylesheet, HTML, final APK and new MP4 byte equality"
+  ],
+  "hosting": "Requires HTTPS static hosting; packaging is not deployment."
+}

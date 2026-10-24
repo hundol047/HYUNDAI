@@ -50,6 +50,18 @@
       "result": "passed"
     },
     {
+      "name": "HTTP200 partial Overpass runtime errors keep the previous catalog instead of claiming no places exist",
+      "result": "passed"
+    },
+    {
+      "name": "queued valid results after eighteen seconds remain cancellable and can still populate the map",
+      "result": "passed"
+    },
+    {
+      "name": "explicit nearby cancellation rejects delayed results and preserves the original catalog",
+      "result": "passed"
+    },
+    {
       "name": "map view fits mobile width",
       "result": "passed"
     }

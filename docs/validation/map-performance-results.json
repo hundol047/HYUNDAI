@@ -1,10 +1,10 @@
 {
   "type": "headless Chromium deterministic map/GPS stress workload; synthetic 100000-point route, fixture GPS, aborted tile requests; not device FPS or live network latency",
-  "timestamp": "2026-10-23T18:17:34.581Z",
+  "timestamp": "2026-10-24T04:18:55.778Z",
   "baseline": false,
   "metrics": {
     "points": 100000,
-    "parseAndInitialRenderMs": 518.6999999992549,
+    "parseAndInitialRenderMs": 662.1999999955297,
     "cpuThrottleRate": 4,
     "idle": {
       "recenterCalls": 0,
@@ -13,10 +13,10 @@
     },
     "moving": {
       "fixes": 120,
-      "p50Ms": 8.199999999254942,
-      "p95Ms": 9.699999999254942,
-      "maxMs": 18.100000001490116,
-      "rafIntervalP95Ms": 19.100000001490116,
+      "p50Ms": 8.399999998509884,
+      "p95Ms": 9.899999998509884,
+      "maxMs": 12.399999998509884,
+      "rafIntervalP95Ms": 18.799999997019768,
       "recenterCalls": 120,
       "stopButtonPreserved": true,
       "tracking": true

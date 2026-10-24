@@ -1,0 +1,170 @@
+{
+  "observedAt": "2026-10-24T04:16:16.994Z",
+  "scope": "Continuous actual Chromium screen recording, live Nominatim/OSRM/Overpass/visible OSM tiles, synthetic public GPS. Manual destination is an unverified map point, not a located missing shop. No physical vehicle or exhaustive coverage claim.",
+  "engineSha256": "fe42ab4609f7f0f0de6ddd912c4c68b90ad8882df8c5921ae44158551d061e63",
+  "pageErrors": [],
+  "responses": [
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Padaria+Bella+Paulista+Sao+Paulo",
+      "status": 200,
+      "file": "provider-0.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Sao+Paulo",
+      "status": 200,
+      "file": "provider-1.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Padaria+Bella+Paulista&viewbox=-46.8295892149%2C-23.370786497472906%2C-46.43717558510001%2C-23.73051490252709&bounded=1&lat=-23.5506507&lon=-46.6333824&radius=20000",
+      "status": 200,
+      "file": "provider-2.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%5Bbakery%5D+Bella+Paulista&viewbox=-46.8295892149%2C-23.370786497472906%2C-46.43717558510001%2C-23.73051490252709&bounded=1&lat=-23.5506507&lon=-46.6333824&radius=20000",
+      "status": 200,
+      "file": "provider-3.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Bella+Paulista&viewbox=-46.8295892149%2C-23.370786497472906%2C-46.43717558510001%2C-23.73051490252709&bounded=1&lat=-23.5506507&lon=-46.6333824&radius=20000",
+      "status": 200,
+      "file": "provider-4.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=PadariaBella+Paulista&viewbox=-46.8295892149%2C-23.370786497472906%2C-46.43717558510001%2C-23.73051490252709&bounded=1&lat=-23.5506507&lon=-46.6333824&radius=20000",
+      "status": 200,
+      "file": "provider-5.json"
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/-46.6333,-23.5505;-46.6600229,-23.5561971?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200,
+      "file": "provider-6.json"
+    },
+    {
+      "url": "https://overpass-api.de/api/interpreter",
+      "status": 200,
+      "file": "provider-7.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Fidel+Cafe+Wellington",
+      "status": 200,
+      "file": "provider-8.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Cafe+Wellington",
+      "status": 200,
+      "file": "provider-9.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Wellington",
+      "status": 200,
+      "file": "provider-10.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Fidel+Cafe&viewbox=174.53783712123658%2C-41.108931097472905%2C175.01658567876342%2C-41.46865950252709&bounded=1&lat=-41.2887953&lon=174.7772114&radius=20000",
+      "status": 200,
+      "file": "provider-11.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=%5Bcafe%5D+Fidel&viewbox=174.53783712123658%2C-41.108931097472905%2C175.01658567876342%2C-41.46865950252709&bounded=1&lat=-41.2887953&lon=174.7772114&radius=20000",
+      "status": 200,
+      "file": "provider-12.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=Fidel&viewbox=174.53783712123658%2C-41.108931097472905%2C175.01658567876342%2C-41.46865950252709&bounded=1&lat=-41.2887953&lon=174.7772114&radius=20000",
+      "status": 200,
+      "file": "provider-13.json"
+    },
+    {
+      "url": "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=6&accept-language=ko-KR%2Cen&namedetails=1&addressdetails=1&extratags=1&q=FidelCafe&viewbox=174.53783712123658%2C-41.108931097472905%2C175.01658567876342%2C-41.46865950252709&bounded=1&lat=-41.2887953&lon=174.7772114&radius=20000",
+      "status": 200,
+      "file": "provider-14.json"
+    },
+    {
+      "url": "https://router.project-osrm.org/route/v1/driving/174.7772114,-41.2887953;174.77499999999998,-41.294?overview=full&geometries=geojson&steps=true&alternatives=false",
+      "status": 200,
+      "file": "provider-15.json"
+    }
+  ],
+  "scenes": [
+    {
+      "scene": "bakery-route",
+      "nav": {
+        "active": false,
+        "tracking": false,
+        "arrived": false,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 63.972287540835765,
+        "originReady": false,
+        "destinationAccessMeters": 13.22046081288951,
+        "revision": 4,
+        "destination": "Bella Paulista Casa dos Pães",
+        "remainingMeters": 3892.5,
+        "remainingSeconds": 462,
+        "language": "ko-KR",
+        "instructionLanguage": "ko",
+        "instruction": "경로를 따라 출발 · Rua Irmã Simpliciana",
+        "turnSymbol": "↑",
+        "turnMeters": 0,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "자동차 경로 미리보기 · 실시간 교통 미반영",
+        "safetyHeld": false,
+        "fix": {
+          "latitude": -23.5505,
+          "longitude": -46.6333,
+          "accuracy": 5,
+          "timestamp": 1792815392531
+        }
+      }
+    },
+    {
+      "scene": "nearby",
+      "realResults": 60
+    },
+    {
+      "scene": "manual-unverified-point-route",
+      "nav": {
+        "active": false,
+        "tracking": false,
+        "arrived": false,
+        "hasRoute": true,
+        "gpsReady": true,
+        "gpsAgeSeconds": 0,
+        "gpsAccuracy": 5,
+        "originAccessMeters": 73.1570777060162,
+        "originReady": false,
+        "destinationAccessMeters": 24.611292167785102,
+        "revision": 4,
+        "destination": "직접 고른 지도 지점",
+        "remainingMeters": 941.8,
+        "remainingSeconds": 156.1,
+        "language": "ko-KR",
+        "instructionLanguage": "ko",
+        "instruction": "경로를 따라 출발 · Wakefield Street",
+        "turnSymbol": "↑",
+        "turnMeters": 0,
+        "offRoute": false,
+        "directionUncertain": false,
+        "status": "자동차 경로 미리보기 · 실시간 교통 미반영",
+        "safetyHeld": false,
+        "fix": {
+          "latitude": -41.2887953,
+          "longitude": 174.7772114,
+          "accuracy": 5,
+          "timestamp": 1792815450714
+        }
+      }
+    }
+  ],
+  "result": "passed",
+  "video": "page@61083f4ebd3c3ef12a916eaa188fc139.webm",
+  "finishedAt": "2026-10-24T04:17:34.664Z",
+  "mp4": "docs/video/CabinOS_ONE_search_recovery_v0105.mp4",
+  "mp4Sha256": "204c49d6ac735d5eb513d8baffe629d5041f13cc9eed5abab773c46cc0848824",
+  "durationSeconds": 78.28,
+  "bytes": 6788435,
+  "review": "Re-recorded after moving capture-only caption inside the application panel and waiting for visible road tiles. Continuous screen capture; no image slideshow. Selected bakery and unverified manual point both received actual OSRM routes; no driving-start claim."
+}

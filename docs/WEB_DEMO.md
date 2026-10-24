@@ -2,9 +2,9 @@
 
 같은 페이지에서 직접 조작하는 브라우저 데모, 실제 Android Compose UI 갤러리, 제출용 APK 다운로드, 실행 MP4를 제공합니다. 브라우저와 Android는 `core`의 Kotlin 상태 엔진을 공유합니다. 실차 연결은 미지원 상태로 명확하게 표시합니다.
 
-## Android·웹 0.10.4 배포 파일
+## Android·웹 0.10.5 배포 파일
 
-[GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.4)에서 전용 팀 인증서로 서명한 APK와 [`web-release/CabinOS_ONE_web_v0.10.4.zip`](../web-release/CabinOS_ONE_web_v0.10.4.zip)의 버전별 저장소 다운로드 링크를 제공합니다. 클라우드 프록시가 `uploads.github.com` 연결을 HTTP 403으로 차단해 Release 첨부파일 업로드는 완료되지 않았으며, 허용된 기존 Git 저장소에 배포 파일을 보관합니다. 웹 ZIP에는 인터랙티브 데모·Android UI 갤러리·APK·기존 MP4·새 모의 주행 MP4가 포함됩니다. HTTPS 정적 호스팅에 압축을 풀어 배포해야 하며 ZIP 다운로드 자체가 사이트 공개를 뜻하지 않습니다. GitHub Release에는 자동 24시간 만료를 설정하지 않았습니다.
+[GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.5)에서 전용 팀 인증서로 서명한 APK와 [`web-release/CabinOS_ONE_web_v0.10.5.zip`](../web-release/CabinOS_ONE_web_v0.10.5.zip)의 버전별 저장소 다운로드 링크를 제공합니다. 클라우드 프록시가 `uploads.github.com` 연결을 HTTP 403으로 차단해 Release 첨부파일 업로드는 완료되지 않았으며, 허용된 기존 Git 저장소에 배포 파일을 보관합니다. 웹 ZIP에는 인터랙티브 데모·Android UI 갤러리·APK·기존 MP4·새 모의 주행 MP4가 포함됩니다. HTTPS 정적 호스팅에 압축을 풀어 배포해야 하며 ZIP 다운로드 자체가 사이트 공개를 뜻하지 않습니다. GitHub Release에는 자동 24시간 만료를 설정하지 않았습니다.
 
 음성 길찾기와 언어 선택은 [사용법과 실제 지원 범위](VOICE_NAVIGATION_KO.md)를 확인하세요. 기존 MP4는 0.5.0 녹화로 새 음성 기능의 녹화가 아닙니다.
 
@@ -59,3 +59,5 @@ node scripts/web/record-demo.cjs
 0.10.4는 [장시간 글로벌 모의주행](WORLD_SOAK_KO.md), [실제 가게 검색부터 도착까지의 연속 영상과 GPS 불확실성 안내 영상](VIDEO_REVIEW_V0104.md)을 제공합니다. 현재 브라우저 회귀 검사는 날짜변경선 8개를 포함한 132개입니다.
 
 0.10.4 ZIP은 공개 파일의 Unix 권한을 `644`로 저장하며 일반 압축 해제 후 권한·파일 내용 일치를 확인했습니다. Pages 워크플로는 빌드·검사·배포 파일 보관과 사이트 배포를 별도 작업으로 나눕니다. 소유자의 Pages 활성화가 필요한 상태는 그대로 표시합니다.
+
+0.10.5: [검색 누락·주변 추천 후속 수정](SEARCH_RECOVERY_KO.md)과 새 연속 녹화를 포함합니다. 공개 Pages 상태는 APK·ZIP 업로드와 별개입니다.

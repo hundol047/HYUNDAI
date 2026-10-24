@@ -1,0 +1,1 @@
+Three live nearby POST checks on intermediate engine b77233a. The spatial query and nearby POST/cancel implementation remain unchanged in final build; final-build live Lisbon recording and fixture checks are separate.
