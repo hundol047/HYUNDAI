@@ -146,4 +146,13 @@ class ContextEngineTest {
         assertEquals(deadline,engine.state.value.schedule.departureAtMs)
         assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
     }
+    @Test fun drivingClearsOldWalkingReservationBeforeNextStop() {
+        park();engine.setWaitingMinutes(40);assertTrue(engine.selectActivity("cafe"))
+        assertTrue(engine.state.value.schedule.returnSeconds>0)
+        send(Gear.DRIVE,0.0);assertNotNull(engine.state.value.selectedActivityId)
+        send(Gear.DRIVE,40.0);park();engine.setWaitingMinutes(40)
+        assertNull(engine.state.value.selectedActivityId)
+        assertEquals(0L,engine.state.value.schedule.returnSeconds)
+        assertEquals(2100L,engine.state.value.schedule.availableSeconds)
+    }
 }

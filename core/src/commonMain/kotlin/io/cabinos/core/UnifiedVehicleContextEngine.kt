@@ -99,6 +99,7 @@ class UnifiedVehicleContextEngine(
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
         val vehicleContext = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
         if (vehicleContext == VehicleContext.DRIVING && !driving) {
+            returnSeconds=0;mutable.value=state.value.copy(selectedActivityId=null)
             socDeadlineMs=null; manualDepartureAtMs=null; chargeDeadlineMs=null; lastChargeEstimate=null
             routeDeadlineMs=null; routeReadAtMs=null; routePlanOverridden=false; departureAnnounced=false; scheduleLabel="시간 미설정"
             if (old.arrivalTargetMs?.let { it < now } == true) mutable.value=state.value.copy(arrivalTargetMs=null)
