@@ -80,6 +80,7 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
     await touch.evaluate(()=>{const original=L.map;L.map=function(...a){return window.touchMap=original.apply(this,a)}});
     const session=await touch.context().newCDPSession(touch);
     for(const name of ['nearby','navigation']) {
+     if(name==='navigation')await touch.locator('#supplementary').evaluate(e=>e.open=true);
      await touch.locator(`aside [data-page="${name}"]`).click();const target=touch.locator(`#${name}-map`);await target.scrollIntoViewIfNeeded();await touch.waitForTimeout(350);
      const box=await target.boundingBox(),x=box.x+box.width/2,y=box.y+box.height/2;
      async function pinch(from,to){await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-from,y,id:1},{x:x+from,y,id:2}]});for(let i=1;i<=8;i++){const gap=from+(to-from)*i/8;await session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-gap,y,id:1},{x:x+gap,y,id:2}]});await touch.waitForTimeout(20)}await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(500)}

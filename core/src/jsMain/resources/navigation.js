@@ -24,7 +24,7 @@
    const reader=r.body.getReader();const chunks=[];let size=0;
    try{while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>12000000)throw Error('경로가 너무 큽니다. 가까운 구간으로 나누세요.');chunks.push(value)}}finally{await reader.cancel().catch(()=>{})}
    const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.byteLength}return new TextDecoder().decode(bytes);
-  }catch(e){if(timedOut)throw Error('서버 응답 시간이 지났습니다. 잠시 후 다시 검색하거나 목적지를 선택해 주세요.');throw e}finally{clearTimeout(timer);if(controller===current)controller=null}
+  }catch(e){if(timedOut)throw Error('서버 응답 시간이 지났습니다. 잠시 후 다시 검색하거나 목적지를 선택해 주세요.');if(e instanceof TypeError)throw Error('지도 서버에 연결하지 못했습니다. 네트워크·인증서·사이트 접근 설정을 확인하고 다시 시도하세요.');throw e}finally{clearTimeout(timer);if(controller===current)controller=null}
  }
  async function request(body){cancel();const id=generation;busy=true;render();try{await body(id)}catch(e){if(id===generation&&e.name!=='AbortError')notice=e.message||'네트워크 연결을 확인하세요.'}finally{if(id===generation){busy=false;render();refresh?.()}}}
  function origin(){const f=nav?.fix;return f&&Date.now()-f.timestamp>=0&&Date.now()-f.timestamp<=10000&&f.accuracy<=50?f:null}
