@@ -16,6 +16,8 @@ jobs:
           node-version: '22'
       - name: Verify optional place gateway without live provider calls
         run: python3 -m unittest discover -s server -v
+      - name: Verify vehicle recording evidence checks
+        run: python3 -m unittest discover -s scripts/tests -v
       # ubuntu-24.04 already includes the Android SDK and accepted SDK licenses.
       - name: Install pinned Android platform and build tools
         run: |

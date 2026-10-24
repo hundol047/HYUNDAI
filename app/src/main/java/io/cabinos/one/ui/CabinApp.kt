@@ -83,7 +83,7 @@ import java.util.*
     }
     CabinTheme(appearance) {
         Row(Modifier.fillMaxSize().background(Brush.linearGradient(listOf(Night,Panel,Night)))) {
-            NavigationRailPanel(if(navigationOpen||navigationState.guidance.active)"navigation" else route,s.parkedAllowed,onNavigate={ if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} },onAssistant={assistantOpen=true},onDemo={simulatorOpen=true})
+            NavigationRailPanel(if(navigationOpen||navigationState.guidance.active)"navigation" else route,s.parkedAllowed,onNavigate={ if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} },onAssistant={assistantOpen=true},onDemo={simulatorOpen=true},automotive=vm.automotive)
             Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=24.dp)) {
                 BrandHeader(s)
                 Box(Modifier.weight(1f)) {
@@ -110,7 +110,7 @@ import java.util.*
         composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
     }
 }
-@Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit) {
+@Composable private fun NavigationRailPanel(route:String,parked:Boolean,onNavigate:(String)->Unit,onAssistant:()->Unit,onDemo:()->Unit,automotive:Boolean) {
     Column(Modifier.width(76.dp).fillMaxHeight().background(Night).border(1.dp,Line.copy(alpha=.4f)).padding(vertical=23.dp),horizontalAlignment=Alignment.CenterHorizontally,verticalArrangement=Arrangement.spacedBy(15.dp)) {
         Icon(Icons.Outlined.Hexagon,"CabinOS ONE",tint=Mint,modifier=Modifier.size(30.dp))
         Spacer(Modifier.height(24.dp))
@@ -121,7 +121,7 @@ import java.util.*
         RailItem(Icons.Outlined.Tune,"설정",route=="settings",parked){onNavigate("settings")}
         RailItem(Icons.Outlined.MicNone,"음성",false,true,onAssistant)
         Spacer(Modifier.weight(1f))
-        RailItem(Icons.Outlined.Science,"데모",false,true,onDemo)
+        RailItem(Icons.Outlined.Science,if(automotive)"차량 상태" else "데모",false,true,onDemo)
         Text("ONE",fontSize=10.sp,color=Muted,letterSpacing=3.sp)
     }
 }
@@ -144,7 +144,7 @@ import java.util.*
 }
 @Composable private fun BottomBar(s:AppState,onVoice:()->Unit,onSimulator:()->Unit) {
     Row(Modifier.fillMaxWidth().height(66.dp),verticalAlignment=Alignment.CenterVertically) {
-        TextButton(onClick=onSimulator) {Icon(Icons.Outlined.Science,null,Modifier.size(15.dp),tint=Amber);Spacer(Modifier.width(6.dp));Text(if(s.sample?.source==DataSource.VEHICLE)"실차 연결 미지원 · 안전 제한" else "데모 모드 — 시뮬레이션 데이터",fontSize=11.sp,color=Amber)}
+        TextButton(onClick=onSimulator) {Icon(Icons.Outlined.Science,null,Modifier.size(15.dp),tint=Amber);Spacer(Modifier.width(6.dp));Text(if(s.sample?.source==DataSource.VEHICLE)if(s.sample?.connected==true)"차량 속도·기어 연결 · 읽기 전용" else "차량 신호 미확인 · 안전 제한" else "데모 모드 — 시뮬레이션 데이터",fontSize=11.sp,color=Amber)}
         Spacer(Modifier.weight(1f))
         Text(if(!s.locationAvailable)"위치 사용 불가" else if(!s.networkAvailable)"오프라인 · 로컬 실행" else "모든 순간, 하나의 경험",color=Muted,fontSize=11.sp)
         Spacer(Modifier.width(18.dp))

@@ -51,14 +51,17 @@ import io.cabinos.core.*
 }
 @Composable fun SimulatorDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onLocation:()->Unit) {
     val selected by vm.scenario.collectAsStateWithLifecycle()
+    val vehicleStatus by vm.vehicleStatus.collectAsStateWithLifecycle()
+    val pleosState by vm.pleosState.collectAsStateWithLifecycle()
     val running by vm.demoRunning.collectAsStateWithLifecycle()
     Dialog(onDismissRequest=onClose,properties=DialogProperties(usePlatformDefaultWidth=false)) {
         SurfacePanel(Modifier.widthIn(max=830.dp).fillMaxWidth(.93f).heightIn(max=680.dp)) {
-            Row(verticalAlignment=Alignment.CenterVertically){Icon(Icons.Outlined.Science,null,tint=Amber);Spacer(Modifier.width(10.dp));Text("차량 시뮬레이터",fontSize=22.sp);Spacer(Modifier.weight(1f));IconButton(onClick=onClose){Icon(Icons.Outlined.Close,"닫기")}}
-            Text("데모 모드 — 시뮬레이션 데이터 · 실제 차량을 제어하지 않습니다.",fontSize=12.sp,color=Amber)
+            Row(verticalAlignment=Alignment.CenterVertically){Icon(Icons.Outlined.Science,null,tint=Amber);Spacer(Modifier.width(10.dp));Text(if(vm.automotive)"차량 신호 상태" else "차량 연결 / 시뮬레이터",fontSize=22.sp);Spacer(Modifier.weight(1f));IconButton(onClick=onClose){Icon(Icons.Outlined.Close,"닫기")}}
+            Text(if(selected=="실차 연결")"$vehicleStatus · 읽기 전용" else "데모 모드 — 시뮬레이션 데이터 · 실제 차량을 제어하지 않습니다.",fontSize=12.sp,color=Amber)
             Spacer(Modifier.height(16.dp))
             Column(Modifier.weight(1f,fill=false).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                 Row {Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Blue);Spacer(Modifier.width(10.dp));Pill("기어 ${s.sample?.gear?.name ?: "알 수 없음"}",Muted);Spacer(Modifier.width(10.dp));Pill("${s.sample?.speedKph?.toInt() ?: 0} km/h",Muted)}
+                if(!vm.automotive) {
                 listOf(listOf("주행","신호 대기","주차","충전"),listOf("충전 15분","출발 준비","SDK 끊김","실차 연결")).forEach { row ->Row(horizontalArrangement=Arrangement.spacedBy(7.dp)){row.forEach {name->ActionButton(name,{vm.selectScenario(name)},Modifier.weight(1f),if(selected==name)Mint else Muted)}} }
                 Row(horizontalArrangement=Arrangement.spacedBy(7.dp)) {
                     ActionButton("위험 이벤트 주입",{vm.engine.injectHazard()},Modifier.weight(1f),Red)
@@ -70,9 +73,16 @@ import io.cabinos.core.*
                     ActionButton("휴식 시작",{vm.start(SessionKind.RELAX,15)},Modifier.weight(1f),Mint,s.parkedAllowed)
                     ActionButton(if(running)"시나리오 중지" else "전체 시나리오 실행",{vm.runDemo()},Modifier.weight(2f),Amber)
                 }
+                }
                 if(selected=="실차 연결") {
-                    Text("Pleos 차량 신호는 미연결입니다. 위치 권한을 허용해도 주차 기능은 열리지 않습니다.",fontSize=11.sp,color=Amber)
-                    ActionButton("실제 위치 권한 허용",onLocation,Modifier.fillMaxWidth(),Blue)
+                    Text(pleosState.message,fontSize=12.sp,color=if(pleosState.brakePressed!=null)Mint else Amber)
+                    pleosState.brakePressed?.let { pressed ->
+                        val age=(s.nowMs-(pleosState.successfulReadAtMs ?: 0)).coerceAtLeast(0)/1000
+                        Text("브레이크 페달: ${if(pressed)"눌림" else "해제"} · ${age}초 전 SDK 읽기 · P 판정과 별개",fontSize=11.sp,color=Muted)
+                    }
+                    Text("AAOS CarPropertyManager · 속도 / 기어 읽기. 위치만으로 주차를 판단하지 않습니다. 충전·배터리 신호는 미연동입니다.",fontSize=11.sp,color=Amber)
+                    ActionButton("차량 서비스 다시 연결",{vm.selectScenario("실차 연결")},Modifier.fillMaxWidth(),Blue)
+                    ActionButton("실제 위치 권한 허용",onLocation,Modifier.fillMaxWidth(),Blue,s.parkedAllowed)
                 }
                 Text("P 상태가 1.5초 이상 확인되어야 정차 기능이 활성화됩니다. 신호 대기는 D 기어를 유지합니다. 전체 시나리오는 창을 닫아도 계속됩니다.",fontSize=11.sp,color=Muted)
                 HorizontalDivider(color=Line)

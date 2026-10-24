@@ -17,6 +17,8 @@ import java.util.UUID
 class CabinViewModel @Inject constructor(
     val engine:UnifiedVehicleContextEngine,
     private val simulator:SimulationVehicleProvider,
+    private val vehicle:VehicleStateProvider,
+    private val pleos:PleosVehicleReader,
     private val dao:CabinDao,
     val speech:AndroidSpeechProvider,
     private val location:AndroidLocationProvider,
@@ -36,6 +38,9 @@ class CabinViewModel @Inject constructor(
     val reply=mutableReply.asStateFlow()
     private val mutableScenario=MutableStateFlow(simulator.selected)
     val scenario=mutableScenario.asStateFlow()
+    val vehicleStatus=vehicle.status
+    val pleosState=pleos.state
+    val automotive=vehicle.automotive
     private val mutableAudio=MutableStateFlow<String?>(null)
     val audioPreset=mutableAudio.asStateFlow()
     private val mutableDemoRunning=MutableStateFlow(false)
@@ -55,6 +60,7 @@ class CabinViewModel @Inject constructor(
     fun mapUnavailable(){mutableNearbyStatus.value="지도 앱이나 브라우저가 설치되어 있지 않습니다."}
     private var foreground = true
     private val persistenceMutex = Mutex()
+    private val vehicleDiagnostics=VehicleDiagnostics()
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
     val storageStatus = mutableStorageStatus.asStateFlow()
     init {
@@ -62,10 +68,15 @@ class CabinViewModel @Inject constructor(
             val checkpoint=dao.checkpoint()
             engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
-            launch { simulator.samples.collect { if (foreground) engine.acceptVehicle(it) } }
+            launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
+            launch { vehicle.samples.collect { if (foreground && simulator.realMode) engine.acceptVehicle(it) } }
+            launch { combine(state,pleos.state) { app,sdk -> app to sdk }.collect { (app,sdk) ->
+                if(foreground)vehicleDiagnostics.record(app,sdk)
+            } }
+            if (foreground && simulator.realMode) { vehicle.start();if(automotive)pleos.start();location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
-                if (foreground) { simulator.heartbeat();engine.tick();liveNavigation.tick() }
+                if (foreground) { if(!simulator.realMode) simulator.heartbeat();engine.tick();liveNavigation.tick() }
                 if (!audio.playing) mutableAudio.value=null
             } }
             launch {
@@ -97,9 +108,15 @@ class CabinViewModel @Inject constructor(
         }
     }
     fun selectScenario(name:String) {
+        if(automotive && name!="실차 연결") { mutableReply.value="차량용 기기에서는 실제 차량 신호만 사용합니다.";return }
+        if(name=="실차 연결") {demoJob?.cancel();mutableDemoRunning.value=false}
+        engine.invalidateTelemetry("차량 신호 출처를 다시 확인합니다.")
         simulator.select(name);mutableScenario.value=name
-        if(name=="실차 연결") { location.start();engine.setConnectivity(location=false);mutableReply.value="Pleos SDK가 연결되지 않았습니다. 주차 확인 전까지 안전 제한을 유지합니다." }
-        else { location.stop();engine.setConnectivity(location=true) }
+        if(simulator.realMode) {
+            engine.acceptVehicle(vehicle.samples.value.copy(connected=false,parkingReliable=false))
+            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleos.start()};location.start()}
+            engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
+        } else {pleos.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
     }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
@@ -134,11 +151,10 @@ class CabinViewModel @Inject constructor(
             demoJob?.cancel();mutableDemoRunning.value=false
             audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            location.stop();cancelNearby()
+            pleos.stop();vehicle.stop();location.stop();cancelNearby()
         } else {
-            simulator.heartbeat()
-            engine.acceptVehicle(simulator.samples.value)
-            if (simulator.realMode) location.start()
+            if (simulator.realMode) {vehicle.start();if(automotive)pleos.start();engine.acceptVehicle(vehicle.samples.value);location.start()}
+            else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
     }
     fun mapSelect(id:String) { if(state.value.parkedAllowed)mutableMapSelection.value=id }
@@ -205,6 +221,7 @@ class CabinViewModel @Inject constructor(
     }
     fun navigation() { if(state.value.sample?.source!=DataSource.VEHICLE || !navigation.resumeNavigation()) mutableReply.value="사용 가능한 실제 위치 또는 지도 앱이 없습니다. Pleos 경로 연동은 지원 확인 후 연결해야 합니다." }
     fun runDemo() {
+        if(automotive || simulator.realMode) {mutableReply.value="데모는 일반 Android 기기의 시뮬레이션 모드에서 실행할 수 있습니다.";return}
         if(mutableDemoRunning.value) { demoJob?.cancel();mutableDemoRunning.value=false;return }
         demoJob=viewModelScope.launch {
             mutableDemoRunning.value=true
@@ -221,5 +238,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
+    override fun onCleared() { pleos.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

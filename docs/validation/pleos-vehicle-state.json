@@ -1,0 +1,91 @@
+{
+  "checkedAtUtc": "2026-10-24T07:58:34.544967+00:00",
+  "baseCommit": "d9ceaa053237a5a507420472c0801bf38f5760f3",
+  "buildProfile": "AAOS base (pleosSdk=false)",
+  "tests": {
+    "core": {
+      "tests": 120,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 92,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "recordingEvidenceTests": {
+    "tests": 4,
+    "failures": 0,
+    "fixtureOnly": true
+  },
+  "builds": {
+    "debug": "passed",
+    "releaseUnsigned": "passed",
+    "lintDebug": {
+      "errors": 0,
+      "warnings": 5
+    }
+  },
+  "logSha256": {
+    "tests": "4a61d7ec30dba2ee91340633914da6237a0bb33f44914f834309613cc84f5f3e",
+    "release": "e0c3acc5025273025a3956475510eee231ed3053cb62d39ff46e9f0ab57d1019",
+    "lint": "7134afd936558a836965e5409d89b30ef97d58b38a27e510d9a5f43089d8e4f9"
+  },
+  "sourceSha256": {
+    "app/build.gradle.kts": "a4251e8a474a5f9c01ebe50ddb7da940257303defd63a9f939316c6c1bcc5b8c",
+    "app/src/main/AndroidManifest.xml": "d67c52b2c20e3c7454fb0159d0d58c01ce031574cefc9a11051f6b5d20974058",
+    "app/src/main/java/io/cabinos/one/di/AppModule.kt": "86261b56bc980b0697793c50fbbe4f8748141fb5db8cb08db4d28a51e8e85827",
+    "app/src/main/java/io/cabinos/one/platform/AndroidCarPropertyTransport.kt": "b0696d1d9ae8cf6f8a2e8b41511a77420f6cad7178b9e1368c1f6c2e3d98dab2",
+    "app/src/main/java/io/cabinos/one/platform/PleosVehicleReader.kt": "98e8e7b986039434516ca51cfa3517c55531de3fd9a486cf34a355bb7e135fd9",
+    "app/src/main/java/io/cabinos/one/platform/Providers.kt": "3ae028cefeae7a555a9f0266cfefe9727edbce581f17e276164f6f869526366e",
+    "app/src/main/java/io/cabinos/one/platform/VehicleDiagnostics.kt": "37efc652a2d11d59d66acfd636277ba3d9c9f8d6be0c1bd74cc1dafbef6d2bec",
+    "app/src/main/java/io/cabinos/one/platform/VehicleSignalGate.kt": "0ef6c12788388ded86305c213d5a7d0c5912396c12f68220cebf209403bf172b",
+    "app/src/main/java/io/cabinos/one/platform/VehicleStateProvider.kt": "341e46aff1d11d4335fd9014d90374aca9a474f9e49d9ad1727b5b169ab5a956",
+    "app/src/main/java/io/cabinos/one/ui/CabinApp.kt": "edf060bbb764b13ec3d0c66f202ef6652483dae6eaa4596ed377d79edffcb506",
+    "app/src/main/java/io/cabinos/one/ui/CabinViewModel.kt": "4f010c7cf9d274883814f659421f5c48b7002898bb086b31f68b33f198357c29",
+    "app/src/main/java/io/cabinos/one/ui/Dashboards.kt": "df8f47e3e922912910b224bcbcb8baa9b151a2e732b3a0d3b77e8842a83cda8e",
+    "app/src/main/java/io/cabinos/one/ui/Dialogs.kt": "c0d0cdcc930755e2aa8c66174e9003bbb8babb84316069d9a5f81d5621aea395",
+    "app/src/main/java/io/cabinos/one/ui/SessionScreens.kt": "81ee32b4b42dae0674d1fb3ff0ecb114a34e284c4a2148a129c357d4036628dd",
+    "app/src/pleos/java/io/cabinos/one/platform/PleosSdkFactory.kt": "f29af73ecba7259675110afee06d449e55326af99df6607cf8af0c3ea818a267",
+    "app/src/test/java/io/cabinos/one/AutomotiveApplicationTest.kt": "3ddb79216e4d034622682c052e718035b937241337f1530cb6635aa17747956b",
+    "app/src/test/java/io/cabinos/one/platform/PlatformTest.kt": "a2f9b553f8286b3ad06c9948c0aaff2657a234af7d99a4bf231be89b2df49158",
+    "app/src/test/java/io/cabinos/one/platform/PleosVehicleReaderTest.kt": "ea00a10cc883cfdc4321f1bf8658f6b5c0ab98aaab23e8e4fddbfd3824a51453",
+    "app/src/test/java/io/cabinos/one/platform/VehicleSignalGateTest.kt": "7cbb4273af3291e0b9e7dea9ee6f75d89c8d6fcaaba037199a4f2a199d5d475d",
+    "app/src/test/java/io/cabinos/one/platform/VehicleStateProviderTest.kt": "a8e809cdfdbc745bc4658aef0b19afed2f4d9fdf88ac82e6aef45ae7c93fdf49",
+    "app/src/withoutPleos/java/io/cabinos/one/platform/PleosSdkFactory.kt": "4eab9f2d81fbd08f1808a150580ed961c9110c72927bc3ddc069ba1bcc9be68c",
+    "scripts/package-submission.sh": "f6dc9b486eee6665cd429142e46f60b9ccc32fe39c6fadae9fa2e2e9f65330e9",
+    "scripts/record-vehicle-emulator.py": "e967bde1bc606a522605ea9d84b6815506fbabdcb376d943e1ca987160966b7e",
+    "scripts/tests/test_vehicle_recording.py": "8cde8b9c0c1749c678682c9e6c11c77c98a4b501cbad37693b4fc4e608cf616e",
+    "settings.gradle.kts": "f18c4fc22f0bb63e13d623e31f20edbbfe67bda0cf323cb7ab83ae9e28ed68ab"
+  },
+  "debugApkSha256": "f68317df1d319a394afd7a8b509c9999dc08638ecfef2d9455840e5d92788455",
+  "unsignedReleaseApkSha256": "c083fb28d3837909a9079de213e1ccbedc1d3deeec3981406fe2ee62878e92f2",
+  "publishedApk": {
+    "version": "0.10.5",
+    "sha256": "f0656b16778e06c8c5b53edb199abf9622b562f4c598f5d43c7c2a58b008935c",
+    "updated": false
+  },
+  "officialPleosSdk": {
+    "version": "2.3.2",
+    "typedAdapterSourceAdded": true,
+    "aarDownloaded": false,
+    "profileCompiled": false,
+    "serviceReadVerified": false
+  },
+  "pleosEmulator": {
+    "imageDownloaded": false,
+    "executed": false,
+    "newVideoRecorded": false,
+    "kvmPresent": false
+  },
+  "blocker": {
+    "host": "nexus-playground.pleos.ai",
+    "observedFailure": "Tunnel connection failed: 403 Forbidden (official emulator image index)",
+    "networkDraftDomainAdded": true,
+    "runtimeApplicationConfirmed": false
+  },
+  "submissionReady": false
+}

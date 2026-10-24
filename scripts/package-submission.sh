@@ -4,10 +4,16 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 source scripts/env.sh
+PLEOS_FLAGS=()
+if [ "${CABINOS_PLEOS_SDK:-false}" = "true" ]; then
+    PLEOS_FLAGS=(-PpleosSdk=true)
+else
+    printf 'Building AAOS/base profile: official Pleos SDK is NOT included. Use CABINOS_PLEOS_SDK=true for the SDK submission candidate.\n'
+fi
 # Keep release compilation and lint analysis in separate invocations (K2/UAST stability).
-./gradlew :core:test :app:testDebugUnitTest --console=plain
-./gradlew :app:assembleRelease --console=plain
-./gradlew :app:lintDebug --console=plain
+./gradlew :core:test :app:testDebugUnitTest --console=plain "${PLEOS_FLAGS[@]}"
+./gradlew :app:assembleRelease --console=plain "${PLEOS_FLAGS[@]}"
+./gradlew :app:lintDebug --console=plain "${PLEOS_FLAGS[@]}"
 SIGNING_DIR="${CABINOS_SIGNING_DIR:-/workspace/.signing/cabinos-one}"
 mkdir -p "$SIGNING_DIR"
 chmod 700 "$SIGNING_DIR"

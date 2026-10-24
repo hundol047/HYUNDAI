@@ -5,9 +5,11 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
+val pleosSdkEnabled = providers.gradleProperty("pleosSdk").orNull == "true"
 android {
     namespace = "io.cabinos.one"
     compileSdk = 35
+    useLibrary("android.car", false)
     buildToolsVersion = "35.0.0"
     defaultConfig {
         applicationId = "io.cabinos.one"
@@ -15,8 +17,10 @@ android {
         targetSdk = 35
         versionCode = 15
         versionName = "0.10.5"
+        buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())
     }
     buildFeatures { compose = true; buildConfig = true }
+    sourceSets.getByName("main").java.srcDir(if (pleosSdkEnabled) "src/pleos/java" else "src/withoutPleos/java")
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -46,6 +50,7 @@ android {
 }
 ksp { arg("room.schemaLocation", "$projectDir/schemas") }
 dependencies {
+    if (pleosSdkEnabled) implementation("ai.pleos.playground:Vehicle:2.3.2")
     implementation(project(":core"))
     implementation("org.osmdroid:osmdroid-android:6.1.20")
     implementation(platform("androidx.compose:compose-bom:2024.12.01"))
