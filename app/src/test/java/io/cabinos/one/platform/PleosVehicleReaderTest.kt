@@ -23,11 +23,12 @@ class PleosVehicleReaderTest {
         var pending: ((Boolean?) -> Unit)? = null
         var deferred=false
         var energy: Int? = null
+        var energySupported=true
         var chargeSwitch: Boolean? = null
         var switchSupported=true
         override fun canReadChargeSwitch(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = run { switchChecks++;onComplete(switchSupported) }
         override fun readChargeSwitch(onComplete:(Boolean?)->Unit,onFailed:(Exception)->Unit) = run { switchReads++;readFailure?.let { onFailed(it);return };onComplete(chargeSwitch) }
-        override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = run { energyChecks++;onComplete(true) }
+        override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = run { energyChecks++;onComplete(energySupported) }
         override fun readEnergy(onComplete:(Int?)->Unit,onFailed:(Exception)->Unit) = run { energyReads++;readFailure?.let { onFailed(it);return };onComplete(energy) }
         override fun initialize(){initialized=true}
         override fun canRead(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) {
@@ -152,5 +153,25 @@ class PleosVehicleReaderTest {
         late(true);assertNull(reader.state.value.brakePressed)
         client.deferred=false;advanceTimeBy(1000);runCurrent()
         assertEquals(2,client.brakeChecks);assertEquals(false,reader.state.value.brakePressed);reader.stop()
+    }
+    @Test fun unreadableCapabilitiesRetryAfterThirtySecondsAndRecover() = runTest {
+        val client=FakeClient().apply { capability=false;energySupported=false;switchSupported=false;energy=68;chargeSwitch=true }
+        val reader=PleosVehicleReader({client},backgroundScope,{testScheduler.currentTime})
+        reader.start();runCurrent();advanceTimeBy(29000);runCurrent()
+        assertEquals(listOf(1,1,1),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        assertEquals(listOf(0,0,0),listOf(client.reads,client.energyReads,client.switchReads))
+        client.capability=true;client.energySupported=true;client.switchSupported=true
+        advanceTimeBy(1000);runCurrent()
+        assertEquals(listOf(2,2,2),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        assertEquals(68,reader.energy.value.percent);assertEquals(true,reader.energy.value.chargeSwitchOn)
+        advanceTimeBy(60000);runCurrent()
+        assertEquals(listOf(2,2,2),listOf(client.brakeChecks,client.energyChecks,client.switchChecks));reader.stop()
+    }
+    @Test fun stillUnreadableCapabilitiesRetryOnlyEveryThirtySeconds() = runTest {
+        val client=FakeClient().apply { capability=false;energySupported=false;switchSupported=false }
+        val reader=PleosVehicleReader({client},backgroundScope,{testScheduler.currentTime})
+        reader.start();runCurrent();advanceTimeBy(60000);runCurrent()
+        assertEquals(listOf(3,3,3),listOf(client.brakeChecks,client.energyChecks,client.switchChecks))
+        assertNull(reader.energy.value.percent);assertNull(reader.state.value.brakePressed);reader.stop()
     }
 }

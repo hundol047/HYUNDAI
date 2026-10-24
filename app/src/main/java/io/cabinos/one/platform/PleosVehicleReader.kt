@@ -50,10 +50,14 @@ class PleosVehicleReader internal constructor(
                 val energyClient = client
                 launch {
                     var capability: Boolean? = null
+                    var checkedAt=0L
                     while(isActive && token == generation) {
                         try {
                             val percent = withTimeout(3_000) {
-                                if(capability==null) capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadEnergy(done,failed) }
+                                if(capability==null || (capability==false && clock()-checkedAt !in 0..29_999)) {
+                                    capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadEnergy(done,failed) }
+                                    checkedAt=clock()
+                                }
                                 if(capability==true)
                                     awaitCallback<Int?> { done, failed -> energyClient.readEnergy(done,failed) } else null
                             }
@@ -68,10 +72,14 @@ class PleosVehicleReader internal constructor(
                 }
                 launch {
                     var capability: Boolean? = null
+                    var checkedAt=0L
                     while (isActive && token == generation) {
                         val value = try {
                             withTimeout(3_000) {
-                                if(capability==null) capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadChargeSwitch(done,failed) }
+                                if(capability==null || (capability==false && clock()-checkedAt !in 0..29_999)) {
+                                    capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadChargeSwitch(done,failed) }
+                                    checkedAt=clock()
+                                }
                                 if(capability==true)
                                     awaitCallback<Boolean?> { done, failed -> energyClient.readChargeSwitch(done,failed) } else null
                             }
@@ -84,10 +92,14 @@ class PleosVehicleReader internal constructor(
                     }
                 }
                 var brakeCapability: Boolean? = null
+                var brakeCheckedAt=0L
                 while (isActive && token == generation) {
                     try {
                         val (supported, pressed) = withTimeout(3_000) {
-                            if(brakeCapability==null) brakeCapability=awaitCallback<Boolean> { done, failed -> client.canRead(done, failed) }
+                            if(brakeCapability==null || (brakeCapability==false && clock()-brakeCheckedAt !in 0..29_999)) {
+                                brakeCapability=awaitCallback<Boolean> { done, failed -> client.canRead(done, failed) }
+                                brakeCheckedAt=clock()
+                            }
                             val supported = brakeCapability==true
                             supported to if(supported) awaitCallback<Boolean?> { done, failed -> client.read(done, failed) } else null
                         }
