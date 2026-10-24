@@ -160,6 +160,7 @@ import kotlin.math.min
 @Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
     if(LocalCompactWindow.current) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
             Text(if(s.context==VehicleContext.UNKNOWN) "차량 상태를 확인할 수 없습니다." else "안전한 여정, 함께할게요.",color=White,fontSize=25.sp)
             Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Amber)
             SurfacePanel(Modifier.fillMaxWidth()) {
@@ -174,6 +175,7 @@ import kotlin.math.min
         return
     }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
         Row(verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(if(s.context==VehicleContext.UNKNOWN)"안전한 연결을 기다립니다." else "안전한 여정, 함께할게요.",fontSize=27.sp,fontWeight=FontWeight.SemiBold,color=White)

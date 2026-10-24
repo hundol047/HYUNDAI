@@ -50,6 +50,7 @@ import java.util.Locale
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
             if(canPlan)Row {TextButton(onClick={languageDialog=true}){Text("언어 · ${ui.language}",color=Mint)};TextButton(onClick={settings=true}){Text("서비스 설정",color=Muted)}}
         }
+        Text("데모 · 차량에서는 기본 내비 사용",color=Amber,fontSize=12.sp)
         Text(if(g.active||g.arrived)g.status else ui.notice,color=if(g.offRoute||g.directionUncertain||!g.tracking&&g.active)Amber else Mint,fontSize=12.sp)
         Text(ui.gpsNotice+if(ui.gpsAgeSeconds!=null)" · ${ui.gpsAgeSeconds}초 전 수신" else "",color=if(ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Amber else Muted,fontSize=11.sp)
         if(canPlan&&ui.gpsConnection in listOf(GpsConnection.POOR,GpsConnection.STALE,GpsConnection.DENIED,GpsConnection.DISABLED))Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){

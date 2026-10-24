@@ -42,6 +42,7 @@ class ApplicationTest {
                 gpsConnection=if(ready)io.cabinos.one.platform.GpsConnection.READY else io.cabinos.one.platform.GpsConnection.STALE),vm.liveNavigation,{})
         }}}}
         show(true)
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.onNodeWithText(hint).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("식당 · OSM / Nominatim").assertIsDisplayed()
         capture("navigation-namesake")
@@ -58,6 +59,7 @@ class ApplicationTest {
         }
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.runOnIdle { vm.selectScenario("신호 대기") }
         compose.onNodeWithText("신호 대기 중").assertIsDisplayed()
         assertFalse(vm.state.value.parkedAllowed)
