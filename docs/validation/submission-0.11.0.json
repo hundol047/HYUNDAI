@@ -6,7 +6,7 @@
     "Vehicle": "2.3.2",
     "NaviHelper": "3.0.5"
   },
-  "apkSha256": "050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4",
+  "apkSha256": "079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5",
   "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
   "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
   "buildResult": "SUCCESS",
@@ -37,8 +37,18 @@
     "downloadVerified": true,
     "runtimeVerified": false,
     "publicVideo": null,
+    "sdkEnergyReadVerified": false,
+    "installedApkHashMatched": false,
+    "status": "R8 fix rebuilt and signed; current candidate awaiting official device revalidation"
+  },
+  "submissionReady": false,
+  "previousCandidateRuntime": {
+    "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+    "downloadVerified": true,
+    "runtimeVerified": false,
+    "publicVideo": null,
     "softwareExecution": "official fingerprint and Virtual Console HTTP 200; vehicle services repeatedly aborted; Android boot not completed",
-    "kvmDiagnosticRun": 40087571128,
+    "kvmDiagnosticRun": 40088801025,
     "androidBootVerified": true,
     "apkLaunchVerified": true,
     "aaosParkZeroObserved": true,
@@ -47,7 +57,11 @@
     "naviEtaPlanningVerified": false,
     "sdkEnergyReadVerified": false,
     "consoleScenarioHttpStatus": 503,
-    "consoleScenarioVerified": false
+    "consoleScenarioVerified": false,
+    "apkSha256": "050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4",
+    "installedApkHashMatched": true,
+    "sdkFailure": "Gson TypeToken generic signature removed by R8",
+    "consoleError": "emulator_inactive"
   },
-  "submissionReady": false
+  "releaseFix": "Preserve Gson TypeToken signatures and Vehicle wire model fields using Gson official R8 guidance"
 }

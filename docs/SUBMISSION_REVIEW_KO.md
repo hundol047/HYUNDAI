@@ -1,6 +1,6 @@
 # 제출 검토표 — 0.11.0
 
-현재 **공식 SDK 포함 release APK의 빌드·서명과 공식 Pleos에서 APK 실행은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
+현재 **공식 SDK 포함 release APK의 빌드·서명과 이전 후보의 공식 Pleos 실행은 확인**, SDK 차량 값 변화에 따른 전체 시나리오·공개 영상은 미완료입니다. main 병합은 승인 전 수행하지 않습니다. 과거 0.11.0-rc1은 SDK 없는 AAOS 후보였으며 이 문서와 구분합니다.
 
 ## 완료된 항목
 
@@ -16,7 +16,7 @@
 | 문서 | README 필수 4항목·라이선스 표·main clone, SDK 핵심 기능 표, 로컬 PC 실행·녹화 명령 |
 | 공식 이미지 | Pleos Connect 2.1.0 / API 34 다운로드, 배포 인덱스 SHA-1 대조·설치 완료 |
 
-APK SHA-256: `050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4`.
+APK SHA-256: `079108b2b298dffcb3327ae54e3df9cdc36ca3a56ba73cadaf9f460ee4b011d5`.
 
 팀 서명 인증서 SHA-256: `33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0`. 키·비밀번호는 저장소에 포함하지 않습니다.
 
@@ -31,6 +31,10 @@ sha256sum -c apk/SHA256SUMS
 
 JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 없는 Robolectric에서는 bind 실패를 설정하고 SDK의 비동기 재연결 작업이 다른 테스트에 남지 않도록 클래스별 JVM을 격리합니다. 이를 실제 차량 연결 성공으로 계산하지 않습니다. [기계 판독 기록](validation/submission-0.11.0.json).
 
+## release 최적화 오류 수정
+
+이전 후보(`050b9949…`)의 실제 Pleos 로그에서 Gson `TypeToken must be created with a type argument` 오류를 확인했습니다. Gson 공식 R8 설정에 따라 TypeToken 제네릭 정보와 Vehicle 데이터 모델 필드를 보존하도록 수정했습니다. SDK 전체 빌드 명령은 2분 12초에 성공했고 기존 팀 키로 다시 서명했습니다. 아래 장치 관측은 이전 후보의 기록이며, 현재 APK의 SDK 실제 응답은 재검증 대상입니다.
+
 ## 공식 Pleos 실제 실행 결과 — 2026-10-24
 
 공식 이미지 `Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys`를 KVM runner에서 부팅하여 제출 APK를 설치·실행했습니다.
@@ -39,7 +43,7 @@ JVM SDK 테스트는 실제 AAR를 로드합니다. 실제 Vehicle 서비스가 
 - `CAR_ENERGY`, `CAR_DRIVE`, `NAVI_ROUTE`, `NAVI_CUSTOM_MAP` 등 요청한 차량 권한의 `granted=true`를 확인했습니다.
 - NaviHelper의 `getDestinationInfo` → `onDestinationInfo` 콜백을 확인했습니다. 실제 목적지 ETA 값과 계획 반영까지 확인했다는 뜻은 아닙니다.
 - EvBattery SOC·충전 스위치와 Brake의 유효 응답을 받지 못했습니다. 앱의 실제 SDK SOC는 null이고 `sdkSocUsed=false`였습니다. 권한 부여만으로 SDK 연결 성공을 판단하지 않습니다.
-- 공식 Virtual Console의 속도·기어·SOC·충전 스위치 PUT 요청 모두 HTTP 503이었습니다. P→D 및 SOC 변화 입력이 성공하지 않았으므로 전체 안전 시나리오를 통과로 표시하지 않습니다.
+- 공식 Virtual Console의 속도·기어·SOC·충전 스위치 PUT 요청 모두 HTTP 503이었습니다. 오류 본문은 `{"error":"emulator_inactive"}`였습니다. P→D 및 SOC 변화 입력이 성공하지 않았으므로 전체 안전 시나리오를 통과로 표시하지 않습니다.
 - CI 진단 job의 성공은 수집 스크립트 완료를 뜻합니다. `submissionReady=false`를 유지하며 영상 검증 성공으로 계산하지 않습니다.
 
 장치 진단 실행 ID: `40087571128` / check `120853522514`. 같은 소스의 push CI `40087571319`, PR CI `40087574637`는 성공했습니다. 최신 변경의 CI 결과는 PR checks를 확인하세요.

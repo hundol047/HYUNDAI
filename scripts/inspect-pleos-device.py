@@ -50,9 +50,14 @@ def boot_diagnostics():
         lines=[line for line in log.read_text(errors='replace').splitlines() if any(x in line.lower() for x in ['error','failed','fatal','panic'])]
         notice('Pleos emulator startup errors','\n'.join(lines[-8:]) or 'No emulator error line captured')
     try:
-        crash=run('logcat','-d','-b','crash','-t','80',timeout=10,check=False).stdout
+        crash=run('logcat','-d','-b','crash','-t','300',timeout=10,check=False).stdout
         (a.output/'boot-crashes.txt').write_text(crash)
-        notice('Pleos boot crash summary','\n'.join(line for line in crash.splitlines() if any(x in line for x in ['Cmdline:','Abort message:','FATAL EXCEPTION','Caused by:'])))
+        lines=crash.splitlines()
+        selected=[]
+        for index,line in enumerate(lines):
+            if 'FATAL EXCEPTION' in line:selected.extend(lines[index:index+10])
+            elif 'Cmdline:' in line or 'Abort message:' in line:selected.append(line)
+        notice('Pleos boot crash summary','\n'.join(selected[-35:]))
     except subprocess.TimeoutExpired:
         notice('Pleos boot diagnostics','ADB crash read timed out')
 

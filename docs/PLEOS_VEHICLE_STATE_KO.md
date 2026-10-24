@@ -83,7 +83,7 @@ sha256sum -c apk/SHA256SUMS
 
 ## 6. Console 503 / SDK 값 누락 재현 시
 
-공식 이미지가 부팅되고 APK가 실행돼도 차량 데이터 서비스가 정상이라는 뜻은 아닙니다. 이 작업의 KVM 실행에서는 권한 부여와 AAOS P/0 수신은 확인했지만 Console 503·EvBattery 읽기 실패가 남았습니다. 다음 명령으로 로컬 PC의 동일 이미지와 비교하세요.
+공식 이미지가 부팅되고 APK가 실행돼도 차량 데이터 서비스가 정상이라는 뜻은 아닙니다. 이 작업의 KVM 실행에서는 권한 부여와 AAOS P/0 수신은 확인했지만 Console 503(`emulator_inactive`)·EvBattery 읽기 실패가 있었습니다. 앱의 Gson/R8 오류는 보존 규칙을 추가했으며 새 APK로 재검증합니다. 다음 명령으로 로컬 PC의 동일 이미지와 비교하세요.
 
 ```bash
 adb start-server
