@@ -38,7 +38,7 @@ def run(*args, timeout=30, check=True):
 
 def notice(title, value):
     # GitHub caps workflow-command annotations per step. Preserve decisive failures.
-    if title in ('Installed Pleos services', 'Console scenario input failed', 'Pleos actual visible text'):
+    if title in ('Installed Pleos services', 'Console scenario input failed', 'Pleos actual visible text', 'Actual vehicle permission grants', 'Pleos emulator startup errors'):
         return
     text=json.dumps(value,ensure_ascii=False) if not isinstance(value,str) else value
     text=text.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
@@ -120,6 +120,29 @@ for endpoint in ['/', '/vehicle/catalog', '/vehicle/state']:
         (a.output / ('console'+endpoint.replace('/','-')+('.html' if endpoint=='/' else '.json'))).write_bytes(data)
     except OSError as error:
         notice('Console diagnostic read failed',endpoint+': '+str(error))
+# If the official Console reports an inactive emulator, try only the official
+# emulator app's advertised launcher activity, like opening it from the launcher.
+# Never write private system properties or substitute synthetic SDK readings.
+try:
+    console_state=json.loads((a.output/'console-vehicle-state.json').read_text())
+except (OSError,ValueError):
+    console_state={}
+if not console_state.get('controls',{}).get('emulator_active',False):
+    resolved=run('shell','cmd','package','resolve-activity','--brief','-a','android.intent.action.MAIN',
+                 '-c','android.intent.category.LAUNCHER','ai.pleos.hardware.vehicle.emulator',check=False).stdout.strip()
+    component=next((line for line in resolved.splitlines() if line.startswith('ai.pleos.hardware.vehicle.emulator/')),None)
+    if component:
+        launched=run('shell','am','start','-W','-n',component,timeout=60,check=False)
+        notice('Official emulator launcher',launched.stdout[-1200:])
+        time.sleep(5)
+        run('shell','uiautomator','dump','/sdcard/official-emulator.xml',timeout=45,check=False)
+        copied=run('pull','/sdcard/official-emulator.xml',str(a.output/'official-emulator.xml'),check=False)
+        if copied.returncode==0:
+            ui=ET.parse(a.output/'official-emulator.xml')
+            notice('Official emulator visible controls',[node.get('text') for node in ui.iter('node') if node.get('text')][:30])
+    else:
+        notice('Official emulator launcher','No advertised launcher activity; no private activation API attempted')
+
 # Public Console inputs target this verified emulator, not the app simulator.
 scenario_ready=True
 for endpoint in ['/vehicle/controls?speed=0&accelerator=0&brake=0','/vehicle/gear?gear=Park',
