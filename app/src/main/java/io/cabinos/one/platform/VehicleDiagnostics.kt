@@ -14,7 +14,8 @@ internal class VehicleDiagnostics {
         val sample=state.sample ?: return
         val key=listOf(sample.source,sample.connected,sample.speedKph,sample.gear,state.parkedAllowed,
             pleos.included,pleos.brakePressed,pleos.successfulReadAtMs,energy.percent,energy.readAtMs,
-            sample.batteryPercent,sample.charging,sample.chargeRemainingSeconds)
+            sample.batteryPercent,sample.charging,sample.chargeRemainingSeconds,energy.chargeSwitchOn,energy.chargeReadAtMs,
+            state.schedule.departureAtMs,state.schedule.availableSeconds,state.chargeTargetPercent,state.session?.status)
         if(key==last)return
         last=key
         Log.i("CabinVehicle",JSONObject().apply {
@@ -29,6 +30,14 @@ internal class VehicleDiagnostics {
             put("chargeRemainingSeconds",sample.chargeRemainingSeconds ?: JSONObject.NULL)
             put("sdkBatteryPercent",energy.percent ?: JSONObject.NULL)
             put("sdkBatteryReadAtMs",energy.readAtMs ?: JSONObject.NULL)
+            put("sdkChargeSwitch",energy.chargeSwitchOn ?: JSONObject.NULL)
+            put("sdkChargeReadAtMs",energy.chargeReadAtMs ?: JSONObject.NULL)
+            put("sdkSocUsed",sample.pleosSoc)
+            put("departureAtMs",state.schedule.departureAtMs ?: JSONObject.NULL)
+            put("availableSeconds",state.schedule.availableSeconds)
+            put("chargeTargetPercent",state.chargeTargetPercent ?: JSONObject.NULL)
+            put("planSource",state.schedule.estimateLabel)
+            put("sessionStatus",state.session?.status?.name ?: JSONObject.NULL)
         }.toString())
     }
 }

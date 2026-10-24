@@ -15,6 +15,10 @@ class PleosVehicleReaderTest {
         var pending: ((Boolean?) -> Unit)? = null
         var deferred=false
         var energy: Int? = null
+        var chargeSwitch: Boolean? = null
+        var switchSupported=true
+        override fun canReadChargeSwitch(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = onComplete(switchSupported)
+        override fun readChargeSwitch(onComplete:(Boolean?)->Unit,onFailed:(Exception)->Unit) = onComplete(chargeSwitch)
         override fun canReadEnergy(onComplete:(Boolean)->Unit,onFailed:(Exception)->Unit) = onComplete(true)
         override fun readEnergy(onComplete:(Int?)->Unit,onFailed:(Exception)->Unit) = onComplete(energy)
         override fun initialize(){initialized=true}
@@ -67,6 +71,21 @@ class PleosVehicleReaderTest {
             client.pending!!.invoke(true);client.pending!!.invoke(false)
             assertNull(reader.state.value.brakePressed);assertTrue(client.released)
         } finally {scope.cancel()}
+    }
+    @Test fun chargeSwitchReadIsIndependentAndClearsOnStop() {
+        for(value in listOf(true,false,null)) {
+            val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)
+            try {
+                val client=FakeClient().apply { energy=75;chargeSwitch=value;failure=SecurityException("brake denied") }
+                val reader=PleosVehicleReader({client},scope,{1234})
+                reader.start()
+                assertEquals(75,reader.energy.value.percent)
+                assertEquals(value,reader.energy.value.chargeSwitchOn)
+                assertEquals(if(value==null)null else 1234L,reader.energy.value.chargeReadAtMs)
+                reader.stop();assertNull(reader.energy.value.chargeSwitchOn)
+                client.switchSupported=false;reader.start();assertNull(reader.energy.value.chargeSwitchOn);reader.stop()
+            } finally {scope.cancel()}
+        }
     }
     @Test fun buildWithoutOfficialSdkExplicitlyReportsAbsence() {
         val reader=PleosVehicleReader(null)

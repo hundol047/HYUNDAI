@@ -73,8 +73,15 @@ class CabinViewModel @Inject constructor(
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
             launch { combine(vehicle.samples,pleos.energy) { sample,energy ->
                 val fresh = energy.readAtMs?.let { System.currentTimeMillis()-it in 0..3_000 } == true
-                if(sample.connected && fresh && energy.percent!=null) sample.copy(batteryPercent=energy.percent) else sample
+                val chargeFresh=energy.chargeReadAtMs?.let { System.currentTimeMillis()-it in 0..3_000 } == true
+                sample.copy(batteryPercent=if(sample.connected && fresh && energy.percent!=null) energy.percent else sample.batteryPercent,
+                    pleosSoc=sample.connected && fresh && energy.percent!=null,
+                    // Switch ON alone does not prove current is flowing. OFF vetoes a charging budget.
+                    charging=sample.charging && !(chargeFresh && energy.chargeSwitchOn==false))
             }.collect { if (foreground && simulator.realMode) engine.acceptVehicle(it) } }
+            launch { pleosNavigation.state.collect { nav ->
+                if(foreground && simulator.realMode) engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
+            } }
             launch { combine(state,pleos.state,pleos.energy) { app,sdk,energy -> Triple(app,sdk,energy) }.collect { (app,sdk,energy) ->
                 if(foreground)vehicleDiagnostics.record(app,sdk,energy)
             } }
@@ -122,6 +129,12 @@ class CabinViewModel @Inject constructor(
             if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();pleos.start();pleosNavigation.start()};location.start()}
             engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
         } else {pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
+    }
+    fun arrival(minutes:Int?) {
+        if(engine.setArrivalInMinutes(minutes)) {
+            val nav=pleosNavigation.state.value
+            engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
+        }
     }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }

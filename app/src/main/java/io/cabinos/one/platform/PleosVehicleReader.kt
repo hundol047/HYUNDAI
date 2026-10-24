@@ -11,6 +11,8 @@ internal interface PleosBrakeClient {
     fun read(onComplete: (Boolean?) -> Unit, onFailed: (Exception) -> Unit)
     fun canReadEnergy(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) = onComplete(false)
     fun readEnergy(onComplete: (Int?) -> Unit, onFailed: (Exception) -> Unit) = onComplete(null)
+    fun canReadChargeSwitch(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) = onComplete(false)
+    fun readChargeSwitch(onComplete: (Boolean?) -> Unit, onFailed: (Exception) -> Unit) = onComplete(null)
     fun release()
 }
 
@@ -20,7 +22,8 @@ data class PleosReadState(
     val brakePressed: Boolean? = null,
     val successfulReadAtMs: Long? = null,
 )
-data class PleosEnergyState(val percent: Int? = null, val readAtMs: Long? = null, val message: String = "EvBattery 수신 대기")
+data class PleosEnergyState(val percent: Int? = null, val readAtMs: Long? = null, val message: String = "EvBattery 수신 대기",
+    val chargeSwitchOn: Boolean? = null, val chargeReadAtMs: Long? = null)
 
 /** Official SDK brake status is diagnostic only: pressing a pedal never proves P gear. */
 class PleosVehicleReader internal constructor(
@@ -53,10 +56,24 @@ class PleosVehicleReader internal constructor(
                                     awaitCallback<Int?> { done, failed -> energyClient.readEnergy(done,failed) } else null
                             }
                             mutableEnergy.value = if(percent != null && percent in 0..100)
-                                PleosEnergyState(percent,clock(),"Pleos EvBattery 수신") else PleosEnergyState(message="EvBattery 미지원 또는 유효한 값 없음")
-                        } catch (_: TimeoutCancellationException) { mutableEnergy.value = PleosEnergyState(message="EvBattery 응답 시간 초과") }
+                                mutableEnergy.value.copy(percent=percent,readAtMs=clock(),message="Pleos EvBattery 수신") else mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 미지원 또는 유효한 값 없음")
+                        } catch (_: TimeoutCancellationException) { mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 응답 시간 초과") }
                         catch(error: CancellationException) { throw error }
-                        catch (_: Exception) { mutableEnergy.value = PleosEnergyState(message="EvBattery 읽기 실패 · 권한/지원 확인") }
+                        catch (_: Exception) { mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 읽기 실패 · 권한/지원 확인") }
+                        delay(1_000)
+                    }
+                }
+                launch {
+                    while (isActive && token == generation) {
+                        val value = try {
+                            withTimeout(3_000) {
+                                if(awaitCallback<Boolean> { done, failed -> energyClient.canReadChargeSwitch(done,failed) })
+                                    awaitCallback<Boolean?> { done, failed -> energyClient.readChargeSwitch(done,failed) } else null
+                            }
+                        } catch (_: TimeoutCancellationException) { null }
+                        catch (error: CancellationException) { throw error }
+                        catch (_: Exception) { null }
+                        mutableEnergy.value=mutableEnergy.value.copy(chargeSwitchOn=value,chargeReadAtMs=if(value!=null)clock() else null)
                         delay(1_000)
                     }
                 }

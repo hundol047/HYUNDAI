@@ -20,6 +20,13 @@ internal object PleosSdkFactory {
         override fun read(onComplete: (Boolean?) -> Unit, onFailed: (Exception) -> Unit) {
             vehicle.getBrake().getCurrentBrakePedalStatus(onComplete = onComplete, onFailed = onFailed)
         }
+        override fun canReadChargeSwitch(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) {
+            vehicle.getEvBattery().checkEvChargeSwitchCapabilities(
+                onComplete={ config -> onComplete(config.accessType == AccessType.READ || config.accessType == AccessType.READ_WRITE) },
+                onFailed=onFailed)
+        }
+        override fun readChargeSwitch(onComplete: (Boolean?) -> Unit, onFailed: (Exception) -> Unit) =
+            vehicle.getEvBattery().getEvChargeSwitchState(onComplete=onComplete,onFailed=onFailed)
         override fun release() = vehicle.release()
         override fun canReadEnergy(onComplete: (Boolean) -> Unit, onFailed: (Exception) -> Unit) {
             vehicle.getEvBattery().checkEvBatteryStateOfChargeCapabilities(

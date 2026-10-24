@@ -15,8 +15,8 @@ android {
         applicationId = "io.cabinos.one"
         minSdk = 29
         targetSdk = 35
-        versionCode = 16
-        versionName = "0.11.0-rc1"
+        versionCode = 17
+        versionName = "0.11.0"
         buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())
     }
     buildFeatures { compose = true; buildConfig = true }

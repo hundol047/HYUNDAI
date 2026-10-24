@@ -39,6 +39,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             }
         }
         ActionButton(if(vm.automotive) "차량 내비게이션에서 주변 찾기" else "지도에서 주변 찾기",onMap,Modifier.fillMaxWidth())
+        VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=12.sp)
     }
     if(timeDialog) WaitingDialog(s,{timeDialog=false},{vm.waiting(it);timeDialog=false})

@@ -13,6 +13,7 @@ data class VehicleSample(
     val charging: Boolean = false, val batteryPercent: Int = 68,
     val chargeRemainingSeconds: Long? = null, val timestampMs: Long,
     val source: DataSource = DataSource.SIMULATION,
+    val pleosSoc: Boolean = false,
 )
 data class Preferences(
     val focusMinutes: Int = 25, val relaxMinutes: Int = 30,
@@ -49,6 +50,7 @@ data class AppState(
     val context: VehicleContext = VehicleContext.UNKNOWN,
     val parkedAllowed: Boolean = false, val echoRoadActive: Boolean = false,
     val stopSenseActive: Boolean = false, val cabinActive: Boolean = false,
+    val chargeTargetPercent: Int? = null, val arrivalTargetMs: Long? = null,
     val sample: VehicleSample? = null, val schedule: SharedSchedule = SharedSchedule(),
     val preferences: Preferences = Preferences(), val session: CabinSession? = null,
     val history: List<CabinSession> = emptyList(), val hazards: List<RankedHazard> = emptyList(),
