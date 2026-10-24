@@ -6,17 +6,25 @@
     "Vehicle": "2.3.2",
     "NaviHelper": "3.0.5"
   },
-  "apkSha256": "56d94d7433944c1cb566cc810e80969c1b863c1bfebcfbc13bf91710f991dabb",
+  "apkSha256": "050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4",
   "signingCertificateSha256": "33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0",
   "buildCommand": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug",
   "buildResult": "SUCCESS",
   "tests": {
     "core": {
-      "total": 129,
+      "total": 131,
       "failures": 0
     },
     "android": {
       "total": 101,
+      "failures": 0
+    },
+    "recorder": {
+      "total": 5,
+      "failures": 0
+    },
+    "gateway": {
+      "total": 11,
       "failures": 0
     }
   },
@@ -28,7 +36,9 @@
     "officialImageSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
     "downloadVerified": true,
     "runtimeVerified": false,
-    "publicVideo": null
+    "publicVideo": null,
+    "softwareExecution": "official fingerprint and Virtual Console HTTP 200; vehicle services repeatedly aborted; Android boot not completed",
+    "kvmDiagnosticRun": 40085750712
   },
   "submissionReady": false
 }

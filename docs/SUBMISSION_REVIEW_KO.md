@@ -9,14 +9,14 @@
 | 공식 SDK 컴파일 | Vehicle 2.3.2 / NaviHelper 3.0.5 실제 AAR, `-PpleosSdk=true` debug/release 성공 |
 | 핵심 기능 | SDK SOC 목표 → 활동 종료, 충전 스위치 → 충전 예산 유효성, NaviHelper 목적지 시간 → 도착 목표 기반 출발 마감. [API 매핑](SDK_CAPABILITIES.md) |
 | 안전 제한 | 0 + P 1.5초, 신호 만료 시 잠금, D/0 잠금. 차량 기기 데모 거부. DO 미선언 |
-| 테스트 | 공통 129/129, Android 101/101, 녹화 검사 5/5, 선택적 장소 게이트웨이 11/11. 실제 차량 신호 시험과 구분 |
+| 테스트 | 공통 131/131, Android 101/101, 녹화 검사 5/5, 선택적 장소 게이트웨이 11/11. 실제 차량 신호 시험과 구분 |
 | 린트 | 오류 0, 기존 경고 4 |
 | release | versionName 0.11.0 / versionCode 17, 최적화·비디버그 APK, 기존 팀 키 서명·zipalign 검사 |
 | 파일 | `apk/퓨처랩스_CabinOS_ONE_release.apk`, `apk/SHA256SUMS` |
 | 문서 | README 필수 4항목·라이선스 표·main clone, SDK 핵심 기능 표, 로컬 PC 실행·녹화 명령 |
 | 공식 이미지 | Pleos Connect 2.1.0 / API 34 다운로드, 배포 인덱스 SHA-1 대조·설치 완료 |
 
-APK SHA-256: `56d94d7433944c1cb566cc810e80969c1b863c1bfebcfbc13bf91710f991dabb`.
+APK SHA-256: `050b99491ef62218f43aa114ffe6860bcd98dd6dcac5d51d390d4345c5468db4`.
 
 팀 서명 인증서 SHA-256: `33ebb1d6c0e297bb734bb85f55d05edf6faf66375a9448ae2e73a3457e9bb9e0`. 키·비밀번호는 저장소에 포함하지 않습니다.
 

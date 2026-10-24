@@ -63,4 +63,15 @@ class PleosDeparturePlanTest {
         assertFalse(engine.startSession(SessionKind.FOCUS,10))
         assertFalse(engine.setChargeTarget(90));assertFalse(engine.setArrivalInMinutes(30))
     }
+    @Test fun chargingAnswerUsesVehicleEstimateInsteadOfEarlierArrivalDeadline() {
+        park();engine.setArrivalInMinutes(60);engine.updateNavigationEstimate(2700,42000,now)
+        assertTrue(engine.assistant("충전 얼마나 남았어?").contains("40분"))
+        assertEquals(15L,engine.state.value.schedule.waitingSeconds/60)
+    }
+    @Test fun manualPlanCannotBeSpokenAsAnUnsupportedChargingEstimate() {
+        park();sample(seconds=null);engine.setWaitingMinutes(30)
+        val answer=engine.assistant("충전 얼마나 남았어?")
+        assertTrue(answer.contains("제공하지 않았습니다"));assertFalse(answer.contains("30분"))
+    }
+
 }

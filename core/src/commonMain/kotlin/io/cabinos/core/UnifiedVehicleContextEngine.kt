@@ -253,7 +253,10 @@ class UnifiedVehicleContextEngine(
             c.contains("위험") -> if (!state.value.locationAvailable) "위치 정보가 없어 경로 위험을 확인할 수 없습니다." else state.value.hazards.firstOrNull()?.let { "전방 ${it.distanceMeters.toInt()}미터에 ${it.hazard.kind} 정보가 있습니다. 데모 데이터입니다." } ?: "현재 경로에 확인된 주요 위험 알림이 없습니다."
             c.contains("집중") -> if (startSession(SessionKind.FOCUS, minutes ?: state.value.preferences.focusMinutes)) "집중 세션을 시작했습니다." else state.value.message
             c.contains("휴식") -> if (startSession(SessionKind.RELAX, minutes ?: state.value.preferences.relaxMinutes)) "휴식 세션을 시작했습니다." else state.value.message
-            c.contains("충전") -> if (state.value.sample?.charging == true) "충전 예상 시간은 ${state.value.schedule.waitingSeconds / 60}분입니다. ${state.value.schedule.estimateLabel}입니다." else "현재 확인된 충전 정보가 없습니다."
+            c.contains("충전") -> if (state.value.sample?.charging == true) {
+                state.value.sample?.chargeRemainingSeconds?.let { "충전 잔여 시간은 ${(it+59)/60}분입니다. ${if(state.value.sample?.source==DataSource.SIMULATION) "시뮬레이션" else "차량 제공 예상"}입니다." }
+                    ?: "충전 상태는 확인했지만 차량이 남은 시간을 제공하지 않았습니다. 출발 계획을 직접 설정해 주세요."
+            } else "현재 확인된 충전 정보가 없습니다."
             c.contains("전에알려") -> if (state.value.parkedAllowed) { updatePreferences(state.value.preferences.copy(departureBufferMinutes = minutes ?: 5)); "출발 ${state.value.preferences.departureBufferMinutes}분 전에 알려드릴게요." } else "주행 중에는 출발 설정을 변경할 수 없습니다."
             c.contains("출발") -> if (state.value.parkedAllowed) { endSession(); "세션을 정리했습니다. 차량 신호가 주행을 확인하면 자동 전환합니다." } else "EchoRoad가 주행 상태를 확인하고 있습니다."
             c.contains("추천") || c.contains("쉴곳") -> if (state.value.parkedAllowed) state.value.activities.firstOrNull { it.feasible }?.let { "${it.activity.name}, 편도 약 ${it.activity.oneWaySeconds / 60}분입니다. ${if(it.activity.simulated) "예시 장소입니다." else "OpenStreetMap 등록 장소이며 도보 추정입니다."}" } ?: "지금은 차량 안에서 짧게 쉬는 것을 추천합니다." else "주행 중에는 주변 활동 추천을 사용할 수 없습니다."

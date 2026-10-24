@@ -44,8 +44,18 @@ def main():
         if 'android.hardware.type.automotive' in features:raise RuntimeError('Use the dedicated Pleos recorder for automotive devices')
         adb('install','-r',str(a.apk),timeout=120)
         package=adb('shell','dumpsys','package','io.cabinos.one').decode();(a.output/'package.txt').write_text(package)
-        path=adb('shell','pm','path','io.cabinos.one').decode().strip().removeprefix('package:')
-        installed=a.output/'installed.apk';adb('pull',path,str(installed))
+        installed=a.output/'installed.apk'
+        # Package-manager/ADB can briefly disagree immediately after installation.
+        # Re-read the path on each bounded retry; the exact-file hash remains mandatory.
+        for attempt in range(3):
+            path=adb('shell','pm','path','io.cabinos.one').decode().strip().removeprefix('package:')
+            try:
+                adb('pull',path,str(installed))
+                break
+            except subprocess.CalledProcessError:
+                if attempt==2: raise
+                time.sleep(1)
+
         digest=hashlib.sha256(a.apk.read_bytes()).hexdigest()
         if hashlib.sha256(installed.read_bytes()).hexdigest()!=digest:raise RuntimeError('Installed APK hash mismatch')
         installed.unlink()
@@ -72,7 +82,8 @@ def main():
     except Exception as error:
         checks.append({'result':'failed','error':str(error)})
         # Structured CI annotations keep the failure reason visible even when raw log storage is unavailable.
-        message=str(error).replace('%','%25').replace('\r','%0D').replace('\n','%0A')
+        detail=str(error)+((': '+error.stderr.decode(errors='replace')) if isinstance(error,subprocess.CalledProcessError) and error.stderr else '')
+        message=detail.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
         print('::error title=Android APK execution::'+message,flush=True)
         try:
             crash=adb('logcat','-d','-t','150','-s','AndroidRuntime:E',check=False).decode(errors='replace')
@@ -90,7 +101,7 @@ def main():
                     if pid.isdigit():adb('shell','kill','-2',pid,check=False)
                 try:recorder.wait(timeout=20)
                 except subprocess.TimeoutExpired:recorder.terminate();recorder.wait(timeout=10)
-            adb('pull',video,str(a.output/'CabinOS_ONE_android_apk_v0110rc1.mp4'),check=False,timeout=60)
+            adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
         fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False).decode().strip()
         result={'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,

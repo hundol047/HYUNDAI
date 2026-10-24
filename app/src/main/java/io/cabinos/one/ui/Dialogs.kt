@@ -20,7 +20,7 @@ import io.cabinos.core.*
 @Composable fun WaitingDialog(s:AppState,onDismiss:()->Unit,onSet:(Int)->Unit) {
     var minutes by remember { mutableIntStateOf(((s.schedule.waitingSeconds+59)/60).toInt().coerceIn(5,120)) }
     AlertDialog(onDismissRequest=onDismiss,title={Text("나의 정차 시간")},text={Column {
-        Text("출발까지 남은 시간을 설정하세요. 충전 추정치 대신 사용자 설정으로 표시됩니다.",fontSize=13.sp,color=Muted)
+        Text("출발까지 남은 시간을 설정하세요. 차량 충전·도착 계획과 비교해 더 이른 마감을 사용합니다.",fontSize=13.sp,color=Muted)
         Spacer(Modifier.height(20.dp));Text("${minutes}분",color=Mint,fontSize=36.sp)
         Slider(value=minutes.toFloat(),onValueChange={minutes=it.toInt()},valueRange=5f..120f,steps=22)
         Text("출발 준비 ${s.preferences.departureBufferMinutes}분을 제외하고 세션을 추천합니다.",fontSize=12.sp,color=Muted)
