@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-24T07:18:27.576Z",
+  "site": "https://hundol047.github.io/HYUNDAI/",
+  "deploymentRun": 40062127227,
+  "attempt": 2,
+  "scope": "Actual HTTPS Pages/browser execution with TLS verification; vehicle state is simulation, no physical GPS claim.",
+  "checks": [
+    "HTTPS site and interactive engine loaded",
+    "Driving/parking demo controls execute",
+    "Android gallery and navigation image loaded",
+    "Hosted APK matches signed release",
+    "Live visible OSM map tiles load from Pages",
+    "Mobile viewport fits",
+    "Hosted video plays and seeks"
+  ],
+  "errors": [],
+  "apk": {
+    "bytes": 3420892,
+    "sha256": "f0656b16778e06c8c5b53edb199abf9622b562f4c598f5d43c7c2a58b008935c"
+  },
+  "loadedTiles": 3,
+  "video": {
+    "duration": 78.28,
+    "time": 65.019025
+  },
+  "result": "passed",
+  "deployedCommit": "e94616ab2a2b9f227f5c30f35bda9ad97a249c36",
+  "checkedAtKST": "2026-10-24T16:18:27.576000+09:00"
+}

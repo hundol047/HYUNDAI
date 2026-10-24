@@ -12,7 +12,7 @@
 
 **이전 실행 영상:** [실제 가게 검색→모의주행 MP4](docs/video/CabinOS_ONE_world_shop_v0104.mp4) · [GPS 불확실성·차량 접근 안내 MP4](docs/video/CabinOS_ONE_gps_access_v0104.mp4) · [영상 근거와 재검토](docs/VIDEO_REVIEW_V0104.md)
 
-**브라우저 체험:** [배포 안내와 접속 상태](docs/WEB_DEMO.md) — 같은 페이지에서 인터랙티브 데모·Android UI·APK 다운로드 제공.
+**브라우저 체험:** [지금 실행하기](https://hundol047.github.io/HYUNDAI/) · [배포 안내와 확인 결과](docs/WEB_DEMO.md) — 같은 페이지에서 인터랙티브 데모·Android UI·APK 다운로드 제공.
 
 **제출 안내:** [팀명·APK·서명·Private 저장소 확인](docs/SUBMISSION_KO.md)
 
@@ -30,7 +30,7 @@
 
 **0.10.0 음성 길찾기:** 내비의 음성 버튼 → 목적지 → 결과 번호 → 안내 시작. 길 안내 번역 31개 언어/지역 팩과 BCP 47 인식 언어 선택을 제공합니다. 지원하지 않는 번역은 영어로 대체하며 실제 STT/TTS는 기기 서비스·언어팩에 따릅니다. [사용법·언어 범위·실행 근거](docs/VOICE_NAVIGATION_KO.md).
 
-**배포 파일:** [0.10.5 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.5)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.5.zip`](web-release/CabinOS_ONE_web_v0.10.5.zip)입니다. 공개 웹사이트는 Pages 활성화가 필요합니다. [접속 상태](docs/WEB_DEMO.md).
+**배포 파일:** [0.10.5 GitHub Release](https://github.com/hundol047/HYUNDAI/releases/tag/v0.10.5)에서 서명 APK와 HTTPS 호스팅용 웹 ZIP의 저장소 다운로드 링크를 제공합니다. 웹 ZIP의 저장소 경로는 [`web-release/CabinOS_ONE_web_v0.10.5.zip`](web-release/CabinOS_ONE_web_v0.10.5.zip)입니다. [공개 웹사이트](https://hundol047.github.io/HYUNDAI/) 배포를 완료했습니다. [접속 상태](docs/WEB_DEMO.md).
 
 0.10.4: [5시간 글로벌 모의주행 검사](docs/WORLD_SOAK_KO.md). GPS 흔들림·경로 복귀·도착 판정·동명 장소·날짜변경선 표시를 보완했습니다. 실제 5시간 동안 35개국 50개 경로를 완료했으며, 미완료·검색 누락은 검사 보고서에 별도 기록했습니다.
 

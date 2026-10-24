@@ -10,15 +10,15 @@
 
 ## 공개 접속 상태
 
-GitHub Pages 배포 워크플로와 정적 사이트 구성을 준비했습니다. **현재 공개 사이트 배포 성공은 확인되지 않았습니다.** 예상 배포 주소는 `https://hundol047.github.io/HYUNDAI/`이며, 배포 성공 전에는 동작하는 링크로 간주하면 안 됩니다.
+**공개 배포 완료:** https://hundol047.github.io/HYUNDAI/
 
-저장소 소유자가 한 번 [Settings → Pages](https://github.com/hundol047/HYUNDAI/settings/pages)에서 **Build and deployment → Source → GitHub Actions**를 선택해야 합니다. 이후 main 푸시 또는 [Publish CabinOS ONE demo](https://github.com/hundol047/HYUNDAI/actions/workflows/pages.yml)의 Run workflow로 배포합니다. Actions의 `deploy` 성공 후 표시되는 URL을 확인하세요.
+2026-10-24 16:18 KST에 실제 HTTPS 사이트를 Chromium으로 확인했습니다. 같은 페이지에서 **직접 체험하기**, **Android 앱 화면 안내**, **서명 APK 다운로드**, **실행 영상**을 사용할 수 있습니다. Android 앱 화면 안내는 Compose 갤러리이며, APK를 브라우저 안에서 실행하는 기능은 아닙니다.
 
-환경 재시작 후 GitHub API 조회와 공개 주소 접근은 가능해졌습니다. 저장소 조회에서 `has_pages=false`를 확인했고, 공개 주소는 HTTP 404입니다. 2026-10-23에도 Pages 활성화를 다시 요청했지만 생성 API는 연동 앱 권한 제한으로 `403 Resource not accessible by integration`을 반환했습니다. 저장소 소유자가 위 설정에서 Pages를 활성화해야 합니다.
+소유자의 Pages 활성화 후 [기존 검증된 배포 작업의 두 번째 실행](https://github.com/hundol047/HYUNDAI/actions/runs/40062127227)이 성공했습니다. 실제 배포한 앱 소스는 `e94616ab2a2b9f227f5c30f35bda9ad97a249c36`입니다. 데모 주행/주차 조작, Android 내비 이미지, 실제 지도 타일, 390px 모바일 배치, APK 바이트 일치, 78.28초 영상 재생·65초 탐색을 확인했습니다. [공개 사이트 검증 기록](validation/pages-v0105.json).
 
-[이전 원격 웹 검사](https://github.com/hundol047/HYUNDAI/actions/runs/39638061596)에서 사이트 빌드와 브라우저 기능 검사는 통과했으며, `configure-pages` 단계에서 Pages 미활성화로 HTTP 404가 발생했습니다. 필요한 도메인과 재사용 시작 절차는 클라우드 환경 설정 초안에 저장했습니다. 초안 저장은 사이트 배포를 의미하지 않습니다.
+이전 Pages 미활성화·연동 앱 권한 부족으로 인한 배포 실패는 해결됐습니다. 이후 앱 변경은 main 푸시 또는 [배포 워크플로](https://github.com/hundol047/HYUNDAI/actions/workflows/pages.yml) 실행으로 배포할 수 있습니다. 이번 문서 갱신은 앱 코드를 바꾸지 않으므로 검증된 사이트를 다시 빌드하지 않습니다.
 
-GitHub Pages는 이 작업 환경의 서버 종료와 관계없이 유지되며 24시간 만료를 설정하지 않았습니다. 실제 가용 시간은 GitHub 서비스와 저장소 설정에 따릅니다.
+GitHub Pages는 이 클라우드 작업 환경의 종료와 관계없이 유지됩니다. **24시간 자동 만료를 설정하지 않았습니다.** 실제 가용성은 GitHub 서비스와 저장소 설정에 따릅니다.
 
 ## 로컬 재현
 
@@ -58,6 +58,6 @@ node scripts/web/record-demo.cjs
 
 0.10.4는 [장시간 글로벌 모의주행](WORLD_SOAK_KO.md), [실제 가게 검색부터 도착까지의 연속 영상과 GPS 불확실성 안내 영상](VIDEO_REVIEW_V0104.md)을 제공합니다. 현재 브라우저 회귀 검사는 날짜변경선 8개를 포함한 132개입니다.
 
-0.10.4 ZIP은 공개 파일의 Unix 권한을 `644`로 저장하며 일반 압축 해제 후 권한·파일 내용 일치를 확인했습니다. Pages 워크플로는 빌드·검사·배포 파일 보관과 사이트 배포를 별도 작업으로 나눕니다. 소유자의 Pages 활성화가 필요한 상태는 그대로 표시합니다.
+0.10.4 ZIP은 공개 파일의 Unix 권한을 `644`로 저장하며 일반 압축 해제 후 권한·파일 내용 일치를 확인했습니다. Pages 워크플로는 빌드·검사·배포 파일 보관과 사이트 배포를 별도 작업으로 나눕니다. 당시 소유자 활성화가 필요했던 상태는 위 0.10.5 공개 배포에서 해결됐습니다.
 
 0.10.5: [검색 누락·주변 추천 후속 수정](SEARCH_RECOVERY_KO.md)과 새 연속 녹화를 포함합니다. 공개 Pages 상태는 APK·ZIP 업로드와 별개입니다.

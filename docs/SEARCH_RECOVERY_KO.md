@@ -40,8 +40,8 @@
 
 재현: `node scripts/web/verify-search-recovery-live.cjs`, `node scripts/web/verify-nearby-provider-live.cjs`, `node scripts/web/record-search-recovery.cjs`. 실제 외부 서비스를 쓰므로 CI에서 반복 실행하지 않습니다. 이 클라우드에서 녹화할 때는 `PLAYWRIGHT_BROWSERS_PATH=/workspace/.cache/ms-playwright`를 설정해 설치된 FFmpeg를 사용합니다. 내부 HTTPS 프록시·CA 신뢰를 유지하며 우회 경로나 TLS 검증 해제는 사용하지 않습니다.
 
-## 외부 설정으로 남은 사항
+## 배포 후 상태와 남은 범위
 
-공개 Pages 사이트는 소유자가 [Settings → Pages](https://github.com/hundol047/HYUNDAI/settings/pages)에서 **Source → GitHub Actions**를 선택해야 합니다. 현재 연동 앱의 Pages 생성 권한이 부족합니다. APK·영상·웹 ZIP 공개 파일과 실제 실행 가능한 웹사이트를 구분합니다. [배포 안내](WEB_DEMO.md).
+소유자의 Pages 활성화 후 **[공개 체험 사이트](https://hundol047.github.io/HYUNDAI/) 배포가 완료**됐습니다. 2026-10-24 16:18 KST에 실제 브라우저 동작·APK·영상·지도 타일을 확인했습니다. [배포 안내와 검증](WEB_DEMO.md). Fidel Cafe의 빈 상호 검색은 Pages 설정과 별개의 제공자 데이터 문제로 남아 있습니다.
 
 물리 GPS·실차/Pleos SDK·실시간 교통·차선 데이터는 이번 수정으로 검증되지 않습니다. 기본 공개 지도 서버에는 응답 시간·데이터 완전성 보장이 없습니다.
