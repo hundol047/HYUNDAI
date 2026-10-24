@@ -100,6 +100,7 @@ class ContextEngineTest {
         engine.updateNavigationEstimate(900,1000,now)
         repeat(301) { now+=1000;real() }
         assertTrue(engine.setWaitingMinutes(30));assertTrue(engine.state.value.schedule.availableSeconds>0)
+        now+=1000;real();assertTrue(engine.state.value.schedule.availableSeconds>0)
     }
     @Test fun drivingDiscardsPastArrivalTarget() {
         park();engine.setArrivalInMinutes(1);now+=61000;send(Gear.DRIVE,20.0)
@@ -123,5 +124,20 @@ class ContextEngineTest {
             engine.acceptVehicle(VehicleSample(gear=Gear.DRIVE,speedKph=30.0,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
             assertNull(engine.state.value.schedule.departureAtMs)
         }
+    }
+    @Test fun reachedSocGoalDoesNotBlockNextStopUntilRearmed() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(80);now+=1600;real(80);engine.setChargeTarget(80)
+        real(80,Gear.DRIVE,20.0);real(80);now+=1600;real(80)
+        engine.setWaitingMinutes(30);now+=1000;real(80)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        real(70);real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun expiredRouteDoesNotOverrideExplicitWaitingOnNextNavigationRead() {
+        park();engine.setArrivalInMinutes(10);engine.updateNavigationEstimate(900,1000,now)
+        engine.setWaitingMinutes(30);now+=1000;send();engine.updateNavigationEstimate(900,1000,now)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        engine.setArrivalInMinutes(20);engine.updateNavigationEstimate(1000,1000,now)
+        assertEquals(0L,engine.state.value.schedule.availableSeconds)
     }
 }
