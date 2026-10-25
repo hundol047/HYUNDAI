@@ -22,7 +22,7 @@ internal data class RoadMapHealth(val status:RoadMapStatus=RoadMapStatus.LOADING
 }
 internal fun configureRoadTiles(context:Context) {Configuration.getInstance().apply {
     userAgentValue="CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)"
-    osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
+    osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2;cacheMapTileCount=128
 }}
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */
 internal class RoadMapView(context:Context,private val clock:()->Long=android.os.SystemClock::elapsedRealtime):MapView(context) {
@@ -33,6 +33,7 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
     private var online=true
     private var waitingSince:Long?=null
     private var observing=false
+    private var lastDrawCheck=Long.MIN_VALUE
     private val check=object:Runnable {override fun run(){if(!observing)return;sampleHealth();postDelayed(this,1000)}}
     init {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(2.0);controller.setCenter(GeoPoint(20.0,0.0))}
     fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null};setUseDataConnection(available);sampleHealth()}
@@ -61,7 +62,11 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
         if(health!=next){health=next;post {onHealth?.invoke(health)}}
         return next
     }
-    override fun onDraw(canvas:Canvas){super.onDraw(canvas);sampleHealth()}
+    override fun onDraw(canvas:Canvas){
+        super.onDraw(canvas)
+        val now=clock()
+        if(lastDrawCheck==Long.MIN_VALUE||now-lastDrawCheck>=500){lastDrawCheck=now;sampleHealth()}
+    }
     override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean {
         if(!gesturesEnabled)return false
         if(event.actionMasked==android.view.MotionEvent.ACTION_MOVE) {
