@@ -28,7 +28,7 @@ import java.util.Locale
 ) {
     var expanded by rememberSaveable {mutableStateOf(false)}
     Box(Modifier.fillMaxSize()) {
-        if(!expanded)NavigationMap(ui.guidance,online,false,ui.selectedPlace,ui.mapFix,false,{},showPicker=false)
+        if(!expanded)NavigationMap(ui.guidance,online,false,ui.selectedPlace,ui.mapFix,false,{},showPicker=false,traffic=ui.traffic)
         Box(Modifier.fillMaxSize().semantics {contentDescription="지도 크게 보기"}
             .clickable(role=Role.Button,onClickLabel="지도 크게 보기"){expanded=true})
         Text("터치하여 지도 크게 보기",color=White,fontSize=12.sp,
@@ -50,7 +50,7 @@ import java.util.Locale
             }
             Box(Modifier.fillMaxWidth().weight(1f)) {
                 NavigationMap(g,online,true,ui.selectedPlace,ui.mapFix,!ui.busy,onPick,
-                    showPicker=interactive,showHealth=false)
+                    showPicker=interactive,showHealth=false,traffic=ui.traffic)
             }
             Column(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {
                 val destination=g.route?.destination ?: ui.selectedPlace

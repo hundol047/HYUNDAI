@@ -9,6 +9,14 @@ import org.osmdroid.views.overlay.*
 
 /** Keep the road geometry alive across GPS updates; only the position marker moves. */
 internal class NavigationMapRenderer(private val map:MapView) {
+    private var traffic:io.cabinos.one.platform.TrafficFlow?=null
+    private var trafficLine:Polyline?=null
+    fun traffic(value:io.cabinos.one.platform.TrafficFlow?) {
+        if(traffic==value)return
+        traffic=value;trafficLine?.let {map.overlays.remove(it)};trafficLine=null
+        value?.let {f->trafficLine=Polyline(map).apply {setPoints(f.points.map {GeoPoint(it.latitude,it.longitude)});outlinePaint.color=f.color;outlinePaint.strokeWidth=13f};map.overlays.add(trafficLine)}
+        map.invalidate()
+    }
     private var route:DrivingRoute?=null
     private var selected:NavPlace?=null
     private var line:Polyline?=null

@@ -43,6 +43,10 @@ import java.util.Locale
     var languageTag by remember(ui.language){mutableStateOf(ui.language)}
     val microphone=androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.RequestPermission()){granted->if(granted)nav.listenDestination() else nav.voiceError("마이크 권한이 거부됐습니다. 주차 후 앱 권한 설정에서 허용해 주세요.")}
     var settings by remember {mutableStateOf(false)}
+    var trafficSettings by remember {mutableStateOf(false)}
+    var trafficEndpoint by remember {mutableStateOf("")}
+    var trafficToken by remember {mutableStateOf("")}
+    var trafficError by remember {mutableStateOf("")}
     var searchEndpoint by remember {mutableStateOf(nav.service.searchEndpoint)}
     var routeEndpoint by remember {mutableStateOf(nav.service.routeEndpoint)}
     var settingsError by remember {mutableStateOf("")}
@@ -95,7 +99,11 @@ import java.util.Locale
             ActionButton("안내 다시 듣기",{nav.handleVoice("안내 반복")},Modifier.weight(1f).heightIn(min=52.dp),Blue,g.tracking&&!g.directionUncertain&&!g.offRoute)
             ActionButton("안내 종료",{nav.stop()},Modifier.weight(1f).heightIn(min=52.dp),Muted)
         }
-        Text("실시간 교통 미연결 · 정체 색상 및 교통 반영 도착 시간 미제공",color=Muted,fontSize=12.sp)
+        Row(verticalAlignment=androidx.compose.ui.Alignment.CenterVertically) {
+            Text(ui.trafficNotice+" · 도착 시간에 교통 미반영",color=Muted,fontSize=12.sp,modifier=Modifier.weight(1f))
+            if(canPlan)TextButton(onClick={trafficSettings=true}){Text("교통 연결")}
+        }
+        if(ui.traffic!=null)Text("빨강 정체/통제 · 노랑 서행 · 초록 원활 · 회색 불확실 · 조회 후 90초 만료",color=Muted,fontSize=11.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->
             Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { ExpandableNavigationMap(ui,s.networkAvailable,canPlan,chooseDestination) }
@@ -164,6 +172,12 @@ import java.util.Locale
             })
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
     }
+    if(trafficSettings&&canPlan)AlertDialog(onDismissRequest={trafficToken="";trafficSettings=false},title={Text("교통 중계 서버")},text={Column {
+        Text("국내 서버는 아직 미배포입니다. TomTom 키를 입력하지 마세요. 중계 서버 주소와 별도 접근 토큰을 사용합니다. 설정은 저장하지 않습니다.")
+        OutlinedTextField(trafficEndpoint,{trafficEndpoint=it},label={Text("HTTPS 서버 주소")})
+        OutlinedTextField(trafficToken,{trafficToken=it},label={Text("중계 서버 접근 토큰")},visualTransformation=androidx.compose.ui.text.input.PasswordVisualTransformation())
+        Text(trafficError,color=Amber)
+    }},confirmButton={TextButton(onClick={runCatching {nav.configureTraffic(trafficEndpoint,trafficToken)}.onSuccess {trafficToken="";trafficSettings=false}.onFailure {trafficError="HTTPS 주소와 24자 이상 접근 토큰을 확인하세요."}}){Text("연결")}},dismissButton={TextButton(onClick={nav.configureTraffic("","");trafficToken="";trafficSettings=false}){Text("연결 해제")}})
     if(languageDialog&&canPlan)AlertDialog(onDismissRequest={languageDialog=false},title={Text("길 안내·목적지 음성 언어")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)){
         Text("31개 지역별 길 안내 번역을 내장했습니다. 다른 언어는 영어 안내로 대체합니다. 음성 인식·재생은 기기 서비스와 언어팩에 따릅니다.",fontSize=12.sp)
         OutlinedTextField(languageTag,{languageTag=it.take(48)},label={Text("언어 코드 · ko-KR / en-US / fr-FR")},singleLine=true)
@@ -182,7 +196,7 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0) {
+@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0,traffic:TrafficFlow?=null) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
@@ -203,6 +217,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
             view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
             view.onUserGesture={following=false;renderer.followPosition=false}
             renderer.followPosition=following
+            renderer.traffic(traffic)
             renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking,placeZoom)
         })
         if(interactive&&!following)ActionButton("내 위치로",{

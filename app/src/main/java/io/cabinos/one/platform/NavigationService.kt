@@ -139,7 +139,7 @@ open class NavigationService {
 
 enum class GpsConnection { OFF, WAITING, READY, POOR, STALE, DENIED, DISABLED }
 
-data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val mapFix:NavFix?=null,val gpsAgeSeconds:Long?=null,val language:String="ko-KR",val voiceListening:Boolean=false,val voiceNotice:String="목적지 → 결과 번호를 말하세요.",val searchQuery:String="")
+data class NavigationUi(val guidance:Guidance=Guidance(),val places:List<NavPlace> = emptyList(),val busy:Boolean=false,val selectedPlace:NavPlace?=null,val hasMore:Boolean=false,val originAccessMeters:Double=0.0,val originReady:Boolean=false,val notice:String="목적지를 검색하거나 위도,경도를 입력하세요.",val gpsNotice:String="GPS 미연결 · 내 위치 사용을 눌러 주세요.",val gpsConnection:GpsConnection=GpsConnection.OFF,val gpsAccuracy:Double?=null,val mapFix:NavFix?=null,val gpsAgeSeconds:Long?=null,val language:String="ko-KR",val voiceListening:Boolean=false,val voiceNotice:String="목적지 → 결과 번호를 말하세요.",val searchQuery:String="",val traffic:TrafficFlow?=null,val trafficNotice:String="실시간 교통 미연결")
 
 /** Foreground-only location: no background permission/service and no stored GPS history. */
 class LiveNavigation(private val context:Context,private val engine:UnifiedVehicleContextEngine,private val speech:AndroidSpeechProvider,val service:NavigationService=NavigationService(),private val clock:()->Long=System::currentTimeMillis) {
@@ -153,6 +153,28 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private var job:Job?=null;private var generation=0;private var foreground=true;private var listening=false
     private var safetyHeld=false;private val stationary=StationaryEvidence()
     private val repeatGuard=GuidanceRepeatGuard()
+    private val trafficClient=TrafficClient()
+    private var trafficJob:Job?=null
+    private var trafficLastAttempt=0L
+    private var trafficGeneration=0
+    fun configureTraffic(endpoint:String,token:String) {
+        if(!canPlan())return
+        trafficClient.configure(endpoint,token);trafficGeneration++;trafficJob?.cancel();trafficLastAttempt=0
+        mutable.value=mutable.value.copy(traffic=null,trafficNotice=if(endpoint.isBlank())"실시간 교통 미연결" else "교통 서버 설정됨 · 현재 위치 주변 1개 도로 구간 조회")
+    }
+    private fun trafficTick() {
+        if(mutable.value.traffic?.current(clock())==false)mutable.value=mutable.value.copy(traffic=null,trafficNotice="교통 정보 만료")
+        val f=fix
+        if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(traffic=null);return}
+        if(!foreground||!engine.state.value.networkAvailable||trafficClient.endpoint.isBlank()||trafficJob?.isActive==true||clock()-trafficLastAttempt<60_000)return
+        trafficLastAttempt=clock();val epoch=trafficGeneration
+        trafficJob=scope.launch {
+            try {
+                val flow=trafficClient.fetch(f.point,clock)
+                if(epoch==trafficGeneration&&foreground&&fix?.let {tracker.usable(it)&&NavigationGeometry.distance(it.point,f.point)<500}==true)mutable.value=mutable.value.copy(traffic=flow,trafficNotice="© TomTom · 주변 도로 1구간 ${flow.level} · ${flow.speed.toInt()} km/h · 조회 시각 기준, 경로 전체 정보 아님")
+            }catch(e:Exception){if(e is CancellationException)throw e;if(epoch==trafficGeneration)mutable.value=mutable.value.copy(traffic=null,trafficNotice="교통 정보 수신 실패 · 한국 구간은 국내 서버 준비 필요")}
+        }
+    }
     private var voiceGeneration=0
     init {service.language=language}
     private var lastQuery="";private var resolvedSearchQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
@@ -308,14 +330,14 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한이 해제됐습니다. 앱 권한 설정을 확인해 주세요.")}
             else if(mutable.value.gpsConnection!=GpsConnection.STALE&&(fix?.let {!tracker.usable(it)}==true||fix==null&&receivedAt?.let {clock()-it>10_000}==true||fix==null&&receivedAt==null&&requestedAt?.let {clock()-it>=15_000}==true))invalidateGps(GpsConnection.STALE,"GPS 응답이 오래됐습니다. 다시 연결하거나 위치 설정을 확인해 주세요.")
         }
-        publish();resumeLocationIfReady();if(tracker.state.active)reroute()
+        publish();resumeLocationIfReady();trafficTick();if(tracker.state.active)reroute()
     }
     fun configure(search:String,route:String,accessToken:String=""){if(canPlan()){cancelRequest();service.configure(search,route,accessToken);tracker.stop();mutable.value=mutable.value.copy(guidance=tracker.state,places=emptyList(),selectedPlace=null,hasMore=false,originReady=false,notice="검색 서버 설정을 적용했습니다. 가게를 다시 검색하세요.")}}
     fun cancelPending(){pendingStart=false;pendingDestination=null;if(canPlan()&&mutable.value.busy){cancelRequest();mutable.value=mutable.value.copy(notice="요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")}}
     fun retry(){rerouteFailures=0;reroute()}
     fun stop(){pendingStart=false;pendingDestination=null;cancelVoice();cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
     private fun stopLocation(){locationGeneration++;listener?.let {runCatching {manager.removeUpdates(it)}};listener=null;listening=false}
-    fun setForeground(active:Boolean){foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
+    fun setForeground(active:Boolean){if(!active){trafficGeneration++;trafficJob?.cancel();trafficClient.cancel();mutable.value=mutable.value.copy(traffic=null)};foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
     private fun resumeLocationIfReady(){if(foreground&&resumeLocation&&(canPlan()||tracker.state.active||safetyHeld)){resumeLocation=false;locate()}}
     fun openLocationSettings(appPermissions:Boolean=false){
         if(!canPlan())return
@@ -372,6 +394,6 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val uri=android.net.Uri.parse("https://www.google.com/maps/search/?api=1&query="+android.net.Uri.encode(query.take(180)))
         runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,uri).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))}.onFailure {mutable.value=mutable.value.copy(notice="외부 지도를 열 수 없습니다. 브라우저 설치를 확인하세요.")}
     }
-    fun clear(){cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearPersonalData();lastQuery="";resolvedSearchQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
-    fun close(){cancelVoice();cancelRequest();stopLocation();scope.cancel()}
+    fun clear(){trafficGeneration++;trafficJob?.cancel();trafficClient.configure("","");cancelVoice();language="ko-KR";preferences.navigationLanguage=language;service.language=language;stop();service.clearPersonalData();lastQuery="";resolvedSearchQuery="";nearbySearch=false;seenPlaceIds=emptyList();mutable.value=NavigationUi(notice="검색·좌표·접근키를 삭제했습니다.")}
+    fun close(){trafficJob?.cancel();trafficClient.cancel();cancelVoice();cancelRequest();stopLocation();scope.cancel()}
 }

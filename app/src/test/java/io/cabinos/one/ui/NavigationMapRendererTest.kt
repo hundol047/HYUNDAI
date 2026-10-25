@@ -76,6 +76,16 @@ class NavigationMapRendererTest {
             assertTrue(center.distanceToAsDouble(map.mapCenter)>100)
         }finally{map.onDetach()}
     }
+    @Test fun trafficOverlayUsesItsOwnColorAndCanBeRemoved() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        try {
+            val flow=io.cabinos.one.platform.TrafficFlow(listOf(NavPoint(52.3,4.9),NavPoint(52.31,4.91)),10.0,50.0,1.0,false,1000)
+            renderer.traffic(flow)
+            assertEquals(0xFFE53935.toInt(),map.overlays.filterIsInstance<Polyline>().single().outlinePaint.color)
+            renderer.traffic(null)
+            assertTrue(map.overlays.none {it is Polyline})
+        }finally{map.onDetach()}
+    }
     private fun route(name:String="dense route"):DrivingRoute {
         val points=(0..50_000).map {NavPoint(37.5547,126.9723+it*.000002)}
         return NavigationGeometry.route(NavPlace(name,points.last()),points,9000.0,900.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))

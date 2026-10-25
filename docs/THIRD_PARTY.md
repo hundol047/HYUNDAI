@@ -40,3 +40,5 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 편의점 로고: [원본 및 상표 안내](BRAND_LOGO_CREDITS.md). 백색 소음·잔잔한 톤만 자체 합성하며 자연음 출처는 아래에 기재합니다.
 
 실제 자연음 녹음: [저작자·원본·라이선스 및 가공 내역](NATURE_AUDIO_CREDITS.md). 피아노 항목은 제거했습니다.
+
+교통 구간 데이터: TomTom Traffic Flow API. 공급자 키는 중계 서버에서만 사용하며 현재 공개 배포 및 한국 데이터 연결은 미완료입니다. [범위 및 출처](../server/TRAFFIC.md).
