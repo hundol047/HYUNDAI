@@ -32,3 +32,50 @@ class ImportTest(unittest.TestCase):
         self.assertIsNone(records[0][-1])
         records, _ = prepare.convert([self.row(제한속도="30")], "camera", "2026-10-25")
         self.assertEqual(30, records[0][-1])
+
+    def test_national_wgs84_columns_are_used_without_tm_conversion(self):
+        row={"WGS84위도":"37.55787859", "WGS84경도":"127.009382", "데이터기준일자":"2021-08-11", "데이터갱신구분":"I"}
+        records, audit=prepare.convert([row], "bump", "2026-10-25")
+        self.assertEqual(1,audit["accepted"])
+        self.assertEqual([37.55787859,127.009382],records[0][1:3])
+        self.assertEqual("2021-08-11",records[0][5])
+
+    def test_missing_date_deleted_and_conflicting_columns_are_rejected(self):
+        rows=[self.row(데이터기준일자=""),self.row(데이터갱신구분="D"),self.row(WGS84위도="37.0", WGS84경도="127.0")]
+        records,audit=prepare.convert(rows,"bump","2026-10-25")
+        self.assertEqual([],records)
+        self.assertEqual(3,audit["invalidRows"])
+
+    def test_zip_is_read_without_extracting_member_paths(self):
+        import tempfile, zipfile
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"source.zip"
+            with zipfile.ZipFile(path,"w") as archive:
+                archive.writestr("../../outside.csv","WGS84위도,WGS84경도\n37.5,127.0\n")
+            rows=prepare.read_rows(path)
+            self.assertEqual("37.5",rows[0]["WGS84위도"])
+            self.assertEqual([path],list(Path(directory).iterdir()))
+
+    def test_zip_with_multiple_data_files_requires_explicit_selection(self):
+        import tempfile, zipfile
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"source.zip"
+            with zipfile.ZipFile(path,"w") as archive:
+                archive.writestr("one.csv","위도,경도")
+                archive.writestr("two.csv","위도,경도")
+            with self.assertRaises(ValueError):prepare.read_rows(path)
+
+    def test_newer_date_only_supersedes_an_identical_facility(self):
+        rows=[self.row(데이터기준일자="2021-01-01"),self.row(데이터기준일자="2026-05-01")]
+        records,audit=prepare.convert(rows,"bump","2026-10-25")
+        self.assertEqual("2026-05-01",records[0][5])
+        self.assertEqual(1,audit["duplicateRows"])
+        rows[1]["설치장소"]="다른시설"
+        records,audit=prepare.convert(rows,"bump","2026-10-25")
+        self.assertEqual([],records)
+        self.assertEqual(2,audit["conflictingCoordinateRows"])
+
+    def test_conflicting_administrative_areas_are_not_merged(self):
+        records,audit=prepare.convert([self.row(시군구명="지역A"),self.row(시군구명="지역B")],"bump","2026-10-25")
+        self.assertEqual([],records)
+        self.assertEqual(2,audit["conflictingCoordinateRows"])
