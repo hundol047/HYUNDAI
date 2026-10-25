@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "e7e8a99dcb75adec7dc92788acf0ee6faa31f7ec",
-  "apkSha256": "bcd9438ba9a5940a4ce4f9630b4ee893e973db484a9c09084e30cb485e1555d3",
+  "sourceCommit": "268c64748bc7268c5641beb877e2d10a9d14e5a9",
+  "apkSha256": "061d2c219075c09952eb6eaca43cc2377a5874dc638c75526e0c674683ec803e",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 186,
+      "tests": 188,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -92,5 +92,14 @@
     "publicGatewayDeployed": false,
     "trafficAwareRouting": false,
     "deviceLiveValidated": false
+  },
+  "driverNavigation": {
+    "autoExpandOnGuidanceStart": true,
+    "manualCollapsePreserved": true,
+    "largeTurnDistanceAndControls": true,
+    "expandedRerouteErrorVisible": true,
+    "cameraAndSpeedHumpDataConnected": false,
+    "commercialAppParityValidated": false,
+    "physicalDeviceValidated": false
   }
 }
