@@ -1,11 +1,11 @@
 {
   "applicationId": "io.cabinos.one.preview",
-  "startedAtUtc": "2026-10-25T17:07:14.970891+00:00",
+  "startedAtUtc": "2026-10-25T17:42:39.957267+00:00",
   "captureMethod": "adb shell screenrecord: continuous device frames",
   "deviceType": "regular Android emulator, NOT Pleos",
   "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
   "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
-  "apkSha256": "19c32341cf1400afa60e2247eec9a84d754947ec2551ca9183cf0137cbc159e7",
+  "apkSha256": "7b813330b007ae75f2ae5cfdd88904d1b73b18a91b0a2a0f64d5f00a72aa16bb",
   "checks": [
     {
       "name": "upgrade plan visible",
@@ -21,6 +21,14 @@
     },
     {
       "name": "active session sound control visible before plan",
+      "result": "passed"
+    },
+    {
+      "name": "one tap sound stop available",
+      "result": "passed"
+    },
+    {
+      "name": "sound stopped without reopening picker",
       "result": "passed"
     },
     {
