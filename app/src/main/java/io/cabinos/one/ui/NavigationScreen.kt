@@ -109,7 +109,6 @@ import java.util.Locale
                     }
                 }
                 if(canPlan&&ui.hasMore&&submittedQuery==query&&submittedNearby==nearby)ActionButton("다른 결과 더 보기 (최대 18개)",{nav.search(query,nearby,true)},Modifier.fillMaxWidth(),Blue,!ui.busy)
-                if(canPlan&&query.isNotBlank())TextButton(onClick={nav.externalSearch(query)}){Text("Google Maps에서 추가 검색 ↗",color=Blue,fontSize=11.sp)}
                 if(canPlan&&ui.places.isEmpty()) {
                     Text("가게명에 지점·도시를 함께 입력해 보세요. 현지어와 영문 검색 결과가 다를 수 있습니다.",color=Muted,fontSize=11.sp)
                     if(RegionalPlaceSearch.splits(query).isNotEmpty())ActionButton("지역을 나눠 주변 후보 찾기",{nav.searchRegional(query)},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
@@ -119,6 +118,9 @@ import java.util.Locale
                         Text(p.name,color=White,fontSize=15.sp)
                         if(p.address.isNotBlank())Text(p.address,color=Muted,fontSize=11.sp)
                         Text(p.source,color=Muted,fontSize=11.sp)
+                        Text(ui.notice,color=Amber,fontSize=12.sp)
+                        Text(ui.gpsNotice,color=Muted,fontSize=12.sp)
+                        if(ui.busy)LinearProgressIndicator(Modifier.fillMaxWidth())
                         ActionButton("현재 위치에서 안내 시작",{chooseDestination(p)},Modifier.fillMaxWidth(),Mint,!ui.busy)
                     }
                 }

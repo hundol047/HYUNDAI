@@ -168,13 +168,13 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null,if(location.hasBearing())location.bearing.toDouble() else null)
             // A coarse Wi-Fi/cell update must not interrupt a fresh precise GPS
             // stream. A poor GPS update itself still invalidates readiness.
-            if(location.provider==LocationManager.NETWORK_PROVIDER&&fixProvider==LocationManager.GPS_PROVIDER&&fix?.let {tracker.usable(it)&&clock()-it.timestampMs<=3000&&f.accuracy>=it.accuracy}==true)return
+            if(location.provider!=LocationManager.GPS_PROVIDER&&fixProvider==LocationManager.GPS_PROVIDER&&fix?.let {tracker.usable(it)&&clock()-it.timestampMs<=3000&&f.accuracy>=it.accuracy}==true)return
             if(f.timestampMs<=lastFixTimestamp)return
             if(clock()-f.timestampMs in 0..10_000)lastFixTimestamp=f.timestampMs
             receivedAt=clock()
             if(!tracker.usable(f)){invalidateGps(GpsConnection.POOR,"위치가 부정확하거나 오래됐습니다. 정확한 GPS를 기다려 주세요.");return}
             fix=f;fixProvider=location.provider
-            mutable.value=mutable.value.copy(gpsConnection=GpsConnection.READY,gpsNotice="${if(location.provider==LocationManager.GPS_PROVIDER)"GPS" else "네트워크 위치"} 확인 · 정확도 약 ${f.accuracy.toInt()}m")
+            mutable.value=mutable.value.copy(gpsConnection=GpsConnection.READY,gpsNotice="${when(location.provider){LocationManager.GPS_PROVIDER->"GPS";LocationManager.NETWORK_PROVIDER->"네트워크 위치";else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m")
             if(f.speedMps?.let {it>=2}==true){safetyHeld=true;stationary.reset();engine.setNavigationLock(true)}
             if(safetyHeld&&!tracker.state.active&&stationary.accept(f,clock())){safetyHeld=false;stationary.reset();engine.setNavigationLock(false)}
             if(tracker.state.active){tracker.update(f);publish();guide();reroute()}else {
@@ -206,11 +206,15 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         invalidateGps(GpsConnection.WAITING,"GPS 수신 중 · 야외에서 정확한 위치를 기다려 주세요.")
         if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){invalidateGps(GpsConnection.DENIED,"정확한 위치 권한이 필요합니다. 앱 권한 설정에서 정확한 위치를 허용해 주세요.");return}
         try {
-            val providers=manager.getProviders(true).filter {it==LocationManager.GPS_PROVIDER||it==LocationManager.NETWORK_PROVIDER}
+            val providers=manager.getProviders(true).filter {it in listOf(LocationManager.GPS_PROVIDER,LocationManager.NETWORK_PROVIDER,"fused")}
             if(!manager.isLocationEnabled||providers.isEmpty()){invalidateGps(GpsConnection.DISABLED,"기기 위치 서비스를 켜 주세요.");return}
             val current=listenerFor(++locationGeneration);listener=current;listening=true;requestedAt=clock()
             // Receive fresh fixes even when the parked vehicle does not move.
             providers.forEach {manager.requestLocationUpdates(it,1000L,0f,current,Looper.getMainLooper())}
+            // Reuse only genuine recent precise framework fixes, preserving their original timestamp.
+            providers.mapNotNull {manager.getLastKnownLocation(it)}.filter {
+                it.hasAccuracy()&&it.accuracy in 0f..50f&&clock()-it.time in 0..10_000
+            }.maxByOrNull {it.time}?.let {current.onLocationChanged(it)}
         } catch(_:SecurityException){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한을 확인해 주세요.")}
           catch(_:IllegalArgumentException){stopLocation();invalidateGps(GpsConnection.DISABLED,"위치 제공자를 사용할 수 없습니다. 위치 설정을 확인해 주세요.")}
     }
@@ -254,14 +258,15 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         }
     }
     fun navigateTo(destination:NavPlace) = plan(destination,true)
-    fun ensureLocation(){if(fix?.let {tracker.usable(it)}!=true&&!listening)locate()}
+    fun ensureLocation(){if(fix?.let {tracker.usable(it)}!=true&&(!listening||mutable.value.gpsConnection!=GpsConnection.WAITING))locate()}
     fun plan(destination:NavPlace,startWhenReady:Boolean=false) {
-        if(!canPlan())return
+        if(!canPlan()){mutable.value=mutable.value.copy(notice="안전한 정차 확인 또는 진행 중인 안내 종료 후 목적지를 설정하세요.");return}
         pendingStart=startWhenReady;pendingDestination=null
         cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=destination)
         if(!engine.state.value.networkAvailable){mutable.value=mutable.value.copy(notice="선택한 지점 위치는 표시합니다. 새 자동차 경로는 온라인 연결이 필요합니다.");return}
         val f=fix
         if(f==null||!tracker.usable(f)){pendingDestination=destination;mutable.value=mutable.value.copy(notice="선택한 지점을 표시했습니다. 내 위치를 허용하면 앱에서 자동차 경로를 계산합니다.");ensureLocation();return}
+        mutable.value=mutable.value.copy(notice="현재 위치에서 ${destination.name}까지 자동차 경로 계산 중…")
         request {current->val r=service.route(f.point,destination);if(current()&&canPlan()){tracker.preview(r.localized(language));publish();if(engine.state.value.preferences.voiceEnabled)speech.speakNavigation(destination.name,language);mutable.value=mutable.value.copy(busy=false,notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")
             val begin=pendingStart;pendingStart=false
             if(begin)start()}}

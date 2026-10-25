@@ -24,6 +24,44 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test @Config(sdk=[35]) fun fusedProviderCanSupplyFreshPreciseOriginOnModernPhones() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            shadowOf(f.manager).setProviderEnabled(LocationManager.GPS_PROVIDER,false)
+            shadowOf(f.manager).setProviderEnabled(LocationManager.NETWORK_PROVIDER,false)
+            shadowOf(f.manager).setProviderEnabled("fused",true)
+            shadowOf(f.manager).setLastKnownLocation("fused",Location("fused").apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=12f;time=f.now;speed=0f
+            })
+            f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertTrue(f.nav.state.value.gpsNotice.contains("기기 위치"))
+        }
+    }
+
+    @Test fun retryingSelectedDestinationRestartsStalledGpsSubscription() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate()
+            val old=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            repeat(16){f.advance(1000);f.park();f.nav.tick()}
+            assertTrue(f.engine.state.value.parkedAllowed)
+            assertEquals(GpsConnection.STALE,f.nav.state.value.gpsConnection)
+            f.nav.navigateTo(destination)
+            val current=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            assertNotSame(old,current)
+            f.gps();assertTrue(f.nav.state.value.guidance.active)
+        }
+    }
+    @Test fun freshFrameworkCachedFixStartsRouteWithoutWaitingForMovement() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            shadowOf(f.manager).setLastKnownLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=12f;time=f.now;speed=0f
+            })
+            f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+        }
+    }
+
     @Test fun spokenDestinationUsesCurrentGpsAndResultNumberStartsGuidance() {
         var searched="";var originUsed:NavPoint?=null
         Fixture(object:NavigationService(){
