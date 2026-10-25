@@ -37,7 +37,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
                 SurfacePanel(Modifier.fillMaxWidth()) {
                     Text("${kind.label} 모드",color=White,fontSize=20.sp)
                     Text("추천 ${minOf(minutes.toLong(),s.schedule.availableSeconds/60)}분",color=Mint)
-                    ActionButton("${kind.label} 시작",{vm.start(kind,minutes)},Modifier.fillMaxWidth(),enabled=s.schedule.availableSeconds>0)
+                    ActionButton("${kind.label} 시작",{vm.start(kind,minutes)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed && s.schedule.availableSeconds>=60)
                 }
             }
         }
@@ -57,10 +57,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
         Text("${session.kind.label} 세션",color=Mint,fontSize=22.sp)
         Text(timeText(session.remainingSeconds),color=White,fontSize=52.sp)
         Text("출발 준비 ${s.preferences.departureBufferMinutes}분 전 자동 종료",color=Muted,fontSize=13.sp)
-        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            ActionButton(if(session.status==SessionStatus.RUNNING) "일시정지" else "계속",{vm.engine.pauseOrResume()},Modifier.weight(1f))
-            ActionButton("종료",{vm.engine.endSession()},Modifier.weight(1f),color=Muted)
-        }
+        SessionActionButtons(s,{vm.engine.pauseOrResume()},{vm.engine.endSession()})
         if(session.kind==SessionKind.RELAX) Text(if((s.nowMs/4000)%2==0L) "천천히 들이쉬세요" else "편안하게 내쉬세요",color=Mint)
         AmbientControls(vm,session.status==SessionStatus.RUNNING)
         if(session.kind==SessionKind.FOCUS) {

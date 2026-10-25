@@ -53,6 +53,12 @@ def record(adb, tree, tap, check, snapshot, scenario):
     tap('25분 집중 바로 시작')
     top()
     check('active session sound control visible before plan', '배경 소리 선택', 'plan-focus-controls')
+    tap('배경 소리 선택'); tap('▶ 백색 소음'); tap('완료')
+    check('one tap sound stop available', '소리 끄기', 'plan-sound-stop')
+    tap('소리 끄기')
+    if find('소리 끄기') is not None:
+        raise AssertionError('Sound stop did not clear selected audio')
+    check('sound stopped without reopening picker', '배경 소리 선택', 'plan-sound-stopped')
     reveal('여유 안에서 5분 더')
     before = remaining()
     tap('여유 안에서 5분 더')

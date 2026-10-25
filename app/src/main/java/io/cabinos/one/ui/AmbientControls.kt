@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
     val preset by vm.audioPreset.collectAsStateWithLifecycle()
     val status by vm.audioStatus.collectAsStateWithLifecycle()
     var open by remember {mutableStateOf(false)}
-    ActionButton(if(preset==null)"배경 소리 선택" else "$preset · 소리 설정",{open=true},enabled=enabled)
+    AmbientQuickActions(preset,enabled,{open=true},vm::stopAudio)
     if(open) AlertDialog(onDismissRequest={open=false},title={Text("배경 소리")},text={
         Column(Modifier.heightIn(max=400.dp).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             io.cabinos.one.platform.AmbientSamples.presets.forEach {name->

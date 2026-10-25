@@ -30,7 +30,7 @@ import java.util.*
     var taskText by remember { mutableStateOf("") }
     val color=when(session.kind){SessionKind.FOCUS->Blue;SessionKind.RELAX->Mint;SessionKind.AUDIO->Purple}
     Row(Modifier.fillMaxWidth().heightIn(min=275.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
-        Box(Modifier.weight(.58f).height(280.dp).clip(RoundedCornerShape(20.dp)).border(1.dp,color.copy(alpha=.45f),RoundedCornerShape(20.dp))) {
+        Box(Modifier.weight(.58f).height(316.dp).clip(RoundedCornerShape(20.dp)).border(1.dp,color.copy(alpha=.45f),RoundedCornerShape(20.dp))) {
             MountainScene(Modifier.fillMaxSize())
             Column(Modifier.fillMaxSize().padding(22.dp)) {
                 Row {Pill("${session.kind.label} 모드",color);Spacer(Modifier.weight(1f));Text(if(session.status==SessionStatus.PAUSED)"일시정지됨" else "나를 위한 시간",fontSize=11.sp,color=White)}
@@ -45,16 +45,13 @@ import java.util.*
                     Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                         Text(if(session.kind==SessionKind.RELAX)"잠시, 쉬어가도 괜찮아요." else if(session.kind==SessionKind.FOCUS)"당신만의 몰입을 시작하세요." else "좋은 소리로 채우는 시간.",color=White,fontSize=17.sp,fontWeight=FontWeight.Medium)
                         Text("출발 준비 ${s.preferences.departureBufferMinutes}분 전 자동 종료\n남은 일정에 맞춰 시간을 조정해요.",color=White.copy(alpha=.65f),fontSize=11.sp)
-                        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                            ActionButton(if(session.status==SessionStatus.RUNNING)"일시정지" else "계속",{vm.engine.pauseOrResume()},color=color,enabled=session.status==SessionStatus.RUNNING || s.schedule.availableSeconds>0,icon=if(session.status==SessionStatus.RUNNING)Icons.Outlined.Pause else Icons.Outlined.PlayArrow)
-                            ActionButton("종료",{vm.engine.endSession()},color=White)
-                        }
+                        SessionActionButtons(s,{vm.engine.pauseOrResume()},{vm.engine.endSession()})
                     }
                 }
                 AmbientControls(vm,session.status==SessionStatus.RUNNING)
             }
         }
-        SurfacePanel(Modifier.weight(.42f).height(280.dp)) {
+        SurfacePanel(Modifier.weight(.42f).height(316.dp)) {
             if(session.kind==SessionKind.FOCUS) {
                 Row {SectionLabel("나의 할 일",color=Blue);Spacer(Modifier.weight(1f));Text("${tasks.count{it.done}} / ${tasks.size}",color=Muted,fontSize=11.sp)}
                 FocusTaskPresets(s.parkedAllowed,vm::addTask)
