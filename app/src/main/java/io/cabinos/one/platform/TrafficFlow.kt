@@ -32,11 +32,13 @@ internal class TrafficClient {
         cancel()
         endpoint=url.trimEnd('/');token=key
     }
-    suspend fun fetch(p:NavPoint,now:()->Long):TrafficFlow=withContext(Dispatchers.IO) {
-        val c=URL("$endpoint/flow?point=${p.latitude},${p.longitude}").openConnection() as HttpURLConnection
+    suspend fun fetch(p:NavPoint,now:()->Long):TrafficFlow {
+        val base=endpoint;val access=token
+        return withContext(Dispatchers.IO) {
+        val c=URL("$base/flow?point=${p.latitude},${p.longitude}").openConnection() as HttpURLConnection
         connection=c
         try {
-            c.instanceFollowRedirects=false;c.connectTimeout=6000;c.readTimeout=12000;c.setRequestProperty("Authorization","Bearer $token")
+            c.instanceFollowRedirects=false;c.connectTimeout=6000;c.readTimeout=12000;c.setRequestProperty("Authorization","Bearer $access")
             require(c.responseCode==200)
             val b=c.inputStream.use {input->
                 val output=java.io.ByteArrayOutputStream();val chunk=ByteArray(8192)
@@ -46,5 +48,6 @@ internal class TrafficClient {
             require(b.size<=500000)
             TrafficFlow.parse(String(b,Charsets.UTF_8),now())
         }finally {c.disconnect();if(connection===c)connection=null}
+        }
     }
 }
