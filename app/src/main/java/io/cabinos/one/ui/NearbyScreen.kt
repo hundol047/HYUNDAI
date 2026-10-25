@@ -59,6 +59,7 @@ import org.osmdroid.views.overlay.*
         }
         Text("${s.preferences.preferredCategory} ${s.activities.size}곳 · 출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
         Text("추천순 · 이용 가능 여부 → 가까운 순 · 아래로 스크롤",color=Muted,fontSize=11.sp)
+        Text(status,color=if(busy)Mint else Muted,fontSize=12.sp)
         if(s.activities.any {it.activity.simulated})Text("데모 예시 목록 · 실제 매장 검색 결과가 아닙니다",color=Amber,fontSize=12.sp)
     }
     val details:@Composable (ActivityOption)->Unit = { option ->
@@ -72,7 +73,7 @@ import org.osmdroid.views.overlay.*
         Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
     }
     val attribution:@Composable ()->Unit = {
-        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Overpass에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
+        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
     }
     val online=s.networkAvailable&&s.locationAvailable&&s.parkedAllowed
     if(compact) {
@@ -172,7 +173,7 @@ private fun openMapUri(context:android.content.Context,uri:String):Boolean = try
     }
     LazyColumn(modifier,state=scroll,verticalArrangement=Arrangement.spacedBy(7.dp),contentPadding=PaddingValues(bottom=12.dp)) {
         if(header!=null)item(key="header"){header()}
-        if(options.isEmpty()) item {Text("이 분류의 검색 결과가 없습니다. 다른 분류 또는 지도 중심을 선택해 주변 검색을 눌러 주세요.",color=Muted,fontSize=13.sp)}
+        if(options.isEmpty()) item {Text("불러온 장소가 없습니다. 검색 중이거나 실패했는지 위 상태를 확인하고, 다른 분류 또는 지도 중심으로 검색하세요.",color=Muted,fontSize=13.sp)}
         itemsIndexed(options,key={_,option->option.activity.id}) { index,option ->
             val a=option.activity
             SurfacePanel(Modifier.fillMaxWidth().clickable {onSelect(a.id)},accent=if(a.id==selected)Mint else Line) {

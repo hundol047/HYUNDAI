@@ -55,6 +55,7 @@ PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issu
 | Kotlin·coroutines, AndroidX/Compose/Room, Hilt/Dagger, Gson, osmdroid | Apache-2.0 · [원문·출처](docs/THIRD_PARTY.md) |
 | Leaflet, osrm-text-instructions | BSD-2-Clause · [원문·출처](docs/THIRD_PARTY.md) |
 | OpenStreetMap 도로·장소 | ODbL, © OpenStreetMap contributors · [저작권](https://www.openstreetmap.org/copyright) |
+| Photon 주변 장소 API | 외부 검색 서비스 · OSM 데이터 · [출처·이용 범위](docs/THIRD_PARTY.md) |
 | Pleos Vehicle / NaviHelper | SDK 제공자 이용 조건. 위 오픈소스 라이선스의 적용 대상과 구분 |
 
 ## Pleos SDK 사용 기능

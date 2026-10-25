@@ -15,6 +15,8 @@ import java.net.URL
 import java.net.URLEncoder
 import kotlin.coroutines.resume
 
+data class NearbySearchResult(val places:List<NearbyActivity>,val notice:String,val complete:Boolean=true)
+
 /** Only called by explicit parked UI actions. Coordinates are not persisted. */
 class NearbyPlaces(private val context:Context) {
     @Volatile private var activeConnection:HttpURLConnection?=null
@@ -46,13 +48,35 @@ class NearbyPlaces(private val context:Context) {
         } catch(_:SecurityException) { null }
     }
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
-    suspend fun search(origin:MapPosition):List<NearbyActivity> {
+    suspend fun search(origin:MapPosition):NearbySearchResult {
+        val places=mutableListOf<NearbyActivity>();var successful=0
+        for((index,url) in PhotonNearby.urls(origin).withIndex()) {
+            currentCoroutineContext().ensureActive()
+            if(index>0)delay(1100)
+            try {places+=requestPhoton(url,origin);successful++}catch(error:java.io.IOException){/* A failed category is explicitly marked below. */}
+        }
+        if(successful==4 || places.isNotEmpty())return NearbySearchResult(places.distinctBy {it.id},
+            "OpenStreetMap / Photon 등록 장소 ${places.size}곳 · 반경 2km"+if(successful<4)" · 일부 분류 검색 실패: 잠시 후 다시 검색하세요." else " · 영업 여부 확인 필요",complete=successful==4)
         var last:java.io.IOException?=null
         for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
             currentCoroutineContext().ensureActive()
-            try {return request(origin,endpoint)} catch(error:java.io.IOException){last=error}
+            try {val result=request(origin,endpoint);return NearbySearchResult(result,"OpenStreetMap / Overpass 등록 장소 ${result.size}곳 · 영업 여부 확인 필요")} catch(error:java.io.IOException){last=error}
         }
         throw last ?: java.io.IOException("주변 검색 서버에 연결할 수 없습니다.")
+    }
+    private suspend fun requestPhoton(url:String,origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
+        val connection=URL(url).openConnection() as HttpURLConnection;activeConnection=connection
+        val deadline=launch(Dispatchers.Default) {try{delay(12000)}finally{connection.disconnect()}}
+        try {
+            connection.connectTimeout=5000;connection.readTimeout=8000
+            connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
+            connection.setRequestProperty("Accept","application/json")
+            check(connection.responseCode!=429){"장소 검색 서비스의 요청 한도입니다. 잠시 후 다시 시도하세요."}
+            if(connection.responseCode!=200)throw java.io.IOException("Photon 장소 검색 오류 (${connection.responseCode})")
+            val bytes=connection.inputStream.use {it.readBytesLimited(2_000_000)}
+            currentCoroutineContext().ensureActive()
+            try {PhotonNearby.parse(String(bytes,Charsets.UTF_8),origin)}catch(error:org.json.JSONException){throw java.io.IOException("장소 검색 응답 오류",error)}
+        }finally{deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null}
     }
     private suspend fun request(origin:MapPosition,endpoint:String):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())

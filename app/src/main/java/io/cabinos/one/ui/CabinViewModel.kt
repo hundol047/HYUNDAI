@@ -69,7 +69,7 @@ class CabinViewModel @Inject constructor(
     private val mutableMapSelection=MutableStateFlow<String?>(null)
     val mapSelection=mutableMapSelection.asStateFlow()
     private var nearbyJob:Job?=null
-    private var lastNearbySearch=0L
+    private val nearbyCache=NearbyQueryCache()
     private var nearbyGeneration=0
     private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
     fun cancelNearbySearch(){cancelNearby();mutableNearbyStatus.value="주변 검색을 취소했습니다. 기존 표시를 유지합니다."}
@@ -231,7 +231,7 @@ class CabinViewModel @Inject constructor(
     fun mapOrigin(position:MapPosition) {
         if(!foreground || !state.value.parkedAllowed || !position.valid())return
         cancelNearby();mutableMapSelection.value=null
-        engine.updateNearbyActivities(position,emptyList())
+        engine.updateNearbyActivities(position,nearbyCache.read(position,System.currentTimeMillis()) ?: emptyList())
         mutableNearbyStatus.value="기준점이 바뀌었습니다. 주변 검색을 눌러 실제 등록 장소를 불러오세요."
     }
     fun mapExamples() {
@@ -247,7 +247,7 @@ class CabinViewModel @Inject constructor(
             try {
                 val position=nearbyPlaces.locate()
                 if(foreground && state.value.parkedAllowed && state.value.locationAvailable) {
-                    if(position!=null) {located=true;engine.updateNearbyActivities(position,emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
+                    if(position!=null) {located=true;engine.updateNearbyActivities(position,nearbyCache.read(position,System.currentTimeMillis()) ?: emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
                     else mutableNearbyStatus.value="현재 위치를 얻지 못했습니다. 위치 권한·GPS를 확인하거나 지도 중심을 사용하세요."
                 }
             } finally { if(generation==nearbyGeneration){mutableNearbyBusy.value=false;if(located)searchNearby()} }
@@ -256,20 +256,28 @@ class CabinViewModel @Inject constructor(
     fun searchNearby() {
         if(!foreground || !state.value.parkedAllowed || !state.value.networkAvailable || !state.value.locationAvailable || mutableNearbyBusy.value)return
         val now=System.currentTimeMillis()
-        if(now-lastNearbySearch in 0..29_999) {mutableNearbyStatus.value="검색은 30초 간격으로 가능합니다. 잠시 후 다시 시도해 주세요.";return}
-        lastNearbySearch=now;val origin=state.value.activityOrigin
+        val origin=state.value.activityOrigin
+        nearbyCache.read(origin,now)?.let { cached ->
+            engine.updateNearbyActivities(origin,cached);mutableNearbyStatus.value="최근 2분 이내의 주변 검색 결과 ${cached.size}곳 · 분류별로 확인하세요.";return
+        }
+        val remaining=nearbyCache.remainingSeconds(origin,now)
+        if(remaining>0){mutableNearbyStatus.value="검색 재시도까지 ${remaining}초 · 현재 위치와 다른 분류도 확인해 주세요.";return}
+        nearbyCache.begin(origin,now)
         cancelNearby();val generation=nearbyGeneration
         mutableNearbyBusy.value=true;mutableNearbyStatus.value="OpenStreetMap 주변 장소 검색 중…"
         nearbyJob=viewModelScope.launch {
             try {
-                val places=nearbyPlaces.search(origin)
+                val result=nearbyPlaces.search(origin)
+                val places=result.places
                 if(foreground && state.value.parkedAllowed && state.value.networkAvailable && state.value.locationAvailable && state.value.activityOrigin==origin) {
-                    engine.updateNearbyActivities(origin,places);mutableMapSelection.value=places.firstOrNull()?.id
-                    mutableNearbyStatus.value=if(places.isEmpty())"표시할 이름 있는 장소를 찾지 못했습니다. 지도 데이터에 없는 장소가 있을 수 있습니다." else "OpenStreetMap 등록 장소 ${places.size}곳 · 이름·분류를 선택하고 앱에서 길 안내를 시작하세요. 영업 여부는 별도 확인이 필요합니다."
+                    if(result.complete)nearbyCache.save(origin,places,System.currentTimeMillis()) else nearbyCache.fail()
+                    engine.updateNearbyActivities(origin,places);mutableMapSelection.value=null
+                    mutableNearbyStatus.value=result.notice+if(places.isEmpty())" · 등록 장소를 찾지 못했습니다. 지도 중심을 바꿔 검색하세요." else ""
+
                 }
             } catch(error:Exception) {
                 if(error is CancellationException)throw error
-                if(generation==nearbyGeneration)mutableNearbyStatus.value="장소 검색을 완료하지 못했습니다. 기존 표시를 유지합니다. 잠시 후 다시 시도해 주세요."
+                if(generation==nearbyGeneration){nearbyCache.fail();mutableNearbyStatus.value="장소 검색 실패 · 기존 표시를 유지합니다. "+(error.message ?: "연결을 확인하고 다시 검색하세요.")}
             } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
         }
     }
@@ -285,7 +293,7 @@ class CabinViewModel @Inject constructor(
                 if (!engine.clearPersonalData()) {storageRestored=wasRestored;return@withLock}
                 try {
                     demoJob?.cancel();mutableDemoRunning.value=false
-                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
+                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();mutableMapSelection.value=null;liveNavigation.clear()
                     dao.clearPersonalData();dao.saveState(state.value)
                     runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
                     storageRestored=true;mutableRestoreFailure.value=null

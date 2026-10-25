@@ -28,3 +28,5 @@ Deterministic UI fixtures use synthetic protocol/GPS data; live-recorded route/s
 Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`에 포함합니다. 웹 Leaflet 및 번역 라이선스는 각 배포 자산의 원문을 유지합니다. 데이터 출처 표시는 앱 지도에서도 유지합니다.
 
 - **Gson** — Apache-2.0. https://github.com/google/gson . 공식 Vehicle SDK의 전이 런타임 의존성입니다.
+
+- **Photon 장소 검색 API** — https://photon.komoot.io/ ; API 명세: https://github.com/komoot/photon/blob/master/docs/api-v1.md . Android 주변 장소 검색은 `/reverse`의 `osm_tag`, `radius=2`, `limit=15`를 사용합니다. OSM 데이터 출처를 화면에 표시하며 기준점 좌표를 전송합니다. 분류별 요청 사이 1.1초 간격과 같은 지역의 2분 메모리 캐시를 적용합니다. 공개 데모의 합리적 사용 범위·가용성에는 제한이 있으므로 대규모 운영 시 자체/계약 서비스를 준비해야 합니다. Photon 서버 소스/바이너리를 APK에 포함하지 않습니다.
