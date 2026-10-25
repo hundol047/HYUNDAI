@@ -81,14 +81,21 @@ import java.util.Locale
         if(!voiceAvailable)Text("음성 서비스 사용 불가 · 목적지 검색과 안내 버튼을 사용하세요",color=Muted,fontSize=12.sp)
         if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 선택 시 안내 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
-            Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},if(compact)Modifier.width(240.dp) else Modifier.widthIn(min=260.dp,max=500.dp),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
-                ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
-                ActionButton("내 위치 사용",onLocate,color=Mint,enabled=!ui.busy)
-                if(ui.busy)ActionButton("요청 취소",{nav.cancelPending()},color=Amber)
+            Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.fillMaxWidth(),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+                Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+                ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},modifier=Modifier.weight(1f).heightIn(min=52.dp),color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
+                ActionButton("내 위치 사용",onLocate,Modifier.weight(1f).heightIn(min=52.dp),color=Mint,enabled=!ui.busy)
+                }
+                if(ui.busy)ActionButton("요청 취소",{nav.cancelPending()},Modifier.fillMaxWidth(),color=Amber)
             }
             Row {Checkbox(nearby,{nearby=it},enabled=!ui.busy);Text("내 위치 주변 20km에서 찾기 · 결과에 없는 가게가 있을 수 있습니다.",color=Muted,fontSize=11.sp)}
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
+        if(g.active)Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
+            ActionButton("안내 다시 듣기",{nav.handleVoice("안내 반복")},Modifier.weight(1f).heightIn(min=52.dp),Blue,g.tracking&&!g.directionUncertain&&!g.offRoute)
+            ActionButton("안내 종료",{nav.stop()},Modifier.weight(1f).heightIn(min=52.dp),Muted)
+        }
+        Text("실시간 교통 미연결 · 정체 색상 및 교통 반영 도착 시간 미제공",color=Muted,fontSize=12.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->
             Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { ExpandableNavigationMap(ui,s.networkAvailable,canPlan,chooseDestination) }
@@ -144,7 +151,7 @@ import java.util.Locale
                         if(canPlan&&!ui.originReady)Text(if(ui.originAccessMeters>45)"출발 GPS와 연결도로 시작점이 약 ${navDistance(ui.originAccessMeters)} 떨어져 있습니다. 도로 근처에서 정확한 위치를 확인하세요. 이 사이 진입도로는 안내하지 않습니다." else "출발 위치의 정확하고 최신인 GPS를 확인해 주세요.",color=Amber,fontSize=11.sp)
                         if(canPlan)ActionButton("안내 시작",{nav.start(accessConfirmed)},Modifier.fillMaxWidth(),Mint,!ui.busy&&ui.originReady&&(r.destinationAccessMeters<=100||accessConfirmed))
                         if(canPlan)ActionButton("현재 위치로 경로 다시 계산",{nav.plan(r.destination)},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
-                        ActionButton("안내 종료·경로 지우기",{nav.stop()},Modifier.fillMaxWidth(),Muted)
+                        if(!g.active)ActionButton("안내 종료·경로 지우기",{nav.stop()},Modifier.fillMaxWidth(),Muted)
                         if(g.active&&!g.tracking)ActionButton("GPS 다시 연결",{nav.locate()},Modifier.fillMaxWidth(),Blue)
                         if(g.offRoute)ActionButton("재탐색 재시도",{nav.retry()},Modifier.fillMaxWidth(),Blue,!ui.busy&&s.networkAvailable)
                     }
