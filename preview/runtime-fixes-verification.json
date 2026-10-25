@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "810eb07",
-  "apkSha256": "2d1abc1cbed3431762fc2de55192189cfce9f310bae961ae4ea15ddae98fb3fb",
+  "sourceCommit": "0b514772d273744271073c48effaaea154550eac",
+  "apkSha256": "a91b1cbba7c7048835d1d514dc2f7eeb93085fa43bb3e962d189ec94444194f9",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 161,
+      "tests": 168,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -26,11 +26,28 @@
     }
   ],
   "registeredPhotoLiveCheck": "Wikimedia Commons metadata and thumbnail HTTP 200; test image, not a business catalog validation",
-  "nearbyLiveCheck": "Overpass request timed out after 20 seconds",
+  "nearbyLiveCheck": {
+    "provider": "Photon",
+    "reference": "public Pangyo reference coordinate, not user GPS",
+    "httpStatus": 200,
+    "returnedCounts": {
+      "카페": 15,
+      "식당": 15,
+      "산책": 15,
+      "쇼핑": 15
+    }
+  },
   "testEnvironment": "JVM / Robolectric Android framework and Compose; injected location and speech callbacks in tests",
   "samePreviewSigningCertificate": true,
   "physicalSamsungValidated": false,
   "currentApkEmulatorVideoValidated": false,
   "pleosDeviceValidated": false,
-  "submissionApkUnchanged": true
+  "submissionApkUnchanged": true,
+  "routeLiveCheck": {
+    "provider": "OSRM",
+    "httpStatus": 200,
+    "code": "Ok",
+    "distanceMeters": 90437.1,
+    "physicalDrive": false
+  }
 }
