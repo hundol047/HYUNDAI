@@ -28,10 +28,10 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             Text("활동 ${s.schedule.availableSeconds/60}분 · 출발 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint)
             ActionButton("시간 설정",{timeDialog=true},Modifier.fillMaxWidth())
         }
-        StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
+        val session=s.session?.takeIf {it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED}
+        if(session==null) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         val cabin by vm.cabin.state.collectAsStateWithLifecycle()
         CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
-        val session=s.session?.takeIf {it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED}
         if(session!=null) CompactSession(s,vm,session) else {
             listOf(SessionKind.FOCUS to s.preferences.focusMinutes,SessionKind.RELAX to s.preferences.relaxMinutes,SessionKind.AUDIO to 15).forEach { (kind,minutes) ->
                 SurfacePanel(Modifier.fillMaxWidth()) {
@@ -41,6 +41,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
                 }
             }
         }
+        if(session!=null) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         ActionButton(if(vm.automotive) "차량 내비게이션에서 주변 찾기" else "지도에서 주변 찾기",onMap,Modifier.fillMaxWidth())
         VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=12.sp)

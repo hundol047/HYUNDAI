@@ -66,7 +66,7 @@ import kotlin.math.min
             }
             ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
-        StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
+        if(!active) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         val cabin by vm.cabin.state.collectAsState()
         CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)
@@ -75,6 +75,7 @@ import kotlin.math.min
             ModeCard("휴식 모드","다음 여정을 위한 재충전",min(s.preferences.relaxMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Spa,Mint,Modifier.weight(1f)){vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
             ModeCard("오디오 모드","좋아하는 소리와 함께하는 시간",min(15L,s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Headphones,Purple,Modifier.weight(1f)){vm.start(SessionKind.AUDIO,15)}
         }
+        if(active) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         if(s.context==VehicleContext.PREPARING_DEPARTURE) SurfacePanel(accent=Amber) {Text("출발 준비 시간입니다",color=Amber,fontSize=18.sp);Text("활동을 정리하고 주변을 확인해 주세요. 출발 후에는 차량 기본 내비게이션의 안내를 따라 주세요.",color=White,fontSize=13.sp)}
         VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=11.sp,modifier=Modifier.padding(bottom=5.dp))

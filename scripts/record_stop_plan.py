@@ -39,6 +39,8 @@ def record(adb, tree, tap, check, snapshot, scenario):
     top(); tap('시간 설정'); tap('45분'); tap('적용')
     reveal('25분 집중 바로 시작')
     tap('25분 집중 바로 시작')
+    top()
+    check('active session sound control visible before plan', '배경 소리 선택', 'plan-focus-controls')
     reveal('여유 안에서 5분 더')
     before = remaining()
     tap('여유 안에서 5분 더')
@@ -48,6 +50,7 @@ def record(adb, tree, tap, check, snapshot, scenario):
     check('bounded extension changes countdown', '여유 안에서 5분 더', 'plan-04-extended')
     time.sleep(4)
     scenario('충전 15분')
+    top(); reveal('계속'); tap('계속')
     reveal('여유 안에서 5분 더')
     if remaining() > 600:
         raise AssertionError('Charge update failed to cap session')
