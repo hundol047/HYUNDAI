@@ -58,8 +58,10 @@ import java.util.*
     val entry by nav.currentBackStackEntryAsState()
     val route=entry?.destination?.route ?: "dashboard"
     var assistantOpen by remember { mutableStateOf(false) }
+    val navigationRequests by vm.navigationRequests.collectAsStateWithLifecycle()
+    LaunchedEffect(navigationRequests) {if(navigationRequests>0){assistantOpen=false;navigationOpen=true}}
     var simulatorOpen by remember { mutableStateOf(false) }
-    val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.command("마이크 권한 없이 도움말") }
+    val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.voicePermissionDenied() }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
     val locationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.requestLocation()}
     val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
@@ -152,7 +154,7 @@ import java.util.*
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
                             else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,{requestVehiclePermissions(true)})
                             else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true},mapFix=navigationState.mapFix)
-                            else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
+                            else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation) {vm.liveNavigation.plan(it);navigationOpen=true;requestNavigationLocation()}
                         }
                         if(compact) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(2.dp)) {
                             listOf("홈" to "dashboard","내비" to "navigation","지도" to "nearby","기록" to "history","설정" to "settings").forEach { (label,key) ->
@@ -164,18 +166,18 @@ import java.util.*
                 }
             }
         }
-        if(assistantOpen) AssistantDialog(s,vm,onClose={assistantOpen=false},onMicrophone={
+        if(assistantOpen) AssistantDialog(s,vm,onClose={assistantOpen=false;vm.speech.cancelListening()},onMicrophone={
             if(context.checkSelfPermission(Manifest.permission.RECORD_AUDIO)==PackageManager.PERMISSION_GRANTED || !s.parkedAllowed) vm.listen()
             else microphone.launch(Manifest.permission.RECORD_AUDIO)
         })
         if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions={requestVehiclePermissions(true)})
     }
 }
-@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit) {
+@Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit,onDestination:(NavPlace)->Unit) {
     // Collect live timing inside destinations so a tick never rebuilds the navigation graph.
     NavHost(navController=nav,startDestination="dashboard") {
         composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();if(LocalCompactWindow.current) CompactParkedDashboard(s,vm,onMap={nav.navigate("nearby"){launchSingleTop=true}}) else ParkedDashboard(s,vm,onMap={nav.navigate("nearby"){launchSingleTop=true}}) }
-        composable("nearby") {val s by vm.state.collectAsStateWithLifecycle();NearbyScreen(s,vm,onLocate)}
+        composable("nearby") {val s by vm.state.collectAsStateWithLifecycle();NearbyScreen(s,vm,onLocate,onDestination)}
         composable("history") { val s by vm.state.collectAsStateWithLifecycle();HistoryScreen(s) }
         composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
     }

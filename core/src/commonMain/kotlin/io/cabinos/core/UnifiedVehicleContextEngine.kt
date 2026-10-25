@@ -277,6 +277,9 @@ class UnifiedVehicleContextEngine(
         val minutes = Regex("(\\d+)분").find(c)?.groupValues?.get(1)?.toIntOrNull()
         val response = when {
             c.contains("위험") -> if (!state.value.locationAvailable) "위치 정보가 없어 경로 위험을 확인할 수 없습니다." else state.value.hazards.firstOrNull()?.let { "전방 ${it.distanceMeters.toInt()}미터에 ${it.hazard.kind} 정보가 있습니다. 데모 데이터입니다." } ?: "현재 경로에 확인된 주요 위험 알림이 없습니다."
+            c.contains("종료") || c.contains("끝내") -> if(state.value.parkedAllowed){endSession();"세션을 종료했습니다."}else "안전한 주차 확인 후 조작해 주세요."
+            c.contains("일시정지") || c.contains("잠깐멈") -> if(state.value.session?.status==SessionStatus.RUNNING && pauseOrResume()) "세션을 일시정지했습니다." else "진행 중인 세션이 없습니다."
+            c.contains("계속") || c.contains("다시시작") -> if(state.value.session?.status==SessionStatus.PAUSED && pauseOrResume()) "세션을 계속합니다." else "다시 시작할 수 있는 세션이 없습니다."
             c.contains("집중") -> if (startSession(SessionKind.FOCUS, minutes ?: state.value.preferences.focusMinutes)) "집중 세션을 시작했습니다." else state.value.message
             c.contains("휴식") -> if (startSession(SessionKind.RELAX, minutes ?: state.value.preferences.relaxMinutes)) "휴식 세션을 시작했습니다." else state.value.message
             c.contains("충전") -> if (state.value.sample?.charging == true) {

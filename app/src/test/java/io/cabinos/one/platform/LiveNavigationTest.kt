@@ -81,4 +81,24 @@ class LiveNavigationTest {
             nav.setForeground(false);assertNull(nav.state.value.guidance.route)
         }finally{nav.close();speech.close()}
     }
+    @Test fun destinationSelectedBeforeGpsPlansInsideAppOnceAfterFreshFix() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        var calls=0;val end=NavPlace("목적지",NavPoint(37.51,127.01))
+        val service=object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {calls++;return NavigationGeometry.route(destination,listOf(origin,destination.point),1400.0,300.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))}}
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,service,clock={now})
+        try {
+            nav.plan(end);assertEquals(0,calls);nav.locate()
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            fun gps(){listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;accuracy=5f;speed=0f;time=now});shadowOf(Looper.getMainLooper()).idle()}
+            gps();assertEquals(1,calls);assertEquals(end,nav.state.value.guidance.route?.destination)
+            now+=1000;gps();assertEquals(1,calls);assertFalse(nav.state.value.guidance.active)
+        }finally{nav.close();speech.close()}
+    }
+
 }

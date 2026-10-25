@@ -102,10 +102,14 @@ internal fun voiceServicesAvailable(context:Context):Boolean = runCatching {
 class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     private val mutableVoiceAvailable=MutableStateFlow(false)
     val voiceAvailable=mutableVoiceAvailable.asStateFlow()
-    fun refreshVoiceAvailability() { mutableVoiceAvailable.value=initialized && voiceServicesAvailable(context) }
+    fun refreshVoiceAvailability() { mutableVoiceAvailable.value=runCatching {SpeechRecognizer.isRecognitionAvailable(context)}.getOrDefault(false) }
     private var initialized=false
     private var pending:String?=null
-    var status="음성 엔진 준비 중"; private set
+    private val mutableStatus=MutableStateFlow("음성 엔진 준비 중")
+    val statusFlow=mutableStatus.asStateFlow()
+    var status:String
+        get()=mutableStatus.value
+        private set(value){mutableStatus.value=value}
     private var tts:TextToSpeech?=null
     private var recognizer:SpeechRecognizer?=null
     private var recognitionEpoch=0

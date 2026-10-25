@@ -29,7 +29,7 @@ class NearbyPlaces(private val context:Context) {
             val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { System.currentTimeMillis()-it.time in 0..60_000 && it.accuracy<=1000 }.maxByOrNull { it.time }
             if(cached!=null)return position(cached)
             if(providers.isEmpty())return null
-            withTimeoutOrNull(12_000) {
+            withTimeoutOrNull(25_000) {
                 suspendCancellableCoroutine { continuation ->
                     val listener=object:LocationListener {
                         override fun onLocationChanged(location:Location) {
@@ -46,15 +46,23 @@ class NearbyPlaces(private val context:Context) {
         } catch(_:SecurityException) { null }
     }
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
-    suspend fun search(origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
+    suspend fun search(origin:MapPosition):List<NearbyActivity> {
+        var last:java.io.IOException?=null
+        for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
+            currentCoroutineContext().ensureActive()
+            try {return request(origin,endpoint)} catch(error:java.io.IOException){last=error}
+        }
+        throw last ?: java.io.IOException("주변 검색 서버에 연결할 수 없습니다.")
+    }
+    private suspend fun request(origin:MapPosition,endpoint:String):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())
         val query=NearbyGeometry.query(origin)
-        val connection=URL("https://overpass-api.de/api/interpreter").openConnection() as HttpURLConnection
+        val connection=URL(endpoint).openConnection() as HttpURLConnection
         activeConnection=connection
-        val deadline=launch(Dispatchers.Default) {try{delay(35_000)}finally{connection.disconnect()}}
+        val deadline=launch(Dispatchers.Default) {try{delay(20_000)}finally{connection.disconnect()}}
         try {
             // The provider may queue a 12-second query before executing it.
-            connection.connectTimeout=8_000;connection.readTimeout=35_000
+            connection.connectTimeout=6_000;connection.readTimeout=18_000
             connection.requestMethod="POST";connection.doOutput=true
             connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
             connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
@@ -62,6 +70,7 @@ class NearbyPlaces(private val context:Context) {
             currentCoroutineContext().ensureActive()
             val form=("data="+URLEncoder.encode(query,"UTF-8")).toByteArray(Charsets.UTF_8)
             connection.setFixedLengthStreamingMode(form.size);connection.outputStream.use {it.write(form)}
+            if(connection.responseCode>=500)throw java.io.IOException("주변 검색 서버 일시 오류")
             check(connection.responseCode==200) {"장소 검색 서버가 응답하지 않습니다 (${connection.responseCode})."}
             val bytes=connection.inputStream.use { it.readBytesLimited(2_000_000) }
             parse(String(bytes,Charsets.UTF_8),origin)
@@ -86,7 +95,9 @@ class NearbyPlaces(private val context:Context) {
                 val center=item.optJSONObject("center") ?: item
                 NearbyGeometry.osmActivity("osm-${item.optString("type")}-${item.optLong("id")}",name,category,
                     center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)
-            }.distinctBy { it.id }.take(60)
+            }.distinctBy { it.id }.groupBy {it.category}.values.flatMap {places->
+                places.sortedBy {NearbyGeometry.distanceMeters(origin,MapPosition(it.latitude!!,it.longitude!!))}.take(15)
+            }.sortedBy {it.oneWaySeconds}
         }
     }
 }

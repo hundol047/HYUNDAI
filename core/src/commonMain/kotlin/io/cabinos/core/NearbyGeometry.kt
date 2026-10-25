@@ -15,7 +15,8 @@ object NearbyGeometry {
         val around="(around:1200,${origin.latitude},${origin.longitude})"
         // Materialize the spatial set before matching name keys. Otherwise the
         // provider can scan worldwide tag keys before applying the small radius.
-        return "[out:json][timeout:12];nwr$around->.local;(nwr.local[amenity~\"^(cafe|restaurant|fast_food)$\"]$named;nwr.local[leisure=park]$named;nwr.local[shop~\"^(convenience|supermarket|mall)$\"]$named;);out center tags 60;"
+        val filters=listOf("[amenity=cafe]","[amenity~\"^(restaurant|fast_food)$\"]","[leisure=park]","[shop~\"^(convenience|supermarket|mall)$\"]")
+        return "[out:json][timeout:12];nwr$around->.local;"+filters.joinToString("") {"nwr.local$it$named;out center tags 60;"}
     }
     fun placeName(korean:String,local:String,english:String):String =
         listOf(korean,local,english).map {value->value.filter {it>=' '&&it!='\u007f'&&it !in '\u202a'..'\u202e'&&it !in '\u2066'..'\u2069'}.trim().take(100)}.firstOrNull {it.isNotBlank()} ?: ""

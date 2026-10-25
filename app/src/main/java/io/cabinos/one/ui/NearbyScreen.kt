@@ -12,6 +12,8 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -26,7 +28,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.*
 
-@Composable fun NearbyScreen(s:AppState,vm:CabinViewModel,onLocate:()->Unit) {
+@Composable fun NearbyScreen(s:AppState,vm:CabinViewModel,onLocate:()->Unit,onNavigate:(NavPlace)->Unit={vm.liveNavigation.plan(it)}) {
     val status by vm.nearbyStatus.collectAsStateWithLifecycle()
     val busy by vm.nearbyBusy.collectAsStateWithLifecycle()
     val selected by vm.mapSelection.collectAsStateWithLifecycle()
@@ -54,12 +56,12 @@ import org.osmdroid.views.overlay.*
             Column(pane,verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(5.dp)) {
                     listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
-                        FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.preferences(s.preferences.copy(preferredCategory=category))},label={Text(category,fontSize=11.sp)})
+                        FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.nearbyCategory(category)},label={Text(category,fontSize=11.sp)})
                     }
                 }
-                Text("출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
+                Text("${s.preferences.preferredCategory} ${s.activities.size}곳 · 출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(7.dp)) {
-                    if(s.activities.isEmpty()) Text("표시할 장소가 없습니다. 기준점 주변을 검색해 주세요.",color=Muted,fontSize=13.sp)
+                    if(s.activities.isEmpty()) Text("이 분류의 검색 결과가 없습니다. 다른 분류 또는 지도 중심을 선택해 주변 검색을 눌러 주세요.",color=Muted,fontSize=13.sp)
                     s.activities.forEach { option ->
                         val a=option.activity
                         SurfacePanel(Modifier.fillMaxWidth().clickable {vm.mapSelect(a.id)},accent=if(a.id==chosen?.activity?.id)Mint else Line) {
@@ -76,14 +78,11 @@ import org.osmdroid.views.overlay.*
                         Text("도보·왕복 시간은 직선거리 기반 추정입니다. 횡단·우회·출입 제한은 반영하지 않으니 실제 경로를 확인하세요.",fontSize=10.sp,color=Muted)
                         Spacer(Modifier.height(7.dp))
                         ActionButton(if(s.selectedActivityId==a.id)"왕복 계획에 반영됨" else "이 장소로 계획",{vm.engine.selectActivity(a.id)},Modifier.fillMaxWidth(),Mint,option.feasible)
-                        TextButton(onClick={
-                            if(vm.state.value.parkedAllowed && a.latitude!=null && a.longitude!=null) {
-                                val label=Uri.encode(a.name)
-                                val uri="geo:${a.latitude},${a.longitude}?q=${a.latitude},${a.longitude}($label)"
-                                val fallback="https://www.openstreetmap.org/?mlat=${a.latitude}&mlon=${a.longitude}#map=17/${a.latitude}/${a.longitude}"
-                                if(!openMapUri(context,uri) && !openMapUri(context,fallback))vm.mapUnavailable()
-                            }
-                        }) {Text("외부 지도에서 위치·경로 확인 ↗",fontSize=11.sp,color=Blue)}
+                        ActionButton("앱에서 길 안내",{
+                            if(vm.state.value.parkedAllowed && a.latitude!=null && a.longitude!=null)
+                                onNavigate(NavPlace(a.name,NavPoint(a.latitude!!,a.longitude!!)))
+                        },Modifier.fillMaxWidth(),Blue,enabled=a.latitude!=null&&a.longitude!=null)
+                        Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
                     }
                 }
             }
@@ -98,25 +97,27 @@ import org.osmdroid.views.overlay.*
     val owner=LocalLifecycleOwner.current
     val map=remember {
         configureRoadTiles(context)
-        MapView(context).apply {
+        RoadMapView(context).apply {
             setTileSource(TileSourceFactory.MAPNIK);setMultiTouchControls(true)
             minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(16.0)
             zoomController.setVisibility(org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
         }
     }
+    var health by remember {mutableStateOf(RoadMapHealth())}
     val currentSelect by rememberUpdatedState(onSelect)
     var previousOrigin by remember { mutableStateOf<MapPosition?>(null) }
     var previousSelection by remember { mutableStateOf<String?>(null) }
     var signature by remember { mutableStateOf("") }
     DisposableEffect(map,owner) {
-        onReady(map)
-        val observer=LifecycleEventObserver { _,event ->if(event==Lifecycle.Event.ON_START)map.onResume() else if(event==Lifecycle.Event.ON_STOP)map.onPause() }
+        onReady(map);map.onHealth={health=it};map.beginHealth()
+        val observer=LifecycleEventObserver { _,event ->if(event==Lifecycle.Event.ON_START){map.onHealth={health=it};map.onResume();map.beginHealth()} else if(event==Lifecycle.Event.ON_STOP){map.onPause();map.endHealth()} }
         owner.lifecycle.addObserver(observer);map.onResume()
-        onDispose {owner.lifecycle.removeObserver(observer);map.onPause();map.onDetach()}
+        onDispose {owner.lifecycle.removeObserver(observer);map.endHealth();map.onPause();map.onDetach()}
     }
-    AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={ view ->
+    Box(Modifier.fillMaxSize()) {
+    AndroidView(factory={map},modifier=Modifier.fillMaxSize().clipToBounds(),update={ view ->
         applyMapAppearance(view,appearance,palette)
-        view.setUseDataConnection(s.networkAvailable&&s.locationAvailable&&s.parkedAllowed)
+        view.connection(s.networkAvailable&&s.locationAvailable&&s.parkedAllowed)
         if(previousOrigin!=s.activityOrigin) {view.controller.setCenter(GeoPoint(s.activityOrigin.latitude,s.activityOrigin.longitude));previousOrigin=s.activityOrigin}
         val next="${s.nearbyRevision}|$selected|${s.activities.map {it.activity.id to it.feasible}}"
         if(next!=signature) {
@@ -142,6 +143,11 @@ import org.osmdroid.views.overlay.*
             s.activities.firstOrNull {it.activity.id==selected}?.activity?.let {a->if(a.latitude!=null&&a.longitude!=null)view.controller.animateTo(GeoPoint(a.latitude!!,a.longitude!!))}
         }
     })
+    if(health.status!=RoadMapStatus.READY) Column(Modifier.align(Alignment.TopCenter).background(Panel).padding(8.dp)) {
+        Text(health.message,color=Amber,fontSize=12.sp)
+        if(health.status==RoadMapStatus.UNAVAILABLE)TextButton(onClick={map.retryRoads()}){Text("지도 다시 불러오기")}
+    }
+    }
 }
 
 private fun openMapUri(context:android.content.Context,uri:String):Boolean = try {

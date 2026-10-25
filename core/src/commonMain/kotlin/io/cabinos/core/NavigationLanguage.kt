@@ -52,7 +52,7 @@ object NavigationVoice {
         val numbers=listOf(listOf("1","one","first","일번","일 번","1번","첫 번째","uno","un","eins","一","一番"),listOf("2","two","second","이번","이 번","2번","두 번째","dos","deux","zwei","二","二番"),listOf("3","three","third","삼번","삼 번","3번","세 번째","tres","trois","drei","三","三番"),listOf("4","four","fourth","사번","사 번","4번","네 번째","cuatro","quatre","vier","四","四番"),listOf("5","five","fifth","오번","오 번","5번","다섯 번째","cinco","cinq","fünf","五","五番"),listOf("6","six","sixth","육번","육 번","6번","여섯 번째","seis","sechs","六","六番"))
         val number=numbers.indexOfFirst {t in it||t=="select ${it.first()}"||t=="${it.first()} 번"}
         if(number>=0)return NavigationVoiceCommand(NavigationVoiceAction.SELECT,index=number)
-        val query=raw.trim().take(180).replace(Regex("^(navigate to |directions to |find |검색 )",RegexOption.IGNORE_CASE),"").replace(Regex(" (길 찾아줘|길 찾아 줘|찾아줘|찾아 줘)[.!?]*$"),"").trim()
+        val query=raw.trim().take(180).replace(Regex("^(navigate to |directions to |find |검색 )",RegexOption.IGNORE_CASE),"").replace(Regex("(으?로)?\\s*(길\\s*찾아\\s*줘|길\\s*안내해\\s*줘|검색해\\s*줘|찾아\\s*줘)[.!?]*$"),"").trim()
         return NavigationVoiceCommand(NavigationVoiceAction.SEARCH,query=if(query.length>=2)query else "")
     }
 }

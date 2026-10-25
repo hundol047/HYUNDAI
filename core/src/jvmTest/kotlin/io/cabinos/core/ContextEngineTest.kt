@@ -161,4 +161,23 @@ class ContextEngineTest {
         assertFalse(engine.setArrivalAt(now-1));assertEquals(target,engine.state.value.arrivalTargetMs)
         send(Gear.DRIVE,40.0);assertFalse(engine.setArrivalAt(target))
     }
+    @Test fun spokenSessionControlsDoNotRestartFocusOrBypassParking() {
+        park();engine.setWaitingMinutes(40)
+        engine.assistant("25분 집중 시작")
+        val id=engine.state.value.session!!.id
+        engine.assistant("집중 일시정지")
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        engine.assistant("집중 계속")
+        assertEquals(id,engine.state.value.session!!.id)
+        assertEquals(SessionStatus.RUNNING,engine.state.value.session!!.status)
+        engine.assistant("집중 종료")
+        assertNull(engine.state.value.session)
+        send(Gear.DRIVE,0.0);engine.assistant("집중 시작")
+        assertNull(engine.state.value.session);assertFalse(engine.state.value.parkedAllowed)
+    }
+    @Test fun spokenDestinationSuffixKeepsOnlyThePlaceName() {
+        for(text in listOf("서울역으로 길찾아줘","서울역 길 찾아 줘","서울역 검색해줘"))
+            assertEquals("서울역",NavigationVoice.parse(text).query)
+    }
+
 }

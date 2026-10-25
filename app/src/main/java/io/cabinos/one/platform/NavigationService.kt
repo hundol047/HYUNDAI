@@ -158,6 +158,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private var lastFixTimestamp=Long.MIN_VALUE;private var resumeLocation=false
     private var locationGeneration=0;private var requestedAt:Long?=null;private var receivedAt:Long?=null
     private var listener:LocationListener?=null
+    private var pendingDestination:NavPlace?=null
     private var fix:NavFix?=null;private var fixProvider:String?=null;private var spoken="";private var rerouteFailures=0
     private fun listenerFor(epoch:Int)=object:LocationListener {
         override fun onLocationChanged(location:Location) {
@@ -175,7 +176,10 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             mutable.value=mutable.value.copy(gpsConnection=GpsConnection.READY,gpsNotice="${if(location.provider==LocationManager.GPS_PROVIDER)"GPS" else "네트워크 위치"} 확인 · 정확도 약 ${f.accuracy.toInt()}m")
             if(f.speedMps?.let {it>=2}==true){safetyHeld=true;stationary.reset();engine.setNavigationLock(true)}
             if(safetyHeld&&!tracker.state.active&&stationary.accept(f,clock())){safetyHeld=false;stationary.reset();engine.setNavigationLock(false)}
-            if(tracker.state.active){tracker.update(f);publish();guide();reroute()}else publish()
+            if(tracker.state.active){tracker.update(f);publish();guide();reroute()}else {
+                publish()
+                if(canPlan())pendingDestination?.let {pendingDestination=null;plan(it)}
+            }
         }
         override fun onProviderDisabled(provider:String){if(epoch==locationGeneration&&foreground&&listening)invalidateGps(GpsConnection.DISABLED,"위치 제공자가 중지됐습니다. 위치 설정 또는 GPS 다시 연결을 확인해 주세요.")}
     }
@@ -213,7 +217,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val center=fix?.takeIf {tracker.usable(it)}?.point
         if(nearby&&center==null){mutable.value=mutable.value.copy(notice="주변 가게 검색은 내 위치를 먼저 받아 주세요.");return}
         val old=if(more)mutable.value.places else emptyList()
-        if(!more){resolvedSearchQuery=query;cancelRequest();seenPlaceIds=emptyList();tracker.stop();publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false)}
+        if(!more){pendingDestination=null;resolvedSearchQuery=query;cancelRequest();seenPlaceIds=emptyList();tracker.stop();publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false)}
         val coordinates=query.split(',').map {it.trim().toDoubleOrNull()}
         if(!more&&coordinates.size==2&&coordinates.all {it!=null}) {
             val p=NavPoint(coordinates[0]!!,coordinates[1]!!)
@@ -248,10 +252,11 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     }
     fun plan(destination:NavPlace) {
         if(!canPlan())return
+        pendingDestination=null
         cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=destination)
         if(!engine.state.value.networkAvailable){mutable.value=mutable.value.copy(notice="선택한 지점 위치는 표시합니다. 새 자동차 경로는 온라인 연결이 필요합니다.");return}
         val f=fix
-        if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(notice="선택한 지점을 지도에 표시했습니다. 자동차 경로는 내 위치를 먼저 받아 주세요.");return}
+        if(f==null||!tracker.usable(f)){pendingDestination=destination;mutable.value=mutable.value.copy(notice="선택한 지점을 표시했습니다. 내 위치를 허용하면 앱에서 자동차 경로를 계산합니다.");return}
         request {current->val r=service.route(f.point,destination);if(current()&&canPlan()){tracker.preview(r.localized(language));publish();if(engine.state.value.preferences.voiceEnabled)speech.speakNavigation(destination.name,language);mutable.value=mutable.value.copy(notice="경로를 확인한 뒤 안내 시작을 누르세요. 실제 교통·차선 정보는 제공하지 않습니다.")}}
     }
     fun start(accessConfirmed:Boolean=false) {
@@ -293,9 +298,9 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         publish();resumeLocationIfReady();if(tracker.state.active)reroute()
     }
     fun configure(search:String,route:String,accessToken:String=""){if(canPlan()){cancelRequest();service.configure(search,route,accessToken);tracker.stop();mutable.value=mutable.value.copy(guidance=tracker.state,places=emptyList(),selectedPlace=null,hasMore=false,originReady=false,notice="검색 서버 설정을 적용했습니다. 가게를 다시 검색하세요.")}}
-    fun cancelPending(){if(canPlan()&&mutable.value.busy){cancelRequest();mutable.value=mutable.value.copy(notice="요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")}}
+    fun cancelPending(){pendingDestination=null;if(canPlan()&&mutable.value.busy){cancelRequest();mutable.value=mutable.value.copy(notice="요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")}}
     fun retry(){rerouteFailures=0;reroute()}
-    fun stop(){cancelVoice();cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
+    fun stop(){pendingDestination=null;cancelVoice();cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
     private fun stopLocation(){locationGeneration++;listener?.let {runCatching {manager.removeUpdates(it)}};listener=null;listening=false}
     fun setForeground(active:Boolean){foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
     private fun resumeLocationIfReady(){if(foreground&&resumeLocation&&(canPlan()||tracker.state.active||safetyHeld)){resumeLocation=false;locate()}}
@@ -340,7 +345,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             }
         }
     }
-    fun clearSelection(){if(canPlan()){cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=null,notice="선택한 장소를 지웠습니다.")}}
+    fun clearSelection(){if(canPlan()){pendingDestination=null;cancelRequest();tracker.stop();publish();mutable.value=mutable.value.copy(selectedPlace=null,notice="선택한 장소를 지웠습니다.")}}
     fun openPlaceWebsite(place:NavPlace) {
         if(!canPlan()||place.website.isBlank())return
         val uri=android.net.Uri.parse(place.website)

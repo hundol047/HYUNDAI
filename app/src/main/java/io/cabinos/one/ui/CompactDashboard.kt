@@ -60,9 +60,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             ActionButton("종료",{vm.engine.endSession()},Modifier.weight(1f),color=Muted)
         }
         if(session.kind==SessionKind.RELAX) Text(if((s.nowMs/4000)%2==0L) "천천히 들이쉬세요" else "편안하게 내쉬세요",color=Mint)
-        listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
-            ActionButton(if(audio==name) "$name 중지" else name,{vm.toggleAudio(name)},Modifier.fillMaxWidth(),enabled=session.status==SessionStatus.RUNNING)
-        }
+        AmbientControls(vm,session.status==SessionStatus.RUNNING)
         if(session.kind==SessionKind.FOCUS) {
             FocusTaskPresets(s.parkedAllowed,vm::addTask)
             OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed,label={Text("이번 시간에 할 일")},singleLine=true)

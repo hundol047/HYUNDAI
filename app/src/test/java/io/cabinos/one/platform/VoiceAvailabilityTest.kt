@@ -24,4 +24,12 @@ class VoiceAvailabilityTest {
         shadowOf(context.packageManager).removeResolveInfosForIntent(Intent("android.speech.RecognitionService"),"test.recognizer")
         assertFalse(voiceServicesAvailable(context))
     }
+    @Test fun speechInputRemainsAvailableWithoutTtsOutputEngine() {
+        val context=ApplicationProvider.getApplicationContext<Context>()
+        val recognizer=ResolveInfo().apply {serviceInfo=ServiceInfo().apply {packageName="test.recognizer";name="TestRecognizer";enabled=true;exported=true}}
+        shadowOf(context.packageManager).addResolveInfoForIntent(Intent("android.speech.RecognitionService"),recognizer)
+        val speech=AndroidSpeechProvider(context)
+        try {speech.refreshVoiceAvailability();assertTrue(speech.voiceAvailable.value)}finally{speech.close()}
+    }
+
 }

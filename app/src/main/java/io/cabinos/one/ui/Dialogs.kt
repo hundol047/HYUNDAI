@@ -34,6 +34,7 @@ import io.cabinos.core.*
 }
 @Composable fun AssistantDialog(s:AppState,vm:CabinViewModel,onClose:()->Unit,onMicrophone:()->Unit) {
     val reply by vm.reply.collectAsStateWithLifecycle()
+    val speechStatus by vm.speech.statusFlow.collectAsStateWithLifecycle()
     val voiceAvailable by vm.speech.voiceAvailable.collectAsStateWithLifecycle()
     var input by remember { mutableStateOf("") }
     val commands=if(s.parkedAllowed) listOf("충전 얼마나 남았어?","25분 집중 모드 켜줘","15분 휴식 모드 시작해 줘","근처 쉴 곳 추천해 줘","출발 5분 전에 알려줘","이제 출발할게") else listOf("앞에 위험 구간 있어?","현재 주행 상황 알려줘")
@@ -52,7 +53,7 @@ import io.cabinos.core.*
                 }
             }
             if(voiceAvailable) { Spacer(Modifier.height(12.dp));ActionButton("말하기",onMicrophone,Modifier.fillMaxWidth(),Blue,icon=Icons.Outlined.MicNone) }
-            Text("${vm.speech.status} · 음성 인식 서비스가 없으면 명령 버튼을 사용하세요.",fontSize=10.sp,color=Muted,modifier=Modifier.padding(top=9.dp))
+            Text("${speechStatus} · 음성 인식 서비스가 없으면 명령 버튼을 사용하세요.",fontSize=10.sp,color=Muted,modifier=Modifier.padding(top=9.dp))
         }
     }
 }

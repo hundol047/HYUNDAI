@@ -49,4 +49,12 @@ class NearbyPlacesTest {
         assertEquals("산책",items[1].category);assertFalse(items.any {it.simulated})
         assertTrue(items.all {it.latitude!=null && it.oneWaySeconds>=60})
     }
+    @Test fun cafeHeavyResponseCannotCrowdOutOtherCategories() {
+        val elements=(1..60).map {"""{"type":"node","id":$it,"lat":37.395,"lon":127.111,"tags":{"name":"Cafe $it","amenity":"cafe"}}"""}+
+            listOf("amenity" to "restaurant","leisure" to "park","shop" to "mall").mapIndexed {i,(key,value)->"""{"type":"node","id":${100+i},"lat":37.395,"lon":127.111,"tags":{"name":"Place $i","$key":"$value"}}"""}
+        val result=NearbyPlaces.parse("""{"elements":[${elements.joinToString(",") }]}""",MapPosition())
+        assertEquals(setOf("카페","식당","산책","쇼핑"),result.map {it.category}.toSet())
+        assertEquals(15,result.count {it.category=="카페"})
+    }
+
 }

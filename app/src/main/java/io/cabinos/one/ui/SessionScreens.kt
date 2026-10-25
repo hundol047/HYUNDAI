@@ -51,11 +51,7 @@ import java.util.*
                         }
                     }
                 }
-                Row(horizontalArrangement=Arrangement.spacedBy(7.dp)) {
-                    listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
-                        FilterChip(enabled=session.status==SessionStatus.RUNNING,selected=preset==name,onClick={vm.toggleAudio(name)},label={Text(name,fontSize=10.sp)},leadingIcon={Icon(if(preset==name)Icons.AutoMirrored.Outlined.VolumeUp else Icons.Outlined.MusicNote,null,Modifier.size(14.dp))},modifier=Modifier.heightIn(min=48.dp),colors=FilterChipDefaults.filterChipColors(selectedContainerColor=color.copy(alpha=.25f),selectedLabelColor=White))
-                    }
-                }
+                AmbientControls(vm,session.status==SessionStatus.RUNNING)
             }
         }
         SurfacePanel(Modifier.weight(.42f).height(280.dp)) {

@@ -44,6 +44,9 @@ class CabinViewModel @Inject constructor(
     }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
     val reply=mutableReply.asStateFlow()
+    private val mutableNavigationRequests=MutableStateFlow(0)
+    val navigationRequests=mutableNavigationRequests.asStateFlow()
+    fun voicePermissionDenied(){mutableReply.value="마이크 권한이 거부됐습니다. 앱 권한에서 허용하거나 명령 버튼을 사용하세요."}
     private val mutableScenario=MutableStateFlow(simulator.selected)
     val scenario=mutableScenario.asStateFlow()
     val vehicleStatus=vehicle.status
@@ -53,6 +56,9 @@ class CabinViewModel @Inject constructor(
     val automotive=vehicle.automotive
     private val mutableAudio=MutableStateFlow<String?>(null)
     val audioPreset=mutableAudio.asStateFlow()
+    val audioStatus=audio.status
+    fun showMediaVolume() {audio.showVolume()}
+    fun stopAudio() {audio.stopByUser();mutableAudio.value=null}
     private val mutableDemoRunning=MutableStateFlow(false)
     val demoRunning=mutableDemoRunning.asStateFlow()
     private var demoJob:Job?=null
@@ -162,10 +168,26 @@ class CabinViewModel @Inject constructor(
     }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
-    fun command(text:String) { mutableReply.value=engine.assistant(text);if(state.value.preferences.voiceEnabled) speech.speak(mutableReply.value) }
+    fun command(text:String) {
+        val compact=text.replace(" ","")
+        val sound=listOf("백색 소음","자연의 소리","잔잔한 톤").firstOrNull {compact.contains(it.replace(" ",""))}
+        if(sound!=null || compact.contains("소리꺼") || compact.contains("소리끄")) {
+            if(!state.value.parkedAllowed){mutableReply.value="안전한 주차 확인 후 소리를 조작할 수 있습니다.";return}
+            if(sound==null){stopAudio();mutableReply.value="배경 소리를 껐습니다."}
+            else if(state.value.session?.status!=SessionStatus.RUNNING)mutableReply.value="먼저 집중·휴식 세션을 시작해 주세요."
+            else {if(audioPreset.value!=sound)toggleAudio(sound);mutableReply.value=audioStatus.value}
+            return
+        }
+        if(compact.contains("길찾") || compact.contains("길안내") || compact.contains("검색해")) {
+            liveNavigation.handleVoice(text);mutableNavigationRequests.value++;return
+        }
+        mutableReply.value=engine.assistant(text)
+        if(state.value.preferences.voiceEnabled)speech.speak(mutableReply.value)
+    }
     fun listen() {
         liveNavigation.cancelVoice()
-        speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it})
+        stopAudio()
+        speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it},{mutableReply.value="듣고 있습니다. 예: 25분 집중 모드 켜줘"})
     }
     private fun writeTask(action:suspend ()->Unit) {
         if (!state.value.parkedAllowed || !storageRestored) return
@@ -183,7 +205,7 @@ class CabinViewModel @Inject constructor(
     fun preferences(p:Preferences) { engine.updatePreferences(p) }
     fun toggleAudio(preset:String) {
         if(!state.value.parkedAllowed || state.value.session?.status!=SessionStatus.RUNNING)return
-        if(mutableAudio.value==preset) {audio.stop();mutableAudio.value=null} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
+        if(mutableAudio.value==preset) {stopAudio()} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
     }
     fun setForeground(active: Boolean) {
         if(active)speech.refreshVoiceAvailability()
@@ -200,6 +222,11 @@ class CabinViewModel @Inject constructor(
             else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
     }
+    fun nearbyCategory(category:String) {
+        if(!state.value.parkedAllowed)return
+        preferences(state.value.preferences.copy(preferredCategory=category));mutableMapSelection.value=null
+        if(state.value.activities.none {!it.activity.simulated})searchNearby()
+    }
     fun mapSelect(id:String) { if(state.value.parkedAllowed)mutableMapSelection.value=id }
     fun mapOrigin(position:MapPosition) {
         if(!foreground || !state.value.parkedAllowed || !position.valid())return
@@ -215,15 +242,15 @@ class CabinViewModel @Inject constructor(
     }
     fun mapLocate() {
         if(!foreground || !state.value.parkedAllowed || !state.value.locationAvailable)return
-        cancelNearby();val generation=nearbyGeneration;mutableNearbyBusy.value=true;mutableNearbyStatus.value="기기 위치 확인 중…"
+        cancelNearby();val generation=nearbyGeneration;var located=false;mutableNearbyBusy.value=true;mutableNearbyStatus.value="기기 위치 확인 중… 최대 25초 기다려 주세요."
         nearbyJob=viewModelScope.launch {
             try {
                 val position=nearbyPlaces.locate()
                 if(foreground && state.value.parkedAllowed && state.value.locationAvailable) {
-                    if(position!=null) {engine.updateNearbyActivities(position,emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
+                    if(position!=null) {located=true;engine.updateNearbyActivities(position,emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
                     else mutableNearbyStatus.value="현재 위치를 얻지 못했습니다. 위치 권한·GPS를 확인하거나 지도 중심을 사용하세요."
                 }
-            } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
+            } finally { if(generation==nearbyGeneration){mutableNearbyBusy.value=false;if(located)searchNearby()} }
         }
     }
     fun searchNearby() {
@@ -238,7 +265,7 @@ class CabinViewModel @Inject constructor(
                 val places=nearbyPlaces.search(origin)
                 if(foreground && state.value.parkedAllowed && state.value.networkAvailable && state.value.locationAvailable && state.value.activityOrigin==origin) {
                     engine.updateNearbyActivities(origin,places);mutableMapSelection.value=places.firstOrNull()?.id
-                    mutableNearbyStatus.value=if(places.isEmpty())"표시할 이름 있는 장소를 찾지 못했습니다. 지도 데이터에 없는 장소가 있을 수 있습니다." else "OpenStreetMap 등록 장소 ${places.size}곳 · 영업 여부와 실제 경로는 외부 지도에서 확인하세요."
+                    mutableNearbyStatus.value=if(places.isEmpty())"표시할 이름 있는 장소를 찾지 못했습니다. 지도 데이터에 없는 장소가 있을 수 있습니다." else "OpenStreetMap 등록 장소 ${places.size}곳 · 이름·분류를 선택하고 앱에서 길 안내를 시작하세요. 영업 여부는 별도 확인이 필요합니다."
                 }
             } catch(error:Exception) {
                 if(error is CancellationException)throw error

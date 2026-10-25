@@ -16,7 +16,8 @@ class NearbyTest {
         assertEquals("English only",NearbyGeometry.placeName("\u202e"," ","English only"))
         assertEquals("현지 이름",NearbyGeometry.placeName("","현지 이름","English name"))
         val query=NearbyGeometry.query(MapPosition(48.85,2.35))
-        assertEquals(3,query.split("[~").size-1)
+        assertEquals(4,query.split("[~").size-1)
+        assertEquals(4,query.split("out center tags 60;").size-1)
         assertTrue(query.endsWith("out center tags 60;"))
         try{NearbyGeometry.query(MapPosition(Double.NaN,0.0));fail("Invalid origin must not reach the provider")}catch(_:IllegalArgumentException){}
     }
