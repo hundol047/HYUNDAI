@@ -24,3 +24,9 @@ APK를 내려받아 설치하세요. 설치 과정에서 요청될 때 다운로
 ## 검증
 
 core 146 + Android 155 = **301개 통과, 실패 0**. 공식 SDK 포함 phonePreview 빌드·lint 통과. 실제 OSM 타일을 받은 Android Compose 화면에서 판교역 주변 도로·건물명을 확인했습니다. 새 APK의 연속 실행 검사는 진행 중이며 기존 버전의 영상을 새 APK 증거로 사용하지 않습니다.
+
+## 다운로드 QR
+
+![휴대폰 APK QR](install-qr.png)
+
+[같은 APK 직접 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/35e70dac6b4eaf9a3ead4b71bf8f0de24c740f73/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk)
