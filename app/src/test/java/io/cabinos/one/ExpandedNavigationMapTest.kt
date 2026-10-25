@@ -43,6 +43,37 @@ class ExpandedNavigationMapTest {
         compose.onNodeWithTag("expanded-navigation").assertDoesNotExist()
         assertEquals(0,picks)
     }
+    @Test fun guidanceStartExpandsOnceAndManualCollapseSurvivesUpdates() {
+        val state=androidx.compose.runtime.mutableStateOf(NavigationUi())
+        var repeated=0;var stopped=0
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            Box(Modifier.fillMaxWidth().height(300.dp)) {
+                ExpandableNavigationMap(state.value,false,false,onRepeat={repeated++},onStop={stopped++}){}
+            }
+        }}}
+        compose.onNodeWithTag("expanded-navigation").assertDoesNotExist()
+        compose.runOnIdle {state.value=state.value.copy(guidance=Guidance(active=true,tracking=true,nextInstruction="시험 우회전",turnMeters=250.0))}
+        compose.onNodeWithTag("expanded-navigation").assertIsDisplayed()
+        compose.onNodeWithText("250 m 앞").assertIsDisplayed()
+        compose.onNodeWithText("다시 듣기").performClick()
+        compose.runOnIdle {assertEquals(1,repeated)}
+        compose.onNodeWithText("지도 축소").performClick()
+        compose.runOnIdle {state.value=state.value.copy(guidance=state.value.guidance.copy(turnMeters=200.0))}
+        compose.onNodeWithTag("expanded-navigation").assertDoesNotExist()
+        compose.onNodeWithContentDescription("지도 크게 보기").performClick()
+        compose.onNodeWithText("안내 종료").performClick()
+        compose.runOnIdle {assertEquals(1,stopped)}
+        compose.onNodeWithTag("expanded-navigation").assertDoesNotExist()
+    }
+    @Test @Config(qualifiers="w1280dp-h800dp-land-mdpi")
+    fun activeLandscapeShowsTurnsAndControls() {
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            ExpandableNavigationMap(NavigationUi(guidance=Guidance(active=true,tracking=true,turnMeters=150.0)),false,false){}
+        }}}
+        compose.onNodeWithText("150 m 앞").assertIsDisplayed()
+        compose.onNodeWithText("다시 듣기").assertIsDisplayed().assertHeightIsAtLeast(52.dp)
+        compose.onNodeWithText("안내 종료").assertIsDisplayed().assertHeightIsAtLeast(52.dp)
+    }
     @Test fun phoneMapTapExpandsAndClosePreservesNavigation(){expandAndClose()}
     @Test @Config(qualifiers="w1280dp-h800dp-land-mdpi")
     fun landscapeMonitorUsesExpandedWindow(){expandAndClose()}

@@ -4,6 +4,9 @@ import androidx.activity.compose.setContent
 import io.cabinos.one.ui.CabinTheme
 import io.cabinos.one.ui.NavigationScreen
 import io.cabinos.one.platform.NavigationUi
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasScrollToIndexAction
 import androidx.compose.ui.test.performScrollToIndex
@@ -69,8 +72,8 @@ class ApplicationTest {
             NavigationScreen(AppState(networkAvailable=false),NavigationUi(
                 guidance=Guidance(active=true,offRoute=true,status="경로 이탈 · 재탐색 대기"),notice=error),vm.liveNavigation,{})
         }}}
-        compose.onNodeWithText("경로 이탈 · 재탐색 대기").assertIsDisplayed()
-        compose.onNodeWithText(error).assertIsDisplayed()
+        compose.onNode(hasText("경로 이탈 · 재탐색 대기") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNode(hasText(error) and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
         compose.onNodeWithText("검색").assertDoesNotExist()
     }
 
@@ -178,10 +181,10 @@ class ApplicationTest {
         capture("navigation-pending")
         val tracker=NavigationTracker();tracker.preview(route);tracker.start(NavFix(points[0],5.0,System.currentTimeMillis(),0.0))
         compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님",gpsNotice="검사용 합성 GPS · 정확도 5m · 실기기 수신 아님"),vm.liveNavigation,{})}}}
-        compose.onNodeWithText("EchoRoad · 글로벌 내비게이션").assertIsDisplayed()
-        compose.onNodeWithText("좌회전 · Rue du Louvre").assertIsDisplayed()
-        compose.onNodeWithText("안내 종료").assertIsDisplayed()
-        compose.onNodeWithText("안내 다시 듣기").assertIsDisplayed()
+        compose.onNodeWithText("내비게이션").assertIsDisplayed()
+        compose.onNode(hasText("좌회전 · Rue du Louvre") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNode(hasText("안내 종료") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNodeWithText("다시 듣기").assertIsDisplayed()
         compose.onNodeWithText("안내 시작").assertDoesNotExist()
         capture("navigation")
     }

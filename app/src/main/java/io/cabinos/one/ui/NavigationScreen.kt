@@ -106,7 +106,7 @@ import java.util.Locale
         if(ui.traffic!=null)Text("빨강 정체/통제 · 노랑 서행 · 초록 원활 · 회색 불확실 · 조회 후 90초 만료",color=Muted,fontSize=11.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->
-            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { ExpandableNavigationMap(ui,s.networkAvailable,canPlan,chooseDestination) }
+            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { ExpandableNavigationMap(ui,s.networkAvailable,canPlan,onRepeat={nav.handleVoice("안내 반복")},onStop={nav.stop()},onPick=chooseDestination) }
             }, details = { pane ->
             Column(pane.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
