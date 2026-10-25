@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "810eb07",
+  "apkSha256": "2d1abc1cbed3431762fc2de55192189cfce9f310bae961ae4ea15ddae98fb3fb",
+  "tests": {
+    "core": {
+      "tests": 149,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 161,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "commands": [
+    {
+      "command": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest",
+      "result": "passed"
+    },
+    {
+      "command": "./gradlew -PpleosSdk=true :app:lintDebug :app:assemblePhonePreview",
+      "result": "passed"
+    }
+  ],
+  "registeredPhotoLiveCheck": "Wikimedia Commons metadata and thumbnail HTTP 200; test image, not a business catalog validation",
+  "nearbyLiveCheck": "Overpass request timed out after 20 seconds",
+  "testEnvironment": "JVM / Robolectric Android framework and Compose; injected location and speech callbacks in tests",
+  "samePreviewSigningCertificate": true,
+  "physicalSamsungValidated": false,
+  "currentApkEmulatorVideoValidated": false,
+  "pleosDeviceValidated": false,
+  "submissionApkUnchanged": true
+}
