@@ -63,6 +63,19 @@ class NavigationMapRendererTest {
             assertTrue(map.overlays.none {it is Polyline})
         }finally{map.onDetach()}
     }
+    @Test fun manualPanSurvivesActiveGpsUpdates() {
+        val map=map();val renderer=NavigationMapRenderer(map);val r=route()
+        try {
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[0],5.0,100)),-1)
+            renderer.followPosition=false
+            map.controller.setCenter(GeoPoint(37.7,127.2));val center=GeoPoint(map.mapCenter)
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[10],5.0,200)),-1)
+            assertEquals(0.0,center.distanceToAsDouble(map.mapCenter),1.0)
+            renderer.followPosition=true
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[20],5.0,300)),-1)
+            assertTrue(center.distanceToAsDouble(map.mapCenter)>100)
+        }finally{map.onDetach()}
+    }
     private fun route(name:String="dense route"):DrivingRoute {
         val points=(0..50_000).map {NavPoint(37.5547,126.9723+it*.000002)}
         return NavigationGeometry.route(NavPlace(name,points.last()),points,9000.0,900.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))

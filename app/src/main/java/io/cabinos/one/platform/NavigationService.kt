@@ -152,6 +152,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private val manager=context.getSystemService(LocationManager::class.java)
     private var job:Job?=null;private var generation=0;private var foreground=true;private var listening=false
     private var safetyHeld=false;private val stationary=StationaryEvidence()
+    private val repeatGuard=GuidanceRepeatGuard()
     private var voiceGeneration=0
     init {service.language=language}
     private var lastQuery="";private var resolvedSearchQuery="";private var nearbySearch=false;private var seenPlaceIds:List<String> = emptyList()
@@ -168,7 +169,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
             val f=NavFix(NavPoint(location.latitude,location.longitude),if(location.hasAccuracy())location.accuracy.toDouble() else Double.POSITIVE_INFINITY,location.time,if(location.hasSpeed())location.speed.toDouble() else null,if(location.hasBearing())location.bearing.toDouble() else null)
             // A coarse Wi-Fi/cell update must not interrupt a fresh precise GPS
             // stream. A poor GPS update itself still invalidates readiness.
-            if(location.provider!=LocationManager.GPS_PROVIDER&&fixProvider==LocationManager.GPS_PROVIDER&&fix?.let {tracker.usable(it)&&clock()-it.timestampMs<=3000&&f.accuracy>=it.accuracy}==true)return
+            if(location.provider!=LocationManager.GPS_PROVIDER&&fix?.let {tracker.usable(it)&&clock()-it.timestampMs<=3000&&f.accuracy>it.accuracy*2}==true)return
             if(f.timestampMs<=lastFixTimestamp)return
             if(clock()-f.timestampMs in 0..10_000)lastFixTimestamp=f.timestampMs
             receivedAt=clock()
@@ -184,9 +185,9 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
                 }
             }
         }
-        override fun onProviderDisabled(provider:String){if(epoch==locationGeneration&&foreground&&listening)invalidateGps(GpsConnection.DISABLED,"위치 제공자가 중지됐습니다. 위치 설정 또는 GPS 다시 연결을 확인해 주세요.")}
+        override fun onProviderDisabled(provider:String){if(epoch==locationGeneration&&foreground&&listening){spoken="";repeatGuard.clear();invalidateGps(GpsConnection.DISABLED,"위치 제공자가 중지됐습니다. 위치 설정 또는 GPS 다시 연결을 확인해 주세요.")}}
     }
-    private fun invalidateGps(status:GpsConnection,message:String){val ownVoice=tracker.state.tracking||spoken.isNotEmpty();fix=null;fixProvider=null;stationary.reset();tracker.suspendTracking();if(ownVoice)speech.stopSpeaking();spoken="";mutable.value=mutable.value.copy(gpsConnection=status,gpsNotice=message);publish()}
+    private fun invalidateGps(status:GpsConnection,message:String){val ownVoice=tracker.state.tracking||spoken.isNotEmpty();fix=null;fixProvider=null;stationary.reset();tracker.suspendTracking();if(ownVoice)speech.stopSpeaking();mutable.value=mutable.value.copy(gpsConnection=status,gpsNotice=message);publish()}
     private fun publish(){
         val r=tracker.state.route;val f=fix;val gap=if(r!=null&&f!=null)NavigationGeometry.distance(f.point,r.points.first()) else 0.0
         mutable.value=mutable.value.copy(guidance=tracker.state,originAccessMeters=gap,originReady=r!=null&&f!=null&&tracker.usable(f)&&gap<=kotlin.math.max(45.0,f.accuracy*2),gpsAccuracy=f?.accuracy,mapFix=f,gpsAgeSeconds=f?.let {((clock()-it.timestampMs)/1000).coerceAtLeast(0)})
@@ -277,14 +278,14 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         if((tracker.state.route?.destinationAccessMeters ?: 0.0)>100&&!accessConfirmed){mutable.value=mutable.value.copy(notice="차량 접근 지점과 목적지의 차이를 먼저 확인해 주세요.");return}
         val f=fix
         if(f==null||!tracker.start(f)){mutable.value=mutable.value.copy(notice="출발 위치의 정확한 GPS가 필요합니다. 이동했다면 경로를 다시 계산하세요.");return}
-        cancelRequest();safetyHeld=true;stationary.reset();engine.setNavigationLock(true);publish();spoken="";rerouteFailures=0;guide()
+        cancelRequest();safetyHeld=true;stationary.reset();engine.setNavigationLock(true);publish();spoken="";repeatGuard.clear();rerouteFailures=0;guide()
     }
     private fun guide() {
         val g=tracker.state
-        if(!g.tracking||g.offRoute||g.directionUncertain||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();spoken="";return}
+        if(!g.tracking||g.offRoute||g.directionUncertain||!engine.state.value.preferences.voiceEnabled){speech.stopSpeaking();return}
         val band=when{g.arrived->"arrived";g.turnMeters<60->"now";g.turnMeters<300->"soon";else->"ahead"}
         val key="${g.nextInstruction}|$band"
-        if(key!=spoken&&!mutable.value.voiceListening){
+        if(key!=spoken&&!mutable.value.voiceListening&&repeatGuard.allow(key,clock())){
             val code=NavigationLanguages.resolve(language)
             val spokenLocale=java.util.Locale.forLanguageTag(if(code=="ko")"ko-KR" else code)
             val distance=android.icu.text.MeasureFormat.getInstance(spokenLocale,android.icu.text.MeasureFormat.FormatWidth.WIDE).format(android.icu.util.Measure(g.turnMeters.toInt(),android.icu.util.MeasureUnit.METER))
@@ -302,7 +303,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     }
     fun tick(){
         val wasTracking=tracker.state.tracking;tracker.tick()
-        if(wasTracking&&!tracker.state.tracking){speech.stopSpeaking();spoken=""}
+        if(wasTracking&&!tracker.state.tracking){speech.stopSpeaking()}
         if(listening){
             if(context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){stopLocation();invalidateGps(GpsConnection.DENIED,"위치 권한이 해제됐습니다. 앱 권한 설정을 확인해 주세요.")}
             else if(mutable.value.gpsConnection!=GpsConnection.STALE&&(fix?.let {!tracker.usable(it)}==true||fix==null&&receivedAt?.let {clock()-it>10_000}==true||fix==null&&receivedAt==null&&requestedAt?.let {clock()-it>=15_000}==true))invalidateGps(GpsConnection.STALE,"GPS 응답이 오래됐습니다. 다시 연결하거나 위치 설정을 확인해 주세요.")
@@ -342,7 +343,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
         val c=NavigationVoice.parse(raw)
         mutable.value=mutable.value.copy(voiceNotice="인식: ${raw.take(180)}")
         when(c.action){
-            NavigationVoiceAction.REPEAT->{spoken="";guide()}
+            NavigationVoiceAction.REPEAT->{spoken="";repeatGuard.clear();guide()}
             NavigationVoiceAction.STOP->stop()
             NavigationVoiceAction.CANCEL->{cancelPending();cancelVoice()}
             else->{

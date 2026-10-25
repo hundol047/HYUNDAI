@@ -27,6 +27,7 @@ internal fun configureRoadTiles(context:Context) {Configuration.getInstance().ap
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */
 internal class RoadMapView(context:Context,private val clock:()->Long=android.os.SystemClock::elapsedRealtime):MapView(context) {
     var gesturesEnabled=true
+    var onUserGesture:(()->Unit)?=null
     var onHealth:((RoadMapHealth)->Unit)?=null
     var health=RoadMapHealth();private set
     private var online=true
@@ -61,6 +62,13 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
         return next
     }
     override fun onDraw(canvas:Canvas){super.onDraw(canvas);sampleHealth()}
-    override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean=if(gesturesEnabled)super.dispatchTouchEvent(event) else false
+    override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean {
+        if(!gesturesEnabled)return false
+        if(event.actionMasked==android.view.MotionEvent.ACTION_MOVE) {
+            parent?.requestDisallowInterceptTouchEvent(true)
+            onUserGesture?.invoke()
+        }
+        return super.dispatchTouchEvent(event)
+    }
     override fun performClick():Boolean=super.performClick()
 }

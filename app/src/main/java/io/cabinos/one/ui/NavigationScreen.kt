@@ -181,6 +181,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
     val renderer=remember(map){NavigationMapRenderer(map)}
     var health by remember {mutableStateOf(RoadMapHealth())}
+    var following by remember {mutableStateOf(true)}
     DisposableEffect(map,owner) {
         map.onHealth={health=it}
         val observer=LifecycleEventObserver {_,e->if(e==Lifecycle.Event.ON_START){map.onHealth={health=it};map.onResume();map.beginHealth()}else if(e==Lifecycle.Event.ON_STOP){map.onPause();map.endHealth()}}
@@ -193,8 +194,14 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
             view.connection(online);view.setMultiTouchControls(interactive);view.gesturesEnabled=interactive
             view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
             view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
+            view.onUserGesture={following=false;renderer.followPosition=false}
+            renderer.followPosition=following
             renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking,placeZoom)
         })
+        if(interactive&&!following)ActionButton("내 위치로",{
+            following=true;renderer.followPosition=true
+            (location ?: g.fix)?.let {map.controller.setCenter(org.osmdroid.util.GeoPoint(it.point.latitude,it.point.longitude))}
+        },Modifier.align(androidx.compose.ui.Alignment.BottomEnd).padding(12.dp),Blue)
         if(interactive&&showPicker) {
             Text("+",color=White,fontSize=32.sp,modifier=Modifier.align(androidx.compose.ui.Alignment.Center))
             ActionButton("지도 중심을 목적지로",{val c=map.mapCenter;PlaceSearch.mapPoint(c.latitude,c.longitude)?.let(onPick)},Modifier.align(androidx.compose.ui.Alignment.BottomCenter).padding(12.dp),Blue,pickEnabled)

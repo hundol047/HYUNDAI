@@ -16,6 +16,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
     private var position:Marker?=null
     private var point:NavPoint?=null
     private var tracking:Boolean?=null
+    var followPosition=true
     private var following=false
     private var accent:Int?=null
     init {map.overlays.add(CopyrightOverlay(map.context).apply {setCopyrightNotice("© OpenStreetMap contributors")})}
@@ -57,7 +58,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
             }
             val startingFollow=g.active&&g.tracking&&!following
             if(startingFollow||(firstPosition&&g.route==null&&selectedPlace==null))map.controller.setZoom(map.zoomLevelDouble.coerceAtLeast(15.0))
-            if((g.active&&g.tracking&&(moved||!following))||(firstPosition&&g.route==null&&selectedPlace==null))map.controller.setCenter(GeoPoint(fix.point.latitude,fix.point.longitude))
+            if((followPosition&&g.active&&g.tracking&&(moved||!following))||(firstPosition&&g.route==null&&selectedPlace==null))map.controller.setCenter(GeoPoint(fix.point.latitude,fix.point.longitude))
         }else if(position!=null){map.overlays.remove(position);position=null;point=null;tracking=null;changed=true}
         following=g.active&&g.tracking
         if(changed)map.invalidate()

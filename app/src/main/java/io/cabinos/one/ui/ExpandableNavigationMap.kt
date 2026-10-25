@@ -49,7 +49,7 @@ import java.util.Locale
                     color=if(reliable)White else Amber,fontSize=20.sp,modifier=Modifier.padding(horizontal=16.dp,vertical=4.dp))
             }
             Box(Modifier.fillMaxWidth().weight(1f)) {
-                NavigationMap(g,online,interactive,ui.selectedPlace,ui.mapFix,!ui.busy,onPick,
+                NavigationMap(g,online,true,ui.selectedPlace,ui.mapFix,!ui.busy,onPick,
                     showPicker=interactive,showHealth=false)
             }
             Column(Modifier.fillMaxWidth().padding(horizontal=16.dp,vertical=10.dp),verticalArrangement=Arrangement.spacedBy(4.dp)) {

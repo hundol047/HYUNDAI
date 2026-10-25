@@ -144,8 +144,11 @@ import java.util.*
         BoxWithConstraints(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).background(Brush.linearGradient(listOf(Night,Panel,Night)))) {
             val compact=maxWidth<840.dp || maxHeight<520.dp
             CompositionLocalProvider(LocalCompactWindow provides compact) {
-                val selected=if(navigationOpen||navigationState.guidance.active) "navigation" else route
-                val navigate:(String)->Unit = { if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} }
+                val selected=if(navigationOpen) "navigation" else route
+                val navigate:(String)->Unit = {
+                    if(!s.parkedAllowed && it !in listOf("dashboard","navigation")) {
+                        android.widget.Toast.makeText(context,"안내 종료 후 안전한 정차가 확인되면 지도·기록·설정을 사용할 수 있습니다.",android.widget.Toast.LENGTH_LONG).show()
+                    } else if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} }
                 Row(Modifier.fillMaxSize()) {
                     if(!compact) NavigationRailPanel(selected,s.parkedAllowed,navigate,{assistantOpen=true},{simulatorOpen=true},vm.automotive,voiceAvailable)
                     Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=if(compact)12.dp else 24.dp)) {
@@ -156,14 +159,14 @@ import java.util.*
                         storageStatus?.let { Text(it,color=Amber,fontSize=12.sp,modifier=Modifier.fillMaxWidth().padding(vertical=4.dp)) }
                         Box(Modifier.weight(1f)) {
                             if(vm.automotive && (navigationOpen || route=="nearby")) VehicleNavigationPanel(s,vm)
-                            else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
+                            else if(navigationOpen) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
                             else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,{requestVehiclePermissions(true)})
                             else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true},mapFix=navigationState.mapFix)
                             else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation) {vm.liveNavigation.navigateTo(it);navigationOpen=true;if(vm.liveNavigation.state.value.gpsConnection==io.cabinos.one.platform.GpsConnection.DENIED)requestNavigationLocation()}
                         }
                         if(compact) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(2.dp)) {
                             listOf("홈" to "dashboard","내비" to "navigation","지도" to "nearby","기록" to "history","설정" to "settings").forEach { (label,key) ->
-                                TextButton(onClick={navigate(key)},enabled=s.parkedAllowed||key in listOf("dashboard","navigation"),modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text(label,color=if(selected==key)Mint else Muted)}
+                                TextButton(onClick={navigate(key)},enabled=true,modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text(label,color=if(selected==key)Mint else Muted)}
                             }
                             TextButton(onClick={assistantOpen=true},modifier=Modifier.weight(1f).heightIn(min=52.dp),contentPadding=PaddingValues(2.dp)){Text(if(voiceAvailable)"음성" else "명령")}
                         } else BottomBar(s,onVoice={assistantOpen=true},onSimulator={simulatorOpen=true},voiceAvailable=voiceAvailable)

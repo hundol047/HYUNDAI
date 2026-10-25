@@ -18,6 +18,25 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class LiveNavigationTest {
+    @Test fun coarseFallbackCannotReplaceFreshFusedPositionOrExtendItsLifetime() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,clock={now})
+        try {
+            nav.locate();val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            fun emit(precision:Float){listener.onLocationChanged(Location("fused").apply {latitude=37.5;longitude=127.0;accuracy=precision;time=now})}
+            emit(5f);val original=nav.state.value.mapFix
+            now+=1000;emit(500f)
+            assertEquals(original,nav.state.value.mapFix);assertEquals(GpsConnection.READY,nav.state.value.gpsConnection)
+            now+=11000;nav.tick();assertNull(nav.state.value.mapFix)
+            assertEquals(GpsConnection.STALE,nav.state.value.gpsConnection)
+        }finally{nav.close();speech.close()}
+    }
     @Test fun languageChangeKeepsSearchCredentialUntilPersonalDataIsCleared() {
         val context=ApplicationProvider.getApplicationContext<Context>()
         var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
