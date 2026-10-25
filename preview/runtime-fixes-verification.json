@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "2b812e18e684a78ead974b0171aca991e9ecd45f",
-  "apkSha256": "e2773685d1b7ebf1ca04fd444a53b0de87b43962dd098988bf89067f0bb85be6",
+  "sourceCommit": "3e6655266579b0f0ce2f63545dd8b7543bc0dd1e",
+  "apkSha256": "a026c47a33c38d2e7c50fc1335e15161c2ce1c79aa1d0d5c9656b0dea937893f",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 175,
+      "tests": 179,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -63,12 +63,6 @@
     "configured": false,
     "completePlacePhotoCoverage": false
   },
-  "initialRun": {
-    "corePassed": 149,
-    "androidPassed": 174,
-    "androidFailed": 1,
-    "failure": "CompactWindowTest: 야간 밝기 node absent after theme change; unchanged full suite rerun passed"
-  },
   "categoryPhotos": {
     "bundledCategories": [
       "카페",
@@ -79,5 +73,9 @@
     "actualVenuePhotoPreferred": true,
     "representativeLabel": "업종 대표 이미지 · 실제 장소 사진 아님",
     "offlineDecodeTestPassed": true
-  }
+  },
+  "iterationFailures": [
+    "GPS safety tests rejected retaining a poor GPS fix; change narrowed to coarse fallback arbitration",
+    "Provider recovery TTS regression corrected; full suite rerun"
+  ]
 }
