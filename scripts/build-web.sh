@@ -12,6 +12,10 @@ out=root/'build/site'
 if out.exists():shutil.rmtree(out) # This script owns this generated build directory.
 shutil.copytree(root/'core/build/dist/js/productionExecutable',out)
 (out/'.nojekyll').write_text('')
+(out/'preview').mkdir()
+for p in (root/'preview').iterdir():
+ if p.is_file() and (p.suffix in {'.apk','.png','.mp4','.json'} or p.name=='SHA256SUMS'):
+  shutil.copy2(p,out/'preview'/p.name)
 leaflet=root/'scripts/web/node_modules/leaflet/dist'
 (out/'vendor/leaflet').mkdir(parents=True)
 for name in ['leaflet.js','leaflet.css']:shutil.copy2(leaflet/name,out/'vendor/leaflet'/name)
