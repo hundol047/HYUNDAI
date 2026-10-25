@@ -1,0 +1,20 @@
+{
+  "recordingRun": "https://github.com/hundol047/HYUNDAI/actions/runs/40214804926",
+  "durationSeconds": 139.558978,
+  "continuousCapture": true,
+  "edited": false,
+  "videoSha256": "341657ae7f90cf48725fe2b1b27464e3b4842a0d2b75ae4c7316533244a2ba4b",
+  "apkSha256": "19c32341cf1400afa60e2247eec9a84d754947ec2551ca9183cf0137cbc159e7",
+  "fullDecodeErrors": 0,
+  "videoPacketTimestampsStrictlyIncreasing": true,
+  "scenarioChecksPassed": 8,
+  "tests": {
+    "core": 160,
+    "android": 199,
+    "scripts": 50
+  },
+  "capturedLogFatalExceptionOrAnrFound": false,
+  "portraitEvidence": "separate screenshot after resolution change, not part of the landscape video",
+  "physicalVehicleValidated": false,
+  "audioRecorded": false
+}
