@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "f2b2dab3aa4df1edfdfe08addebe9a9790cd27ea",
-  "apkSha256": "f9e71d327ca4e9272b6472b9133423d8e9b7dc6a701e7f69b699bf04248775ab",
+  "sourceCommit": "3e06f13f977969666f3b5c7214f0ce1f62f31135",
+  "apkSha256": "1bc943535eaf012da91f0160645cad6ac6d903eb1b1c521de4cc877c4dc41346",
   "tests": {
     "core": {
       "tests": 153,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 191,
+      "tests": 192,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -98,39 +98,102 @@
     "manualCollapsePreserved": true,
     "largeTurnDistanceAndControls": true,
     "expandedRerouteErrorVisible": true,
-    "cameraDataConnected": false,
+    "cameraReferenceDataConnected": true,
+    "cameraDirectionalVoiceImplemented": false,
     "speedHumpReferenceDataConnected": true,
-    "speedHumpCoverage": "Chungcheongnam-do only",
+    "speedHumpCoverage": "South Korea public dataset; incomplete and age-filtered",
     "commercialAppParityValidated": false,
     "physicalDeviceValidated": false
   },
   "roadSafety": {
-    "schema": 1,
-    "source": "https://www.data.go.kr/data/15152204/fileData.do",
-    "coverage": "충청남도 12개 시군 · 전국 자료 아님",
-    "asOf": "2025-11-13",
-    "rawSha256": "89b91f1f34961aa146dba162b9913719ae7fd05700abb547a0d82f785f7eea8a",
-    "audit": {
-      "inputRows": 16251,
-      "accepted": 9314,
-      "invalidRows": 0,
-      "conflictingCoordinateRows": 388,
-      "duplicateRows": 6549
-    },
-    "columns": [
-      "id",
-      "latitude",
-      "longitude",
-      "kind",
-      "road",
-      "recordDate",
-      "reportedSpeedKmh"
+    "checkedAt": "2026-10-25",
+    "datasets": [
+      {
+        "schema": 1,
+        "source": "https://www.data.go.kr/data/15028195/standard.do",
+        "coverage": "전국 제공자료 · 수록 누락 가능",
+        "asOf": "2026-10-25",
+        "rawSha256": "13591335595d2b755b36a7543169c137e1aac58dccfa07039757574576fdc529",
+        "audit": {
+          "inputRows": 141140,
+          "accepted": 82697,
+          "invalidRows": 5555,
+          "conflictingCoordinateRows": 17648,
+          "duplicateRows": 35240
+        },
+        "columns": [
+          "id",
+          "latitude",
+          "longitude",
+          "kind",
+          "road",
+          "recordDate",
+          "reportedSpeedKmh"
+        ],
+        "directionVerified": false,
+        "recordDateRange": {
+          "oldest": "2019-01-01",
+          "newest": "2026-08-27"
+        },
+        "activeAtImport": 39384,
+        "normalizedSha256": "af1729d8ebda886ee0eed35d997b2edea6171b31f02effdb9924fbb383cd47e9",
+        "transport": "user-uploaded ZIP"
+      },
+      {
+        "schema": 1,
+        "source": "https://www.data.go.kr/data/15028200/standard.do",
+        "coverage": "고정식 교통단속시설 · 이동식 제외",
+        "asOf": "2026-10-25",
+        "rawSha256": "fbdbdd2d7d1469b4d7a72ac85314457ee3815c0e4933d9c49f567ee72ce4c219",
+        "audit": {
+          "inputRows": 43764,
+          "accepted": 39827,
+          "invalidRows": 0,
+          "conflictingCoordinateRows": 3612,
+          "duplicateRows": 325
+        },
+        "columns": [
+          "id",
+          "latitude",
+          "longitude",
+          "kind",
+          "road",
+          "recordDate",
+          "reportedSpeedKmh"
+        ],
+        "directionVerified": false,
+        "recordDateRange": {
+          "oldest": "2021-09-24",
+          "newest": "2026-09-13"
+        },
+        "activeAtImport": 37267,
+        "normalizedSha256": "a7ed7784debaa9a37a7e897da973ae9a5580abe0773bc09e1039d1ef8fa76621",
+        "transport": "official public download, two pages"
+      }
     ],
-    "directionVerified": false,
-    "normalizedSha256": "330c1adeb8fa1790ec5dc75ca367d792f788607d7cff91efcca16b8ffa9d4950",
+    "cameraDownload": {
+      "expectedRows": 43764,
+      "receivedRows": 43764,
+      "crossPartIdenticalRows": 0,
+      "parts": [
+        {
+          "part": 1,
+          "rows": 21882,
+          "sha256": "74aea207c1dd4cb1e1ac72f2d802d5f44e2076109106bc2a81bea17ffc0e714f"
+        },
+        {
+          "part": 2,
+          "rows": 21882,
+          "sha256": "50ab0bf7e16feb47d65de3a9fe65d51a772289a6bb5f58d15a694e52e0509841"
+        }
+      ]
+    },
+    "bumpInvalidDetails": {
+      "coordinates": 3077,
+      "futureReferenceDate": 2478
+    },
     "commercialNavigationParity": "not established",
-    "nationalCameraSnapshotPackaged": false,
-    "nationalBumpSnapshotPackaged": false,
-    "physicalDrivingValidated": false
+    "physicalDrivingValidated": false,
+    "cameraDirectionalVoiceImplemented": false
   }
 }
