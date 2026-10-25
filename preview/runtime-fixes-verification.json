@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "0b514772d273744271073c48effaaea154550eac",
-  "apkSha256": "a91b1cbba7c7048835d1d514dc2f7eeb93085fa43bb3e962d189ec94444194f9",
+  "sourceCommit": "0863a3cb84430afc5a81b88fdff8f67788e40877",
+  "apkSha256": "74696b218dbc33eafe86f3cdee4499de653e1c55709b9175cc7553c7e8fcef8d",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 168,
+      "tests": 173,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -49,5 +49,18 @@
     "code": "Ok",
     "distanceMeters": 90437.1,
     "physicalDrive": false
+  },
+  "expandedMapVerification": "Robolectric touch, close and back in portrait and landscape; not a physical car display test",
+  "placePhotoLookupLiveCheck": {
+    "place": "Central Park",
+    "wikidata": "Q160409",
+    "photoFile": "Southwest corner of Central Park, looking east, NYC.jpg",
+    "coordinateDifferenceMeters": 70,
+    "renderedOnDevice": false
+  },
+  "naverImageApi": {
+    "httpStatus": 401,
+    "configured": false,
+    "completePlacePhotoCoverage": false
   }
 }
