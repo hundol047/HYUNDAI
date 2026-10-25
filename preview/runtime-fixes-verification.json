@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "65c5ab5c743551c2f5930d72dbeec25b2fbd33ba",
-  "apkSha256": "c6e5e5664f1f030c286c6205d03228ee6c401ec22f58ad79e5439639e15c57e8",
+  "sourceCommit": "53340282cfe76e893e7db8d02989410ed9d82f6e",
+  "apkSha256": "edd2af311f54860337b8bc2e08f26299f83f3ed623dfc919042b6f561a1402d5",
   "tests": {
     "core": {
-      "tests": 156,
+      "tests": 159,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 193,
+      "tests": 198,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -209,5 +209,11 @@
     "physicalDrivingValidated": false,
     "cameraDirectionalVoiceImplemented": false,
     "cameraReferenceVoiceImplemented": true
+  },
+  "stopPlan": {
+    "sharedPhoneVehiclePanel": true,
+    "departurePreservingExtension": true,
+    "explicitPlaceCancellation": true,
+    "physicalDeviceValidated": false
   }
 }
