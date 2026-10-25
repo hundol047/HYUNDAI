@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "3e6655266579b0f0ce2f63545dd8b7543bc0dd1e",
-  "apkSha256": "a026c47a33c38d2e7c50fc1335e15161c2ce1c79aa1d0d5c9656b0dea937893f",
+  "sourceCommit": "3c615802155c12341b843fe14769233031ba0c4c",
+  "apkSha256": "801e702f1d288068e39407978c10aa099757d3f2d05c84b90340ace43bcb043b",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 179,
+      "tests": 181,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -74,8 +74,15 @@
     "representativeLabel": "업종 대표 이미지 · 실제 장소 사진 아님",
     "offlineDecodeTestPassed": true
   },
-  "iterationFailures": [
-    "GPS safety tests rejected retaining a poor GPS fix; change narrowed to coarse fallback arbitration",
-    "Provider recovery TTS regression corrected; full suite rerun"
-  ]
+  "rotationAudioTest": "Two Activity recreations retain running session and selected audio; background transition still stops audio and pauses session. Robolectric, not physical Samsung rotation.",
+  "ambientPresets": [
+    "백색 소음",
+    "자연의 소리",
+    "잔잔한 톤",
+    "빗소리",
+    "계곡 소리",
+    "파도 소리",
+    "잔잔한 피아노"
+  ],
+  "mapPerformance": "128 memory tiles; draw health scan throttled to 500ms; cold-network latency not benchmarked on S20+"
 }
