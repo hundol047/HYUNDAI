@@ -2,7 +2,25 @@
 """Install and continuously record the signed APK on a regular Android emulator.
 Vehicle signals are explicitly app demo data; this is NOT Pleos/AAOS validation.
 """
-import argparse, datetime, hashlib, json, pathlib, re, subprocess, time, xml.etree.ElementTree as ET
+import argparse, datetime, hashlib, json, pathlib, re, subprocess, time, threading, xml.etree.ElementTree as ET
+
+def host_sample(proc=pathlib.Path('/proc')):
+    """Bounded resource metadata only; never read process environments or arguments."""
+    def fields(path):
+        try:return dict(line.split(':',1) for line in path.read_text().splitlines() if ':' in line)
+        except OSError:return {}
+    def number(values,key):
+        raw=values.get(key,'').strip().split()
+        return int(raw[0]) if raw and raw[0].isdigit() else None
+    emulators=[]
+    for entry in proc.iterdir():
+        if not entry.name.isdigit():continue
+        try:name=(entry/'comm').read_text().strip()
+        except OSError:continue
+        if not name.startswith('qemu-system'):continue
+        values=fields(entry/'status')
+        emulators.append({'pid':int(entry.name),'rssKiB':number(values,'VmRSS'),'threads':number(values,'Threads')})
+    return {'monotonic':time.monotonic(),'availableKiB':number(fields(proc/'meminfo'),'MemAvailable'),'emulators':emulators}
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -13,6 +31,16 @@ def main():
     a.output.mkdir(parents=True,exist_ok=False)
     base=['adb','-s',a.serial]
     def adb(*args,timeout=45,check=True):return subprocess.run(base+list(args),capture_output=True,check=check,timeout=timeout).stdout
+    resource_stop=threading.Event();resources=[]
+    def monitor():
+        with (a.output/'host-resources.jsonl').open('w') as out:
+            while not resource_stop.is_set():
+                try:
+                    sample=host_sample();resources.append(sample)
+                    out.write(json.dumps(sample)+'\n');out.flush()
+                except OSError:pass
+                resource_stop.wait(1)
+    resource_thread=threading.Thread(target=monitor,daemon=True);resource_thread.start()
     checks=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();video=None;recorder=None;log_reader=None;log_output=None
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
@@ -105,6 +133,9 @@ def main():
             print('::warning title=Device diagnostics::'+str(diagnostics_error),flush=True)
         raise
     finally:
+        resource_stop.set();resource_thread.join(timeout=2)
+        peak=max((p['rssKiB'] or 0 for sample in resources for p in sample['emulators']),default=0)
+        print('Emulator resource samples:',len(resources),'peak RSS KiB:',peak,flush=True)
         if log_reader is not None:
             log_reader.terminate()
             try:log_reader.wait(timeout=5)

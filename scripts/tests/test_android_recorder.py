@@ -5,6 +5,18 @@ from unittest.mock import patch
 spec=importlib.util.spec_from_file_location('recorder','scripts/record-android-demo.py')
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 class AndroidRecorderTest(unittest.TestCase):
+    def test_host_sample_records_emulator_memory_without_process_arguments(self):
+        with tempfile.TemporaryDirectory() as root:
+            proc=pathlib.Path(root);(proc/'meminfo').write_text('MemAvailable: 900000 kB\n')
+            for pid,name in [('12','qemu-system-x86'),('13','unrelated')]:
+                entry=proc/pid;entry.mkdir();(entry/'comm').write_text(name)
+                (entry/'status').write_text('VmRSS: 123456 kB\nThreads: 18\n')
+                (entry/'environ').write_text('must not be read')
+            sample=m.host_sample(proc)
+            self.assertEqual(900000,sample['availableKiB'])
+            self.assertEqual([{'pid':12,'rssKiB':123456,'threads':18}],sample['emulators'])
+            self.assertNotIn('must not be read',json.dumps(sample))
+
     def test_disconnect_retains_stdout_startup_and_failed_evidence(self):
         with tempfile.TemporaryDirectory() as root:
             apk=pathlib.Path(root)/'fixture.apk';apk.write_bytes(b'test fixture, not an APK')
