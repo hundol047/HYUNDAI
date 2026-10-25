@@ -21,6 +21,16 @@ class NearbyTest {
         assertTrue(query.endsWith("out center tags 60;"))
         try{NearbyGeometry.query(MapPosition(Double.NaN,0.0));fail("Invalid origin must not reach the provider")}catch(_:IllegalArgumentException){}
     }
+    @Test fun eachDemoCategoryHasSeveralRankedClearlySimulatedOptions() {
+        val places=DemoActivityRepository().activities()
+        for(category in listOf("카페","식당","산책","쇼핑")) {
+            val ranked=TimeOptimizer.recommend(places,SharedSchedule(waitingSeconds=2400,bufferSeconds=300),category)
+            assertTrue(category,ranked.size>=3)
+            assertTrue(ranked.all {it.activity.simulated})
+            assertEquals(ranked.map {it.activity.oneWaySeconds}.sorted(),ranked.map {it.activity.oneWaySeconds})
+        }
+        assertEquals(places.size,places.map {it.id}.distinct().size)
+    }
     private var now=1_000_000L
     private fun parked():UnifiedVehicleContextEngine {
         val engine=UnifiedVehicleContextEngine({now})

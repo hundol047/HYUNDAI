@@ -5,6 +5,8 @@ import io.cabinos.one.ui.CabinTheme
 import io.cabinos.one.ui.NavigationScreen
 import io.cabinos.one.platform.NavigationUi
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasScrollToIndexAction
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performClick
 import android.graphics.Bitmap
@@ -132,8 +134,9 @@ class ApplicationTest {
         compose.runOnIdle {vm.engine.setConnectivity(network=false)}
         compose.onNodeWithText("지도").performClick()
         compose.onNodeWithText("멈춘 시간, 어디에서 보낼까요?").assertIsDisplayed()
-        compose.onNodeWithText("숲속 카페").performScrollTo().performClick()
-        compose.onNodeWithText("이 장소로 계획").assertIsDisplayed().performClick()
+        compose.onNode(hasScrollToIndexAction()).performScrollToIndex(vm.state.value.activities.indexOfFirst {it.activity.id=="cafe"})
+        compose.onNodeWithText("숲속 카페").performClick()
+        compose.onNodeWithText("이 장소로 계획").performScrollTo().assertIsDisplayed().performClick()
         assertEquals("cafe",vm.state.value.selectedActivityId)
         capture("nearby")
         compose.onNodeWithText("홈").performClick()

@@ -6,6 +6,9 @@ import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -28,15 +31,15 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.*
 
-@Composable fun NearbyScreen(s:AppState,vm:CabinViewModel,onLocate:()->Unit,onNavigate:(NavPlace)->Unit={vm.liveNavigation.plan(it)}) {
+@Composable fun NearbyScreen(s:AppState,vm:CabinViewModel,onLocate:()->Unit,onNavigate:(NavPlace)->Unit={vm.liveNavigation.navigateTo(it)}) {
     val status by vm.nearbyStatus.collectAsStateWithLifecycle()
     val busy by vm.nearbyBusy.collectAsStateWithLifecycle()
     val selected by vm.mapSelection.collectAsStateWithLifecycle()
     val compact=LocalCompactWindow.current
     val context=LocalContext.current
     var map by remember { mutableStateOf<MapView?>(null) }
-    val chosen=s.activities.firstOrNull { it.activity.id==selected } ?: s.activities.firstOrNull()
-    Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+    LaunchedEffect(Unit) {if(s.networkAvailable && s.locationAvailable && s.activities.all {it.activity.simulated})onLocate()}
+    val controls:@Composable ()->Unit = {
         Text("멈춘 시간, 어디에서 보낼까요?",color=White,fontSize=24.sp)
         Text(s.activityOrigin.label,color=Mint,fontSize=12.sp)
         Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
@@ -47,47 +50,50 @@ import org.osmdroid.views.overlay.*
             if(!busy)ActionButton("예시 초기화",{vm.mapExamples()},color=Muted)
         }
         Text(if(!s.networkAvailable) "오프라인 · 새 지도와 장소를 불러올 수 없습니다." else if(!s.locationAvailable) "위치 사용 제한 · 온라인 지도·검색을 중단했습니다." else status,color=if(s.networkAvailable)Muted else Amber,fontSize=11.sp)
-        ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
-            map = { pane ->
-            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) {
-                OpenStreetMap(s,selected,{vm.mapSelect(it)},{map=it})
+    }
+    val categories:@Composable ()->Unit = {
+        Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(5.dp)) {
+            listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
+                FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.nearbyCategory(category)},label={Text(category,fontSize=11.sp)})
             }
-            }, details = { pane ->
-            Column(pane,verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(5.dp)) {
-                    listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
-                        FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.nearbyCategory(category)},label={Text(category,fontSize=11.sp)})
-                    }
-                }
-                Text("${s.preferences.preferredCategory} ${s.activities.size}곳 · 출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
-                Column(Modifier.weight(1f).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(7.dp)) {
-                    if(s.activities.isEmpty()) Text("이 분류의 검색 결과가 없습니다. 다른 분류 또는 지도 중심을 선택해 주변 검색을 눌러 주세요.",color=Muted,fontSize=13.sp)
-                    s.activities.forEach { option ->
-                        val a=option.activity
-                        SurfacePanel(Modifier.fillMaxWidth().clickable {vm.mapSelect(a.id)},accent=if(a.id==chosen?.activity?.id)Mint else Line) {
-                            Text(a.name,color=White,fontSize=14.sp)
-                            Text("${a.category} · 도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM 등록"}",color=Muted,fontSize=11.sp)
-                            Text(if(option.feasible)"왕복 후 ${option.usableSeconds/60}분 이용 가능" else "왕복·준비 시간을 확보하기 어렵습니다",color=if(option.feasible)Mint else Amber,fontSize=11.sp)
-                        }
-                    }
-                }
-                chosen?.let { option ->
-                    val a=option.activity
-                    SurfacePanel(Modifier.fillMaxWidth(),accent=Blue) {
-                        Text(a.name,color=White,fontSize=16.sp)
-                        Text("도보·왕복 시간은 직선거리 기반 추정입니다. 횡단·우회·출입 제한은 반영하지 않으니 실제 경로를 확인하세요.",fontSize=10.sp,color=Muted)
-                        Spacer(Modifier.height(7.dp))
-                        ActionButton(if(s.selectedActivityId==a.id)"왕복 계획에 반영됨" else "이 장소로 계획",{vm.engine.selectActivity(a.id)},Modifier.fillMaxWidth(),Mint,option.feasible)
-                        ActionButton("앱에서 길 안내",{
-                            if(vm.state.value.parkedAllowed && a.latitude!=null && a.longitude!=null)
-                                onNavigate(NavPlace(a.name,NavPoint(a.latitude!!,a.longitude!!)))
-                        },Modifier.fillMaxWidth(),Blue,enabled=a.latitude!=null&&a.longitude!=null)
-                        Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
-                    }
-                }
-            }
-            })
+        }
+        Text("${s.preferences.preferredCategory} ${s.activities.size}곳 · 출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
+        Text("추천순 · 이용 가능 여부 → 가까운 순 · 아래로 스크롤",color=Muted,fontSize=11.sp)
+        if(s.activities.any {it.activity.simulated})Text("데모 예시 목록 · 실제 매장 검색 결과가 아닙니다",color=Amber,fontSize=12.sp)
+    }
+    val details:@Composable (ActivityOption)->Unit = { option ->
+        val a=option.activity
+        Text("도보 시간은 직선거리 기반 추정입니다. 실제 경로·출입 가능 여부를 확인하세요.",fontSize=10.sp,color=Muted)
+        ActionButton(if(s.selectedActivityId==a.id)"왕복 계획에 반영됨" else "이 장소로 계획",{vm.engine.selectActivity(a.id)},Modifier.fillMaxWidth(),Mint,option.feasible)
+        ActionButton("앱에서 길 안내",{
+            if(vm.state.value.parkedAllowed && a.latitude!=null && a.longitude!=null)
+                onNavigate(NavPlace(a.name,NavPoint(a.latitude!!,a.longitude!!),category=a.category,source=if(a.simulated)"데모 예시 좌표 · 실제 매장 아님" else "OpenStreetMap 등록 장소"))
+        },Modifier.fillMaxWidth(),Blue,enabled=a.latitude!=null&&a.longitude!=null)
+        Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
+    }
+    val attribution:@Composable ()->Unit = {
         Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Overpass에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
+    }
+    val online=s.networkAvailable&&s.locationAvailable&&s.parkedAllowed
+    if(compact) {
+        // One scroll container keeps both the last result and its actions reachable on phones.
+        NearbyRankedList(s.activities,selected,online,Modifier.fillMaxSize(),details=details,
+            header={Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
+                controls()
+                Box(Modifier.fillMaxWidth().height(300.dp).clip(RoundedCornerShape(18.dp)).background(Panel)) {
+                    OpenStreetMap(s,selected,{vm.mapSelect(it)},{map=it})
+                }
+                categories()
+            }},footer=attribution,onSelect=vm::mapSelect)
+    } else Column(Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(10.dp)) {
+        controls()
+        ResponsiveMapPanels(Modifier.weight(1f),false,map={pane->
+            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) {OpenStreetMap(s,selected,{vm.mapSelect(it)},{map=it})}
+        },details={pane->Column(pane,verticalArrangement=Arrangement.spacedBy(8.dp)) {
+            categories()
+            NearbyRankedList(s.activities,selected,online,Modifier.weight(1f),details=details,onSelect=vm::mapSelect)
+        }})
+        attribution()
     }
 }
 
@@ -153,3 +159,35 @@ import org.osmdroid.views.overlay.*
 private fun openMapUri(context:android.content.Context,uri:String):Boolean = try {
     context.startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(uri)));true
 } catch(_:android.content.ActivityNotFoundException) {false} catch(_:SecurityException) {false}
+
+@Composable internal fun NearbyRankedList(
+    options:List<ActivityOption>,selected:String?,online:Boolean,modifier:Modifier,
+    details:@Composable (ActivityOption)->Unit={},header:(@Composable ()->Unit)?=null,
+    footer:(@Composable ()->Unit)?=null,onSelect:(String)->Unit,
+) {
+    val scroll=rememberLazyListState()
+    LaunchedEffect(selected) {
+        val index=options.indexOfFirst {it.activity.id==selected}
+        if(index>=0)scroll.scrollToItem(index+if(header==null)0 else 1)
+    }
+    LazyColumn(modifier,state=scroll,verticalArrangement=Arrangement.spacedBy(7.dp),contentPadding=PaddingValues(bottom=12.dp)) {
+        if(header!=null)item(key="header"){header()}
+        if(options.isEmpty()) item {Text("이 분류의 검색 결과가 없습니다. 다른 분류 또는 지도 중심을 선택해 주변 검색을 눌러 주세요.",color=Muted,fontSize=13.sp)}
+        itemsIndexed(options,key={_,option->option.activity.id}) { index,option ->
+            val a=option.activity
+            SurfacePanel(Modifier.fillMaxWidth().clickable {onSelect(a.id)},accent=if(a.id==selected)Mint else Line) {
+                Row(horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+                    PlaceThumbnail(a,online)
+                    Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+                        Text("${index+1}위",color=Mint,fontSize=11.sp)
+                        Text(a.name,color=White,fontSize=14.sp)
+                        Text("${a.category} · 도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM 등록"}",color=Muted,fontSize=11.sp)
+                        Text(if(option.feasible)"왕복 후 ${option.usableSeconds/60}분 이용 가능" else "왕복·준비 시간 부족",color=if(option.feasible)Mint else Amber,fontSize=11.sp)
+                    }
+                }
+                if(a.id==selected)details(option)
+            }
+        }
+        if(footer!=null)item(key="footer"){footer()}
+    }
+}

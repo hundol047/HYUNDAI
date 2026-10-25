@@ -58,6 +58,7 @@ class CompactWindowTest {
         compose.runOnIdle {vm.engine.setConnectivity(network=false)}
         compose.onNodeWithText("지도").performClick()
         compose.onNodeWithText("멈춘 시간, 어디에서 보낼까요?").assertIsDisplayed()
+        compose.onNodeWithText("그린 산책로").performScrollTo().performClick()
         compose.onNodeWithText("이 장소로 계획").performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("내비").performClick()
         compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()

@@ -43,6 +43,7 @@ data class NearbyActivity(
     val minimumActivitySeconds: Long, val description: String,
     val simulated: Boolean = true,
     val latitude: Double? = null, val longitude: Double? = null,
+    val commonsPhoto: String? = null,
 )
 data class ActivityOption(val activity: NearbyActivity, val usableSeconds: Long, val feasible: Boolean)
 data class ContextEvent(val id: Long, val name: String, val message: String, val timestampMs: Long)

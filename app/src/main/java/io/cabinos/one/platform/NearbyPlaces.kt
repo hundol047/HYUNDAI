@@ -94,7 +94,7 @@ class NearbyPlaces(private val context:Context) {
                 }
                 val center=item.optJSONObject("center") ?: item
                 NearbyGeometry.osmActivity("osm-${item.optString("type")}-${item.optLong("id")}",name,category,
-                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)
+                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)?.copy(commonsPhoto=PlacePhoto.file(tags.optString("wikimedia_commons")))
             }.distinctBy { it.id }.groupBy {it.category}.values.flatMap {places->
                 places.sortedBy {NearbyGeometry.distanceMeters(origin,MapPosition(it.latitude!!,it.longitude!!))}.take(15)
             }.sortedBy {it.oneWaySeconds}
