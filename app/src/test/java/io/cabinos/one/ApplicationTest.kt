@@ -180,7 +180,8 @@ class ApplicationTest {
         compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님",gpsNotice="검사용 합성 GPS · 정확도 5m · 실기기 수신 아님"),vm.liveNavigation,{})}}}
         compose.onNodeWithText("EchoRoad · 글로벌 내비게이션").assertIsDisplayed()
         compose.onNodeWithText("좌회전 · Rue du Louvre").assertIsDisplayed()
-        compose.onNodeWithText("안내 종료·경로 지우기").assertIsDisplayed()
+        compose.onNodeWithText("안내 종료").assertIsDisplayed()
+        compose.onNodeWithText("안내 다시 듣기").assertIsDisplayed()
         compose.onNodeWithText("안내 시작").assertDoesNotExist()
         capture("navigation")
     }
