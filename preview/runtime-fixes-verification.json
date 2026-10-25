@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "dccf39fac7db5ea7f65c78496535fd86f3344427",
-  "apkSha256": "19c32341cf1400afa60e2247eec9a84d754947ec2551ca9183cf0137cbc159e7",
+  "sourceCommit": "71aa89c28b4a27b74fbd1b22dec0c0d7a502bc37",
+  "apkSha256": "7b813330b007ae75f2ae5cfdd88904d1b73b18a91b0a2a0f64d5f00a72aa16bb",
   "tests": {
     "core": {
-      "tests": 160,
+      "tests": 162,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 199,
+      "tests": 202,
       "failures": 0,
       "errors": 0,
       "skipped": 0
