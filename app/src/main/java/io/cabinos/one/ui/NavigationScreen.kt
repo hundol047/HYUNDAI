@@ -35,6 +35,9 @@ import java.util.Locale
     var nearby by remember {mutableStateOf(false)}
     var submittedQuery by remember {mutableStateOf("")}
     var submittedNearby by remember {mutableStateOf(false)}
+    LaunchedEffect(ui.searchQuery) {
+        if(ui.searchQuery.isNotBlank()){query=ui.searchQuery;submittedQuery=ui.searchQuery;submittedNearby=nearby}
+    }
     var accessConfirmed by remember(g.route){mutableStateOf(false)}
     var languageDialog by remember {mutableStateOf(false)}
     var languageTag by remember(ui.language){mutableStateOf(ui.language)}
@@ -46,6 +49,13 @@ import java.util.Locale
     var accessToken by remember {mutableStateOf("")}
     val voiceAvailable by nav.voiceAvailable.collectAsStateWithLifecycle()
     val canPlan=s.parkedAllowed&&!g.active
+    val chooseDestination:(NavPlace)->Unit = { place ->
+        nav.navigateTo(place)
+        if(nav.state.value.gpsConnection==GpsConnection.DENIED)onLocate()
+    }
+    LaunchedEffect(ui.gpsConnection,ui.voiceNotice) {
+        if(ui.gpsConnection==GpsConnection.DENIED && ui.voiceNotice.startsWith("인식:"))onLocate()
+    }
     Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.SpaceBetween) {
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
@@ -69,7 +79,7 @@ import java.util.Locale
             Text(ui.voiceNotice,color=Muted,fontSize=12.sp,modifier=Modifier.weight(1f))
         }
         if(!voiceAvailable)Text("음성 서비스 사용 불가 · 목적지 검색과 안내 버튼을 사용하세요",color=Muted,fontSize=12.sp)
-        if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 → 안내 시작 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
+        if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 선택 시 안내 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
             Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},if(compact)Modifier.width(240.dp) else Modifier.widthIn(min=260.dp,max=500.dp),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
@@ -81,12 +91,12 @@ import java.util.Locale
         } else if(!g.active&&!g.arrived)Text("목적지 설정은 안전한 주차 확인 후 가능합니다.",color=Amber,fontSize=13.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->
-            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix,!ui.busy,{nav.plan(it)}) }
+            Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { NavigationMap(g,s.networkAvailable,canPlan,ui.selectedPlace,ui.mapFix,!ui.busy,{chooseDestination(it)}) }
             }, details = { pane ->
             Column(pane.verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEachIndexed { index,place ->
-                    SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){nav.plan(place)},accent=Blue) {
+                    SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){chooseDestination(place)},accent=Blue) {
                         Text("${index+1}. ${place.name}",color=White,fontSize=15.sp)
                         if(place.address.isNotBlank())Text(place.address,color=Muted,fontSize=11.sp)
                         Text(listOf(place.category,place.source).filter {it.isNotBlank()}.joinToString(" · "),color=Muted,fontSize=10.sp)
@@ -95,7 +105,7 @@ import java.util.Locale
                         if(place.phone.isNotBlank())Text("전화 ${place.phone}",color=Muted,fontSize=11.sp)
                         if(place.openingHours.isNotBlank())Text("등록 영업시간 ${place.openingHours} · 현재 영업 여부 미확인",color=Muted,fontSize=10.sp)
                         if(place.website.isNotBlank())TextButton(onClick={nav.openPlaceWebsite(place)}){Text("상세정보/웹사이트 ↗",fontSize=11.sp,color=Blue)}
-                        Text("지도에 표시 · 자동차 경로 계산 →",color=Blue,fontSize=11.sp)
+                        Text("내 위치에서 이곳으로 안내 시작 →",color=Blue,fontSize=11.sp)
                     }
                 }
                 if(canPlan&&ui.hasMore&&submittedQuery==query&&submittedNearby==nearby)ActionButton("다른 결과 더 보기 (최대 18개)",{nav.search(query,nearby,true)},Modifier.fillMaxWidth(),Blue,!ui.busy)
@@ -109,6 +119,7 @@ import java.util.Locale
                         Text(p.name,color=White,fontSize=15.sp)
                         if(p.address.isNotBlank())Text(p.address,color=Muted,fontSize=11.sp)
                         Text(p.source,color=Muted,fontSize=11.sp)
+                        ActionButton("현재 위치에서 안내 시작",{chooseDestination(p)},Modifier.fillMaxWidth(),Mint,!ui.busy)
                     }
                 }
                 g.route?.let {r->

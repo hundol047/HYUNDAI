@@ -178,7 +178,7 @@ class CabinViewModel @Inject constructor(
             else {if(audioPreset.value!=sound)toggleAudio(sound);mutableReply.value=audioStatus.value}
             return
         }
-        if(compact.contains("길찾") || compact.contains("길안내") || compact.contains("검색해")) {
+        if(NavigationVoice.isNavigationRequest(text)) {
             liveNavigation.handleVoice(text);mutableNavigationRequests.value++;return
         }
         mutableReply.value=engine.assistant(text)

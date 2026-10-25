@@ -59,7 +59,7 @@ import java.util.*
     val route=entry?.destination?.route ?: "dashboard"
     var assistantOpen by remember { mutableStateOf(false) }
     val navigationRequests by vm.navigationRequests.collectAsStateWithLifecycle()
-    LaunchedEffect(navigationRequests) {if(navigationRequests>0){assistantOpen=false;navigationOpen=true}}
+
     var simulatorOpen by remember { mutableStateOf(false) }
     val microphone=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { if(it) vm.listen() else vm.voicePermissionDenied() }
     val notificationPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {vm.refreshNotifications()}
@@ -120,6 +120,11 @@ import java.util.*
             else navigationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))
         }
     }
+    LaunchedEffect(navigationRequests) {
+        if(navigationRequests>0){assistantOpen=false;navigationOpen=true
+            if(!vm.automotive && vm.liveNavigation.state.value.gpsConnection==io.cabinos.one.platform.GpsConnection.DENIED)requestNavigationLocation()
+        }
+    }
     val nearbyPermission=rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {vm.mapLocate()}
     val requestNearbyLocation:()->Unit = {
         if(vm.state.value.parkedAllowed) {
@@ -154,7 +159,7 @@ import java.util.*
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
                             else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,{requestVehiclePermissions(true)})
                             else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true},mapFix=navigationState.mapFix)
-                            else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation) {vm.liveNavigation.plan(it);navigationOpen=true;requestNavigationLocation()}
+                            else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation) {vm.liveNavigation.navigateTo(it);navigationOpen=true;if(vm.liveNavigation.state.value.gpsConnection==io.cabinos.one.platform.GpsConnection.DENIED)requestNavigationLocation()}
                         }
                         if(compact) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(2.dp)) {
                             listOf("홈" to "dashboard","내비" to "navigation","지도" to "nearby","기록" to "history","설정" to "settings").forEach { (label,key) ->

@@ -3,6 +3,14 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationLanguageTest {
+    @Test fun conversationalDirectionsReachNavigationWithoutLosingDestination() {
+        listOf("판교역으로 안내해 줘", "판교역까지 데려다줘", "판교역 가는 길 알려줘", "판교역 찾아 줘", "판교역으로 길 안내해줘").forEach {
+            assertTrue(it,NavigationVoice.isNavigationRequest(it))
+            assertEquals(it,"판교역",NavigationVoice.parse(it).query)
+        }
+        assertTrue(NavigationVoice.isNavigationRequest("안내 시작"))
+        assertFalse(NavigationVoice.isNavigationRequest("25분 집중 모드 켜줘"))
+    }
     private val p=NavPoint(48.85,2.35)
     @Test fun all31PacksHandleEveryDirectionAndExitWithoutUnresolvedTokens(){
         assertEquals(31,NavigationLanguages.codes.size)

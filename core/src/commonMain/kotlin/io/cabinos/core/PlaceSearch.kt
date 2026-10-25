@@ -44,7 +44,7 @@ object PlaceSearch {
     fun category(value:String)=when(value){"cafe"->"카페";"restaurant"->"식당";"fast_food"->"간편식";"bakery"->"베이커리";"convenience"->"편의점";"supermarket"->"슈퍼마켓";"mall"->"쇼핑몰";"pharmacy"->"약국";"fuel"->"주유소";"charging_station"->"충전소";else->clean(value,100)}
     fun results(places:List<NavPlace>,origin:NavPoint?,nearby:Boolean):List<NavPlace> {
         val unique=places.distinctBy {it.id.ifBlank {it.name.lowercase()+"|"+it.point}}
-        return if(nearby){require(origin?.valid()==true);unique.filter {NavigationGeometry.distance(origin!!,it.point)<=radiusMeters}.sortedBy {NavigationGeometry.distance(origin!!,it.point)}.take(pageSize)} else unique.take(pageSize)
+        return if(nearby){require(origin?.valid()==true);unique.filter {NavigationGeometry.distance(origin!!,it.point)<=radiusMeters}.sortedBy {NavigationGeometry.distance(origin!!,it.point)}.take(pageSize)} else (if(origin?.valid()==true)unique.sortedBy {NavigationGeometry.distance(origin,it.point)} else unique).take(pageSize)
     }
     fun page(places:List<NavPlace>,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
         val seen=(excluded+places.map {it.id}.filter {it.isNotBlank()}).distinct().take(maxResults)
@@ -56,7 +56,17 @@ object PlaceSearch {
         val ids=excluded.take(maxResults).filter {it.length in 1..160&&it.all {c->c.isLetterOrDigit()||c in "._:-"}}.distinct()
         val base=linkedMapOf("format" to "jsonv2","limit" to "$pageSize","accept-language" to "$language,en","namedetails" to "1","addressdetails" to "1","extratags" to "1","q" to q)
         if(ids.isNotEmpty()){base["exclude_ids"]=ids.joinToString(",");val numeric=ids.filter {it.all(Char::isDigit)};if(numeric.isNotEmpty())base["exclude_place_ids"]=numeric.joinToString(",")}
-        if(!nearby)return listOf(base)
+        if(!nearby) {
+            if(origin?.valid()==true) {
+                val latDelta=radiusMeters/111195.0
+                val lonDelta=latDelta/cos(origin.latitude*PI/180).coerceAtLeast(.00001)
+                if(origin.longitude-lonDelta>=-180&&origin.longitude+lonDelta<=180) {
+                    base["viewbox"]="${origin.longitude-lonDelta},${(origin.latitude+latDelta).coerceAtMost(90.0)},${origin.longitude+lonDelta},${(origin.latitude-latDelta).coerceAtLeast(-90.0)}"
+                    base["bounded"]="0"
+                }
+            }
+            return listOf(base)
+        }
         require(origin?.valid()==true){"주변 가게 검색은 정확한 내 위치를 먼저 받아 주세요."}
         require(radius.isFinite()&&radius in 500.0..radiusMeters)
         val p=origin!!;val latDelta=radius/111195.0;val lonDelta=latDelta/cos(p.latitude*PI/180).coerceAtLeast(.00001)

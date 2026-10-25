@@ -24,6 +24,30 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test fun spokenDestinationUsesCurrentGpsAndResultNumberStartsGuidance() {
+        var searched="";var originUsed:NavPoint?=null
+        Fixture(object:NavigationService(){
+            override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+                searched=query;originUsed=origin;return PlaceSearchPage(listOf(destination),listOf("1"),false)
+            }
+            override suspend fun route(origin:NavPoint,destination:NavPlace)=route()
+        }).use {f->
+            f.nav.locate();f.gps();f.nav.handleVoice("판교역까지 데려다줘");f.idle()
+            assertEquals("판교역",searched);assertEquals(origin,originUsed)
+            assertEquals("판교역",f.nav.state.value.searchQuery)
+            assertFalse(f.nav.state.value.guidance.active)
+            f.nav.handleVoice("1번");f.idle()
+            assertTrue(f.nav.state.value.guidance.active);assertFalse(f.engine.state.value.parkedAllowed)
+        }
+    }
+    @Test fun cancelledOneTapDestinationCannotStartWhenGpsArrivesLater() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute{calls++;return route()}}).use {f->
+            f.nav.navigateTo(destination);f.nav.cancelPending();f.gps()
+            assertEquals(0,calls);assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+
     @Test fun regionalCandidatesRequireExplicitActionAndNeverAutomaticallyStartGuidance() {
         var calls=0
         val service=object:NavigationService(){override suspend fun regionalSearch(query:String,origin:NavPoint?):RegionalSearchResult {
