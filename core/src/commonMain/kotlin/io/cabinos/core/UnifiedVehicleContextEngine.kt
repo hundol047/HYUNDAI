@@ -244,11 +244,11 @@ class UnifiedVehicleContextEngine(
         val s = state.value.session ?: return false
         if (s.status == SessionStatus.RUNNING) {
             mutable.value = state.value.copy(session = s.copy(status = SessionStatus.PAUSED)); sessionDeadlineMs = null
-        } else if (s.status == SessionStatus.PAUSED && state.value.schedule.availableSeconds > 0) {
+        } else if (s.status == SessionStatus.PAUSED && s.remainingSeconds > 0 && state.value.schedule.availableSeconds > 0) {
             val remaining = min(s.remainingSeconds, state.value.schedule.availableSeconds)
             mutable.value = state.value.copy(session = s.copy(status = SessionStatus.RUNNING, remainingSeconds = remaining))
             sessionDeadlineMs = clock() + remaining * 1000
-        }
+        } else return false
         tick(); return true
     }
     private fun archiveActive() {

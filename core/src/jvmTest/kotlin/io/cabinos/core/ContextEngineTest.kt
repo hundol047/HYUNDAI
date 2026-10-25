@@ -214,4 +214,17 @@ class ContextEngineTest {
         assertEquals(1L,engine.state.value.schedule.availableSeconds-engine.state.value.session!!.remainingSeconds)
         assertFalse(engine.extendSession())
     }
+    @Test fun expiredPausedSessionDoesNotReportSuccessfulResume() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,10)
+        engine.pauseOrResume();engine.setWaitingMinutes(5)
+        assertFalse(engine.pauseOrResume())
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        assertEquals("다시 시작할 수 있는 세션이 없습니다.",engine.assistant("계속"))
+    }
+    @Test fun completedSessionCannotBePausedOrResumed() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,1)
+        repeat(61){now+=1000;send()}
+        assertEquals(SessionStatus.COMPLETED,engine.state.value.session!!.status)
+        assertFalse(engine.pauseOrResume())
+    }
 }
