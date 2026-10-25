@@ -4,7 +4,7 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/a14f503355e845fef2ed1b5c13047e96f190643d/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/fc524279bf72954552c7d941d06d7d800c4491cb/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -13,6 +13,8 @@
 [실제 APK 실행 영상 · 검증 결과](../docs/video/stop-plan/README.md) — Android 13 에뮬레이터에서 2분 20초 연속 녹화. 차량 신호는 데모이며 음성 트랙은 없습니다.
 
 ## 이번 수정
+
+- 간단한 조작: 56dp 세션 버튼, 한 번에 소리 끄기, 재개 불가 설명을 추가하고 시간이 만료된 세션의 잘못된 재개 성공 응답을 수정했습니다. [상세 변경](../docs/SIMPLE_CONTROLS_KO.md)
 
 - 정차 플랜: 활동 마감·출발 시각과 이동·준비 시간을 한 카드로 표시합니다. 15·30·60분 빠른 출발 설정, 남은 시간에 맞는 집중/휴식 시작, 출발 시간을 바꾸지 않는 세션 연장을 제공합니다. [동작·검증 범위](../docs/STOP_PLAN_UPGRADE_KO.md)
 
@@ -59,7 +61,7 @@
 
 이번 공개 캠퍼스 좌표(37.279,127.908) 점검에서 Photon 카페 결과는 0곳, Overpass 두 서버는 20초 제한 시간 초과였습니다. 이 지역의 실제 카페 검색이 완성됐다고 검증하지 못했습니다.
 
-core 160개 + Android 199개, 총 **359개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
+core 162개 + Android 202개, 총 **364개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
 
 이번 실제 HTTP 점검에서 판교 기준 Photon 검색은 카페·식당·산책·쇼핑 각각 15곳(HTTP 200)을 반환했고, OSRM 자동차 경로는 약 90.4km 경로(HTTP 200)를 반환했습니다. 이는 서버 점검이며 S20+ 실물에서 같은 경로를 주행한 결과가 아닙니다. Overpass의 502·시간 초과는 재현되어 보조 경로로 남겼습니다. 공개 서비스의 장애·미등록 매장·사진 누락은 가능하며 모든 지역의 수록을 보장하지 않습니다. 상용 장소 API 키는 설정되어 있지 않습니다.
 
