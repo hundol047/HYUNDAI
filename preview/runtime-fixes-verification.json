@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "3e06f13f977969666f3b5c7214f0ce1f62f31135",
-  "apkSha256": "1bc943535eaf012da91f0160645cad6ac6d903eb1b1c521de4cc877c4dc41346",
+  "sourceCommit": "65c5ab5c743551c2f5930d72dbeec25b2fbd33ba",
+  "apkSha256": "c6e5e5664f1f030c286c6205d03228ee6c401ec22f58ad79e5439639e15c57e8",
   "tests": {
     "core": {
-      "tests": 153,
+      "tests": 156,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 192,
+      "tests": 193,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -100,6 +100,7 @@
     "expandedRerouteErrorVisible": true,
     "cameraReferenceDataConnected": true,
     "cameraDirectionalVoiceImplemented": false,
+    "cameraReferenceVoiceImplemented": true,
     "speedHumpReferenceDataConnected": true,
     "speedHumpCoverage": "South Korea public dataset; incomplete and age-filtered",
     "commercialAppParityValidated": false,
@@ -109,7 +110,7 @@
     "checkedAt": "2026-10-25",
     "datasets": [
       {
-        "schema": 1,
+        "schema": 2,
         "source": "https://www.data.go.kr/data/15028195/standard.do",
         "coverage": "전국 제공자료 · 수록 누락 가능",
         "asOf": "2026-10-25",
@@ -128,7 +129,8 @@
           "kind",
           "road",
           "recordDate",
-          "reportedSpeedKmh"
+          "reportedSpeedKmh",
+          "advisory"
         ],
         "directionVerified": false,
         "recordDateRange": {
@@ -136,11 +138,14 @@
           "newest": "2026-08-27"
         },
         "activeAtImport": 39384,
-        "normalizedSha256": "af1729d8ebda886ee0eed35d997b2edea6171b31f02effdb9924fbb383cd47e9",
-        "transport": "user-uploaded ZIP"
+        "normalizedSha256": "fdab7593b5dec94d51753ab70e9ee1c5b7394b8d47bc16335d5f14b36bcecde7",
+        "transport": "user-uploaded ZIP",
+        "advisoryCounts": {
+          "none": 82697
+        }
       },
       {
-        "schema": 1,
+        "schema": 2,
         "source": "https://www.data.go.kr/data/15028200/standard.do",
         "coverage": "고정식 교통단속시설 · 이동식 제외",
         "asOf": "2026-10-25",
@@ -159,7 +164,8 @@
           "kind",
           "road",
           "recordDate",
-          "reportedSpeedKmh"
+          "reportedSpeedKmh",
+          "advisory"
         ],
         "directionVerified": false,
         "recordDateRange": {
@@ -167,8 +173,15 @@
           "newest": "2026-09-13"
         },
         "activeAtImport": 37267,
-        "normalizedSha256": "a7ed7784debaa9a37a7e897da973ae9a5580abe0773bc09e1039d1ef8fa76621",
-        "transport": "official public download, two pages"
+        "normalizedSha256": "5a6ac243e3cdbb9a7f3bdc89d1756282dc389c57145c080c74388fd980e7f90f",
+        "transport": "official public download, two pages",
+        "advisoryCounts": {
+          "fixed": 29856,
+          "section_end": 216,
+          "section_start": 214,
+          "section": 200,
+          "none": 9341
+        }
       }
     ],
     "cameraDownload": {
@@ -194,6 +207,7 @@
     },
     "commercialNavigationParity": "not established",
     "physicalDrivingValidated": false,
-    "cameraDirectionalVoiceImplemented": false
+    "cameraDirectionalVoiceImplemented": false,
+    "cameraReferenceVoiceImplemented": true
   }
 }
