@@ -66,6 +66,7 @@ import kotlin.math.min
             }
             ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
+        StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         val cabin by vm.cabin.state.collectAsState()
         CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)

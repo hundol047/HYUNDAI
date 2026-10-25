@@ -28,6 +28,7 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             Text("활동 ${s.schedule.availableSeconds/60}분 · 출발 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint)
             ActionButton("시간 설정",{timeDialog=true},Modifier.fillMaxWidth())
         }
+        StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         val cabin by vm.cabin.state.collectAsStateWithLifecycle()
         CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         val session=s.session?.takeIf {it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED}
