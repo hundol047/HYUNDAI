@@ -56,7 +56,7 @@ PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issu
 | Leaflet, osrm-text-instructions | BSD-2-Clause · [원문·출처](docs/THIRD_PARTY.md) |
 | OpenStreetMap 도로·장소 | ODbL, © OpenStreetMap contributors · [저작권](https://www.openstreetmap.org/copyright) |
 | Photon 주변 장소 API | 외부 검색 서비스 · OSM 데이터 · [출처·이용 범위](docs/THIRD_PARTY.md) |
-| 휴대폰 검토본의 충남 방지턱 참고자료 | 충청남도 제공, 데이터별 이용허락범위 제한 없음 · [출처·가공·범위](docs/ROAD_SAFETY_DATA_KO.md) |
+| 휴대폰 검토본의 전국 안전시설 참고자료 | 행정안전부·경찰청·지방자치단체 공공데이터 · [출처·가공·이용 조건](docs/THIRD_PARTY.md) · [검증 범위](docs/ROAD_SAFETY_DATA_KO.md) |
 | Pleos Vehicle / NaviHelper | SDK 제공자 이용 조건. 위 오픈소스 라이선스의 적용 대상과 구분 |
 
 ## Pleos SDK 사용 기능

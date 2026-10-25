@@ -45,5 +45,7 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 
 ## 도로 안전시설 참고자료
 
-- **충청남도_과속방지턱현황_20251113** — 제공: 충청남도. [공식 데이터](https://www.data.go.kr/data/15152204/fileData.do), [충남 공식 이용 조건](https://alldam.chungnam.go.kr/index.chungnam?menuCd=DOM_000000201001001001&publicdatapk=15152204). 데이터별 표기: 무료·이용허락범위 제한 없음(2026-10-25 확인). 웹페이지 디자인의 이용 조건과 CSV 데이터별 조건은 구분합니다. 원본 16,251행에서 중복·충돌을 처리한 9,314개 위치를 변환 수록했습니다. 원본 SHA-256·처리 통계는 `app/src/main/assets/road_safety/chungnam-bumps.json`에 포함됩니다. [가공 방법·적용 범위](ROAD_SAFETY_DATA_KO.md).
+- **전국 과속방지턱 정보** — 행정안전부·지방자치단체, [공식 목록](https://www.data.go.kr/data/15028195/standard.do). 데이터별 표기: 무료·이용허락범위 제한 없음(2026-10-25 원문 확인). 사용자가 제공한 ZIP 141,140행을 가공해 82,697개 위치를 수록했습니다. 기존 충남 단독 자료는 교체했습니다.
+- **전국무인교통단속카메라표준데이터** — 경찰청·지방자치단체, [공식 목록](https://www.data.go.kr/data/15028200/standard.do), 데이터셋에 연결된 [공공데이터포털 이용정책](https://data.go.kr/ugs/selectPortalPolicyView.do). 공개 다운로드 43,764행에서 충돌·중복을 처리한 39,827개 참고 위치를 수록했습니다. 이동식은 제외되며 방향별 단속 속도 안내로 사용하지 않습니다. 별도의 상용 내비 데이터 라이선스를 취득했다는 의미가 아닙니다.
+- 가공 방법, 기준일, 제외 건수, 원본·변환본 해시: [자료 검증](ROAD_SAFETY_DATA_KO.md), [검사 기록](ROAD_SAFETY_DATA_AUDIT.json). 원본의 연락처는 수록하지 않았습니다.
 - ktfmt 0.54 — Apache-2.0, https://github.com/facebook/ktfmt . 개발 중 Kotlin 서식 정리에만 사용하며 앱에 포함하지 않습니다.

@@ -1,17 +1,19 @@
 package io.cabinos.one.platform
 
 import android.content.Context
+import android.util.JsonReader
+import android.util.JsonToken
 import io.cabinos.core.*
-import java.io.ByteArrayOutputStream
+import java.io.Reader
+import java.io.StringReader
 import java.time.LocalDate
 import java.time.ZoneOffset
 import kotlinx.coroutines.*
-import org.json.JSONObject
 
 data class RoadSafetyUi(
     val points: List<RoadSafetyPoint> = emptyList(),
     val approach: RoadSafetyApproach? = null,
-    val notice: String = "충남 방지턱 참고자료 · 카메라·전국 자료 미연결",
+    val notice: String = "안전시설 참고자료 · 위치 수신 후 확인",
 )
 
 /** App-bundled, read-only snapshots. No location uploads or network work here. */
@@ -56,74 +58,110 @@ internal class RoadSafetyRepository(
     }
 
     companion object {
-        fun parse(text: String): List<RoadSafetyPoint> {
-            val json = JSONObject(text)
-            require(json.getInt("schema") == 1)
-            val rows = json.getJSONArray("records")
-            require(rows.length() <= 200_000)
-            return (0 until rows.length()).map { i ->
-                val row = rows.getJSONArray(i)
-                val point = NavPoint(row.getDouble(1), row.getDouble(2))
-                require(
-                    point.valid() && point.latitude in 32.0..40.0 && point.longitude in 124.0..132.0
-                )
-                val kind =
-                    when (row.getString(3)) {
-                        "bump" -> RoadSafetyKind.BUMP
-                        "camera" -> RoadSafetyKind.CAMERA
-                        else -> error("Unknown road safety type")
-                    }
-                val date = LocalDate.parse(row.getString(5))
-                val expires =
-                    date.plusDays(365).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
-                RoadSafetyPoint(
-                    row.getString(0),
-                    point,
-                    kind,
-                    row.getString(4),
-                    date.toString(),
-                    expires,
-                    if (row.isNull(6)) null else row.getInt(6).takeIf { it in 10..140 },
-                    date.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli(),
-                )
-            }
-        }
-
         data class Dataset(val points: List<RoadSafetyPoint>, val notice: String)
+
+        fun parse(text: String): List<RoadSafetyPoint> = readDataset(StringReader(text)).points
+
+        private fun readDataset(input: Reader): Dataset =
+            JsonReader(input).use { reader ->
+                var schema = 0
+                var coverage = ""
+                var asOf = ""
+                var oldest = ""
+                var newest = ""
+                val points = ArrayList<RoadSafetyPoint>()
+                val dates = mutableMapOf<String, Pair<Long, Long>>()
+                reader.beginObject()
+                while (reader.hasNext()) {
+                    when (reader.nextName()) {
+                        "schema" -> schema = reader.nextInt()
+                        "coverage" -> coverage = reader.nextString()
+                        "asOf" -> asOf = reader.nextString()
+                        "recordDateRange" -> {
+                            reader.beginObject()
+                            while (reader.hasNext()) {
+                                when (reader.nextName()) {
+                                    "oldest" -> oldest = reader.nextString()
+                                    "newest" -> newest = reader.nextString()
+                                    else -> reader.skipValue()
+                                }
+                            }
+                            reader.endObject()
+                        }
+                        "records" -> {
+                            reader.beginArray()
+                            while (reader.hasNext()) {
+                                require(points.size < 200_000)
+                                points += readPoint(reader, dates)
+                            }
+                            reader.endArray()
+                        }
+                        else -> reader.skipValue()
+                    }
+                }
+                reader.endObject()
+                require(schema == 1 && reader.peek() == JsonToken.END_DOCUMENT)
+                val dateLabel =
+                    if (oldest.isNotBlank() && newest.isNotBlank()) "$oldest~$newest" else asOf
+                Dataset(points, "$coverage · 기준일 $dateLabel · 1년 지난 자료 제외")
+            }
+
+        private fun readPoint(
+            reader: JsonReader,
+            dates: MutableMap<String, Pair<Long, Long>>,
+        ): RoadSafetyPoint {
+            reader.beginArray()
+            val id = reader.nextString()
+            val point = NavPoint(reader.nextDouble(), reader.nextDouble())
+            require(
+                point.valid() && point.latitude in 32.0..40.0 && point.longitude in 124.0..132.0
+            )
+            val kind =
+                when (reader.nextString()) {
+                    "bump" -> RoadSafetyKind.BUMP
+                    "camera" -> RoadSafetyKind.CAMERA
+                    else -> error("Unknown road safety type")
+                }
+            val road = reader.nextString()
+            val observed = reader.nextString()
+            val (from, expiry) =
+                dates.getOrPut(observed) {
+                    val date = LocalDate.parse(observed)
+                    date.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli() to
+                        date.plusDays(365).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+                }
+            val speed =
+                if (reader.peek() == JsonToken.NULL) {
+                    reader.nextNull()
+                    null
+                } else reader.nextInt().takeIf { it in 10..140 }
+            reader.endArray()
+            require(id.length in 1..100 && road.length <= 120)
+            return RoadSafetyPoint(id, point, kind, road, observed, expiry, speed, from)
+        }
 
         fun load(context: Context): List<RoadSafetyPoint> = loadDataset(context).points
 
         private fun loadDataset(context: Context): Dataset {
-            val documents =
+            val datasets =
                 context.assets
                     .list("road_safety")
                     .orEmpty()
                     .filter { it.endsWith(".json") }
                     .map { name ->
-                        context.assets.open("road_safety/$name").use { stream ->
-                            val out = ByteArrayOutputStream()
-                            val buffer = ByteArray(8192)
-                            while (true) {
-                                val n = stream.read(buffer)
-                                if (n < 0) break
-                                require(out.size() + n <= 24_000_000)
-                                out.write(buffer, 0, n)
-                            }
-                            out.toString("UTF-8")
-                        }
+                        context.assets
+                            .open("road_safety/$name")
+                            .bufferedReader(Charsets.UTF_8)
+                            .use { readDataset(it) }
                     }
-            val points = documents.flatMap(::parse)
+            val points = datasets.flatMap { it.points }
             require(points.map { it.id }.distinct().size == points.size)
             require(points.map { it.kind to it.point }.distinct().size == points.size)
-            val scope =
-                documents.joinToString(" / ") {
-                    val data = JSONObject(it)
-                    "${data.getString("coverage")} · 자료 ${data.getString("asOf") }"
-                }
+            val coverage = datasets.joinToString(" / ") { it.notice }
             val missing =
                 if (points.none { it.kind == RoadSafetyKind.CAMERA }) " · 카메라 미연결"
                 else " · 단속 방향 미검증"
-            return Dataset(points, "$scope · ${points.size}곳$missing")
+            return Dataset(points, "$coverage · 수록 ${points.size}곳$missing")
         }
     }
 }

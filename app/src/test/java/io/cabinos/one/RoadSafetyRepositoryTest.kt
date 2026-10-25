@@ -15,14 +15,25 @@ class RoadSafetyRepositoryTest {
     @Test
     fun bundledOfficialSnapshotIsValidatedAndHasNoDuplicateCoordinates() {
         val points = RoadSafetyRepository.load(ApplicationProvider.getApplicationContext())
-        assertEquals(9314, points.size)
-        assertEquals(points.size, points.map { it.point }.distinct().size)
+        val bumps = points.filter { it.kind == RoadSafetyKind.BUMP }
+        val cameras = points.filter { it.kind == RoadSafetyKind.CAMERA }
+        assertEquals(82697, bumps.size)
+        assertEquals(39827, cameras.size)
+        assertEquals(122524, points.size)
+        assertEquals(points.size, points.map { it.kind to it.point }.distinct().size)
+        val checkedAt =
+            java.time.LocalDate.of(2026, 10, 25)
+                .atStartOfDay()
+                .toInstant(java.time.ZoneOffset.UTC)
+                .toEpochMilli()
+        assertEquals(39384, bumps.count { checkedAt in it.validFromMs until it.expiresAtMs })
+        assertEquals(37267, cameras.count { checkedAt in it.validFromMs until it.expiresAtMs })
+        assertTrue(points.all { it.point.valid() && it.expiresAtMs > it.validFromMs })
         assertTrue(
-            points.all {
-                it.kind == RoadSafetyKind.BUMP && it.point.valid() && it.reportedSpeedKmh == null
-            }
+            bumps.all { it.reportedSpeedKmh == null && it.recordDate in "2019-01-01".."2026-08-27" }
         )
-        assertTrue(points.all { it.expiresAtMs > it.validFromMs && it.recordDate == "2025-11-13" })
+        assertTrue(cameras.all { it.reportedSpeedKmh == null || it.reportedSpeedKmh in 10..140 })
+        assertTrue(cameras.all { it.recordDate in "2021-09-24".."2026-09-13" })
     }
 
     @Test
@@ -33,5 +44,18 @@ class RoadSafetyRepositoryTest {
             RoadSafetyRepository.parse(json)
             fail("Projected coordinates accepted")
         } catch (_: IllegalArgumentException) {}
+    }
+
+    @Test
+    fun streamingParserAcceptsMetadataAfterRowsAndRejectsUnsupportedSchema() {
+        val rows = """[["fixture",37.5,127.0,"bump","검사도로","2026-01-01",null]]"""
+        val points =
+            RoadSafetyRepository.parse(
+                """{"records":$rows,"schema":1,"coverage":"검사용","asOf":"2026-10-25"}"""
+            )
+        assertEquals("2026-01-01", points.single().recordDate)
+        assertThrows(IllegalArgumentException::class.java) {
+            RoadSafetyRepository.parse("""{"schema":2,"records":$rows}""")
+        }
     }
 }
