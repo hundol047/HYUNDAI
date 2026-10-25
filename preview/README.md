@@ -4,13 +4,18 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/8159e9e7d8fa19d3e39dc3c9c61bc7b7ca30e044/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/aa6d2955f71d07aca88a67093e21f4b9d0dd331c/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
 휴대폰 위치 서비스를 켜고 앱에 **정확한 위치**를 허용하세요. 음성 입력에는 마이크 권한과 기기 음성 인식 서비스가 필요합니다. APK는 아이폰에 설치할 수 없습니다. 팀 서명 제출본 `apk/`는 변경하지 않았습니다.
 
 ## 이번 수정
+
+- 확대 지도에서 드래그·핀치 확대/축소를 지원합니다. 이동 후 자동 중심 복귀를 멈추고 ‘내 위치로’로 다시 추적합니다.
+- GPS 품질 변화와 거리 경계에서의 같은 음성 반복을 억제합니다. 명시적 반복 요청과 위치 제공자 재연결 후 안내는 유지합니다.
+- 내비 화면이 홈 선택을 덮어쓰는 문제를 수정했습니다. 하단 지도·기록·설정의 안전 잠금 중에는 터치 시 이유를 표시합니다. 안내 종료와 안전한 정차 확인 전 제한은 유지합니다.
+- 최근 정확한 GPS/fused 위치보다 품질이 나쁜 보조 위치값에 대한 필터를 보완했습니다. GPS 만료·부정확·권한 상실 시 안내 중지는 유지합니다. [수정 범위와 제한](../docs/NAVIGATION_INTERACTION_FIXES.md)
 
 - 내비 지도 터치 → 앱 창을 채우는 확대 지도 → ‘지도 축소’ 또는 뒤로가기로 복귀합니다. 세로·가로 레이아웃에서 검사했습니다. 확대/축소로 경로를 새로 시작하거나 종료하지 않습니다. GPS가 끊긴 경우 회전 안내를 표시하지 않고 위치 대기를 유지합니다.
 - 이 확대 기능은 일반 Android의 앱 내 지도에 적용됩니다. 실제 Pleos 차량은 기존 NaviHelper 기본 내비 연동을 유지하며 기본 내비 창 크기는 차량 OS가 제어합니다.
@@ -29,9 +34,7 @@
 
 ## 검증과 제한
 
-첫 실행에서 기존 `CompactWindowTest`의 테마 변경 후 항목 찾기 1건이 실패했으며, 테스트 변경 없이 전체 재실행하여 통과했습니다.
-
-core 149개 + Android 175개, 총 **324개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
+core 149개 + Android 179개, 총 **328개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
 
 이번 실제 HTTP 점검에서 판교 기준 Photon 검색은 카페·식당·산책·쇼핑 각각 15곳(HTTP 200)을 반환했고, OSRM 자동차 경로는 약 90.4km 경로(HTTP 200)를 반환했습니다. 이는 서버 점검이며 S20+ 실물에서 같은 경로를 주행한 결과가 아닙니다. Overpass의 502·시간 초과는 재현되어 보조 경로로 남겼습니다. 공개 서비스의 장애·미등록 매장·사진 누락은 가능하며 모든 지역의 수록을 보장하지 않습니다. 상용 장소 API 키는 설정되어 있지 않습니다.
 
