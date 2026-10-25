@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -157,9 +158,18 @@ import java.util.*
 }
 
 @Composable internal fun FocusTaskPresets(parked:Boolean,onAdd:(String)->Unit) {
-    FlowRow(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
-        listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
-            OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
+    if(LocalCompactWindow.current) {
+        FlowRow(Modifier.fillMaxWidth().testTag("focus-presets"),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            FocusPresetButtons(parked,onAdd)
         }
+    } else {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("focus-presets"),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+            FocusPresetButtons(parked,onAdd)
+        }
+    }
+}
+@Composable private fun FocusPresetButtons(parked:Boolean,onAdd:(String)->Unit) {
+    listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
+        OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
     }
 }

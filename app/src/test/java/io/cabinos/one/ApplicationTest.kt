@@ -12,6 +12,7 @@ import java.io.File
 import org.robolectric.annotation.GraphicsMode
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -31,6 +32,33 @@ import org.robolectric.annotation.Config
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class ApplicationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
+
+    @Test @Config(sdk=[35]) fun assistantFocusCommandCanCloseAndAddTaskOnAndroid15() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) {
+            org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+            vm.state.value.sample!=null
+        }
+        compose.runOnIdle {vm.selectScenario("주차")}
+        Thread.sleep(1600)
+        compose.runOnIdle {
+            vm.engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=System.currentTimeMillis()))
+            vm.waiting(40)
+        }
+        compose.onNodeWithText("무엇을 도와드릴까요?").performClick()
+        compose.onNodeWithText("25분 집중 모드 켜줘").performClick()
+        compose.onNodeWithContentDescription("닫기").performClick()
+        assertEquals(SessionStatus.RUNNING,vm.state.value.session?.status)
+        compose.onNodeWithText("나의 할 일").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("메일 확인").performScrollTo().performClick()
+        compose.waitUntil(10_000) {
+            org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+            vm.tasks.value.any {it.text=="메일 확인"}
+        }
+        compose.runOnIdle {vm.selectScenario("신호 대기")}
+        assertFalse(vm.state.value.parkedAllowed)
+        compose.onNodeWithText("나의 할 일").assertDoesNotExist()
+    }
 
     @Test fun activeGuidanceKeepsRerouteConnectionFailureVisible() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]

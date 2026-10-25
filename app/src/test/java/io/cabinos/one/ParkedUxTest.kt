@@ -1,6 +1,9 @@
 package io.cabinos.one
 
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,17 @@ class ParkedUxTest {
         compose.onNodeWithText("메일 확인").assertHeightIsAtLeast(48.dp).performClick()
         assertEquals("메일 확인",added)
         show(false);compose.onNodeWithText("메일 확인").assertIsNotEnabled()
+    }
+    @Test fun narrowFocusPresetsLeaveSpaceForTasksAndAllCommandsRemainReachable() {
+        var added=""
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            Box(Modifier.width(240.dp)) {FocusTaskPresets(true) {added=it}}
+        }}}
+        compose.onNodeWithTag("focus-presets").assertHeightIsEqualTo(48.dp)
+        compose.onNodeWithText("스트레칭").performScrollTo().assertHeightIsAtLeast(48.dp).performClick()
+        assertEquals("스트레칭",added)
+        compose.onNodeWithText("메일 확인").performScrollTo().performClick()
+        assertEquals("메일 확인",added)
     }
     @Test fun arrivalWithoutRouteExplainsDisabledControls() {
         compose.runOnIdle { compose.activity.setContent { CabinTheme { ArrivalClockControls(10000,false) {} } } }
