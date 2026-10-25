@@ -611,7 +611,6 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     private fun guideRoadSafety() {
         val g = tracker.state
-        val approach = mutable.value.roadSafety.approach ?: return
         if (
             !foreground ||
                 !engine.state.value.preferences.voiceEnabled ||
@@ -619,11 +618,12 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 speech.navigationSpeaking
         )
             return
-        if (!safetyAnnouncements.eligible(approach, clock(), g.turnMeters)) return
+        val approach =
+            mutable.value.roadSafety.upcoming.firstOrNull {
+                safetyAnnouncements.eligible(it, clock(), g.turnMeters)
+            } ?: return
         val korean = NavigationLanguages.resolve(language) == "ko"
-        val text =
-            if (korean) "경로 주변에 과속방지턱 등록 지점이 있습니다. 현장 표지를 확인하세요."
-            else "A speed bump is recorded near the route. Check road signs."
+        val text = approach.spoken(korean)
         if (speech.speakNavigation(text, if (korean) "ko-KR" else "en-US")) {
             safetyAnnouncements.accepted(approach, clock())
         }

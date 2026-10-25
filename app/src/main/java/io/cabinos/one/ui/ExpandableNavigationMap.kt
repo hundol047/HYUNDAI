@@ -164,7 +164,7 @@ internal fun ExpandableNavigationMap(
                         )
                     ui.roadSafety.approach?.let { approach ->
                         Text(
-                            "경로 주변 방지턱 · 약 ${approach.meters.toInt()}m · 현장 표지 확인",
+                            "경로 주변 ${approach.label()} · 약 ${approach.roundedMeters}m · 현장 표지 확인",
                             color = Amber,
                             fontSize = 16.sp,
                         )

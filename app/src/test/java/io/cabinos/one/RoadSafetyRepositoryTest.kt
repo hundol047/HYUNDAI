@@ -55,7 +55,20 @@ class RoadSafetyRepositoryTest {
             )
         assertEquals("2026-01-01", points.single().recordDate)
         assertThrows(IllegalArgumentException::class.java) {
-            RoadSafetyRepository.parse("""{"schema":2,"records":$rows}""")
+            RoadSafetyRepository.parse("""{"schema":99,"records":$rows}""")
         }
+    }
+
+    @Test
+    fun schemaTwoRetainsOnlyRecognizedCameraAdvisories() {
+        val points =
+            RoadSafetyRepository.parse(
+                """{"schema":2,"records":[
+          ["start",37.5,127.0,"camera","도로","2026-01-01",60,"section_start"],
+          ["unknown",37.6,127.0,"camera","도로","2026-01-01",60,"unrecognized"]
+        ]}"""
+            )
+        assertEquals(CameraAdvisory.SECTION_START, points[0].cameraAdvisory)
+        assertEquals(CameraAdvisory.NONE, points[1].cameraAdvisory)
     }
 }

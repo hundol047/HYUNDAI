@@ -78,4 +78,59 @@ class RoadSafetyTest {
         guard.reset()
         assertTrue(guard.eligible(item, now + 60_000, 500.0))
     }
+
+    @Test
+    fun cameraDistanceAndSectionLabelsAreReferenceAdvisories() {
+        val camera =
+            bump.copy(
+                id = "camera",
+                point = NavPoint(36.704, 126.5),
+                kind = RoadSafetyKind.CAMERA,
+                cameraAdvisory = CameraAdvisory.SECTION_START,
+                reportedSpeedKmh = 60,
+            )
+        val index = RoadSafetyIndex(listOf(camera))
+        val item = index.upcoming(guidance, now).single()
+        assertEquals(450, item.roundedMeters)
+        assertTrue(item.spoken(true).contains("450미터"))
+        assertTrue(item.spoken(true).contains("구간단속 시작 지점"))
+        assertTrue(item.spoken(true).contains("경로 주변"))
+        assertFalse(item.spoken(true).contains("60"))
+        assertTrue(
+            item
+                .copy(item = camera.copy(cameraAdvisory = CameraAdvisory.SECTION_END))
+                .spoken(true)
+                .contains("구간단속 종료 지점")
+        )
+        assertTrue(index.upcoming(guidance.copy(directionUncertain = true), now).isEmpty())
+        assertTrue(index.upcoming(guidance.copy(offRoute = true), now).isEmpty())
+        assertTrue(index.upcoming(guidance, now + 10_001).isEmpty())
+        assertTrue(index.upcoming(guidance.copy(progressMeters = 500.0), now).isEmpty())
+    }
+
+    @Test
+    fun cameraAndBumpHaveDifferentApproachWindows() {
+        val far = bump.copy(point = NavPoint(36.704, 126.5))
+        assertTrue(RoadSafetyIndex(listOf(far)).upcoming(guidance, now).isEmpty())
+        val camera = far.copy(kind = RoadSafetyKind.CAMERA, cameraAdvisory = CameraAdvisory.FIXED)
+        assertEquals(1, RoadSafetyIndex(listOf(camera)).upcoming(guidance, now).size)
+        assertTrue(
+            RoadSafetyIndex(listOf(camera.copy(point = NavPoint(36.705, 126.5))))
+                .upcoming(guidance, now)
+                .isEmpty()
+        )
+    }
+
+    @Test
+    fun displayPinLimitAndAlreadySpokenPointDoNotHideNextAdvisory() {
+        val clutter = (1..40).map { bump.copy(id = "near$it", point = NavPoint(36.7001, 126.5002)) }
+        val next = bump.copy(id = "next", point = NavPoint(36.702, 126.5))
+        val index = RoadSafetyIndex(clutter + bump + next)
+        assertEquals(32, index.nearby(fix, now).size)
+        val upcoming = index.upcoming(guidance, now)
+        assertEquals(listOf("test", "next"), upcoming.map { it.item.id })
+        val guard = RoadSafetyAnnouncements()
+        guard.accepted(upcoming.first(), now)
+        assertEquals("next", upcoming.first { guard.eligible(it, now + 15_000, 900.0) }.item.id)
+    }
 }

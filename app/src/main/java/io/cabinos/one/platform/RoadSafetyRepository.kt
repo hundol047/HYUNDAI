@@ -13,6 +13,7 @@ import kotlinx.coroutines.*
 data class RoadSafetyUi(
     val points: List<RoadSafetyPoint> = emptyList(),
     val approach: RoadSafetyApproach? = null,
+    val upcoming: List<RoadSafetyApproach> = emptyList(),
     val notice: String = "안전시설 참고자료 · 위치 수신 후 확인",
 )
 
@@ -54,7 +55,13 @@ internal class RoadSafetyRepository(
         }
         if (clock() >= lastExpiry) return RoadSafetyUi(notice = "방지턱 자료 유효기간 경과 · 업데이트 전 경고 미제공")
         val nearby = index.nearby(fix, clock())
-        return RoadSafetyUi(nearby, index.approach(guidance, nearby, clock()), notice)
+        val upcoming = index.upcoming(guidance, clock())
+        return RoadSafetyUi(
+            points = nearby,
+            approach = upcoming.firstOrNull(),
+            upcoming = upcoming,
+            notice = notice,
+        )
     }
 
     companion object {
@@ -100,7 +107,7 @@ internal class RoadSafetyRepository(
                     }
                 }
                 reader.endObject()
-                require(schema == 1 && reader.peek() == JsonToken.END_DOCUMENT)
+                require(schema in 1..2 && reader.peek() == JsonToken.END_DOCUMENT)
                 val dateLabel =
                     if (oldest.isNotBlank() && newest.isNotBlank()) "$oldest~$newest" else asOf
                 Dataset(points, "$coverage · 기준일 $dateLabel · 1년 지난 자료 제외")
@@ -135,9 +142,19 @@ internal class RoadSafetyRepository(
                     reader.nextNull()
                     null
                 } else reader.nextInt().takeIf { it in 10..140 }
+            val advisory =
+                if (reader.hasNext())
+                    when (reader.nextString()) {
+                        "fixed" -> CameraAdvisory.FIXED
+                        "section" -> CameraAdvisory.SECTION
+                        "section_start" -> CameraAdvisory.SECTION_START
+                        "section_end" -> CameraAdvisory.SECTION_END
+                        else -> CameraAdvisory.NONE
+                    }
+                else CameraAdvisory.NONE
             reader.endArray()
             require(id.length in 1..100 && road.length <= 120)
-            return RoadSafetyPoint(id, point, kind, road, observed, expiry, speed, from)
+            return RoadSafetyPoint(id, point, kind, road, observed, expiry, speed, from, advisory)
         }
 
         fun load(context: Context): List<RoadSafetyPoint> = loadDataset(context).points
