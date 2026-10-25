@@ -224,6 +224,21 @@ class UnifiedVehicleContextEngine(
         sessionDeadlineMs = clock() + duration * 1000
         event("${kind.name}SessionStarted", "${duration / 60}분 ${kind.label} 세션을 시작합니다."); tick(); return true
     }
+    /** Add at most five minutes without changing departure, travel or preparation reserves. */
+    fun extendSession(): Boolean {
+        if (!parkedNow()) return reject()
+        val session=state.value.session ?: return false
+        if(session.status!=SessionStatus.RUNNING && session.status!=SessionStatus.PAUSED) return false
+        val extra=minOf(300L, state.value.schedule.availableSeconds-session.remainingSeconds,
+            120*60L-session.durationSeconds)
+        if(extra<=0) return false
+        mutable.value=state.value.copy(session=session.copy(
+            durationSeconds=session.durationSeconds+extra,
+            remainingSeconds=session.remainingSeconds+extra))
+        if(session.status==SessionStatus.RUNNING) sessionDeadlineMs=(sessionDeadlineMs ?: clock())+extra*1000
+        event("SessionExtended", "출발 계획 안에서 세션을 ${extra/60}분 ${extra%60}초 늘렸습니다.")
+        tick();return true
+    }
     fun pauseOrResume(): Boolean {
         if (!parkedNow()) return reject()
         val s = state.value.session ?: return false

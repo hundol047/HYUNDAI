@@ -180,4 +180,30 @@ class ContextEngineTest {
             assertEquals("서울역",NavigationVoice.parse(text).query)
     }
 
+    @Test fun extensionKeepsDepartureAndPreparationBuffer() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,12)
+        val departure=engine.state.value.schedule.departureAtMs
+        assertTrue(engine.extendSession())
+        assertEquals(900L,engine.state.value.session!!.remainingSeconds)
+        assertEquals(900L,engine.state.value.session!!.durationSeconds)
+        assertEquals(departure,engine.state.value.schedule.departureAtMs)
+        assertFalse(engine.extendSession())
+    }
+    @Test fun extendingPausedSessionDoesNotResumeOrCountPauseAsActivity() {
+        park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.RELAX,10)
+        now+=2000;send();engine.pauseOrResume()
+        assertTrue(engine.extendSession())
+        val s=engine.state.value.session!!
+        assertEquals(SessionStatus.PAUSED,s.status)
+        assertEquals(900L,s.durationSeconds)
+        assertEquals(898L,s.remainingSeconds)
+        now+=1000;send();assertEquals(s.remainingSeconds,engine.state.value.session!!.remainingSeconds)
+    }
+    @Test fun extensionFailsClosedOnExpiredVehicleSignal() {
+        park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,10)
+        now+=5001
+        assertFalse(engine.extendSession())
+        assertFalse(engine.state.value.parkedAllowed)
+        assertEquals(600L,engine.state.value.session!!.durationSeconds)
+    }
 }
