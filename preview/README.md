@@ -4,13 +4,16 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/8ef450da86f1339c8ec2ca8cae6e333d73d77d1a/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/ea668b6d23c2097551648f3524f0d87e7d8571a2/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
 휴대폰 위치 서비스를 켜고 앱에 **정확한 위치**를 허용하세요. 음성 입력에는 마이크 권한과 기기 음성 인식 서비스가 필요합니다. APK는 아이폰에 설치할 수 없습니다. 팀 서명 제출본 `apk/`는 변경하지 않았습니다.
 
 ## 이번 수정
+
+- 검색 입력창을 전체 너비로 표시하고 검색·내 위치 버튼을 바로 아래에 배치했습니다. 안내 중에는 지도 위에서 ‘안내 다시 듣기·안내 종료’를 바로 누를 수 있습니다(최소 높이 52dp).
+- 실시간 교통은 아직 연결되지 않았습니다. TomTom 데이터 요청은 인증키 부재로 HTTP 401, ITS 안내 사이트는 점검 당시 HTTP 503이었습니다. 정체 색상을 임의로 생성하지 않으며 OSRM 도착 시간은 실시간 교통을 반영하지 않습니다. [실시간 교통 연결 요건](../docs/LIVE_TRAFFIC_INTEGRATION_KO.md)
 
 - 주변 검색의 기기 위치를 최근 10초·오차 50m 이내로 제한했습니다. 누락된 정확도, 오래되거나 오차가 큰 위치는 사용하지 않습니다. 첫 데이터원의 결과가 비어 있으면 보조 검색을 시도합니다. 검색 시작 시 예시 장소를 비워 실제 결과와 섞이지 않게 했습니다. 실제 매장의 최신 영업 여부와 누락 여부는 공개 지도 데이터의 한계가 있습니다.
 - 지도 연결 상태가 같을 때 불필요한 연결 설정과 타일 상태 검사를 반복하지 않습니다. S20+의 실물 프레임 속도·지도 서버 응답 시간 개선을 검증한 것은 아닙니다.
