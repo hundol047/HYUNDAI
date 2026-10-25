@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "cb5f6a06775192f8c60e97487e684d3ba6b0516f",
-  "apkSha256": "d990d4c3bf48a644866f052b31d706a700cc5ca29adbb903ba2a026f3a7686cb",
+  "sourceCommit": "e7e8a99dcb75adec7dc92788acf0ee6faa31f7ec",
+  "apkSha256": "bcd9438ba9a5940a4ce4f9630b4ee893e973db484a9c09084e30cb485e1555d3",
   "tests": {
     "core": {
       "tests": 149,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 183,
+      "tests": 186,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -83,9 +83,14 @@
   "recordedNatureAudio": "Four distinct licensed field recordings; piano removed; offline PCM playback",
   "nearbyLocation": "Requires explicit accuracy <=50m and timestamp age <=10s; rejects invalid coordinates",
   "liveTraffic": {
-    "enabled": false,
-    "TomTomWithoutKeyHttpStatus": 401,
-    "ItsPortalHttpStatus": 503,
-    "trafficAwareRouting": false
+    "enabledByDefault": false,
+    "singleSegmentOverlayImplemented": true,
+    "gatewayLiveHttpStatus": 200,
+    "gatewayUnauthorizedStatus": 401,
+    "gatewayKoreaRejectedStatus": 400,
+    "pythonTestsPassed": 14,
+    "publicGatewayDeployed": false,
+    "trafficAwareRouting": false,
+    "deviceLiveValidated": false
   }
 }
