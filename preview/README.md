@@ -28,3 +28,11 @@ APK를 내려받아 열고, 설치 앱의 ‘출처를 알 수 없는 앱 설치
 재현 빌드: `./gradlew -PpleosSdk=true :app:assemblePhonePreview`. Android SDK와 공식 Pleos Maven 접근이 필요합니다. 이 빌드는 기존 Android debug 키를 사용하며 팀 배포 키를 변경하지 않습니다.
 
 설치 실행 검사는 GitHub Actions의 `phone-preview` 작업에서 APK 파일과 설치된 파일의 SHA-256을 대조한 뒤 수행합니다. 실행 결과와 영상은 해당 커밋의 Actions 기록을 기준으로 확인하세요. Android 에뮬레이터 검사는 실제 삼성·Pleos 기기 검사를 대체하지 않습니다.
+
+## 확인한 실행 범위 (2026-10-25)
+
+다운로드 APK와 설치된 APK의 SHA-256을 대조한 Android 15 일반 에뮬레이터에서 정차 대시보드, 명령 버튼으로 집중 시작, 충전 시간 변경, 주행 잠금, D/0 신호 대기 잠금, 색상 설정의 6개 검사를 통과했습니다. [연속 실행 영상(77초)](android-execution.mp4) · [실행 기록](verification.json). 차량 신호는 데모 데이터이며 영상은 실제 APK 화면을 연속 녹화했습니다.
+
+기존 SwiftShader 방식에서는 집중 시작 직후 에뮬레이터 연결이 끊겼고, APK를 바꾸지 않고 ANGLE 소프트웨어 렌더러(`swangle`)로 변경하자 같은 검사가 통과했습니다. 직접적인 종료 원인은 확정하지 않았습니다. 물리 삼성 기기·실제 GPS·음성 서비스·공식 Pleos 연동 전체 시나리오 검증을 대신하지 않습니다.
+
+공식 SDK 프로필의 core/Android 자동 테스트 291개(실패 0), 스크립트 테스트 33개, phonePreview 빌드 및 lint가 통과했습니다. 작은 창 테스트도 통과했으며 차량용 가로 화면 규격과 안전 잠금 조건은 유지했습니다.
