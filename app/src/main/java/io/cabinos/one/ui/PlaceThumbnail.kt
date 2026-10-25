@@ -33,16 +33,18 @@ import io.cabinos.one.platform.PlacePhoto
 
 @Composable internal fun PlacePhotoFrame(place:NearbyActivity,photo:PlacePhoto.Photo?,online:Boolean,loading:Boolean=false) {
     val context=LocalContext.current
-    val representative=representativePhoto(place.category)
+    val logo=brandLogo(place)
+    val representative=logo ?: representativePhoto(place.category)
+    val fallbackLabel=if(logo!=null)"브랜드 로고 · 매장 사진 아님" else REPRESENTATIVE_PHOTO_LABEL
     Column(Modifier.width(88.dp),horizontalAlignment=Alignment.CenterHorizontally) {
         Box(Modifier.size(88.dp).clip(RoundedCornerShape(12.dp)).background(Panel),contentAlignment=Alignment.Center) {
             val image=photo
             if(image!=null)Image(image.bitmap.asImageBitmap(),"${place.name} 등록 사진",Modifier.fillMaxSize(),contentScale=ContentScale.Crop)
-            else Image(painterResource(representative.drawable),"${place.category} $REPRESENTATIVE_PHOTO_LABEL",Modifier.fillMaxSize(),contentScale=ContentScale.Crop)
+            else Image(painterResource(representative.drawable),"${place.name} $fallbackLabel",Modifier.fillMaxSize(),contentScale=if(logo!=null)ContentScale.Fit else ContentScale.Crop)
         }
         val image=photo
         if(image==null) {
-            Text(REPRESENTATIVE_PHOTO_LABEL,color=Muted,fontSize=10.sp)
+            Text(fallbackLabel,color=Muted,fontSize=10.sp)
             if(loading)Text("장소 사진 확인 중…",color=Muted,fontSize=10.sp)
         }
         Text(image?.credit?:representative.credit,color=Muted,fontSize=9.sp,modifier=Modifier.clickable(enabled=online){
