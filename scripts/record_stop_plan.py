@@ -3,6 +3,18 @@ import re
 import time
 
 
+def control_disabled(root, label):
+    parents = {child: parent for parent in root.iter() for child in parent}
+    node = next((n for n in root.iter('node') if n.get('text') == label), None)
+    if node is None:
+        raise AssertionError('Control missing: ' + label)
+    while node is not None:
+        if node.get('enabled') == 'false':
+            return True
+        node = parents.get(node)
+    return False
+
+
 def record(adb, tree, tap, check, snapshot, scenario):
     def find(label):
         return next((n for n in tree().iter('node') if n.get('text') == label), None)
@@ -54,9 +66,12 @@ def record(adb, tree, tap, check, snapshot, scenario):
     reveal('여유 안에서 5분 더')
     if remaining() > 600:
         raise AssertionError('Charge update failed to cap session')
-    node = find('여유 안에서 5분 더')
-    if node is None or node.get('enabled') != 'false':
+    if not control_disabled(tree(), '여유 안에서 5분 더'):
         raise AssertionError('Extension remains enabled without spare time')
+    before = remaining()
+    tap('여유 안에서 5분 더')
+    if remaining() > before:
+        raise AssertionError('Disabled extension changed the timer')
     check('charge change shortens session and blocks extension', '여유 안에서 5분 더', 'plan-05-charge-limit')
     time.sleep(4)
     scenario('신호 대기')
