@@ -1,0 +1,132 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-10-25T08:19:29.030839+00:00",
+  "captureMethod": "adb shell screenrecord: continuous device frames",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emu64x:15/AE3A.240806.019/12368160:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "apkSha256": "aca85bb8cdb9a9b69e633580aa93b46d29536c32e2bfa3ba1027b28108d7960b",
+  "checks": [
+    {
+      "name": "APK parked dashboard",
+      "result": "passed"
+    },
+    {
+      "name": "focus session via assistant command",
+      "result": "passed"
+    },
+    {
+      "name": "ambient preset playback state: 백색 소음",
+      "result": "passed"
+    },
+    {
+      "name": "ambient preset playback state: 자연의 소리",
+      "result": "passed"
+    },
+    {
+      "name": "ambient preset playback state: 잔잔한 톤",
+      "result": "passed"
+    },
+    {
+      "name": "charging estimate changes shared session",
+      "result": "passed"
+    },
+    {
+      "name": "motion locks parked controls",
+      "result": "passed"
+    },
+    {
+      "name": "EchoRoad visible road tiles loaded",
+      "result": "passed"
+    },
+    {
+      "name": "D at zero does not unlock parked screen",
+      "result": "passed"
+    },
+    {
+      "name": "appearance settings accessible",
+      "result": "passed"
+    },
+    {
+      "name": "phone portrait dashboard",
+      "result": "passed"
+    }
+  ],
+  "pleosValidated": false,
+  "workflowRun": "https://github.com/hundol047/HYUNDAI/actions/runs/40176066991",
+  "workflowCommit": "bf54778435e05adae847eabd861659b23506b874",
+  "videoDurationSeconds": 116.750156,
+  "android13": {
+    "applicationId": "io.cabinos.one.preview",
+    "startedAtUtc": "2026-10-25T08:19:52.788460+00:00",
+    "captureMethod": "adb shell screenrecord: continuous device frames",
+    "deviceType": "regular Android emulator, NOT Pleos",
+    "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+    "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+    "apkSha256": "aca85bb8cdb9a9b69e633580aa93b46d29536c32e2bfa3ba1027b28108d7960b",
+    "checks": [
+      {
+        "name": "APK parked dashboard",
+        "result": "passed"
+      },
+      {
+        "name": "focus session via assistant command",
+        "result": "passed"
+      },
+      {
+        "name": "ambient preset playback state: 백색 소음",
+        "result": "passed"
+      },
+      {
+        "name": "ambient preset playback state: 자연의 소리",
+        "result": "passed"
+      },
+      {
+        "name": "ambient preset playback state: 잔잔한 톤",
+        "result": "passed"
+      },
+      {
+        "name": "charging estimate changes shared session",
+        "result": "passed"
+      },
+      {
+        "name": "motion locks parked controls",
+        "result": "passed"
+      },
+      {
+        "name": "EchoRoad visible road tiles loaded",
+        "result": "passed"
+      },
+      {
+        "name": "D at zero does not unlock parked screen",
+        "result": "passed"
+      },
+      {
+        "name": "appearance settings accessible",
+        "result": "passed"
+      },
+      {
+        "name": "phone portrait dashboard",
+        "result": "passed"
+      }
+    ],
+    "pleosValidated": false
+  },
+  "audioVerification": "AudioTrack playback state and PCM amplitude tests; screen recording has no audio track; physical speaker not measured",
+  "physicalSamsungValidated": false,
+  "physicalIphoneValidated": false,
+  "nearbyProviderProbe": [
+    {
+      "endpoint": "https://overpass-api.de/api/interpreter",
+      "seconds": 25.52,
+      "status": "failed",
+      "error": "The read operation timed out"
+    },
+    {
+      "endpoint": "https://overpass.kumi.systems/api/interpreter",
+      "seconds": 26.05,
+      "status": "failed",
+      "error": "The read operation timed out"
+    }
+  ]
+}

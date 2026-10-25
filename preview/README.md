@@ -23,7 +23,7 @@ APK를 내려받아 설치하세요. 설치 과정에서 요청될 때 다운로
 
 ## 검증
 
-core 146 + Android 156 = **302개 통과, 실패 0**. 공식 SDK 포함 phonePreview 빌드·lint 통과. 실제 OSM 타일을 받은 Android Compose 화면에서 판교역 주변 도로·건물명을 확인했습니다. 새 APK의 연속 실행 검사는 진행 중이며 기존 버전의 영상을 새 APK 증거로 사용하지 않습니다.
+core 146 + Android 156 = **302개 통과, 실패 0**. 공식 SDK 포함 phonePreview 빌드·lint 통과. 실제 OSM 타일을 받은 Android Compose 화면에서 판교역 주변 도로·건물명을 확인했습니다. 동일 SHA-256 APK를 Android 13·15 일반 에뮬레이터에서 실행해 각각 11개 검사를 통과했습니다. 지도 로딩, 세 배경음의 재생 상태, 안전 잠금, 색상 설정과 세로 화면을 포함합니다.
 
 ## 다운로드 QR
 
@@ -32,3 +32,9 @@ core 146 + Android 156 = **302개 통과, 실패 0**. 공식 SDK 포함 phonePre
 [같은 APK 직접 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/fdbf7b60b4dd9ad7f40f4103755756c93c2b3d47/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk)
 
 실제 주변 검색 서버 점검에서 Overpass 두 서버가 시간 초과했으며, 단순 GET 점검도 502를 반환했습니다. 분류별 누락 방지·재시도·오류 표시는 구현했지만 외부 서비스 가용성과 매장 데이터 완전성은 보장하지 않습니다. 상용 장소 API 또는 자체 서버 연결은 별도 설정이 필요합니다.
+
+## 실행 증거
+
+[동일 APK 연속 실행 영상 · 117초](android-execution.mp4) · [검증 기록](verification.json) · [도로·건물 지도](road-map.png) · [소리 설정](audio-controls.png) · [화이트](white-theme.png) · [블랙](black-theme.png)
+
+영상은 실제 APK 화면의 **무음 연속 녹화**입니다. 사진을 이어 붙이지 않았습니다. 재생 API 상태·PCM 신호를 검사했으며 S20+나 iPhone 실물 스피커에서 직접 들은 검증은 아닙니다. 음성 서비스·실물 GPS·공식 Pleos 전체 시나리오는 별도 검증이 필요합니다.
