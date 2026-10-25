@@ -30,3 +30,5 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 - **Gson** — Apache-2.0. https://github.com/google/gson . 공식 Vehicle SDK의 전이 런타임 의존성입니다.
 
 - **Photon 장소 검색 API** — https://photon.komoot.io/ ; API 명세: https://github.com/komoot/photon/blob/master/docs/api-v1.md . Android 주변 장소 검색은 `/reverse`의 `osm_tag`, `radius=2`, `limit=15`를 사용합니다. OSM 데이터 출처를 화면에 표시하며 기준점 좌표를 전송합니다. 분류별 요청 사이 1.1초 간격과 같은 지역의 2분 메모리 캐시를 적용합니다. 공개 데모의 합리적 사용 범위·가용성에는 제한이 있으므로 대규모 운영 시 자체/계약 서비스를 준비해야 합니다. Photon 서버 소스/바이너리를 APK에 포함하지 않습니다.
+
+- **장소 사진 연결** — 검색 결과의 공개 OSM 장소 ID로 OpenStreetMap 편집 API의 해당 객체 태그를 읽고, 그 객체에 등록된 Commons 파일 또는 Wikidata `P18` 사진을 조회합니다. 브랜드용 Wikidata ID는 사용하지 않으며 장소 Wikidata 좌표가 기준점 300m 이내인지 확인합니다. 사진은 Wikimedia Commons의 저작자·라이선스 정보와 원문 링크를 함께 표시합니다. 원본 장소 사진이 없는 경우 임의로 다른 매장 사진을 붙이지 않습니다. 보이는 항목만 조회하며 동시 조회 2개·메모리 캐시를 적용합니다. 서버에 공개 장소/파일 식별자가 전달됩니다. https://wiki.openstreetmap.org/wiki/API_v0.6 · https://www.wikidata.org/wiki/Wikidata:Data_access · https://commons.wikimedia.org/

@@ -5,6 +5,9 @@ import android.graphics.BitmapFactory
 import android.text.Html
 import android.util.LruCache
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
+import io.cabinos.core.*
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -16,6 +19,32 @@ object PlacePhoto {
     private val cache=object:LruCache<String,Photo>(4*1024*1024) {
         override fun sizeOf(key:String,value:Photo)=value.bitmap.byteCount
     }
+    private data class Reference(val at:Long,val file:String?)
+    private val references=LruCache<String,Reference>(128)
+    private val permits=Semaphore(2)
+    suspend fun forPlace(place:NearbyActivity):Photo? {
+        if(place.simulated)return null
+        place.commonsPhoto?.let {load(it)?.let {photo->return photo}}
+        val endpoint=PlacePhotoReference.osmUrl(place.id) ?: return null
+        return permits.withPermit {
+            val previous=references.get(place.id)
+            if(previous!=null&&System.currentTimeMillis()-previous.at in 0..600000)return@withPermit previous.file?.let {load(it)}
+            withContext(Dispatchers.IO) {
+                try {
+                    delay(500)
+                    val tags=PlacePhotoReference.tags(String(download(endpoint,700000)),place.id) ?: return@withContext null
+                    var file=PlacePhotoReference.commons(tags)
+                    if(file==null&&place.latitude!=null&&place.longitude!=null) {
+                        val id=PlacePhotoReference.wikidata(tags)
+                        if(id!=null)file=PlacePhotoReference.wikidataFile(String(download("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=$id&props=claims&format=json",700000)),id,NavPoint(place.latitude!!,place.longitude!!))
+                    }
+                    references.put(place.id,Reference(System.currentTimeMillis(),file))
+                    file?.let {load(it)}
+                }catch(error:Exception){if(error is CancellationException)throw error;null}
+            }
+        }
+    }
+    fun clear(){cache.evictAll();references.evictAll()}
     fun file(value:String):String?=value.takeIf {
         it.startsWith("File:") && it.length in 7..240 && it.none {c->c<' '||c=='/'||c=='\\'} &&
             it.substringAfterLast('.').lowercase() in listOf("jpg","jpeg","png","webp")

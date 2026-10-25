@@ -293,7 +293,7 @@ class CabinViewModel @Inject constructor(
                 if (!engine.clearPersonalData()) {storageRestored=wasRestored;return@withLock}
                 try {
                     demoJob?.cancel();mutableDemoRunning.value=false
-                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();mutableMapSelection.value=null;liveNavigation.clear()
+                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();PlacePhoto.clear();mutableMapSelection.value=null;liveNavigation.clear()
                     dao.clearPersonalData();dao.saveState(state.value)
                     runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
                     storageRestored=true;mutableRestoreFailure.value=null
