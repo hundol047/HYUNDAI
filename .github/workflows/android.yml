@@ -79,7 +79,10 @@ jobs:
         if: matrix.profile == 'current-source-release-test'
         run: |
           ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleRelease --console=plain
-          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-key-alias androiddebugkey --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-release-runtime-test.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          ./gradlew --no-daemon -q -PpleosSdk=true :app:signingReport > "$RUNNER_TEMP/runtime-signing-report.txt"
+          runtime_debug_store="$(awk '/^Variant: / { selected = ($2 == "debug") } selected && /^Store: / { sub(/^Store: /, ""); print; exit }' "$RUNNER_TEMP/runtime-signing-report.txt")"
+          if ! test -f "$runtime_debug_store"; then echo "::error title=Runtime signing::Gradle debug keystore was not found"; exit 1; fi
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$runtime_debug_store" --ks-key-alias androiddebugkey --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-release-runtime-test.apk app/build/outputs/apk/release/app-release-unsigned.apk
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify app/build/outputs/apk/release/app-release-runtime-test.apk
       - name: Enable runner KVM access
         run: |
