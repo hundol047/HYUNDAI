@@ -26,6 +26,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--serial',required=True);p.add_argument('--apk',required=True,type=pathlib.Path)
     p.add_argument('--output',required=True,type=pathlib.Path)
+    p.add_argument('--package',choices=['io.cabinos.one','io.cabinos.one.preview'],default='io.cabinos.one')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -71,12 +72,12 @@ def main():
         features=adb('shell','pm','list','features').decode()
         if 'android.hardware.type.automotive' in features:raise RuntimeError('Use the dedicated Pleos recorder for automotive devices')
         adb('install','-r',str(a.apk),timeout=120)
-        package=adb('shell','dumpsys','package','io.cabinos.one').decode();(a.output/'package.txt').write_text(package)
+        package=adb('shell','dumpsys','package',a.package).decode();(a.output/'package.txt').write_text(package)
         installed=a.output/'installed.apk'
         # Package-manager/ADB can briefly disagree immediately after installation.
         # Re-read the path on each bounded retry; the exact-file hash remains mandatory.
         for attempt in range(3):
-            path=adb('shell','pm','path','io.cabinos.one').decode().strip().removeprefix('package:')
+            path=adb('shell','pm','path',a.package).decode().strip().removeprefix('package:')
             try:
                 adb('pull',path,str(installed))
                 break
@@ -93,8 +94,8 @@ def main():
         # the startup failure evidence or require another responsive shell.
         log_output=(a.output/'startup-logcat.txt').open('wb')
         log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','AndroidRuntime:E','ActivityManager:I','libc:F','DEBUG:F','*:S'],stdout=log_output,stderr=subprocess.STDOUT)
-        adb('shell','am','force-stop','io.cabinos.one')
-        adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity',timeout=90)
+        adb('shell','am','force-stop',a.package)
+        adb('shell','am','start','-W','-n',a.package+'/io.cabinos.one.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
         video='/sdcard/cabinos-apk-proof.mp4'
         with (a.output/'screenrecord.log').open('wb') as log:
@@ -151,7 +152,7 @@ def main():
             adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
         try:fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False,timeout=10).decode().strip()
         except (subprocess.SubprocessError,OSError):fingerprint='unavailable: device connection lost'
-        result={'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
+        result={'applicationId':a.package,'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',
           'apkSha256':hashlib.sha256(a.apk.read_bytes()).hexdigest(),'checks':checks,'pleosValidated':False}
