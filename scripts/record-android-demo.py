@@ -86,7 +86,10 @@ def main():
     except Exception as error:
         checks.append({'result':'failed','error':str(error)})
         # Structured CI annotations keep the failure reason visible even when raw log storage is unavailable.
-        detail=str(error)+((': '+error.stderr.decode(errors='replace')) if isinstance(error,subprocess.CalledProcessError) and error.stderr else '')
+        detail=str(error)
+        if isinstance(error,subprocess.CalledProcessError):
+            for label,value in [('stdout',error.stdout),('stderr',error.stderr)]:
+                if value:detail+='; '+label+': '+(value.decode(errors='replace') if isinstance(value,bytes) else str(value))[-6000:]
         message=detail.replace('%','%25').replace('\r','%0D').replace('\n','%0A')
         print('::error title=Android APK execution::'+message,flush=True)
         captured=a.output/'startup-logcat.txt'
@@ -94,7 +97,7 @@ def main():
             early=captured.read_text(errors='replace')[-6000:]
             if early.strip():print('::error title=Captured APK startup::'+early.replace('%','%25').replace('\r','%0D').replace('\n','%0A'),flush=True)
         try:
-            crash=adb('logcat','-d','-t','150','-s','AndroidRuntime:E',check=False).decode(errors='replace')
+            crash=adb('logcat','-b','crash','-d',check=False,timeout=10).decode(errors='replace')
             (a.output/'android-runtime.txt').write_text(crash)
             if crash.strip():print('::error title=Android runtime::'+crash[-6000:].replace('%','%25').replace('\r','%0D').replace('\n','%0A'),flush=True)
             snapshot('failure-screen')

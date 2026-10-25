@@ -57,6 +57,8 @@ jobs:
             apk: apk/퓨처랩스_CabinOS_ONE_release.apk
           - profile: current-source-debug
             apk: app/build/outputs/apk/debug/app-debug.apk
+          - profile: current-source-release-test
+            apk: app/build/outputs/apk/release/app-release-runtime-test.apk
     # The ordinary Android emulator validates APK execution, not Pleos services.
     if: github.event_name == 'push'
     steps:
@@ -66,13 +68,19 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-        if: matrix.profile == 'current-source-debug'
+        if: matrix.profile != 'stored-release'
       - name: Build current source with official SDK for device smoke testing
-        if: matrix.profile == 'current-source-debug'
+        if: matrix.profile != 'stored-release'
         run: |
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
           # Release the compiler/Gradle heap before starting a memory-heavy emulator.
           ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleDebug --console=plain
+      - name: Build optimized release and sign only for isolated runtime testing
+        if: matrix.profile == 'current-source-release-test'
+        run: |
+          ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleRelease --console=plain
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$HOME/.android/debug.keystore" --ks-key-alias androiddebugkey --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-release-runtime-test.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify app/build/outputs/apk/release/app-release-runtime-test.apk
       - name: Enable runner KVM access
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
