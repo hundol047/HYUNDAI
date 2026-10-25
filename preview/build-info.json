@@ -1,0 +1,12 @@
+{
+  "team": "퓨처랩스",
+  "app": "CabinOS ONE 테스트",
+  "applicationId": "io.cabinos.one.preview",
+  "versionName": "0.11.1-preview",
+  "sourceCommit": "bc7d3e1bd7036f418d90f5f50b90ffd39ce6b23a",
+  "apkSha256": "6e7f9e31c747510de8d04ab6dd3a6a9d1db0993bdec81a0a8727b5aa1e9837b9",
+  "sdkIncluded": true,
+  "signing": "Android debug test identity; not the team production signer",
+  "submissionRelease": false,
+  "physicalSamsungValidated": false
+}
