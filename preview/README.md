@@ -38,3 +38,9 @@ core 146 + Android 156 = **302개 통과, 실패 0**. 공식 SDK 포함 phonePre
 [동일 APK 연속 실행 영상 · 117초](android-execution.mp4) · [검증 기록](verification.json) · [도로·건물 지도](road-map.png) · [소리 설정](audio-controls.png) · [화이트](white-theme.png) · [블랙](black-theme.png)
 
 영상은 실제 APK 화면의 **무음 연속 녹화**입니다. 사진을 이어 붙이지 않았습니다. 재생 API 상태·PCM 신호를 검사했으며 S20+나 iPhone 실물 스피커에서 직접 들은 검증은 아닙니다. 음성 서비스·실물 GPS·공식 Pleos 전체 시나리오는 별도 검증이 필요합니다.
+
+## CI와 웹 게시 상태
+
+[소스 CI](https://github.com/hundol047/HYUNDAI/actions/runs/40176066991)가 통과했습니다. 테스트·lint·공식 SDK 빌드, 현재 소스 debug/최적화 release 실행, Android 13·15 검토 APK 실행을 포함합니다. 이후 커밋은 실행 증거와 안내를 추가합니다.
+
+[웹 자동 검사](https://github.com/hundol047/HYUNDAI/actions/runs/40176120106)는 통과했지만 `github-pages` 환경의 보호 규칙이 `fix/vehicle-runtime-issues` 브랜치 배포를 거부했습니다. 현재 공개 웹 주소가 이 수정본으로 갱신됐다는 뜻이 아닙니다. main 병합 승인 없이 보호 규칙을 변경하거나 main에 push하지 않았습니다.
