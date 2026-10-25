@@ -29,6 +29,6 @@ core 146 + Android 156 = **302개 통과, 실패 0**. 공식 SDK 포함 phonePre
 
 ![휴대폰 APK QR](install-qr.png)
 
-[같은 APK 직접 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/35e70dac6b4eaf9a3ead4b71bf8f0de24c740f73/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk)
+[같은 APK 직접 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/fdbf7b60b4dd9ad7f40f4103755756c93c2b3d47/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk)
 
 실제 주변 검색 서버 점검에서 Overpass 두 서버가 시간 초과했으며, 단순 GET 점검도 502를 반환했습니다. 분류별 누락 방지·재시도·오류 표시는 구현했지만 외부 서비스 가용성과 매장 데이터 완전성은 보장하지 않습니다. 상용 장소 API 또는 자체 서버 연결은 별도 설정이 필요합니다.
