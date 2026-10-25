@@ -165,7 +165,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     private fun trafficTick() {
         if(mutable.value.traffic?.current(clock())==false)mutable.value=mutable.value.copy(traffic=null,trafficNotice="교통 정보 만료")
         val f=fix
-        if(f==null||!tracker.usable(f)){mutable.value=mutable.value.copy(traffic=null);return}
+        if(f==null||!tracker.usable(f)){if(mutable.value.traffic!=null)mutable.value=mutable.value.copy(traffic=null,trafficNotice="교통 정보 중지 · 정확한 위치 대기");return}
         if(!foreground||!engine.state.value.networkAvailable||trafficClient.endpoint.isBlank()||trafficJob?.isActive==true||clock()-trafficLastAttempt<60_000)return
         trafficLastAttempt=clock();val epoch=trafficGeneration
         trafficJob=scope.launch {
@@ -337,7 +337,7 @@ class LiveNavigation(private val context:Context,private val engine:UnifiedVehic
     fun retry(){rerouteFailures=0;reroute()}
     fun stop(){pendingStart=false;pendingDestination=null;cancelVoice();cancelRequest();speech.stopSpeaking();tracker.stop();stationary.reset();if(!safetyHeld){resumeLocation=false;engine.setNavigationLock(false);stopLocation();invalidateGps(GpsConnection.OFF,"GPS 미연결 · 내 위치 사용을 눌러 주세요.")};publish();mutable.value=mutable.value.copy(places=emptyList(),selectedPlace=null,hasMore=false,notice="안내를 종료했습니다. 정차 상태를 다시 확인합니다.")}
     private fun stopLocation(){locationGeneration++;listener?.let {runCatching {manager.removeUpdates(it)}};listener=null;listening=false}
-    fun setForeground(active:Boolean){if(!active){trafficGeneration++;trafficJob?.cancel();trafficClient.cancel();mutable.value=mutable.value.copy(traffic=null)};foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
+    fun setForeground(active:Boolean){if(!active){trafficGeneration++;trafficJob?.cancel();trafficClient.cancel();mutable.value=mutable.value.copy(traffic=null,trafficNotice=if(trafficClient.endpoint.isBlank())"실시간 교통 미연결" else "교통 정보 중지 · 화면 복귀 후 새로 조회")};foreground=active;if(!active)cancelVoice();if(!active){resumeLocation=resumeLocation||listening;cancelRequest();stopLocation();invalidateGps(GpsConnection.OFF,"화면 밖에서는 위치 수신 중지")}else{if(tracker.state.active||safetyHeld)resumeLocation=true;resumeLocationIfReady()}}
     private fun resumeLocationIfReady(){if(foreground&&resumeLocation&&(canPlan()||tracker.state.active||safetyHeld)){resumeLocation=false;locate()}}
     fun openLocationSettings(appPermissions:Boolean=false){
         if(!canPlan())return
