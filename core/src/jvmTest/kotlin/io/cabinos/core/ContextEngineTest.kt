@@ -206,4 +206,12 @@ class ContextEngineTest {
         assertFalse(engine.state.value.parkedAllowed)
         assertEquals(600L,engine.state.value.session!!.durationSeconds)
     }
+    @Test fun fractionalResumeSlackCannotOfferMeaninglessExtension() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,15)
+        now+=250;send();engine.pauseOrResume()
+        now+=1000;send();engine.pauseOrResume()
+        now+=750;send()
+        assertEquals(1L,engine.state.value.schedule.availableSeconds-engine.state.value.session!!.remainingSeconds)
+        assertFalse(engine.extendSession())
+    }
 }

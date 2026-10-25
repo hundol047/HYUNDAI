@@ -87,4 +87,16 @@ class StopPlanPanelTest {
         compose.onNodeWithText("25분 집중 바로 시작").assertIsDisplayed().assertHeightIsAtLeast(48.dp)
         compose.onNodeWithText("활동 35분 · 왕복 이동 0분 · 출발 준비 5분").assertIsDisplayed()
     }
+
+    @Test
+    fun subMinuteSlackDoesNotEnableFiveMinuteExtension() {
+        render(
+            AppState(
+                parkedAllowed = true,
+                schedule = SharedSchedule(departureAtMs = 900000, availableSeconds = 601),
+                session = CabinSession("test", SessionKind.FOCUS, 0, 900, 600),
+            )
+        )
+        compose.onNodeWithText("여유 안에서 5분 더").assertIsNotEnabled()
+    }
 }

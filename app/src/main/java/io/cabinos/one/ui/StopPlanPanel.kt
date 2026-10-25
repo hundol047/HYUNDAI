@@ -67,10 +67,10 @@ fun StopPlanPanel(
                         onExtend,
                         enabled =
                             s.parkedAllowed &&
-                                schedule.availableSeconds > session.remainingSeconds &&
-                                session.durationSeconds < 7200,
+                                schedule.availableSeconds - session.remainingSeconds >= 60 &&
+                                session.durationSeconds <= 7140,
                     )
-                    Text("남은 여유만큼만 연장하며 출발 시각은 바꾸지 않아요.", color = Muted, fontSize = 12.sp)
+                    Text("1분 이상 여유가 있을 때만 연장하며 출발 시각은 바꾸지 않아요.", color = Muted, fontSize = 12.sp)
                 }
                 s.selectedActivityId != null -> {
                     Text("선택한 장소의 왕복 시간을 확보했어요. 이동 시간은 도보 추정입니다.", color = Muted)

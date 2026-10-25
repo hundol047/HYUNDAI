@@ -3,6 +3,7 @@ on:
   push:
     branches: [fix/vehicle-runtime-issues]
     paths:
+      - preview/퓨처랩스_CabinOS_ONE_preview.apk
       - scripts/record_stop_plan.py
       - .github/workflows/stop-plan-video.yml
 permissions:

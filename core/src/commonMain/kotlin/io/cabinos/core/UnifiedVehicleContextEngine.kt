@@ -231,7 +231,7 @@ class UnifiedVehicleContextEngine(
         if(session.status!=SessionStatus.RUNNING && session.status!=SessionStatus.PAUSED) return false
         val extra=minOf(300L, state.value.schedule.availableSeconds-session.remainingSeconds,
             120*60L-session.durationSeconds)
-        if(extra<=0) return false
+        if(extra<60) return false
         mutable.value=state.value.copy(session=session.copy(
             durationSeconds=session.durationSeconds+extra,
             remainingSeconds=session.remainingSeconds+extra))
