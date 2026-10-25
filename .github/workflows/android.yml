@@ -65,6 +65,10 @@ jobs:
           - profile: phone-preview
             apk: preview/퓨처랩스_CabinOS_ONE_preview.apk
             package: io.cabinos.one.preview
+          - profile: phone-preview-api33
+            apk: preview/퓨처랩스_CabinOS_ONE_preview.apk
+            package: io.cabinos.one.preview
+            api: 33
     # The ordinary Android emulator validates APK execution, not Pleos services.
     if: github.event_name == 'push'
     steps:
@@ -98,7 +102,7 @@ jobs:
       - name: Install and record the selected APK (debug is test-only)
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ matrix.api || 35 }}
           arch: x86_64
           target: default
           disable-animations: true
