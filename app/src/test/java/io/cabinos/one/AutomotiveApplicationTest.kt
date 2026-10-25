@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertHeightIsAtLeast
 import androidx.compose.ui.unit.dp
@@ -68,6 +69,9 @@ class AutomotiveApplicationTest {
         compose.waitUntil(20_000) { shadowOf(android.os.Looper.getMainLooper()).idle();vm.state.value.sample!=null }
         assertTrue(vm.automotive);assertFalse(vm.state.value.parkedAllowed)
         assertNotNull(shadowOf(compose.activity).lastRequestedPermission)
+        // The vehicle status flow and Compose lifecycle collection update independently.
+        // Wait for the current cause to render, not only for the first vehicle sample.
+        compose.waitUntil(20_000) { compose.onNodeWithText(vm.vehicleStatus.value).isDisplayed() }
         compose.onNodeWithText(vm.vehicleStatus.value).assertIsDisplayed()
         compose.onNodeWithText("차량 읽기 권한 허용").assertIsDisplayed().assertHeightIsAtLeast(48.dp)
     }
