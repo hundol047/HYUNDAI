@@ -64,7 +64,7 @@ def main():
         # Collect while ADB is healthy: a later device disconnect must not erase
         # the startup failure evidence or require another responsive shell.
         log_output=(a.output/'startup-logcat.txt').open('wb')
-        log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','AndroidRuntime:E','ActivityManager:I','*:S'],stdout=log_output,stderr=subprocess.STDOUT)
+        log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','AndroidRuntime:E','ActivityManager:I','libc:F','DEBUG:F','*:S'],stdout=log_output,stderr=subprocess.STDOUT)
         adb('shell','am','force-stop','io.cabinos.one')
         adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
