@@ -27,6 +27,7 @@ def main():
     p.add_argument('--serial',required=True);p.add_argument('--apk',required=True,type=pathlib.Path)
     p.add_argument('--output',required=True,type=pathlib.Path)
     p.add_argument('--package',choices=['io.cabinos.one','io.cabinos.one.preview'],default='io.cabinos.one')
+    p.add_argument('--stop-plan',action='store_true',help='Record the parked-plan upgrade scenario')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -101,32 +102,36 @@ def main():
         with (a.output/'screenrecord.log').open('wb') as log:
             recorder=subprocess.Popen(base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video],stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
-            check('APK parked dashboard','StopSense  +  CabinOS','01-parked')
-            tap('무엇을 도와드릴까요?');tap('25분 집중 모드 켜줘');tap('닫기')
-            check('focus session via assistant command','나의 할 일','02-focus')
-            if 'versionName=0.11.0' not in package:
-                tap('배경 소리 선택')
-                for index,name in enumerate(['백색 소음','자연의 소리','잔잔한 톤']):
-                    tap('▶ '+name)
-                    check('ambient preset playback state: '+name,'■ '+name+' 중지','02b-audio-'+str(index))
-                tap('소리 끄기');tap('완료')
-            scenario('충전 15분');check('charging estimate changes shared session','나의 할 일','03-charge-update')
-            scenario('주행');check('motion locks parked controls','안전한 여정, 함께할게요.','04-driving')
-            if 'versionName=0.11.0' not in package:
-                wait('도로 지도 표시 중',seconds=60)
-                check('EchoRoad visible road tiles loaded','판교역 · 데모 위치 (GPS 아님)','04b-real-roads')
-            if any(n.get('text')=='나의 할 일' for n in tree().iter('node')):raise AssertionError('Task editor visible while driving')
-            scenario('신호 대기');check('D at zero does not unlock parked screen','신호 대기 중','05-traffic')
-            scenario('충전');wait('StopSense  +  CabinOS')
-            tap('설정');check('appearance settings accessible','당신에게 맞춘 CabinOS','06-settings')
-            tap('웜 샌드');snapshot('07-custom-color')
-            if 'versionName=0.11.0' not in package:
-                tap('화이트');snapshot('07b-white')
-                tap('블랙');snapshot('07c-black')
-            tap('홈');wait('StopSense  +  CabinOS');time.sleep(3)
-            if a.package.endswith('.preview'):
-                adb('shell','wm','size','720x1600');adb('shell','wm','density','320')
-                check('phone portrait dashboard','이 시간을, 나답게.','08-phone-portrait')
+            if a.stop_plan:
+                from record_stop_plan import record
+                record(adb, tree, tap, check, snapshot, scenario)
+            else:
+                check('APK parked dashboard','StopSense  +  CabinOS','01-parked')
+                tap('무엇을 도와드릴까요?');tap('25분 집중 모드 켜줘');tap('닫기')
+                check('focus session via assistant command','나의 할 일','02-focus')
+                if 'versionName=0.11.0' not in package:
+                    tap('배경 소리 선택')
+                    for index,name in enumerate(['백색 소음','자연의 소리','잔잔한 톤']):
+                        tap('▶ '+name)
+                        check('ambient preset playback state: '+name,'■ '+name+' 중지','02b-audio-'+str(index))
+                    tap('소리 끄기');tap('완료')
+                scenario('충전 15분');check('charging estimate changes shared session','나의 할 일','03-charge-update')
+                scenario('주행');check('motion locks parked controls','안전한 여정, 함께할게요.','04-driving')
+                if 'versionName=0.11.0' not in package:
+                    wait('도로 지도 표시 중',seconds=60)
+                    check('EchoRoad visible road tiles loaded','판교역 · 데모 위치 (GPS 아님)','04b-real-roads')
+                if any(n.get('text')=='나의 할 일' for n in tree().iter('node')):raise AssertionError('Task editor visible while driving')
+                scenario('신호 대기');check('D at zero does not unlock parked screen','신호 대기 중','05-traffic')
+                scenario('충전');wait('StopSense  +  CabinOS')
+                tap('설정');check('appearance settings accessible','당신에게 맞춘 CabinOS','06-settings')
+                tap('웜 샌드');snapshot('07-custom-color')
+                if 'versionName=0.11.0' not in package:
+                    tap('화이트');snapshot('07b-white')
+                    tap('블랙');snapshot('07c-black')
+                tap('홈');wait('StopSense  +  CabinOS');time.sleep(3)
+                if a.package.endswith('.preview'):
+                    adb('shell','wm','size','720x1600');adb('shell','wm','density','320')
+                    check('phone portrait dashboard','이 시간을, 나답게.','08-phone-portrait')
     except Exception as error:
         checks.append({'result':'failed','error':str(error)})
         # Structured CI annotations keep the failure reason visible even when raw log storage is unavailable.
