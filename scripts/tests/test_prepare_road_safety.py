@@ -29,9 +29,9 @@ class ImportTest(unittest.TestCase):
 
     def test_unknown_speed_never_becomes_zero_speed_warning(self):
         records, _ = prepare.convert([self.row(제한속도="0")], "camera", "2026-10-25")
-        self.assertIsNone(records[0][-1])
+        self.assertIsNone(records[0][6])
         records, _ = prepare.convert([self.row(제한속도="30")], "camera", "2026-10-25")
-        self.assertEqual(30, records[0][-1])
+        self.assertEqual(30, records[0][6])
 
     def test_national_wgs84_columns_are_used_without_tm_conversion(self):
         row={"WGS84위도":"37.55787859", "WGS84경도":"127.009382", "데이터기준일자":"2021-08-11", "데이터갱신구분":"I"}
@@ -79,3 +79,13 @@ class ImportTest(unittest.TestCase):
         records,audit=prepare.convert([self.row(시군구명="지역A"),self.row(시군구명="지역B")],"bump","2026-10-25")
         self.assertEqual([],records)
         self.assertEqual(2,audit["conflictingCoordinateRows"])
+
+    def test_section_labels_need_explicit_unambiguous_source_information(self):
+        hint=prepare.camera_advisory
+        self.assertEqual("fixed",hint({},30))
+        self.assertEqual("none",hint({"설치장소":"구간 시점"},None))
+        self.assertEqual("section_start",hint({"설치장소":"구간단속 시점","단속구간위치구분":"01"},60))
+        self.assertEqual("section_end",hint({"설치장소":"구간 종점","단속구간위치구분":"02"},60))
+        self.assertEqual("none",hint({"설치장소":"구간 시점","단속구간위치구분":"2"},60))
+        self.assertEqual("none",hint({"설치장소":"구간 시점에서 종점"},60))
+        self.assertEqual("section",hint({"단속구간위치구분":"1","과속단속구간길이":"2.5"},60))
