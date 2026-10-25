@@ -58,7 +58,8 @@ class CabinViewModel @Inject constructor(
     val audioPreset=mutableAudio.asStateFlow()
     val audioStatus=audio.status
     fun showMediaVolume() {audio.showVolume()}
-    fun stopAudio() {audio.stopByUser();mutableAudio.value=null}
+    private var audioRequest=0
+    fun stopAudio() {audioRequest++;audio.stopByUser();mutableAudio.value=null}
     private val mutableDemoRunning=MutableStateFlow(false)
     val demoRunning=mutableDemoRunning.asStateFlow()
     private var demoJob:Job?=null
@@ -170,7 +171,7 @@ class CabinViewModel @Inject constructor(
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
     fun command(text:String) {
         val compact=text.replace(" ","")
-        val sound=listOf("백색 소음","자연의 소리","잔잔한 톤").firstOrNull {compact.contains(it.replace(" ",""))}
+        val sound=AmbientSamples.presets.firstOrNull {compact.contains(it.replace(" ",""))}
         if(sound!=null || compact.contains("소리꺼") || compact.contains("소리끄")) {
             if(!state.value.parkedAllowed){mutableReply.value="안전한 주차 확인 후 소리를 조작할 수 있습니다.";return}
             if(sound==null){stopAudio();mutableReply.value="배경 소리를 껐습니다."}
@@ -205,7 +206,15 @@ class CabinViewModel @Inject constructor(
     fun preferences(p:Preferences) { engine.updatePreferences(p) }
     fun toggleAudio(preset:String) {
         if(!state.value.parkedAllowed || state.value.session?.status!=SessionStatus.RUNNING)return
-        if(mutableAudio.value==preset) {stopAudio()} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
+        if(mutableAudio.value==preset) {stopAudio()} else {
+            if(preset !in AmbientSamples.presets)return
+            val request=++audioRequest
+            viewModelScope.launch {
+                val samples=withContext(Dispatchers.Default){AmbientSamples.create(preset)}
+                if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING)return@launch
+                if(audio.play(preset,samples))mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."
+            }
+        }
     }
     fun setForeground(active: Boolean) {
         if(active)speech.refreshVoiceAvailability()
@@ -214,7 +223,7 @@ class CabinViewModel @Inject constructor(
         foreground=active
         if (!active) {
             demoJob?.cancel();mutableDemoRunning.value=false
-            audio.stop();mutableAudio.value=null;speech.cancelListening()
+            audioRequest++;audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
             pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();cancelNearby()
         } else {

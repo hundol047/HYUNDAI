@@ -38,17 +38,17 @@ import java.util.*
     val appearance by vm.appearance.collectAsStateWithLifecycle()
     val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
     var navigationOpen by remember { mutableStateOf(false) }
+    val context=LocalContext.current
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle,vm) {
         val observer=LifecycleEventObserver { _,event ->
             if(event==Lifecycle.Event.ON_START) vm.setForeground(true)
-            if(event==Lifecycle.Event.ON_STOP) vm.setForeground(false)
+            if(event==Lifecycle.Event.ON_STOP && (context as? android.app.Activity)?.isChangingConfigurations!=true) vm.setForeground(false)
         }
         lifecycle.addObserver(observer)
-        vm.setForeground(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED))
-        onDispose { lifecycle.removeObserver(observer);vm.setForeground(false) }
+        if(lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) vm.setForeground(true)
+        onDispose { lifecycle.removeObserver(observer);if((context as? android.app.Activity)?.isChangingConfigurations!=true)vm.setForeground(false) }
     }
-    val context=LocalContext.current
     val view=LocalView.current
     DisposableEffect(view,s.parkedAllowed,s.session?.status,navigationState.guidance.active) {
         view.keepScreenOn=navigationState.guidance.active || (s.parkedAllowed && s.session?.status==SessionStatus.RUNNING)

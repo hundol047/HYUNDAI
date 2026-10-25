@@ -18,7 +18,7 @@ class AmbientAudio(context: Context) {
     fun showVolume() {manager.adjustVolume(AudioManager.ADJUST_SAME,AudioManager.FLAG_SHOW_UI)}
     fun stopByUser() {stop();mutableStatus.value="배경 소리 꺼짐"}
 
-    fun play(preset: String): Boolean {
+    fun play(preset: String,samples:ShortArray=AmbientSamples.create(preset)): Boolean {
         stop()
         val attributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
         val request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
@@ -28,7 +28,6 @@ class AmbientAudio(context: Context) {
         if (manager.requestAudioFocus(request) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { stop();mutableStatus.value="다른 앱의 소리 사용이 끝난 뒤 다시 재생해 주세요."; return false }
         return try {
             val rate=AmbientSamples.RATE
-            val samples=AmbientSamples.create(preset)
             val audio = AudioTrack.Builder().setAudioAttributes(attributes)
                 .setAudioFormat(AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(rate).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
                 .setTransferMode(AudioTrack.MODE_STATIC).setBufferSizeInBytes(samples.size * 2).build()

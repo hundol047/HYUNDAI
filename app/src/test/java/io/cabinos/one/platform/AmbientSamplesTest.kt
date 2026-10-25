@@ -6,7 +6,7 @@ import kotlin.math.*
 
 class AmbientSamplesTest {
     @Test fun everyPresetHasAudibleSignalWithoutClippingAndQuietLoopEdges() {
-        listOf("백색 소음","자연의 소리","잔잔한 톤").forEach {name->
+        AmbientSamples.presets.forEach {name->
             val pcm=AmbientSamples.create(name)
             val rms=sqrt(pcm.sumOf {it.toDouble()*it}/pcm.size)/Short.MAX_VALUE
             assertTrue("$name rms=$rms",rms in .12.. .16)
