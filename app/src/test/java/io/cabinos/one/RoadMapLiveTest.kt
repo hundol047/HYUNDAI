@@ -51,4 +51,28 @@ class RoadMapLiveTest {
             File(out,"results.json").writeText(JSONObject().put("result","passed").put("type","actual Android Compose + osmdroid via Robolectric native graphics, live OSM/OSRM HTTP; no supplied bitmap fixtures").put("visibleTiles",h.visible).put("loadedTiles",h.loaded).put("routePoints",route.points.size).put("physicalDeviceGps",false).put("realRoadDriving",false).toString(2))
         }
     }
+    @Test fun echoRoadShowsActualPangyoRoadAndBuildingTiles() {
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {DrivingDashboard(AppState(context=VehicleContext.DRIVING,networkAvailable=true),{},{})}}}
+        val bitmap=Bitmap.createBitmap(1280,800,Bitmap.Config.ARGB_8888)
+        try {
+            compose.waitUntil(35_000) {
+                var ready=false
+                compose.runOnIdle {
+                    compose.activity.window.decorView.draw(android.graphics.Canvas(bitmap))
+                    ready=find(compose.activity.window.decorView)?.sampleHealth()?.status==RoadMapStatus.READY
+                }
+                ready
+            }
+            compose.runOnIdle {
+                val map=find(compose.activity.window.decorView)!!
+                assertEquals(17.0,map.zoomLevelDouble,0.01)
+                assertTrue(map.health.loaded>=4)
+                val out=File("build/live-map").apply {mkdirs()}
+                compose.activity.window.decorView.draw(android.graphics.Canvas(bitmap))
+                File(out,"echoroad-roads.png").outputStream().use {bitmap.compress(Bitmap.CompressFormat.PNG,100,it)}
+                File(out,"echoroad-results.json").writeText(JSONObject().put("result","passed").put("visibleTiles",map.health.visible).put("loadedTiles",map.health.loaded).put("zoom",map.zoomLevelDouble).put("gps","public demo coordinate, not GPS").toString(2))
+            }
+        } finally {bitmap.recycle()}
+    }
+
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.draw.clipToBounds
 import androidx.lifecycle.*
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import io.cabinos.core.*
@@ -161,7 +162,7 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable private fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit) {
+@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
@@ -174,18 +175,18 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
         onDispose {owner.lifecycle.removeObserver(observer);map.endHealth();map.onPause();map.onDetach()}
     }
     Box(Modifier.fillMaxSize()) {
-        AndroidView(factory={map},modifier=Modifier.fillMaxSize(),update={view->
+        AndroidView(factory={map},modifier=Modifier.fillMaxSize().clipToBounds(),update={view->
             view.onHealth={health=it};applyMapAppearance(view,appearance,palette)
             view.connection(online);view.setMultiTouchControls(interactive);view.gesturesEnabled=interactive
             view.importantForAccessibility=if(interactive)android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES else android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
             view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
-            renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking)
+            renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking,placeZoom)
         })
-        if(interactive) {
+        if(interactive&&showPicker) {
             Text("+",color=White,fontSize=32.sp,modifier=Modifier.align(androidx.compose.ui.Alignment.Center))
             ActionButton("지도 중심을 목적지로",{val c=map.mapCenter;PlaceSearch.mapPoint(c.latitude,c.longitude)?.let(onPick)},Modifier.align(androidx.compose.ui.Alignment.BottomCenter).padding(12.dp),Blue,pickEnabled)
         }
-        if(health.status!=RoadMapStatus.READY)Column(Modifier.align(androidx.compose.ui.Alignment.TopCenter).padding(10.dp).clip(RoundedCornerShape(12.dp)).background(Panel.copy(alpha=.96f)).padding(10.dp)) {
+        if(showHealth||health.status!=RoadMapStatus.READY)Column(Modifier.align(androidx.compose.ui.Alignment.TopCenter).padding(10.dp).clip(RoundedCornerShape(12.dp)).background(Panel.copy(alpha=.96f)).padding(10.dp)) {
             Text(health.message,color=if(health.status in listOf(RoadMapStatus.UNAVAILABLE,RoadMapStatus.OFFLINE))Amber else Muted,fontSize=12.sp)
             if(health.status==RoadMapStatus.UNAVAILABLE&&interactive)TextButton(onClick={map.retryRoads()}){Text("도로 지도 다시 불러오기",color=Blue)}
         }

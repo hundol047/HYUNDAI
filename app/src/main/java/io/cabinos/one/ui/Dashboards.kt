@@ -145,7 +145,7 @@ import kotlin.math.min
     }
 }
 
-@Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
+@Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit,mapFix:NavFix?=null) {
     if(LocalCompactWindow.current) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
             Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
@@ -156,6 +156,7 @@ import kotlin.math.min
                 Text(if(s.sample?.source==DataSource.SIMULATION) "데모 차량 신호" else "차량 신호",color=Muted)
                 Text("P 기어와 정지를 확인한 뒤 집중·휴식 기능을 열 수 있습니다.",color=Muted)
             }
+            EchoRoadRoads(s,mapFix,Modifier.fillMaxWidth().height(320.dp))
             ActionButton("내비게이션",onNavigation,Modifier.fillMaxWidth())
             ActionButton("위험 정보 듣기",onVoice,Modifier.fillMaxWidth())
             Text(s.message,color=Muted)
@@ -187,21 +188,21 @@ import kotlin.math.min
         }
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
             Box(Modifier.weight(.66f).fillMaxHeight().clip(RoundedCornerShape(20.dp)).border(1.dp,Line,RoundedCornerShape(20.dp))) {
-                RouteScene(Modifier.fillMaxSize())
-                Column(Modifier.padding(20.dp)) {
-                    Pill("EchoRoad · ${if(s.echoRoadActive)"활성" else "안전 제한"}",Blue)
-                    Spacer(Modifier.height(12.dp));Text("${s.sample?.speedKph?.toInt() ?: 0}",fontSize=48.sp,fontWeight=FontWeight.Light,color=White);Text(if(s.sample?.source==DataSource.VEHICLE)"km/h · 차량 신호" else "km/h · 시뮬레이션",fontSize=11.sp,color=Muted)
-                }
-                SurfacePanel(Modifier.align(Alignment.TopEnd).padding(18.dp).width(155.dp),accent=Blue) {
-                    Icon(Icons.Outlined.TurnRight,null,tint=Blue,modifier=Modifier.size(28.dp));Text("3.2 km",fontSize=23.sp,color=White);Text("판교IC · 데모 경로",fontSize=11.sp,color=Muted)
-                }
-                Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().background(Brush.verticalGradient(listOf(androidx.compose.ui.graphics.Color.Transparent,Night))).padding(20.dp)) {
-                    Text(if(s.locationAvailable)"시뮬레이션 경로 · 실제 길 안내 아님" else "위치 사용 불가 · 경로 위험 안내 중단",color=if(s.locationAvailable)Muted else Amber,fontSize=11.sp)
-                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton("내비게이션",onNavigation,color=Blue,enabled=true,icon=Icons.Outlined.Navigation)}
+                Column(Modifier.fillMaxSize()) {
+                    Row(Modifier.fillMaxWidth().background(Panel).padding(12.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Pill("EchoRoad · 도로 지도",Blue)
+                        Spacer(Modifier.weight(1f))
+                        Text("${s.sample?.speedKph?.toInt() ?: 0} km/h · 데모 신호",color=White,fontSize=16.sp)
+                    }
+                    EchoRoadRoads(s,mapFix,Modifier.fillMaxWidth().weight(1f))
+                    Row(Modifier.fillMaxWidth().background(Panel).padding(horizontal=12.dp,vertical=4.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Text("길 안내는 목적지 설정 후 시작",color=Muted,fontSize=11.sp,modifier=Modifier.weight(1f))
+                        ActionButton("내비게이션",onNavigation,color=Blue,icon=Icons.Outlined.Navigation)
+                    }
                 }
             }
             Column(Modifier.weight(.34f).fillMaxHeight(),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                SectionLabel("경로 위험 정보",color=Blue)
+                SectionLabel("위험 정보 · 시뮬레이션",color=Blue)
                 s.hazards.take(3).forEachIndexed { index,h ->
                     SurfacePanel(Modifier.fillMaxWidth(),accent=if(index==0) Red.copy(alpha=.6f) else Line) {
                         Row(verticalAlignment=Alignment.CenterVertically) {

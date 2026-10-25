@@ -151,7 +151,7 @@ import java.util.*
                             if(vm.automotive && (navigationOpen || route=="nearby")) VehicleNavigationPanel(s,vm)
                             else if(navigationOpen || navigationState.guidance.active) NavigationScreen(s,navigationState,vm.liveNavigation,requestNavigationLocation)
                             else if(vm.automotive && !s.parkedAllowed) VehicleParkedNotice(s,vehicleStatus,speedPermissionMissing,{requestVehiclePermissions(true)})
-                            else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true})
+                            else if(!s.parkedAllowed) DrivingDashboard(s,onVoice={vm.command("앞에 위험 구간 있어?")},onNavigation={navigationOpen=true},mapFix=navigationState.mapFix)
                             else ParkedNavigation(nav,vm,requestNotifications,requestNearbyLocation)
                         }
                         if(compact) Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(2.dp)) {

@@ -20,7 +20,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
     private var accent:Int?=null
     init {map.overlays.add(CopyrightOverlay(map.context).apply {setCopyrightNotice("© OpenStreetMap contributors")})}
 
-    fun update(g:Guidance,color:Int,selectedPlace:NavPlace?=null,location:NavFix?=g.fix,locationCurrent:Boolean=g.tracking) {
+    fun update(g:Guidance,color:Int,selectedPlace:NavPlace?=null,location:NavFix?=g.fix,locationCurrent:Boolean=g.tracking,placeZoom:Double=16.0) {
         var changed=false
         if(route!==g.route) {
             line?.let {map.overlays.remove(it)};destination?.let {map.overlays.remove(it)}
@@ -39,7 +39,7 @@ internal class NavigationMapRenderer(private val map:MapView) {
             destination?.let {map.overlays.remove(it)};destination=null;selected=selectedPlace
             selectedPlace?.let {p->
                 destination=Marker(map).apply {position=GeoPoint(p.point.latitude,p.point.longitude);title=p.name;subDescription=p.address}
-                map.overlays.add(destination);map.controller.setZoom(16.0);map.controller.setCenter(GeoPoint(p.point.latitude,p.point.longitude))
+                map.overlays.add(destination);map.controller.setZoom(placeZoom);map.controller.setCenter(GeoPoint(p.point.latitude,p.point.longitude))
             };changed=true
         }
         if(g.route!=null)selected=null

@@ -106,6 +106,9 @@ def main():
             check('focus session via assistant command','나의 할 일','02-focus')
             scenario('충전 15분');check('charging estimate changes shared session','나의 할 일','03-charge-update')
             scenario('주행');check('motion locks parked controls','안전한 여정, 함께할게요.','04-driving')
+            if 'versionName=0.11.0' not in package:
+                wait('도로 지도 표시 중',seconds=60)
+                check('EchoRoad visible road tiles loaded','판교역 · 데모 위치 (GPS 아님)','04b-real-roads')
             if any(n.get('text')=='나의 할 일' for n in tree().iter('node')):raise AssertionError('Task editor visible while driving')
             scenario('신호 대기');check('D at zero does not unlock parked screen','신호 대기 중','05-traffic')
             scenario('충전');wait('StopSense  +  CabinOS')
