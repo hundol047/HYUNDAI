@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "source": "https://www.data.go.kr/data/15152204/fileData.do",
+  "coverage": "충청남도 12개 시군 · 전국 자료 아님",
+  "asOf": "2025-11-13",
+  "rawSha256": "89b91f1f34961aa146dba162b9913719ae7fd05700abb547a0d82f785f7eea8a",
+  "audit": {
+    "inputRows": 16251,
+    "accepted": 9314,
+    "invalidRows": 0,
+    "conflictingCoordinateRows": 388,
+    "duplicateRows": 6549
+  },
+  "columns": [
+    "id",
+    "latitude",
+    "longitude",
+    "kind",
+    "road",
+    "recordDate",
+    "reportedSpeedKmh"
+  ],
+  "directionVerified": false,
+  "normalizedSha256": "330c1adeb8fa1790ec5dc75ca367d792f788607d7cff91efcca16b8ffa9d4950",
+  "commercialNavigationParity": "not established",
+  "nationalCameraSnapshotPackaged": false,
+  "nationalBumpSnapshotPackaged": false,
+  "physicalDrivingValidated": false
+}

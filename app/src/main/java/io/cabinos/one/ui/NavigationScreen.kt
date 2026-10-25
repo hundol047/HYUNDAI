@@ -196,7 +196,7 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0,traffic:TrafficFlow?=null) {
+@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0,traffic:TrafficFlow?=null,safetyPoints:List<RoadSafetyPoint> = emptyList()) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
@@ -217,6 +217,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
             view.zoomController.setVisibility(if(interactive)org.osmdroid.views.CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT else org.osmdroid.views.CustomZoomButtonsController.Visibility.NEVER)
             view.onUserGesture={following=false;renderer.followPosition=false}
             renderer.followPosition=following
+            renderer.safety(safetyPoints)
             renderer.traffic(traffic)
             renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking,placeZoom)
         })

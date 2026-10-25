@@ -42,3 +42,8 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 실제 자연음 녹음: [저작자·원본·라이선스 및 가공 내역](NATURE_AUDIO_CREDITS.md). 피아노 항목은 제거했습니다.
 
 교통 구간 데이터: TomTom Traffic Flow API. 공급자 키는 중계 서버에서만 사용하며 현재 공개 배포 및 한국 데이터 연결은 미완료입니다. [범위 및 출처](../server/TRAFFIC.md).
+
+## 도로 안전시설 참고자료
+
+- **충청남도_과속방지턱현황_20251113** — 제공: 충청남도. [공식 데이터](https://www.data.go.kr/data/15152204/fileData.do), [충남 공식 이용 조건](https://alldam.chungnam.go.kr/index.chungnam?menuCd=DOM_000000201001001001&publicdatapk=15152204). 데이터별 표기: 무료·이용허락범위 제한 없음(2026-10-25 확인). 웹페이지 디자인의 이용 조건과 CSV 데이터별 조건은 구분합니다. 원본 16,251행에서 중복·충돌을 처리한 9,314개 위치를 변환 수록했습니다. 원본 SHA-256·처리 통계는 `app/src/main/assets/road_safety/chungnam-bumps.json`에 포함됩니다. [가공 방법·적용 범위](ROAD_SAFETY_DATA_KO.md).
+- ktfmt 0.54 — Apache-2.0, https://github.com/facebook/ktfmt . 개발 중 Kotlin 서식 정리에만 사용하며 앱에 포함하지 않습니다.

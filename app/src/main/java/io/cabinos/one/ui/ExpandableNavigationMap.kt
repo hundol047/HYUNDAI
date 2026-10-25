@@ -50,6 +50,7 @@ internal fun ExpandableNavigationMap(
                 {},
                 showPicker = false,
                 traffic = ui.traffic,
+                safetyPoints = ui.roadSafety.points,
             )
         Box(
             Modifier.fillMaxSize()
@@ -127,6 +128,7 @@ internal fun ExpandableNavigationMap(
                         showPicker = interactive,
                         showHealth = false,
                         traffic = ui.traffic,
+                        safetyPoints = ui.roadSafety.points,
                     )
                 }
                 Column(
@@ -160,8 +162,15 @@ internal fun ExpandableNavigationMap(
                             color = Muted,
                             fontSize = 12.sp,
                         )
+                    ui.roadSafety.approach?.let { approach ->
+                        Text(
+                            "경로 주변 방지턱 · 약 ${approach.meters.toInt()}m · 현장 표지 확인",
+                            color = Amber,
+                            fontSize = 16.sp,
+                        )
+                    }
                     if (g.active) {
-                        Text("단속카메라·과속방지턱 데이터 미연결 · 현장 표지 확인", color = Amber, fontSize = 11.sp)
+                        Text(ui.roadSafety.notice, color = Amber, fontSize = 11.sp)
                         Row(
                             Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.spacedBy(8.dp),

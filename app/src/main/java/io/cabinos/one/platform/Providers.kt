@@ -125,6 +125,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     }
     override fun speak(text:String) { if(initialized)speakNavigation(text,"ko-KR") else pending=text }
     fun navigationLanguages():List<String> = runCatching {tts?.availableLanguages?.map {it.toLanguageTag()}?.sorted() ?: emptyList()}.getOrDefault(emptyList())
+    val navigationSpeaking:Boolean get()=tts?.isSpeaking==true
     fun speakNavigation(text:String,tag:String):Boolean {
         if(!initialized)return false
         val locale=Locale.forLanguageTag(tag)

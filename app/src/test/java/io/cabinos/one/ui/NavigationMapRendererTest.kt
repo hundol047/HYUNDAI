@@ -134,4 +134,19 @@ class NavigationMapRendererTest {
             renderer.update(Guidance(),-1);assertTrue(map.overlays.none {it is Polyline||it is Marker});assertEquals(1,map.overlays.filterIsInstance<CopyrightOverlay>().size)
         }finally{map.onDetach()}
     }
+    @Test fun referenceMarkersAreReusedAndClearedWithoutRemovingRoute() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        val point=RoadSafetyPoint("fixture",NavPoint(37.5,127.0),RoadSafetyKind.BUMP,"검사도로","2026-01-01",Long.MAX_VALUE)
+        try {
+            renderer.update(Guidance(route=route()),-1)
+            renderer.safety(listOf(point))
+            val first=map.overlays.filterIsInstance<Marker>().first {it.title.contains("참고 위치")}
+            renderer.safety(listOf(point))
+            assertSame(first,map.overlays.filterIsInstance<Marker>().first {it.title.contains("참고 위치")})
+            renderer.safety(emptyList())
+            assertFalse(map.overlays.contains(first))
+            assertEquals(1,map.overlays.filterIsInstance<Polyline>().size)
+        }finally{map.onDetach()}
+    }
+
 }

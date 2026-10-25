@@ -27,6 +27,8 @@ class LiveNavigation(
     private val mutable = MutableStateFlow(NavigationUi(language = language))
     val state = mutable.asStateFlow()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val roadSafety = RoadSafetyRepository(context, scope, clock)
+    private val safetyAnnouncements = RoadSafetyAnnouncements()
     private val manager = context.getSystemService(LocationManager::class.java)
     private var job: Job? = null
     private var generation = 0
@@ -235,6 +237,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         mutable.value =
             mutable.value.copy(
                 guidance = tracker.state,
+                roadSafety = roadSafety.snapshot(tracker.state, f, foreground),
                 originAccessMeters = gap,
                 originReady =
                     r != null &&
@@ -557,6 +560,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         spoken = ""
         repeatGuard.clear()
         rerouteFailures = 0
+        safetyAnnouncements.reset()
         guide()
     }
 
@@ -602,6 +606,26 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
             )
                 spoken = key
             mutable.value = mutable.value.copy(voiceNotice = speech.status)
+        }
+    }
+
+    private fun guideRoadSafety() {
+        val g = tracker.state
+        val approach = mutable.value.roadSafety.approach ?: return
+        if (
+            !foreground ||
+                !engine.state.value.preferences.voiceEnabled ||
+                mutable.value.voiceListening ||
+                speech.navigationSpeaking
+        )
+            return
+        if (!safetyAnnouncements.eligible(approach, clock(), g.turnMeters)) return
+        val korean = NavigationLanguages.resolve(language) == "ko"
+        val text =
+            if (korean) "경로 주변에 과속방지턱 등록 지점이 있습니다. 현장 표지를 확인하세요."
+            else "A speed bump is recorded near the route. Check road signs."
+        if (speech.speakNavigation(text, if (korean) "ko-KR" else "en-US")) {
+            safetyAnnouncements.accepted(approach, clock())
         }
     }
 
@@ -665,6 +689,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         publish()
         resumeLocationIfReady()
         trafficTick()
+        guideRoadSafety()
         if (tracker.state.active) reroute()
     }
 
@@ -744,6 +769,11 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 )
         }
         foreground = active
+        if (!active)
+            mutable.value =
+                mutable.value.copy(
+                    roadSafety = RoadSafetyUi(notice = mutable.value.roadSafety.notice)
+                )
         if (!active) cancelVoice()
         if (!active) {
             resumeLocation = resumeLocation || listening
