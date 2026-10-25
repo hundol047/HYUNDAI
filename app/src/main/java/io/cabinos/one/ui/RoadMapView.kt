@@ -36,7 +36,7 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
     private var lastDrawCheck=Long.MIN_VALUE
     private val check=object:Runnable {override fun run(){if(!observing)return;sampleHealth();postDelayed(this,1000)}}
     init {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(2.0);controller.setCenter(GeoPoint(20.0,0.0))}
-    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null};setUseDataConnection(available);sampleHealth()}
+    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null;setUseDataConnection(available);sampleHealth()}}
     fun beginHealth(){if(!observing){observing=true;post(check)}}
     fun endHealth(){observing=false;removeCallbacks(check);onHealth=null}
     fun retryRoads(){if(!online)return;waitingSince=null;health=RoadMapHealth();onHealth?.invoke(health);invalidate()}

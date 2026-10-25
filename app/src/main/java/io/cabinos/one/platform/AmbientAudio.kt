@@ -8,13 +8,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** Local PCM ambience. It never owns vehicle audio zones or starts playback in the background. */
-class AmbientAudio(context: Context) {
+class AmbientAudio(private val context: Context) {
     private val manager = context.getSystemService(AudioManager::class.java)
     private var track: AudioTrack? = null
     private var focus: AudioFocusRequest? = null
     var playing = false; private set
     private val mutableStatus=MutableStateFlow("배경 소리 꺼짐")
     val status=mutableStatus.asStateFlow()
+    internal fun samples(name:String)=RecordedAmbience.load(context,name)
     fun showVolume() {manager.adjustVolume(AudioManager.ADJUST_SAME,AudioManager.FLAG_SHOW_UI)}
     fun stopByUser() {stop();mutableStatus.value="배경 소리 꺼짐"}
 

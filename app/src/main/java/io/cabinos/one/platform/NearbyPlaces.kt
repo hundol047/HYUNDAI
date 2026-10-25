@@ -28,14 +28,14 @@ class NearbyPlaces(private val context:Context) {
         return try {
             val fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
             val providers=manager.getProviders(true).filter { it!=LocationManager.PASSIVE_PROVIDER && (fine || it!=LocationManager.GPS_PROVIDER) }
-            val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { System.currentTimeMillis()-it.time in 0..60_000 && it.accuracy<=1000 }.maxByOrNull { it.time }
+            val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { usableLocation(it) }.minByOrNull { it.accuracy }
             if(cached!=null)return position(cached)
             if(providers.isEmpty())return null
             withTimeoutOrNull(25_000) {
                 suspendCancellableCoroutine { continuation ->
                     val listener=object:LocationListener {
                         override fun onLocationChanged(location:Location) {
-                            if(continuation.isActive && System.currentTimeMillis()-location.time in 0..60_000 && location.accuracy<=1000) {
+                            if(continuation.isActive && usableLocation(location)) {
                                 runCatching {manager.removeUpdates(this)};continuation.resume(position(location))
                             }
                         }
@@ -47,6 +47,10 @@ class NearbyPlaces(private val context:Context) {
             }
         } catch(_:SecurityException) { null }
     }
+    internal fun usableLocation(location:Location,now:Long=System.currentTimeMillis())=
+        location.hasAccuracy()&&location.accuracy.isFinite()&&location.accuracy in 0f..50f&&
+        now-location.time in 0..10_000&&location.latitude.isFinite()&&location.latitude in -90.0..90.0&&
+        location.longitude.isFinite()&&location.longitude in -180.0..180.0
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
     suspend fun search(origin:MapPosition):NearbySearchResult {
         val places=mutableListOf<NearbyActivity>();var successful=0

@@ -210,7 +210,7 @@ class CabinViewModel @Inject constructor(
             if(preset !in AmbientSamples.presets)return
             val request=++audioRequest
             viewModelScope.launch {
-                val samples=withContext(Dispatchers.Default){AmbientSamples.create(preset)}
+                val samples=withContext(Dispatchers.IO){audio.samples(preset)}
                 if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING)return@launch
                 if(audio.play(preset,samples))mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."
             }
@@ -266,6 +266,7 @@ class CabinViewModel @Inject constructor(
         if(!foreground || !state.value.parkedAllowed || !state.value.networkAvailable || !state.value.locationAvailable || mutableNearbyBusy.value)return
         val now=System.currentTimeMillis()
         val origin=state.value.activityOrigin
+        if(state.value.activities.any {it.activity.simulated})engine.updateNearbyActivities(origin,emptyList())
         nearbyCache.read(origin,now)?.let { cached ->
             engine.updateNearbyActivities(origin,cached);mutableNearbyStatus.value="최근 2분 이내의 주변 검색 결과 ${cached.size}곳 · 분류별로 확인하세요.";return
         }

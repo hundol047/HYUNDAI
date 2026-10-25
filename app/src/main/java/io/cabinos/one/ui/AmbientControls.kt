@@ -21,7 +21,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
                 ActionButton(if(preset==name)"■ $name 중지" else "▶ $name",{vm.toggleAudio(name)},Modifier.fillMaxWidth(),enabled=enabled)
             }
             Text(status,color=Muted,fontSize=13.sp)
-            Text("자연음과 피아노는 앱 자체 합성음이며 기존 곡·OST 녹음을 사용하지 않습니다. 블루투스 연결 중이면 연결된 기기에서 재생됩니다.",color=Muted,fontSize=11.sp)
+            Text("비·계곡·파도·자연의 소리는 실제 자연음 녹음입니다. 백색 소음·잔잔한 톤은 합성음입니다. 블루투스 연결 중이면 연결된 기기에서 재생됩니다.",color=Muted,fontSize=11.sp)
+            Text("빗소리: Effib · CC BY-SA 3.0 · commons.wikimedia.org/wiki/File:Sound_of_rain.ogg · 앞 20초, 음량·페이드 가공. 계곡: jackthemurray · CC0. 파도: Jarrod stanley · CC0. 새소리: ezwa · Public domain.",color=Muted,fontSize=11.sp)
             ActionButton("휴대폰 미디어 음량",vm::showMediaVolume,Modifier.fillMaxWidth())
         }
     },confirmButton={TextButton(onClick={open=false}){Text("완료")}},dismissButton={TextButton(onClick={vm.stopAudio()}){Text("소리 끄기")}})
