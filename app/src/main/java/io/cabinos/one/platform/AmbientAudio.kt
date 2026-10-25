@@ -33,13 +33,17 @@ class AmbientAudio(context: Context) {
                 .setAudioFormat(AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(rate).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
                 .setTransferMode(AudioTrack.MODE_STATIC).setBufferSizeInBytes(samples.size * 2).build()
             track = audio
+            // MODE_STATIC starts in STATE_NO_STATIC_DATA. A successful write
+            // moves it to INITIALIZED; checking earlier rejects every preset.
+            check(audio.state != AudioTrack.STATE_UNINITIALIZED)
+            val pcm=java.nio.ByteBuffer.allocate(samples.size*2).order(java.nio.ByteOrder.LITTLE_ENDIAN).apply {asShortBuffer().put(samples)}.array()
+            check(audio.write(pcm, 0, pcm.size) == pcm.size)
             check(audio.state == AudioTrack.STATE_INITIALIZED)
-            check(audio.write(samples, 0, samples.size) == samples.size)
             check(audio.setLoopPoints(0, samples.size, -1) == AudioTrack.SUCCESS)
             audio.play(); playing = true
             mutableStatus.value=if(manager.getStreamVolume(AudioManager.STREAM_MUSIC)==0)"재생 중이지만 미디어 음량이 0입니다. 음량을 올려 주세요." else "$preset 재생 중 · 안 들리면 미디어 음량과 블루투스 출력을 확인하세요."
             true
-        } catch (_: RuntimeException) { stop();mutableStatus.value="소리를 재생하지 못했습니다. 다른 오디오 앱을 닫고 다시 시도해 주세요."; false }
+        } catch (error: RuntimeException) { android.util.Log.w("CabinAudio","배경 소리 초기화 실패",error);stop();mutableStatus.value="소리를 재생하지 못했습니다. 다른 오디오 앱을 닫고 다시 시도해 주세요."; false }
     }
     fun stop() {
         playing = false
