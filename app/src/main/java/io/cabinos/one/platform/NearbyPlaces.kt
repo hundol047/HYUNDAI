@@ -59,7 +59,7 @@ class NearbyPlaces(private val context:Context) {
             if(index>0)delay(1100)
             try {places+=requestPhoton(url,origin);successful++}catch(error:java.io.IOException){/* A failed category is explicitly marked below. */}
         }
-        if(successful==4 || places.isNotEmpty())return NearbySearchResult(places.distinctBy {it.id},
+        if(places.isNotEmpty())return NearbySearchResult(places.distinctBy {it.id},
             "OpenStreetMap / Photon 등록 장소 ${places.size}곳 · 반경 2km"+if(successful<4)" · 일부 분류 검색 실패: 잠시 후 다시 검색하세요." else " · 영업 여부 확인 필요",complete=successful==4)
         var last:java.io.IOException?=null
         for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
