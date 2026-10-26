@@ -14,6 +14,10 @@ def record(adb, tree, tap, check, snapshot, scenario, window, language):
             raise AssertionError('Voice language was not entered')
     finally:
         device.stop_uiautomator()
+    # Accessibility entry opens the IME; dismiss it before targeting the dialog's
+    # Apply button, whose old bounds can otherwise hit a keyboard letter.
+    adb('shell','input','keyevent','4')
+    time.sleep(1)
     tap('적용')
     check('requested navigation language selected', '언어 · '+language, 'speech-language')
     tap('설정')

@@ -3,7 +3,7 @@
   "app": "CabinOS ONE 테스트",
   "applicationId": "io.cabinos.one.preview",
   "versionName": "0.11.1-preview",
-  "sourceCommit": "96e08e1",
+  "sourceCommit": "96e08e16a74100a7f67b3dd63ec7ef60971adf4d",
   "apkSha256": "5a0bad2bae52d0faa8aeb416f86bf067e306f599fa01198adb995d8c89fa6414",
   "sdkIncluded": true,
   "signing": "Android debug test identity; not the team production signer",

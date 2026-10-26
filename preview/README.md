@@ -2,11 +2,11 @@
 
 퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.1-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
 
-**[소리 포함 실제 실행 영상](../docs/video/live-audio/README.md)** — 배경음 6종과 한국어 내비 안내를 최신 APK에서 다시 녹화했습니다. 일반 Android 에뮬레이터이며 녹화용 TTS 목소리는 실제 휴대폰과 다를 수 있습니다.
+**[이전 APK의 소리 포함 실행 영상](../docs/video/live-audio/README.md)** — 배경음 6종과 한국어 내비 안내를 이전 APK에서 녹화했습니다. 이 영상의 eSpeak 음성은 새 신경망 음성 검증과 구분합니다. 일반 Android 에뮬레이터이며 녹화용 TTS 목소리는 실제 휴대폰과 다를 수 있습니다.
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/775bfeb416e23e6ae6908422fe201d7935781031/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/741460605afd80995cff4a9a7c88d54af5e3de44/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -14,7 +14,13 @@
 
 [현재 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13의 내비·정차·사진 연속 녹화 3편. 내비 9건·정차 플랜 10건·장소/사진 검사 8건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
 
-## 이번 수정
+## 이번 음성 수정
+
+한국어 거리와 동작을 완성된 문장으로 읽고, 모든 내장 언어에서 화면 구분 기호를 음성 문장에 그대로 넣지 않습니다. 언어를 매번 다시 설정하지 않으며, 재생 중인 같은 문장의 재시작과 일반 상태 알림이 길 안내를 끊는 경우를 방지합니다. 새로운 회전 안내·안전 잠금에 의한 중지는 유지합니다.
+
+기본 TTS 엔진 안에서 설치된 오프라인 음성을 언어·지역·품질 순으로 선택합니다. 앱 설정의 **안내 음성 들어보기 / 기기 음성 설정**으로 확인할 수 있습니다. 음성 엔진을 바꾼 후 앱으로 돌아오면 다시 연결합니다. 특정 신경망 모델은 이 APK에 포함하지 않았으며 실제 목소리는 선택한 엔진·음성팩에 따릅니다.
+
+## 이전 수정
 
 - 큰 글씨·낮은 가로 화면의 버튼과 확대 지도 배치, 화면 회전·뒤로 가기, 연속 회전 음성 안내, 배경음 전환·반복 경계를 수정했습니다. Kotlin/Android 430개와 서버·도구 82개 검사를 통과했습니다. 같은 APK의 실제 실행 검사 27건이 통과했습니다. 내비 목적지는 접근성 입력이며 GPS는 모의 위치입니다. 실기기 확인 범위는 영상 안내에 명시합니다.
 
