@@ -4,6 +4,8 @@ on:
     branches: [fix/vehicle-runtime-issues]
     paths:
       - .github/workflows/audio-video.yml
+      - scripts/record-android-demo.py
+      - scripts/record_navigation_review.py
       - scripts/record_audio_review.py
       - scripts/verify_recorded_audio.py
   workflow_dispatch:

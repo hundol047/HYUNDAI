@@ -118,9 +118,11 @@ def main():
         video='/sdcard/cabinos-apk-proof.mp4'
         recording_started=time.monotonic()
         with (a.output/'screenrecord.log').open('wb') as log:
-            capture=(['scrcpy','--serial',a.serial,'--no-playback','--no-control','--require-audio','--audio-source=output','--audio-codec=aac','--video-bit-rate=2500000','--record='+str(a.output/'CabinOS_ONE_android_apk.mp4')] if a.capture_audio else base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video])
+            capture=(['scrcpy','--serial',a.serial,'--no-playback','--no-window','--no-control','--require-audio','--audio-source=output','--audio-codec=aac','--video-bit-rate=2500000','--record='+str(a.output/'CabinOS_ONE_android_apk.mp4')] if a.capture_audio else base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video])
             recorder=subprocess.Popen(capture,stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
+            if recorder.poll() is not None:
+                raise RuntimeError('Recording process stopped before UI scenario; see screenrecord.log')
             if a.navigation_review:
                 from record_navigation_review import record
                 record(adb, tree, tap, check, snapshot, scenario, audio_window=window if a.capture_audio else None)

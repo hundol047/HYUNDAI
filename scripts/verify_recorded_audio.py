@@ -14,7 +14,8 @@ def measure(raw):
     if sys.byteorder != 'little':
         values.byteswap()
     rms = math.sqrt(sum(v*v for v in values) / len(values)) / 32768 if values else 0
-    return {'samples': len(values), 'rmsDbfs': 20*math.log10(max(rms, 1e-10)),
+    active = sum(1 for i in range(0, len(values), 1600) if math.sqrt(sum(v*v for v in values[i:i+1600])/len(values[i:i+1600]))/32768 > 10**(-65/20)) * .1
+    return {'activeSecondsAboveMinus65Dbfs': round(active, 2), 'samples': len(values), 'rmsDbfs': 20*math.log10(max(rms, 1e-10)),
             'peak': max((abs(v) for v in values), default=0), 'pcmSha256': hashlib.sha256(raw).hexdigest()}
 
 
@@ -36,7 +37,7 @@ def verify(folder):
                                        '-map', '0:a:0', '-ac', '1', '-ar', '16000', '-f', 's16le', '-'])
         stats = measure(raw)
         stats.update(w)
-        stats['passed'] = stats['rmsDbfs'] < -65 if w['expectSilence'] else stats['rmsDbfs'] > -65
+        stats['passed'] = stats['rmsDbfs'] < -65 if w['expectSilence'] else stats['rmsDbfs'] > -65 and stats['activeSecondsAboveMinus65Dbfs'] >= 1
         results.append(stats)
     report = {'capture': 'Live Android output via scrcpy; no replacement soundtrack', 'durationSeconds': duration,
               'streams': [{'type': s['codec_type'], 'codec': s['codec_name']} for s in probe['streams']], 'windows': results,
