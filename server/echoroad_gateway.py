@@ -139,6 +139,7 @@ class Handler(BaseHTTPRequestHandler):
         except OverflowError:self.reply(429,{'error':'Report rate or capacity limit'})
         except (ValueError,TypeError,KeyError):self.reply(400,{'error':'Invalid observation'})
     def do_GET(self):
+        if self.path=='/healthz':return self.reply(200,{'status':'ok'})
         who=self.identity()
         if who is None:return self.reply(401,{'error':'Unauthorized'})
         u=urllib.parse.urlsplit(self.path)
@@ -156,7 +157,14 @@ class Handler(BaseHTTPRequestHandler):
             'accidentZones':[r for r in self.server.zones if r['validUntilMs']>now and distance(r,p)<=2000][:50]})
 
 
+def bind_address(env):
+    host=env.get('CABIN_ECHO_HOST','127.0.0.1')
+    port=int(env.get('PORT',env.get('CABIN_ECHO_PORT','8012')))
+    if not host or not 1<=port<=65535:raise ValueError('Invalid listen address')
+    return host,port
+
+
 if __name__=='__main__':
     tokens=json.loads(os.environ['CABIN_ECHO_TOKENS_JSON'])
     zones=load_zones(os.environ.get('CABIN_ACCIDENT_ZONES_JSON',''),int(time.time()*1000))
-    EchoServer(('127.0.0.1',int(os.environ.get('CABIN_ECHO_PORT','8012'))),tokens,zones).serve_forever()
+    EchoServer(bind_address(os.environ),tokens,zones).serve_forever()

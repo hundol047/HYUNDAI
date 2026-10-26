@@ -3,7 +3,7 @@ import threading
 import unittest
 import urllib.request
 import urllib.error
-from echoroad_gateway import Store, EchoServer
+from echoroad_gateway import Store, EchoServer, bind_address
 
 
 class EchoRoadTest(unittest.TestCase):
@@ -58,3 +58,22 @@ class EchoRoadTest(unittest.TestCase):
             self.assertEqual({},self.store.last)
         finally:
             server.server_close()
+
+    def test_railway_port_and_explicit_public_bind(self):
+        self.assertEqual(('127.0.0.1',8012),bind_address({}))
+        self.assertEqual(('0.0.0.0',8080),bind_address({'CABIN_ECHO_HOST':'0.0.0.0','PORT':'8080','CABIN_ECHO_PORT':'8012'}))
+        for port in ['0','65536','abc']:
+            with self.assertRaises(ValueError):bind_address({'PORT':port})
+
+    def test_healthcheck_without_credentials_does_not_expose_reports(self):
+        server=EchoServer(('127.0.0.1',0),{'a'*24:'one'},store=self.store)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        try:
+            base=f'http://127.0.0.1:{server.server_port}'
+            with urllib.request.urlopen(base+'/healthz',timeout=3) as response:
+                self.assertEqual(200,response.status)
+                self.assertEqual({'status':'ok'},json.load(response))
+            with self.assertRaises(urllib.error.HTTPError) as error:
+                urllib.request.urlopen(base+'/v1/risks?lat=37.5&lon=127',timeout=3)
+            self.assertEqual(401,error.exception.code)
+        finally:server.shutdown();server.server_close();thread.join()
