@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "71aa89c28b4a27b74fbd1b22dec0c0d7a502bc37",
-  "apkSha256": "7b813330b007ae75f2ae5cfdd88904d1b73b18a91b0a2a0f64d5f00a72aa16bb",
+  "sourceCommit": "d153a4a2711d8d7f939ba0662cfcf1b6146aabe5",
+  "apkSha256": "c7bea72909a8d8708fc3604e6578b31d2ee82fc86c8a0541e2b0565bb821329a",
   "tests": {
     "core": {
-      "tests": 162,
+      "tests": 168,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 202,
+      "tests": 209,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -214,6 +214,24 @@
     "sharedPhoneVehiclePanel": true,
     "departurePreservingExtension": true,
     "explicitPlaceCancellation": true,
+    "physicalDeviceValidated": false
+  },
+  "walkingEchoRoad": {
+    "footRoundTripAndAsymmetricReturn": true,
+    "publicFootHttpProbes": [
+      "Pangyo",
+      "Seoul",
+      "Tokyo",
+      "New York",
+      "Paris street"
+    ],
+    "noRouteObserved": "Paris initial coordinates",
+    "echoLocalHttpValidated": true,
+    "pythonServerTestsPassed": 18,
+    "pythonScriptTestsPassed": 52,
+    "publicEchoServerDeployed": false,
+    "officialAccidentFeedConnected": false,
+    "koroadAuthenticatedApiValidated": false,
     "physicalDeviceValidated": false
   }
 }
