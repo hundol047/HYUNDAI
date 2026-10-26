@@ -7,7 +7,7 @@ import unittest
 import urllib.request
 import urllib.error
 from accident_zones import load_zones, metadata, validate_geometry
-from echoroad_gateway import EchoServer
+from echoroad_gateway import EchoServer, Store
 
 NOW=1793000000000
 DATA=Path(__file__).parent/'data/accident-zones.json'
@@ -29,7 +29,7 @@ class AccidentZonesTest(unittest.TestCase):
         with self.assertRaises(ValueError):validate_geometry({'type':'Polygon','coordinates':[ring[:-1]]})
     def test_public_dataset_query_never_exposes_private_reports(self):
         zones=load_zones(DATA,NOW);r=zones[0]
-        server=EchoServer(('127.0.0.1',0),{'a'*24:'test-device'},zones)
+        server=EchoServer(('127.0.0.1',0),{'a'*24:'test-device'},zones,Store(lambda:NOW))
         thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
         try:
             base=f'http://127.0.0.1:{server.server_port}'

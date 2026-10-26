@@ -1,6 +1,6 @@
 # Railway에서 EchoRoad 실행하기
 
-이 저장소의 `railway.toml`은 Android 앱 전체 대신 `server/Dockerfile.echo`의 Python 공유 서버만 빌드합니다. 앱 APK는 바뀌지 않습니다. 기본 데이터셋은 비어 있으며, 업로드된 CSV를 아직 자동으로 서비스하지 않습니다.
+이 저장소의 `railway.toml`은 Android 앱 전체 대신 `server/Dockerfile.echo`의 Python 공유 서버만 빌드합니다. 앱 APK는 바뀌지 않습니다. 공식 CSV에서 가공한 최신 1,271개 구역이 기본 데이터셋에 포함됩니다. 별도 데이터 환경변수를 넣지 않아도 시작합니다.
 
 1. Railway의 HYUNDAI **서비스** → Settings → Source에서 배포 브랜치를 `fix/vehicle-runtime-issues`로 선택합니다. main에는 이 설정이 아직 없습니다. Root Directory는 저장소 루트(`/`)로 유지합니다. 기존 사용자 지정 Build Command·Start Command가 있다면 이 Dockerfile과 충돌하지 않는지 확인합니다.
 2. 서비스 → Variables에 `CABIN_ECHO_TOKENS_JSON`을 추가합니다. 값은 **기기별 무작위 접근키 → 익명 기기 ID**의 JSON 객체입니다. 모든 이용자에게 같은 키를 배포하면 안 됩니다. 첫 검토용 휴대폰에는 `device-01` 같은 ID를 사용합니다.
@@ -21,4 +21,4 @@ python -c "import secrets,json; print(json.dumps({secrets.token_urlsafe(32): 'de
 
 [파일별 검사 결과](ACCIDENT_UPLOAD_AUDIT.json). 지자체별 5,977행, 보행자 2,402행, 어린이 1,300행, 결빙 685행입니다. 좌표·Polygon/MultiPolygon 구조 검사 오류는 0건이며 실제 도로 위치 정확성 검증은 아닙니다. 별도 지역별 통계 46,764행은 좌표가 없어 지점 안내로 사용할 수 없습니다.
 
-좌표 자료에는 명시적 통계 연도 열이 없습니다. `사고다발지id`의 앞 네 자리를 통계 연도로 간주하면 안 됩니다. 예를 들어 파일명은 2025년까지인데 `2026...` ID가 존재합니다. 유형별 통계 기준연도와 데이터셋 ID의 공식 대응 관계, 최신 자료 선택, MultiPolygon 처리와 기존 5,000행 한도 처리가 필요하므로 현재 서버에 임의 적재하지 않았습니다. 파일 방식은 API 키 없이 가공·연결할 수 있지만 새 자료 갱신은 별도 다운로드가 필요합니다.
+좌표 자료에는 명시적 통계 연도 열이 없습니다. `사고다발지id`의 앞 네 자리를 통계 연도로 간주하면 안 됩니다. 예를 들어 파일명은 2025년까지인데 `2026...` ID가 존재합니다. 이후 공식 코드표로 대응 관계를 검증하고 최신 통계 기간 1,271행을 선택해 서버에 적재했습니다. [결과·제한 사항](ACCIDENT_AREAS_KO.md). 파일 방식은 API 키 없이 가공·연결할 수 있지만 새 자료 갱신은 별도 다운로드가 필요합니다.

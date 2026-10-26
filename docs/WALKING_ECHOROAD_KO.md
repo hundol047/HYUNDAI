@@ -22,7 +22,7 @@
 
 ## 공식 사고 다발 자료
 
-현재 **발급된 API 키가 없어 공식 자료 미연결**입니다. [한국도로교통공단 공개 API 안내](https://opendata.koroad.or.kr/api/selectLgDataSet.do)의 실제 필드에 맞춘 가져오기 스크립트를 준비했습니다. 실제 인증 API 호출은 검증하지 못했습니다. 발급 후 서버 환경에 `KOROAD_API_KEY`를 설정하고 실행합니다. 키 값은 앱·저장소·채팅에 넣지 않습니다.
+현재 **공식 다운로드 CSV로 1,271개 구역을 연결**했습니다. API 키 없이 파일 방식으로 조회합니다. [자료·검증 범위](ACCIDENT_AREAS_KO.md). 아래 API 스크립트는 별도의 자동 수집 선택지입니다. [한국도로교통공단 공개 API 안내](https://opendata.koroad.or.kr/api/selectLgDataSet.do)의 실제 필드에 맞춘 가져오기 스크립트를 준비했습니다. 실제 인증 API 호출은 검증하지 못했습니다. 발급 후 서버 환경에 `KOROAD_API_KEY`를 설정하고 실행합니다. 키 값은 앱·저장소·채팅에 넣지 않습니다.
 
 ```bash
 python3 scripts/fetch_accident_zones.py --year 2023 --sido 11 --sigungu 680 --output /secure/accident-zones.json

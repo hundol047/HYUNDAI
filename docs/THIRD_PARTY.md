@@ -53,4 +53,4 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 ### 보행 라우팅 및 사고 다발 통계 연결
 
 - OSM/FOSSGIS 보행 라우팅: https://routing.openstreetmap.de/about.html (OSM/ODbL 데이터, 제공자 사용 정책·개인정보 안내 적용). 지도에는 OpenStreetMap 기여자 출처와 지도 오류 제보 링크를 제공합니다. `foot-route-pangyo.json`은 공개 장소 좌표의 실제 라우팅 응답 테스트 fixture입니다.
-- 한국도로교통공단 사고 다발 지역 공개 API: https://opendata.koroad.or.kr/api/selectLgDataSet.do . 연결 어댑터만 제공하며 현재 실제 데이터·API 키는 포함하지 않습니다. 발급 시 제공 기관의 이용 조건과 해당 자료의 출처 표시 조건을 확인해야 합니다.
+- 한국도로교통공단 사고 다발 지역 공개 API: https://opendata.koroad.or.kr/api/selectLgDataSet.do . 공식 CSV 파일에서 최신 통계 기간의 1,271개 구역을 가공해 포함합니다. [기간·원본 해시·출처](../server/data/README.md). API 키는 포함하지 않으며 현재 사고 발생 정보가 아닙니다.

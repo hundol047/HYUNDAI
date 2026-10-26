@@ -11,7 +11,7 @@ Set `CABIN_ECHO_TOKENS_JSON` in the server's secret environment before starting.
 
 The service binds `127.0.0.1:8012` (override `CABIN_ECHO_PORT`). For Android connection, place it behind a trusted HTTPS reverse proxy with request/body/connection limits. Keep the upstream private. Disable access logs containing query coordinates or Authorization. The Android client rejects HTTP and redirects. The Python HTTP server is intended as the private upstream, not an Internet-facing TLS server. Railway deployment configuration is included; see the linked deployment guide.
 
-Optional `CABIN_ACCIDENT_ZONES_JSON` points to a reviewed historical dataset imported with `scripts/fetch_accident_zones.py`. No sample or synthetic accident dataset is enabled. Invalid or expired input fails startup. Renew and restart before expiry. Data format and limitations: [Korean feature guide](../docs/WALKING_ECHOROAD_KO.md).
+Optional `CABIN_ACCIDENT_ZONES_JSON` points to a reviewed historical dataset imported with `scripts/fetch_accident_zones.py`. The default bundled dataset contains 1,271 real official historical areas. No synthetic dataset is enabled. Invalid input fails startup; expired rows are excluded without stopping community observations. Renew and restart before expiry. Data format and limitations: [Korean feature guide](../docs/WALKING_ECHOROAD_KO.md).
 
 Protocol (all endpoints require `Authorization: Bearer <installation token>`):
 
@@ -23,3 +23,5 @@ In-memory report lifetime: 15 minutes, including idle expiry. Restart clears rep
 Railway configuration and setup: [Korean deployment guide](../docs/RAILWAY_ECHOROAD_KO.md). The optional `CABIN_ECHO_HOST` overrides the local bind address, and Railway's `PORT` overrides `CABIN_ECHO_PORT`. `/healthz` returns a minimal unauthenticated process readiness response; risk queries remain authenticated. The Docker image sets the bind host to `0.0.0.0` for the platform's HTTPS proxy.
 
 `GET /v1/status` requires Bearer authentication and checks credentials without receiving coordinates or inserting observations. Returns `status` and `accidentDatasetConnected`; HTTP 200 is authentication success, not proof of any live observations.
+
+Public historical dataset metadata `/v1/dataset` and nearby areas `/v1/accident-zones?lat=...&lon=...` contain no community observations or identities. These reads are limited to 20 per second globally, 2km and 50 areas, with a 150KB area payload cap. The authenticated combined endpoint uses the same selection and reports truncation. Dataset digest is computed once at startup. See [official area provenance and validation](../docs/ACCIDENT_AREAS_KO.md).
