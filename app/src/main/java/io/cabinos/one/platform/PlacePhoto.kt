@@ -24,43 +24,22 @@ object PlacePhoto {
     private val permits=Semaphore(2)
     suspend fun forPlace(place:NearbyActivity):Photo? {
         if(place.simulated)return null
-        place.commonsPhoto?.let {load(it)?.let {photo->return photo}}
-        val endpoint=PlacePhotoReference.osmUrl(place.id) ?: return null
-        val key="${place.id}|${place.name}|${place.latitude}|${place.longitude}"
+        val key="${place.id}|${place.name}|${place.latitude}|${place.longitude}|${place.commonsPhoto}"
         return permits.withPermit {
             val previous=references.get(key)
-            if(previous!=null&&System.currentTimeMillis()-previous.at in 0..600000)return@withPermit previous.file?.let {load(it)}
+            if(previous!=null&&System.currentTimeMillis()-previous.at in 0..600000) {
+                previous.file?.let {load(it)?.let {photo->return@withPermit photo}}
+                if(previous.file==null&&System.currentTimeMillis()-previous.at in 0..60000)return@withPermit null
+            }
             withContext(Dispatchers.IO) {
-                try {
-                    delay(500)
-                    val tags=try {PlacePhotoReference.tags(String(download(endpoint,700000)),place.id) ?: JSONObject()}
-                    catch(error:Exception){if(error is CancellationException)throw error;JSONObject()}
-                    var file=PlacePhotoReference.commons(tags)
-                    if(file==null&&place.latitude!=null&&place.longitude!=null) {
-                        val id=PlacePhotoReference.wikidata(tags)
-                        if(id!=null)file=PlacePhotoReference.wikidataFile(String(download("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=$id&props=claims&format=json",700000)),id,NavPoint(place.latitude!!,place.longitude!!))
-                    }
-                    if(file==null&&place.latitude!=null&&place.longitude!=null) {
-                        val point=NavPoint(place.latitude!!,place.longitude!!)
-                        PlacePhotoReference.wikipediaUrl(tags)?.let {url->
-                            file=PlacePhotoReference.wikipediaFile(String(download(url,200000)),point)
-                        }
-                        if(file==null) {
-                            val query=URLEncoder.encode(place.name,"UTF-8")
-                            val language=if(place.name.any {it in '가'..'힣'})"ko" else "en"
-                            val ids=PlacePhotoReference.candidates(String(download("https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=$language&limit=3&search=$query",200000)))
-                            if(ids.isNotEmpty()) {
-                                val entities=String(download("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims%7Clabels%7Caliases&ids="+ids.joinToString("%7C"),700000))
-                                file=ids.firstNotNullOfOrNull {id->PlacePhotoReference.namedFile(entities,id,place.name,point)}
-                            }
-                        }
-                    }
-                    references.put(key,Reference(System.currentTimeMillis(),file))
-                    file?.let {load(it)}
-                }catch(error:Exception){if(error is CancellationException)throw error;null}
+                delay(500)
+                val result=PlacePhotoResolver(read={String(download(it,700000))},image={load(it)}).resolve(place)
+                references.put(key,Reference(System.currentTimeMillis(),result?.file))
+                result?.photo
             }
         }
     }
+
     fun clear(){cache.evictAll();references.evictAll()}
     fun file(value:String):String?=value.takeIf {
         it.startsWith("File:") && it.length in 7..240 && it.none {c->c<' '||c=='/'||c=='\\'} &&

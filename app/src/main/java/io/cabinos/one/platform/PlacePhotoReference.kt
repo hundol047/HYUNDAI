@@ -72,8 +72,9 @@ object PlacePhotoReference {
         return null
     }
     fun commons(tags:JSONObject):String? {
-        PlacePhoto.file(tags.optString("wikimedia_commons"))?.let {return it}
-        val raw=tags.optString("image")
+        return listOf("wikimedia_commons","image").firstNotNullOfOrNull {key->commonsValue(tags.optString(key))}
+    }
+    private fun commonsValue(raw:String):String? {
         PlacePhoto.file(raw)?.let {return it}
         return runCatching {
             val uri=URI(raw)
