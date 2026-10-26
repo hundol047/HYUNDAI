@@ -3,6 +3,7 @@ package io.cabinos.one.platform
 import android.speech.tts.TextToSpeech
 import android.speech.tts.Voice
 import java.util.Locale
+import kotlin.math.roundToInt
 
 /** Never select a network voice implicitly: road names stay on this device. */
 internal object NavigationSpeechVoice {
@@ -18,6 +19,13 @@ internal object NavigationSpeechVoice {
         val requested=Locale.forLanguageTag(tag)
         val supported=Locale.forLanguageTag(io.cabinos.core.NavigationLanguages.resolve(tag))
         return if(requested.language==supported.language)requested else supported
+    }
+
+    /** Speech only: route progress and turn thresholds retain the exact distance. */
+    fun roundedMeters(meters:Double):Int {
+        require(meters.isFinite()&&meters>=0)
+        val step=when {meters>=1000->100;meters>=100->10;else->1}
+        return (meters/step).roundToInt()*step
     }
 
     fun koreanMeters(meters:Int):String {

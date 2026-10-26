@@ -24,6 +24,18 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test fun automaticGuidanceDoesNotStartADestinationUtteranceThatItImmediatelyInterrupts() {
+        org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertFalse("목적지 읽기를 시작하자마자 첫 안내로 끊으면 안 됩니다",tts.spokenTextList.contains(destination.name))
+            assertTrue(tts.spokenTextList.isNotEmpty())
+        }
+    }
+
     @Test @Config(sdk=[35]) fun fusedProviderCanSupplyFreshPreciseOriginOnModernPhones() {
         Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
             shadowOf(f.manager).setProviderEnabled(LocationManager.GPS_PROVIDER,false)

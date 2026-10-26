@@ -31,6 +31,12 @@ class NavigationSpeechVoiceTest {
     @Test fun missingOfflineLanguageIsNotReplacedWithAnotherLanguage() {
         assertNull(NavigationSpeechVoice.select(setOf(voice("en","en-US",Voice.QUALITY_HIGH),voice("ko-cloud","ko-KR",Voice.QUALITY_HIGH,true)),Locale.KOREA))
     }
+    @Test fun spokenDistanceAvoidsUnhelpfulPrecisionWithoutChangingCloseTurnDistances() {
+        assertEquals(1100,NavigationSpeechVoice.roundedMeters(1079.0))
+        assertEquals(1100,NavigationSpeechVoice.roundedMeters(1081.0))
+        assertEquals(280,NavigationSpeechVoice.roundedMeters(278.0))
+        assertEquals(37,NavigationSpeechVoice.roundedMeters(37.0))
+    }
     @Test fun koreanDistanceIsReadAsWordsInsteadOfDigitsOrSeparators() {
         assertEquals("천백 미터",NavigationSpeechVoice.koreanMeters(1100))
         assertEquals("삼백 미터",NavigationSpeechVoice.koreanMeters(300))

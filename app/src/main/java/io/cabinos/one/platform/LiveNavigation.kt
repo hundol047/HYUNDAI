@@ -614,7 +614,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
             if (current() && canPlan()) {
                 tracker.preview(r.localized(language))
                 publish()
-                if (engine.state.value.preferences.voiceEnabled)
+                if (!pendingStart && engine.state.value.preferences.voiceEnabled)
                     speech.speakNavigation(destination.name, language)
                 mutable.value =
                     mutable.value.copy(
@@ -683,14 +683,14 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         if (key != spoken && !mutable.value.voiceListening && repeatGuard.allow(g, clock())) {
             val code = NavigationLanguages.resolve(language)
             val spokenLocale = NavigationSpeechVoice.locale(language)
-            val distance = if(code=="ko") NavigationSpeechVoice.koreanMeters(g.turnMeters.toInt()) else
+            val distance = if(code=="ko") NavigationSpeechVoice.koreanMeters(NavigationSpeechVoice.roundedMeters(g.turnMeters)) else
                 android.icu.text.MeasureFormat.getInstance(
                         spokenLocale,
                         android.icu.text.MeasureFormat.FormatWidth.WIDE,
                     )
                     .format(
                         android.icu.util.Measure(
-                            g.turnMeters.toInt(),
+                            NavigationSpeechVoice.roundedMeters(g.turnMeters),
                             android.icu.util.MeasureUnit.METER,
                         )
                     )
