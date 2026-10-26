@@ -4,7 +4,7 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/2f7a7c7ab9a67324df8f778843107e5042588e3c/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/137cc724764e9f7daa748d183adf8021e0c24ad9/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -14,8 +14,11 @@
 
 ## 이번 수정
 
+- EchoRoad 연결 확인: 주소가 기본 입력되며, 키를 입력하고 **연결 확인**을 누르면 창을 유지한 채 실제 인증 결과를 표시합니다. 정차·GPS 미연결 상태에서도 위치 전송 없이 확인합니다. 성공 문구 확인 후 **닫기**를 누르세요. 인증 성공과 사고 자료 미적재는 별도 상태로 표시합니다. 키는 계속 메모리에만 보관합니다.
+
+
 - 실제 장소는 **보행 경로 확인하고 계획**을 누르면 보행 전용 서버에서 가는 길·돌아오는 길을 조회합니다. 실제 복귀 시간으로 알림을 계산하며, 경로 미확인 장소는 계획을 확정하지 않습니다.
-- EchoRoad는 정확한 실제 GPS의 급감속 후보를 동의하에 전송하고 서로 다른 기기 제보를 집계해 경로 앞 참고 정보로 표시합니다. **공개 공유 서버 미배포·공식 사고 다발 자료 미연결**입니다. 설치만으로 실제 이용자 제보가 나타나지는 않습니다. [연결·검증 범위](../docs/WALKING_ECHOROAD_KO.md)
+- EchoRoad는 정확한 실제 GPS의 급감속 후보를 동의하에 전송하고 서로 다른 기기 제보를 집계해 경로 앞 참고 정보로 표시합니다. **Railway 공개 공유 서버 배포·공식 사고 다발 자료 미적재**입니다. 설치만으로 실제 이용자 제보가 나타나지는 않습니다. [연결·검증 범위](../docs/WALKING_ECHOROAD_KO.md)
 
 
 - 간단한 조작: 56dp 세션 버튼, 한 번에 소리 끄기, 재개 불가 설명을 추가하고 시간이 만료된 세션의 잘못된 재개 성공 응답을 수정했습니다. [상세 변경](../docs/SIMPLE_CONTROLS_KO.md)
@@ -65,7 +68,7 @@
 
 이번 공개 캠퍼스 좌표(37.279,127.908) 점검에서 Photon 카페 결과는 0곳, Overpass 두 서버는 20초 제한 시간 초과였습니다. 이 지역의 실제 카페 검색이 완성됐다고 검증하지 못했습니다.
 
-core 168개 + Android 209개, 총 **377개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
+core 168개 + Android 215개, 총 **383개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
 
 이번 실제 HTTP 점검에서 판교 기준 Photon 검색은 카페·식당·산책·쇼핑 각각 15곳(HTTP 200)을 반환했고, OSRM 자동차 경로는 약 90.4km 경로(HTTP 200)를 반환했습니다. 이는 서버 점검이며 S20+ 실물에서 같은 경로를 주행한 결과가 아닙니다. Overpass의 502·시간 초과는 재현되어 보조 경로로 남겼습니다. 공개 서비스의 장애·미등록 매장·사진 누락은 가능하며 모든 지역의 수록을 보장하지 않습니다. 상용 장소 API 키는 설정되어 있지 않습니다.
 
