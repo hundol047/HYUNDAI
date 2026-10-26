@@ -29,6 +29,7 @@ def main():
     p.add_argument('--package',choices=['io.cabinos.one','io.cabinos.one.preview'],default='io.cabinos.one')
     p.add_argument('--stop-plan',action='store_true',help='Record the parked-plan upgrade scenario')
     p.add_argument('--place-photos',action='store_true',help='Record actual nearby photos using an explicitly simulated Paris GPS position')
+    p.add_argument('--navigation-review',action='store_true',help='Record live routing with simulated Seoul GPS and portrait/short-landscape controls')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -96,17 +97,22 @@ def main():
         # the startup failure evidence or require another responsive shell.
         log_output=(a.output/'startup-logcat.txt').open('wb')
         log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','*:I'],stdout=log_output,stderr=subprocess.STDOUT)
-        if a.place_photos:
+        if a.place_photos or a.navigation_review:
             for permission in ['android.permission.ACCESS_FINE_LOCATION','android.permission.ACCESS_COARSE_LOCATION']:
                 adb('shell','pm','grant',a.package,permission)
         adb('shell','am','force-stop',a.package)
         adb('shell','am','start','-W','-n',a.package+'/io.cabinos.one.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
+        adb('shell','dumpsys','gfxinfo',a.package,'reset',check=False)
+        (a.output/'memory-before.txt').write_bytes(adb('shell','dumpsys','meminfo',a.package,check=False))
         video='/sdcard/cabinos-apk-proof.mp4'
         with (a.output/'screenrecord.log').open('wb') as log:
             recorder=subprocess.Popen(base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video],stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
-            if a.place_photos:
+            if a.navigation_review:
+                from record_navigation_review import record
+                record(adb, tree, tap, check, snapshot, scenario)
+            elif a.place_photos:
                 from record_place_photos import record
                 record(adb, tree, tap, check, snapshot, scenario)
             elif a.stop_plan:
@@ -177,12 +183,15 @@ def main():
                 try:recorder.wait(timeout=20)
                 except subprocess.TimeoutExpired:recorder.terminate();recorder.wait(timeout=10)
             adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
+        for report,service in [('rendering.txt','gfxinfo'),('memory-after.txt','meminfo')]:
+            try:(a.output/report).write_bytes(adb('shell','dumpsys',service,a.package,check=False,timeout=10))
+            except (subprocess.SubprocessError,OSError):pass
         try:fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False,timeout=10).decode().strip()
         except (subprocess.SubprocessError,OSError):fingerprint='unavailable: device connection lost'
         result={'applicationId':a.package,'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',
-          'locationSource':'emulator geo fix: Paris, NOT actual GPS' if a.place_photos else 'not tested',
+          'locationSource':('emulator geo fix: Seoul, NOT actual GPS' if a.navigation_review else 'emulator geo fix: Paris, NOT actual GPS' if a.place_photos else 'not tested'),
           'apkSha256':hashlib.sha256(a.apk.read_bytes()).hexdigest(),'checks':checks,'pleosValidated':False}
         (a.output/'evidence.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     return 0
