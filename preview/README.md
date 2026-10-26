@@ -4,13 +4,13 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/d96dddb1a08445a1c756bb854bf922795553efed/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/7cdd0982d0a232db160e1df0045dc5a185739d01/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
 휴대폰 위치 서비스를 켜고 앱에 **정확한 위치**를 허용하세요. 음성 입력에는 마이크 권한과 기기 음성 인식 서비스가 필요합니다. APK는 아이폰에 설치할 수 없습니다. 팀 서명 제출본 `apk/`는 변경하지 않았습니다.
 
-[사진 표시 검증 영상 — 이전 검토본](../docs/video/place-photos/README.md) — Android 13에서 약 1분 28초 연속 녹화. 카페 두 곳·공원 사진과 사진 미확인 상태를 확인했습니다. 위치·차량 상태는 모의 입력이며 음성 트랙은 없습니다.
+[현재 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13에서 약 2분 45초 연속 녹화. 정차 플랜 10건·별도 사진 검사 4건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
 
 ## 이번 수정
 

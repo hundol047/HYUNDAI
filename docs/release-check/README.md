@@ -53,3 +53,11 @@ bash scripts/package-submission.sh
 ```
 
 스크립트는 공식 SDK 테스트·release·lint, 서명·정렬·인증서·버전·해시를 확인하고 별도 후보 폴더를 만듭니다. 후보와 동일한 APK를 Pleos에서 검증한 후에만 `apk/퓨처랩스_CabinOS_ONE_release.apk`와 SHA256SUMS를 갱신합니다. 키를 복구할 수 없다면 새 서명 전환과 기존 설치본 업데이트 불가 문제를 먼저 결정해야 합니다.
+
+## 실행한 검사
+
+- 공식 SDK 포함: core 172개 + Android 232개 = 404개, 실패·건너뜀 0.
+- 서버 25개 + 도구 55개 = 80개, 실패 0. 합계 484개.
+- `:app:assemblePhonePreview :app:assembleRelease` 성공. `:app:lintDebug :core:jsBrowserDistribution` 성공.
+- [서명 전 차량용 후보 식별 정보](build-candidate.json): 실제 빌드·SDK 표시·버전·비디버그·정렬 확인. 서명·제출 가능 판정은 false.
+- [현재 APK 연속 실행 영상과 해시 대조](../video/release-review/README.md): 실제 Android 에뮬레이터, 차량·GPS 모의 입력. S20+·최신 Pleos 실기기 검증은 남아 있습니다.
