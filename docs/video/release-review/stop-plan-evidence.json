@@ -1,52 +1,62 @@
 {
   "applicationId": "io.cabinos.one.preview",
-  "startedAtUtc": "2026-10-26T06:48:47.436860+00:00",
+  "startedAtUtc": "2026-10-26T09:37:16.352240+00:00",
   "captureMethod": "adb shell screenrecord: continuous device frames",
   "deviceType": "regular Android emulator, NOT Pleos",
   "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
   "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
   "locationSource": "not tested",
-  "apkSha256": "fc8807cb071997c9c19b4dc41fe7db3b63bc07ac27e2e59140535e919f62511f",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
   "checks": [
     {
       "name": "upgrade plan visible",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 4.19
     },
     {
       "name": "motion locks cabin",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 14.89
     },
     {
       "name": "manual departure presets",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 30.19
     },
     {
       "name": "active session sound control visible before plan",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 53.3
     },
     {
       "name": "one tap sound stop available",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 63.77
     },
     {
       "name": "sound stopped without reopening picker",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 70.67
     },
     {
       "name": "bounded extension changes countdown",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 85.06
     },
     {
       "name": "charge change shortens session and blocks extension",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 122.87
     },
     {
       "name": "zero speed in drive stays locked",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 137.33
     },
     {
       "name": "parked plan recovers",
-      "result": "passed"
+      "result": "passed",
+      "secondsSinceRecordingStart": 152.27
     }
   ],
   "pleosValidated": false
