@@ -74,10 +74,12 @@ def record(adb, tree, tap, check, snapshot, scenario):
         time.sleep(3)
         check('large-font short landscape preserves expanded map', '지도 축소', 'nav-05-short-large-font')
         check('short landscape stop remains reachable', '안내 종료', 'nav-06-short-controls')
+        # Keep the same 360x800 dp portrait layout inside screenrecord's initial
+        # 1280x800 pixel canvas, so the continuous video does not crop its bottom.
         # Portrait recreates the activity; it must retain navigation and the dialog.
         adb('shell', 'settings', 'put', 'system', 'font_scale', '1.0')
-        adb('shell', 'wm', 'size', '720x1600')
-        adb('shell', 'wm', 'density', '320')
+        adb('shell', 'wm', 'size', '360x800')
+        adb('shell', 'wm', 'density', '160')
         time.sleep(3)
         check('portrait rotation retains expanded guidance', '지도 축소', 'nav-07-portrait')
         tap('안내 종료')
