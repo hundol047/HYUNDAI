@@ -4,6 +4,13 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun courseMissingCannotDistinguishSameHeadingParallelRoadsInsideGpsRadius() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.001,0.0),NavPoint(.001,.002),NavPoint(0.0,.002),NavPoint(0.0,.0001),NavPoint(.001,.0001))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,380.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p.last(),"arrive")))
+        val match=NavigationGeometry.match(r,NavPoint(.0005,.00005),ambiguityRadius=15.0)
+        assertTrue("Same-heading alternatives also make position ambiguous without course",match.directionUncertain)
+    }
+
     @Test fun preciseGpsWithoutCourseStillHoldsTurnsBetweenVeryCloseHairpinLegs() {
         val p=listOf(NavPoint(0.0,0.0),NavPoint(.001,0.0),NavPoint(.001,.00005),NavPoint(0.0,.00005))
         val r=NavigationGeometry.route(NavPlace("end",p.last()),p,228.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p[1],"turn","right"),NavManeuver(p.last(),"arrive")))

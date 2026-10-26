@@ -89,8 +89,8 @@ object NavigationGeometry {
     /** Project onto a polyline, correctly wrapping longitude across the date line. */
     fun project(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null,headingWeight:Double=40.0,continuityWeight:Double=.2,expectedProgress:Double?=previous,maxGap:Double=Double.POSITIVE_INFINITY):Pair<Double,Double> = match(route,p,previous,heading,maxDelta,headingWeight,continuityWeight,expectedProgress,maxGap).let {it.progressMeters to it.gapMeters}
     fun match(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null,headingWeight:Double=40.0,continuityWeight:Double=.2,expectedProgress:Double?=previous,maxGap:Double=Double.POSITIVE_INFINITY,ambiguityRadius:Double=0.0):RouteProjection {
-        var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY;var bestHeading=0.0
-        val nearbyCandidates=if(ambiguityRadius>0)mutableListOf<Pair<Double,Double>>() else null
+        var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY
+        val nearbyCandidates=if(ambiguityRadius>0)mutableListOf<Double>() else null
         // Cumulative distances are ordered. Visit only the physically reachable window
         // on a GPS update, including segments that straddle either boundary.
         fun lowerBound(target:Double):Int {
@@ -114,17 +114,17 @@ object NavigationGeometry {
             val gap=hypot(ax+t*dx,ay+t*dy)
             val at=route.cumulative[i]+t*(route.cumulative[i+1]-route.cumulative[i])
             if(previous!=null&&maxDelta!=null&&abs(at-previous)>maxDelta)continue
-            val segmentHeading=if(heading!=null||nearbyCandidates!=null)((atan2(dx,dy)*180/PI)+360)%360 else 0.0
-            if(nearbyCandidates!=null&&gap<=ambiguityRadius)nearbyCandidates.add(at to segmentHeading)
+            val segmentHeading=if(heading!=null)((atan2(dx,dy)*180/PI)+360)%360 else 0.0
+            if(nearbyCandidates!=null&&gap<=ambiguityRadius)nearbyCandidates.add(at)
             val headingPenalty=if(heading!=null)headingWeight*(abs(delta(segmentHeading-heading))/180) else 0.0
             // At intersections prefer the nearby part of the route, not a later crossing.
             val score=gap+headingPenalty+(if(previous==null)0.0 else abs(at-(expectedProgress ?: previous))*continuityWeight)
             // Continuity must not select an implausibly distant segment when a
             // geographically plausible candidate exists inside the same window.
             val plausible=gap<=maxGap;val bestPlausible=bestGap<=maxGap
-            if((plausible&&!bestPlausible)||(plausible==bestPlausible&&score<bestScore)){bestScore=score;bestGap=gap;bestProgress=at;bestHeading=segmentHeading}
+            if((plausible&&!bestPlausible)||(plausible==bestPlausible&&score<bestScore)){bestScore=score;bestGap=gap;bestProgress=at}
         }
-        val ambiguous=nearbyCandidates?.any {(at,course)->abs(at-bestProgress)>max(45.0,ambiguityRadius*2)&&abs(delta(course-bestHeading))>=75}==true
+        val ambiguous=nearbyCandidates?.any {at->abs(at-bestProgress)>max(45.0,ambiguityRadius*2)}==true
         return RouteProjection(bestProgress,bestGap,ambiguous)
     }
 }
