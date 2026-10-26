@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "a948e13949c7e7a150ffe7739bca1de2f84268b0",
-  "apkSha256": "fc8807cb071997c9c19b4dc41fe7db3b63bc07ac27e2e59140535e919f62511f",
+  "sourceCommit": "03e7bd6abded1e142097084a77e4660a7c0cc351",
+  "apkSha256": "a553ed0dd0ed99cb937904dbca6289cd7281fe53bc97fba99260fd1e8a8707d7",
   "tests": {
     "core": {
       "tests": 172,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 232,
+      "tests": 253,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -365,5 +365,14 @@
     "liveNavigationHttpPassed": 15,
     "physicalDeviceValidated": false,
     "teamSignedLatestRelease": false
+  },
+  "finalUsability": {
+    "androidTests": 253,
+    "coreTests": 172,
+    "failures": 0,
+    "browserVoiceChecks": 17,
+    "audioRecordingsDistinct": true,
+    "rotationAndShortWindowTests": true,
+    "physicalDeviceValidated": false
   }
 }
