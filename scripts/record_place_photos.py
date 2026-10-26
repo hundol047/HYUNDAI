@@ -33,7 +33,15 @@ def record(adb, tree, tap, check, snapshot, scenario):
     def category(label):
         x1,y1,x2,y2=category_control(tree(),label)
         adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2))
-        expect('category filter selected: '+label,label+' ', 'filter-'+label)
+        deadline=time.monotonic()+20
+        while time.monotonic()<deadline:
+            for node in tree().iter('node'):
+                value=node.get('text','')
+                if re.match(re.escape(label)+r" \d+곳 ·",value):
+                    check('category filter selected: '+label,value,'filter-'+label)
+                    return
+            time.sleep(1)
+        raise AssertionError('Category did not change: '+label)
 
     def reveal_photo(name, fragment, image):
         for _ in range(4):
