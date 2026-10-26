@@ -72,7 +72,7 @@ def record(adb, tree, tap, check, snapshot, scenario, audio_window=None):
         if audio_window is not None:
             def listen():
                 tap('다시 듣기')
-                time.sleep(10)
+                time.sleep(20)
             audio_window('Korean navigation repeat from app TTS', listen)
             check('navigation repeat recorded with device audio', '안내 종료', 'nav-audio-repeat')
             tap('안내 종료')

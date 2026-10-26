@@ -32,6 +32,8 @@ def main():
     p.add_argument('--navigation-review',action='store_true',help='Record live routing with simulated Seoul GPS and portrait/short-landscape controls')
     p.add_argument('--capture-audio',action='store_true',help='Record real device output with scrcpy, including audio')
     p.add_argument('--audio-review',action='store_true',help='Play all six ambient presets in the installed APK')
+    p.add_argument('--speech-review',action='store_true',help='Record an actual spoken preview from app settings')
+    p.add_argument('--review-language',default='ko-KR')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -135,6 +137,9 @@ def main():
             if a.navigation_review:
                 from record_navigation_review import record
                 record(adb, tree, tap, check, snapshot, scenario, audio_window=window if a.capture_audio else None)
+            elif a.speech_review:
+                from record_speech_review import record
+                record(adb, tree, tap, check, snapshot, scenario, window, a.review_language)
             elif a.audio_review:
                 from record_audio_review import record
                 record(adb, tree, tap, check, snapshot, scenario, window)
