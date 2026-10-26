@@ -58,6 +58,16 @@ import java.util.*
     val nav=rememberNavController()
     val entry by nav.currentBackStackEntryAsState()
     val route=entry?.destination?.route ?: "dashboard"
+    var pendingTab by rememberSaveable { mutableStateOf<String?>(null) }
+    // A restored navigation-only screen has not composed its parked NavHost yet.
+    // Mount that host first, then apply the requested tab after its graph is ready.
+    LaunchedEffect(pendingTab,navigationOpen,entry,s.parkedAllowed) {
+        val target=pendingTab
+        if(target!=null&&!navigationOpen&&entry!=null) {
+            nav.openTab(if(s.parkedAllowed)target else "dashboard")
+            pendingTab=null
+        }
+    }
     var assistantOpen by remember { mutableStateOf(false) }
     val navigationRequests by vm.navigationRequests.collectAsStateWithLifecycle()
 
@@ -122,7 +132,7 @@ import java.util.*
         }
     }
     LaunchedEffect(navigationRequests) {
-        if(navigationRequests>0){assistantOpen=false;navigationOpen=true
+        if(navigationRequests>0){assistantOpen=false;pendingTab=null;navigationOpen=true
             if(!vm.automotive && vm.liveNavigation.state.value.gpsConnection==io.cabinos.one.platform.GpsConnection.DENIED)requestNavigationLocation()
         }
     }
@@ -149,7 +159,7 @@ import java.util.*
                 val navigate:(String)->Unit = {
                     if(!s.parkedAllowed && it !in listOf("dashboard","navigation")) {
                         android.widget.Toast.makeText(context,"안내 종료 후 안전한 정차가 확인되면 지도·기록·설정을 사용할 수 있습니다.",android.widget.Toast.LENGTH_LONG).show()
-                    } else if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.openTab(it)} }
+                    } else if(it=="navigation"){pendingTab=null;navigationOpen=true} else {navigationOpen=false;pendingTab=it} }
                 Row(Modifier.fillMaxSize()) {
                     if(!compact) NavigationRailPanel(selected,s.parkedAllowed,navigate,{assistantOpen=true},{simulatorOpen=true},vm.automotive,voiceAvailable)
                     Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=if(compact)12.dp else 24.dp)) {

@@ -75,6 +75,17 @@ class CompactWindowTest {
         compose.runOnIdle {compose.activity.onBackPressedDispatcher.onBackPressed()}
         compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
     }
+    @Test fun tabsAfterRestoredNavigationWaitForTheParkedGraph() {
+        ready()
+        compose.onNodeWithText("내비").performClick()
+        compose.activityRule.scenario.recreate()
+        compose.onNodeWithText("홈").performClick()
+        compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
+        compose.onNodeWithText("내비").performClick()
+        compose.activityRule.scenario.recreate()
+        compose.onNodeWithText("설정").performClick()
+        compose.onNodeWithText("웜 샌드").performScrollTo().assertIsDisplayed()
+    }
     @Test @Config(qualifiers="w1280dp-h800dp-land-mdpi")
     fun navigationSearchRemainsReachableWhenKeyboardReducesContentHeight() {
         val vm=ready()
