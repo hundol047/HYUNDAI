@@ -649,6 +649,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
             return
         }
         cancelRequest()
+        mutable.value = mutable.value.copy(notice = "현재 위치에서 안내 중입니다. 실제 교통·차선 정보는 제공하지 않습니다.")
         safetyHeld = true
         stationary.reset()
         engine.setNavigationLock(true)

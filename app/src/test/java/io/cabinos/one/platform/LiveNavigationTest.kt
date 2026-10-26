@@ -136,6 +136,7 @@ class LiveNavigationTest {
             fun gps(){listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;accuracy=5f;speed=0f;time=now});shadowOf(Looper.getMainLooper()).idle()}
             gps();assertEquals(1,calls);assertEquals(end,nav.state.value.guidance.route?.destination)
             now+=1000;gps();assertEquals(1,calls);assertTrue(nav.state.value.guidance.active)
+            assertEquals("현재 위치에서 안내 중입니다. 실제 교통·차선 정보는 제공하지 않습니다.",nav.state.value.notice)
         }finally{nav.close();speech.close()}
     }
 
