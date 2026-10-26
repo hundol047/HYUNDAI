@@ -109,7 +109,11 @@ def main():
             for permission in ['android.permission.ACCESS_FINE_LOCATION','android.permission.ACCESS_COARSE_LOCATION']:
                 adb('shell','pm','grant',a.package,permission)
         if a.capture_audio:
-            adb('shell','cmd','media_session','volume','--stream','3','--set','12')
+            volume=adb('shell','cmd','media_session','volume','--stream','3','--get').decode()
+            bounds=re.search(r'range\s*\[\s*(\d+)\s*\.\.\s*(\d+)\s*\]',volume)
+            if not bounds:raise RuntimeError('Cannot determine emulator media volume range: '+volume)
+            adb('shell','cmd','media_session','volume','--stream','3','--set',bounds.group(2))
+            (a.output/'media-volume.txt').write_bytes(adb('shell','cmd','media_session','volume','--stream','3','--get'))
         adb('shell','am','force-stop',a.package)
         adb('shell','am','start','-W','-n',a.package+'/io.cabinos.one.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
