@@ -20,6 +20,10 @@ class NearbySearchCoordinatorTest {
         val result=NearbySearchCoordinator.search({i->listOf(place(NearbySearchCoordinator.categories[i]))},{error("unnecessary fallback")})
         assertEquals(4,result.places.size);assertTrue(result.complete)
     }
+    @Test fun totalFailureIsNotAnEmptySuccess()=runBlocking {
+        try {NearbySearchCoordinator.search({throw java.io.IOException()},{throw java.io.IOException()});fail("must preserve prior results via failure")}
+        catch(_:java.io.IOException){}
+    }
     @Test fun cancellationDoesNotTryFallback()=runBlocking {
         try {NearbySearchCoordinator.search({throw CancellationException()},{error("cancelled")});fail("must cancel")}catch(_:CancellationException){}
     }

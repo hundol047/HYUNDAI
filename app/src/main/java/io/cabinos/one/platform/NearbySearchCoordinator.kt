@@ -24,6 +24,7 @@ internal object NearbySearchCoordinator {
             catch(_:IOException){complete=false}
         }
         val merged=places.distinctBy {it.id}.groupBy {it.category}.values.flatMap {it.sortedBy {p->p.oneWaySeconds}.take(15)}.sortedBy {it.oneWaySeconds}
+        if(merged.isEmpty()&&!complete)throw IOException("주변 검색을 완료하지 못했습니다. 기존 결과를 유지합니다.")
         val notice="OpenStreetMap 등록 장소 ${merged.size}곳 · 반경 2km · "+
             if(complete)"영업 여부 확인 필요" else "${missing.joinToString("·")} 보완 검색 실패 · 다른 분류 결과 유지, 잠시 후 재시도"
         return NearbySearchResult(merged,notice,complete)
