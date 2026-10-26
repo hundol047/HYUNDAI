@@ -6,13 +6,15 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/741460605afd80995cff4a9a7c88d54af5e3de44/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f1fd2df2acc0351c88f87dee4c8f932aeecc5d84/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
 휴대폰 위치 서비스를 켜고 앱에 **정확한 위치**를 허용하세요. 음성 입력에는 마이크 권한과 기기 음성 인식 서비스가 필요합니다. APK는 아이폰에 설치할 수 없습니다. 팀 서명 제출본 `apk/`는 변경하지 않았습니다.
 
 [현재 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13의 내비·정차·사진 연속 녹화 3편. 내비 9건·정차 플랜 10건·장소/사진 검사 8건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
+
+[음성 수정·엔진 선택 안내](../docs/NATURAL_VOICE_KO.md) · [440개 테스트와 빌드 검증](voice-quality-verification.json)
 
 ## 이번 음성 수정
 
