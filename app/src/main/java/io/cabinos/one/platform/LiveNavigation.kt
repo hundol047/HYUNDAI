@@ -682,8 +682,8 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         val key = "${g.maneuverIndex}|${g.nextInstruction}|$band"
         if (key != spoken && !mutable.value.voiceListening && repeatGuard.allow(g, clock())) {
             val code = NavigationLanguages.resolve(language)
-            val spokenLocale = java.util.Locale.forLanguageTag(if (code == "ko") "ko-KR" else code)
-            val distance =
+            val spokenLocale = NavigationSpeechVoice.locale(language)
+            val distance = if(code=="ko") NavigationSpeechVoice.koreanMeters(g.turnMeters.toInt()) else
                 android.icu.text.MeasureFormat.getInstance(
                         spokenLocale,
                         android.icu.text.MeasureFormat.FormatWidth.WIDE,

@@ -222,7 +222,7 @@ class CabinViewModel @Inject constructor(
         }
     }
     fun setForeground(active: Boolean) {
-        if(active)speech.refreshVoiceAvailability()
+        if(active){speech.refreshVoiceAvailability();speech.refreshOutputEngine()}
         liveNavigation.setForeground(active)
         if (foreground == active) return
         foreground=active

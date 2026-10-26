@@ -23,7 +23,28 @@ object NavigationLanguages {
         val text=table.getValue("$type|$modifier|$exit")
         return text+(if(m.exit!=null&&m.exit>10&&type in listOf("roundabout","rotary"))" · #${m.exit}" else "")+if(m.road.isNotBlank())" · ${m.road.take(100)}" else ""
     }
-    fun spoken(tag:String,distance:String,instruction:String):String = navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance).replace("{instruction_one}",instruction)
+    fun spoken(tag:String,distance:String,instruction:String):String {
+        if(resolve(tag)=="ko") {
+            val parts=instruction.split(" · ",limit=2)
+            val action=parts.first()
+            val sentence=when(action) {
+                "좌회전","우회전","유턴","직진"->"${action}하세요."
+                "경로를 따라 출발"->"안내 경로를 따라 출발하세요."
+                "목적지 도착"->"목적지에 도착합니다."
+                else->when {
+                    action.endsWith("합류")->"${action}하세요."
+                    action.endsWith("이용")->"${action}하세요."
+                    action.endsWith("출구")->"${action}로 나가세요."
+                    action.endsWith("진입")->"${action}하세요."
+                    action.endsWith("완만하게")||action.endsWith("크게")->"${action} 회전하세요."
+                    else->"${action}하세요."
+                }
+            }
+            return "약 $distance 앞에서 $sentence"+parts.getOrNull(1)?.let {" $it 방면입니다."}.orEmpty()
+        }
+        return navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance)
+            .replace("{instruction_one}",instruction.replace(" · ",", "))
+    }
     fun upcomingArrival(tag:String,road:String=""):String = navDestinationLabels.getValue(resolve(tag))+
         if(road.isNotBlank())" · ${road.take(100)}" else ""
     fun arrival(tag:String,accessMeters:Double):String {

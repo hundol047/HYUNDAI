@@ -11,6 +11,17 @@ class NavigationLanguageTest {
         assertTrue(NavigationVoice.isNavigationRequest("안내 시작"))
         assertFalse(NavigationVoice.isNavigationRequest("25분 집중 모드 켜줘"))
     }
+    @Test fun koreanSpeechUsesACompleteSentenceInsteadOfReadingDisplayFragments() {
+        assertEquals("약 천백 미터 앞에서 유턴하세요. 한강대로 방면입니다.", NavigationLanguages.spoken("ko-KR","천백 미터","유턴 · 한강대로"))
+    }
+    @Test fun speechAcrossAllPacksDoesNotReadVisualSeparators() {
+        NavigationLanguages.codes.forEach { code ->
+            val instruction=NavigationLanguages.instruction(NavManeuver(NavPoint(0.0,0.0),"turn","right","Central Road"),code)
+            val text=NavigationLanguages.spoken(code,"300 m",instruction)
+            assertFalse(code,text.contains(" · "))
+            assertTrue(code,text.contains("Central Road"))
+        }
+    }
     private val p=NavPoint(48.85,2.35)
     @Test fun all31PacksHandleEveryDirectionAndExitWithoutUnresolvedTokens(){
         assertEquals(31,NavigationLanguages.codes.size)

@@ -111,28 +111,67 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         get()=mutableStatus.value
         private set(value){mutableStatus.value=value}
     private var tts:TextToSpeech?=null
+    private var configuredLanguage:String?=null
+    private var voiceDescription=""
+    private var lastSpokenText:String?=null
+    private var lastSpokenLanguage:String?=null
     private var recognizer:SpeechRecognizer?=null
     private var recognitionEpoch=0
     private val handler=android.os.Handler(android.os.Looper.getMainLooper())
     private var timeout:Runnable?=null
-    init {
-        tts=TextToSpeech(context) { result ->
-            initialized=result==TextToSpeech.SUCCESS
-            refreshVoiceAvailability()
-            status=if(initialized)"음성 엔진 준비됨 · 언어팩은 언어별 확인" else "TTS 사용 불가 · 화면 안내 사용"
-            pending?.let {if(initialized)speak(it)};pending=null
-        }
+    private var outputEngine:String?=null
+    private var outputGeneration=0
+    init { connectOutput() }
+    private fun defaultOutputEngine()=android.provider.Settings.Secure.getString(context.contentResolver,"tts_default_synth")
+    private fun connectOutput() {
+        val generation=++outputGeneration
+        initialized=false;configuredLanguage=null
+        tts?.shutdown()
+        outputEngine=defaultOutputEngine()
+        status="음성 엔진 준비 중"
+        tts=TextToSpeech(context,{result ->
+            if(generation==outputGeneration) {
+                initialized=result==TextToSpeech.SUCCESS
+                refreshVoiceAvailability()
+                status=if(initialized)"음성 엔진 준비됨 · 언어별 오프라인 음성 사용" else "TTS 사용 불가 · 화면 안내 사용"
+                pending?.let {if(initialized)speak(it)};pending=null
+            }
+        },outputEngine)
     }
-    override fun speak(text:String) { if(initialized)speakNavigation(text,"ko-KR") else pending=text }
+    fun refreshOutputEngine() {if(outputEngine!=defaultOutputEngine())connectOutput()}
+    fun openOutputSettings() {
+        val intent=android.content.Intent("com.android.settings.TTS_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {context.startActivity(intent)} catch(_:android.content.ActivityNotFoundException) {status="기기 설정에서 글자 읽어주기와 오프라인 음성팩을 확인해 주세요."}
+    }
+    fun previewOutput(tag:String) {
+        val code=io.cabinos.core.NavigationLanguages.resolve(tag)
+        val instruction=io.cabinos.core.NavigationLanguages.instruction(io.cabinos.core.NavManeuver(io.cabinos.core.NavPoint(0.0,0.0),"turn","right"),code)
+        val distance=if(code=="ko")NavigationSpeechVoice.koreanMeters(300) else android.icu.text.MeasureFormat.getInstance(Locale.forLanguageTag(code),android.icu.text.MeasureFormat.FormatWidth.WIDE)
+            .format(android.icu.util.Measure(300,android.icu.util.MeasureUnit.METER))
+        speakNavigation(io.cabinos.core.NavigationLanguages.spoken(code,distance,instruction),NavigationSpeechVoice.locale(tag).toLanguageTag())
+    }
+    override fun speak(text:String) {
+        // Informational cabin messages must not cut off a turn already being spoken.
+        if(initialized) { if(!navigationSpeaking)speakNavigation(text,"ko-KR") } else pending=text
+    }
     fun navigationLanguages():List<String> = runCatching {tts?.availableLanguages?.map {it.toLanguageTag()}?.sorted() ?: emptyList()}.getOrDefault(emptyList())
     val navigationSpeaking:Boolean get()=tts?.isSpeaking==true
     fun speakNavigation(text:String,tag:String):Boolean {
         if(!initialized)return false
         val locale=Locale.forLanguageTag(tag)
-        val supported=tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
-        if(supported<TextToSpeech.LANG_AVAILABLE){status="${locale.getDisplayName(locale)} 음성팩 미지원/미설치 · 화면 안내 사용";return false}
+        if(configuredLanguage!=locale.toLanguageTag()) {
+            val supported=tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
+            if(supported<TextToSpeech.LANG_AVAILABLE){status="${locale.getDisplayName(locale)} 음성팩 미지원/미설치 · 화면 안내 사용";return false}
+            val selected=NavigationSpeechVoice.select(runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet()),locale)
+            if(selected!=null)tts?.setVoice(selected)
+            if(tts?.voice?.isNetworkConnectionRequired==true){status="이 언어의 오프라인 음성팩을 설치해 주세요.";return false}
+            configuredLanguage=locale.toLanguageTag()
+            voiceDescription=if((tts?.voice?.quality ?: 0)>=android.speech.tts.Voice.QUALITY_HIGH)"고품질 기기 음성" else "기기 기본 음성 · 품질은 음성팩에 따라 다릅니다"
+        }
+        if(tts?.isSpeaking==true && text==lastSpokenText && configuredLanguage==lastSpokenLanguage)return true
+        lastSpokenText=text;lastSpokenLanguage=configuredLanguage
         val result=tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"cabinos-${System.nanoTime()}")
-        status=if(result==TextToSpeech.SUCCESS)"${locale.getDisplayName(locale)} 음성 안내" else "음성 재생 불가 · 화면 안내 사용"
+        status=if(result==TextToSpeech.SUCCESS)"${locale.getDisplayName(locale)} · $voiceDescription" else "음성 재생 불가 · 화면 안내 사용"
         return result==TextToSpeech.SUCCESS
     }
     override fun listen(onResult:(String)->Unit) { listenNavigation("ko-KR",onResult,{onResult(it)}) }
@@ -176,8 +215,8 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
                 .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1))
         }catch(_:RuntimeException){finish(null,"음성 인식을 시작하지 못했습니다. 마이크·기기 음성 서비스를 확인하세요.")}
     }
-    fun stopSpeaking(){pending=null;tts?.stop()}
+    fun stopSpeaking(){pending=null;lastSpokenText=null;lastSpokenLanguage=null;tts?.stop()}
     fun cancelRecognition(){recognitionEpoch++;timeout?.let {handler.removeCallbacks(it)};timeout=null;val old=recognizer;recognizer=null;runCatching {old?.cancel()};runCatching {old?.destroy()}}
     fun cancelListening(){cancelRecognition();stopSpeaking()}
-    override fun close(){cancelListening();tts?.shutdown()}
+    override fun close(){outputGeneration++;cancelListening();tts?.shutdown()}
 }
