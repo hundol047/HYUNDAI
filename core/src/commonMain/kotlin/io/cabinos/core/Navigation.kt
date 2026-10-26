@@ -179,7 +179,7 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val matchingSpeed=fix.speedMps ?: recentProgressSpeed(fix.timestampMs)
         val uncertainCourse=heading==null&&fix.accuracy>10&&(matchingSpeed ?: 0.0) in 2.0..75.0&&previous!=null&&!state.offRoute
         val expected=state.progressMeters+if(uncertainCourse)matchingSpeed!!*elapsed.coerceAtMost(3.0) else 0.0
-        val projection=NavigationGeometry.match(r,fix.point,state.progressMeters,heading,maximumProgress,max(40.0,fix.accuracy*2),if(uncertainCourse).65 else continuityWeight,expected,max(45.0,fix.accuracy*2),if(heading==null&&fix.accuracy>20)fix.accuracy+5 else 0.0)
+        val projection=NavigationGeometry.match(r,fix.point,state.progressMeters,heading,maximumProgress,max(40.0,fix.accuracy*2),if(uncertainCourse).65 else continuityWeight,expected,max(45.0,fix.accuracy*2),if(heading==null)fix.accuracy+5 else 0.0)
         val at=projection.progressMeters;val gap=projection.gapMeters;val ambiguous=projection.directionUncertain
         val reversing=!ambiguous&&at+fix.accuracy<peakConfirmedProgress-60&&(fix.speedMps ?: 0.0)>=2
         val off=gap>max(45.0,fix.accuracy*2)||reversing

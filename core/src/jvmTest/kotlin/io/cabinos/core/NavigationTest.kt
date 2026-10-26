@@ -4,6 +4,18 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NavigationTest {
+    @Test fun preciseGpsWithoutCourseStillHoldsTurnsBetweenVeryCloseHairpinLegs() {
+        val p=listOf(NavPoint(0.0,0.0),NavPoint(.001,0.0),NavPoint(.001,.00005),NavPoint(0.0,.00005))
+        val r=NavigationGeometry.route(NavPlace("end",p.last()),p,228.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p[1],"turn","right"),NavManeuver(p.last(),"arrive")))
+        val t=running(r)
+        now+=20_000;t.update(NavFix(NavPoint(.0006,.000025),5.0,now,null,null))
+        assertTrue(t.state.tracking);assertTrue(t.state.directionUncertain)
+        assertEquals("GPS 위치·진행 방향 확인 중",t.state.nextInstruction)
+        assertFalse(t.state.offRoute);assertFalse(t.state.arrived)
+        now+=1000;t.update(NavFix(NavPoint(.0007,0.0),5.0,now,10.0,0.0))
+        assertFalse(t.state.directionUncertain)
+    }
+
     @Test fun opposingRoadsInsideGpsUncertaintyHoldTurnsAndRecoverWithPreciseCourse() {
         val p=listOf(NavPoint(0.0,0.0),NavPoint(.002,0.0),NavPoint(.002,.0003),NavPoint(0.0,.0003))
         val r=NavigationGeometry.route(NavPlace("end",p.last()),p,478.0,90.0,listOf(NavManeuver(p.first(),"depart"),NavManeuver(p[1],"turn","right"),NavManeuver(p.last(),"arrive")))
