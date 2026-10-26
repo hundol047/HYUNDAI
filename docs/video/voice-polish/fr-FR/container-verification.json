@@ -1,0 +1,16 @@
+{
+  "processing": "Full MP4: faststart stream copy only; no audio replacement or video edits. M4A: actual audio window excerpt, no substituted speech.",
+  "originalSha256": "662312d24f8c63cb6232e468ebdae3000e318e0b248d187120df9719d258010c",
+  "publishedSha256": "66a275082972b721a190c9a043cba12208ab78671a36460219dceb3cb94798bd",
+  "unchangedPacketHashes": {
+    "v:0": "SHA256=8537c30cfae29692ae35558a93bfc8c102295f0a1bf87cbcab849a1b0c58a4d4",
+    "a:0": "SHA256=5e4a3753487560e8f990a4e16edde56a703515d02255c27a221992682f08b10f"
+  },
+  "decodePassed": true,
+  "audioExcerptWindow": {
+    "name": "fr-FR actual app spoken preview",
+    "startSeconds": 28.77633627999998,
+    "endSeconds": 51.63013964999999,
+    "expectSilence": false
+  }
+}

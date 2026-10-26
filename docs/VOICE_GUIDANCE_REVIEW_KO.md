@@ -34,7 +34,7 @@
 
 ## 실행 검증
 
-- 공식 Pleos SDK 포함 전체 단위 테스트 454개(코어 185, Android 269), 실패·오류·건너뜀 0. 전체 빌드와 lint 통과.
-- 이후 추가한 내비 화면의 비동기 음성 오류 전파까지 포함해 음성·내비 회귀 테스트 42개 통과. 이 최종 소스로 공식 SDK 포함 `assemblePhonePreview`, `assembleRelease`, `lintDebug` 통과.
-- 도구 테스트 60개 통과. 최종 소스 전체 CI와 실제 APK 녹화 결과는 [검증 기록](../preview/voice-quality-verification.json)에 연결합니다.
-- 휴대폰 검토 APK는 기존 검토용 인증서로 서명했습니다. 팀 제출용 `apk/`는 변경하지 않았습니다.
+- [최종 소스의 공식 SDK 포함 GitHub CI](https://github.com/hundol047/HYUNDAI/actions/runs/40338994089) 통과. 코어 186개 + Android 271개 = **457개**, 실패·건너뜀 0. 릴리스 빌드와 lint 통과.
+- 도구 테스트 60개 통과. 같은 CI의 Android APK 실행 5개 프로필 성공. 별도 Pleos 부팅 진단은 실행하지 않았습니다.
+- [최종 APK의 다섯 언어 음성·영상](video/voice-polish/README.md): UI 검사 19건과 실제 오디오 구간 5건 통과. 프랑스어·일본어의 거리와 회전 방향은 두 전사 모델로 추가 대조했습니다. 자동 전사는 사람의 자연스러움 평가가 아닙니다.
+- 휴대폰 검토 APK는 기존 검토용 인증서로 서명했습니다. 팀 제출용 `apk/`는 변경하지 않았습니다. [설치·QR](../preview/README.md) · [APK 해시와 검증 기록](../preview/voice-quality-verification.json).

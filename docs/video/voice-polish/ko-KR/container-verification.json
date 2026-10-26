@@ -1,0 +1,16 @@
+{
+  "processing": "Full MP4: faststart stream copy only; no audio replacement or video edits. M4A: actual audio window excerpt, no substituted speech.",
+  "originalSha256": "8555df0dfa715569c49f7074befc412e507f07d6ea0d59133c1519f464b7857b",
+  "publishedSha256": "27d55a28037e74ecd225bb37d52db9611344f4e1f9d7135ffbd22028f7f042d4",
+  "unchangedPacketHashes": {
+    "v:0": "SHA256=208a679d8a0c5bcbbe7db58c851e43f8dc02a4192058ac40d570c9bfd1850cf6",
+    "a:0": "SHA256=41656d756ebcca36baee2d5a820802089705e510eb3cbf43aa7ea8a32f6149c5"
+  },
+  "decodePassed": true,
+  "audioExcerptWindow": {
+    "name": "Korean navigation repeat from app TTS",
+    "startSeconds": 45.985653240999966,
+    "endSeconds": 68.75076548899995,
+    "expectSilence": false
+  }
+}

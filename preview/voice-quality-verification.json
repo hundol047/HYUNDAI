@@ -1,45 +1,40 @@
 {
   "sourceCommit": "5921b285647e16c441d762c3bc018853cea2afc5",
   "apkSha256": "aba15205f8043dd979e993fa4f2108b192a6dbd840717e18aa2d092f14464edf",
-  "phonePreviewBuildPassed": true,
-  "lintPassed": true,
-  "fullSuiteBeforeFinalErrorPropagation": {
-    "core": {
-      "tests": 185,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    },
-    "android": {
-      "tests": 269,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    }
-  },
-  "finalErrorPropagationRegressionTests": {
-    "tests": 42,
-    "failures": 0,
-    "errors": 0,
-    "skipped": 0
-  },
-  "toolTestsPassed": 60,
-  "physicalSamsungTest": false,
-  "productionApkUpdated": false,
-  "fullFinalSourceCi": "pending",
-  "pronunciationRegressionTests": {
+  "officialSdkBuildAndLintPassed": true,
+  "unitTests": {
     "core": {
       "tests": 186,
       "failures": 0,
-      "errors": 0,
       "skipped": 0
     },
-    "targetedAndroid": {
-      "tests": 17,
+    "android": {
+      "tests": 271,
       "failures": 0,
-      "errors": 0,
       "skipped": 0
     }
   },
-  "previousSourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40336244258"
+  "toolTestsPassed": 60,
+  "fullFinalSourceCi": {
+    "url": "https://github.com/hundol047/HYUNDAI/actions/runs/40338994089",
+    "conclusion": "success"
+  },
+  "actualApkVoiceRecording": {
+    "url": "https://github.com/hundol047/HYUNDAI/actions/runs/40338994062",
+    "languages": [
+      "ko-KR",
+      "en-US",
+      "ja-JP",
+      "fr-FR",
+      "de-DE"
+    ],
+    "uiChecksPassed": 19,
+    "audioWindowsPassed": 5,
+    "publicRecordings": "../docs/video/voice-polish/README.md"
+  },
+  "physicalSamsungTest": false,
+  "pleosEmulatorValidated": false,
+  "productionApkUpdated": false,
+  "recordingEngineBundledInApp": false,
+  "humanNaturalnessRating": false
 }

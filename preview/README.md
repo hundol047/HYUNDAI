@@ -2,13 +2,15 @@
 
 퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.1-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
 
-**[최신 APK의 한국어·영어·일본어·프랑스어·독일어 음성 영상](../docs/video/neural-voice/README.md)** — 실제 앱 출력 소리를 녹음했습니다. 녹화용 신경망 엔진은 별도 설치했으며 휴대폰 기본 음성과 다를 수 있습니다.
+**[최신 APK의 한국어·영어·일본어·프랑스어·독일어 음성 듣기와 실행 영상](../docs/video/voice-polish/README.md)** — 실제 앱 소리입니다. 프랑스어 숫자·일본어 회전 표현을 보완한 APK로 다시 녹화했습니다. 녹화용 신경망 엔진은 별도 설치했으며 휴대폰의 기본 목소리와 다를 수 있습니다.
+
+**[이전 APK의 한국어·영어·일본어·프랑스어·독일어 음성 영상](../docs/video/neural-voice/README.md)** — 실제 앱 출력 소리를 녹음했습니다. 녹화용 신경망 엔진은 별도 설치했으며 휴대폰 기본 음성과 다를 수 있습니다.
 
 **[이전 APK의 소리 포함 실행 영상](../docs/video/live-audio/README.md)** — 배경음 6종과 한국어 내비 안내를 이전 APK에서 녹화했습니다. 이 영상의 eSpeak 음성은 새 신경망 음성 검증과 구분합니다. 일반 Android 에뮬레이터이며 녹화용 TTS 목소리는 실제 휴대폰과 다를 수 있습니다.
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f1fd2df2acc0351c88f87dee4c8f932aeecc5d84/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f42c44138d6b4f0d8e5e5beb5bf27278dac11677/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -16,9 +18,12 @@
 
 [이전 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13의 내비·정차·사진 연속 녹화 3편. 내비 9건·정차 플랜 10건·장소/사진 검사 8건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
 
-[음성 수정·엔진 선택 안내](../docs/NATURAL_VOICE_KO.md) · [440개 테스트와 빌드 검증](voice-quality-verification.json)
+[음성 수정·엔진 선택 안내](../docs/NATURAL_VOICE_KO.md) · [음성 테스트와 빌드 검증](voice-quality-verification.json)
 
 ## 이번 음성 수정
+
+[말투·공식 안내 구조 비교·검증 범위](../docs/VOICE_GUIDANCE_REVIEW_KO.md). 실제 회전 데이터에서 한국어 안내를 짧게 구성하고, 가까운 회전의 긴 도로명은 생략합니다. 킬로미터·회전교차로 출구·합류 표현을 개선했습니다. 합성 대기 중의 중복 요청, 다음 교차로의 같은 문구 누락, 실제 재생 실패 표시도 보완했습니다.
+
 
 한국어 거리와 동작을 완성된 문장으로 읽고, 모든 내장 언어에서 화면 구분 기호를 음성 문장에 그대로 넣지 않습니다. 언어를 매번 다시 설정하지 않으며, 재생 중인 같은 문장의 재시작과 일반 상태 알림이 길 안내를 끊는 경우를 방지합니다. 새로운 회전 안내·안전 잠금에 의한 중지는 유지합니다.
 
