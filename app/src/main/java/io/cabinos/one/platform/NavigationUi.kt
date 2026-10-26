@@ -34,6 +34,8 @@ data class NavigationUi(
     val echoRisks: List<EchoRisk> = emptyList(),
     val echoNotice: String = "EchoRoad 공유 서버 미연결",
     val echoAhead: String? = null,
+    val echoChecking: Boolean = false,
+    val echoConnected: Boolean = false,
     val traffic: TrafficFlow? = null,
     val trafficNotice: String = "실시간 교통 미연결",
 )

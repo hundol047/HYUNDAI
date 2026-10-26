@@ -29,4 +29,16 @@ class EchoRoadClientTest {
         assertThrows(IllegalArgumentException::class.java){c.configure("https://name:pass@example.org","x".repeat(24))}
         c.configure("https://example.org","x".repeat(24));c.configure("","");assertEquals("",c.endpoint)
     }
+    @Test fun connectionInputAcceptsCopiedHostButRejectsWholeCredentialJson() {
+        val c=EchoRoadClient()
+        c.configure(" example.org/healthz "," "+"a".repeat(32)+" ")
+        assertEquals("https://example.org",c.endpoint)
+        assertThrows(IllegalArgumentException::class.java){c.configure("https://example.org","{\""+"a".repeat(32)+"\":\"device-01\"}")}
+    }
+    @Test fun authenticationStatusRequiresExplicitSuccessAndDatasetFlag() {
+        assertFalse(EchoRoadClient.parseStatus("""{"status":"ok","accidentDatasetConnected":false}"""))
+        assertThrows(IllegalArgumentException::class.java){EchoRoadClient.parseStatus("""{"status":"error","accidentDatasetConnected":false}""")}
+        assertTrue(EchoRoadClient.connectionError(EchoHttpException(401)).contains("접근키"))
+        assertTrue(EchoRoadClient.connectionError(EchoHttpException(404)).contains("최신 배포"))
+    }
 }

@@ -19,6 +19,7 @@ class LiveNavigation(
     private val speech: AndroidSpeechProvider,
     val service: NavigationService = NavigationService(),
     private val clock: () -> Long = System::currentTimeMillis,
+    private val echoProbe: EchoRoadClient = EchoRoadClient(),
 ) {
     val voiceAvailable = speech.voiceAvailable
     private val tracker = NavigationTracker(clock)
@@ -43,6 +44,8 @@ class LiveNavigation(
     private var trafficGeneration = 0
 
     private val echoClient=EchoRoadClient()
+    private var echoCheckJob:Job?=null
+    private var echoCheckGeneration=0
     private val brakeDetector=BrakeDetector()
     private var echoJob:Job?=null
     private var echoGeneration=0
@@ -52,18 +55,42 @@ class LiveNavigation(
     private var echoVoiceAt=0L
     private val echoSpoken=mutableSetOf<String>()
 
+    private fun cancelEchoCheck() {
+        echoCheckGeneration++;echoCheckJob?.cancel();echoProbe.cancel()
+        if(mutable.value.echoChecking)mutable.value=mutable.value.copy(echoChecking=false,echoNotice="연결 확인 중단 · 다시 연결을 눌러 주세요.")
+    }
     fun configureEcho(endpoint:String,token:String,sharing:Boolean=false) {
-        if(!canPlan())return
+        check(canPlan()) { "안내 종료 후 안전하게 정차한 상태에서 연결하세요." }
+        if(mutable.value.echoChecking && endpoint.isNotBlank())return
+        // Validate before changing the currently configured client. Never store a key on disk.
+        echoProbe.configure(endpoint,token)
+        cancelEchoCheck()
         echoGeneration++;echoJob?.cancel();echoClient.cancel();echoClient.configure(endpoint,token)
-        echoSharing=sharing && endpoint.isNotEmpty()
+        echoSharing=sharing && echoClient.endpoint.isNotEmpty()
         engine.updatePreferences(engine.state.value.preferences.copy(shareHazards=echoSharing))
         brakeDetector.reset();echoAttempt=0L;echoSpoken.clear()
-        mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null,echoNotice=if(endpoint.isEmpty())"EchoRoad 공유 서버 미연결" else "EchoRoad 연결 설정 · 위치 확인 후 조회")
+        val configured=echoClient.endpoint.isNotEmpty()
+        mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null,echoConnected=false,echoChecking=configured,
+            echoNotice=if(!configured)"EchoRoad 공유 서버 미연결" else "서버·접근키 확인 중… · 위치는 전송하지 않습니다.")
+        if(!configured)return
+        val epoch=echoCheckGeneration
+        echoCheckJob=scope.launch {
+            try {
+                val official=echoProbe.verify()
+                if(epoch==echoCheckGeneration && foreground)mutable.value=mutable.value.copy(echoConnected=true,
+                    echoNotice="서버 연결·접근키 인증 성공 · "+if(official)"사고 다발 자료 연결" else "사고 다발 자료 미적재 · 주변 제보는 GPS 안내 중 조회")
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                if(epoch==echoCheckGeneration)mutable.value=mutable.value.copy(echoConnected=false,echoNotice=EchoRoadClient.connectionError(error))
+            } finally {
+                if(epoch==echoCheckGeneration)mutable.value=mutable.value.copy(echoChecking=false)
+            }
+        }
     }
     private fun echoObservation(f:NavFix,location:Location) {
         if(!tracker.state.active || location.provider!=LocationManager.GPS_PROVIDER || location.isFromMockProvider || !location.hasSpeedAccuracy() || !location.speedAccuracyMetersPerSecond.isFinite() || location.speedAccuracyMetersPerSecond !in 0f..1.5f) {brakeDetector.reset();return}
         val event=brakeDetector.accept(f,clock()) ?: return
-        if(!echoSharing || !engine.state.value.preferences.shareHazards || echoClient.endpoint.isEmpty()) {
+        if(!mutable.value.echoConnected || !echoSharing || !engine.state.value.preferences.shareHazards || echoClient.endpoint.isEmpty()) {
             mutable.value=mutable.value.copy(echoNotice="급감속 후보 감지 · 공유하지 않음");return
         }
         if(echoJob?.isActive==true)return // No location queue and no delayed uploads.
@@ -75,7 +102,7 @@ class LiveNavigation(
     }
     private fun echoTick() {
         val g=tracker.state;val f=fix
-        val ready=foreground && echoRealFix && g.active && g.tracking && f!=null && tracker.usable(f) && clock()-f.timestampMs in 0..3000 && engine.state.value.networkAvailable
+        val ready=mutable.value.echoConnected && foreground && echoRealFix && g.active && g.tracking && f!=null && tracker.usable(f) && clock()-f.timestampMs in 0..3000 && engine.state.value.networkAvailable
         val fresh=if(ready)mutable.value.echoRisks.filter {it.expiresAtMs>clock()} else emptyList()
         val ahead=if(ready)EchoRoadMatch.ahead(g,fresh,clock()) else null
         mutable.value=mutable.value.copy(echoRisks=fresh,echoAhead=ahead?.let {"약 ${it.second}m 앞 · ${it.first.label} · 참고 정보"})
@@ -816,6 +843,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     fun setForeground(active: Boolean) {
         if (!active) {
+            cancelEchoCheck()
             echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
             mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null)
             trafficGeneration++
@@ -1014,6 +1042,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun clear() {
+        cancelEchoCheck();echoProbe.configure("","")
         echoClient.configure("","");echoSharing=false
         trafficGeneration++
         trafficJob?.cancel()
@@ -1032,6 +1061,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun close() {
+        cancelEchoCheck();echoProbe.configure("","")
         echoJob?.cancel();echoClient.configure("","")
         trafficJob?.cancel()
         trafficClient.cancel()

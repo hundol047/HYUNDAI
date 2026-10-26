@@ -10,7 +10,7 @@ import org.json.JSONObject
 /**
  * Access token and precise coordinates are memory-only. HTTPS only; never follow auth redirects.
  */
-class EchoRoadClient {
+open class EchoRoadClient {
     var endpoint = ""
         private set
 
@@ -18,29 +18,34 @@ class EchoRoadClient {
     @Volatile private var connection: HttpURLConnection? = null
 
     fun configure(endpoint: String, token: String) {
-        if (endpoint.isEmpty()) {
+        val input = endpoint.trim()
+        val credential = token.trim()
+        if (input.isEmpty()) {
             this.endpoint = ""
             this.token = ""
             cancel()
             return
         }
-        val u = URL(endpoint)
+        val address = if ("://" in input) input else "https://$input"
+        val u = URL(address)
         require(
             u.protocol == "https" &&
                 u.host.isNotBlank() &&
                 u.userInfo == null &&
                 u.query == null &&
                 u.ref == null &&
-                token.length in 24..256 &&
-                token.all { it in '!'..'~' }
+                credential.length in 24..256 &&
+                credential.all { it in '!'..'~' && it !in "\"{}" }
         )
-        this.endpoint = endpoint.trimEnd('/')
-        this.token = token
+        this.endpoint = if (u.path.trimEnd('/') == "/healthz") address.substringBefore("/healthz") else address.trimEnd('/')
+        this.token = credential
     }
 
     fun cancel() {
         connection?.disconnect()
     }
+
+    open suspend fun verify(): Boolean = parseStatus(request("/v1/status"))
 
     suspend fun report(candidate: BrakeCandidate) {
         val b =
@@ -55,8 +60,9 @@ class EchoRoadClient {
     }
 
     suspend fun read(f: NavFix, now: Long): Pair<List<EchoRisk>, Boolean> {
+        val started = android.os.SystemClock.elapsedRealtime()
         val json = request("/v1/risks?lat=${f.point.latitude}&lon=${f.point.longitude}")
-        return parse(json, f.point, now)
+        return parse(json, f.point, now + android.os.SystemClock.elapsedRealtime() - started)
     }
 
     private suspend fun request(path: String, body: String? = null): String =
@@ -87,7 +93,7 @@ class EchoRoadClient {
                     c.outputStream.use { it.write(bytes) }
                 }
                 if (c.responseCode !in 200..299)
-                    throw java.io.IOException("EchoRoad 서버 응답 오류 (${c.responseCode})")
+                    throw EchoHttpException(c.responseCode)
                 c.inputStream.use { input ->
                     val out = java.io.ByteArrayOutputStream()
                     val buf = ByteArray(8192)
@@ -108,6 +114,22 @@ class EchoRoadClient {
         }
 
     companion object {
+        fun parseStatus(json: String): Boolean {
+            val result = JSONObject(json)
+            require(result.getString("status") == "ok")
+            return result.getBoolean("accidentDatasetConnected")
+        }
+        fun connectionError(error: Exception): String = when (error) {
+            is EchoHttpException -> when (error.status) {
+                401, 403 -> "접근키 인증 실패 · Railway에 등록한 키 부분만 입력하세요."
+                404 -> "연결 확인 API가 없습니다. Railway 최신 배포와 서버 주소를 확인하세요."
+                429 -> "요청이 많습니다. 잠시 후 다시 연결하세요."
+                else -> "서버 응답 오류 (${error.status}) · 잠시 후 다시 연결하세요."
+            }
+            is java.net.SocketTimeoutException -> "서버 응답 시간이 초과됐습니다. 인터넷 연결을 확인하고 다시 시도하세요."
+            else -> "연결 확인 실패 · 서버 주소·인터넷 연결을 확인하세요."
+        }
+
         fun parse(json: String, origin: NavPoint, now: Long): Pair<List<EchoRisk>, Boolean> {
             val root = JSONObject(json)
             require(now - root.getLong("generatedAtMs") in -2000..30000)
@@ -165,3 +187,5 @@ class EchoRoadClient {
         }
     }
 }
+
+class EchoHttpException(val status: Int) : java.io.IOException("EchoRoad HTTP $status")
