@@ -12,22 +12,25 @@ class AmbientAudio(private val context: Context) {
     private val manager = context.getSystemService(AudioManager::class.java)
     private var track: AudioTrack? = null
     private var focus: AudioFocusRequest? = null
+    private var playbackEpoch=0
     var playing = false; private set
     private val mutableStatus=MutableStateFlow("배경 소리 꺼짐")
     val status=mutableStatus.asStateFlow()
     internal fun samples(name:String)=RecordedAmbience.load(context,name)
+    internal fun loadFailed() {mutableStatus.value="소리 파일을 불러오지 못했습니다. 다른 소리를 선택하거나 다시 시도해 주세요."}
     fun showVolume() {manager.adjustVolume(AudioManager.ADJUST_SAME,AudioManager.FLAG_SHOW_UI)}
     fun stopByUser() {stop();mutableStatus.value="배경 소리 꺼짐"}
 
     fun play(preset: String,samples:ShortArray=AmbientSamples.create(preset)): Boolean {
         stop()
+        val epoch=playbackEpoch
         val attributes = AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
         val request = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
             .setAudioAttributes(attributes).setWillPauseWhenDucked(true)
-            .setOnAudioFocusChangeListener({ change -> if (change < 0) {stop();mutableStatus.value="다른 소리로 인해 중지됐습니다. 다시 재생해 주세요."} }, Handler(Looper.getMainLooper())).build()
+            .setOnAudioFocusChangeListener({ change -> if (change < 0 && epoch==playbackEpoch) {stop();mutableStatus.value="다른 소리로 인해 중지됐습니다. 다시 재생해 주세요."} }, Handler(Looper.getMainLooper())).build()
         focus = request
-        if (manager.requestAudioFocus(request) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { stop();mutableStatus.value="다른 앱의 소리 사용이 끝난 뒤 다시 재생해 주세요."; return false }
         return try {
+            if (manager.requestAudioFocus(request) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) { stop();mutableStatus.value="다른 앱의 소리 사용이 끝난 뒤 다시 재생해 주세요."; return false }
             val rate=AmbientSamples.RATE
             val audio = AudioTrack.Builder().setAudioAttributes(attributes)
                 .setAudioFormat(AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(rate).setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
@@ -40,19 +43,25 @@ class AmbientAudio(private val context: Context) {
             check(audio.write(pcm, 0, pcm.size) == pcm.size)
             check(audio.state == AudioTrack.STATE_INITIALIZED)
             check(audio.setLoopPoints(0, samples.size, -1) == AudioTrack.SUCCESS)
+            // Synthetic presets have more sustained energy than the recordings.
+            audio.setVolume(if(preset=="백색 소음"||preset=="잔잔한 톤") .4f else 1f)
             audio.play(); playing = true
             mutableStatus.value=if(manager.getStreamVolume(AudioManager.STREAM_MUSIC)==0)"재생 중이지만 미디어 음량이 0입니다. 음량을 올려 주세요." else "$preset 재생 중 · 안 들리면 미디어 음량과 블루투스 출력을 확인하세요."
             true
         } catch (error: RuntimeException) { android.util.Log.w("CabinAudio","배경 소리 초기화 실패",error);stop();mutableStatus.value="소리를 재생하지 못했습니다. 다른 오디오 앱을 닫고 다시 시도해 주세요."; false }
     }
     fun stop() {
+        playbackEpoch++
         playing = false
-        track?.let { audio ->
-            try { if (audio.playState == AudioTrack.PLAYSTATE_PLAYING) audio.stop() } finally { audio.release() }
-        }
+        mutableStatus.value="배경 소리 꺼짐"
+        val previousTrack=track
         track = null
         val previousFocus=focus
         focus = null
-        previousFocus?.let { manager.abandonAudioFocusRequest(it) }
+        previousTrack?.let { audio ->
+            runCatching { if (audio.playState == AudioTrack.PLAYSTATE_PLAYING) audio.stop() }
+            runCatching { audio.release() }
+        }
+        previousFocus?.let {runCatching {manager.abandonAudioFocusRequest(it)}}
     }
 }

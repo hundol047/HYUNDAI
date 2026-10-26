@@ -73,7 +73,7 @@ import java.util.*
                 Spacer(Modifier.height(16.dp));Text(timeText(s.schedule.waitingSeconds),fontSize=38.sp,fontWeight=FontWeight.Light,color=White)
                 Spacer(Modifier.height(12.dp));Text("${s.schedule.availableSeconds/60}분 뒤 활동 정리",color=Mint,fontSize=13.sp)
                 Spacer(Modifier.height(12.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
-                Text(if(session.kind==SessionKind.RELAX)"4초 들숨, 4초 날숨\n편안한 호흡으로 다음 여정을 준비하세요." else "기기에서 생성하는 배경 소리입니다.\n실제 스트리밍·차량 오디오 제어는 연결되지 않았습니다.",fontSize=12.sp,color=Muted)
+                Text(if(session.kind==SessionKind.RELAX)"4초 들숨, 4초 날숨\n편안한 호흡으로 다음 여정을 준비하세요." else "배경 소리 선택에서 자연음·합성음을 골라 보세요.\n기기의 미디어 음량으로 조절할 수 있어요.",fontSize=12.sp,color=Muted)
                 Spacer(Modifier.weight(1f));Text("StopSense와 시간 동기화 중",fontSize=10.sp,color=color)
             }
         }

@@ -211,7 +211,11 @@ class CabinViewModel @Inject constructor(
             if(preset !in AmbientSamples.presets)return
             val request=++audioRequest
             viewModelScope.launch {
-                val samples=withContext(Dispatchers.IO){audio.samples(preset)}
+                val samples=try {withContext(Dispatchers.IO){audio.samples(preset)}} catch(error:Exception) {
+                    if(error is CancellationException)throw error
+                    if(request==audioRequest){audio.loadFailed();mutableReply.value=audio.status.value}
+                    return@launch
+                }
                 if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING)return@launch
                 if(audio.play(preset,samples))mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."
             }
