@@ -33,6 +33,18 @@ def record(adb, tree, tap, check, snapshot, scenario):
         else:
             raise AssertionError('Emulator GPS did not become available')
         tap('가게명·지점·도시·주소 또는 위도,경도')
+        # IME startup/resizing on software GPU is asynchronous. Wait for the
+        # focused input bounds to settle before injecting the user's keystrokes.
+        previous = None
+        for _ in range(12):
+            fields=[n for n in tree().iter('node') if n.get('class')=='android.widget.EditText' and n.get('focused')=='true']
+            bounds=fields[0].get('bounds') if fields else None
+            if bounds and bounds==previous:
+                break
+            previous=bounds
+            time.sleep(1)
+        else:
+            raise AssertionError('Destination input did not settle after opening the keyboard')
         adb('shell', 'input', 'text', '37.567005,126.977893')
         check('destination input remains visible with landscape keyboard', '37.567005,126.977893', 'nav-00-keyboard')
         # IME search must dismiss the keyboard and run the same guarded search.

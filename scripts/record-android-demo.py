@@ -45,6 +45,7 @@ def main():
                 except OSError:pass
                 resource_stop.wait(1)
     resource_thread=threading.Thread(target=monitor,daemon=True);resource_thread.start()
+    recording_started=None
     checks=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();video=None;recorder=None;log_reader=None;log_output=None
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
@@ -69,7 +70,7 @@ def main():
         node=wait(label);x1,y1,x2,y2=map(int,re.findall(r'\d+',node.get('bounds','')))
         adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2));time.sleep(.8)
     def check(name,label,image):
-        wait(label);snapshot(image);checks.append({'name':name,'result':'passed'});print('PASS',name,flush=True)
+        wait(label);snapshot(image);checks.append({'name':name,'result':'passed','secondsSinceRecordingStart':round(time.monotonic()-recording_started,2) if recording_started else None});print('PASS',name,flush=True)
     def scenario(label):tap('데모');tap(label);tap('대시보드로 돌아가기')
     try:
         features=adb('shell','pm','list','features').decode()
@@ -106,6 +107,7 @@ def main():
         adb('shell','dumpsys','gfxinfo',a.package,'reset',check=False)
         (a.output/'memory-before.txt').write_bytes(adb('shell','dumpsys','meminfo',a.package,check=False))
         video='/sdcard/cabinos-apk-proof.mp4'
+        recording_started=time.monotonic()
         with (a.output/'screenrecord.log').open('wb') as log:
             recorder=subprocess.Popen(base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video],stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
