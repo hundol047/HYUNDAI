@@ -27,7 +27,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
-    val compact=LocalCompactWindow.current
+    val compactWindow=LocalCompactWindow.current
     val context=LocalContext.current
     val keyboard=androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
     DisposableEffect(nav){onDispose {nav.cancelVoice()}}
@@ -62,6 +62,8 @@ import java.util.Locale
     LaunchedEffect(ui.gpsConnection,ui.voiceNotice) {
         if(ui.gpsConnection==GpsConnection.DENIED && ui.voiceNotice.startsWith("인식:"))onLocate()
     }
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+    val compact=compactWindow || maxHeight.value/androidx.compose.ui.platform.LocalDensity.current.fontScale<520f
     Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.SpaceBetween) {
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
@@ -175,6 +177,7 @@ import java.util.Locale
             }
             })
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
+    }
     }
     if(trafficSettings&&canPlan)AlertDialog(onDismissRequest={trafficToken="";trafficSettings=false},title={Text("교통 중계 서버")},text={Column {
         Text("국내 서버는 아직 미배포입니다. TomTom 키를 입력하지 마세요. 중계 서버 주소와 별도 접근 토큰을 사용합니다. 설정은 저장하지 않습니다.")

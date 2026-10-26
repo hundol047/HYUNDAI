@@ -1,5 +1,8 @@
 package io.cabinos.one
 
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.dp
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Looper
@@ -69,6 +72,22 @@ class CompactWindowTest {
         compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
         compose.runOnIdle {compose.activity.onBackPressedDispatcher.onBackPressed()}
         compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
+    }
+    @Test @Config(qualifiers="w1280dp-h800dp-land-mdpi")
+    fun navigationSearchRemainsReachableWhenKeyboardReducesContentHeight() {
+        val vm=ready()
+        compose.runOnIdle {compose.activity.setContent {
+            io.cabinos.one.ui.CabinTheme {
+                androidx.compose.runtime.CompositionLocalProvider(io.cabinos.one.ui.LocalCompactWindow provides false) {
+                    androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.height(260.dp)) {
+                        io.cabinos.one.ui.NavigationScreen(vm.state.value,vm.liveNavigation.state.value,vm.liveNavigation){}
+                    }
+                }
+            }
+        }}
+        compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").performScrollTo().performTextInput("37.567005,126.977893")
+        compose.onNodeWithText("검색",useUnmergedTree=true).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("37.567005,126.977893").performScrollTo().assertIsDisplayed()
     }
     @Test @Config(qualifiers="w600dp-h800dp-port-mdpi")
     fun singleCellWindowAndOfflineMapHaveReachableControls() {
