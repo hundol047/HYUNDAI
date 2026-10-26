@@ -1,9 +1,9 @@
 {
-  "sourceCommit": "c49bbd14ea321bbca756691198da7ae307c691cd",
-  "apkSha256": "8277d327ac2adaf6ad197d47805b1f90248937f4dfe7057e770750bfdcc6e494",
+  "sourceCommit": "0058d276b726e24cec30baabe8aaa791a7a7515d",
+  "apkSha256": "73161c5e144db0e85e4f435542dc5a6cfb7960fc96e8c055b7bd266db93ccc19",
   "tests": {
     "core": {
-      "tests": 173,
+      "tests": 174,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -367,14 +367,18 @@
     "teamSignedLatestRelease": false
   },
   "finalUsability": {
-    "androidTests": 253,
-    "coreTests": 172,
+    "androidTests": 254,
+    "coreTests": 174,
     "failures": 0,
     "browserVoiceChecks": 17,
     "audioRecordingsDistinct": true,
     "rotationAndShortWindowTests": true,
     "physicalDeviceValidated": false,
     "keyboardReducedNavigationViewport": true,
-    "preciseGpsHairpinAmbiguityHoldsTurns": true
+    "preciseGpsHairpinAmbiguityHoldsTurns": true,
+    "scriptTests": 57,
+    "serverTests": 25,
+    "destinationDraftSurvivesRotation": true,
+    "ambiguousGpsExcludedFromConfirmedHistory": true
   }
 }
