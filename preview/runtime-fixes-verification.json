@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "df0ae0e64c27d320638d7c111b6f8799e3344821",
-  "apkSha256": "6f4d2f938c9de98a173634dcc8f677f7dd1939404c8a1c17aa2bfdb8e4dab5bf",
+  "sourceCommit": "a948e13949c7e7a150ffe7739bca1de2f84268b0",
+  "apkSha256": "fc8807cb071997c9c19b4dc41fe7db3b63bc07ac27e2e59140535e919f62511f",
   "tests": {
     "core": {
-      "tests": 171,
+      "tests": 172,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 225,
+      "tests": 232,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -356,5 +356,14 @@
     "physicalDeviceValidated": false,
     "alternateSourceRecovery": true,
     "failedLookupRetryAfterSeconds": 60
+  },
+  "releaseReview": {
+    "missingCategoryFallback": true,
+    "gardenNatureReserveFallback": true,
+    "fallbackRadiusMeters": 2000,
+    "oldTrafficClearedOnDisconnect": true,
+    "liveNavigationHttpPassed": 15,
+    "physicalDeviceValidated": false,
+    "teamSignedLatestRelease": false
   }
 }
