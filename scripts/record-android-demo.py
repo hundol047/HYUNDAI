@@ -127,6 +127,11 @@ def main():
             time.sleep(2)
             if recorder.poll() is not None:
                 raise RuntimeError('Recording process stopped before UI scenario; see screenrecord.log')
+            if a.capture_audio:
+                (a.output/'audio-routing-before.txt').write_bytes(adb('shell','dumpsys','audio'))
+                adb('shell','cmd','media_session','volume','--stream','3','--set',str(max(0,int(bounds.group(2))-1)))
+                adb('shell','cmd','media_session','volume','--stream','3','--set',bounds.group(2))
+                (a.output/'audio-routing-after.txt').write_bytes(adb('shell','dumpsys','audio'))
             if a.navigation_review:
                 from record_navigation_review import record
                 record(adb, tree, tap, check, snapshot, scenario, audio_window=window if a.capture_audio else None)
