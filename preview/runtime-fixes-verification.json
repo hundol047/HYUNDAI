@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "a66b55199597af3618774827304a8f5029692f2b",
-  "apkSha256": "cdc5943561bebbf8d16d0bb2852714d939365012903d2756ac5487019bbcaff1",
+  "sourceCommit": "1fdf778ceec00e77efbf7015bb237410e74ebf3c",
+  "apkSha256": "0a8e41dde13b560e2228e97f6cc896b78df386051dfce9d8bae5e3374831dd38",
   "tests": {
     "core": {
       "tests": 171,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 216,
+      "tests": 220,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -346,5 +346,13 @@
     "unauthenticatedPrivateRisksStatus": 401,
     "authenticatedUserKeyTested": false,
     "physicalDrivingValidated": false
+  },
+  "placePhotos": {
+    "officialThumbnailHosts": true,
+    "registeredReferencesAndCoordinateMatchedNameSearch": true,
+    "repeatedCategoryStockRemoved": true,
+    "publicSourceHttpSamples": 4,
+    "allPlacePhotoCoverage": false,
+    "physicalDeviceValidated": false
   }
 }
