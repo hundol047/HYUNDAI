@@ -1,0 +1,22 @@
+{
+  "language": "ko-KR",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 4.3,
+      "endSeconds": 8.8,
+      "text": " 약 1,100m 앞에서 유턴하세요. 한강대로 방면입니다."
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.36,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "Korean navigation repeat from app TTS",
+    "startSeconds": 47.986879872,
+    "endSeconds": 70.782496332,
+    "expectSilence": false
+  }
+}

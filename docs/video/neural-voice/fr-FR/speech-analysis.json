@@ -1,0 +1,22 @@
+{
+  "language": "fr-FR",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 4.4,
+      "endSeconds": 6.4,
+      "text": " Dans 300 mètres, tournez à droite."
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.08,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "fr-FR actual app spoken preview",
+    "startSeconds": 27.91228778200002,
+    "endSeconds": 50.76632933100001,
+    "expectSilence": false
+  }
+}

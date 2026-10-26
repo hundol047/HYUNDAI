@@ -1,0 +1,9 @@
+{
+  "processing": "MP4 faststart stream copy only; no audio replacement or video edits",
+  "originalSha256": "05c4566eea7f683135a416354b801c19593dcfa150695b13a50c0f0a9dcbf5a8",
+  "publishedSha256": "1e0055bb4043a68f02c282d09eede15ed22ccbf6463831186d9a99b5a81ce70b",
+  "unchangedPacketHashes": {
+    "v:0": "SHA256=997c38ae3fd1c8211821d8dc9067cb033ec8ae6f473e8fc48e6b89bc722d4287",
+    "a:0": "SHA256=981bb9a19d666a84fe36e0a1429c395be9db4261c373155b569bcd92faf5c13f"
+  }
+}
