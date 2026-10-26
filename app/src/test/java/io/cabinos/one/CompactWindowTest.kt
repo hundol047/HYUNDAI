@@ -52,6 +52,24 @@ class CompactWindowTest {
         assertEquals("sand",vm.appearance.value.preset)
         compose.onNodeWithText("야간 밝기").performScrollTo().performClick();capture("portrait-settings")
     }
+    @Test fun switchingTabsDoesNotStackDuplicateScreensBehindBack() {
+        ready()
+        repeat(4) {
+            compose.onNodeWithText("설정").performClick()
+            compose.onNodeWithText("기록").performClick()
+        }
+        compose.runOnIdle {compose.activity.onBackPressedDispatcher.onBackPressed()}
+        compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
+    }
+    @Test fun navigationScreenSurvivesRotationAndBackReturnsHome() {
+        ready()
+        compose.onNodeWithText("내비").performClick()
+        compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
+        compose.activityRule.scenario.recreate()
+        compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
+        compose.runOnIdle {compose.activity.onBackPressedDispatcher.onBackPressed()}
+        compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
+    }
     @Test @Config(qualifiers="w600dp-h800dp-port-mdpi")
     fun singleCellWindowAndOfflineMapHaveReachableControls() {
         val vm=ready();capture("single-cell-parked")

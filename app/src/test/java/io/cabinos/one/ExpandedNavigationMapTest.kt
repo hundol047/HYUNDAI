@@ -22,6 +22,31 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class ExpandedNavigationMapTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Test @Config(qualifiers="w1024dp-h480dp-land-mdpi")
+    fun shortLandscapeWithLargeFontKeepsMapAndExitReachable() {
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            val density=androidx.compose.ui.platform.LocalDensity.current
+            androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(density.density,1.5f)) {
+                ExpandableNavigationMap(NavigationUi(
+                    guidance=Guidance(active=true,tracking=true,turnMeters=150.0,nextInstruction="오른쪽 도로로 진입하세요"),
+                    gpsNotice="기기 위치 · 정확도 약 12m",
+                    echoAhead="경로 주변 과거 사고 통계 구역 · 현재 사고 아님",
+                    notice="실시간 교통·차선 안내 미제공 · 현장 표지를 확인하세요"
+                ),false,false){}
+            }
+        }}}
+        compose.onNodeWithText("지도 축소").assertIsDisplayed()
+        compose.onNodeWithText("안내 종료").assertIsDisplayed()
+        fun maps(view:android.view.View):List<org.osmdroid.views.MapView> =
+            if(view is org.osmdroid.views.MapView)listOf(view)
+            else if(view is android.view.ViewGroup)(0 until view.childCount).flatMap {maps(view.getChildAt(it))}
+            else emptyList()
+        compose.runOnIdle {
+            val root=org.robolectric.shadows.ShadowDialog.getLatestDialog().window!!.decorView
+            val map=maps(root).single()
+            assertTrue("도로를 읽을 수 있는 지도 높이가 필요합니다: ${map.height}",map.height>=180*map.resources.displayMetrics.density)
+        }
+    }
     private fun expandAndClose() {
         var picks=0
         val ui=NavigationUi(gpsNotice="GPS 신호 대기 · 회전 안내 일시중지")

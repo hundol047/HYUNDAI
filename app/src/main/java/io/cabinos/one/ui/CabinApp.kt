@@ -37,7 +37,8 @@ import java.util.*
     val storageStatus by vm.storageStatus.collectAsStateWithLifecycle()
     val appearance by vm.appearance.collectAsStateWithLifecycle()
     val navigationState by vm.liveNavigation.state.collectAsStateWithLifecycle()
-    var navigationOpen by remember { mutableStateOf(false) }
+    var navigationOpen by rememberSaveable { mutableStateOf(false) }
+    androidx.activity.compose.BackHandler(enabled=navigationOpen) {navigationOpen=false}
     val context=LocalContext.current
     val lifecycle=LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle,vm) {
@@ -148,7 +149,7 @@ import java.util.*
                 val navigate:(String)->Unit = {
                     if(!s.parkedAllowed && it !in listOf("dashboard","navigation")) {
                         android.widget.Toast.makeText(context,"안내 종료 후 안전한 정차가 확인되면 지도·기록·설정을 사용할 수 있습니다.",android.widget.Toast.LENGTH_LONG).show()
-                    } else if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.navigate(it){launchSingleTop=true}} }
+                    } else if(it=="navigation")navigationOpen=true else {navigationOpen=false;nav.openTab(it)} }
                 Row(Modifier.fillMaxSize()) {
                     if(!compact) NavigationRailPanel(selected,s.parkedAllowed,navigate,{assistantOpen=true},{simulatorOpen=true},vm.automotive,voiceAvailable)
                     Column(Modifier.weight(1f).fillMaxHeight().padding(horizontal=if(compact)12.dp else 24.dp)) {
@@ -181,10 +182,17 @@ import java.util.*
         if(simulatorOpen) SimulatorDialog(s,vm,onClose={simulatorOpen=false},onLocation={locationPermission.launch(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION))},onVehiclePermissions={requestVehiclePermissions(true)})
     }
 }
+private fun androidx.navigation.NavHostController.openTab(route:String) {
+    navigate(route) {
+        popUpTo("dashboard") {saveState=true}
+        launchSingleTop=true
+        restoreState=true
+    }
+}
 @Composable private fun ParkedNavigation(nav:androidx.navigation.NavHostController,vm:CabinViewModel,onNotifications:()->Unit,onLocate:()->Unit,onDestination:(NavPlace)->Unit) {
     // Collect live timing inside destinations so a tick never rebuilds the navigation graph.
     NavHost(navController=nav,startDestination="dashboard") {
-        composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();if(LocalCompactWindow.current) CompactParkedDashboard(s,vm,onMap={nav.navigate("nearby"){launchSingleTop=true}}) else ParkedDashboard(s,vm,onMap={nav.navigate("nearby"){launchSingleTop=true}}) }
+        composable("dashboard") { val s by vm.state.collectAsStateWithLifecycle();if(LocalCompactWindow.current) CompactParkedDashboard(s,vm,onMap={nav.openTab("nearby")}) else ParkedDashboard(s,vm,onMap={nav.openTab("nearby")}) }
         composable("nearby") {val s by vm.state.collectAsStateWithLifecycle();NearbyScreen(s,vm,onLocate,onDestination)}
         composable("history") { val s by vm.state.collectAsStateWithLifecycle();HistoryScreen(s) }
         composable("settings") { val s by vm.state.collectAsStateWithLifecycle();SettingsScreen(s,vm,onNotifications) }
