@@ -1,0 +1,258 @@
+{
+  "checkedAt": "2026-10-26",
+  "source": "User-provided downloaded archives; original download URLs not embedded",
+  "archives": [
+    {
+      "archive": "10_25_stt.zip",
+      "sha256": "a1974fa55524e578a821b1ffb0f15f2c6e2d56ee2d22c1faf62f9b86d26052d6",
+      "files": [
+        {
+          "file": "10_25_stt.csv",
+          "rows": 46764,
+          "headers": [
+            "연도",
+            "대상사고 구분명",
+            "법정동코드",
+            "사고건수",
+            "사고건수 구성비",
+            "사망자수",
+            "사망자수 구성비",
+            "치사율",
+            "부상자수",
+            "부상자수 구성비",
+            "인구10만명당 사고건수",
+            "자동차1만대당 사고건수",
+            "과속",
+            "중앙선 침범",
+            "신호위반",
+            "안전거리 미확보",
+            "안전운전 의무 불이행",
+            "보행자 보호의무 위반",
+            "기타",
+            "차대사람",
+            "차대차",
+            "차량단독",
+            "철길건널목"
+          ],
+          "coordinateData": false,
+          "years": [
+            "2010",
+            "2011",
+            "2012",
+            "2013",
+            "2014",
+            "2015",
+            "2016",
+            "2017",
+            "2018",
+            "2019",
+            "2020",
+            "2021",
+            "2022",
+            "2023",
+            "2024",
+            "2025"
+          ],
+          "categories": [
+            "PM사고",
+            "고령보행사고",
+            "고령운전사고",
+            "노인사고",
+            "무면허사고",
+            "보행자사고",
+            "뺑소니사고",
+            "스쿨존내어린이사고",
+            "야간사고",
+            "어린이보행사고",
+            "어린이사고",
+            "자전거사고",
+            "전체"
+          ]
+        },
+        {
+          "file": "19_25_pedstrians.csv",
+          "rows": 2402,
+          "headers": [
+            "사고다발지fid",
+            "사고다발지id",
+            "법정동코드",
+            "지점코드",
+            "시도시군구명",
+            "지점명",
+            "사고건수",
+            "사상자수",
+            "사망자수",
+            "중상자수",
+            "경상자수",
+            "부상신고자수",
+            "경도",
+            "위도",
+            "다발지역폴리곤"
+          ],
+          "coordinateData": true,
+          "invalidCoordinates": 0,
+          "invalidPolygons": 0,
+          "duplicateFidRows": 0,
+          "uniqueRoundedCoordinates": 2297,
+          "datasetIds": {
+            "2022040": 609,
+            "2023060": 470,
+            "2024051": 459,
+            "2025083": 446,
+            "2026122": 418
+          },
+          "explicitYearColumn": false,
+          "geometryTypes": {
+            "Polygon": 2402
+          }
+        },
+        {
+          "file": "12_25_child.csv",
+          "rows": 1300,
+          "headers": [
+            "사고다발지fid",
+            "사고다발지id",
+            "법정동코드",
+            "지점코드",
+            "시도시군구명",
+            "지점명",
+            "사고건수",
+            "사상자수",
+            "사망자수",
+            "중상자수",
+            "경상자수",
+            "부상신고자수",
+            "경도",
+            "위도",
+            "다발지역폴리곤"
+          ],
+          "coordinateData": true,
+          "invalidCoordinates": 0,
+          "invalidPolygons": 0,
+          "duplicateFidRows": 0,
+          "uniqueRoundedCoordinates": 1300,
+          "datasetIds": {
+            "2013097": 198,
+            "2014110": 158,
+            "2015049": 130,
+            "2016044": 117,
+            "2017027": 91,
+            "2018028": 79,
+            "2019035": 79,
+            "2020016": 82,
+            "2021017": 30,
+            "2022084": 37,
+            "2023011": 58,
+            "2024042": 59,
+            "2025108": 94,
+            "2026124": 88
+          },
+          "explicitYearColumn": false,
+          "geometryTypes": {
+            "Polygon": 1242,
+            "MultiPolygon": 58
+          }
+        },
+        {
+          "file": "13_25_freezing.csv",
+          "rows": 685,
+          "headers": [
+            "사고다발지fid",
+            "사고다발지id",
+            "법정동코드",
+            "지점코드",
+            "시도시군구명",
+            "지점명",
+            "사고건수",
+            "사상자수",
+            "사망자수",
+            "중상자수",
+            "경상자수",
+            "부상신고자수",
+            "경도",
+            "위도",
+            "다발지역폴리곤"
+          ],
+          "coordinateData": true,
+          "invalidCoordinates": 0,
+          "invalidPolygons": 0,
+          "duplicateFidRows": 0,
+          "uniqueRoundedCoordinates": 545,
+          "datasetIds": {
+            "2018091": 136,
+            "2019079": 91,
+            "2020036": 51,
+            "2021029": 68,
+            "2022082": 62,
+            "2023071": 56,
+            "2024055": 54,
+            "2025113": 85,
+            "2026125": 82
+          },
+          "explicitYearColumn": false,
+          "geometryTypes": {
+            "Polygon": 685
+          }
+        }
+      ]
+    },
+    {
+      "archive": "17_25_lg.zip",
+      "sha256": "b4afe453e23af59314896f47baf82eb324e9c03da15b8294cde7bd6129acac59",
+      "files": [
+        {
+          "file": "17_25_lg.csv",
+          "rows": 5977,
+          "encoding": "cp949",
+          "headers": [
+            "사고다발지fid",
+            "사고다발지id",
+            "법정동코드",
+            "지점코드",
+            "시도시군구명",
+            "지점명",
+            "사고건수",
+            "사상자수",
+            "사망자수",
+            "중상자수",
+            "경상자수",
+            "부상신고자수",
+            "경도",
+            "위도",
+            "다발지역폴리곤"
+          ],
+          "invalidCoordinates": 0,
+          "invalidPolygons": 0,
+          "geometryTypes": {
+            "Polygon": 5977
+          },
+          "datasetIds": {
+            "2018074": 660,
+            "2019056": 655,
+            "2020087": 662,
+            "2021056": 665,
+            "2022046": 656,
+            "2023026": 658,
+            "2024056": 678,
+            "2025119": 660,
+            "2026134": 683
+          },
+          "duplicateFidRows": 0,
+          "uniqueRoundedCoordinates": 4436,
+          "explicitYearColumn": false
+        }
+      ]
+    }
+  ],
+  "positionRows": 10364,
+  "statisticsRows": 46764,
+  "coordinateOrGeometryFormatErrors": 0,
+  "deployed": false,
+  "statisticalYearMappingVerified": false,
+  "notes": [
+    "Data ID prefixes are not treated as statistical years.",
+    "Repeated coordinates across annual datasets are not distinct physical places.",
+    "The child dataset contains 58 valid MultiPolygon records.",
+    "Coordinate range and geometry structure checks do not prove on-road accuracy."
+  ]
+}
