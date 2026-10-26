@@ -58,6 +58,23 @@ class NavigationTest {
             }
         }
     }
+    @Test fun recordedFurkaHairpinsRecoverFromCoarseGpsWithoutFalseOffRoute() {
+        fun rows(name:String)=javaClass.getResourceAsStream(name)!!.bufferedReader().useLines {lines->
+            lines.filter {it.isNotBlank()&&!it.startsWith("#")}.map {it.split(',').map(String::toDouble)}.toList()
+        }
+        val points=rows("/world-furka.csv").map {NavPoint(it[0],it[1])}
+        val total=points.zipWithNext().sumOf {(a,b)->NavigationGeometry.distance(a,b)}
+        val r=NavigationGeometry.route(NavPlace("Recorded road",points.last()),points,total,600.0,listOf(NavManeuver(points.first(),"depart"),NavManeuver(points.last(),"arrive")))
+        val fixes=rows("/furka-noisy-fixes.csv")
+        now=100_000
+        val tracker=running(r)
+        fixes.drop(1).forEachIndexed {index,v->
+            now=100_000+v[3].toLong()
+            tracker.update(NavFix(NavPoint(v[0],v[1]),v[2],now,v[4].takeIf {it>=0},v[5].takeIf {it>=0}))
+            assertFalse("False off-route at recorded input $index",tracker.state.offRoute)
+        }
+        assertTrue(tracker.state.arrived)
+    }
     @Test fun denselySampledSegmentsKeepCourseDirectionAndDuplicateVerticesAreNotCandidates() {
         val p=(0..50).map {NavPoint(it*.000018,0.0)}+
             (50 downTo 0).flatMap {listOf(NavPoint(it*.000018,.0001),NavPoint(it*.000018,.0001))}

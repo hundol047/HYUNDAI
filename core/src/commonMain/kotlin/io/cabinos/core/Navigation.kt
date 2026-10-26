@@ -188,7 +188,9 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val progress=if(off)state.progressMeters else at
         // Compare non-overlapping uncertainty bounds before calling motion a reversal.
         // A noisy accepted fix can otherwise set a false peak for every later fix.
-        if(!off){peakConfirmedProgress=max(peakConfirmedProgress,progress-fix.accuracy);lastOnRouteAt=fix.timestampMs
+        // Ambiguous matches are not a new confirmed anchor or speed observation.
+        // Otherwise a close hairpin can repeatedly renew the wrong search window.
+        if(!off&&!ambiguous){peakConfirmedProgress=max(peakConfirmedProgress,progress-fix.accuracy);lastOnRouteAt=fix.timestampMs
             // Bound both memory and per-fix work even for high-frequency providers.
             if(progressHistory.isEmpty()||fix.timestampMs-progressHistory.last().first>=250)progressHistory.addLast(fix.timestampMs to progress)
             while(progressHistory.isNotEmpty()&&(fix.timestampMs-progressHistory.first().first>12_000||progressHistory.size>64))progressHistory.removeFirst()
