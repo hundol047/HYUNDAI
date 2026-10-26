@@ -45,8 +45,8 @@ def record(adb, tree, tap, check, snapshot, scenario):
             time.sleep(1)
         else:
             raise AssertionError('Destination input did not settle after opening the keyboard')
-        # Pace real Android key events; a single rapid `input text` burst was
-        # dropped by the emulator input connection during window reflow.
+        # The previous burst input was absent from the captured UI. Use paced
+        # Android key events and verify the complete text before claiming input worked.
         for character in '37.567005,126.977893':
             code={'.':56,',':55}.get(character)
             if code is None:
