@@ -77,3 +77,17 @@ class EchoRoadTest(unittest.TestCase):
                 urllib.request.urlopen(base+'/v1/risks?lat=37.5&lon=127',timeout=3)
             self.assertEqual(401,error.exception.code)
         finally:server.shutdown();server.server_close();thread.join()
+
+    def test_connection_check_authenticates_without_coordinates_or_observations(self):
+        server=EchoServer(('127.0.0.1',0),{'a'*24:'one'},store=self.store)
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        try:
+            url=f'http://127.0.0.1:{server.server_port}/v1/status'
+            with self.assertRaises(urllib.error.HTTPError) as error:urllib.request.urlopen(url,timeout=3)
+            self.assertEqual(401,error.exception.code)
+            req=urllib.request.Request(url,headers={'Authorization':'Bearer '+'a'*24})
+            with urllib.request.urlopen(req,timeout=3) as response:
+                self.assertEqual({'status':'ok','accidentDatasetConnected':False},json.load(response))
+            self.assertEqual({},self.store.reports)
+            self.assertEqual({},server.get_last)
+        finally:server.shutdown();server.server_close();thread.join()

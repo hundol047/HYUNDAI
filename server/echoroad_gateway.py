@@ -143,6 +143,8 @@ class Handler(BaseHTTPRequestHandler):
         who=self.identity()
         if who is None:return self.reply(401,{'error':'Unauthorized'})
         u=urllib.parse.urlsplit(self.path)
+        if u.path=='/v1/status':
+            return self.reply(200,{'status':'ok','accidentDatasetConnected':any(r['validUntilMs']>self.server.store.clock() for r in self.server.zones)})
         if u.path!='/v1/risks':return self.reply(404,{'error':'Not found'})
         try:
             q=urllib.parse.parse_qs(u.query);p={'lat':float(q['lat'][0]),'lon':float(q['lon'][0])}
