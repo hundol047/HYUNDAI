@@ -4,7 +4,7 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/ae9637d430c2f459995923313186231f9f62f640/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f108c132ad39a75a56173e0ed35729861cf69022/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -74,7 +74,7 @@
 
 이번 공개 캠퍼스 좌표(37.279,127.908) 점검에서 Photon 카페 결과는 0곳, Overpass 두 서버는 20초 제한 시간 초과였습니다. 이 지역의 실제 카페 검색이 완성됐다고 검증하지 못했습니다.
 
-core 171개 + Android 216개, 총 **387개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
+core 171개 + Android 220개, 총 **391개 통과·실패 0·건너뜀 0**. 공식 SDK 포함 lint·phonePreview APK 빌드가 통과했습니다. [이번 수정의 검증 기록](runtime-fixes-verification.json)을 참고하세요. Robolectric 화면·위치·음성 콜백 검사는 실제 삼성 S20+의 마이크·GPS·스피커 시험을 뜻하지 않습니다. 공식 SDK를 포함해 컴파일했으며 공식 Pleos 기기 전체 시나리오 검증을 새로 수행한 것은 아닙니다.
 
 이번 실제 HTTP 점검에서 판교 기준 Photon 검색은 카페·식당·산책·쇼핑 각각 15곳(HTTP 200)을 반환했고, OSRM 자동차 경로는 약 90.4km 경로(HTTP 200)를 반환했습니다. 이는 서버 점검이며 S20+ 실물에서 같은 경로를 주행한 결과가 아닙니다. Overpass의 502·시간 초과는 재현되어 보조 경로로 남겼습니다. 공개 서비스의 장애·미등록 매장·사진 누락은 가능하며 모든 지역의 수록을 보장하지 않습니다. 상용 장소 API 키는 설정되어 있지 않습니다.
 

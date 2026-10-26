@@ -17,6 +17,8 @@ def record(adb, tree, tap, check, snapshot, scenario):
         raise AssertionError('Expected loaded place photo/control: ' + fragment)
 
     def reveal_photo(name, fragment, image):
+        for _ in range(4):
+            adb('shell', 'input', 'swipe', '1120', '455', '1120', '595', '350')
         for _ in range(6):
             nodes = list(tree().iter('node'))
             if any(fragment in n.get('content-desc', '') for n in nodes):
