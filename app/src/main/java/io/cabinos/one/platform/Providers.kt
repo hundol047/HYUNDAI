@@ -100,6 +100,9 @@ internal fun voiceServicesAvailable(context:Context):Boolean = runCatching {
 }.getOrDefault(false)
 
 class AndroidSpeechProvider(private val context:Context):SpeechProvider {
+    private val outputPreferences=context.getSharedPreferences("voice-output",Context.MODE_PRIVATE)
+    private val mutableGentle=MutableStateFlow(outputPreferences.getBoolean("gentle",true))
+    val gentleOutput=mutableGentle.asStateFlow()
     private val mutableVoiceAvailable=MutableStateFlow(false)
     val voiceAvailable=mutableVoiceAvailable.asStateFlow()
     fun refreshVoiceAvailability() { mutableVoiceAvailable.value=runCatching {SpeechRecognizer.isRecognitionAvailable(context)}.getOrDefault(false) }
@@ -163,6 +166,22 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     }
     private fun clearSynthesisTimeout() {synthesisTimeout?.let {handler.removeCallbacks(it)};synthesisTimeout=null}
     fun refreshOutputEngine() {if(outputEngine!=defaultOutputEngine())connectOutput()}
+    fun setGentleOutput(value:Boolean) {
+        stopSpeaking();configuredLanguage=null
+        outputPreferences.edit().putBoolean("gentle",value).apply();mutableGentle.value=value
+    }
+    private fun voiceKey(tag:String)="voice:${outputEngine.orEmpty()}:${NavigationSpeechVoice.locale(tag).toLanguageTag()}"
+    fun outputVoices(tag:String)=NavigationSpeechVoice.available(runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet()),NavigationSpeechVoice.locale(tag))
+    fun selectedVoiceName(tag:String):String?=outputPreferences.getString(voiceKey(tag),null)
+    fun chooseOutputVoice(tag:String,name:String?):Boolean {
+        if(name!=null&&outputVoices(tag).none {it.name==name})return false
+        stopSpeaking();configuredLanguage=null
+        outputPreferences.edit().apply {if(name==null)remove(voiceKey(tag)) else putString(voiceKey(tag),name)}.apply()
+        return true
+    }
+    fun resetOutputPreferences() {
+        stopSpeaking();configuredLanguage=null;outputPreferences.edit().clear().apply();mutableGentle.value=true
+    }
     fun openOutputSettings() {
         val intent=android.content.Intent("com.android.settings.TTS_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
         try {context.startActivity(intent)} catch(_:android.content.ActivityNotFoundException) {status="기기 설정에서 글자 읽어주기와 오프라인 음성팩을 확인해 주세요."}
@@ -184,13 +203,17 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         if(configuredLanguage!=locale.toLanguageTag()) {
             val supported=tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
             if(supported<TextToSpeech.LANG_AVAILABLE){status="${locale.getDisplayName(locale)} 음성팩 미지원/미설치 · 화면 안내 사용";return false}
-            val selected=NavigationSpeechVoice.select(runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet()),locale,tts?.voice)
+            val voices=runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet())
+            val selected=NavigationSpeechVoice.available(voices,locale).firstOrNull {it.name==selectedVoiceName(tag)}
+                ?: NavigationSpeechVoice.select(voices,locale,tts?.voice)
             if(selected!=null&&tts?.setVoice(selected)!=TextToSpeech.SUCCESS) {
                 status="음성을 선택하지 못했습니다 · 기기 음성팩을 확인해 주세요."
                 return false
             }
             if(tts?.voice?.isNetworkConnectionRequired==true){status="이 언어의 오프라인 음성팩을 설치해 주세요.";return false}
             configuredLanguage=locale.toLanguageTag()
+            // Preserve the engine's natural pitch; a small rate change must not become a synthetic pitch shift.
+            tts?.setSpeechRate(if(mutableGentle.value)0.94f else 1.0f)
             voiceDescription=if((tts?.voice?.quality ?: 0)>=android.speech.tts.Voice.QUALITY_HIGH)"고품질 기기 음성" else "기기 기본 음성 · 품질은 음성팩에 따라 다릅니다"
         }
         if(navigationSpeaking && text==lastSpokenText && configuredLanguage==lastSpokenLanguage&&requestKey==lastSpokenKey)return true

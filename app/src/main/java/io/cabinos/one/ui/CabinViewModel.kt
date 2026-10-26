@@ -332,6 +332,7 @@ class CabinViewModel @Inject constructor(
                     audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();PlacePhoto.clear();mutableMapSelection.value=null;liveNavigation.clear()
                     dao.clearPersonalData();dao.saveState(state.value)
                     runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
+                    speech.resetOutputPreferences()
                     storageRestored=true;mutableRestoreFailure.value=null
                     mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다."
                 } catch (error: Exception) {

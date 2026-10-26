@@ -104,6 +104,7 @@ import java.util.*
     var confirmDeletion by remember { mutableStateOf(false) }
     val storage by vm.storageStatus.collectAsStateWithLifecycle()
     val speechStatus by vm.speech.statusFlow.collectAsStateWithLifecycle()
+    val navigationUi by vm.liveNavigation.state.collectAsStateWithLifecycle()
     if(confirmDeletion) AlertDialog(onDismissRequest={confirmDeletion=false},
         title={Text("개인 데이터를 삭제할까요?")},
         text={Text("할 일, 세션 기록, 개인 설정, 출발 계획을 삭제합니다. 진행 중인 세션도 종료됩니다. 차량 데이터 모드 선택은 유지합니다.")},
@@ -124,11 +125,12 @@ import java.util.*
                 SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(speechStatus,color=Muted,fontSize=12.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
                 Spacer(Modifier.height(12.dp))
+                VoiceComfortSettings(vm.speech,navigationUi.language,s.parkedAllowed&&s.preferences.voiceEnabled)
                 FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
                     ActionButton("안내 음성 들어보기",{vm.speech.previewOutput(vm.liveNavigation.state.value.language)},Modifier.heightIn(min=56.dp),enabled=s.preferences.voiceEnabled)
                     ActionButton("기기 음성 설정",{vm.speech.openOutputSettings()},Modifier.heightIn(min=56.dp))
                 }
-                Text("음성 설정에서 원하는 엔진과 고품질 오프라인 음성팩을 선택하세요. 앱은 설치된 음성 중 해당 언어의 품질이 높은 음성을 우선합니다.",color=Muted,fontSize=12.sp)
+                Text("목소리를 직접 골라 들어보세요. 선택한 목소리는 이 기기에 저장돼요. 음색은 기기의 엔진과 설치된 음성팩에 따라 달라요.",color=Muted,fontSize=12.sp)
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("급감속 후보 공유 동의",color=White,fontSize=14.sp);Text("EchoRoad 서버 연결·이번 연결의 공유 동의가 모두 필요",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
                 Spacer(Modifier.height(20.dp));Text("동의하고 EchoRoad 서버를 연결하면 급감속 후보의 좌표·방향·시각·감속량을 전송합니다. 원시 주행 이력은 전송하지 않으며 서버는 제보를 15분 후 삭제합니다.",fontSize=11.sp,color=Muted)

@@ -27,6 +27,10 @@ def record(adb, tree, tap, check, snapshot, scenario, window, language):
         adb('shell', 'input', 'swipe', '1100', '650', '1100', '280', '600')
         time.sleep(1)
     check('voice preview and settings reachable', '안내 음성 들어보기', 'speech-settings')
+    check('voice chooser reachable', '목소리 골라 듣기', 'voice-chooser-button')
+    tap('목소리 골라 듣기')
+    check('offline voice choices opened', '편안한 목소리를 골라 주세요', 'voice-chooser')
+    tap('완료')
     def listen():
         tap('안내 음성 들어보기')
         # Include neural engine synthesis latency and the complete utterance.

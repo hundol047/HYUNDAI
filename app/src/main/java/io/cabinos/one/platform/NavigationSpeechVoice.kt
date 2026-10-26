@@ -7,11 +7,13 @@ import kotlin.math.roundToInt
 
 /** Never select a network voice implicitly: road names stay on this device. */
 internal object NavigationSpeechVoice {
-    fun select(voices:Set<Voice>,locale:Locale,preferred:Voice?=null):Voice? = voices.asSequence().filter {
+    fun available(voices:Set<Voice>,locale:Locale):List<Voice> = voices.filter {
         it.locale.language==locale.language && !it.isNetworkConnectionRequired &&
             TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED !in it.features.orEmpty() &&
             (locale.script.isBlank()||it.locale.script.isBlank()||locale.script==it.locale.script)
-    }.sortedWith(compareByDescending<Voice> {it.locale.toLanguageTag()==locale.toLanguageTag()}
+    }.sortedBy {it.name}
+
+    fun select(voices:Set<Voice>,locale:Locale,preferred:Voice?=null):Voice? = available(voices,locale).sortedWith(compareByDescending<Voice> {it.locale.toLanguageTag()==locale.toLanguageTag()}
         .thenByDescending {locale.country.isNotBlank()&&it.locale.country==locale.country}
         .thenByDescending {it.quality}.thenByDescending {it==preferred}
         .thenBy {it.latency}.thenBy {it.name}).firstOrNull()

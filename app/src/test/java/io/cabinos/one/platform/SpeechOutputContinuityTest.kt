@@ -18,6 +18,8 @@ import java.util.Locale
 class SpeakingTextToSpeech:ShadowTextToSpeech() {
     var busy=false
     var languageChanges=0
+    var speechRate=1.0f
+    @Implementation fun setSpeechRate(rate:Float):Int {speechRate=rate;return TextToSpeech.SUCCESS}
     var lastUtteranceId:String?=null
     @Implementation override fun speak(text:CharSequence,queueMode:Int,params:android.os.Bundle?,utteranceId:String?):Int {lastUtteranceId=utteranceId;return super.speak(text,queueMode,params,utteranceId)}
     var progress:android.speech.tts.UtteranceProgressListener?=null
@@ -132,6 +134,38 @@ class SpeechOutputContinuityTest {
             shadowOf(android.os.Looper.getMainLooper()).idle()
             assertTrue(nav.state.value.voiceNotice,nav.state.value.voiceNotice.contains("음성 재생 실패"))
         } finally {nav.close();speech.close()}
+    }
+    @Test fun gentleRateAndChosenOfflineVoicePersistAndCanBeReset() {
+        val context=ApplicationProvider.getApplicationContext<Context>()
+        val low=android.speech.tts.Voice("warm-choice",Locale.KOREA,android.speech.tts.Voice.QUALITY_NORMAL,android.speech.tts.Voice.LATENCY_NORMAL,false,emptySet())
+        val high=android.speech.tts.Voice("automatic-high",Locale.KOREA,android.speech.tts.Voice.QUALITY_HIGH,android.speech.tts.Voice.LATENCY_NORMAL,false,emptySet())
+        val cloud=android.speech.tts.Voice("cloud",Locale.KOREA,android.speech.tts.Voice.QUALITY_HIGH,android.speech.tts.Voice.LATENCY_NORMAL,true,emptySet())
+        ShadowTextToSpeech.addLanguageAvailability(Locale.KOREA)
+        listOf(low,high,cloud).forEach {ShadowTextToSpeech.addVoice(it)}
+        var speech=AndroidSpeechProvider(context)
+        fun ready():SpeakingTextToSpeech {
+            val tts=org.robolectric.shadow.api.Shadow.extract<SpeakingTextToSpeech>(ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(TextToSpeech.SUCCESS);return tts
+        }
+        try {
+            val first=ready()
+            assertTrue(speech.gentleOutput.value)
+            assertFalse(speech.chooseOutputVoice("ko-KR","cloud"))
+            assertTrue(speech.chooseOutputVoice("ko-KR",low.name))
+            speech.previewOutput("ko-KR")
+            assertEquals(low,first.currentVoice)
+            assertEquals(0.94f,first.speechRate,0.001f)
+            speech.setGentleOutput(false);speech.close()
+            speech=AndroidSpeechProvider(context)
+            val second=ready();speech.previewOutput("ko-KR")
+            assertFalse(speech.gentleOutput.value)
+            assertEquals(low,second.currentVoice)
+            assertEquals(1.0f,second.speechRate,0.001f)
+            speech.resetOutputPreferences();speech.previewOutput("ko-KR")
+            assertNull(speech.selectedVoiceName("ko-KR"))
+            assertTrue(speech.gentleOutput.value)
+            assertEquals(high,second.currentVoice)
+        } finally {speech.close()}
     }
     @Test fun regionalVoiceIsNotCollapsedToBaseLanguageAndUnsupportedPackUsesEnglish() {
         assertEquals("fr-CA",NavigationSpeechVoice.locale("fr-CA").toLanguageTag())
