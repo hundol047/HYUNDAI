@@ -64,4 +64,13 @@ class CompactWindowTest {
         compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
         capture("single-cell-navigation")
     }
+    @Test @Config(qualifiers="w1024dp-h480dp-land-mdpi")
+    fun shortWideVehicleWindowCanReachSessionAndSettings() {
+        ready()
+        compose.onNodeWithText("집중 시작").performScrollTo().performClick()
+        compose.onNodeWithText("집중 세션").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("설정").performClick()
+        compose.onNodeWithText("웜 샌드").performScrollTo().assertIsDisplayed()
+        capture("short-wide-vehicle-window")
+    }
 }

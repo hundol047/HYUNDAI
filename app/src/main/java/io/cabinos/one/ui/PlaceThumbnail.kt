@@ -47,12 +47,12 @@ import io.cabinos.one.platform.PlacePhoto
         }
         val image=photo
         if(image==null) {
-            Text(fallbackLabel,color=Muted,fontSize=10.sp)
-            if(loading)Text("장소 사진 확인 중…",color=Muted,fontSize=10.sp)
+            Text(fallbackLabel,color=Muted,fontSize=10.sp,lineHeight=14.sp)
+            if(loading)Text("장소 사진 확인 중…",color=Muted,fontSize=10.sp,lineHeight=14.sp)
         }
         val credit=image?.credit?:logo?.credit
         val source=image?.source?:logo?.source
-        if(credit!=null&&source!=null)Text(credit,color=Muted,fontSize=9.sp,modifier=Modifier.clickable(enabled=online){
+        if(credit!=null&&source!=null)Text(credit,color=Muted,fontSize=9.sp,lineHeight=12.sp,modifier=Modifier.clickable(enabled=online){
             runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse(source)))}
         })
     }

@@ -29,6 +29,7 @@ import java.util.Locale
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
     val compact=LocalCompactWindow.current
     val context=LocalContext.current
+    val keyboard=androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
     DisposableEffect(nav){onDispose {nav.cancelVoice()}}
     val g=ui.guidance
     var query by remember {mutableStateOf("")}
@@ -54,6 +55,7 @@ import java.util.Locale
     val voiceAvailable by nav.voiceAvailable.collectAsStateWithLifecycle()
     val canPlan=s.parkedAllowed&&!g.active
     val chooseDestination:(NavPlace)->Unit = { place ->
+        keyboard?.hide()
         nav.navigateTo(place)
         if(nav.state.value.gpsConnection==GpsConnection.DENIED)onLocate()
     }
@@ -86,9 +88,9 @@ import java.util.Locale
         if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 선택 시 안내 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
             Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.fillMaxWidth(),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy){submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.fillMaxWidth(),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy&&s.networkAvailable&&query.trim().length>=2){keyboard?.hide();submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                ActionButton("검색",{submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},modifier=Modifier.weight(1f).heightIn(min=52.dp),color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
+                ActionButton("검색",{keyboard?.hide();submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},modifier=Modifier.weight(1f).heightIn(min=52.dp),color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
                 ActionButton("내 위치 사용",onLocate,Modifier.weight(1f).heightIn(min=52.dp),color=Mint,enabled=!ui.busy)
                 }
                 if(ui.busy)ActionButton("요청 취소",{nav.cancelPending()},Modifier.fillMaxWidth(),color=Amber)

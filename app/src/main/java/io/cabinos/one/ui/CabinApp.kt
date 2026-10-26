@@ -142,7 +142,7 @@ import java.util.*
     }
     CabinTheme(appearance) {
         BoxWithConstraints(Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing).background(Brush.linearGradient(listOf(Night,Panel,Night)))) {
-            val compact=maxWidth<840.dp || maxHeight<520.dp
+            val compact=compactWindow(maxWidth.value,maxHeight.value,androidx.compose.ui.platform.LocalDensity.current.fontScale)
             CompositionLocalProvider(LocalCompactWindow provides compact) {
                 val selected=if(navigationOpen) "navigation" else route
                 val navigate:(String)->Unit = {

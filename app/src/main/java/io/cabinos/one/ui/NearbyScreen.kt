@@ -38,6 +38,7 @@ import org.osmdroid.views.overlay.*
     val compact=LocalCompactWindow.current
     val context=LocalContext.current
     var map by remember { mutableStateOf<MapView?>(null) }
+    var attributionOpen by remember {mutableStateOf(false)}
     LaunchedEffect(Unit) {if(s.networkAvailable && s.locationAvailable && s.activities.all {it.activity.simulated})onLocate()}
     val controls:@Composable ()->Unit = {
         Text("멈춘 시간, 어디에서 보낼까요?",color=White,fontSize=24.sp)
@@ -46,20 +47,19 @@ import org.osmdroid.views.overlay.*
             ActionButton(if(busy)"확인 중…" else "내 위치 사용",onLocate,color=Blue,enabled=!busy&&s.locationAvailable,icon=Icons.Outlined.MyLocation)
             ActionButton("지도 중심 사용",{map?.mapCenter?.let {vm.mapOrigin(MapPosition(it.latitude,it.longitude,"직접 고른 지도 기준점 · 차량 위치 아님"))}},color=Muted,enabled=!busy)
             ActionButton("주변 검색",{vm.searchNearby()},color=Mint,enabled=!busy&&s.networkAvailable&&s.locationAvailable,icon=Icons.Outlined.Search)
-            if(busy)ActionButton("검색 취소",{vm.cancelNearbySearch()},color=Amber)
             if(!busy)ActionButton("예시 초기화",{vm.mapExamples()},color=Muted)
         }
+        if(busy)NearbySearchProgress {vm.cancelNearbySearch()}
         Text(if(!s.networkAvailable) "오프라인 · 새 지도와 장소를 불러올 수 없습니다." else if(!s.locationAvailable) "위치 사용 제한 · 온라인 지도·검색을 중단했습니다." else status,color=if(s.networkAvailable)Muted else Amber,fontSize=11.sp)
     }
     val categories:@Composable ()->Unit = {
         Row(Modifier.horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(5.dp)) {
             listOf("전체","카페","식당","산책","쇼핑").forEach { category ->
-                FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.nearbyCategory(category)},label={Text(category,fontSize=11.sp)})
+                FilterChip(selected=s.preferences.preferredCategory==category,onClick={vm.nearbyCategory(category)},label={Text(category,fontSize=13.sp)},modifier=Modifier.heightIn(min=48.dp))
             }
         }
         Text("${s.preferences.preferredCategory} ${s.activities.size}곳 · 출발 ${s.schedule.waitingSeconds/60}분 · 준비 ${s.preferences.departureBufferMinutes}분 확보",color=Mint,fontSize=12.sp)
         Text("추천순 · 이용 가능 여부 → 가까운 순 · 아래로 스크롤",color=Muted,fontSize=11.sp)
-        Text(status,color=if(busy)Mint else Muted,fontSize=12.sp)
         if(s.activities.any {it.activity.simulated})Text("데모 예시 목록 · 실제 매장 검색 결과가 아닙니다",color=Amber,fontSize=12.sp)
     }
     val details:@Composable (ActivityOption)->Unit = { option ->
@@ -73,13 +73,18 @@ import org.osmdroid.views.overlay.*
         Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
     }
     val attribution:@Composable ()->Unit = {
-        TextButton(onClick={if(vm.state.value.parkedAllowed)openMapUri(context,"https://www.openstreetmap.org/fixthemap")}){Text("지도 오류 제보",color=Muted)}
-        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 보행 확인 시 출발·장소 좌표를 FOSSGIS에 전송합니다. 사진: OSM 등록 링크·위키백과·Wikidata에서 장소명과 좌표를 대조한 Wikimedia Commons 사진. 사진 검색 시 장소명을 전송합니다. 사진 없는 곳은 미확인으로 표시합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
+        Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.SpaceBetween) {
+            TextButton(onClick={attributionOpen=true}){Text("지도·사진 출처 및 데이터 안내",color=Muted,fontSize=11.sp)}
+            TextButton(onClick={if(vm.state.value.parkedAllowed)openMapUri(context,"https://www.openstreetmap.org/fixthemap")}){Text("지도 오류 제보",color=Muted,fontSize=11.sp)}
+        }
     }
+    if(attributionOpen)AlertDialog(onDismissRequest={attributionOpen=false},title={Text("지도·사진 출처")},
+        text={Column(Modifier.heightIn(max=320.dp).verticalScroll(rememberScrollState())) {Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 보행 확인 시 출발·장소 좌표를 FOSSGIS에 전송합니다. 사진: OSM 등록 링크·위키백과·Wikidata에서 장소명과 좌표를 대조한 Wikimedia Commons 사진. 사진 검색 시 장소명을 전송합니다. 사진 없는 곳은 미확인으로 표시합니다. 영업·보행 가능 여부를 확인하세요.",fontSize=14.sp)}},
+        confirmButton={TextButton(onClick={attributionOpen=false}){Text("닫기")}})
     val online=s.networkAvailable&&s.locationAvailable&&s.parkedAllowed
     if(compact) {
         // One scroll container keeps both the last result and its actions reachable on phones.
-        NearbyRankedList(s.activities,selected,online,Modifier.fillMaxSize(),details=details,
+        NearbyRankedList(s.activities,selected,online,Modifier.fillMaxSize(),details=details,busy=busy,resetKey=s.preferences.preferredCategory,
             header={Column(verticalArrangement=Arrangement.spacedBy(10.dp)) {
                 controls()
                 Box(Modifier.fillMaxWidth().height(300.dp).clip(RoundedCornerShape(18.dp)).background(Panel)) {
@@ -93,7 +98,7 @@ import org.osmdroid.views.overlay.*
             Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) {OpenStreetMap(s,selected,{vm.mapSelect(it)},{map=it})}
         },details={pane->Column(pane,verticalArrangement=Arrangement.spacedBy(8.dp)) {
             categories()
-            NearbyRankedList(s.activities,selected,online,Modifier.weight(1f),details=details,onSelect=vm::mapSelect)
+            NearbyRankedList(s.activities,selected,online,Modifier.weight(1f),details=details,busy=busy,resetKey=s.preferences.preferredCategory,onSelect=vm::mapSelect)
         }})
         attribution()
     }
@@ -171,16 +176,20 @@ private fun openMapUri(context:android.content.Context,uri:String):Boolean = try
 @Composable internal fun NearbyRankedList(
     options:List<ActivityOption>,selected:String?,online:Boolean,modifier:Modifier,
     details:@Composable (ActivityOption)->Unit={},header:(@Composable ()->Unit)?=null,
-    footer:(@Composable ()->Unit)?=null,onSelect:(String)->Unit,
+    footer:(@Composable ()->Unit)?=null,busy:Boolean=false,resetKey:String="",onSelect:(String)->Unit,
 ) {
     val scroll=rememberLazyListState()
+    LaunchedEffect(resetKey) {
+        if(header==null)scroll.scrollToItem(0)
+        else if(scroll.firstVisibleItemIndex>0)scroll.scrollToItem(1)
+    }
     LaunchedEffect(selected) {
         val index=options.indexOfFirst {it.activity.id==selected}
         if(index>=0)scroll.scrollToItem(index+if(header==null)0 else 1)
     }
     LazyColumn(modifier,state=scroll,verticalArrangement=Arrangement.spacedBy(7.dp),contentPadding=PaddingValues(bottom=12.dp)) {
         if(header!=null)item(key="header"){header()}
-        if(options.isEmpty()) item {Text("불러온 장소가 없습니다. 검색 중이거나 실패했는지 위 상태를 확인하고, 다른 분류 또는 지도 중심으로 검색하세요.",color=Muted,fontSize=13.sp)}
+        if(options.isEmpty()) item {Text(if(busy)"장소를 찾고 있습니다. 완료되면 목록에 표시됩니다." else "표시할 장소가 없습니다. 위 검색 상태를 확인하거나 다른 분류·지역에서 다시 검색하세요.",color=Muted,fontSize=13.sp)}
         itemsIndexed(options,key={_,option->option.activity.id}) { index,option ->
             val a=option.activity
             SurfacePanel(Modifier.fillMaxWidth().clickable {onSelect(a.id)},accent=if(a.id==selected)Mint else Line) {
@@ -197,5 +206,15 @@ private fun openMapUri(context:android.content.Context,uri:String):Boolean = try
             }
         }
         if(footer!=null)item(key="footer"){footer()}
+    }
+}
+
+@Composable internal fun NearbySearchProgress(onCancel:()->Unit) {
+    Row(Modifier.fillMaxWidth(),verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(12.dp)) {
+        Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(4.dp)) {
+            LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint)
+            Text("위치·장소 확인 중",color=Muted,fontSize=12.sp)
+        }
+        ActionButton("검색 취소",onCancel,color=Amber,modifier=Modifier.heightIn(min=56.dp))
     }
 }

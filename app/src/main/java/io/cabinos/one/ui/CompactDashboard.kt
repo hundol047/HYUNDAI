@@ -10,6 +10,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.cabinos.core.*
 
+internal fun compactWindow(widthDp:Float,heightDp:Float,fontScale:Float):Boolean {
+    val scale=fontScale.coerceAtLeast(1f)
+    return widthDp/scale<840f || heightDp/scale<520f
+}
+
 val LocalCompactWindow = staticCompositionLocalOf { false }
 
 /** Single-column layout for Pleos one-cell windows and phones; no minimum landscape width. */
