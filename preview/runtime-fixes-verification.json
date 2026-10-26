@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "a03ffc8faf7371a538de5ef6eb90233cf9fbbcd8",
-  "apkSha256": "9f1c33ccb9bc83ab4589e2f370baeb2b4bcbb9514fad95d5bf15aafddaa8676a",
+  "sourceCommit": "d32b178274e67ec0e138f0210593abd105be382d",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
   "tests": {
     "core": {
       "tests": 175,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 254,
+      "tests": 255,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -367,7 +367,7 @@
     "teamSignedLatestRelease": false
   },
   "finalUsability": {
-    "androidTests": 254,
+    "androidTests": 255,
     "coreTests": 175,
     "failures": 0,
     "browserVoiceChecks": 17,
@@ -380,6 +380,8 @@
     "serverTests": 25,
     "destinationDraftSurvivesRotation": true,
     "ambiguousGpsExcludedFromConfirmedHistory": true,
-    "sameHeadingGpsAmbiguityHoldsTurns": true
+    "sameHeadingGpsAmbiguityHoldsTurns": true,
+    "restoredNavigationTabsWaitForGraph": true,
+    "activeGuidanceNoticeUpdated": true
   }
 }
