@@ -129,7 +129,7 @@ import kotlin.math.min
                     }
                     Spacer(Modifier.height(10.dp));Text(a.name,fontSize=13.sp,fontWeight=FontWeight.SemiBold,color=White,maxLines=1,overflow=TextOverflow.Ellipsis)
                     Spacer(Modifier.height(5.dp));Text("도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM"}",fontSize=10.sp,color=Muted,maxLines=1)
-                    Spacer(Modifier.height(5.dp));Text(if(option.feasible)"${option.usableSeconds/60}분 이용 가능  ↗" else "시간 부족",fontSize=10.sp,color=if(option.feasible)Mint else Amber)
+                    Spacer(Modifier.height(5.dp));Text(if(!a.simulated && a.walking==null)"지도에서 보행 경로 확인" else if(option.feasible)"${option.usableSeconds/60}분 이용 가능  ↗" else "시간 부족",fontSize=10.sp,color=if(option.feasible)Mint else Amber)
                 }
             }
         }

@@ -30,8 +30,8 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         // Losing foreground/telemetry does not fabricate a new parking state or erase an already saved reminder.
         if (!state.parkedAllowed) return
         val departure = state.schedule.departureAtMs ?: run { cancel(); return }
-        // Place plans reserve a full round trip. Once outside, allow the return half before preparation.
-        val returnWalk = if(state.selectedActivityId!=null)state.schedule.returnSeconds/2 else 0
+        // Place plans reserve a full round trip. Once outside, reserve the actual inbound leg before preparation.
+        val returnWalk = if(state.selectedActivityId!=null)(state.schedule.inboundSeconds.takeIf {it>0} ?: (state.schedule.returnSeconds/2)) else 0
         val alert = departure - (state.schedule.bufferSeconds + returnWalk) * 1000
         if (alert <= clock()) {
             // A shortened plan must invalidate the previous future alarm as well.

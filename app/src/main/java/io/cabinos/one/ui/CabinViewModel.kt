@@ -72,7 +72,8 @@ class CabinViewModel @Inject constructor(
     private var nearbyJob:Job?=null
     private val nearbyCache=NearbyQueryCache()
     private var nearbyGeneration=0
-    private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
+    private val walkingService=WalkingService()
+    private fun cancelNearby(){walkingService.cancel();nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
     fun cancelNearbySearch(){cancelNearby();mutableNearbyStatus.value="주변 검색을 취소했습니다. 기존 표시를 유지합니다."}
     fun mapUnavailable(){mutableNearbyStatus.value="지도 앱이나 브라우저가 설치되어 있지 않습니다."}
     private var foreground = true
@@ -289,6 +290,27 @@ class CabinViewModel @Inject constructor(
                 if(error is CancellationException)throw error
                 if(generation==nearbyGeneration){nearbyCache.fail();mutableNearbyStatus.value="장소 검색 실패 · 기존 표시를 유지합니다. "+(error.message ?: "연결을 확인하고 다시 검색하세요.")}
             } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
+        }
+    }
+    fun walkingPlan(id:String) {
+        if(!foreground || !state.value.parkedAllowed || mutableNearbyBusy.value)return
+        val origin=state.value.activityOrigin
+        val place=state.value.activities.firstOrNull {it.activity.id==id}?.activity ?: return
+        if(place.simulated || place.walking?.usable(System.currentTimeMillis(),origin)==true){engine.selectActivity(id);return}
+        if(!state.value.networkAvailable){mutableNearbyStatus.value="보행 경로 확인에는 인터넷 연결이 필요합니다.";return}
+        cancelNearby();val generation=nearbyGeneration;mutableNearbyBusy.value=true
+        mutableNearbyStatus.value="가는 길·돌아오는 보행 경로 확인 중…"
+        nearbyJob=viewModelScope.launch {
+            try {
+                val plan=walkingService.roundTrip(origin,place)
+                if(generation==nearbyGeneration && foreground && state.value.networkAvailable && state.value.parkedAllowed && engine.confirmWalking(id,origin,plan)) {
+                    val selected=engine.selectActivity(id)
+                    mutableNearbyStatus.value="보행 왕복 ${plan.roundTripSeconds/60}분 · OSM/FOSSGIS 경로 확인 · "+if(selected)"출발 계획에 반영했습니다." else "활동·출발 준비 시간이 부족합니다."
+                }
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                if(generation==nearbyGeneration)mutableNearbyStatus.value="보행 경로를 확인하지 못해 계획에 반영하지 않았습니다. 잠시 후 다시 시도하거나 다른 장소를 선택하세요."
+            } finally {if(generation==nearbyGeneration)mutableNearbyBusy.value=false}
         }
     }
     fun notificationsAllowed() = reminders.permitted()

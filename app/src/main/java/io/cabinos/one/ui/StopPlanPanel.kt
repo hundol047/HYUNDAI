@@ -73,7 +73,7 @@ fun StopPlanPanel(
                     Text("1분 이상 여유가 있을 때만 연장하며 출발 시각은 바꾸지 않아요.", color = Muted, fontSize = 12.sp)
                 }
                 s.selectedActivityId != null -> {
-                    Text("선택한 장소의 왕복 시간을 확보했어요. 이동 시간은 도보 추정입니다.", color = Muted)
+                    Text("선택한 장소의 왕복 시간을 확보했어요. 경로·출입 가능 여부는 지도에서 확인하세요.", color = Muted)
                     ActionButton("차 안에서 보내기로 변경", onStay, enabled = s.parkedAllowed)
                 }
                 else -> {

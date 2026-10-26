@@ -64,8 +64,8 @@ import org.osmdroid.views.overlay.*
     }
     val details:@Composable (ActivityOption)->Unit = { option ->
         val a=option.activity
-        Text("도보 시간은 직선거리 기반 추정입니다. 실제 경로·출입 가능 여부를 확인하세요.",fontSize=10.sp,color=Muted)
-        ActionButton(if(s.selectedActivityId==a.id)"왕복 계획에 반영됨" else "이 장소로 계획",{vm.engine.selectActivity(a.id)},Modifier.fillMaxWidth(),Mint,option.feasible)
+        Text(if(a.walking!=null)"OSM 보행 왕복 경로 확인 · 출입 제한·신호 대기·현장 상황은 별도 확인하세요." else "보행 경로 미확인 · 계획 전에 실제 왕복 경로를 조회합니다.",fontSize=10.sp,color=Muted)
+        ActionButton(if(s.selectedActivityId==a.id)"왕복 계획에 반영됨" else if(!a.simulated && a.walking==null)"보행 경로 확인하고 계획" else "이 장소로 계획",{vm.walkingPlan(a.id)},Modifier.fillMaxWidth(),Mint,!busy && s.parkedAllowed && (option.feasible || (!a.simulated && a.walking==null)))
         ActionButton("앱에서 길 안내",{
             if(vm.state.value.parkedAllowed && a.latitude!=null && a.longitude!=null)
                 onNavigate(NavPlace(a.name,NavPoint(a.latitude!!,a.longitude!!),category=a.category,source=if(a.simulated)"데모 예시 좌표 · 실제 매장 아님" else "OpenStreetMap 등록 장소"))
@@ -73,7 +73,8 @@ import org.osmdroid.views.overlay.*
         Text("자동차 경로로 안내합니다. 위 도보 시간과 다를 수 있습니다.",color=Muted,fontSize=10.sp)
     }
     val attribution:@Composable ()->Unit = {
-        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
+        TextButton(onClick={if(vm.state.value.parkedAllowed)openMapUri(context,"https://www.openstreetmap.org/fixthemap")}){Text("지도 오류 제보",color=Muted)}
+        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 보행 확인 시 출발·장소 좌표를 FOSSGIS에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
     }
     val online=s.networkAvailable&&s.locationAvailable&&s.parkedAllowed
     if(compact) {
@@ -142,6 +143,12 @@ import org.osmdroid.views.overlay.*
                     setOnMarkerClickListener {_,_->currentSelect(a.id);true}
                 })
             }
+            s.activities.firstOrNull {it.activity.id==selected}?.activity?.walking?.let {walk ->
+                view.overlays.add(org.osmdroid.views.overlay.Polyline().apply {
+                    setPoints(walk.points.map {GeoPoint(it.latitude,it.longitude)})
+                    outlinePaint.color=AndroidColor.rgb(45,176,150);outlinePaint.strokeWidth=8f
+                })
+            }
             view.overlays.add(CopyrightOverlay(context).apply {setTextSize(12);setCopyrightNotice("© OpenStreetMap contributors")})
             view.invalidate()
         }
@@ -183,7 +190,7 @@ private fun openMapUri(context:android.content.Context,uri:String):Boolean = try
                         Text("${index+1}위",color=Mint,fontSize=11.sp)
                         Text(a.name,color=White,fontSize=14.sp)
                         Text("${a.category} · 도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM 등록"}",color=Muted,fontSize=11.sp)
-                        Text(if(option.feasible)"왕복 후 ${option.usableSeconds/60}분 이용 가능" else "왕복·준비 시간 부족",color=if(option.feasible)Mint else Amber,fontSize=11.sp)
+                        Text(if(!a.simulated && a.walking==null)"보행 경로 확인 필요" else if(option.feasible)"왕복 후 ${option.usableSeconds/60}분 이용 가능" else "왕복·준비 시간 부족",color=if(option.feasible)Mint else Amber,fontSize=11.sp)
                     }
                 }
                 if(a.id==selected)details(option)

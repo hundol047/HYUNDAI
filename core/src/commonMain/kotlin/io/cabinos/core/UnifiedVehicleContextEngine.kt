@@ -114,7 +114,7 @@ class UnifiedVehicleContextEngine(
         )
         constraints.minByOrNull { it.first }?.let { departureAtMs=it.first; scheduleLabel=it.second }
             ?: run { departureAtMs=null }
-        val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel)
+        val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel).copy(inboundSeconds=(nearbyActivities ?: recommendations.activities()).firstOrNull {it.id==state.value.selectedActivityId}?.let {it.walking?.inboundSeconds ?: it.oneWaySeconds} ?: 0)
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
         val physical = if(navigationLock)VehicleContext.DRIVING else vehicleContext
         val allowed = physical == VehicleContext.PARKED || physical == VehicleContext.CHARGING
@@ -150,7 +150,7 @@ class UnifiedVehicleContextEngine(
             stopSenseActive = allowed, cabinActive = allowed, schedule = schedule, session = session, history = history,
             hazards = ranked, nowMs = now,
             activities = if (allowed) TimeOptimizer.recommend(
-                (nearbyActivities ?: recommendations.activities()).filter { old.sample?.source != DataSource.VEHICLE || !it.simulated },
+                (nearbyActivities ?: recommendations.activities()).map {a -> if(a.walking?.usable(now,old.activityOrigin)==false)a.copy(walking=null) else a}.filter { old.sample?.source != DataSource.VEHICLE || !it.simulated },
                 schedule, old.preferences.preferredCategory) else emptyList(),
         )
         if (context != old.context) event("ContextChanged", "${contextLabel(old.context)} → ${contextLabel(context)}")
@@ -201,16 +201,33 @@ class UnifiedVehicleContextEngine(
     fun selectActivity(id: String): Boolean {
         if (!parkedNow()) return reject()
         val option = state.value.activities.firstOrNull { it.activity.id == id && it.feasible } ?: return false
-        returnSeconds = 2 * option.activity.oneWaySeconds
+        if(!option.activity.simulated && option.activity.walking?.usable(clock(),state.value.activityOrigin)!=true)return false
+        returnSeconds = option.activity.roundTripSeconds
         mutable.value = state.value.copy(selectedActivityId=id)
         event("ActivitySelected", "${option.activity.name} 선택 · 왕복 ${returnSeconds / 60}분을 확보했습니다."); tick(); return true
     }
     fun updateNearbyActivities(origin:MapPosition,activities:List<NearbyActivity>):Boolean {
         if(!parkedNow() || !origin.valid())return false
-        nearbyActivities=activities.filter { it.latitude!=null && it.longitude!=null && MapPosition(it.latitude,it.longitude).valid() && it.name.isNotBlank() && it.oneWaySeconds>=60 && it.minimumActivitySeconds>=0 }.distinctBy { it.id }.take(60)
-        val selected=nearbyActivities!!.firstOrNull { it.id==state.value.selectedActivityId }
-        returnSeconds=selected?.oneWaySeconds?.times(2) ?: 0
+        val previous=nearbyActivities.orEmpty().associateBy {it.id}
+        val sameOrigin=origin==state.value.activityOrigin
+        nearbyActivities=activities.filter { it.latitude!=null && it.longitude!=null && MapPosition(it.latitude,it.longitude).valid() && it.name.isNotBlank() && it.oneWaySeconds>=60 && it.minimumActivitySeconds>=0 }.distinctBy { it.id }.take(60).map {place ->
+            val old=previous[place.id]
+            val walk=old?.walking
+            // Refreshing names/photos must not replace a reserved return path with a straight line.
+            if(sameOrigin && walk!=null && old.latitude==place.latitude && old.longitude==place.longitude &&
+                (place.id==state.value.selectedActivityId || walk.usable(clock(),origin)))place.copy(walking=walk,oneWaySeconds=walk.outboundSeconds) else place
+        }
+        val selected=nearbyActivities!!.firstOrNull { it.id==state.value.selectedActivityId && (it.simulated || it.walking!=null) }
+        returnSeconds=selected?.roundTripSeconds ?: 0
         mutable.value=state.value.copy(activityOrigin=origin,selectedActivityId=selected?.id,nearbyRevision=state.value.nearbyRevision+1)
+        tick();return true
+    }
+    fun confirmWalking(id:String,origin:MapPosition,plan:WalkingPlan):Boolean {
+        if(!parkedNow() || origin!=state.value.activityOrigin || !plan.usable(clock(),origin))return false
+        val places=nearbyActivities ?: return false
+        if(places.none {it.id==id && !it.simulated})return false
+        nearbyActivities=places.map {if(it.id==id)it.copy(oneWaySeconds=plan.outboundSeconds,walking=plan)else it}
+        mutable.value=state.value.copy(nearbyRevision=state.value.nearbyRevision+1)
         tick();return true
     }
     fun stayInCabin() { if (parkedNow()) { returnSeconds = 0;mutable.value=state.value.copy(selectedActivityId=null);tick() } }
