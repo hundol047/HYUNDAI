@@ -103,6 +103,7 @@ import java.util.Locale
             Text(ui.trafficNotice+" · 도착 시간에 교통 미반영",color=Muted,fontSize=12.sp,modifier=Modifier.weight(1f))
             if(canPlan)TextButton(onClick={trafficSettings=true}){Text("교통 연결")}
         }
+        EchoRoadPanel(ui,nav,canPlan)
         if(ui.traffic!=null)Text("빨강 정체/통제 · 노랑 서행 · 초록 원활 · 회색 불확실 · 조회 후 90초 만료",color=Muted,fontSize=11.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->

@@ -31,6 +31,9 @@ data class NavigationUi(
     val voiceNotice: String = "목적지 → 결과 번호를 말하세요.",
     val searchQuery: String = "",
     val roadSafety: RoadSafetyUi = RoadSafetyUi(),
+    val echoRisks: List<EchoRisk> = emptyList(),
+    val echoNotice: String = "EchoRoad 공유 서버 미연결",
+    val echoAhead: String? = null,
     val traffic: TrafficFlow? = null,
     val trafficNotice: String = "실시간 교통 미연결",
 )

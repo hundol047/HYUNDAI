@@ -42,6 +42,57 @@ class LiveNavigation(
     private var trafficLastAttempt = 0L
     private var trafficGeneration = 0
 
+    private val echoClient=EchoRoadClient()
+    private val brakeDetector=BrakeDetector()
+    private var echoJob:Job?=null
+    private var echoGeneration=0
+    private var echoRealFix=false
+    private var echoSharing=false
+    private var echoAttempt=0L
+    private var echoVoiceAt=0L
+    private val echoSpoken=mutableSetOf<String>()
+
+    fun configureEcho(endpoint:String,token:String,sharing:Boolean=false) {
+        if(!canPlan())return
+        echoGeneration++;echoJob?.cancel();echoClient.cancel();echoClient.configure(endpoint,token)
+        echoSharing=sharing && endpoint.isNotEmpty()
+        engine.updatePreferences(engine.state.value.preferences.copy(shareHazards=echoSharing))
+        brakeDetector.reset();echoAttempt=0L;echoSpoken.clear()
+        mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null,echoNotice=if(endpoint.isEmpty())"EchoRoad 공유 서버 미연결" else "EchoRoad 연결 설정 · 위치 확인 후 조회")
+    }
+    private fun echoObservation(f:NavFix,location:Location) {
+        if(!tracker.state.active || location.provider!=LocationManager.GPS_PROVIDER || location.isFromMockProvider || !location.hasSpeedAccuracy() || !location.speedAccuracyMetersPerSecond.isFinite() || location.speedAccuracyMetersPerSecond !in 0f..1.5f) {brakeDetector.reset();return}
+        val event=brakeDetector.accept(f,clock()) ?: return
+        if(!echoSharing || !engine.state.value.preferences.shareHazards || echoClient.endpoint.isEmpty()) {
+            mutable.value=mutable.value.copy(echoNotice="급감속 후보 감지 · 공유하지 않음");return
+        }
+        if(echoJob?.isActive==true)return // No location queue and no delayed uploads.
+        val epoch=echoGeneration
+        echoJob=scope.launch {
+            try {echoClient.report(event);if(epoch==echoGeneration)mutable.value=mutable.value.copy(echoNotice="급감속 후보 전송 · 다른 기기 확인 전 미게시")}
+            catch(e:Exception){if(e is CancellationException)throw e;if(epoch==echoGeneration)mutable.value=mutable.value.copy(echoNotice="위험 제보 전송 실패 · 저장·재전송하지 않음")}
+        }
+    }
+    private fun echoTick() {
+        val g=tracker.state;val f=fix
+        val ready=foreground && echoRealFix && g.active && g.tracking && f!=null && tracker.usable(f) && clock()-f.timestampMs in 0..3000 && engine.state.value.networkAvailable
+        val fresh=if(ready)mutable.value.echoRisks.filter {it.expiresAtMs>clock()} else emptyList()
+        val ahead=if(ready)EchoRoadMatch.ahead(g,fresh,clock()) else null
+        mutable.value=mutable.value.copy(echoRisks=fresh,echoAhead=ahead?.let {"약 ${it.second}m 앞 · ${it.first.label} · 참고 정보"})
+        if(!ready){brakeDetector.reset();echoJob?.cancel();echoClient.cancel();return}
+        if(ahead!=null && ahead.first.id !in echoSpoken && clock()-echoVoiceAt>=30000 && g.turnMeters>150 && !mutable.value.voiceListening && !speech.navigationSpeaking && engine.state.value.preferences.voiceEnabled) {
+            val text=if(NavigationLanguages.resolve(language)=="ko")"약 ${ahead.second}미터 앞 경로 주변에 ${ahead.first.label}가 있습니다. 현장 상황을 확인하세요." else "Road risk observations ahead. Check road conditions."
+            if(speech.speakNavigation(text,language)){echoSpoken+=ahead.first.id;echoVoiceAt=clock()}
+        }
+        if(echoClient.endpoint.isEmpty() || echoJob?.isActive==true || clock()-echoAttempt<20000)return
+        echoAttempt=clock();val epoch=echoGeneration
+        echoJob=scope.launch {
+            try {val result=echoClient.read(f!!,clock());if(epoch==echoGeneration && foreground && tracker.state.active && fix?.let { tracker.usable(it) && clock()-it.timestampMs in 0..3000 }==true)mutable.value=mutable.value.copy(echoRisks=result.first,
+                echoNotice="제보 ${result.first.count {it.reporters>0}}건 · "+if(result.second)"사고 다발 자료 연결 · 실시간 사고 확정 아님" else "공식 사고 다발 자료 미연결 · 정보 없음은 안전 보장 아님")}
+            catch(e:Exception){if(e is CancellationException)throw e;if(epoch==echoGeneration)mutable.value=mutable.value.copy(echoNotice="EchoRoad 수신 실패 · 기존 정보는 최대 90초 후 만료")}
+        }
+    }
+
     fun configureTraffic(endpoint: String, token: String) {
         if (!canPlan()) return
         trafficClient.configure(endpoint, token)
@@ -168,6 +219,7 @@ class LiveNavigation(
                     invalidateGps(GpsConnection.POOR, "위치가 부정확하거나 오래됐습니다. 정확한 GPS를 기다려 주세요.")
                     return
                 }
+                echoRealFix=location.provider==LocationManager.GPS_PROVIDER && !location.isFromMockProvider
                 fix = f
                 fixProvider = location.provider
                 mutable.value =
@@ -190,6 +242,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 }
                 if (tracker.state.active) {
                     tracker.update(f)
+                    echoObservation(f,location)
                     publish()
                     guide()
                     reroute()
@@ -219,6 +272,9 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     private fun invalidateGps(status: GpsConnection, message: String) {
         val ownVoice = tracker.state.tracking || spoken.isNotEmpty()
+        echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
+        echoRealFix = false
+        mutable.value = mutable.value.copy(echoRisks = emptyList(), echoAhead = null)
         fix = null
         fixProvider = null
         stationary.reset()
@@ -690,6 +746,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         resumeLocationIfReady()
         trafficTick()
         guideRoadSafety()
+        echoTick()
         if (tracker.state.active) reroute()
     }
 
@@ -725,6 +782,8 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun stop() {
+        echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset();echoSpoken.clear()
+        mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null)
         pendingStart = false
         pendingDestination = null
         cancelVoice()
@@ -757,6 +816,8 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     fun setForeground(active: Boolean) {
         if (!active) {
+            echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
+            mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null)
             trafficGeneration++
             trafficJob?.cancel()
             trafficClient.cancel()
@@ -953,6 +1014,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun clear() {
+        echoClient.configure("","");echoSharing=false
         trafficGeneration++
         trafficJob?.cancel()
         trafficClient.configure("", "")
@@ -970,6 +1032,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun close() {
+        echoJob?.cancel();echoClient.configure("","")
         trafficJob?.cancel()
         trafficClient.cancel()
         cancelVoice()
