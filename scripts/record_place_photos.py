@@ -16,6 +16,20 @@ def record(adb, tree, tap, check, snapshot, scenario):
             time.sleep(1)
         raise AssertionError('Expected loaded place photo/control: ' + fragment)
 
+    def reveal_photo(name, fragment, image):
+        for _ in range(6):
+            nodes = list(tree().iter('node'))
+            if any(fragment in n.get('content-desc', '') for n in nodes):
+                expect(name, fragment, image)
+                return
+            # Only scroll inside the visible result list (y=435..617), not the footer.
+            if any(fragment.removesuffix(' 등록 사진') in n.get('text', '') for n in nodes):
+                expect(name, fragment, image)
+                return
+            adb('shell', 'input', 'swipe', '1120', '585', '1120', '455', '600')
+            time.sleep(3)
+        raise AssertionError('Place not reached by list scrolling: ' + fragment)
+
     stop = threading.Event()
     def location():
         while not stop.is_set():
@@ -37,11 +51,11 @@ def record(adb, tree, tap, check, snapshot, scenario):
         expect('Flore actual photo loaded', 'Café de Flore 등록 사진', 'photos-02-flore')
         # Keep the nearest results visible; both cafes are within 30 metres.
         time.sleep(6)
-        expect('second cafe actual photo loaded', 'Les Deux Magots 등록 사진', 'photos-03-deux-magots')
+        reveal_photo('second cafe actual photo loaded', 'Les Deux Magots 등록 사진', 'photos-03-deux-magots')
         time.sleep(4)
         tap('산책')
-        adb('shell', 'input', 'swipe', '1120', '410', '1120', '660', '450')
-        expect('park actual photo loaded', 'Square Laurent Prache 등록 사진', 'photos-04-walking')
+        adb('shell', 'input', 'swipe', '1120', '455', '1120', '595', '450')
+        reveal_photo('park actual photo loaded', 'Square Laurent Prache 등록 사진', 'photos-04-walking')
         time.sleep(4)
         tap('쇼핑')
         time.sleep(10)
