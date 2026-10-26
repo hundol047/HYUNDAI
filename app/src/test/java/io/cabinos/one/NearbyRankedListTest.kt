@@ -29,7 +29,8 @@ class NearbyRankedListTest {
             NearbyRankedList(options,null,false,Modifier.fillMaxWidth().height(440.dp)){selected=it}
         }}}
         compose.onNodeWithText("장소 1").assertIsDisplayed()
-        compose.onAllNodesWithText(REPRESENTATIVE_PHOTO_LABEL).onFirst().assertIsDisplayed()
+        compose.onAllNodesWithText("실제 장소 사진 미확인").onFirst().assertIsDisplayed()
+        compose.onAllNodesWithText(REPRESENTATIVE_PHOTO_LABEL).assertCountEquals(0)
         compose.onNode(hasScrollToIndexAction()).performScrollToIndex(14)
         compose.onNodeWithText("장소 15").assertIsDisplayed().performClick()
         compose.runOnIdle {assertEquals("15",selected)}

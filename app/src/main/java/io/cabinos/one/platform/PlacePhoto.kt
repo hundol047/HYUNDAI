@@ -13,7 +13,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
-/** Only the place's registered Commons file; never a stock image of another business. */
+/** Place-specific, attributed Commons photos; never a stock photo of another business. */
 object PlacePhoto {
     data class Photo(val bitmap:Bitmap,val credit:String,val source:String)
     private val cache=object:LruCache<String,Photo>(4*1024*1024) {
@@ -26,19 +26,36 @@ object PlacePhoto {
         if(place.simulated)return null
         place.commonsPhoto?.let {load(it)?.let {photo->return photo}}
         val endpoint=PlacePhotoReference.osmUrl(place.id) ?: return null
+        val key="${place.id}|${place.name}|${place.latitude}|${place.longitude}"
         return permits.withPermit {
-            val previous=references.get(place.id)
+            val previous=references.get(key)
             if(previous!=null&&System.currentTimeMillis()-previous.at in 0..600000)return@withPermit previous.file?.let {load(it)}
             withContext(Dispatchers.IO) {
                 try {
                     delay(500)
-                    val tags=PlacePhotoReference.tags(String(download(endpoint,700000)),place.id) ?: return@withContext null
+                    val tags=try {PlacePhotoReference.tags(String(download(endpoint,700000)),place.id) ?: JSONObject()}
+                    catch(error:Exception){if(error is CancellationException)throw error;JSONObject()}
                     var file=PlacePhotoReference.commons(tags)
                     if(file==null&&place.latitude!=null&&place.longitude!=null) {
                         val id=PlacePhotoReference.wikidata(tags)
                         if(id!=null)file=PlacePhotoReference.wikidataFile(String(download("https://www.wikidata.org/w/api.php?action=wbgetentities&ids=$id&props=claims&format=json",700000)),id,NavPoint(place.latitude!!,place.longitude!!))
                     }
-                    references.put(place.id,Reference(System.currentTimeMillis(),file))
+                    if(file==null&&place.latitude!=null&&place.longitude!=null) {
+                        val point=NavPoint(place.latitude!!,place.longitude!!)
+                        PlacePhotoReference.wikipediaUrl(tags)?.let {url->
+                            file=PlacePhotoReference.wikipediaFile(String(download(url,200000)),point)
+                        }
+                        if(file==null) {
+                            val query=URLEncoder.encode(place.name,"UTF-8")
+                            val language=if(place.name.any {it in '가'..'힣'})"ko" else "en"
+                            val ids=PlacePhotoReference.candidates(String(download("https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&language=$language&limit=3&search=$query",200000)))
+                            if(ids.isNotEmpty()) {
+                                val entities=String(download("https://www.wikidata.org/w/api.php?action=wbgetentities&format=json&props=claims%7Clabels%7Caliases&ids="+ids.joinToString("%7C"),700000))
+                                file=ids.firstNotNullOfOrNull {id->PlacePhotoReference.namedFile(entities,id,place.name,point)}
+                            }
+                        }
+                    }
+                    references.put(key,Reference(System.currentTimeMillis(),file))
                     file?.let {load(it)}
                 }catch(error:Exception){if(error is CancellationException)throw error;null}
             }
@@ -57,8 +74,8 @@ object PlacePhoto {
             val json=JSONObject(String(download("https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url%7Cextmetadata&iiurlwidth=320&titles=$encoded",200_000)))
             val pages=json.getJSONObject("query").getJSONObject("pages")
             val info=pages.getJSONObject(pages.keys().next()).getJSONArray("imageinfo").getJSONObject(0)
-            val thumb=info.getString("thumburl");val url=URL(thumb)
-            if(url.protocol!="https"||url.host!="upload.wikimedia.org"||url.userInfo!=null)return@withContext null
+            val thumb=info.getString("thumburl")
+            if(!PlacePhotoReference.thumbnailUrl(thumb))return@withContext null
             val bytes=download(thumb,1_500_000)
             val bounds=BitmapFactory.Options().apply {inJustDecodeBounds=true}
             BitmapFactory.decodeByteArray(bytes,0,bytes.size,bounds)

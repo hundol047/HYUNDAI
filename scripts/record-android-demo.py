@@ -28,6 +28,7 @@ def main():
     p.add_argument('--output',required=True,type=pathlib.Path)
     p.add_argument('--package',choices=['io.cabinos.one','io.cabinos.one.preview'],default='io.cabinos.one')
     p.add_argument('--stop-plan',action='store_true',help='Record the parked-plan upgrade scenario')
+    p.add_argument('--place-photos',action='store_true',help='Record actual nearby photos using an explicitly simulated Paris GPS position')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -95,6 +96,9 @@ def main():
         # the startup failure evidence or require another responsive shell.
         log_output=(a.output/'startup-logcat.txt').open('wb')
         log_reader=subprocess.Popen(base+['logcat','-v','threadtime','-T','1','*:I'],stdout=log_output,stderr=subprocess.STDOUT)
+        if a.place_photos:
+            for permission in ['android.permission.ACCESS_FINE_LOCATION','android.permission.ACCESS_COARSE_LOCATION']:
+                adb('shell','pm','grant',a.package,permission)
         adb('shell','am','force-stop',a.package)
         adb('shell','am','start','-W','-n',a.package+'/io.cabinos.one.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
@@ -102,7 +106,10 @@ def main():
         with (a.output/'screenrecord.log').open('wb') as log:
             recorder=subprocess.Popen(base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video],stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
-            if a.stop_plan:
+            if a.place_photos:
+                from record_place_photos import record
+                record(adb, tree, tap, check, snapshot, scenario)
+            elif a.stop_plan:
                 from record_stop_plan import record
                 record(adb, tree, tap, check, snapshot, scenario)
             else:
@@ -175,6 +182,7 @@ def main():
         result={'applicationId':a.package,'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',
+          'locationSource':'emulator geo fix: Paris, NOT actual GPS' if a.place_photos else 'not tested',
           'apkSha256':hashlib.sha256(a.apk.read_bytes()).hexdigest(),'checks':checks,'pleosValidated':False}
         (a.output/'evidence.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     return 0

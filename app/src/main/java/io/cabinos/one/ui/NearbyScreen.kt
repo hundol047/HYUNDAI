@@ -74,7 +74,7 @@ import org.osmdroid.views.overlay.*
     }
     val attribution:@Composable ()->Unit = {
         TextButton(onClick={if(vm.state.value.parkedAllowed)openMapUri(context,"https://www.openstreetmap.org/fixthemap")}){Text("지도 오류 제보",color=Muted)}
-        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 보행 확인 시 출발·장소 좌표를 FOSSGIS에 전송합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
+        Text("지도: © OpenStreetMap contributors · 주변 검색 시 기준점 좌표를 Photon·Overpass에 전송합니다. 보행 확인 시 출발·장소 좌표를 FOSSGIS에 전송합니다. 사진: OSM 등록 링크·위키백과·Wikidata에서 장소명과 좌표를 대조한 Wikimedia Commons 사진. 사진 검색 시 장소명을 전송합니다. 사진 없는 곳은 미확인으로 표시합니다. 영업·보행 가능 여부를 확인하세요.",color=Muted,fontSize=10.sp,modifier=Modifier.clickable {if(vm.state.value.parkedAllowed && !openMapUri(context,"https://www.openstreetmap.org/copyright"))vm.mapUnavailable()})
     }
     val online=s.networkAvailable&&s.locationAvailable&&s.parkedAllowed
     if(compact) {
