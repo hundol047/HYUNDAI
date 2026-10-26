@@ -10,6 +10,12 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NearbyPlacesTest {
+    @Test fun fallbackIncludesGardensAndNatureReserves() {
+        val elements=listOf("garden","nature_reserve").mapIndexed {i,type->"""{"type":"way","id":${i+1},"center":{"lat":37.395,"lon":127.111},"tags":{"leisure":"$type","name":"Walk $i"}}"""}
+        val result=NearbyPlaces.parse("""{"elements":[${elements.joinToString(",")}]}""",MapPosition())
+        assertEquals(2,result.size);assertTrue(result.all {it.category=="산책"})
+    }
+
     @Test fun registeredCommonsPhotoRemainsAttachedToItsOwnPlace() {
         val raw="""{"elements":[{"type":"node","id":1,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name":"등록 장소","wikimedia_commons":"File:Cafe.jpg"}}]}"""
         val place=NearbyPlaces.parse(raw,MapPosition()).single()

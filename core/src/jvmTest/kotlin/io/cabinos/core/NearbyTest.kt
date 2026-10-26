@@ -4,6 +4,11 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NearbyTest {
+    @Test fun fallbackRadiusAndWalkingTypesMatchPrimarySearch() {
+        val query=NearbyGeometry.query(MapPosition())
+        assertTrue(query.contains("around:2000"));assertTrue(query.contains("garden"));assertTrue(query.contains("nature_reserve"))
+    }
+
     @Test fun otherRegisteredLanguagesArePreservedWithoutTreatingMetadataAsNames() {
         assertEquals("喫茶店",NearbyGeometry.placeName(mapOf("name:fr" to "\u202e", "name:ja" to "喫茶店", "name:pronunciation" to "not a name")))
         assertEquals("茶館",NearbyGeometry.placeName(mapOf("name:zh-Hant" to "茶館")))

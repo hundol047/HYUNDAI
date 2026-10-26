@@ -53,20 +53,19 @@ class NearbyPlaces(private val context:Context) {
         location.longitude.isFinite()&&location.longitude in -180.0..180.0
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
     suspend fun search(origin:MapPosition):NearbySearchResult {
-        val places=mutableListOf<NearbyActivity>();var successful=0
-        for((index,url) in PhotonNearby.urls(origin).withIndex()) {
-            currentCoroutineContext().ensureActive()
+        val urls=PhotonNearby.urls(origin)
+        return NearbySearchCoordinator.search(primary={index->
             if(index>0)delay(1100)
-            try {places+=requestPhoton(url,origin);successful++}catch(error:java.io.IOException){/* A failed category is explicitly marked below. */}
-        }
-        if(places.isNotEmpty())return NearbySearchResult(places.distinctBy {it.id},
-            "OpenStreetMap / Photon 등록 장소 ${places.size}곳 · 반경 2km"+if(successful<4)" · 일부 분류 검색 실패: 잠시 후 다시 검색하세요." else " · 영업 여부 확인 필요",complete=successful==4)
-        var last:java.io.IOException?=null
-        for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
-            currentCoroutineContext().ensureActive()
-            try {val result=request(origin,endpoint);return NearbySearchResult(result,"OpenStreetMap / Overpass 등록 장소 ${result.size}곳 · 영업 여부 확인 필요")} catch(error:java.io.IOException){last=error}
-        }
-        throw last ?: java.io.IOException("주변 검색 서버에 연결할 수 없습니다.")
+            requestPhoton(urls[index],origin)
+        },fallback={categories->
+            var result:List<NearbyActivity>?=null
+            var last:java.io.IOException?=null
+            for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
+                currentCoroutineContext().ensureActive()
+                try {result=request(origin,endpoint,categories);break}catch(error:java.io.IOException){last=error}
+            }
+            result ?: throw (last ?: java.io.IOException("주변 검색 서버에 연결할 수 없습니다."))
+        })
     }
     private suspend fun requestPhoton(url:String,origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
         val connection=URL(url).openConnection() as HttpURLConnection;activeConnection=connection
@@ -75,16 +74,16 @@ class NearbyPlaces(private val context:Context) {
             connection.connectTimeout=5000;connection.readTimeout=8000
             connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
             connection.setRequestProperty("Accept","application/json")
-            check(connection.responseCode!=429){"장소 검색 서비스의 요청 한도입니다. 잠시 후 다시 시도하세요."}
+            if(connection.responseCode==429)throw java.io.IOException("장소 검색 서비스의 요청 한도입니다. 잠시 후 다시 시도하세요.")
             if(connection.responseCode!=200)throw java.io.IOException("Photon 장소 검색 오류 (${connection.responseCode})")
             val bytes=connection.inputStream.use {it.readBytesLimited(2_000_000)}
             currentCoroutineContext().ensureActive()
             try {PhotonNearby.parse(String(bytes,Charsets.UTF_8),origin)}catch(error:org.json.JSONException){throw java.io.IOException("장소 검색 응답 오류",error)}
         }finally{deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null}
     }
-    private suspend fun request(origin:MapPosition,endpoint:String):List<NearbyActivity> = withContext(Dispatchers.IO) {
+    private suspend fun request(origin:MapPosition,endpoint:String,categories:Set<String>):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())
-        val query=NearbyGeometry.query(origin)
+        val query=NearbyGeometry.query(origin,categories)
         val connection=URL(endpoint).openConnection() as HttpURLConnection
         activeConnection=connection
         val deadline=launch(Dispatchers.Default) {try{delay(20_000)}finally{connection.disconnect()}}
@@ -99,9 +98,11 @@ class NearbyPlaces(private val context:Context) {
             val form=("data="+URLEncoder.encode(query,"UTF-8")).toByteArray(Charsets.UTF_8)
             connection.setFixedLengthStreamingMode(form.size);connection.outputStream.use {it.write(form)}
             if(connection.responseCode>=500)throw java.io.IOException("주변 검색 서버 일시 오류")
-            check(connection.responseCode==200) {"장소 검색 서버가 응답하지 않습니다 (${connection.responseCode})."}
+            if(connection.responseCode!=200)throw java.io.IOException("장소 검색 서버가 응답하지 않습니다 (${connection.responseCode}).")
             val bytes=connection.inputStream.use { it.readBytesLimited(2_000_000) }
-            parse(String(bytes,Charsets.UTF_8),origin)
+            try {parse(String(bytes,Charsets.UTF_8),origin)}
+            catch(error:org.json.JSONException){throw java.io.IOException("주변 검색 응답 오류",error)}
+            catch(error:IllegalStateException){throw java.io.IOException("주변 검색 미완료",error)}
         } finally { deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null }
     }
     companion object {
@@ -116,13 +117,13 @@ class NearbyPlaces(private val context:Context) {
                 val category=when {
                     tags.optString("amenity")=="cafe"->"카페"
                     tags.optString("amenity") in listOf("restaurant","fast_food")->"식당"
-                    tags.optString("leisure")=="park"->"산책"
+                    tags.optString("leisure") in listOf("park","garden","nature_reserve")->"산책"
                     tags.optString("shop") in listOf("convenience","supermarket","mall")->"쇼핑"
                     else->return@mapNotNull null
                 }
                 val center=item.optJSONObject("center") ?: item
                 NearbyGeometry.osmActivity("osm-${item.optString("type")}-${item.optLong("id")}",name,category,
-                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)?.copy(commonsPhoto=PlacePhoto.file(tags.optString("wikimedia_commons")))
+                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)?.copy(commonsPhoto=PlacePhotoReference.commons(tags))
             }.distinctBy { it.id }.groupBy {it.category}.values.flatMap {places->
                 places.sortedBy {NearbyGeometry.distanceMeters(origin,MapPosition(it.latitude!!,it.longitude!!))}.take(15)
             }.sortedBy {it.oneWaySeconds}

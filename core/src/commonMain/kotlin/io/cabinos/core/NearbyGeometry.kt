@@ -9,13 +9,14 @@ data class MapPosition(val latitude:Double=37.3948,val longitude:Double=127.1112
 object NearbyGeometry {
     /** Filter usable names before the provider's 60-object limit, so unnamed
      * objects cannot crowd named businesses out of the response. */
-    fun query(origin:MapPosition):String {
+    fun query(origin:MapPosition,categories:Set<String> = setOf("카페","식당","산책","쇼핑")):String {
         require(origin.valid())
         val named="[~\"^(name|name:[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8})*)$\"~\".\"]"
-        val around="(around:1200,${origin.latitude},${origin.longitude})"
+        require(categories.isNotEmpty() && categories.all {it in setOf("카페","식당","산책","쇼핑")})
+        val around="(around:2000,${origin.latitude},${origin.longitude})"
         // Materialize the spatial set before matching name keys. Otherwise the
         // provider can scan worldwide tag keys before applying the small radius.
-        val filters=listOf("[amenity=cafe]","[amenity~\"^(restaurant|fast_food)$\"]","[leisure=park]","[shop~\"^(convenience|supermarket|mall)$\"]")
+        val filters=mapOf("카페" to "[amenity=cafe]","식당" to "[amenity~\"^(restaurant|fast_food)$\"]","산책" to "[leisure~\"^(park|garden|nature_reserve)$\"]","쇼핑" to "[shop~\"^(convenience|supermarket|mall)$\"]").filterKeys {it in categories}.values
         return "[out:json][timeout:12];nwr$around->.local;"+filters.joinToString("") {"nwr.local$it$named;out center tags 60;"}
     }
     fun placeName(korean:String,local:String,english:String):String =
