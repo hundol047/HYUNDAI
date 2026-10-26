@@ -19,6 +19,7 @@ data class Guidance(
     val fix:NavFix?=null,val progressMeters:Double=0.0,val remainingMeters:Double=0.0,val remainingSeconds:Double=0.0,
     val nextInstruction:String="목적지를 검색해 주세요.",val turnSymbol:String="↑",val turnMeters:Double=0.0,val offRoute:Boolean=false,
     val rerouteRequired:Boolean=false,val directionUncertain:Boolean=false,val status:String="전 세계 목적지 검색 · OSM 도로 데이터",
+    val maneuverIndex:Int=0,
 )
 data class RouteProjection(val progressMeters:Double,val gapMeters:Double,val directionUncertain:Boolean=false)
 object NavigationGeometry {
@@ -208,7 +209,7 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
                 done->NavigationLanguages.arrival(r.language,r.destinationAccessMeters)
                 next.type=="arrive"->NavigationLanguages.upcomingArrival(r.language,next.maneuver?.road.orEmpty())
                 else->next.instruction
-            },turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
+            },turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),maneuverIndex=nextStepIndex,
             offRoute=off,rerouteRequired=need,directionUncertain=ambiguous,status=when{ambiguous->"GPS 오차 안에 여러 도로가 있습니다 · 회전 안내 대기";done->"차량 경로 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";nearDestination&&!arrived->"목적지 부근 · 정확한 GPS를 기다리는 중";else->"GPS 주행 안내 · 정확도 약 ${fix.accuracy.toInt()}m · 교통 미반영 예상"})
     }
     private fun recentProgressSpeed(timestamp:Long):Double? {

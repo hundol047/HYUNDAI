@@ -32,6 +32,29 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/voice-n
   await test('background/cancel retires callbacks and prevents delayed searches',async()=>{await fresh();await page.locator('#nav-voice').click();await page.evaluate(()=>{window.oldVoice=mics.at(-1);Object.defineProperty(document,'hidden',{configurable:true,value:true});document.dispatchEvent(new Event('visibilitychange'));oldVoice.onresult({resultIndex:0,results:[Object.assign([{transcript:'late cafe',confidence:1}],{isFinal:true})]})});assert.equal(await page.evaluate(()=>oldVoice.aborted),true);assert.equal(await page.locator('[data-nav-place]').count(),0);assert.equal(await page.locator('#nav-voice').getAttribute('aria-pressed'),'false')});
   await test('language and recognition provider failures never become shop searches',async()=>{await fresh();await page.locator('#nav-voice').click();await page.evaluate(()=>mics.at(-1).onerror({error:'language-not-supported'}));assert.match(await page.locator('#nav-voice-status').textContent(),/지원하지/);assert.equal(await page.locator('[data-nav-place]').count(),0)});
   await test('a missing voice is reported without falsely claiming speech playback',async()=>{await fresh();await plan();await page.evaluate(()=>speechSynthesis.getVoices=()=>[]);await say('start navigation');await page.waitForFunction(()=>JSON.parse(CabinOS.navState()).active);assert.match(await page.locator('#nav-voice-status').textContent(),/음성팩/)});
+  async function turnRoute(turns){
+   await fresh();
+   await page.evaluate(turns=>{
+    const now=Date.now.bind(Date);let offset=0;Date.now=()=>now()+offset;
+    const p=Array.from({length:61},(_,i)=>[127,37.5+i*.0001]);
+    const steps=[{maneuver:{type:'depart',location:p[0]}},...turns.map(i=>({maneuver:{type:'turn',modifier:'left',location:p[i]}})),{maneuver:{type:'arrive',location:p.at(-1)}}];
+    const raw={code:'Ok',routes:[{distance:667,duration:120,geometry:{coordinates:p},legs:[{steps}]}]};
+    CabinOS.navFix(p[0][1],p[0][0],5,Date.now(),0,-1);
+    const error=CabinOS.navPreview(JSON.stringify(raw),'Repeated turn fixture',p.at(-1)[1],p.at(-1)[0]);if(error)throw Error(error);
+    if(!CabinOS.navStart(true))throw Error('start failed');cabinDemo.render();
+    window.turnFix=(i,ms)=>{offset+=ms;CabinOS.navFix(p[i][1],p[i][0],5,Date.now(),0,-1);cabinDemo.render()};
+   },turns);
+  }
+  await test('identical consecutive turns each receive a voice announcement',async()=>{
+   await turnRoute([5,11]);const before=await page.evaluate(()=>said.length);
+   await page.evaluate(()=>turnFix(8,1000));
+   assert.equal((await state()).instruction,'좌회전');assert.equal(await page.evaluate(()=>said.length),before+1);
+  });
+  await test('distance-band jitter does not replay a turn but explicit repeat does',async()=>{
+   await turnRoute([36]);await page.evaluate(()=>turnFix(10,2000));const before=await page.evaluate(()=>said.length);
+   await page.evaluate(()=>turnFix(9,31000));assert.equal(await page.evaluate(()=>said.length),before);
+   await page.evaluate(()=>EchoNavigation.voiceCommand('안내 반복'));assert.equal(await page.evaluate(()=>said.length),before+1);
+  });
   await test('ambiguous opposing roads hold arrows and speech until precise GPS course returns',async()=>{
    await fresh();await page.locator('[data-nav="locate"]').click();
    await page.evaluate(()=>{

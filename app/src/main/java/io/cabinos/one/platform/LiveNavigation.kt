@@ -678,8 +678,8 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 g.turnMeters < 300 -> "soon"
                 else -> "ahead"
             }
-        val key = "${g.nextInstruction}|$band"
-        if (key != spoken && !mutable.value.voiceListening && repeatGuard.allow(key, clock())) {
+        val key = "${g.maneuverIndex}|${g.nextInstruction}|$band"
+        if (key != spoken && !mutable.value.voiceListening && repeatGuard.allow(g, clock())) {
             val code = NavigationLanguages.resolve(language)
             val spokenLocale = java.util.Locale.forLanguageTag(if (code == "ko") "ko-KR" else code)
             val distance =
@@ -699,8 +699,10 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                     else NavigationLanguages.spoken(code, distance, g.nextInstruction),
                     spokenLocale.toLanguageTag(),
                 )
-            )
+            ) {
                 spoken = key
+                repeatGuard.accepted(g)
+            }
             mutable.value = mutable.value.copy(voiceNotice = speech.status)
         }
     }
@@ -831,6 +833,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         cancelRequest()
         speech.stopSpeaking()
         tracker.stop()
+        repeatGuard.clear()
         stationary.reset()
         if (!safetyHeld) {
             resumeLocation = false
@@ -1075,6 +1078,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun close() {
+        repeatGuard.clear()
         cancelEchoCheck();echoProbe.configure("","")
         echoJob?.cancel();echoClient.configure("","")
         trafficJob?.cancel()

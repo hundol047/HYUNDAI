@@ -28,7 +28,7 @@ private fun navSnapshot():String {
         "originAccessMeters" to (g.route?.let {r->navFix?.let {NavigationGeometry.distance(it.point,r.points.first())}} ?: 0.0),
         "originReady" to (g.route?.let {r->navFix?.let {navigator.usable(it)&&NavigationGeometry.distance(it.point,r.points.first())<=kotlin.math.max(45.0,it.accuracy*2)}} ?: false),
         "destinationAccessMeters" to (g.route?.destinationAccessMeters ?: 0.0),"revision" to navRevision,"destination" to g.route?.destination?.name,"remainingMeters" to g.remainingMeters,"remainingSeconds" to g.remainingSeconds,
-        "language" to navigationLanguage,"instructionLanguage" to NavigationLanguages.resolve(navigationLanguage),"instruction" to g.nextInstruction,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"directionUncertain" to g.directionUncertain,"status" to g.status,"safetyHeld" to navSafetyHeld,
+        "language" to navigationLanguage,"instructionLanguage" to NavigationLanguages.resolve(navigationLanguage),"instruction" to g.nextInstruction,"maneuverIndex" to g.maneuverIndex,"turnSymbol" to g.turnSymbol,"turnMeters" to g.turnMeters,"offRoute" to g.offRoute,"directionUncertain" to g.directionUncertain,"status" to g.status,"safetyHeld" to navSafetyHeld,
         "fix" to (if(g.active)g.fix else navFix)?.let {json("latitude" to it.point.latitude,"longitude" to it.point.longitude,"accuracy" to it.accuracy,"timestamp" to it.timestampMs.toDouble())}))
 }
 private fun parseNavRoute(raw:String,name:String,lat:Double,lon:Double):DrivingRoute {
