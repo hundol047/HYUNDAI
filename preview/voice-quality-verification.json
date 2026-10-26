@@ -17,9 +17,39 @@
     }
   },
   "toolTestsPassed": 60,
-  "fullFinalSourceCi": "pending",
+  "fullFinalSourceCi": {
+    "run": "https://github.com/hundol047/HYUNDAI/actions/runs/40348852507",
+    "conclusion": "success",
+    "tests": {
+      "core": {
+        "tests": 186,
+        "failures": 0,
+        "ignored": 0
+      },
+      "android": {
+        "tests": 272,
+        "failures": 0,
+        "ignored": 0
+      }
+    }
+  },
   "physicalSamsungTest": false,
   "productionApkUpdated": false,
   "recordingEngineBundledInApp": false,
-  "humanNaturalnessRating": false
+  "humanNaturalnessRating": false,
+  "gentleVoiceRecording": {
+    "run": "https://github.com/hundol047/HYUNDAI/actions/runs/40348852801",
+    "conclusion": "success",
+    "uiChecksPassed": 10,
+    "audioWindowsPassed": 2,
+    "presets": [
+      0,
+      2
+    ]
+  },
+  "fiveLanguageRecording": {
+    "run": "https://github.com/hundol047/HYUNDAI/actions/runs/40348853763",
+    "conclusion": "success",
+    "note": "Korean navigation UI coordinate search failed on first attempt; failed job rerun succeeded. Other four languages succeeded on first attempt."
+  }
 }

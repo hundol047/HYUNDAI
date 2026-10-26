@@ -19,3 +19,7 @@
 비교 녹화에는 별도로 설치한 sherpa-onnx / Supertonic 3의 두 프리셋(0, 2)을 사용합니다. 프리셋은 엔진의 공개 설정 화면에서 선택하고 같은 APK의 같은 문장을 재생합니다. 이 엔진과 모델은 CabinOS APK에 포함되지 않습니다. 해당 엔진의 세부 화자 선택은 엔진 앱 설정에서 제공되며, CabinOS의 목소리 목록은 Android TTS가 공개한 목소리만 표시합니다.
 
 [엔진 출처·라이선스·설정](NATURAL_VOICE_KO.md). 자연스러움과 편안함은 자동 전사나 음량 검사만으로 보증하지 않습니다.
+
+## 실행 결과
+
+[실제 앱 음성 A/B와 연속 실행 영상](video/gentle-voice/README.md)을 공개했습니다. 최종 소스 CI에서 core 186개 + Android 272개, 총 458개가 통과했고 실패·건너뜀은 0개입니다. 공식 SDK 포함 빌드와 lint, 도구 테스트 60개도 통과했습니다. [세부 검증 기록](../preview/voice-quality-verification.json)

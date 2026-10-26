@@ -1,0 +1,30 @@
+{
+  "capture": "Live Android output via scrcpy; no replacement soundtrack",
+  "durationSeconds": 66.131792,
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264"
+    },
+    {
+      "type": "audio",
+      "codec": "aac"
+    }
+  ],
+  "windows": [
+    {
+      "activeSecondsAboveMinus65Dbfs": 2.6,
+      "samples": 333708,
+      "rmsDbfs": -32.535934961230495,
+      "peak": 14383,
+      "pcmSha256": "6732fd90a05933f9da3a3980370fc8b22c6738151bd429d5490c815bdd9af2b8",
+      "name": "ko-KR actual app spoken preview",
+      "startSeconds": 38.638271763000006,
+      "endSeconds": 61.494685489000005,
+      "expectSilence": false,
+      "passed": true
+    }
+  ],
+  "allPassed": true,
+  "physicalSpeakerTest": false
+}
