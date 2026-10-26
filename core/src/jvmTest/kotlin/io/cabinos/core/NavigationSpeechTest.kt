@@ -31,6 +31,10 @@ class NavigationSpeechTest {
         assertEquals("300メートル先、目的地付近です。",NavigationSpeech.guidance(turn("arrive"),"ja","300メートル"))
         assertEquals("잠시 후, 목적지 부근입니다.",NavigationSpeech.guidance(turn("arrive"),"ko","십 미터",true))
     }
+    @Test fun japaneseUsesAnUnambiguousSpokenTurnInsteadOfACompactLabel() {
+        assertEquals("さんびゃくメートル先、右に曲がります。",NavigationSpeech.guidance(turn(),"ja","さんびゃくメートル"))
+        assertEquals("さんびゃくメートル先、左に曲がります。",NavigationSpeech.guidance(turn(modifier="left"),"ja","さんびゃくメートル"))
+    }
     @Test fun everyPackAndManeuverHasSpeechWithoutVisualSeparatorsOrUnexpandedTokens() {
         for(code in NavigationLanguages.codes)for(type in listOf("turn","arrive","depart","merge","fork","roundabout","on ramp","off ramp")) {
             val result=NavigationSpeech.guidance(turn(type,road="Road A · City B\n",exit=3),code,"300 m")

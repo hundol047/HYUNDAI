@@ -15,6 +15,20 @@ object NavigationSpeech {
                 else->NavigationLanguages.spoken(tag,distance,NavigationLanguages.upcomingArrival(tag))
             }
             var instruction=NavigationLanguages.instruction(clean,tag)
+            if(code=="ja"&&m.type in listOf("turn","continue","new name","end of road")) {
+                val action=when(m.modifier) {
+                    "left"->"左に曲がります"
+                    "right"->"右に曲がります"
+                    "slight left"->"左の道に進みます"
+                    "slight right"->"右の道に進みます"
+                    "sharp left"->"左に大きく曲がります"
+                    "sharp right"->"右に大きく曲がります"
+                    "uturn"->"ユーターンします"
+                    else->"道なりに進みます"
+                }
+                val road=clean.road.replace(" · ","、").take(100)
+                return "${distance}先、${action}。"+if(road.isNotBlank()&&!near)"${road}方面です。" else ""
+            }
             // French display labels use infinitives; spoken directions address the driver.
             if(code=="fr") {
                 val verbs=mapOf("Tourner" to "Tournez","Continuer" to "Continuez","Prendre" to "Prenez",

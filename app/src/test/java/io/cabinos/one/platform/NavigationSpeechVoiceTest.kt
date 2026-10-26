@@ -51,6 +51,20 @@ class NavigationSpeechVoiceTest {
             assertTrue(tag,text.isNotBlank())
         }
     }
+    @Test fun frenchAndJapaneseDistancesAvoidAmbiguousNumericSynthesis() {
+        assertEquals("trois mille",SpokenDistanceNumbers.french(3000))
+        assertEquals("deux cent mille",SpokenDistanceNumbers.french(200000))
+        assertEquals("soixante et onze",SpokenDistanceNumbers.french(71))
+        assertEquals("はっせん",SpokenDistanceNumbers.japanese(8000))
+        assertEquals("trois cents mètres",NavigationSpeechVoice.distance(300.0,"fr-FR"))
+        assertEquals("soixante mètres",NavigationSpeechVoice.distance(60.0,"fr-FR"))
+        assertEquals("quatre-vingt-dix mètres",NavigationSpeechVoice.distance(90.0,"fr-FR"))
+        assertEquals("un virgule deux kilomètre",NavigationSpeechVoice.distance(1200.0,"fr-FR"))
+        assertEquals("さんびゃくメートル",NavigationSpeechVoice.distance(300.0,"ja-JP"))
+        assertEquals("ろっぴゃくメートル",NavigationSpeechVoice.distance(600.0,"ja-JP"))
+        assertEquals("はっぴゃくメートル",NavigationSpeechVoice.distance(800.0,"ja-JP"))
+        assertEquals("いちてんにキロメートル",NavigationSpeechVoice.distance(1200.0,"ja-JP"))
+    }
     @Test fun koreanDistanceIsReadAsWordsInsteadOfDigitsOrSeparators() {
         assertEquals("천백 미터",NavigationSpeechVoice.koreanMeters(1100))
         assertEquals("삼백 미터",NavigationSpeechVoice.koreanMeters(300))

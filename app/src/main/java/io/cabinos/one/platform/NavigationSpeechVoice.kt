@@ -32,6 +32,17 @@ internal object NavigationSpeechVoice {
     fun distance(meters:Double,tag:String):String {
         val rounded=roundedMeters(meters)
         val locale=locale(tag)
+        if(locale.language=="fr") {
+            if(rounded<1000)return SpokenDistanceNumbers.french(rounded)+if(rounded>1)" mètres" else " mètre"
+            val whole=rounded/1000;val decimal=(rounded%1000)/100
+            return SpokenDistanceNumbers.french(whole)+(if(decimal>0)" virgule "+SpokenDistanceNumbers.french(decimal) else "")+
+                if(rounded>=2000)" kilomètres" else " kilomètre"
+        }
+        if(locale.language=="ja") {
+            if(rounded<1000)return SpokenDistanceNumbers.japanese(rounded)+"メートル"
+            val whole=rounded/1000;val decimal=(rounded%1000)/100
+            return SpokenDistanceNumbers.japanese(whole)+(if(decimal>0)"てん"+SpokenDistanceNumbers.japanese(decimal) else "")+"キロメートル"
+        }
         if(locale.language=="ko") {
             if(rounded<1000)return koreanMeters(rounded)
             val whole=rounded/1000
