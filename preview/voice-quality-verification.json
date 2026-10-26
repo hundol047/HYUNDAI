@@ -1,39 +1,24 @@
 {
-  "sourceCommit": "5921b285647e16c441d762c3bc018853cea2afc5",
-  "apkSha256": "aba15205f8043dd979e993fa4f2108b192a6dbd840717e18aa2d092f14464edf",
+  "sourceCommit": "0b2db45733ef190aa2c9e6cd70904fc60eb309e5",
+  "apkSha256": "c00c78d350651b9273d82c19107268c82c411dde70faa313148ce5ae8493739b",
   "officialSdkBuildAndLintPassed": true,
-  "unitTests": {
+  "localUnitTestsBeforeFinalUiFlowBinding": {
     "core": {
       "tests": 186,
       "failures": 0,
+      "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 271,
+      "tests": 272,
       "failures": 0,
+      "errors": 0,
       "skipped": 0
     }
   },
   "toolTestsPassed": 60,
-  "fullFinalSourceCi": {
-    "url": "https://github.com/hundol047/HYUNDAI/actions/runs/40338994089",
-    "conclusion": "success"
-  },
-  "actualApkVoiceRecording": {
-    "url": "https://github.com/hundol047/HYUNDAI/actions/runs/40338994062",
-    "languages": [
-      "ko-KR",
-      "en-US",
-      "ja-JP",
-      "fr-FR",
-      "de-DE"
-    ],
-    "uiChecksPassed": 19,
-    "audioWindowsPassed": 5,
-    "publicRecordings": "../docs/video/voice-polish/README.md"
-  },
+  "fullFinalSourceCi": "pending",
   "physicalSamsungTest": false,
-  "pleosEmulatorValidated": false,
   "productionApkUpdated": false,
   "recordingEngineBundledInApp": false,
   "humanNaturalnessRating": false
