@@ -4,7 +4,7 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f108c132ad39a75a56173e0ed35729861cf69022/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/d96dddb1a08445a1c756bb854bf922795553efed/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
