@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "238502238b827367b2b02f40a6409b32e645d09d",
+  "apkSha256": "c3cae04a7a80692db6ed133253e2e8e0c73131273df29bf4212023c922bfbe9a",
+  "officialSdkBuildAndLintPassed": true,
+  "unitTests": {
+    "core": {
+      "tests": 177,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 263,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "toolTestsPassed": 60,
+  "physicalSamsungTest": false,
+  "productionApkUpdated": false,
+  "redThenGreen": [
+    "koreanSpeechUsesACompleteSentenceInsteadOfReadingDisplayFragments",
+    "speechAcrossAllPacksDoesNotReadVisualSeparators",
+    "automaticGuidanceDoesNotStartADestinationUtteranceThatItImmediatelyInterrupts"
+  ]
+}

@@ -47,8 +47,12 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-          sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg
+          # Use Ubuntu's official archive when the runner's Azure mirror stalls.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt
+          fi
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y ffmpeg
           python3 -m pip install uiautomator2==3.2.10
           mkdir -p /tmp/cabinos-capture
           gh release download v5.0.1 -R Genymobile/scrcpy -p scrcpy-linux-x86_64-v5.0.1.tar.gz -D /tmp/cabinos-capture
