@@ -71,7 +71,7 @@ def record(adb, tree, tap, check, snapshot, scenario, audio_window=None):
         check('recenter preserves active route', '안내 종료', 'nav-04-recenter')
         if audio_window is not None:
             def listen():
-                tap('안내 다시 듣기')
+                tap('다시 듣기')
                 time.sleep(10)
             audio_window('Korean navigation repeat from app TTS', listen)
             check('navigation repeat recorded with device audio', '안내 종료', 'nav-audio-repeat')
