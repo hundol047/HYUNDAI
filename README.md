@@ -46,6 +46,8 @@ PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issu
 
 ## 심사용 문서·영상
 
+- [최신 출시 전 점검: 장소·내비·실기기·제출 서명](docs/release-check/README.md). 해결한 코드 결함과 외부 데이터·기기·키가 필요한 항목을 구분합니다.
+
 - [제출 검토표](docs/SUBMISSION_REVIEW_KO.md): 테스트 결과, APK 식별자, 장치 실행·공개 영상 상태.
 - [핵심 기능 ↔ SDK API 매핑](docs/SDK_CAPABILITIES.md): 기획서에 사용할 기능 설명과 지원 범위.
 - [오픈소스·데이터 출처](docs/THIRD_PARTY.md).

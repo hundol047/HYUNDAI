@@ -1,0 +1,15 @@
+{
+  "scope": "actual campus fallback for cafe and restaurant; not physical GPS",
+  "results": [
+    {
+      "host": "overpass-api.de",
+      "error": "HTTP Error 502: Bad Gateway",
+      "elapsedMs": 962
+    },
+    {
+      "host": "overpass.kumi.systems",
+      "error": "The read operation timed out",
+      "elapsedMs": 20773
+    }
+  ]
+}

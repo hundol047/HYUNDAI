@@ -1,0 +1,141 @@
+{
+  "timestamp": "2026-10-26T06:41:05.873430+00:00",
+  "scope": "actual Photon HTTP samples only; not complete business coverage; fallback tested separately in unit tests",
+  "results": [
+    {
+      "region": "연세대 미래캠퍼스",
+      "category": "카페",
+      "httpStatus": 200,
+      "namedResults": 0,
+      "sampleNames": [],
+      "elapsedMs": 1216
+    },
+    {
+      "region": "연세대 미래캠퍼스",
+      "category": "식당",
+      "httpStatus": 200,
+      "namedResults": 0,
+      "sampleNames": [],
+      "elapsedMs": 843
+    },
+    {
+      "region": "연세대 미래캠퍼스",
+      "category": "산책",
+      "httpStatus": 200,
+      "namedResults": 2,
+      "sampleNames": [
+        "무궁화공원",
+        "윤동주 시비 공원"
+      ],
+      "elapsedMs": 291
+    },
+    {
+      "region": "연세대 미래캠퍼스",
+      "category": "쇼핑",
+      "httpStatus": 200,
+      "namedResults": 3,
+      "sampleNames": [
+        "GS25",
+        "GS25",
+        "무수막 구판장"
+      ],
+      "elapsedMs": 409
+    },
+    {
+      "region": "서울",
+      "category": "카페",
+      "httpStatus": 200,
+      "namedResults": 13,
+      "sampleNames": [
+        "스타벅스",
+        "시청광장돈까스",
+        "스타벅스"
+      ],
+      "elapsedMs": 473
+    },
+    {
+      "region": "서울",
+      "category": "식당",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "금강산오리",
+        "남촌회관",
+        "원주 추어탕"
+      ],
+      "elapsedMs": 292
+    },
+    {
+      "region": "서울",
+      "category": "산책",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "서울광장",
+        "환구단",
+        "웨스틴조선호텔"
+      ],
+      "elapsedMs": 297
+    },
+    {
+      "region": "서울",
+      "category": "쇼핑",
+      "httpStatus": 200,
+      "namedResults": 14,
+      "sampleNames": [
+        "시티스타몰",
+        "CU 한국프레스센터점",
+        "세븐일레븐"
+      ],
+      "elapsedMs": 430
+    },
+    {
+      "region": "파리",
+      "category": "카페",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "Café de Flore",
+        "Les Deux Magots",
+        "Le Montana"
+      ],
+      "elapsedMs": 439
+    },
+    {
+      "region": "파리",
+      "category": "식당",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "KBG Au Saint Benoît",
+        "Emporio Armani Caffe",
+        "Yen"
+      ],
+      "elapsedMs": 324
+    },
+    {
+      "region": "파리",
+      "category": "산책",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "Square Laurent Prache",
+        "Square Félix Desruelles",
+        "Square Tarass-Chevtchenko"
+      ],
+      "elapsedMs": 258
+    },
+    {
+      "region": "파리",
+      "category": "쇼핑",
+      "httpStatus": 200,
+      "namedResults": 15,
+      "sampleNames": [
+        "Monoprix",
+        "Franprix",
+        "L'Épicerie"
+      ],
+      "elapsedMs": 251
+    }
+  ]
+}
