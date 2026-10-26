@@ -49,3 +49,8 @@ Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`�
 - **전국무인교통단속카메라표준데이터** — 경찰청·지방자치단체, [공식 목록](https://www.data.go.kr/data/15028200/standard.do), 데이터셋에 연결된 [공공데이터포털 이용정책](https://data.go.kr/ugs/selectPortalPolicyView.do). 공개 다운로드 43,764행에서 충돌·중복을 처리한 39,827개 참고 위치를 수록했습니다. 이동식은 제외되며 방향별 단속 속도 안내로 사용하지 않습니다. 별도의 상용 내비 데이터 라이선스를 취득했다는 의미가 아닙니다.
 - 가공 방법, 기준일, 제외 건수, 원본·변환본 해시: [자료 검증](ROAD_SAFETY_DATA_KO.md), [검사 기록](ROAD_SAFETY_DATA_AUDIT.json). 원본의 연락처는 수록하지 않았습니다.
 - ktfmt 0.54 — Apache-2.0, https://github.com/facebook/ktfmt . 개발 중 Kotlin 서식 정리에만 사용하며 앱에 포함하지 않습니다.
+
+### 보행 라우팅 및 사고 다발 통계 연결
+
+- OSM/FOSSGIS 보행 라우팅: https://routing.openstreetmap.de/about.html (OSM/ODbL 데이터, 제공자 사용 정책·개인정보 안내 적용). 지도에는 OpenStreetMap 기여자 출처와 지도 오류 제보 링크를 제공합니다. `foot-route-pangyo.json`은 공개 장소 좌표의 실제 라우팅 응답 테스트 fixture입니다.
+- 한국도로교통공단 사고 다발 지역 공개 API: https://opendata.koroad.or.kr/api/selectLgDataSet.do . 연결 어댑터만 제공하며 현재 실제 데이터·API 키는 포함하지 않습니다. 발급 시 제공 기관의 이용 조건과 해당 자료의 출처 표시 조건을 확인해야 합니다.

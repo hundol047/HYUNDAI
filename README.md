@@ -40,6 +40,10 @@ PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issu
 
 공식 Maven 접근 실패 시 중지하며 SDK 없는 빌드로 대체하지 않습니다. Gradle release 출력은 서명 전 파일입니다. 팀 키 서명·공식 이미지 설치·Virtual Console·동일 APK 녹화 명령은 [실행 가이드](docs/PLEOS_VEHICLE_STATE_KO.md)를 따릅니다.
 
+## 보행 경로·EchoRoad 개선
+
+실제 장소는 보행 전용 왕복 경로를 확인한 뒤 계획에 반영하며, 돌아오는 시간에 맞춰 복귀 알림을 계산합니다. EchoRoad는 동의 기반 급감속 후보 수집·인증 서버 집계·경로 앞 위험 표시를 구현했습니다. **공개 공유 서버와 공식 사고 다발 API는 아직 미연결**이며 실시간 사고 확정 서비스가 아닙니다. [구현 범위·검증·서버 연결 안내](docs/WALKING_ECHOROAD_KO.md)를 확인하세요.
+
 ## 심사용 문서·영상
 
 - [제출 검토표](docs/SUBMISSION_REVIEW_KO.md): 테스트 결과, APK 식별자, 장치 실행·공개 영상 상태.

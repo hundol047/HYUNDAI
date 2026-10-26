@@ -91,7 +91,20 @@ def main():
     try:
         rows = fetch(key, a.year, a.sido, a.sigungu)
         # Never log exception URLs: they can contain authKey.
-        a.output.write_text(json.dumps(rows, ensure_ascii=False, indent=2)+'\n')
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', dir=a.output.parent, delete=False) as f:
+            temporary = Path(f.name)
+            try:
+                f.write(json.dumps(rows, ensure_ascii=False, indent=2)+'\n')
+                f.flush()
+                os.fsync(f.fileno())
+            except Exception:
+                temporary.unlink(missing_ok=True)
+                raise
+        try:
+            temporary.replace(a.output)
+        finally:
+            temporary.unlink(missing_ok=True)
     except Exception:
         p.exit(1, 'Import failed; check API authorization, region/year and official schema. No partial file saved.\n')
     print(f'Imported {len(rows)} historical zones for {a.year}; not live accident reports.')
