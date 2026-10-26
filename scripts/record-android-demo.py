@@ -2,7 +2,7 @@
 """Install and continuously record the signed APK on a regular Android emulator.
 Vehicle signals are explicitly app demo data; this is NOT Pleos/AAOS validation.
 """
-import argparse, datetime, hashlib, json, pathlib, re, subprocess, time, threading, xml.etree.ElementTree as ET
+import argparse, datetime, hashlib, json, pathlib, re, subprocess, time, threading, signal, xml.etree.ElementTree as ET
 
 def host_sample(proc=pathlib.Path('/proc')):
     """Bounded resource metadata only; never read process environments or arguments."""
@@ -30,6 +30,8 @@ def main():
     p.add_argument('--stop-plan',action='store_true',help='Record the parked-plan upgrade scenario')
     p.add_argument('--place-photos',action='store_true',help='Record actual nearby photos using an explicitly simulated Paris GPS position')
     p.add_argument('--navigation-review',action='store_true',help='Record live routing with simulated Seoul GPS and portrait/short-landscape controls')
+    p.add_argument('--capture-audio',action='store_true',help='Record real device output with scrcpy, including audio')
+    p.add_argument('--audio-review',action='store_true',help='Play all six ambient presets in the installed APK')
     a=p.parse_args()
     if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Use an explicit emulator serial')
     a.output.mkdir(parents=True,exist_ok=False)
@@ -46,6 +48,11 @@ def main():
                 resource_stop.wait(1)
     resource_thread=threading.Thread(target=monitor,daemon=True);resource_thread.start()
     recording_started=None
+    audio_windows=[]
+    def window(name, action, silent=False):
+        start=time.monotonic()-recording_started
+        action()
+        audio_windows.append(dict(name=name,startSeconds=start,endSeconds=time.monotonic()-recording_started,expectSilence=silent))
     checks=[];started=datetime.datetime.now(datetime.timezone.utc).isoformat();video=None;recorder=None;log_reader=None;log_output=None
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
@@ -101,6 +108,8 @@ def main():
         if a.place_photos or a.navigation_review:
             for permission in ['android.permission.ACCESS_FINE_LOCATION','android.permission.ACCESS_COARSE_LOCATION']:
                 adb('shell','pm','grant',a.package,permission)
+        if a.capture_audio:
+            adb('shell','cmd','media_session','volume','--stream','3','--set','12')
         adb('shell','am','force-stop',a.package)
         adb('shell','am','start','-W','-n',a.package+'/io.cabinos.one.MainActivity',timeout=90)
         wait('StopSense  +  CabinOS',seconds=90)
@@ -109,11 +118,15 @@ def main():
         video='/sdcard/cabinos-apk-proof.mp4'
         recording_started=time.monotonic()
         with (a.output/'screenrecord.log').open('wb') as log:
-            recorder=subprocess.Popen(base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video],stdout=log,stderr=subprocess.STDOUT)
+            capture=(['scrcpy','--serial',a.serial,'--no-playback','--no-control','--require-audio','--audio-source=output','--audio-codec=aac','--video-bit-rate=2500000','--record='+str(a.output/'CabinOS_ONE_android_apk.mp4')] if a.capture_audio else base+['shell','screenrecord','--bit-rate','2500000','--time-limit','180',video])
+            recorder=subprocess.Popen(capture,stdout=log,stderr=subprocess.STDOUT)
             time.sleep(2)
             if a.navigation_review:
                 from record_navigation_review import record
-                record(adb, tree, tap, check, snapshot, scenario)
+                record(adb, tree, tap, check, snapshot, scenario, audio_window=window if a.capture_audio else None)
+            elif a.audio_review:
+                from record_audio_review import record
+                record(adb, tree, tap, check, snapshot, scenario, window)
             elif a.place_photos:
                 from record_place_photos import record
                 record(adb, tree, tap, check, snapshot, scenario)
@@ -179,18 +192,21 @@ def main():
         if log_output is not None:log_output.close()
         if recorder is not None:
             if recorder.poll() is None:
-                ids=adb('shell','pidof','screenrecord',check=False).decode().split()
+                if a.capture_audio:recorder.send_signal(signal.SIGINT)
+                ids=[] if a.capture_audio else adb('shell','pidof','screenrecord',check=False).decode().split()
                 for pid in ids:
                     if pid.isdigit():adb('shell','kill','-2',pid,check=False)
                 try:recorder.wait(timeout=20)
                 except subprocess.TimeoutExpired:recorder.terminate();recorder.wait(timeout=10)
-            adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
+            if not a.capture_audio:adb('pull',video,str(a.output/'CabinOS_ONE_android_apk.mp4'),check=False,timeout=60)
+        if a.capture_audio:
+            (a.output/'audio-windows.json').write_text(json.dumps(audio_windows,ensure_ascii=False,indent=2)+'\n')
         for report,service in [('rendering.txt','gfxinfo'),('memory-after.txt','meminfo')]:
             try:(a.output/report).write_bytes(adb('shell','dumpsys',service,a.package,check=False,timeout=10))
             except (subprocess.SubprocessError,OSError):pass
         try:fingerprint=adb('shell','getprop','ro.build.fingerprint',check=False,timeout=10).decode().strip()
         except (subprocess.SubprocessError,OSError):fingerprint='unavailable: device connection lost'
-        result={'applicationId':a.package,'startedAtUtc':started,'captureMethod':'adb shell screenrecord: continuous device frames',
+        result={'applicationId':a.package,'startedAtUtc':started,'captureMethod':('scrcpy: continuous device frames and live Android output audio' if a.capture_audio else 'adb shell screenrecord: continuous device frames'),
           'deviceType':'regular Android emulator, NOT Pleos','fingerprint':fingerprint,
           'vehicleSignals':'app simulation, NOT actual vehicle telemetry',
           'locationSource':('emulator geo fix: Seoul, NOT actual GPS' if a.navigation_review else 'emulator geo fix: Paris, NOT actual GPS' if a.place_photos else 'not tested'),

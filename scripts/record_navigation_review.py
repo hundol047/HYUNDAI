@@ -5,7 +5,7 @@ import threading
 import time
 
 
-def record(adb, tree, tap, check, snapshot, scenario):
+def record(adb, tree, tap, check, snapshot, scenario, audio_window=None):
     stop = threading.Event()
     errors = []
 
@@ -69,6 +69,16 @@ def record(adb, tree, tap, check, snapshot, scenario):
         if '내 위치로' in texts():
             raise AssertionError('Recenter failed to restore following')
         check('recenter preserves active route', '안내 종료', 'nav-04-recenter')
+        if audio_window is not None:
+            def listen():
+                tap('안내 다시 듣기')
+                time.sleep(10)
+            audio_window('Korean navigation repeat from app TTS', listen)
+            check('navigation repeat recorded with device audio', '안내 종료', 'nav-audio-repeat')
+            tap('안내 종료')
+            tap('홈')
+            check('audio navigation returns home', '이 시간을, 나답게.', 'nav-audio-home')
+            return
         adb('shell', 'wm', 'size', '1024x480')
         adb('shell', 'settings', 'put', 'system', 'font_scale', '1.5')
         time.sleep(3)

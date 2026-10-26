@@ -1,0 +1,58 @@
+name: APK live audio recording
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths:
+      - .github/workflows/audio-video.yml
+      - scripts/record_audio_review.py
+      - scripts/verify_recorded_audio.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [audio-review, navigation-review]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Enable KVM and install recording tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python3 -m pip install uiautomator2==3.2.10
+          mkdir -p /tmp/cabinos-capture
+          gh release download v5.0.1 -R Genymobile/scrcpy -p scrcpy-linux-x86_64-v5.0.1.tar.gz -D /tmp/cabinos-capture
+          echo '9f969d30cc574816077edecda65719c1c70b0aee1df1ba5fa00779ac07b8fd6e  /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz -C /tmp/cabinos-capture
+          echo '/tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1' >> "$GITHUB_PATH"
+          gh release download 1.52.0 -R espeak-ng/espeak-ng -p espeak-1.52.0-signed.apk -D /tmp/cabinos-capture
+          echo '741b46abf84d843f9b0cce80136f60ffee9b9fe591601b9701aa2a9ff99c9ddf  /tmp/cabinos-capture/espeak-1.52.0-signed.apk' | sha256sum -c -
+      - name: Record actual APK video and internal output audio
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: default
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -feature -Vulkan -no-boot-anim -camera-back none
+          script: |
+            adb install /tmp/cabinos-capture/espeak-1.52.0-signed.apk
+            adb shell settings put secure tts_default_synth com.reecedunn.espeak
+            adb shell am start -W -n com.reecedunn.espeak/.DownloadVoiceData
+            sleep 5
+            python3 scripts/record-android-demo.py --serial emulator-5554 --apk preview/퓨처랩스_CabinOS_ONE_preview.apk --package io.cabinos.one.preview --capture-audio --${{ matrix.scenario }} --output artifacts/${{ matrix.scenario }}
+            python3 scripts/verify_recorded_audio.py artifacts/${{ matrix.scenario }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-audio-${{ matrix.scenario }}
+          path: artifacts/${{ matrix.scenario }}/
