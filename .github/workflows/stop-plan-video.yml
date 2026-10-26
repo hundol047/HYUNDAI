@@ -44,6 +44,8 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
+      - name: Install Android UI instrumentation client
+        run: python3 -m pip install uiautomator2==3.2.10
       - name: Exercise live navigation, map pan and orientation changes
         uses: reactivecircus/android-emulator-runner@v2
         with:

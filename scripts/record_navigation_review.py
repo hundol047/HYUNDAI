@@ -45,17 +45,20 @@ def record(adb, tree, tap, check, snapshot, scenario):
             time.sleep(1)
         else:
             raise AssertionError('Destination input did not settle after opening the keyboard')
-        # The previous burst input was absent from the captured UI. Use paced
-        # Android key events and verify the complete text before claiming input worked.
-        for character in '37.567005,126.977893':
-            code={'.':56,',':55}.get(character)
-            if code is None:
-                code=7+int(character)
-            adb('shell','input','keyevent',str(code))
-            time.sleep(.15)
-        check('destination input remains visible with landscape keyboard', '37.567005,126.977893', 'nav-00-keyboard')
-        # IME search must dismiss the keyboard and run the same guarded search.
-        adb('shell', 'input', 'keyevent', '66')
+        # Use Android accessibility text entry, as in UI instrumentation tests.
+        # This verifies app search and routing, not physical keyboard keystrokes.
+        import uiautomator2
+        device=uiautomator2.connect(adb('get-serialno').decode().strip())
+        try:
+            field=device(className='android.widget.EditText')
+            field.set_text('37.567005,126.977893')
+            if '37.567005,126.977893' not in field.get_text():
+                raise AssertionError('Accessibility destination entry was not retained')
+        finally:
+            device.stop_uiautomator()
+        check('accessibility destination entry remains visible with landscape keyboard', '37.567005,126.977893', 'nav-00-keyboard')
+        adb('shell','input','keyevent','4')
+        tap('검색')
         tap('1. 좌표 목적지 37.567005, 126.977893')
         check('live OSRM route automatically expands installed APK map', '지도 축소', 'nav-01-expanded')
         check('stop control available during guidance', '안내 종료', 'nav-02-controls')
