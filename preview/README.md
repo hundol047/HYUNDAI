@@ -4,7 +4,7 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/7fbba17d723d3b337bfa390bdd4f8c04f9a66cdd/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f8c61756e605d3b38d1b94f46c76f31b1718cad0/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
@@ -14,7 +14,7 @@
 
 ## 이번 수정
 
-- 큰 글씨·낮은 가로 화면의 버튼과 확대 지도 배치, 화면 회전·뒤로 가기, 연속 회전 음성 안내, 배경음 전환·반복 경계를 수정했습니다. Kotlin/Android 425개와 서버·도구 80개 검사를 통과했습니다. 새 APK의 에뮬레이터 녹화는 진행 중이며 아래 기존 영상은 이전 APK입니다.
+- 큰 글씨·낮은 가로 화면의 버튼과 확대 지도 배치, 화면 회전·뒤로 가기, 연속 회전 음성 안내, 배경음 전환·반복 경계를 수정했습니다. Kotlin/Android 427개와 서버·도구 80개 검사를 통과했습니다. 새 APK의 에뮬레이터 녹화는 진행 중이며 아래 기존 영상은 이전 APK입니다.
 
 - 장소 검색은 비거나 실패한 분류만 보조 검색하고, 정원·자연보호구역을 포함합니다. 전부 실패하면 이전 결과를 유지합니다. 네트워크·위치 중단·안내 종료 시 이전 교통 색상을 지웁니다. [출시 전 2~5번 점검 결과와 남은 조건](../docs/release-check/README.md)
 
