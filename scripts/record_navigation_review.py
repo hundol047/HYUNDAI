@@ -34,6 +34,7 @@ def record(adb, tree, tap, check, snapshot, scenario):
             raise AssertionError('Emulator GPS did not become available')
         tap('가게명·지점·도시·주소 또는 위도,경도')
         adb('shell', 'input', 'text', '37.567005,126.977893')
+        check('destination input remains visible with landscape keyboard', '37.567005,126.977893', 'nav-00-keyboard')
         # IME search must dismiss the keyboard and run the same guarded search.
         adb('shell', 'input', 'keyevent', '66')
         tap('1. 좌표 목적지 37.567005, 126.977893')
