@@ -4,15 +4,17 @@
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/7cdd0982d0a232db160e1df0045dc5a185739d01/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/7fbba17d723d3b337bfa390bdd4f8c04f9a66cdd/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
 휴대폰 위치 서비스를 켜고 앱에 **정확한 위치**를 허용하세요. 음성 입력에는 마이크 권한과 기기 음성 인식 서비스가 필요합니다. APK는 아이폰에 설치할 수 없습니다. 팀 서명 제출본 `apk/`는 변경하지 않았습니다.
 
-[현재 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13에서 약 2분 45초 연속 녹화. 정차 플랜 10건·별도 사진 검사 4건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
+[이전 APK 실행 영상과 검증 기록](../docs/video/release-review/README.md) — Android 13에서 약 2분 45초 연속 녹화. 정차 플랜 10건·별도 사진 검사 4건 통과. 실제 차량·현장 GPS 검증은 아닙니다.
 
 ## 이번 수정
+
+- 큰 글씨·낮은 가로 화면의 버튼과 확대 지도 배치, 화면 회전·뒤로 가기, 연속 회전 음성 안내, 배경음 전환·반복 경계를 수정했습니다. Kotlin/Android 425개와 서버·도구 80개 검사를 통과했습니다. 새 APK의 에뮬레이터 녹화는 진행 중이며 아래 기존 영상은 이전 APK입니다.
 
 - 장소 검색은 비거나 실패한 분류만 보조 검색하고, 정원·자연보호구역을 포함합니다. 전부 실패하면 이전 결과를 유지합니다. 네트워크·위치 중단·안내 종료 시 이전 교통 색상을 지웁니다. [출시 전 2~5번 점검 결과와 남은 조건](../docs/release-check/README.md)
 
