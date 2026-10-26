@@ -1,15 +1,15 @@
 {
-  "sourceCommit": "2169b56b8f55f5805e6190d939703e13a3e6b0bb",
-  "apkSha256": "22b73b04c96f775698c1e2474e81d3d8ac0b8746f394a6f60c9df5775e8ba0fa",
+  "sourceCommit": "a66b55199597af3618774827304a8f5029692f2b",
+  "apkSha256": "cdc5943561bebbf8d16d0bb2852714d939365012903d2756ac5487019bbcaff1",
   "tests": {
     "core": {
-      "tests": 168,
+      "tests": 171,
       "failures": 0,
       "errors": 0,
       "skipped": 0
     },
     "android": {
-      "tests": 215,
+      "tests": 216,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -227,10 +227,10 @@
     ],
     "noRouteObserved": "Paris initial coordinates",
     "echoLocalHttpValidated": true,
-    "pythonServerTestsPassed": 21,
-    "pythonScriptTestsPassed": 52,
+    "pythonServerTestsPassed": 25,
+    "pythonScriptTestsPassed": 55,
     "publicEchoServerDeployed": true,
-    "officialAccidentFeedConnected": false,
+    "officialAccidentFeedConnected": true,
     "koroadAuthenticatedApiValidated": false,
     "physicalDeviceValidated": false
   },
@@ -241,7 +241,110 @@
     "railwayPublicHealthStatus": 200,
     "unauthenticatedStatusCode": 401,
     "userCredentialLiveValidated": false,
-    "officialAccidentDatasetLoaded": false,
-    "serverTestsPassed": 21
+    "officialAccidentDatasetLoaded": true,
+    "serverTestsPassed": 25
+  },
+  "officialAccidentAreas": {
+    "checkedAt": "2026-10-26T04:53:54.606881+00:00",
+    "baseUrl": "https://hyundai-production-1222.up.railway.app",
+    "dataset": {
+      "historicalOnly": true,
+      "zoneCount": 1271,
+      "loadedRows": 1271,
+      "sha256": "ef9202e871b89a561b1a01a6b9921c12a2e2c00322284af1df1a7d1dc100b976",
+      "categories": {
+        "pedestrian": {
+          "count": 418,
+          "periodStart": 2023,
+          "periodEnd": 2025
+        },
+        "child_pedestrian": {
+          "count": 88,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        },
+        "icy": {
+          "count": 82,
+          "periodStart": 2021,
+          "periodEnd": 2025
+        },
+        "municipal": {
+          "count": 683,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        }
+      },
+      "source": "한국도로교통공단 교통사고정보 개방시스템",
+      "note": "Historical statistics; not live accidents or current ice conditions"
+    },
+    "queries": [
+      {
+        "case": "Seoul",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7341493",
+        "returnedZones": 8,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Gangwon",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7326013",
+        "returnedZones": 3,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Busan",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7333880",
+        "returnedZones": 16,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Jeju",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7313571",
+        "returnedZones": 9,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "municipal",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7341493",
+        "returnedZones": 8,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "pedestrian",
+        "status": 200,
+        "requestedZoneId": "koroad-pedestrian-7301669",
+        "returnedZones": 9,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "child_pedestrian",
+        "status": 200,
+        "requestedZoneId": "koroad-child_pedestrian-7302485",
+        "returnedZones": 5,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "icy",
+        "status": 200,
+        "requestedZoneId": "koroad-icy-7302515",
+        "returnedZones": 5,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      }
+    ],
+    "unauthenticatedPrivateRisksStatus": 401,
+    "authenticatedUserKeyTested": false,
+    "physicalDrivingValidated": false
   }
 }

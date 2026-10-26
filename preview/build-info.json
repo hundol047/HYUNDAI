@@ -3,11 +3,11 @@
   "app": "CabinOS ONE 테스트",
   "applicationId": "io.cabinos.one.preview",
   "versionName": "0.11.1-preview",
-  "sourceCommit": "2169b56b8f55f5805e6190d939703e13a3e6b0bb",
-  "apkSha256": "22b73b04c96f775698c1e2474e81d3d8ac0b8746f394a6f60c9df5775e8ba0fa",
+  "sourceCommit": "a66b55199597af3618774827304a8f5029692f2b",
+  "apkSha256": "cdc5943561bebbf8d16d0bb2852714d939365012903d2756ac5487019bbcaff1",
   "sdkIncluded": true,
   "signing": "Android debug test identity; not the team production signer",
   "submissionRelease": false,
   "physicalSamsungValidated": false,
-  "reviewRevision": "verified-echoroad-connection"
+  "reviewRevision": "official-historical-accident-areas"
 }
