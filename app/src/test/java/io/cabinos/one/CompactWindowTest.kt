@@ -68,7 +68,9 @@ class CompactWindowTest {
         ready()
         compose.onNodeWithText("내비").performClick()
         compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
+        compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").performTextInput("판교역")
         compose.activityRule.scenario.recreate()
+        compose.onNodeWithText("판교역").assertIsDisplayed()
         compose.onNodeWithText("가게명·지점·도시·주소 또는 위도,경도").assertIsDisplayed()
         compose.runOnIdle {compose.activity.onBackPressedDispatcher.onBackPressed()}
         compose.onNodeWithText("이 시간을, 나답게.").assertIsDisplayed()
@@ -76,11 +78,13 @@ class CompactWindowTest {
     @Test @Config(qualifiers="w1280dp-h800dp-land-mdpi")
     fun navigationSearchRemainsReachableWhenKeyboardReducesContentHeight() {
         val vm=ready()
+        val parkedState=vm.state.value
+        val navigationState=vm.liveNavigation.state.value
         compose.runOnIdle {compose.activity.setContent {
             io.cabinos.one.ui.CabinTheme {
                 androidx.compose.runtime.CompositionLocalProvider(io.cabinos.one.ui.LocalCompactWindow provides false) {
                     androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.height(260.dp)) {
-                        io.cabinos.one.ui.NavigationScreen(vm.state.value,vm.liveNavigation.state.value,vm.liveNavigation){}
+                        io.cabinos.one.ui.NavigationScreen(parkedState,navigationState,vm.liveNavigation){}
                     }
                 }
             }

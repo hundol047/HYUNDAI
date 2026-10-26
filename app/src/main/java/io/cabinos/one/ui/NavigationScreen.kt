@@ -5,6 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,16 +31,21 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
     val compactWindow=LocalCompactWindow.current
     val context=LocalContext.current
     val keyboard=androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
     DisposableEffect(nav){onDispose {nav.cancelVoice()}}
+    val searchIntoView=remember {BringIntoViewRequester()}
+    var searchFocused by remember {mutableStateOf(false)}
+    val imeBottom=WindowInsets.ime.getBottom(LocalDensity.current)
+    LaunchedEffect(searchFocused,imeBottom) {if(searchFocused)searchIntoView.bringIntoView()}
     val g=ui.guidance
-    var query by remember {mutableStateOf("")}
-    var nearby by remember {mutableStateOf(false)}
-    var submittedQuery by remember {mutableStateOf("")}
-    var submittedNearby by remember {mutableStateOf(false)}
+    var query by rememberSaveable {mutableStateOf("")}
+    var nearby by rememberSaveable {mutableStateOf(false)}
+    var submittedQuery by rememberSaveable {mutableStateOf("")}
+    var submittedNearby by rememberSaveable {mutableStateOf(false)}
     LaunchedEffect(ui.searchQuery) {
         if(ui.searchQuery.isNotBlank()){query=ui.searchQuery;submittedQuery=ui.searchQuery;submittedNearby=nearby}
     }
@@ -90,7 +100,7 @@ import java.util.Locale
         if(canPlan&&voiceAvailable)Text("음성: 목적지 → 1번~6번 선택 시 안내 / 주행 중: 안내 반복·안내 종료 · start navigation / repeat / stop navigation",color=Muted,fontSize=10.sp)
         if(canPlan) {
             Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.fillMaxWidth(),singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy&&s.networkAvailable&&query.trim().length>=2){keyboard?.hide();submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
+                OutlinedTextField(query,{if(ui.busy)nav.cancelPending();query=it.take(180)},Modifier.fillMaxWidth().bringIntoViewRequester(searchIntoView).onFocusChanged {searchFocused=it.isFocused},singleLine=true,label={Text("가게명·지점·도시·주소 또는 위도,경도")},keyboardOptions=androidx.compose.foundation.text.KeyboardOptions(imeAction=androidx.compose.ui.text.input.ImeAction.Search),keyboardActions=androidx.compose.foundation.text.KeyboardActions(onSearch={if(!ui.busy&&s.networkAvailable&&query.trim().length>=2){keyboard?.hide();submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)}}))
                 Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
                 ActionButton("검색",{keyboard?.hide();submittedQuery=query;submittedNearby=nearby;nav.search(query,nearby)},modifier=Modifier.weight(1f).heightIn(min=52.dp),color=Blue,enabled=!ui.busy&&s.networkAvailable&&query.trim().length>=2)
                 ActionButton("내 위치 사용",onLocate,Modifier.weight(1f).heightIn(min=52.dp),color=Mint,enabled=!ui.busy)
