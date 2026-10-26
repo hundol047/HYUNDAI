@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "d153a4a2711d8d7f939ba0662cfcf1b6146aabe5",
-  "apkSha256": "c7bea72909a8d8708fc3604e6578b31d2ee82fc86c8a0541e2b0565bb821329a",
+  "sourceCommit": "2169b56b8f55f5805e6190d939703e13a3e6b0bb",
+  "apkSha256": "22b73b04c96f775698c1e2474e81d3d8ac0b8746f394a6f60c9df5775e8ba0fa",
   "tests": {
     "core": {
       "tests": 168,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 209,
+      "tests": 215,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -227,11 +227,21 @@
     ],
     "noRouteObserved": "Paris initial coordinates",
     "echoLocalHttpValidated": true,
-    "pythonServerTestsPassed": 18,
+    "pythonServerTestsPassed": 21,
     "pythonScriptTestsPassed": 52,
-    "publicEchoServerDeployed": false,
+    "publicEchoServerDeployed": true,
     "officialAccidentFeedConnected": false,
     "koroadAuthenticatedApiValidated": false,
     "physicalDeviceValidated": false
+  },
+  "echoConnection": {
+    "authenticatedStatusCheck": true,
+    "locationFreeCheck": true,
+    "dialogStaysOpenUntilDismissed": true,
+    "railwayPublicHealthStatus": 200,
+    "unauthenticatedStatusCode": 401,
+    "userCredentialLiveValidated": false,
+    "officialAccidentDatasetLoaded": false,
+    "serverTestsPassed": 21
   }
 }
