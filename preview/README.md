@@ -2,6 +2,8 @@
 
 퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.1-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
 
+**[소리 포함 실제 실행 영상](../docs/video/live-audio/README.md)** — 배경음 6종과 한국어 내비 안내를 최신 APK에서 다시 녹화했습니다. 일반 Android 에뮬레이터이며 녹화용 TTS 목소리는 실제 휴대폰과 다를 수 있습니다.
+
 ## 설치
 
 [APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/775bfeb416e23e6ae6908422fe201d7935781031/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)

@@ -1,5 +1,7 @@
 # 최신 검토 APK 실제 실행 영상
 
+**[소리 포함 새 실행 영상 2편](../live-audio/README.md)** — 아래 3편은 기존 화면 조작 검증용 무음 영상입니다.
+
 - [내비게이션 · 약 1분 12초](CabinOS_ONE_navigation.mp4): 목적지 입력 → 실제 OSRM 경로 → 자동 전체 화면 → 지도 드래그/현재 위치 복귀 → 낮은 가로 창/큰 글씨 → 세로 전환 → 안내 종료 → 홈 복귀. [9건 통과 기록](navigation-evidence.json).
 - [정차·집중 세션 · 약 2분 41초](CabinOS_ONE_runtime.mp4): 정차 플랜, 소리 중지, 시간 연장, 충전 마감, D/0 잠금과 P 복귀. [10건 통과 기록](stop-plan-evidence.json).
 - [장소·사진 · 약 1분 18초](CabinOS_ONE_places.mp4): 카테고리 전환과 서로 다른 실제 카페·공원 등록 사진. [8건 통과 기록](photos-evidence.json).
