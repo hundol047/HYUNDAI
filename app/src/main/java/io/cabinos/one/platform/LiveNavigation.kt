@@ -134,7 +134,19 @@ class LiveNavigation(
             )
     }
 
+    private fun invalidateTraffic(message:String) {
+        trafficGeneration++
+        trafficJob?.cancel();trafficJob=null;trafficClient.cancel()
+        mutable.value=mutable.value.copy(traffic=null,trafficNotice=message)
+    }
+
     private fun trafficTick() {
+        if(!foreground || !engine.state.value.networkAvailable || !engine.state.value.locationAvailable) {
+            if(mutable.value.traffic!=null || trafficJob?.isActive==true)
+                invalidateTraffic("교통 정보 중지 · 네트워크·위치 연결을 확인하세요.")
+            return
+        }
+
         if (mutable.value.traffic?.current(clock()) == false)
             mutable.value = mutable.value.copy(traffic = null, trafficNotice = "교통 정보 만료")
         val f = fix
@@ -160,7 +172,7 @@ class LiveNavigation(
                     val flow = trafficClient.fetch(f.point, clock)
                     if (
                         epoch == trafficGeneration &&
-                            foreground &&
+                            foreground && engine.state.value.networkAvailable && engine.state.value.locationAvailable &&
                             fix?.let {
                                 tracker.usable(it) &&
                                     NavigationGeometry.distance(it.point, f.point) < 500
@@ -298,6 +310,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         }
 
     private fun invalidateGps(status: GpsConnection, message: String) {
+        invalidateTraffic("교통 정보 중지 · 정확한 위치 대기")
         val ownVoice = tracker.state.tracking || spoken.isNotEmpty()
         echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
         echoRealFix = false
@@ -809,6 +822,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun stop() {
+        invalidateTraffic("교통 정보 중지 · 안내 종료")
         echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset();echoSpoken.clear()
         mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null)
         pendingStart = false
