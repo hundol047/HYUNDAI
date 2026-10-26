@@ -41,4 +41,11 @@ class EchoRoadClientTest {
         assertTrue(EchoRoadClient.connectionError(EchoHttpException(401)).contains("접근키"))
         assertTrue(EchoRoadClient.connectionError(EchoHttpException(404)).contains("최신 배포"))
     }
+    @Test fun historicalPeriodsAndGeometryArePreservedWithoutClaimingCurrentIce() {
+        val zone=JSONObject("""{"lat":37.5,"lon":127.0,"kind":"icy","periodStart":2021,"periodEnd":2025,"geometry":{"type":"Polygon","coordinates":[[[127.0,37.5],[127.001,37.5],[127.001,37.501],[127.0,37.5]]]}}""")
+        assertEquals("2021~2025년 결빙 사고 이력 구역",EchoRoadClient.areaLabel(zone,2025))
+        assertTrue(EchoRoadClient.parseArea(zone)!!.valid())
+        zone.getJSONObject("geometry").getJSONArray("coordinates").getJSONArray(0).remove(3)
+        assertThrows(IllegalArgumentException::class.java){EchoRoadClient.parseArea(zone)}
+    }
 }

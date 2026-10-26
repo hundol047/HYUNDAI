@@ -14,6 +14,8 @@ open class EchoRoadClient {
     var endpoint = ""
         private set
 
+    var coverageLimited = false
+        private set
     private var token = ""
     @Volatile private var connection: HttpURLConnection? = null
 
@@ -62,7 +64,9 @@ open class EchoRoadClient {
     suspend fun read(f: NavFix, now: Long): Pair<List<EchoRisk>, Boolean> {
         val started = android.os.SystemClock.elapsedRealtime()
         val json = request("/v1/risks?lat=${f.point.latitude}&lon=${f.point.longitude}")
-        return parse(json, f.point, now + android.os.SystemClock.elapsedRealtime() - started)
+        val parsed=parse(json, f.point, now + android.os.SystemClock.elapsedRealtime() - started)
+        coverageLimited=JSONObject(json).optBoolean("accidentZonesTruncated",false)
+        return parsed
     }
 
     private suspend fun request(path: String, body: String? = null): String =
@@ -114,6 +118,43 @@ open class EchoRoadClient {
         }
 
     companion object {
+        fun areaLabel(r:JSONObject,year:Int):String {
+            if(!r.has("kind"))return "${year}년 사고 다발 자료"
+            val start=r.getInt("periodStart");val end=r.getInt("periodEnd")
+            require(start in 2010..year && end==year)
+            val title=when(r.getString("kind")) {
+                "municipal"->"사고 다발구역"
+                "pedestrian"->"보행자 사고 다발구역"
+                "child_pedestrian"->"보행어린이 사고 다발구역"
+                "icy"->"결빙 사고 이력 구역"
+                else->throw IllegalArgumentException("알 수 없는 통계 유형")
+            }
+            return (if(start==end)"${end}년" else "${start}~${end}년")+" "+title
+        }
+        fun parseArea(r:JSONObject):HistoricalArea? {
+            if(!r.has("geometry")){require(!r.has("kind"));return null}
+            val geometry=r.getJSONObject("geometry");val coordinates=geometry.getJSONArray("coordinates")
+            val polys=when(geometry.getString("type")) {
+                "Polygon"->listOf(coordinates)
+                "MultiPolygon"->{require(coordinates.length() in 1..32);(0 until coordinates.length()).map {coordinates.getJSONArray(it)}}
+                else->throw IllegalArgumentException("구역 경계 형식 오류")
+            }
+            var count=0
+            val area=HistoricalArea(polys.map {poly ->
+                require(poly.length() in 1..32)
+                (0 until poly.length()).map {i ->
+                    val ring=poly.getJSONArray(i);count+=ring.length();require(ring.length()>=4 && count<=2048)
+                    (0 until ring.length()).map {j ->
+                        val p=ring.getJSONArray(j);require(p.length()==2)
+                        NavPoint(p.getDouble(1),p.getDouble(0)).also {
+                            require(it.latitude in 33.0..39.0 && it.longitude in 124.0..132.0)
+                            require(NavigationGeometry.distance(NavPoint(r.getDouble("lat"),r.getDouble("lon")),it)<=1510)
+                        }
+                    }
+                }
+            })
+            require(area.valid());return area
+        }
         fun parseStatus(json: String): Boolean {
             val result = JSONObject(json)
             require(result.getString("status") == "ok")
@@ -179,8 +220,9 @@ open class EchoRoadClient {
                             point(r),
                             null,
                             minOf(expiry, now + 90000),
-                            "${year}년 사고 다발 자료",
+                            areaLabel(r,year),
                             source,
+                            area = parseArea(r),
                         )
                     }
             return parsed.distinctBy { it.id } to root.getBoolean("accidentDatasetConnected")

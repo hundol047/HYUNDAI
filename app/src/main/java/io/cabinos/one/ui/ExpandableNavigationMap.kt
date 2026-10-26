@@ -51,6 +51,7 @@ internal fun ExpandableNavigationMap(
                 showPicker = false,
                 traffic = ui.traffic,
                 safetyPoints = ui.roadSafety.points,
+                echoRisks = ui.echoRisks,
             )
         Box(
             Modifier.fillMaxSize()
@@ -129,6 +130,7 @@ internal fun ExpandableNavigationMap(
                         showHealth = false,
                         traffic = ui.traffic,
                         safetyPoints = ui.roadSafety.points,
+                echoRisks = ui.echoRisks,
                     )
                 }
                 Column(

@@ -80,6 +80,7 @@ data class EchoRisk(
     val label: String,
     val source: String,
     val reporters: Int = 0,
+    val area: HistoricalArea? = null,
 )
 
 object EchoRoadMatch {
@@ -100,6 +101,8 @@ object EchoRoadMatch {
             .asSequence()
             .filter { it.expiresAtMs > now && it.point.valid() }
             .mapNotNull { r ->
+                if(r.area!=null)return@mapNotNull r.area.ahead(route,g.progressMeters)?.let {r to it.toInt()}
+
                 if (
                     r.heading != null &&
                         f.bearingDegrees?.let { abs((it - r.heading + 540) % 360 - 180) > 40 } !=

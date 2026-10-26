@@ -58,6 +58,33 @@ internal class NavigationMapRenderer(private val map: MapView) {
         map.invalidate()
     }
 
+    private var echoRisks:List<EchoRisk> = emptyList()
+    private val echoOverlays=mutableListOf<Overlay>()
+    fun echo(risks:List<EchoRisk>) {
+        if(echoRisks==risks)return
+        echoRisks=risks
+        echoOverlays.forEach {map.overlays.remove(it)};echoOverlays.clear()
+        for(r in risks) {
+            r.area?.polygons?.forEach {p ->
+                val area=Polygon(map).apply {
+                    points=p.first().map {GeoPoint(it.latitude,it.longitude)}
+                    holes=p.drop(1).map {ring -> ring.map {GeoPoint(it.latitude,it.longitude)}}
+                    fillPaint.color=Color.argb(30,255,185,60)
+                    outlinePaint.color=Color.rgb(224,150,45);outlinePaint.strokeWidth=3f
+                    title=r.label;subDescription="한국도로교통공단 · 과거 사고 통계 · 현재 사고·결빙 상태 아님"
+                }
+                echoOverlays+=area;map.overlays.add(0,area)
+            }
+            val marker=Marker(map).apply {
+                position=GeoPoint(r.point.latitude,r.point.longitude);title=r.label
+                subDescription=if(r.area!=null)"공공 통계 참고 구역 · 현재 사고·결빙 아님" else "기기 제보 · 사고 확정 아님"
+                icon=GradientDrawable().apply {shape=GradientDrawable.OVAL;setColor(Color.rgb(245,180,70));setStroke(2,Color.BLACK);setSize(22,22)}
+            }
+            echoOverlays+=marker;map.overlays.add(marker)
+        }
+        map.invalidate()
+    }
+
     private var route: DrivingRoute? = null
     private var selected: NavPlace? = null
     private var line: Polyline? = null

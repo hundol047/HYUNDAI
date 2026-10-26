@@ -102,20 +102,20 @@ class LiveNavigation(
     }
     private fun echoTick() {
         val g=tracker.state;val f=fix
-        val ready=mutable.value.echoConnected && foreground && echoRealFix && g.active && g.tracking && f!=null && tracker.usable(f) && clock()-f.timestampMs in 0..3000 && engine.state.value.networkAvailable
+        val ready=mutable.value.echoConnected && foreground && echoRealFix && ((g.active && g.tracking) || canPlan()) && f!=null && tracker.usable(f) && clock()-f.timestampMs in 0..3000 && engine.state.value.networkAvailable
         val fresh=if(ready)mutable.value.echoRisks.filter {it.expiresAtMs>clock()} else emptyList()
         val ahead=if(ready)EchoRoadMatch.ahead(g,fresh,clock()) else null
-        mutable.value=mutable.value.copy(echoRisks=fresh,echoAhead=ahead?.let {"약 ${it.second}m 앞 · ${it.first.label} · 참고 정보"})
+        mutable.value=mutable.value.copy(echoRisks=fresh,echoAhead=ahead?.let {(if(it.second==0)"현재 경로 주변" else "약 ${it.second}m 앞")+" · ${it.first.label} · "+if(it.first.area!=null)"과거 통계·참고 정보" else "기기 제보·참고 정보"})
         if(!ready){brakeDetector.reset();echoJob?.cancel();echoClient.cancel();return}
         if(ahead!=null && ahead.first.id !in echoSpoken && clock()-echoVoiceAt>=30000 && g.turnMeters>150 && !mutable.value.voiceListening && !speech.navigationSpeaking && engine.state.value.preferences.voiceEnabled) {
-            val text=if(NavigationLanguages.resolve(language)=="ko")"약 ${ahead.second}미터 앞 경로 주변에 ${ahead.first.label}가 있습니다. 현장 상황을 확인하세요." else "Road risk observations ahead. Check road conditions."
+            val text=if(NavigationLanguages.resolve(language)=="ko")(if(ahead.second==0)"현재 경로 주변은 " else "약 ${ahead.second}미터 앞 경로 주변은 ")+"${ahead.first.label.replace("~","년부터 ")}입니다. 현장 상황을 확인하세요." else "Road risk observations ahead. Check road conditions."
             if(speech.speakNavigation(text,language)){echoSpoken+=ahead.first.id;echoVoiceAt=clock()}
         }
         if(echoClient.endpoint.isEmpty() || echoJob?.isActive==true || clock()-echoAttempt<20000)return
         echoAttempt=clock();val epoch=echoGeneration
         echoJob=scope.launch {
-            try {val result=echoClient.read(f!!,clock());if(epoch==echoGeneration && foreground && tracker.state.active && fix?.let { tracker.usable(it) && clock()-it.timestampMs in 0..3000 }==true)mutable.value=mutable.value.copy(echoRisks=result.first,
-                echoNotice="제보 ${result.first.count {it.reporters>0}}건 · "+if(result.second)"사고 다발 자료 연결 · 실시간 사고 확정 아님" else "공식 사고 다발 자료 미연결 · 정보 없음은 안전 보장 아님")}
+            try {val result=echoClient.read(f!!,clock());if(epoch==echoGeneration && foreground && (tracker.state.active || canPlan()) && fix?.let { tracker.usable(it) && clock()-it.timestampMs in 0..3000 }==true)mutable.value=mutable.value.copy(echoRisks=result.first,
+                echoNotice="제보 ${result.first.count {it.reporters>0}}건 · 역사 구역 ${result.first.count {it.area!=null}}곳 · "+(if(result.second)"사고 다발 자료 연결 · 실시간 사고 확정 아님" else "공식 사고 다발 자료 미연결 · 정보 없음은 안전 보장 아님")+(if(echoClient.coverageLimited)" · 가까운 일부 구역만 표시" else ""))}
             catch(e:Exception){if(e is CancellationException)throw e;if(epoch==echoGeneration)mutable.value=mutable.value.copy(echoNotice="EchoRoad 수신 실패 · 기존 정보는 최대 90초 후 만료")}
         }
     }

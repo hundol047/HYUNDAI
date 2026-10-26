@@ -104,6 +104,7 @@ import java.util.Locale
             if(canPlan)TextButton(onClick={trafficSettings=true}){Text("교통 연결")}
         }
         EchoRoadPanel(ui,nav,canPlan)
+        if(ui.echoRisks.any {it.area!=null})Text("황색 경계: 한국도로교통공단 과거 사고 다발구역 · 현재 사고·결빙 상태 아님",color=Amber,fontSize=11.sp)
         if(ui.traffic!=null)Text("빨강 정체/통제 · 노랑 서행 · 초록 원활 · 회색 불확실 · 조회 후 90초 만료",color=Muted,fontSize=11.sp)
         ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
             map = { pane ->
@@ -197,7 +198,7 @@ import java.util.Locale
 }
 private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)} km" else "${m.toInt().coerceAtLeast(0)} m"
 
-@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0,traffic:TrafficFlow?=null,safetyPoints:List<RoadSafetyPoint> = emptyList()) {
+@Composable internal fun NavigationMap(g:Guidance,online:Boolean,interactive:Boolean,selectedPlace:NavPlace?,location:NavFix?,pickEnabled:Boolean,onPick:(NavPlace)->Unit,showPicker:Boolean=true,showHealth:Boolean=false,placeZoom:Double=16.0,traffic:TrafficFlow?=null,safetyPoints:List<RoadSafetyPoint> = emptyList(),echoRisks:List<EchoRisk> = emptyList()) {
     val appearance=LocalAppearance.current;val palette=LocalCabinPalette.current
     val context=LocalContext.current;val owner=LocalLifecycleOwner.current
     val map=remember {configureRoadTiles(context);RoadMapView(context)}
@@ -219,6 +220,7 @@ private fun navDistance(m:Double)=if(m>=1000)"${"%.1f".format(Locale.US,m/1000)}
             view.onUserGesture={following=false;renderer.followPosition=false}
             renderer.followPosition=following
             renderer.safety(safetyPoints)
+            renderer.echo(echoRisks)
             renderer.traffic(traffic)
             renderer.update(g,palette.accent or (0xFF shl 24),selectedPlace,location ?: g.fix,location!=null||g.tracking,placeZoom)
         })
