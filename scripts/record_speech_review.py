@@ -33,6 +33,7 @@ def record(adb, tree, tap, check, snapshot, scenario, window, language):
         time.sleep(20)
     window(language+' actual app spoken preview', listen)
     snapshot('speech-after-playback')
-    if any('미지원/미설치' in n.get('text','') or '오프라인 음성팩을 설치' in n.get('text','') for n in tree().iter('node')):
+    errors=('미지원/미설치','오프라인 음성팩을 설치','음성 재생 실패','음성 합성이 지연','음성을 선택하지 못')
+    if any(any(error in n.get('text','') for error in errors) for n in tree().iter('node')):
         raise AssertionError('Requested offline voice was unavailable')
     check('preview completed without leaving settings', '안내 음성 들어보기', 'speech-finished')

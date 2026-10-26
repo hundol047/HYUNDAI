@@ -107,6 +107,8 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     private var pending:String?=null
     private val mutableStatus=MutableStateFlow("음성 엔진 준비 중")
     val statusFlow=mutableStatus.asStateFlow()
+    private val mutableOutputFailure=MutableStateFlow<String?>(null)
+    val outputFailure=mutableOutputFailure.asStateFlow()
     var status:String
         get()=mutableStatus.value
         private set(value){mutableStatus.value=value}
@@ -115,16 +117,20 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     private var voiceDescription=""
     private var lastSpokenText:String?=null
     private var lastSpokenLanguage:String?=null
+    private var lastSpokenKey:String?=null
     private var recognizer:SpeechRecognizer?=null
     private var recognitionEpoch=0
     private val handler=android.os.Handler(android.os.Looper.getMainLooper())
     private var timeout:Runnable?=null
     private var outputEngine:String?=null
     private var outputGeneration=0
+    private var activeUtterance:String?=null
+    private var synthesisTimeout:Runnable?=null
     init { connectOutput() }
     private fun defaultOutputEngine()=android.provider.Settings.Secure.getString(context.contentResolver,"tts_default_synth")
     private fun connectOutput() {
         val generation=++outputGeneration
+        stopSpeaking()
         initialized=false;configuredLanguage=null
         tts?.shutdown()
         outputEngine=defaultOutputEngine()
@@ -132,12 +138,30 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         tts=TextToSpeech(context,{result ->
             if(generation==outputGeneration) {
                 initialized=result==TextToSpeech.SUCCESS
+                if(initialized)observeOutput(generation)
                 refreshVoiceAvailability()
                 status=if(initialized)"음성 엔진 준비됨 · 언어별 오프라인 음성 사용" else "TTS 사용 불가 · 화면 안내 사용"
                 pending?.let {if(initialized)speak(it)};pending=null
             }
         },outputEngine)
     }
+    private fun observeOutput(generation:Int) {
+        tts?.setOnUtteranceProgressListener(object:android.speech.tts.UtteranceProgressListener() {
+            private fun update(id:String?,action:()->Unit) {
+                handler.post {if(generation==outputGeneration&&id!=null&&id==activeUtterance)action()}
+            }
+            override fun onStart(id:String?)=update(id) {clearSynthesisTimeout()}
+            override fun onDone(id:String?)=update(id) {activeUtterance=null;clearSynthesisTimeout()}
+            override fun onError(id:String?)=onError(id,TextToSpeech.ERROR)
+            override fun onError(id:String?,errorCode:Int)=update(id) {
+                activeUtterance=null;clearSynthesisTimeout();configuredLanguage=null
+                status="음성 재생 실패 · 기기 음성팩을 확인하고 다시 듣기를 눌러 주세요."
+                mutableOutputFailure.value=status
+            }
+            override fun onStop(id:String?,interrupted:Boolean)=update(id) {activeUtterance=null;clearSynthesisTimeout()}
+        })
+    }
+    private fun clearSynthesisTimeout() {synthesisTimeout?.let {handler.removeCallbacks(it)};synthesisTimeout=null}
     fun refreshOutputEngine() {if(outputEngine!=defaultOutputEngine())connectOutput()}
     fun openOutputSettings() {
         val intent=android.content.Intent("com.android.settings.TTS_SETTINGS").addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -145,32 +169,46 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     }
     fun previewOutput(tag:String) {
         val code=io.cabinos.core.NavigationLanguages.resolve(tag)
-        val instruction=io.cabinos.core.NavigationLanguages.instruction(io.cabinos.core.NavManeuver(io.cabinos.core.NavPoint(0.0,0.0),"turn","right"),code)
-        val distance=if(code=="ko")NavigationSpeechVoice.koreanMeters(300) else android.icu.text.MeasureFormat.getInstance(Locale.forLanguageTag(code),android.icu.text.MeasureFormat.FormatWidth.WIDE)
-            .format(android.icu.util.Measure(300,android.icu.util.MeasureUnit.METER))
-        speakNavigation(io.cabinos.core.NavigationLanguages.spoken(code,distance,instruction),NavigationSpeechVoice.locale(tag).toLanguageTag())
+        val maneuver=NavManeuver(NavPoint(0.0,0.0),"turn","right")
+        speakNavigation(NavigationSpeech.guidance(maneuver,code,NavigationSpeechVoice.distance(300.0,tag)),NavigationSpeechVoice.locale(tag).toLanguageTag())
     }
     override fun speak(text:String) {
         // Informational cabin messages must not cut off a turn already being spoken.
         if(initialized) { if(!navigationSpeaking)speakNavigation(text,"ko-KR") } else pending=text
     }
     fun navigationLanguages():List<String> = runCatching {tts?.availableLanguages?.map {it.toLanguageTag()}?.sorted() ?: emptyList()}.getOrDefault(emptyList())
-    val navigationSpeaking:Boolean get()=tts?.isSpeaking==true
-    fun speakNavigation(text:String,tag:String):Boolean {
+    val navigationSpeaking:Boolean get()=activeUtterance!=null||tts?.isSpeaking==true
+    fun speakNavigation(text:String,tag:String,requestKey:String?=null):Boolean {
         if(!initialized)return false
         val locale=Locale.forLanguageTag(tag)
         if(configuredLanguage!=locale.toLanguageTag()) {
             val supported=tts?.setLanguage(locale) ?: TextToSpeech.LANG_NOT_SUPPORTED
             if(supported<TextToSpeech.LANG_AVAILABLE){status="${locale.getDisplayName(locale)} 음성팩 미지원/미설치 · 화면 안내 사용";return false}
-            val selected=NavigationSpeechVoice.select(runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet()),locale)
-            if(selected!=null)tts?.setVoice(selected)
+            val selected=NavigationSpeechVoice.select(runCatching {tts?.voices.orEmpty()}.getOrDefault(emptySet()),locale,tts?.voice)
+            if(selected!=null&&tts?.setVoice(selected)!=TextToSpeech.SUCCESS) {
+                status="음성을 선택하지 못했습니다 · 기기 음성팩을 확인해 주세요."
+                return false
+            }
             if(tts?.voice?.isNetworkConnectionRequired==true){status="이 언어의 오프라인 음성팩을 설치해 주세요.";return false}
             configuredLanguage=locale.toLanguageTag()
             voiceDescription=if((tts?.voice?.quality ?: 0)>=android.speech.tts.Voice.QUALITY_HIGH)"고품질 기기 음성" else "기기 기본 음성 · 품질은 음성팩에 따라 다릅니다"
         }
-        if(tts?.isSpeaking==true && text==lastSpokenText && configuredLanguage==lastSpokenLanguage)return true
-        lastSpokenText=text;lastSpokenLanguage=configuredLanguage
-        val result=tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,"cabinos-${System.nanoTime()}")
+        if(navigationSpeaking && text==lastSpokenText && configuredLanguage==lastSpokenLanguage&&requestKey==lastSpokenKey)return true
+        mutableOutputFailure.value=null
+        lastSpokenText=text;lastSpokenLanguage=configuredLanguage;lastSpokenKey=requestKey
+        clearSynthesisTimeout()
+        val id="cabinos-${System.nanoTime()}"
+        activeUtterance=id
+        val result=tts?.speak(text,TextToSpeech.QUEUE_FLUSH,null,id)
+        if(result==TextToSpeech.SUCCESS) {
+            synthesisTimeout=Runnable {
+                if(activeUtterance==id) {
+                    stopSpeaking()
+                    status="음성 합성이 지연되어 중지했습니다 · 화면을 확인하고 기기 음성 설정을 점검해 주세요."
+                    mutableOutputFailure.value=status
+                }
+            }.also {handler.postDelayed(it,8_000)}
+        } else activeUtterance=null
         status=if(result==TextToSpeech.SUCCESS)"${locale.getDisplayName(locale)} · $voiceDescription" else "음성 재생 불가 · 화면 안내 사용"
         return result==TextToSpeech.SUCCESS
     }
@@ -215,7 +253,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
                 .putExtra(RecognizerIntent.EXTRA_MAX_RESULTS,1))
         }catch(_:RuntimeException){finish(null,"음성 인식을 시작하지 못했습니다. 마이크·기기 음성 서비스를 확인하세요.")}
     }
-    fun stopSpeaking(){pending=null;lastSpokenText=null;lastSpokenLanguage=null;tts?.stop()}
+    fun stopSpeaking(){clearSynthesisTimeout();activeUtterance=null;pending=null;lastSpokenText=null;lastSpokenLanguage=null;lastSpokenKey=null;tts?.stop()}
     fun cancelRecognition(){recognitionEpoch++;timeout?.let {handler.removeCallbacks(it)};timeout=null;val old=recognizer;recognizer=null;runCatching {old?.cancel()};runCatching {old?.destroy()}}
     fun cancelListening(){cancelRecognition();stopSpeaking()}
     override fun close(){outputGeneration++;cancelListening();tts?.shutdown()}

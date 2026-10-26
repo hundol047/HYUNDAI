@@ -23,6 +23,10 @@ class NavigationSpeechVoiceTest {
             assertEquals(tag,high,NavigationSpeechVoice.select(setOf(low,cloud,missing,high),Locale.forLanguageTag(tag)))
         }
     }
+    @Test fun equallyQualifiedVoicesPreserveTheEnginePreferredVoice() {
+        val preferred=voice("z-preferred","ko-KR",Voice.QUALITY_HIGH)
+        assertEquals(preferred,NavigationSpeechVoice.select(setOf(voice("a-other","ko-KR",Voice.QUALITY_HIGH),preferred),Locale.KOREA,preferred))
+    }
     @Test fun requestedAccentAndScriptArePreserved() {
         val canadian=voice("ca","fr-CA",Voice.QUALITY_NORMAL)
         assertEquals(canadian,NavigationSpeechVoice.select(setOf(canadian,voice("fr","fr-FR",Voice.QUALITY_HIGH)),Locale.CANADA_FRENCH))
@@ -36,6 +40,16 @@ class NavigationSpeechVoiceTest {
         assertEquals(1100,NavigationSpeechVoice.roundedMeters(1081.0))
         assertEquals(280,NavigationSpeechVoice.roundedMeters(278.0))
         assertEquals(37,NavigationSpeechVoice.roundedMeters(37.0))
+    }
+    @Test fun longDistancesUseKilometersInTheRequestedLanguage() {
+        assertEquals("일 점 일 킬로미터",NavigationSpeechVoice.distance(1079.0,"ko-KR"))
+        assertEquals("이 킬로미터",NavigationSpeechVoice.distance(2000.0,"ko-KR"))
+        assertEquals("삼백 미터",NavigationSpeechVoice.distance(300.0,"ko-KR"))
+        for(tag in listOf("en-US","fr-FR","de-DE","ja-JP","es-ES")) {
+            val text=NavigationSpeechVoice.distance(1200.0,tag)
+            assertFalse(tag,text.contains("1200"))
+            assertTrue(tag,text.isNotBlank())
+        }
     }
     @Test fun koreanDistanceIsReadAsWordsInsteadOfDigitsOrSeparators() {
         assertEquals("천백 미터",NavigationSpeechVoice.koreanMeters(1100))

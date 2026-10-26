@@ -22,6 +22,17 @@ class NavigationLanguageTest {
             assertTrue(code,text.contains("Central Road"))
         }
     }
+    @Test fun mergeAndRampSpeechDoesNotReadDisplayGrammar() {
+        assertEquals("약 삼백 미터 앞에서 왼쪽 도로로 합류하세요.",NavigationLanguages.spoken("ko","삼백 미터","좌회전 방향으로 합류"))
+        assertEquals("약 삼백 미터 앞에서 오른쪽 진입로로 진입하세요.",NavigationLanguages.spoken("ko","삼백 미터","우회전 진입로 이용"))
+    }
+    @Test fun speechCleansNestedRoadSeparatorsAndControlCharactersAcrossPacks() {
+        NavigationLanguages.codes.forEach { code ->
+            val text=NavigationLanguages.spoken(code,"300 m",NavigationLanguages.instruction(NavManeuver(NavPoint(0.0,0.0),"turn","right","Road A · City B\n"),code))
+            assertFalse(code,text.contains(" · "))
+            assertFalse(code,text.contains('\n'))
+        }
+    }
     private val p=NavPoint(48.85,2.35)
     @Test fun all31PacksHandleEveryDirectionAndExitWithoutUnresolvedTokens(){
         assertEquals(31,NavigationLanguages.codes.size)

@@ -200,6 +200,11 @@ class LiveNavigation(
 
     init {
         service.language = language
+        scope.launch {
+            speech.outputFailure.collect {message ->
+                if(message!=null)mutable.value=mutable.value.copy(voiceNotice=message)
+            }
+        }
     }
 
     private var lastQuery = ""
@@ -683,22 +688,15 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         if (key != spoken && !mutable.value.voiceListening && repeatGuard.allow(g, clock())) {
             val code = NavigationLanguages.resolve(language)
             val spokenLocale = NavigationSpeechVoice.locale(language)
-            val distance = if(code=="ko") NavigationSpeechVoice.koreanMeters(NavigationSpeechVoice.roundedMeters(g.turnMeters)) else
-                android.icu.text.MeasureFormat.getInstance(
-                        spokenLocale,
-                        android.icu.text.MeasureFormat.FormatWidth.WIDE,
-                    )
-                    .format(
-                        android.icu.util.Measure(
-                            NavigationSpeechVoice.roundedMeters(g.turnMeters),
-                            android.icu.util.MeasureUnit.METER,
-                        )
-                    )
+            val distance = NavigationSpeechVoice.distance(g.turnMeters,language)
+            val maneuver=g.route?.steps?.getOrNull(g.maneuverIndex)?.maneuver
             if (
                 speech.speakNavigation(
                     if (g.arrived) g.nextInstruction
+                    else if(maneuver!=null) NavigationSpeech.guidance(maneuver,code,distance,g.turnMeters<=20)
                     else NavigationLanguages.spoken(code, distance, g.nextInstruction),
                     spokenLocale.toLanguageTag(),
+                    requestKey=key,
                 )
             ) {
                 spoken = key

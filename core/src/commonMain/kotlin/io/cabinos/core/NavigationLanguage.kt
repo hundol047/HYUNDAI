@@ -25,9 +25,13 @@ object NavigationLanguages {
     }
     fun spoken(tag:String,distance:String,instruction:String):String {
         if(resolve(tag)=="ko") {
-            val parts=instruction.split(" · ",limit=2)
+            val parts=instruction.replace(Regex("[\\r\\n\\t]+")," ").trim().split(" · ",limit=2)
             val action=parts.first()
             val sentence=when(action) {
+                "좌회전 방향으로 합류"->"왼쪽 도로로 합류하세요."
+                "우회전 방향으로 합류"->"오른쪽 도로로 합류하세요."
+                "우회전 진입로 이용"->"오른쪽 진입로로 진입하세요."
+                "좌회전 진입로 이용"->"왼쪽 진입로로 진입하세요."
                 "좌회전","우회전","유턴","직진"->"${action}하세요."
                 "경로를 따라 출발"->"안내 경로를 따라 출발하세요."
                 "목적지 도착"->"목적지에 도착합니다."
@@ -40,10 +44,10 @@ object NavigationLanguages {
                     else->"${action}하세요."
                 }
             }
-            return "약 $distance 앞에서 $sentence"+parts.getOrNull(1)?.let {" $it 방면입니다."}.orEmpty()
+            return "약 $distance 앞에서 $sentence"+parts.getOrNull(1)?.let {" ${it.replace(" · ",", ")} 방면입니다."}.orEmpty()
         }
         return navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance)
-            .replace("{instruction_one}",instruction.replace(" · ",", "))
+            .replace("{instruction_one}",instruction.replace(" · ",", ").replace(Regex("[\\r\\n\\t]+")," ").trim())
     }
     fun upcomingArrival(tag:String,road:String=""):String = navDestinationLabels.getValue(resolve(tag))+
         if(road.isNotBlank())" · ${road.take(100)}" else ""

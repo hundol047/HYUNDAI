@@ -7,13 +7,14 @@ import kotlin.math.roundToInt
 
 /** Never select a network voice implicitly: road names stay on this device. */
 internal object NavigationSpeechVoice {
-    fun select(voices:Set<Voice>,locale:Locale):Voice? = voices.asSequence().filter {
+    fun select(voices:Set<Voice>,locale:Locale,preferred:Voice?=null):Voice? = voices.asSequence().filter {
         it.locale.language==locale.language && !it.isNetworkConnectionRequired &&
             TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED !in it.features.orEmpty() &&
             (locale.script.isBlank()||it.locale.script.isBlank()||locale.script==it.locale.script)
     }.sortedWith(compareByDescending<Voice> {it.locale.toLanguageTag()==locale.toLanguageTag()}
         .thenByDescending {locale.country.isNotBlank()&&it.locale.country==locale.country}
-        .thenByDescending {it.quality}.thenBy {it.latency}.thenBy {it.name}).firstOrNull()
+        .thenByDescending {it.quality}.thenByDescending {it==preferred}
+        .thenBy {it.latency}.thenBy {it.name}).firstOrNull()
 
     fun locale(tag:String):Locale {
         val requested=Locale.forLanguageTag(tag)
@@ -26,6 +27,22 @@ internal object NavigationSpeechVoice {
         require(meters.isFinite()&&meters>=0)
         val step=when {meters>=1000->100;meters>=100->10;else->1}
         return (meters/step).roundToInt()*step
+    }
+
+    fun distance(meters:Double,tag:String):String {
+        val rounded=roundedMeters(meters)
+        val locale=locale(tag)
+        if(locale.language=="ko") {
+            if(rounded<1000)return koreanMeters(rounded)
+            val whole=rounded/1000
+            val decimal=(rounded%1000)/100
+            val number=koreanMeters(whole).removeSuffix(" 미터")
+            return number+(if(decimal>0)" 점 "+koreanMeters(decimal).removeSuffix(" 미터") else "")+" 킬로미터"
+        }
+        val unit=if(rounded>=1000)android.icu.util.MeasureUnit.KILOMETER else android.icu.util.MeasureUnit.METER
+        val value:Number=if(rounded>=1000)rounded/1000.0 else rounded
+        return android.icu.text.MeasureFormat.getInstance(locale,android.icu.text.MeasureFormat.FormatWidth.WIDE)
+            .format(android.icu.util.Measure(value,unit))
     }
 
     fun koreanMeters(meters:Int):String {
