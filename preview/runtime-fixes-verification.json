@@ -1,6 +1,6 @@
 {
-  "sourceCommit": "1fdf778ceec00e77efbf7015bb237410e74ebf3c",
-  "apkSha256": "0a8e41dde13b560e2228e97f6cc896b78df386051dfce9d8bae5e3374831dd38",
+  "sourceCommit": "df0ae0e64c27d320638d7c111b6f8799e3344821",
+  "apkSha256": "6f4d2f938c9de98a173634dcc8f677f7dd1939404c8a1c17aa2bfdb8e4dab5bf",
   "tests": {
     "core": {
       "tests": 171,
@@ -9,7 +9,7 @@
       "skipped": 0
     },
     "android": {
-      "tests": 220,
+      "tests": 225,
       "failures": 0,
       "errors": 0,
       "skipped": 0
@@ -353,6 +353,8 @@
     "repeatedCategoryStockRemoved": true,
     "publicSourceHttpSamples": 4,
     "allPlacePhotoCoverage": false,
-    "physicalDeviceValidated": false
+    "physicalDeviceValidated": false,
+    "alternateSourceRecovery": true,
+    "failedLookupRetryAfterSeconds": 60
   }
 }
