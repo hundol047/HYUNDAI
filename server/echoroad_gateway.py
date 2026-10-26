@@ -9,6 +9,7 @@ import threading
 import time
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from accident_zones import load_zones, metadata
 
 
 def number(value, lo, hi):
@@ -79,29 +80,27 @@ class Store:
             return sorted(result, key=lambda r:distance(r, point))[:50]
 
 
-def load_zones(path, now):
-    if not path: return []
-    with open(path, 'rb') as f: raw = f.read(1000001)
-    if len(raw)>1000000: raise ValueError('Dataset too large')
-    rows=json.loads(raw)
-    if not isinstance(rows,list) or len(rows)>5000:raise ValueError('Invalid zones')
-    for r in rows:
-        if set(r)!={'id','lat','lon','radiusMeters','year','source','validUntilMs'}:raise ValueError('Invalid zone schema')
-        number(r['lat'],-85,85);number(r['lon'],-180,180);number(r['radiusMeters'],10,1000)
-        number(r['year'],2020,2100);number(r['validUntilMs'],now,now+366*86400000)
-        if not isinstance(r['source'],str) or not r['source'].startswith('https://') or len(r['source'])>300:raise ValueError('Source required')
-        if not isinstance(r['id'],str) or not 1<=len(r['id'])<=80:raise ValueError('Invalid zone id')
-    return rows
-
-
 class EchoServer(ThreadingHTTPServer):
     daemon_threads=True
     def __init__(self, address, tokens, zones=None, store=None):
         if not tokens or len(tokens)>5000 or any(not isinstance(k,str) or len(k)<24 or not k.isascii() or not isinstance(v,str) or not 1<=len(v)<=80 for k,v in tokens.items()):
             raise ValueError('Configure per-installation tokens and opaque identities')
         self.tokens=tokens;self.store=store or Store();self.zones=zones or []
+        self.dataset_sha=metadata(self.zones,self.store.clock())["sha256"]
+        self.public_window=0.0;self.public_reads=0
         self.get_last={};self.rate_lock=threading.Lock();self.slots=threading.BoundedSemaphore(16)
         super().__init__(address, Handler)
+
+    def nearby_zones(self, point):
+        now=self.store.clock()
+        candidates=sorted((r for r in self.zones if r['validUntilMs']>now and distance(r,point)<=2000),key=lambda r:distance(r,point))
+        # Leave room for community reports below the Android client's 200KB response cap.
+        result=[];size=0
+        for r in candidates[:50]:
+            encoded=len(json.dumps(r,separators=(',',':')).encode())
+            if size+encoded>150000:break
+            result.append(r);size+=encoded
+        return result,len(candidates)>len(result)
 
     def service_actions(self):
         with self.store.lock:self.store.prune()
@@ -138,25 +137,42 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(201 if created else 200,{'accepted':True,'published':False,'notice':'Requires independent corroboration'})
         except OverflowError:self.reply(429,{'error':'Report rate or capacity limit'})
         except (ValueError,TypeError,KeyError):self.reply(400,{'error':'Invalid observation'})
+    def query_point(self,u):
+        q=urllib.parse.parse_qs(u.query);p={'lat':float(q['lat'][0]),'lon':float(q['lon'][0])}
+        number(p['lat'],-85,85);number(p['lon'],-180,180)
+        return p
     def do_GET(self):
         if self.path=='/healthz':return self.reply(200,{'status':'ok'})
+        u=urllib.parse.urlsplit(self.path)
+        if u.path in ('/v1/dataset','/v1/accident-zones'):
+            with self.server.rate_lock:
+                now=time.monotonic()
+                if now-self.server.public_window>=1:self.server.public_window=now;self.server.public_reads=0
+                if self.server.public_reads>=20:return self.reply(429,{'error':'Public read limit'})
+                self.server.public_reads+=1
+        if u.path=='/v1/dataset':return self.reply(200,metadata(self.server.zones,self.server.store.clock(),self.server.dataset_sha))
+        # Public official statistics only. Never return community observations on this endpoint.
+        if u.path=='/v1/accident-zones':
+            try:p=self.query_point(u)
+            except (ValueError,KeyError,TypeError):return self.reply(400,{'error':'Invalid coordinates'})
+            zones,truncated=self.server.nearby_zones(p)
+            return self.reply(200,{'historicalOnly':True,'accidentZones':zones,'truncated':truncated,'radiusMeters':2000})
         who=self.identity()
         if who is None:return self.reply(401,{'error':'Unauthorized'})
-        u=urllib.parse.urlsplit(self.path)
         if u.path=='/v1/status':
             return self.reply(200,{'status':'ok','accidentDatasetConnected':any(r['validUntilMs']>self.server.store.clock() for r in self.server.zones)})
         if u.path!='/v1/risks':return self.reply(404,{'error':'Not found'})
         try:
-            q=urllib.parse.parse_qs(u.query);p={'lat':float(q['lat'][0]),'lon':float(q['lon'][0])}
-            number(p['lat'],-85,85);number(p['lon'],-180,180)
+            p=self.query_point(u)
         except (ValueError,KeyError,TypeError):return self.reply(400,{'error':'Invalid coordinates'})
         now=self.server.store.clock()
         with self.server.rate_lock:
             if now-self.server.get_last.get(who,-10**15)<10000:return self.reply(429,{'error':'Read rate limit'})
             self.server.get_last[who]=now
+        zones,truncated=self.server.nearby_zones(p)
         self.reply(200,{'generatedAtMs':now,'coverage':'reports only; absence is not evidence of safety',
             'accidentDatasetConnected':any(r['validUntilMs']>now for r in self.server.zones),'risks':self.server.store.nearby(p),
-            'accidentZones':[r for r in self.server.zones if r['validUntilMs']>now and distance(r,p)<=2000][:50]})
+            'accidentZones':zones,'accidentZonesTruncated':truncated})
 
 
 def bind_address(env):
@@ -168,5 +184,5 @@ def bind_address(env):
 
 if __name__=='__main__':
     tokens=json.loads(os.environ['CABIN_ECHO_TOKENS_JSON'])
-    zones=load_zones(os.environ.get('CABIN_ACCIDENT_ZONES_JSON',''),int(time.time()*1000))
+    zones=load_zones(os.environ.get('CABIN_ACCIDENT_ZONES_JSON',os.path.join(os.path.dirname(__file__),'data','accident-zones.json')),int(time.time()*1000))
     EchoServer(bind_address(os.environ),tokens,zones).serve_forever()
