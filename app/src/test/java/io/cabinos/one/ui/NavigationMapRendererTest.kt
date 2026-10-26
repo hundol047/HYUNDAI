@@ -16,6 +16,21 @@ import org.robolectric.annotation.Config
 class NavigationMapRendererTest {
     @Test
     @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+    fun lightCustomRouteRemainsVisibleOnLightMapLand() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        try {
+            renderer.update(Guidance(route=route()),android.graphics.Color.WHITE)
+            val line=map.overlays.filterIsInstance<Polyline>().single()
+            val bitmap=android.graphics.Bitmap.createBitmap(1000,640,android.graphics.Bitmap.Config.ARGB_8888)
+            bitmap.eraseColor(android.graphics.Color.WHITE)
+            line.draw(android.graphics.Canvas(bitmap),map.projection)
+            val pixels=IntArray(1000*640);bitmap.getPixels(pixels,0,1000,0,0,1000,640)
+            assertTrue("밝은 맞춤 경로도 밝은 지도에서 구별되어야 합니다",pixels.count {android.graphics.Color.red(it)<100&&android.graphics.Color.green(it)<100&&android.graphics.Color.blue(it)<100}>100)
+            bitmap.recycle()
+        } finally {map.onDetach()}
+    }
+    @Test
+    @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
     fun dateLinePinsAndRoadStayNearTheViewportInsteadOfCrossingTheWholeWorld() {
         for(direction in listOf(1.0,-1.0)) {
             val map=map();val renderer=NavigationMapRenderer(map)

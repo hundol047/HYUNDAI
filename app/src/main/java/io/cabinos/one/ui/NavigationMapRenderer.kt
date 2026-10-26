@@ -1,11 +1,13 @@
 package io.cabinos.one.ui
 
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import io.cabinos.core.*
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.*
+import org.osmdroid.views.overlay.advancedpolyline.MonochromaticPaintList
 
 /** Keep the road geometry alive across GPS updates; only the position marker moves. */
 internal class NavigationMapRenderer(private val map: MapView) {
@@ -88,6 +90,8 @@ internal class NavigationMapRenderer(private val map: MapView) {
     private var route: DrivingRoute? = null
     private var selected: NavPlace? = null
     private var line: Polyline? = null
+    private var routePaint: Paint? = null
+    private var routeBorder: Paint? = null
     private var destination: Marker? = null
     private var position: Marker? = null
     private var point: NavPoint? = null
@@ -95,6 +99,7 @@ internal class NavigationMapRenderer(private val map: MapView) {
     var followPosition = true
     private var following = false
     private var accent: Int? = null
+    private fun routeEdge(color:Int)=if(AppearanceCatalog.contrast(color,Color.WHITE)>AppearanceCatalog.contrast(color,Color.BLACK))Color.WHITE else Color.rgb(15,32,45)
 
     init {
         map.overlays.add(
@@ -117,14 +122,23 @@ internal class NavigationMapRenderer(private val map: MapView) {
             line?.let { map.overlays.remove(it) }
             destination?.let { map.overlays.remove(it) }
             line = null
+            routePaint = null
+            routeBorder = null
             destination = null
             route = g.route
             route?.let { r ->
                 line =
                     Polyline(map).apply {
                         setPoints(r.points.map { GeoPoint(it.latitude, it.longitude) })
-                        outlinePaint.color = color
-                        outlinePaint.strokeWidth = 9f
+                        val density=map.resources.displayMetrics.density
+                        val stroke=outlinePaint.apply {
+                            this.color=color;strokeWidth=6f*density;strokeCap=Paint.Cap.ROUND
+                        }
+                        val border=Paint(stroke).apply {this.color=routeEdge(color);strokeWidth=10f*density}
+                        routePaint=stroke;routeBorder=border
+                        // Two paints share one geometry; light/custom accents remain distinct from land.
+                        outlinePaintLists.add(MonochromaticPaintList(border))
+                        outlinePaintLists.add(MonochromaticPaintList(stroke))
                     }
                 // Roads stay behind destination and GPS markers.
                 map.overlays.add(0, line)
@@ -162,7 +176,10 @@ internal class NavigationMapRenderer(private val map: MapView) {
         }
         if (g.route != null) selected = null
         if (accent != color) {
-            line?.outlinePaint?.color = color
+            routePaint?.color = color
+            routeBorder?.color = routeEdge(color)
+            // osmdroid's outlinePaint getter switches back to a single paint.
+            line?.outlinePaintLists
             accent = color
             changed = true
         }

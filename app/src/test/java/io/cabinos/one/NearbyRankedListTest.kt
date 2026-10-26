@@ -21,6 +21,19 @@ import org.robolectric.annotation.GraphicsMode
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 class NearbyRankedListTest {
     @get:Rule val compose=createAndroidComposeRule<MainActivity>()
+    @Test fun allVehicleChargeTargetsAreVisibleInNarrowLargeFontPaneAndStaySafetyGated() {
+        val vm=androidx.lifecycle.ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val state=androidx.compose.runtime.mutableStateOf(AppState(parkedAllowed=true,sample=VehicleSample(source=DataSource.VEHICLE,timestampMs=0)))
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            val density=androidx.compose.ui.platform.LocalDensity.current
+            androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(density.density,1.5f)) {
+                Box(Modifier.width(320.dp)){VehiclePlanControls(state.value,vm)}
+            }
+        }}}
+        listOf("목표 해제","80%","90%","100%").forEach {compose.onNodeWithText(it).assertIsDisplayed().assertHeightIsAtLeast(48.dp)}
+        compose.runOnIdle {state.value=state.value.copy(parkedAllowed=false)}
+        compose.onNodeWithText("100%").assertIsNotEnabled()
+    }
     @Test fun rankedPlacesScrollToLastItemAndSelectWithoutInventingPhotographs() {
         val base=DemoActivityRepository().activities().first()
         val options=(1..15).map {ActivityOption(base.copy(id="$it",name="장소 $it",simulated=false),1200,true)}
