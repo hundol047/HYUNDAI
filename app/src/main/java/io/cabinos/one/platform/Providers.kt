@@ -279,7 +279,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
                 override fun onEvent(eventType:Int,params:Bundle?){}
             })
             timeout=Runnable {finish(null,"음성 입력 시간이 지났습니다. 다시 눌러 말씀해 주세요.")}.also {handler.postDelayed(it,30_000)}
-            tts?.stop()
+            stopSpeaking()
             current.startListening(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
                 .putExtra(RecognizerIntent.EXTRA_LANGUAGE,tag)
                 .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)

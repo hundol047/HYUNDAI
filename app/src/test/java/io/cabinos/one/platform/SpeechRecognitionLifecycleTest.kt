@@ -30,6 +30,20 @@ class SpeechRecognitionLifecycleTest {
         putStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION,arrayListOf(text))
         putFloatArray(SpeechRecognizer.CONFIDENCE_SCORES,floatArrayOf(confidence))
     }
+    @Test fun listeningCancelsPendingSynthesisAndItsFalseTimeout() {
+        val speech=provider()
+        try {
+            org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREA)
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            assertTrue(speech.speakNavigation("우회전입니다.","ko-KR"))
+            assertTrue(speech.navigationSpeaking)
+            speech.listenNavigation("ko-KR",{}, {})
+            assertFalse("마이크 입력 중에 중단한 안내가 재생 중으로 남으면 안 됩니다",speech.navigationSpeaking)
+            shadowOf(Looper.getMainLooper()).idleFor(java.time.Duration.ofSeconds(9))
+            assertNull(speech.outputFailure.value)
+        } finally {speech.close()}
+    }
     @Test fun cancelledAndDuplicateResultsNeverExecuteAnotherCommand() {
         val speech=provider();val results=mutableListOf<String>();val errors=mutableListOf<String>()
         try {
