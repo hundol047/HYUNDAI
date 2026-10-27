@@ -212,6 +212,7 @@ class LiveNavigation(
     private var nearbySearch = false
     private var seenPlaceIds: List<String> = emptyList()
     private var lastFixTimestamp = Long.MIN_VALUE
+    private var rejectedFixTimestamp:Long?=null
     private var resumeLocation = false
     private var locationGeneration = 0
     private var requestedAt: Long? = null
@@ -256,13 +257,16 @@ class LiveNavigation(
                         } == true
                 )
                     return
-                if (f.timestampMs <= lastFixTimestamp) return
-                if (clock() - f.timestampMs in 0..10_000) lastFixTimestamp = f.timestampMs
+                if (f.timestampMs < lastFixTimestamp || (f.timestampMs == lastFixTimestamp && rejectedFixTimestamp != f.timestampMs)) return
                 receivedAt = clock()
                 if (!tracker.usable(f)) {
+                    if(clock()-f.timestampMs in 0..10_000) {
+                        lastFixTimestamp=f.timestampMs;rejectedFixTimestamp=f.timestampMs
+                    }
                     invalidateGps(GpsConnection.POOR, "위치가 부정확하거나 오래됐습니다. 정확한 GPS를 기다려 주세요.")
                     return
                 }
+                lastFixTimestamp = f.timestampMs;rejectedFixTimestamp=null
                 echoRealFix=location.provider==LocationManager.GPS_PROVIDER && !location.isFromMockProvider
                 fix = f
                 fixProvider = location.provider
@@ -304,6 +308,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
             override fun onProviderDisabled(provider: String) {
                 if (epoch == locationGeneration && foreground && listening) {
+                    if(provider!=fixProvider && fix?.let {tracker.usable(it)}==true)return
                     spoken = ""
                     repeatGuard.clear()
                     invalidateGps(
@@ -726,7 +731,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         }
     }
 
-    private fun reroute() {
+    private fun reroute():Boolean {
         if (
             !foreground ||
                 !engine.state.value.networkAvailable ||
@@ -734,10 +739,10 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 rerouteFailures >= 3 ||
                 !tracker.takeReroute()
         )
-            return
+            return false
         val g = tracker.state
-        val destination = g.route?.destination ?: return
-        val origin = g.fix?.point ?: return
+        val destination = g.route?.destination ?: return false
+        val origin = g.fix?.point ?: return false
         request { current ->
             try {
                 val r = service.route(origin, destination)
@@ -758,6 +763,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 throw e
             }
         }
+        return true
     }
 
     fun tick() {
@@ -818,8 +824,21 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun retry() {
+        if(!foreground)return
+        val g=tracker.state
+        val wait=tracker.rerouteDelaySeconds()
+        val reason=when {
+            !g.active -> "안내를 시작한 뒤 재탐색할 수 있습니다."
+            !engine.state.value.networkAvailable -> "재탐색에는 인터넷 연결이 필요합니다. 연결 후 다시 시도해 주세요."
+            mutable.value.busy -> "이미 경로를 확인 중입니다. 결과를 기다려 주세요."
+            !g.tracking || g.fix?.let {tracker.usable(it)}!=true -> "정확한 GPS를 확인한 뒤 재탐색할 수 있습니다."
+            !g.offRoute -> "현재 안내 경로 위입니다. 재탐색이 필요하지 않습니다."
+            wait>0 -> "서버 요청 간격을 지키기 위해 ${wait}초 후 재탐색할 수 있습니다."
+            else -> null
+        }
+        if(reason!=null) {mutable.value=mutable.value.copy(notice=reason);return}
         rerouteFailures = 0
-        reroute()
+        if(!reroute())mutable.value=mutable.value.copy(notice="새 GPS에서 경로 이탈을 다시 확인한 뒤 재탐색합니다.")
     }
 
     fun stop() {

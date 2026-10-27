@@ -446,6 +446,51 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun accurateCorrectionAtTheSameTimeAsARejectedFixCanRecover() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps();f.advance(1000)
+            f.gps(accuracy=500f)
+            assertEquals(GpsConnection.POOR,f.nav.state.value.gpsConnection)
+            f.gps(accuracy=5f)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+            f.gps(accuracy=500f,at=f.now-500)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun rerouteRetryExplainsOfflineAndMissingGpsInsteadOfDoingNothing() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            f.engine.setConnectivity(network=false)
+            f.nav.retry()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("인터넷"))
+            f.engine.setConnectivity(network=true)
+            f.advance(11_000);f.nav.tick();f.nav.retry()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("GPS"))
+        }
+    }
+    @Test fun disablingUnusedNetworkProviderDoesNotInvalidateFreshGps() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            val fix=f.nav.state.value.mapFix
+            listener.onProviderDisabled(LocationManager.NETWORK_PROVIDER)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(fix,f.nav.state.value.mapFix)
+            listener.onProviderDisabled(LocationManager.GPS_PROVIDER)
+            assertEquals(GpsConnection.DISABLED,f.nav.state.value.gpsConnection)
+            assertNull(f.nav.state.value.mapFix)
+        }
+    }
+    @Test fun disablingAnotherProviderDoesNotPreserveAnExpiredFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps();f.advance(10_001)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderDisabled(LocationManager.NETWORK_PROVIDER)
+            assertNull(f.nav.state.value.mapFix)
+        }
+    }
     @Test fun freshGpsIsPublishedForTheMapBeforeAnyRouteAndRemovedOnSignalLoss(){
         Fixture(NavigationService()).use {f->
             f.nav.locate();f.gps();assertEquals(origin,f.nav.state.value.mapFix!!.point)

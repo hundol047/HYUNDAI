@@ -226,9 +226,13 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         return (covariance/variance).takeIf {it.isFinite()&&it in 0.0..75.0}
     }
     fun tick(){if(state.active&&state.fix?.let {usable(it)}!=true){arrivalCount=0;state=state.copy(tracking=false,rerouteRequired=false,status="GPS 신호 대기 · 회전 안내 일시중지")}}
+    fun rerouteDelaySeconds():Long {
+        val previous=lastRerouteAt ?: return 0
+        return ((30_000-(clock()-previous)).coerceIn(0,30_000)+999)/1000
+    }
     fun takeReroute():Boolean {
         tick();if(!state.rerouteRequired||!state.tracking)return false
-        val now=clock();if(lastRerouteAt?.let {now-it<30_000}==true)return false
+        val now=clock();if(rerouteDelaySeconds()>0)return false
         lastRerouteAt=now;state=state.copy(rerouteRequired=false);return true
     }
     fun suspendTracking(){arrivalCount=0;progressHistory.clear();if(state.active)state=state.copy(tracking=false,fix=null,rerouteRequired=false,status="화면 밖에서는 GPS 안내 중지 · 복귀 후 위치 재확인")}

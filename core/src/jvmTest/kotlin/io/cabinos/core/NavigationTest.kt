@@ -240,7 +240,8 @@ class NavigationTest {
         now+=10_000;t.update(fix(p));assertFalse(t.state.rerouteRequired)
         now+=3000;t.update(fix(p));assertFalse(t.state.rerouteRequired)
         now+=3000;t.update(fix(p));assertTrue(t.state.rerouteRequired);assertTrue(t.takeReroute());assertFalse(t.takeReroute())
-        now+=1000;t.update(fix(p));assertFalse(t.takeReroute())
+        assertEquals(30L,t.rerouteDelaySeconds())
+        now+=1000;t.update(fix(p));assertFalse(t.takeReroute());assertEquals(29L,t.rerouteDelaySeconds())
         now+=30_000;t.update(fix(p));assertTrue(t.takeReroute())
     }
     @Test fun freshRouteReplacesOldProgressUsingCurrentFix() {
