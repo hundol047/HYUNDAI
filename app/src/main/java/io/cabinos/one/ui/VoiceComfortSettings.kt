@@ -15,7 +15,9 @@ import io.cabinos.one.platform.AndroidSpeechProvider
 
 @Composable fun VoiceComfortSettings(speech:AndroidSpeechProvider,language:String,enabled:Boolean) {
     val gentle by speech.gentleOutput.collectAsStateWithLifecycle()
+    val ready by speech.outputReady.collectAsStateWithLifecycle()
     var choosing by remember {mutableStateOf(false)}
+    LaunchedEffect(enabled) {if(!enabled)choosing=false}
     Row(verticalAlignment=Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             Text("차분한 말하기 속도",color=White,fontSize=14.sp)
@@ -26,16 +28,18 @@ import io.cabinos.one.platform.AndroidSpeechProvider
     ActionButton("목소리 골라 듣기",{choosing=true},Modifier.heightIn(min=56.dp),enabled=enabled)
     if(!enabled)Text("안내를 종료하고 정차한 뒤 목소리를 바꿔 주세요.",color=Muted,fontSize=12.sp)
     if(choosing&&enabled) {
-        val voices=remember(language) {speech.outputVoices(language)}
-        var selected by remember(language) {mutableStateOf(speech.selectedVoiceName(language)?.takeIf {name->voices.any {it.name==name}})}
+        val voices=remember(language,ready) {if(ready)speech.outputVoices(language) else emptyList()}
+        var selected by remember(language,ready) {mutableStateOf(speech.selectedVoiceName(language)?.takeIf {name->voices.any {it.name==name}})}
         fun choose(name:String?) {
-            if(speech.chooseOutputVoice(language,name)) {selected=name;speech.previewOutput(language)}
+            if(ready&&speech.chooseOutputVoice(language,name)) {selected=name;speech.previewOutput(language)}
         }
-        AlertDialog(onDismissRequest={choosing=false},title={Text("편안한 목소리를 골라 주세요")},
+        fun dismiss() {speech.stopSpeaking();choosing=false}
+        AlertDialog(onDismissRequest={dismiss()},title={Text("편안한 목소리를 골라 주세요")},
             text={Column(Modifier.heightIn(max=360.dp).verticalScroll(rememberScrollState())) {
+                if(!ready)Text("음성 엔진 준비 중입니다. 준비가 끝나면 선택할 수 있습니다.")
                 Text("선택 시 실제 안내를 들어보는 기능입니다. 이 언어에 설치된 오프라인 목소리 목록입니다.")
-                Row(Modifier.fillMaxWidth().heightIn(min=56.dp).clickable {choose(null)},verticalAlignment=Alignment.CenterVertically) {
-                    RadioButton(selected==null,{choose(null)});Text("자동 선택")
+                Row(Modifier.fillMaxWidth().heightIn(min=56.dp).clickable(enabled=ready) {choose(null)},verticalAlignment=Alignment.CenterVertically) {
+                    RadioButton(selected==null,{choose(null)},enabled=ready);Text("자동 선택")
                 }
                 voices.forEachIndexed {index,voice ->
                     Row(Modifier.fillMaxWidth().heightIn(min=56.dp).clickable {choose(voice.name)},verticalAlignment=Alignment.CenterVertically) {
@@ -43,7 +47,7 @@ import io.cabinos.one.platform.AndroidSpeechProvider
                         Text("목소리 ${index+1} · ${voice.locale.getDisplayName(voice.locale)}")
                     }
                 }
-                if(voices.size<=1)Text("더 많은 목소리는 기기 음성 설정에서 음성팩을 설치하거나 엔진을 바꿔 확인해 주세요.")
-            }},confirmButton={TextButton(onClick={choosing=false}){Text("완료")}})
+                if(ready&&voices.size<=1)Text("더 많은 목소리는 기기 음성 설정에서 음성팩을 설치하거나 엔진을 바꿔 확인해 주세요.")
+            }},confirmButton={TextButton(onClick={dismiss()}){Text("완료")}})
     }
 }
