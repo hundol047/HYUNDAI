@@ -19,7 +19,7 @@ import io.cabinos.one.platform.AndroidSpeechProvider
     Row(verticalAlignment=Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
             Text("차분한 말하기 속도",color=White,fontSize=14.sp)
-            Text("조금 여유 있게 읽어요. 목소리 높낮이는 그대로 유지해요.",color=Muted,fontSize=12.sp)
+            Text("목소리 높낮이를 유지하는 차분한 읽기 속도입니다.",color=Muted,fontSize=12.sp)
         }
         Switch(gentle,{speech.setGentleOutput(it)},enabled=enabled)
     }
@@ -33,7 +33,7 @@ import io.cabinos.one.platform.AndroidSpeechProvider
         }
         AlertDialog(onDismissRequest={choosing=false},title={Text("편안한 목소리를 골라 주세요")},
             text={Column(Modifier.heightIn(max=360.dp).verticalScroll(rememberScrollState())) {
-                Text("선택하면 실제 안내를 들려드려요. 이 언어에 설치된 오프라인 목소리만 표시해요.")
+                Text("선택 시 실제 안내를 들어보는 기능입니다. 이 언어에 설치된 오프라인 목소리 목록입니다.")
                 Row(Modifier.fillMaxWidth().heightIn(min=56.dp).clickable {choose(null)},verticalAlignment=Alignment.CenterVertically) {
                     RadioButton(selected==null,{choose(null)});Text("자동 선택")
                 }
