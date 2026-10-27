@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "326354100b6627d8ae2287b7b4af81b16de0f643",
+  "apkSha256": "11f52fa47b9398dd810336b8392fa356215a37c74c6380ea48bf290ad41a82e1",
+  "tests": {
+    "core": {
+      "tests": 187,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 293,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "officialSdkBuildAndLintPassed": true,
+  "samePreviewCertificate": true,
+  "newDeviceRecording": false,
+  "targetedTestsPassed": 61,
+  "serverTestsPassed": 25,
+  "toolTestsPassed": 60,
+  "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40451750103",
+  "sourceCiResult": "pending",
+  "physicalSamsungValidated": false,
+  "productionApkUpdated": false,
+  "sourceDebugDeviceSmokePassed": true,
+  "newPreviewDeviceExecutionVerified": false
+}
