@@ -78,6 +78,23 @@ class NavigationMapRendererTest {
             assertTrue(map.overlays.none {it is Polyline})
         }finally{map.onDetach()}
     }
+    @Test fun manualViewportSurvivesGpsLossAndRecoveryWithOrWithoutGuidance() {
+        for(active in listOf(false,true)) {
+            val map=map();val renderer=NavigationMapRenderer(map);val r=route()
+            val fix=NavFix(r.points.first(),5.0,100)
+            val g=Guidance(route=if(active)r else null,active=active,tracking=true,fix=fix)
+            try {
+                renderer.update(g,-1)
+                renderer.followPosition=false
+                map.controller.setZoom(9.0);map.controller.setCenter(GeoPoint(-33.8688,151.2093))
+                val center=GeoPoint(map.mapCenter)
+                renderer.update(g.copy(fix=null,tracking=false),-1)
+                renderer.update(g.copy(fix=fix.copy(timestampMs=200)),-1)
+                assertEquals("GPS 복구가 수동 확대 수준을 바꾸면 안 됩니다",9.0,map.zoomLevelDouble,0.0)
+                assertEquals("GPS 복구가 사용자가 보고 있는 위치를 옮기면 안 됩니다",0.0,center.distanceToAsDouble(map.mapCenter),1.0)
+            }finally{map.onDetach()}
+        }
+    }
     @Test fun manualPanSurvivesActiveGpsUpdates() {
         val map=map();val renderer=NavigationMapRenderer(map);val r=route()
         try {

@@ -211,11 +211,11 @@ internal class NavigationMapRenderer(private val map: MapView) {
                 changed = true
             }
             val startingFollow = g.active && g.tracking && !following
-            if (startingFollow || (firstPosition && g.route == null && selectedPlace == null))
+            if (followPosition && (startingFollow || (firstPosition && g.route == null && selectedPlace == null)))
                 map.controller.setZoom(map.zoomLevelDouble.coerceAtLeast(15.0))
             if (
                 (followPosition && g.active && g.tracking && (moved || !following)) ||
-                    (firstPosition && g.route == null && selectedPlace == null)
+                    (followPosition && firstPosition && g.route == null && selectedPlace == null)
             )
                 map.controller.setCenter(GeoPoint(fix.point.latitude, fix.point.longitude))
         } else if (position != null) {
