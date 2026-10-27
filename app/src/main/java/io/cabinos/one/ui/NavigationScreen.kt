@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,10 +35,15 @@ import java.util.Locale
 @OptIn(ExperimentalFoundationApi::class)
 @Composable fun NavigationScreen(s:AppState,ui:NavigationUi,nav:LiveNavigation,onLocate:()->Unit) {
     val compactWindow=LocalCompactWindow.current
+    val dialogBodyHeight=androidx.compose.ui.platform.LocalConfiguration.current.screenHeightDp.dp*.4f
     val context=LocalContext.current
     val keyboard=androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
     DisposableEffect(nav){onDispose {nav.cancelVoice()}}
     val searchIntoView=remember {BringIntoViewRequester()}
+    val resultIntoView=remember {BringIntoViewRequester()}
+    LaunchedEffect(ui.places.firstOrNull()) {
+        if(ui.places.isNotEmpty()) {keyboard?.hide();resultIntoView.bringIntoView()}
+    }
     var searchFocused by remember {mutableStateOf(false)}
     val imeBottom=WindowInsets.ime.getBottom(LocalDensity.current)
     LaunchedEffect(searchFocused,imeBottom) {if(searchFocused)searchIntoView.bringIntoView()}
@@ -64,6 +70,12 @@ import java.util.Locale
     var accessToken by remember {mutableStateOf("")}
     val voiceAvailable by nav.voiceAvailable.collectAsStateWithLifecycle()
     val canPlan=s.parkedAllowed&&!g.active
+    LaunchedEffect(canPlan) {
+        if(!canPlan) {
+            settings=false;trafficSettings=false;languageDialog=false
+            accessToken="";trafficToken="";settingsError="";trafficError=""
+        }
+    }
     val chooseDestination:(NavPlace)->Unit = { place ->
         keyboard?.hide()
         nav.navigateTo(place)
@@ -73,7 +85,7 @@ import java.util.Locale
         if(ui.gpsConnection==GpsConnection.DENIED && ui.voiceNotice.startsWith("인식:"))onLocate()
     }
     BoxWithConstraints(Modifier.fillMaxSize()) {
-    val compact=compactWindow || maxHeight.value/androidx.compose.ui.platform.LocalDensity.current.fontScale<520f
+    val compact=compactWindow || maxHeight.value/androidx.compose.ui.platform.LocalDensity.current.fontScale<700f
     Column(if(compact)Modifier.fillMaxSize().verticalScroll(rememberScrollState()) else Modifier.fillMaxSize(),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.SpaceBetween) {
             Text("EchoRoad · 글로벌 내비게이션",color=White,fontSize=23.sp)
@@ -120,7 +132,7 @@ import java.util.Locale
         EchoRoadPanel(ui,nav,canPlan)
         if(ui.echoRisks.any {it.area!=null})Text("황색 경계: 한국도로교통공단 과거 사고 다발구역 · 현재 사고·결빙 상태 아님",color=Amber,fontSize=11.sp)
         if(ui.traffic!=null)Text("빨강 정체/통제 · 노랑 서행 · 초록 원활 · 회색 불확실 · 조회 후 90초 만료",color=Muted,fontSize=11.sp)
-        ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth() else Modifier.weight(1f), compact,
+        ResponsiveMapPanels(if(compact) Modifier.fillMaxWidth().then(if(compactWindow)Modifier else Modifier.height(360.dp)) else Modifier.weight(1f), compactWindow,
             map = { pane ->
             Box(pane.clip(RoundedCornerShape(18.dp)).background(Panel)) { ExpandableNavigationMap(ui,s.networkAvailable,canPlan,onRepeat={nav.handleVoice("안내 반복")},onStop={nav.stop()},onPick=chooseDestination) }
             }, details = { pane ->
@@ -128,7 +140,7 @@ import java.util.Locale
                 if(ui.busy){LinearProgressIndicator(Modifier.fillMaxWidth(),color=Mint);Text("요청 중 · 지도 확대/축소는 계속 사용할 수 있습니다.",color=Muted,fontSize=11.sp)}
                 if(canPlan)ui.places.forEachIndexed { index,place ->
                     SurfacePanel(Modifier.fillMaxWidth().clickable(enabled=!ui.busy){chooseDestination(place)},accent=Blue) {
-                        Text("${index+1}. ${place.name}",color=White,fontSize=15.sp)
+                        Text("${index+1}. ${place.name}",color=White,fontSize=15.sp,modifier=if(index==0)Modifier.bringIntoViewRequester(resultIntoView) else Modifier)
                         if(place.address.isNotBlank())Text(place.address,color=Muted,fontSize=11.sp)
                         Text(listOf(place.category,place.source).filter {it.isNotBlank()}.joinToString(" · "),color=Muted,fontSize=10.sp)
                         val locationHint=PlaceSearch.locationHint(ui.mapFix?.takeIf {ui.gpsConnection==GpsConnection.READY}?.point,place.point)
@@ -163,7 +175,7 @@ import java.util.Locale
                         Spacer(Modifier.height(9.dp))
                         if(g.active) {
                             if(g.tracking&&!g.offRoute&&!g.directionUncertain)Text(g.turnSymbol,color=Blue,fontSize=48.sp)
-                            Text(if(g.tracking&&!g.offRoute)g.nextInstruction else "위치·경로 확인 중",color=White,fontSize=23.sp)
+                            Text(if(g.tracking&&!g.offRoute&&!g.directionUncertain)g.nextInstruction else "위치·경로 확인 중",color=White,fontSize=23.sp)
                             if(g.tracking&&!g.offRoute&&!g.directionUncertain)Text("${navDistance(g.turnMeters)} 앞",color=Blue,fontSize=24.sp)
                         }
                         if(!g.arrived)Text("남은 거리 ${if(g.directionUncertain)"약 " else ""}${navDistance(g.remainingMeters)}",color=Mint,fontSize=18.sp)
@@ -189,20 +201,20 @@ import java.util.Locale
         Text("© OpenStreetMap contributors · 검색: Nominatim · 자동차 경로: OSRM · 국가별 도로 데이터와 서버 가용성에 따라 경로가 없을 수 있습니다.",color=Muted,fontSize=10.sp)
     }
     }
-    if(trafficSettings&&canPlan)AlertDialog(onDismissRequest={trafficToken="";trafficSettings=false},title={Text("교통 중계 서버")},text={Column {
+    if(trafficSettings&&canPlan)AlertDialog(modifier=Modifier.padding(16.dp).widthIn(max=720.dp).fillMaxWidth(),properties=androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false),onDismissRequest={trafficToken="";trafficSettings=false},title={Text("교통 중계 서버")},text={Column(Modifier.heightIn(max=dialogBodyHeight).verticalScroll(rememberScrollState())) {
         Text("국내 서버는 아직 미배포입니다. TomTom 키를 입력하지 마세요. 중계 서버 주소와 별도 접근 토큰을 사용합니다. 설정은 저장하지 않습니다.")
         OutlinedTextField(trafficEndpoint,{trafficEndpoint=it},label={Text("HTTPS 서버 주소")})
         OutlinedTextField(trafficToken,{trafficToken=it},label={Text("중계 서버 접근 토큰")},visualTransformation=androidx.compose.ui.text.input.PasswordVisualTransformation())
         Text(trafficError,color=Amber)
     }},confirmButton={TextButton(onClick={runCatching {nav.configureTraffic(trafficEndpoint,trafficToken)}.onSuccess {trafficToken="";trafficSettings=false}.onFailure {trafficError="HTTPS 주소와 24자 이상 접근 토큰을 확인하세요."}}){Text("연결")}},dismissButton={TextButton(onClick={nav.configureTraffic("","");trafficToken="";trafficSettings=false}){Text("연결 해제")}})
-    if(languageDialog&&canPlan)AlertDialog(onDismissRequest={languageDialog=false},title={Text("길 안내·목적지 음성 언어")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)){
+    if(languageDialog&&canPlan)AlertDialog(modifier=Modifier.padding(16.dp).widthIn(max=720.dp).fillMaxWidth(),properties=androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false),onDismissRequest={languageDialog=false},title={Text("길 안내·목적지 음성 언어")},text={Column(Modifier.heightIn(max=dialogBodyHeight).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)){
         Text("31개 지역별 길 안내 번역을 내장했습니다. 다른 언어는 영어 안내로 대체합니다. 음성 인식·재생은 기기 서비스와 언어팩에 따릅니다.",fontSize=12.sp)
         OutlinedTextField(languageTag,{languageTag=it.take(48)},label={Text("언어 코드 · ko-KR / en-US / fr-FR")},singleLine=true)
         val codes=remember { (NavigationLanguages.codes+nav.availableVoiceLanguages()).distinct().sorted() }
         Column(Modifier.heightIn(max=220.dp).verticalScroll(rememberScrollState())){codes.forEach {tag->TextButton(onClick={languageTag=tag}){Text("${Locale.forLanguageTag(tag).getDisplayName(Locale.forLanguageTag(tag))} · $tag")}}}
         Text("기기 TTS 보고 언어 ${nav.availableVoiceLanguages().size}개 · 인식 언어는 실제 요청 결과로 확인합니다.",fontSize=11.sp)
     }},confirmButton={TextButton(enabled=NavigationLanguages.validTag(languageTag),onClick={nav.setLanguage(languageTag);languageDialog=false}){Text("적용")}},dismissButton={TextButton(onClick={languageDialog=false}){Text("닫기")}})
-    if(settings&&canPlan)AlertDialog(onDismissRequest={accessToken="";settings=false},title={Text("내비게이션 서비스")},text={Column(verticalArrangement=Arrangement.spacedBy(8.dp)) {
+    if(settings&&canPlan)AlertDialog(modifier=Modifier.padding(16.dp).widthIn(max=720.dp).fillMaxWidth(),properties=androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth=false),onDismissRequest={accessToken="";settings=false},title={Text("내비게이션 서비스")},text={Column(Modifier.testTag("navigation-service-fields").heightIn(max=dialogBodyHeight).verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(8.dp)) {
         Text("기본 공개 서버는 체험용이며 상용 가용성을 보장하지 않습니다. 운영 시 자체/계약 서버로 교체하세요. 입력한 서버에 검색어·경로 좌표가 전달됩니다.")
         OutlinedTextField(searchEndpoint,{searchEndpoint=it},label={Text("주소·가게 검색 HTTPS 기본 주소")},singleLine=true)
         OutlinedTextField(routeEndpoint,{routeEndpoint=it},label={Text("OSRM HTTPS 기본 주소")},singleLine=true)
