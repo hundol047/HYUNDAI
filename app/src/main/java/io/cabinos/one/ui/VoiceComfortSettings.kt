@@ -16,6 +16,8 @@ import io.cabinos.one.platform.AndroidSpeechProvider
 @Composable fun VoiceComfortSettings(speech:AndroidSpeechProvider,language:String,enabled:Boolean) {
     val gentle by speech.gentleOutput.collectAsStateWithLifecycle()
     val ready by speech.outputReady.collectAsStateWithLifecycle()
+    val initializationFailed by speech.outputInitializationFailed.collectAsStateWithLifecycle()
+    val outputStatus by speech.statusFlow.collectAsStateWithLifecycle()
     var choosing by remember {mutableStateOf(false)}
     LaunchedEffect(enabled) {if(!enabled)choosing=false}
     Row(verticalAlignment=Alignment.CenterVertically) {
@@ -36,7 +38,8 @@ import io.cabinos.one.platform.AndroidSpeechProvider
         fun dismiss() {speech.stopSpeaking();choosing=false}
         AlertDialog(onDismissRequest={dismiss()},title={Text("편안한 목소리를 골라 주세요")},
             text={Column(Modifier.heightIn(max=360.dp).verticalScroll(rememberScrollState())) {
-                if(!ready)Text("음성 엔진 준비 중입니다. 준비가 끝나면 선택할 수 있습니다.")
+                if(!ready)Text(outputStatus)
+                if(initializationFailed)TextButton(onClick={speech.refreshOutputEngine()},modifier=Modifier.heightIn(min=56.dp)) {Text("음성 엔진 다시 연결")}
                 Text("선택 시 실제 안내를 들어보는 기능입니다. 이 언어에 설치된 오프라인 목소리 목록입니다.")
                 Row(Modifier.fillMaxWidth().heightIn(min=56.dp).clickable(enabled=ready) {choose(null)},verticalAlignment=Alignment.CenterVertically) {
                     RadioButton(selected==null,{choose(null)},enabled=ready);Text("자동 선택")

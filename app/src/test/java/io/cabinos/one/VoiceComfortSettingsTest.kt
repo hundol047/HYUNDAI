@@ -55,6 +55,23 @@ class VoiceComfortSettingsTest {
             compose.onNodeWithText("목소리 1",substring=true).assertIsDisplayed()
         } finally {speech.close()}
     }
+    @Test fun initializationFailureIsShownInsteadOfAnEndlessPreparingMessage() {
+        val speech=AndroidSpeechProvider(compose.activity)
+        val tts=Shadow.extract<SpeakingTextToSpeech>(ShadowTextToSpeech.getLastTextToSpeechInstance())
+        try {
+            compose.runOnIdle {compose.activity.setContent {CabinTheme {Column {VoiceComfortSettings(speech,"ko-KR",true)}}}}
+            compose.onNodeWithText("목소리 골라 듣기").performClick()
+            compose.runOnIdle {tts.onInitListener.onInit(TextToSpeech.ERROR)}
+            compose.onNodeWithText("TTS 사용 불가",substring=true).assertIsDisplayed()
+            compose.onNodeWithText("자동 선택").assertIsNotEnabled()
+            compose.onNodeWithText("음성 엔진 다시 연결").performClick()
+            val replacement=Shadow.extract<SpeakingTextToSpeech>(ShadowTextToSpeech.getLastTextToSpeechInstance())
+            assertNotSame(tts,replacement)
+            compose.runOnIdle {replacement.onInitListener.onInit(TextToSpeech.SUCCESS)}
+            compose.onNodeWithText("자동 선택").assertIsEnabled()
+            compose.onNodeWithText("음성 엔진 다시 연결").assertDoesNotExist()
+        } finally {speech.close()}
+    }
     @Test fun closingChooserStopsItsPreview() {
         val speech=AndroidSpeechProvider(compose.activity)
         val tts=Shadow.extract<SpeakingTextToSpeech>(ShadowTextToSpeech.getLastTextToSpeechInstance())
