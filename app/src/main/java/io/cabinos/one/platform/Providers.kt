@@ -233,6 +233,10 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
             }.also {handler.postDelayed(it,8_000)}
         } else activeUtterance=null
         status=if(result==TextToSpeech.SUCCESS)"${locale.getDisplayName(locale)} · $voiceDescription" else "음성 재생 불가 · 화면 안내 사용"
+        if(result!=TextToSpeech.SUCCESS) {
+            configuredLanguage=null
+            mutableOutputFailure.value=status
+        }
         return result==TextToSpeech.SUCCESS
     }
     override fun listen(onResult:(String)->Unit) { listenNavigation("ko-KR",onResult,{onResult(it)}) }

@@ -17,11 +17,12 @@ import java.util.Locale
 @Implements(TextToSpeech::class)
 class SpeakingTextToSpeech:ShadowTextToSpeech() {
     var busy=false
+    var rejectSpeech=false
     var languageChanges=0
     var speechRate=1.0f
     @Implementation fun setSpeechRate(rate:Float):Int {speechRate=rate;return TextToSpeech.SUCCESS}
     var lastUtteranceId:String?=null
-    @Implementation override fun speak(text:CharSequence,queueMode:Int,params:android.os.Bundle?,utteranceId:String?):Int {lastUtteranceId=utteranceId;return super.speak(text,queueMode,params,utteranceId)}
+    @Implementation override fun speak(text:CharSequence,queueMode:Int,params:android.os.Bundle?,utteranceId:String?):Int {lastUtteranceId=utteranceId;if(rejectSpeech)return TextToSpeech.ERROR;return super.speak(text,queueMode,params,utteranceId)}
     var progress:android.speech.tts.UtteranceProgressListener?=null
     @Implementation fun setOnUtteranceProgressListener(listener:android.speech.tts.UtteranceProgressListener):Int {progress=listener;return TextToSpeech.SUCCESS}
     @Implementation fun isSpeaking()=busy
@@ -133,6 +134,25 @@ class SpeechOutputContinuityTest {
             tts.progress!!.onError(tts.lastUtteranceId,TextToSpeech.ERROR_SYNTHESIS)
             shadowOf(android.os.Looper.getMainLooper()).idle()
             assertTrue(nav.state.value.voiceNotice,nav.state.value.voiceNotice.contains("음성 재생 실패"))
+        } finally {nav.close();speech.close()}
+    }
+    @Test fun immediatePlaybackRejectionIsVisibleAndRetryClearsFailure() {
+        val context=ApplicationProvider.getApplicationContext<Context>()
+        val speech=AndroidSpeechProvider(context)
+        val nav=LiveNavigation(context,io.cabinos.core.UnifiedVehicleContextEngine(),speech)
+        try {
+            ShadowTextToSpeech.addLanguageAvailability(Locale.KOREA)
+            val tts=org.robolectric.shadow.api.Shadow.extract<SpeakingTextToSpeech>(ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(TextToSpeech.SUCCESS)
+            tts.rejectSpeech=true
+            assertFalse(speech.speakNavigation("우회전입니다.","ko-KR"))
+            shadowOf(android.os.Looper.getMainLooper()).idle()
+            assertNotNull(speech.outputFailure.value)
+            assertTrue(nav.state.value.voiceNotice.contains("음성 재생 불가"))
+            assertFalse(speech.navigationSpeaking)
+            tts.rejectSpeech=false
+            assertTrue(speech.speakNavigation("우회전입니다.","ko-KR"))
+            assertNull(speech.outputFailure.value)
         } finally {nav.close();speech.close()}
     }
     @Test fun gentleRateAndChosenOfflineVoicePersistAndCanBeReset() {
