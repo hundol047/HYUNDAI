@@ -13,7 +13,9 @@ internal class GuidanceRepeatGuard {
     fun allow(g:Guidance,now:Long):Boolean {
         if(route!==g.route || step!=g.maneuverIndex) {clear();route=g.route;step=g.maneuverIndex}
         if(band(g)<=spokenBand)return false
-        return allow("${g.maneuverIndex}|${g.nextInstruction}|${band(g)}",now)
+        // A rejected TTS request must not reserve this instruction for 30 seconds.
+        recent.entries.removeAll {now-it.value>=30_000}
+        return "${g.maneuverIndex}|${g.nextInstruction}|${band(g)}" !in recent
     }
     fun accepted(g:Guidance) {spokenBand=band(g)}
     fun allow(key:String,now:Long):Boolean {
