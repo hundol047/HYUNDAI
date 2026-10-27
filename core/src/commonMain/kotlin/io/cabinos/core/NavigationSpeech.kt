@@ -47,33 +47,33 @@ object NavigationSpeech {
             else->"앞쪽"
         }
         val turn=when(m.modifier) {
-            "left"->"좌회전해 주세요."
-            "right"->"우회전해 주세요."
-            "uturn"->"유턴해 주세요."
-            "slight left","slight right"->"$side 길로 진행해 주세요."
-            "sharp left","sharp right"->"${side}으로 크게 돌아 진행해 주세요."
-            else->"직진해 주세요."
+            "left"->"좌회전입니다."
+            "right"->"우회전입니다."
+            "uturn"->"유턴입니다."
+            "slight left","slight right"->"$side 길로 진행하는 구간입니다."
+            "sharp left","sharp right"->"${side}으로 크게 도는 구간입니다."
+            else->"직진 구간입니다."
         }
-        if(m.type=="arrive")return if(near)"목적지가 가까워요. 주변을 확인해 주세요." else "약 $distance 더 가시면 목적지 부근이에요."
+        if(m.type=="arrive")return if(near)"목적지 부근입니다. 주변 확인이 필요한 구간입니다." else "목적지까지 약 $distance 거리입니다."
         val action=when(m.type) {
-            "depart"->"안내 경로를 따라 출발해 주세요."
+            "depart"->"안내 경로의 출발 지점입니다."
             "arrive"->"목적지 부근입니다."
-            "merge"->"$side 도로로 합류해 주세요."
-            "fork"->"갈림길에서 $side 길로 진행해 주세요."
-            "on ramp"->"$side 진입로로 진입해 주세요."
-            "off ramp"->"$side 출구로 나가 주세요."
-            "roundabout","rotary"->m.exit?.takeIf {it>0}?.let {"회전교차로에서 ${ordinal(it)} 출구로 나가 주세요."}
-                ?: "회전교차로로 진입해 주세요."
-            "exit roundabout","exit rotary"->"회전교차로에서 나가 주세요."
+            "merge"->"$side 도로로 합류하는 구간입니다."
+            "fork"->"갈림길에서 $side 길로 진행하는 구간입니다."
+            "on ramp"->"$side 진입로입니다."
+            "off ramp"->"$side 출구로 나가는 구간입니다."
+            "roundabout","rotary"->m.exit?.takeIf {it>0}?.let {"회전교차로의 ${ordinal(it)} 출구입니다."}
+                ?: "회전교차로 진입 구간입니다."
+            "exit roundabout","exit rotary"->"회전교차로 출구입니다."
             "end of road"->"도로 끝에서 $turn"
             else->turn
         }
         // Close to a turn, omit long road labels so the action is heard first.
-        val prefix=if(m.type=="depart")"" else if(near)"잠시 후, " else "약 $distance 앞에서, "
+        val prefix=if(m.type=="depart")"" else if(near)"잠시 후, " else "약 $distance 앞, "
         val road=clean.road.replace(" · ",", ").take(100)
         val mentionRoad=!near&&road.isNotBlank()
-        return if(mentionRoad&&m.type in listOf("turn","continue","new name"))prefix+"$road 방면으로 "+action
-            else prefix+action+if(mentionRoad&&m.type!="depart")" $road 방면이에요." else ""
+        return if(mentionRoad&&m.type in listOf("turn","continue","new name"))prefix+"$road 방면 "+action
+            else prefix+action+if(mentionRoad&&m.type!="depart")" $road 방면입니다." else ""
     }
 
     private fun ordinal(exit:Int)=when(exit) {
