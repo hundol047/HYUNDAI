@@ -155,6 +155,24 @@ class SpeechOutputContinuityTest {
             assertNull(speech.outputFailure.value)
         } finally {nav.close();speech.close()}
     }
+    @Test fun failedEngineInitializationCanReconnectWithoutChangingTheDefaultEngine() {
+        val speech=AndroidSpeechProvider(ApplicationProvider.getApplicationContext<Context>())
+        try {
+            val first=ShadowTextToSpeech.getLastTextToSpeechInstance()
+            val shadow=org.robolectric.shadow.api.Shadow.extract<SpeakingTextToSpeech>(first)
+            speech.refreshOutputEngine()
+            assertSame("준비 중인 엔진은 중복 생성하지 않습니다",first,ShadowTextToSpeech.getLastTextToSpeechInstance())
+            shadow.onInitListener.onInit(TextToSpeech.ERROR)
+            assertFalse(speech.outputReady.value)
+            speech.refreshOutputEngine()
+            val second=ShadowTextToSpeech.getLastTextToSpeechInstance()
+            assertNotSame(first,second)
+            org.robolectric.shadow.api.Shadow.extract<SpeakingTextToSpeech>(second).onInitListener.onInit(TextToSpeech.SUCCESS)
+            assertTrue(speech.outputReady.value)
+            speech.refreshOutputEngine()
+            assertSame(second,ShadowTextToSpeech.getLastTextToSpeechInstance())
+        } finally {speech.close()}
+    }
     @Test fun gentleRateAndChosenOfflineVoicePersistAndCanBeReset() {
         val context=ApplicationProvider.getApplicationContext<Context>()
         val low=android.speech.tts.Voice("warm-choice",Locale.KOREA,android.speech.tts.Voice.QUALITY_NORMAL,android.speech.tts.Voice.LATENCY_NORMAL,false,emptySet())

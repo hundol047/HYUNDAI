@@ -109,6 +109,8 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     private var initialized=false
     private val mutableOutputReady=MutableStateFlow(false)
     val outputReady=mutableOutputReady.asStateFlow()
+    private val mutableOutputInitializationFailed=MutableStateFlow(false)
+    val outputInitializationFailed=mutableOutputInitializationFailed.asStateFlow()
     private var pending:String?=null
     private val mutableStatus=MutableStateFlow("음성 엔진 준비 중")
     val statusFlow=mutableStatus.asStateFlow()
@@ -136,7 +138,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
     private fun connectOutput() {
         val generation=++outputGeneration
         stopSpeaking()
-        initialized=false;mutableOutputReady.value=false;configuredLanguage=null
+        initialized=false;mutableOutputReady.value=false;mutableOutputInitializationFailed.value=false;configuredLanguage=null
         tts?.shutdown()
         outputEngine=defaultOutputEngine()
         status="음성 엔진 준비 중"
@@ -145,6 +147,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
                 initialized=result==TextToSpeech.SUCCESS
                 if(initialized)observeOutput(generation)
                 mutableOutputReady.value=initialized
+                mutableOutputInitializationFailed.value=!initialized
                 refreshVoiceAvailability()
                 status=if(initialized)"음성 엔진 준비됨 · 언어별 오프라인 음성 사용" else "TTS 사용 불가 · 화면 안내 사용"
                 pending?.let {if(initialized)speak(it)};pending=null
@@ -168,7 +171,7 @@ class AndroidSpeechProvider(private val context:Context):SpeechProvider {
         })
     }
     private fun clearSynthesisTimeout() {synthesisTimeout?.let {handler.removeCallbacks(it)};synthesisTimeout=null}
-    fun refreshOutputEngine() {if(outputEngine!=defaultOutputEngine())connectOutput()}
+    fun refreshOutputEngine() {if(outputEngine!=defaultOutputEngine()||mutableOutputInitializationFailed.value)connectOutput()}
     fun setGentleOutput(value:Boolean) {
         stopSpeaking();configuredLanguage=null
         outputPreferences.edit().putBoolean("gentle",value).apply();mutableGentle.value=value
