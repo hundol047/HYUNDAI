@@ -41,7 +41,7 @@ class NearbyPlaces(private val context:Context) {
                         }
                     }
                     continuation.invokeOnCancellation { runCatching {manager.removeUpdates(listener)} }
-                    try { providers.forEach { manager.requestSingleUpdate(it,listener,Looper.getMainLooper()) } }
+                    try { providers.forEach { manager.requestLocationUpdates(it,1000L,0f,listener,Looper.getMainLooper()) } }
                     catch(_:SecurityException) { manager.removeUpdates(listener);if(continuation.isActive)continuation.resume(null) }
                 }
             }
