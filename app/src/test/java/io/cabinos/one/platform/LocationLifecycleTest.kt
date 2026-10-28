@@ -48,6 +48,28 @@ class LocationLifecycleTest {
             assertTrue(provider.available.value)
         } finally {provider.stop()}
     }
+    @Test fun refreshedFixKeepsItsOwnExpiryAndIgnoresOlderQueuedFix() {
+        val context=ApplicationProvider.getApplicationContext<Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        val provider=AndroidLocationProvider(context)
+        try {
+            provider.start()
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            val older=Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;time=System.currentTimeMillis()}
+            listener.onLocationChanged(older)
+            val looper=shadowOf(android.os.Looper.getMainLooper())
+            looper.idleFor(java.time.Duration.ofSeconds(6))
+            val latest=Location(older).apply {latitude=37.5001;time=System.currentTimeMillis()}
+            listener.onLocationChanged(latest);listener.onLocationChanged(older)
+            looper.idleFor(java.time.Duration.ofSeconds(5))
+            assertTrue(provider.available.value)
+            assertEquals(latest.latitude,provider.lastLocation!!.latitude,0.0)
+            looper.idleFor(java.time.Duration.ofSeconds(6))
+            assertFalse(provider.available.value)
+        } finally {provider.stop()}
+    }
     @Test fun invalidOrOldCoordinatesCannotCreateLocationAvailability() {
         val context=ApplicationProvider.getApplicationContext<Application>()
         shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
