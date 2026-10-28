@@ -24,7 +24,7 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,process.env.CABIN_
   for(const direction of ['east','west']){
    if(direction==='west'){start=[-16.8,-179.999];end=[-16.8,179.999]}
    await test(`navigation ${direction} keeps destination and GPS pins on the short date-line route`,async()=>{
-    await fresh();await page.locator('aside [data-page="navigation"]').click();await page.locator('[data-nav="locate"]').click();await page.locator('#nav-query').fill(end.join(','));await page.locator('#nav-search').click();await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]');await page.waitForTimeout(500);
+    await fresh();await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await page.locator('[data-nav="locate"]').click();await page.locator('#nav-query').fill(end.join(','));await page.locator('#nav-search').click();await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]');await page.waitForTimeout(500);
     const pins=await positions('navigation-map');assert.equal(pins.length,2);assert.ok(pins.every(p=>p.visible),JSON.stringify(pins));
     assert.ok(await page.evaluate(()=>Object.values(dateMaps['navigation-map']._layers).find(x=>x instanceof L.Polyline).getBounds().getEast()-Object.values(dateMaps['navigation-map']._layers).find(x=>x instanceof L.Polyline).getBounds().getWest()<.01));
    });

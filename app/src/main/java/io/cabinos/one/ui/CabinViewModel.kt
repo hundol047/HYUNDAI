@@ -20,6 +20,7 @@ class CabinViewModel @Inject constructor(
     private val vehicle:VehicleStateProvider,
     private val pleos:PleosVehicleReader,
     val pleosNavigation:PleosNavigation,
+    val cabin:PleosCabinReader,
     private val dao:CabinDao,
     val speech:AndroidSpeechProvider,
     private val location:AndroidLocationProvider,
@@ -34,17 +35,31 @@ class CabinViewModel @Inject constructor(
     val appearance=mutableAppearance.asStateFlow()
     fun appearance(value:AppearanceSettings){if(state.value.parkedAllowed){val normalized=AppearanceCatalog.normalize(value);runtimePreferences.appearance=normalized;mutableAppearance.value=normalized}}
     val state=engine.state
-    val tasks=dao.tasks().stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
+    private val taskReadFailure="할 일을 읽지 못했습니다. 저장 공간을 확인해 주세요. 잠시 후 다시 시도합니다."
+    val tasks=dao.tasks().onEach {
+        mutableTaskReadFailure.value=null
+    }.retryWhen { error,_ ->
+        if(error is CancellationException)throw error
+        mutableTaskReadFailure.value=taskReadFailure;delay(5000);true
+    }.stateIn(viewModelScope,SharingStarted.WhileSubscribed(5000),emptyList())
     private val mutableReply=MutableStateFlow("안녕하세요. 이동의 모든 순간을 함께할게요.")
     val reply=mutableReply.asStateFlow()
+    private val mutableNavigationRequests=MutableStateFlow(0)
+    val navigationRequests=mutableNavigationRequests.asStateFlow()
+    fun voicePermissionDenied(){mutableReply.value="마이크 권한이 거부됐습니다. 앱 권한에서 허용하거나 명령 버튼을 사용하세요."}
     private val mutableScenario=MutableStateFlow(simulator.selected)
     val scenario=mutableScenario.asStateFlow()
     val vehicleStatus=vehicle.status
+    val signalDiagnostics=vehicle.diagnostics
     val pleosState=pleos.state
     val pleosEnergy=pleos.energy
     val automotive=vehicle.automotive
     private val mutableAudio=MutableStateFlow<String?>(null)
     val audioPreset=mutableAudio.asStateFlow()
+    val audioStatus=audio.status
+    fun showMediaVolume() {audio.showVolume()}
+    private var audioRequest=0
+    fun stopAudio() {audioRequest++;audio.stopByUser();mutableAudio.value=null}
     private val mutableDemoRunning=MutableStateFlow(false)
     val demoRunning=mutableDemoRunning.asStateFlow()
     private var demoJob:Job?=null
@@ -55,20 +70,32 @@ class CabinViewModel @Inject constructor(
     private val mutableMapSelection=MutableStateFlow<String?>(null)
     val mapSelection=mutableMapSelection.asStateFlow()
     private var nearbyJob:Job?=null
-    private var lastNearbySearch=0L
+    private val nearbyCache=NearbyQueryCache()
     private var nearbyGeneration=0
-    private fun cancelNearby(){nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
+    private val walkingService=WalkingService()
+    private fun cancelNearby(){walkingService.cancel();nearbyGeneration++;nearbyJob?.cancel();nearbyPlaces.cancel();mutableNearbyBusy.value=false}
     fun cancelNearbySearch(){cancelNearby();mutableNearbyStatus.value="주변 검색을 취소했습니다. 기존 표시를 유지합니다."}
     fun mapUnavailable(){mutableNearbyStatus.value="지도 앱이나 브라우저가 설치되어 있지 않습니다."}
     private var foreground = true
     private val persistenceMutex = Mutex()
     private val vehicleDiagnostics=VehicleDiagnostics()
+    private var storageRestored=false
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
-    val storageStatus = mutableStorageStatus.asStateFlow()
+    private val mutableRestoreFailure=MutableStateFlow<String?>(null)
+    private val mutableTaskReadFailure=MutableStateFlow<String?>(null)
+    val storageStatus=combine(mutableRestoreFailure,mutableTaskReadFailure,mutableStorageStatus) { restore,tasks,operation ->
+        restore ?: tasks ?: operation
+    }.stateIn(viewModelScope,SharingStarted.Eagerly,null)
     init {
         viewModelScope.launch {
-            val checkpoint=dao.checkpoint()
-            engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+            try {
+                val checkpoint=dao.checkpoint()
+                engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+                storageRestored=true
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                mutableRestoreFailure.value="저장된 계획을 읽지 못해 변경 사항 저장을 중지했습니다. 저장 공간을 확인한 뒤 앱을 다시 시작해 주세요."
+            }
             launch { location.available.collect { available -> if (simulator.realMode) engine.setConnectivity(location=available) } }
             launch { simulator.samples.collect { if (foreground && !simulator.realMode) engine.acceptVehicle(it) } }
             launch { combine(vehicle.samples,pleos.energy) { sample,energy ->
@@ -82,10 +109,10 @@ class CabinViewModel @Inject constructor(
             launch { pleosNavigation.state.collect { nav ->
                 if(foreground && simulator.realMode) engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
             } }
-            launch { combine(state,pleos.state,pleos.energy) { app,sdk,energy -> Triple(app,sdk,energy) }.collect { (app,sdk,energy) ->
-                if(foreground)vehicleDiagnostics.record(app,sdk,energy)
-            } }
-            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};location.start();engine.setConnectivity(location=false) }
+            launch { combine(state,pleos.state,pleos.energy,pleosNavigation.state) { app,sdk,energy,nav ->
+                if(foreground)vehicleDiagnostics.record(app,sdk,energy,nav)
+            }.collect {} }
+            if (foreground && simulator.realMode) { vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};location.start();engine.setConnectivity(location=false) }
             launch { while(isActive) {
                 delay(1000)
                 if (foreground) { if(!simulator.realMode) simulator.heartbeat();engine.tick();liveNavigation.tick() }
@@ -94,7 +121,7 @@ class CabinViewModel @Inject constructor(
             launch {
                 var fingerprint:Any?=null
                 state.collect { s ->
-                    if(!s.parkedAllowed || s.session?.status!=SessionStatus.RUNNING) { audio.stop();mutableAudio.value=null }
+                    if(!s.parkedAllowed || s.session?.status!=SessionStatus.RUNNING) { audioRequest++;audio.stop();mutableAudio.value=null }
                     if(!s.parkedAllowed || !s.networkAvailable || !s.locationAvailable) {
                         cancelNearby()
                     }
@@ -102,7 +129,7 @@ class CabinViewModel @Inject constructor(
                     persistenceMutex.withLock {
                         val latest = state.value
                         val f = listOf(latest.preferences,latest.session,latest.history,latest.schedule.departureAtMs)
-                        if(f != fingerprint) {
+                        if(storageRestored && f != fingerprint) {
                             try { dao.saveState(latest);fingerprint=f;mutableStorageStatus.value=null }
                             catch (error: Exception) { if (error is CancellationException) throw error;mutableStorageStatus.value="저장 공간을 확인해 주세요. 최근 변경 사항을 저장하지 못했습니다." }
                         }
@@ -126,9 +153,9 @@ class CabinViewModel @Inject constructor(
         simulator.select(name);mutableScenario.value=name
         if(simulator.realMode) {
             engine.acceptVehicle(vehicle.samples.value.copy(connected=false,parkingReliable=false))
-            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();pleos.start();pleosNavigation.start()};location.start()}
+            if(foreground) {vehicle.reconnect();if(automotive){pleos.stop();pleosNavigation.stop();cabin.stop();pleos.start();pleosNavigation.start();cabin.start()};location.start()}
             engine.setConnectivity(location=false);mutableReply.value="차량 속도와 기어를 확인합니다. 신호 확인 전까지 안전 제한을 유지합니다."
-        } else {pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
+        } else {pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();engine.setConnectivity(location=true);if(foreground)engine.acceptVehicle(simulator.samples.value)}
     }
     fun arrival(minutes:Int?) {
         if(engine.setArrivalInMinutes(minutes)) {
@@ -136,18 +163,40 @@ class CabinViewModel @Inject constructor(
             engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
         }
     }
+    fun arrivalAt(target:Long) {
+        val nav=pleosNavigation.state.value
+        if(nav.readAtMs?.let { System.currentTimeMillis()-it in 0..10_000 } != true)return
+        if(engine.setArrivalAt(target))engine.updateNavigationEstimate(nav.remainingSeconds,nav.remainingMeters,nav.readAtMs)
+    }
     fun waiting(minutes:Int) { engine.setWaitingMinutes(minutes) }
     fun start(kind:SessionKind,minutes:Int) { engine.stayInCabin();engine.startSession(kind,minutes) }
-    fun command(text:String) { mutableReply.value=engine.assistant(text);if(state.value.preferences.voiceEnabled) speech.speak(mutableReply.value) }
+    fun command(text:String) {
+        val compact=text.replace(" ","")
+        val sound=AmbientSamples.presets.firstOrNull {compact.contains(it.replace(" ",""))}
+        val stopSound=compact.contains("소리꺼") || compact.contains("소리끄")
+        if(sound!=null || stopSound) {
+            if(!state.value.parkedAllowed){mutableReply.value="안전한 주차 확인 후 소리를 조작할 수 있습니다.";return}
+            if(stopSound){stopAudio();mutableReply.value="배경 소리를 껐습니다."}
+            else if(state.value.session?.status!=SessionStatus.RUNNING)mutableReply.value="먼저 집중·휴식 세션을 시작해 주세요."
+            else if(sound!=null) {if(audioPreset.value!=sound)toggleAudio(sound);mutableReply.value=audioStatus.value}
+            return
+        }
+        if(NavigationVoice.isNavigationRequest(text)) {
+            liveNavigation.handleVoice(text);mutableNavigationRequests.value++;return
+        }
+        mutableReply.value=engine.assistant(text)
+        if(state.value.preferences.voiceEnabled)speech.speak(mutableReply.value)
+    }
     fun listen() {
         liveNavigation.cancelVoice()
-        speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it})
+        stopAudio()
+        speech.listenNavigation("ko-KR",{command(it)},{mutableReply.value=it},{mutableReply.value="듣고 있습니다. 예: 25분 집중 모드 켜줘"})
     }
     private fun writeTask(action:suspend ()->Unit) {
-        if (!state.value.parkedAllowed) return
+        if (!state.value.parkedAllowed || !storageRestored) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!state.value.parkedAllowed) return@withLock
+                if (!state.value.parkedAllowed || !storageRestored) return@withLock
                 try { action() }
                 catch(error:Exception) { if(error is CancellationException)throw error;mutableStorageStatus.value="할 일 변경 사항을 저장하지 못했습니다. 저장 공간을 확인해 주세요." }
             }
@@ -159,27 +208,46 @@ class CabinViewModel @Inject constructor(
     fun preferences(p:Preferences) { engine.updatePreferences(p) }
     fun toggleAudio(preset:String) {
         if(!state.value.parkedAllowed || state.value.session?.status!=SessionStatus.RUNNING)return
-        if(mutableAudio.value==preset) {audio.stop();mutableAudio.value=null} else {if(audio.play(preset)) mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."}
+        if(mutableAudio.value==preset) {stopAudio()} else {
+            if(preset !in AmbientSamples.presets)return
+            val request=++audioRequest
+            val sessionId=state.value.session?.id
+            viewModelScope.launch {
+                val samples=try {withContext(Dispatchers.IO){audio.samples(preset)}} catch(error:Exception) {
+                    if(error is CancellationException)throw error
+                    if(request==audioRequest){audio.loadFailed();mutableReply.value=audio.status.value}
+                    return@launch
+                }
+                if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING||state.value.session?.id!=sessionId)return@launch
+                if(audio.play(preset,samples))mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."
+            }
+        }
     }
     fun setForeground(active: Boolean) {
+        if(active){speech.refreshVoiceAvailability();speech.refreshOutputEngine()}
         liveNavigation.setForeground(active)
         if (foreground == active) return
         foreground=active
         if (!active) {
             demoJob?.cancel();mutableDemoRunning.value=false
-            audio.stop();mutableAudio.value=null;speech.cancelListening()
+            audioRequest++;audio.stop();mutableAudio.value=null;speech.cancelListening()
             engine.invalidateTelemetry("화면을 벗어나 세션을 일시정지했습니다. 복귀 후 차량 상태를 다시 확인합니다.")
-            pleos.stop();pleosNavigation.stop();vehicle.stop();location.stop();cancelNearby()
+            pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();location.stop();cancelNearby()
         } else {
-            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
+            if (simulator.realMode) {vehicle.start();if(automotive){pleos.start();pleosNavigation.start();cabin.start()};engine.acceptVehicle(vehicle.samples.value);location.start()}
             else {simulator.heartbeat();engine.acceptVehicle(simulator.samples.value)}
         }
+    }
+    fun nearbyCategory(category:String) {
+        if(!state.value.parkedAllowed)return
+        preferences(state.value.preferences.copy(preferredCategory=category));mutableMapSelection.value=null
+        if(state.value.activities.none {!it.activity.simulated})searchNearby()
     }
     fun mapSelect(id:String) { if(state.value.parkedAllowed)mutableMapSelection.value=id }
     fun mapOrigin(position:MapPosition) {
         if(!foreground || !state.value.parkedAllowed || !position.valid())return
         cancelNearby();mutableMapSelection.value=null
-        engine.updateNearbyActivities(position,emptyList())
+        engine.updateNearbyActivities(position,nearbyCache.read(position,System.currentTimeMillis()) ?: emptyList())
         mutableNearbyStatus.value="기준점이 바뀌었습니다. 주변 검색을 눌러 실제 등록 장소를 불러오세요."
     }
     fun mapExamples() {
@@ -190,35 +258,65 @@ class CabinViewModel @Inject constructor(
     }
     fun mapLocate() {
         if(!foreground || !state.value.parkedAllowed || !state.value.locationAvailable)return
-        cancelNearby();val generation=nearbyGeneration;mutableNearbyBusy.value=true;mutableNearbyStatus.value="기기 위치 확인 중…"
+        cancelNearby();val generation=nearbyGeneration;var located=false;mutableNearbyBusy.value=true;mutableNearbyStatus.value="기기 위치 확인 중… 최대 25초 기다려 주세요."
         nearbyJob=viewModelScope.launch {
             try {
                 val position=nearbyPlaces.locate()
                 if(foreground && state.value.parkedAllowed && state.value.locationAvailable) {
-                    if(position!=null) {engine.updateNearbyActivities(position,emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
+                    if(position!=null) {located=true;engine.updateNearbyActivities(position,nearbyCache.read(position,System.currentTimeMillis()) ?: emptyList());mutableMapSelection.value=null;mutableNearbyStatus.value="위치를 확인했습니다. 주변 검색을 눌러 주세요."}
                     else mutableNearbyStatus.value="현재 위치를 얻지 못했습니다. 위치 권한·GPS를 확인하거나 지도 중심을 사용하세요."
                 }
-            } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
+            } finally { if(generation==nearbyGeneration){mutableNearbyBusy.value=false;if(located)searchNearby()} }
         }
     }
     fun searchNearby() {
         if(!foreground || !state.value.parkedAllowed || !state.value.networkAvailable || !state.value.locationAvailable || mutableNearbyBusy.value)return
         val now=System.currentTimeMillis()
-        if(now-lastNearbySearch in 0..29_999) {mutableNearbyStatus.value="검색은 30초 간격으로 가능합니다. 잠시 후 다시 시도해 주세요.";return}
-        lastNearbySearch=now;val origin=state.value.activityOrigin
+        val origin=state.value.activityOrigin
+        if(state.value.activities.any {it.activity.simulated})engine.updateNearbyActivities(origin,emptyList())
+        nearbyCache.read(origin,now)?.let { cached ->
+            engine.updateNearbyActivities(origin,cached);mutableNearbyStatus.value="최근 2분 이내의 주변 검색 결과 ${cached.size}곳 · 분류별로 확인하세요.";return
+        }
+        val remaining=nearbyCache.remainingSeconds(origin,now)
+        if(remaining>0){mutableNearbyStatus.value="검색 재시도까지 ${remaining}초 · 현재 위치와 다른 분류도 확인해 주세요.";return}
+        nearbyCache.begin(origin,now)
         cancelNearby();val generation=nearbyGeneration
         mutableNearbyBusy.value=true;mutableNearbyStatus.value="OpenStreetMap 주변 장소 검색 중…"
         nearbyJob=viewModelScope.launch {
             try {
-                val places=nearbyPlaces.search(origin)
+                val result=nearbyPlaces.search(origin)
+                val places=result.places
                 if(foreground && state.value.parkedAllowed && state.value.networkAvailable && state.value.locationAvailable && state.value.activityOrigin==origin) {
-                    engine.updateNearbyActivities(origin,places);mutableMapSelection.value=places.firstOrNull()?.id
-                    mutableNearbyStatus.value=if(places.isEmpty())"표시할 이름 있는 장소를 찾지 못했습니다. 지도 데이터에 없는 장소가 있을 수 있습니다." else "OpenStreetMap 등록 장소 ${places.size}곳 · 영업 여부와 실제 경로는 외부 지도에서 확인하세요."
+                    if(result.complete)nearbyCache.save(origin,places,System.currentTimeMillis()) else nearbyCache.fail()
+                    engine.updateNearbyActivities(origin,places);mutableMapSelection.value=null
+                    mutableNearbyStatus.value=result.notice+if(places.isEmpty())" · 등록 장소를 찾지 못했습니다. 지도 중심을 바꿔 검색하세요." else ""
+
                 }
             } catch(error:Exception) {
                 if(error is CancellationException)throw error
-                if(generation==nearbyGeneration)mutableNearbyStatus.value="장소 검색을 완료하지 못했습니다. 기존 표시를 유지합니다. 잠시 후 다시 시도해 주세요."
+                if(generation==nearbyGeneration){nearbyCache.fail();mutableNearbyStatus.value="장소 검색 실패 · 기존 표시를 유지합니다. "+(error.message ?: "연결을 확인하고 다시 검색하세요.")}
             } finally { if(generation==nearbyGeneration)mutableNearbyBusy.value=false }
+        }
+    }
+    fun walkingPlan(id:String) {
+        if(!foreground || !state.value.parkedAllowed || mutableNearbyBusy.value)return
+        val origin=state.value.activityOrigin
+        val place=state.value.activities.firstOrNull {it.activity.id==id}?.activity ?: return
+        if(place.simulated || place.walking?.usable(System.currentTimeMillis(),origin)==true){engine.selectActivity(id);return}
+        if(!state.value.networkAvailable){mutableNearbyStatus.value="보행 경로 확인에는 인터넷 연결이 필요합니다.";return}
+        cancelNearby();val generation=nearbyGeneration;mutableNearbyBusy.value=true
+        mutableNearbyStatus.value="가는 길·돌아오는 보행 경로 확인 중…"
+        nearbyJob=viewModelScope.launch {
+            try {
+                val plan=walkingService.roundTrip(origin,place)
+                if(generation==nearbyGeneration && foreground && state.value.networkAvailable && state.value.parkedAllowed && engine.confirmWalking(id,origin,plan)) {
+                    val selected=engine.selectActivity(id)
+                    mutableNearbyStatus.value="보행 왕복 ${plan.roundTripSeconds/60}분 · OSM/FOSSGIS 경로 확인 · "+if(selected)"출발 계획에 반영했습니다." else "활동·출발 준비 시간이 부족합니다."
+                }
+            } catch(error:Exception) {
+                if(error is CancellationException)throw error
+                if(generation==nearbyGeneration)mutableNearbyStatus.value="보행 경로를 확인하지 못해 계획에 반영하지 않았습니다. 잠시 후 다시 시도하거나 다른 장소를 선택하세요."
+            } finally {if(generation==nearbyGeneration)mutableNearbyBusy.value=false}
         }
     }
     fun notificationsAllowed() = reminders.permitted()
@@ -228,12 +326,21 @@ class CabinViewModel @Inject constructor(
         if (!state.value.parkedAllowed) return
         viewModelScope.launch {
             persistenceMutex.withLock {
-                if (!engine.clearPersonalData()) return@withLock
-                runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
-                demoJob?.cancel();mutableDemoRunning.value=false
-                audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();mutableMapSelection.value=null;liveNavigation.clear()
-                try { dao.clearPersonalData();dao.saveState(state.value);mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다." }
-                catch (error: Exception) { if(error is CancellationException) throw error;mutableStorageStatus.value="데이터 삭제를 완료하지 못했습니다. 다시 시도해 주세요." }
+                val wasRestored=storageRestored
+                storageRestored=false // Never autosave the in-memory reset if disk deletion fails.
+                if (!engine.clearPersonalData()) {storageRestored=wasRestored;return@withLock}
+                try {
+                    demoJob?.cancel();mutableDemoRunning.value=false
+                    audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();PlacePhoto.clear();mutableMapSelection.value=null;liveNavigation.clear()
+                    dao.clearPersonalData();dao.saveState(state.value)
+                    runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
+                    speech.resetOutputPreferences()
+                    storageRestored=true;mutableRestoreFailure.value=null
+                    mutableStorageStatus.value="할 일·기록·개인 설정을 삭제했습니다."
+                } catch (error: Exception) {
+                    if(error is CancellationException) throw error
+                    mutableRestoreFailure.value="데이터 삭제를 완료하지 못해 자동 저장을 중지했습니다. 다시 삭제하거나 앱을 재시작해 주세요."
+                }
             }
         }
     }
@@ -256,5 +363,5 @@ class CabinViewModel @Inject constructor(
             } finally { mutableDemoRunning.value=false }
         }
     }
-    override fun onCleared() { pleos.stop();pleosNavigation.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
+    override fun onCleared() { pleos.stop();pleosNavigation.stop();cabin.stop();vehicle.stop();audio.stop();location.stop();liveNavigation.setForeground(false);speech.cancelListening();super.onCleared() }
 }

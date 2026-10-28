@@ -4,7 +4,12 @@ import androidx.activity.compose.setContent
 import io.cabinos.one.ui.CabinTheme
 import io.cabinos.one.ui.NavigationScreen
 import io.cabinos.one.platform.NavigationUi
+import androidx.compose.ui.test.hasText
+import androidx.compose.ui.test.hasAnyAncestor
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasScrollToIndexAction
+import androidx.compose.ui.test.performScrollToIndex
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performClick
 import android.graphics.Bitmap
@@ -12,6 +17,7 @@ import java.io.File
 import org.robolectric.annotation.GraphicsMode
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
@@ -32,6 +38,45 @@ import org.robolectric.annotation.Config
 class ApplicationTest {
     @get:Rule val compose = createAndroidComposeRule<MainActivity>()
 
+    @Test @Config(sdk=[35]) fun assistantFocusCommandCanCloseAndAddTaskOnAndroid15() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        compose.waitUntil(20_000) {
+            org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+            vm.state.value.sample!=null
+        }
+        compose.runOnIdle {vm.selectScenario("주차")}
+        Thread.sleep(1600)
+        compose.runOnIdle {
+            vm.engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=System.currentTimeMillis()))
+            vm.waiting(40)
+        }
+        compose.onNodeWithText("무엇을 도와드릴까요?").performClick()
+        compose.onNodeWithText("25분 집중 모드 켜줘").performClick()
+        compose.onNodeWithContentDescription("닫기").performClick()
+        assertEquals(SessionStatus.RUNNING,vm.state.value.session?.status)
+        compose.onNodeWithText("나의 할 일").performScrollTo().assertIsDisplayed()
+        compose.onNodeWithText("메일 확인").performScrollTo().performClick()
+        compose.waitUntil(10_000) {
+            org.robolectric.Shadows.shadowOf(android.os.Looper.getMainLooper()).idle()
+            vm.tasks.value.any {it.text=="메일 확인"}
+        }
+        compose.runOnIdle {vm.selectScenario("신호 대기")}
+        assertFalse(vm.state.value.parkedAllowed)
+        compose.onNodeWithText("나의 할 일").assertDoesNotExist()
+    }
+
+    @Test fun activeGuidanceKeepsRerouteConnectionFailureVisible() {
+        val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
+        val error="내비게이션 서버에 연결하지 못했습니다. 네트워크·서비스 주소를 확인해 주세요."
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            NavigationScreen(AppState(networkAvailable=false),NavigationUi(
+                guidance=Guidance(active=true,offRoute=true,status="경로 이탈 · 재탐색 대기"),notice=error),vm.liveNavigation,{})
+        }}}
+        compose.onNode(hasText("경로 이탈 · 재탐색 대기") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNode(hasText(error) and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNodeWithText("검색").assertDoesNotExist()
+    }
+
     @Test fun navigationNamesakeShowsActualDistanceAndHidesItWithoutUsableGps() {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         val origin=NavFix(NavPoint(37.6868,128.7550),5.0,System.currentTimeMillis(),0.0)
@@ -42,6 +87,7 @@ class ApplicationTest {
                 gpsConnection=if(ready)io.cabinos.one.platform.GpsConnection.READY else io.cabinos.one.platform.GpsConnection.STALE),vm.liveNavigation,{})
         }}}}
         show(true)
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.onNodeWithText(hint).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText("식당 · OSM / Nominatim").assertIsDisplayed()
         capture("navigation-namesake")
@@ -58,6 +104,7 @@ class ApplicationTest {
         }
         compose.runOnIdle { vm.selectScenario("주행") }
         compose.onNodeWithText("안전한 여정, 함께할게요.").assertIsDisplayed()
+        compose.onNodeWithText("데모 · 차량에서는 기본 내비 사용").assertIsDisplayed()
         compose.runOnIdle { vm.selectScenario("신호 대기") }
         compose.onNodeWithText("신호 대기 중").assertIsDisplayed()
         assertFalse(vm.state.value.parkedAllowed)
@@ -90,8 +137,9 @@ class ApplicationTest {
         compose.runOnIdle {vm.engine.setConnectivity(network=false)}
         compose.onNodeWithText("지도").performClick()
         compose.onNodeWithText("멈춘 시간, 어디에서 보낼까요?").assertIsDisplayed()
-        compose.onNodeWithText("숲속 카페").performScrollTo().performClick()
-        compose.onNodeWithText("이 장소로 계획").assertIsDisplayed().performClick()
+        compose.onNode(hasScrollToIndexAction()).performScrollToIndex(vm.state.value.activities.indexOfFirst {it.activity.id=="cafe"})
+        compose.onNodeWithText("숲속 카페").performClick()
+        compose.onNodeWithText("이 장소로 계획").performScrollTo().assertIsDisplayed().performClick()
         assertEquals("cafe",vm.state.value.selectedActivityId)
         capture("nearby")
         compose.onNodeWithText("홈").performClick()
@@ -133,9 +181,10 @@ class ApplicationTest {
         capture("navigation-pending")
         val tracker=NavigationTracker();tracker.preview(route);tracker.start(NavFix(points[0],5.0,System.currentTimeMillis(),0.0))
         compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=false),NavigationUi(tracker.state,notice="검사용 합성 GPS·경로 · 실제 도로 주행 아님",gpsNotice="검사용 합성 GPS · 정확도 5m · 실기기 수신 아님"),vm.liveNavigation,{})}}}
-        compose.onNodeWithText("EchoRoad · 글로벌 내비게이션").assertIsDisplayed()
-        compose.onNodeWithText("좌회전 · Rue du Louvre").assertIsDisplayed()
-        compose.onNodeWithText("안내 종료·경로 지우기").assertIsDisplayed()
+        compose.onNodeWithText("내비게이션").assertIsDisplayed()
+        compose.onNode(hasText("좌회전 · Rue du Louvre") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNode(hasText("안내 종료") and hasAnyAncestor(hasTestTag("expanded-navigation"))).assertIsDisplayed()
+        compose.onNodeWithText("다시 듣기").assertIsDisplayed()
         compose.onNodeWithText("안내 시작").assertDoesNotExist()
         capture("navigation")
     }

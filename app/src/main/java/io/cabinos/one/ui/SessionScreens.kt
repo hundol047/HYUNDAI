@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -29,7 +30,7 @@ import java.util.*
     var taskText by remember { mutableStateOf("") }
     val color=when(session.kind){SessionKind.FOCUS->Blue;SessionKind.RELAX->Mint;SessionKind.AUDIO->Purple}
     Row(Modifier.fillMaxWidth().heightIn(min=275.dp),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
-        Box(Modifier.weight(.58f).height(280.dp).clip(RoundedCornerShape(20.dp)).border(1.dp,color.copy(alpha=.45f),RoundedCornerShape(20.dp))) {
+        Box(Modifier.weight(.58f).height(316.dp).clip(RoundedCornerShape(20.dp)).border(1.dp,color.copy(alpha=.45f),RoundedCornerShape(20.dp))) {
             MountainScene(Modifier.fillMaxSize())
             Column(Modifier.fillMaxSize().padding(22.dp)) {
                 Row {Pill("${session.kind.label} 모드",color);Spacer(Modifier.weight(1f));Text(if(session.status==SessionStatus.PAUSED)"일시정지됨" else "나를 위한 시간",fontSize=11.sp,color=White)}
@@ -44,26 +45,20 @@ import java.util.*
                     Column(Modifier.weight(1f),verticalArrangement=Arrangement.spacedBy(10.dp)) {
                         Text(if(session.kind==SessionKind.RELAX)"잠시, 쉬어가도 괜찮아요." else if(session.kind==SessionKind.FOCUS)"당신만의 몰입을 시작하세요." else "좋은 소리로 채우는 시간.",color=White,fontSize=17.sp,fontWeight=FontWeight.Medium)
                         Text("출발 준비 ${s.preferences.departureBufferMinutes}분 전 자동 종료\n남은 일정에 맞춰 시간을 조정해요.",color=White.copy(alpha=.65f),fontSize=11.sp)
-                        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                            ActionButton(if(session.status==SessionStatus.RUNNING)"일시정지" else "계속",{vm.engine.pauseOrResume()},color=color,enabled=session.status==SessionStatus.RUNNING || s.schedule.availableSeconds>0,icon=if(session.status==SessionStatus.RUNNING)Icons.Outlined.Pause else Icons.Outlined.PlayArrow)
-                            ActionButton("종료",{vm.engine.endSession()},color=White)
-                        }
+                        SessionActionButtons(s,{vm.engine.pauseOrResume()},{vm.engine.endSession()})
                     }
                 }
-                Row(horizontalArrangement=Arrangement.spacedBy(7.dp)) {
-                    listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
-                        FilterChip(enabled=session.status==SessionStatus.RUNNING,selected=preset==name,onClick={vm.toggleAudio(name)},label={Text(name,fontSize=10.sp)},leadingIcon={Icon(if(preset==name)Icons.AutoMirrored.Outlined.VolumeUp else Icons.Outlined.MusicNote,null,Modifier.size(14.dp))},modifier=Modifier.heightIn(min=48.dp),colors=FilterChipDefaults.filterChipColors(selectedContainerColor=color.copy(alpha=.25f),selectedLabelColor=White))
-                    }
-                }
+                AmbientControls(vm,session.status==SessionStatus.RUNNING)
             }
         }
-        SurfacePanel(Modifier.weight(.42f).height(280.dp)) {
+        SurfacePanel(Modifier.weight(.42f).height(316.dp)) {
             if(session.kind==SessionKind.FOCUS) {
                 Row {SectionLabel("나의 할 일",color=Blue);Spacer(Modifier.weight(1f));Text("${tasks.count{it.done}} / ${tasks.size}",color=Muted,fontSize=11.sp)}
+                FocusTaskPresets(s.parkedAllowed,vm::addTask)
                 Spacer(Modifier.height(10.dp))
                 Row(verticalAlignment=Alignment.CenterVertically,horizontalArrangement=Arrangement.spacedBy(6.dp)) {
-                    OutlinedTextField(value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
-                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
+                    OutlinedTextField(enabled=s.parkedAllowed,value=taskText,onValueChange={taskText=it.take(100)},placeholder={Text("이번 시간에 할 일",fontSize=11.sp)},singleLine=true,modifier=Modifier.weight(1f),shape=RoundedCornerShape(10.dp),textStyle=LocalTextStyle.current.copy(fontSize=12.sp))
+                    IconButton(onClick={vm.addTask(taskText);taskText=""},enabled=s.parkedAllowed&&taskText.isNotBlank()){Icon(Icons.Outlined.Add,"할 일 추가",tint=Blue)}
                 }
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState())) {
                     if(tasks.isEmpty()) Text("작은 목표 하나를 적어보세요.\n완료한 일은 다음에도 기억해요.",fontSize=12.sp,color=Muted,modifier=Modifier.padding(top=20.dp))
@@ -78,7 +73,7 @@ import java.util.*
                 Spacer(Modifier.height(16.dp));Text(timeText(s.schedule.waitingSeconds),fontSize=38.sp,fontWeight=FontWeight.Light,color=White)
                 Spacer(Modifier.height(12.dp));Text("${s.schedule.availableSeconds/60}분 뒤 활동 정리",color=Mint,fontSize=13.sp)
                 Spacer(Modifier.height(12.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
-                Text(if(session.kind==SessionKind.RELAX)"4초 들숨, 4초 날숨\n편안한 호흡으로 다음 여정을 준비하세요." else "기기에서 생성하는 배경 소리입니다.\n실제 스트리밍·차량 오디오 제어는 연결되지 않았습니다.",fontSize=12.sp,color=Muted)
+                Text(if(session.kind==SessionKind.RELAX)"4초 들숨, 4초 날숨\n편안한 호흡으로 다음 여정을 준비하세요." else "배경 소리 선택에서 자연음·합성음을 골라 보세요.\n기기의 미디어 음량으로 조절할 수 있어요.",fontSize=12.sp,color=Muted)
                 Spacer(Modifier.weight(1f));Text("StopSense와 시간 동기화 중",fontSize=10.sp,color=color)
             }
         }
@@ -108,6 +103,8 @@ import java.util.*
 @Composable fun SettingsScreen(s:AppState,vm:CabinViewModel,onNotifications:()->Unit) {
     var confirmDeletion by remember { mutableStateOf(false) }
     val storage by vm.storageStatus.collectAsStateWithLifecycle()
+    val speechStatus by vm.speech.statusFlow.collectAsStateWithLifecycle()
+    val navigationUi by vm.liveNavigation.state.collectAsStateWithLifecycle()
     if(confirmDeletion) AlertDialog(onDismissRequest={confirmDeletion=false},
         title={Text("개인 데이터를 삭제할까요?")},
         text={Text("할 일, 세션 기록, 개인 설정, 출발 계획을 삭제합니다. 진행 중인 세션도 종료됩니다. 차량 데이터 모드 선택은 유지합니다.")},
@@ -126,10 +123,17 @@ import java.util.*
             }
             SurfacePanel(Modifier.weight(1f)) {
                 SectionLabel("음성 및 개인정보");Spacer(Modifier.height(16.dp))
-                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(vm.speech.status,color=Muted,fontSize=10.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("음성 안내 · 내비 언어 별도 선택",color=White,fontSize=14.sp);Text(speechStatus,color=Muted,fontSize=12.sp)};Switch(s.preferences.voiceEnabled,{vm.preferences(s.preferences.copy(voiceEnabled=it))})}
+                Spacer(Modifier.height(12.dp))
+                VoiceComfortSettings(vm.speech,navigationUi.language,s.parkedAllowed&&s.preferences.voiceEnabled)
+                FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
+                    ActionButton("안내 음성 들어보기",{vm.speech.previewOutput(vm.liveNavigation.state.value.language)},Modifier.heightIn(min=56.dp),enabled=s.preferences.voiceEnabled)
+                    ActionButton("기기 음성 설정",{vm.speech.openOutputSettings()},Modifier.heightIn(min=56.dp))
+                }
+                Text("목소리를 직접 골라 들어보세요. 선택한 목소리는 이 기기에 저장돼요. 음색은 기기의 엔진과 설치된 음성팩에 따라 달라요.",color=Muted,fontSize=12.sp)
                 Spacer(Modifier.height(16.dp));HorizontalDivider(color=Line);Spacer(Modifier.height(16.dp))
-                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("익명 위험 공유 동의",color=White,fontSize=14.sp);Text("현재 서버 미연결 · 외부 전송 없음",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
-                Spacer(Modifier.height(20.dp));Text("상세 이동 이력을 전송하지 않습니다. 동의 설정만 저장하며 실제 공유는 검증된 서버 연동 후 제공됩니다.",fontSize=11.sp,color=Muted)
+                Row(verticalAlignment=Alignment.CenterVertically){Column(Modifier.weight(1f)){Text("급감속 후보 공유 동의",color=White,fontSize=14.sp);Text("EchoRoad 서버 연결·이번 연결의 공유 동의가 모두 필요",color=Muted,fontSize=10.sp)};Switch(s.preferences.shareHazards,{vm.preferences(s.preferences.copy(shareHazards=it))})}
+                Spacer(Modifier.height(20.dp));Text("동의하고 EchoRoad 서버를 연결하면 급감속 후보의 좌표·방향·시각·감속량을 전송합니다. 원시 주행 이력은 전송하지 않으며 서버는 제보를 15분 후 삭제합니다.",fontSize=11.sp,color=Muted)
             }
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
@@ -146,10 +150,27 @@ import java.util.*
         }
         SurfacePanel(Modifier.fillMaxWidth()) {
             SectionLabel("연결 및 지원 범위",color=Amber);Spacer(Modifier.height(14.dp))
-            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: 선택 빌드의 브레이크 읽기 · 대상 기기 검증 미완료\n충전·배터리: 데모 / 실차 미연동\nPleos FusedLocation · NaviHelper: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
+            Text("속도·기어: AAOS 차량 읽기 어댑터 / 일반 기기 데모\nPleos Vehicle SDK: SOC·충전 상태·선택적 실내 정보 읽기\n충전·배터리: 차량 제공 값 / 일반 기기 데모\nNaviHelper: 기본 내비 연결·도착 계획 / FusedLocation: 미연동\n차량 공조 · 조명 제어: 지원 안 함\n음성: Android TTS · SpeechRecognizer (기기 서비스와 언어팩 필요)\nAI 어시스턴트: 오프라인 한국어 명령 해석 · 생성형 AI 미연결",color=Muted,fontSize=12.sp,lineHeight=23.sp)
         }
     }
 }
 @Composable private fun SettingStepper(label:String,value:Int,options:List<Int>,onSelect:(Int)->Unit) {
     Column {Text(label,color=White,fontSize=13.sp);Row(horizontalArrangement=Arrangement.spacedBy(8.dp)){ options.forEach { n ->FilterChip(selected=value==n,onClick={onSelect(n)},label={Text("${n}분",fontSize=12.sp)}) } };Spacer(Modifier.height(12.dp))}
+}
+
+@Composable internal fun FocusTaskPresets(parked:Boolean,onAdd:(String)->Unit) {
+    if(LocalCompactWindow.current) {
+        FlowRow(Modifier.fillMaxWidth().testTag("focus-presets"),horizontalArrangement=Arrangement.spacedBy(6.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
+            FocusPresetButtons(parked,onAdd)
+        }
+    } else {
+        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).testTag("focus-presets"),horizontalArrangement=Arrangement.spacedBy(6.dp)) {
+            FocusPresetButtons(parked,onAdd)
+        }
+    }
+}
+@Composable private fun FocusPresetButtons(parked:Boolean,onAdd:(String)->Unit) {
+    listOf("메일 확인","통화 정리","일정 확인","스트레칭").forEach { task ->
+        OutlinedButton(onClick={onAdd(task)},enabled=parked,modifier=Modifier.heightIn(min=48.dp)) { Text(task) }
+    }
 }

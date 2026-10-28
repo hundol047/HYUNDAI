@@ -16,6 +16,21 @@ import org.robolectric.annotation.Config
 class NavigationMapRendererTest {
     @Test
     @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
+    fun lightCustomRouteRemainsVisibleOnLightMapLand() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        try {
+            renderer.update(Guidance(route=route()),android.graphics.Color.WHITE)
+            val line=map.overlays.filterIsInstance<Polyline>().single()
+            val bitmap=android.graphics.Bitmap.createBitmap(1000,640,android.graphics.Bitmap.Config.ARGB_8888)
+            bitmap.eraseColor(android.graphics.Color.WHITE)
+            line.draw(android.graphics.Canvas(bitmap),map.projection)
+            val pixels=IntArray(1000*640);bitmap.getPixels(pixels,0,1000,0,0,1000,640)
+            assertTrue("밝은 맞춤 경로도 밝은 지도에서 구별되어야 합니다",pixels.count {android.graphics.Color.red(it)<100&&android.graphics.Color.green(it)<100&&android.graphics.Color.blue(it)<100}>100)
+            bitmap.recycle()
+        } finally {map.onDetach()}
+    }
+    @Test
+    @org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
     fun dateLinePinsAndRoadStayNearTheViewportInsteadOfCrossingTheWholeWorld() {
         for(direction in listOf(1.0,-1.0)) {
             val map=map();val renderer=NavigationMapRenderer(map)
@@ -60,6 +75,46 @@ class NavigationMapRendererTest {
             renderer.update(Guidance(),-1,location=NavFix(p,5.0,100),locationCurrent=true)
             assertEquals(15.0,map.zoomLevelDouble,0.0);assertEquals(0.0,GeoPoint(p.latitude,p.longitude).distanceToAsDouble(map.mapCenter),5.0)
             assertEquals("현재 GPS 위치",map.overlays.filterIsInstance<Marker>().single().title)
+            assertTrue(map.overlays.none {it is Polyline})
+        }finally{map.onDetach()}
+    }
+    @Test fun manualViewportSurvivesGpsLossAndRecoveryWithOrWithoutGuidance() {
+        for(active in listOf(false,true)) {
+            val map=map();val renderer=NavigationMapRenderer(map);val r=route()
+            val fix=NavFix(r.points.first(),5.0,100)
+            val g=Guidance(route=if(active)r else null,active=active,tracking=true,fix=fix)
+            try {
+                renderer.update(g,-1)
+                renderer.followPosition=false
+                map.controller.setZoom(9.0);map.controller.setCenter(GeoPoint(-33.8688,151.2093))
+                val center=GeoPoint(map.mapCenter)
+                renderer.update(g.copy(fix=null,tracking=false),-1)
+                renderer.update(g.copy(fix=fix.copy(timestampMs=200)),-1)
+                assertEquals("GPS 복구가 수동 확대 수준을 바꾸면 안 됩니다",9.0,map.zoomLevelDouble,0.0)
+                assertEquals("GPS 복구가 사용자가 보고 있는 위치를 옮기면 안 됩니다",0.0,center.distanceToAsDouble(map.mapCenter),1.0)
+            }finally{map.onDetach()}
+        }
+    }
+    @Test fun manualPanSurvivesActiveGpsUpdates() {
+        val map=map();val renderer=NavigationMapRenderer(map);val r=route()
+        try {
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[0],5.0,100)),-1)
+            renderer.followPosition=false
+            map.controller.setCenter(GeoPoint(37.7,127.2));val center=GeoPoint(map.mapCenter)
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[10],5.0,200)),-1)
+            assertEquals(0.0,center.distanceToAsDouble(map.mapCenter),1.0)
+            renderer.followPosition=true
+            renderer.update(Guidance(route=r,active=true,tracking=true,fix=NavFix(r.points[20],5.0,300)),-1)
+            assertTrue(center.distanceToAsDouble(map.mapCenter)>100)
+        }finally{map.onDetach()}
+    }
+    @Test fun trafficOverlayUsesItsOwnColorAndCanBeRemoved() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        try {
+            val flow=io.cabinos.one.platform.TrafficFlow(listOf(NavPoint(52.3,4.9),NavPoint(52.31,4.91)),10.0,50.0,1.0,false,1000)
+            renderer.traffic(flow)
+            assertEquals(0xFFE53935.toInt(),map.overlays.filterIsInstance<Polyline>().single().outlinePaint.color)
+            renderer.traffic(null)
             assertTrue(map.overlays.none {it is Polyline})
         }finally{map.onDetach()}
     }
@@ -111,4 +166,19 @@ class NavigationMapRendererTest {
             renderer.update(Guidance(),-1);assertTrue(map.overlays.none {it is Polyline||it is Marker});assertEquals(1,map.overlays.filterIsInstance<CopyrightOverlay>().size)
         }finally{map.onDetach()}
     }
+    @Test fun referenceMarkersAreReusedAndClearedWithoutRemovingRoute() {
+        val map=map();val renderer=NavigationMapRenderer(map)
+        val point=RoadSafetyPoint("fixture",NavPoint(37.5,127.0),RoadSafetyKind.BUMP,"검사도로","2026-01-01",Long.MAX_VALUE)
+        try {
+            renderer.update(Guidance(route=route()),-1)
+            renderer.safety(listOf(point))
+            val first=map.overlays.filterIsInstance<Marker>().first {it.title.contains("참고 위치")}
+            renderer.safety(listOf(point))
+            assertSame(first,map.overlays.filterIsInstance<Marker>().first {it.title.contains("참고 위치")})
+            renderer.safety(emptyList())
+            assertFalse(map.overlays.contains(first))
+            assertEquals(1,map.overlays.filterIsInstance<Polyline>().size)
+        }finally{map.onDetach()}
+    }
+
 }

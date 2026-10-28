@@ -1,0 +1,23 @@
+[
+  {
+    "url": "https://developers.kakaomobility.com/guide/navi-api/directions.html",
+    "retrievedDate": "2026-10-26",
+    "sha256": "facfebdcc6b790a2eb607ef250f03744a32e51c86be0c05decd969a4915f2c58",
+    "shortExcerpt": "ce\" : 0, \"duration\" : 0, \"type\" : 100, \"guidance\" : \"출발지\", \"road_index\" : 0 }, // 코드 생략 { \"name\" : \"경유지\", \"x\" : 127.17352998262038, \"y\" : 37.36708073181059, \"distance\" : 596, \"duration\" : 104, \"type\" : 1000, \"guidance\" : \"경유지\", \"road_index\"",
+    "scope": "Public documentation, not an audio recording or in-car test"
+  },
+  {
+    "url": "https://developers.kakaomobility.com/guide/android-ui/driving.html",
+    "retrievedDate": "2026-10-26",
+    "sha256": "3091894f9e5da6412e6b89ba16f62b86cda64d6d456685329d3c3bfca394d85a",
+    "shortExcerpt": "ideDelegate // 음성 안내 사용 여부 override fun shouldPlayVoiceGuide (guidance: KNGuidance , voiceGuide: KNGuide_Voice , newData: MutableList < ByteArray >): Boolean { return naviView. shouldPlayVoiceGuide (guidance, voiceGuide, newData) } // 음성 안내",
+    "scope": "Public documentation, not an audio recording or in-car test"
+  },
+  {
+    "url": "https://tmapapi.tmapmobility.com/webservice/docs/tmapRouteDoc.html",
+    "retrievedDate": "2026-10-26",
+    "sha256": "6f4bdb89ebf39ab6d9de4f75a5352149de1a27b014f5da302c111fd13dde963c",
+    "shortExcerpt": "도로 명칭입니다. - type=\"Point\"일 때 응답되는 정보입니다. turnType Number N 회전 정보입니다. - type=\"Point\"일 때 응답되는 정보입니다. - 0: 휴게소 - 1: 도곽에 의한 점 - 2: 타일에 의한 점 - 3: 고속도로에 의한 안내없음 - 4: 일반도로에 의한 안내없음 - 5: 특수한 경우 안내없음 - 6: Y자 오른쪽 안내없음 - 7: Y자 왼쪽 안내없음 - 11: 직진 - 12: 좌회",
+    "scope": "Public documentation, not an audio recording or in-car test"
+  }
+]

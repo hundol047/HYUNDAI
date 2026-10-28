@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "1c4aa6bbffb37e7a9dc3995e0d567360c86acee0",
+  "fixedIssueGroups": 4,
+  "newRegressionTests": 12,
+  "tests": {
+    "core": {
+      "tests": 189,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 311,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "targetedTestsPassed": 71,
+  "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40660122745",
+  "sourceCiResult": "success",
+  "physicalSamsungValidated": false,
+  "officialPleosEmulatorValidated": false,
+  "newPreviewDeviceExecutionVerified": false,
+  "productionApkUpdated": false,
+  "initialLintFailure": "Kotlin FIR resolver internal failure in ApplicationTest.kt; unchanged lint checks passed in fresh single-worker Gradle process",
+  "sourceDebugDeviceSmokePassed": true,
+  "sourceReleaseDeviceSmokePassed": true,
+  "lint": {
+    "errors": 0,
+    "warnings": 14
+  },
+  "lintRetryPassed": true,
+  "apkSha256": "3cb33a30e231cae5deef1ec3d54e7e98e815a4ad614e670ad80d6a6302243cda",
+  "officialSdkBuildAndLintPassed": true,
+  "samePreviewCertificate": true,
+  "releaseBuild": "unsigned; team production key not available",
+  "previewSigning": "Android debug test identity; same as previous preview",
+  "publicDownloadHashVerified": true,
+  "qrDecodedToImmutableApk": true,
+  "apkUrl": "https://raw.githubusercontent.com/hundol047/HYUNDAI/961484689547a61506807f9e0417f717c657e35a/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk"
+}

@@ -15,8 +15,10 @@ android {
         applicationId = "io.cabinos.one"
         minSdk = 29
         targetSdk = 35
-        versionCode = 19
-        versionName = "0.11.0"
+        versionCode = 20
+        versionName = "0.11.1"
+        manifestPlaceholders["pleosSdkEnabled"] = pleosSdkEnabled.toString()
+        buildConfigField("boolean", "SPEED_RECEIPT_FRESHNESS", "false")
         buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())
     }
     buildFeatures { compose = true; buildConfig = true }
@@ -31,6 +33,13 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+        create("phonePreview") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".preview"
+            versionNameSuffix = "-preview"
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
         }
     }
     testOptions {
@@ -77,6 +86,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
     testImplementation("org.robolectric:robolectric:4.14.1")
     testImplementation("androidx.test:core:1.6.1")
     testImplementation("androidx.compose.ui:ui-test-junit4")

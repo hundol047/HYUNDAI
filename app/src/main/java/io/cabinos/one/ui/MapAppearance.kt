@@ -2,7 +2,8 @@ package io.cabinos.one.ui
 
 import io.cabinos.core.*
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.TilesOverlay
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import java.util.WeakHashMap
 
 private data class MapStyle(val night:Boolean,val panel:Int,val line:Int,val background:Int)
@@ -13,7 +14,7 @@ fun applyMapAppearance(view:MapView,settings:AppearanceSettings,palette:CabinPal
     if(appliedMapStyles[view]==style)return
     appliedMapStyles[view]=style
     view.overlayManager.tilesOverlay.apply {
-        setColorFilter(if(settings.nightMap)TilesOverlay.INVERT_COLORS else null)
+        setColorFilter(if(settings.nightMap)ColorMatrixColorFilter(ColorMatrix().apply {setScale(.78f,.78f,.78f,1f)}) else null)
         loadingBackgroundColor=palette.panel or (0xFF shl 24)
         loadingLineColor=palette.line or (0xFF shl 24)
     }

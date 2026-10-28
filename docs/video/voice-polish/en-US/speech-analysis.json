@@ -1,0 +1,22 @@
+{
+  "language": "en-US",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 3.92,
+      "endSeconds": 5.92,
+      "text": " in 300 meters turn right."
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.04,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "en-US actual app spoken preview",
+    "startSeconds": 29.00192039799998,
+    "endSeconds": 51.853108735999996,
+    "expectSilence": false
+  }
+}

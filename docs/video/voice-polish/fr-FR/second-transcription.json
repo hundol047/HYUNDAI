@@ -1,0 +1,6 @@
+{
+  "model": "faster-whisper medium CPU int8; no initial prompt; transcription is not human review",
+  "transcription": [
+    " Dans trois cents mètres, tournez à droite."
+  ]
+}

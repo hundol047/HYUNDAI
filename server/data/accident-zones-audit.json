@@ -1,0 +1,63 @@
+{
+  "files": {
+    "pedestrian": {
+      "inputRows": 2402,
+      "selectedRows": 418,
+      "olderPeriodRows": 1984,
+      "identicalDuplicateRows": 0,
+      "periodStart": 2023,
+      "periodEnd": 2025,
+      "datasetIds": [
+        "2026122"
+      ]
+    },
+    "child_pedestrian": {
+      "inputRows": 1300,
+      "selectedRows": 88,
+      "olderPeriodRows": 1212,
+      "identicalDuplicateRows": 0,
+      "periodStart": 2025,
+      "periodEnd": 2025,
+      "datasetIds": [
+        "2026124"
+      ]
+    },
+    "icy": {
+      "inputRows": 685,
+      "selectedRows": 82,
+      "olderPeriodRows": 603,
+      "identicalDuplicateRows": 0,
+      "periodStart": 2021,
+      "periodEnd": 2025,
+      "datasetIds": [
+        "2026125"
+      ]
+    },
+    "municipal": {
+      "inputRows": 5977,
+      "selectedRows": 683,
+      "olderPeriodRows": 5294,
+      "identicalDuplicateRows": 0,
+      "periodStart": 2025,
+      "periodEnd": 2025,
+      "datasetIds": [
+        "2026134"
+      ]
+    }
+  },
+  "archives": [
+    {
+      "name": "10_25_stt.zip",
+      "sha256": "a1974fa55524e578a821b1ffb0f15f2c6e2d56ee2d22c1faf62f9b86d26052d6"
+    },
+    {
+      "name": "17_25_lg.zip",
+      "sha256": "b4afe453e23af59314896f47baf82eb324e9c03da15b8294cde7bd6129acac59"
+    }
+  ],
+  "zoneCount": 1271,
+  "sha256": "ef9202e871b89a561b1a01a6b9921c12a2e2c00322284af1df1a7d1dc100b976",
+  "validUntilMs": 1798416000000,
+  "selection": "Latest verified statistical period per category; no cross-category accident count summation",
+  "excludedStatisticsFile": "10_25_stt.csv contains no coordinates"
+}

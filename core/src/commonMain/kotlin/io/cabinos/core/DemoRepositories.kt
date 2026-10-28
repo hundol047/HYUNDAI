@@ -19,5 +19,11 @@ class DemoActivityRepository : ActivityRecommendationRepository {
         NearbyActivity("walk", "그린 산책로", "산책", 120, 600, "가볍게 걷고 기분을 전환하세요 · 예시 장소",latitude=37.3935,longitude=127.1098),
         NearbyActivity("food", "오후의 테이블", "식당", 300, 1200, "여유롭게 즐기는 한 끼 · 예시 장소",latitude=37.3971,longitude=127.1144),
         NearbyActivity("shop", "라이프 스토어", "쇼핑", 420, 900, "일상에 작은 발견 · 예시 장소",latitude=37.3908,longitude=127.1135),
-    )
+    ).let { originals ->
+        originals + originals.flatMap { base -> (2..4).map { index ->
+            base.copy(id="${base.id}-$index",name="${base.name} 예시 $index",
+                oneWaySeconds=base.oneWaySeconds+(index-1)*120,
+                latitude=base.latitude!!+(index-1)*0.0007,longitude=base.longitude!!+(index-1)*0.0005)
+        } }
+    }
 }

@@ -4,6 +4,11 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class NearbyTest {
+    @Test fun fallbackRadiusAndWalkingTypesMatchPrimarySearch() {
+        val query=NearbyGeometry.query(MapPosition())
+        assertTrue(query.contains("around:2000"));assertTrue(query.contains("garden"));assertTrue(query.contains("nature_reserve"))
+    }
+
     @Test fun otherRegisteredLanguagesArePreservedWithoutTreatingMetadataAsNames() {
         assertEquals("喫茶店",NearbyGeometry.placeName(mapOf("name:fr" to "\u202e", "name:ja" to "喫茶店", "name:pronunciation" to "not a name")))
         assertEquals("茶館",NearbyGeometry.placeName(mapOf("name:zh-Hant" to "茶館")))
@@ -16,9 +21,20 @@ class NearbyTest {
         assertEquals("English only",NearbyGeometry.placeName("\u202e"," ","English only"))
         assertEquals("현지 이름",NearbyGeometry.placeName("","현지 이름","English name"))
         val query=NearbyGeometry.query(MapPosition(48.85,2.35))
-        assertEquals(3,query.split("[~").size-1)
+        assertEquals(4,query.split("[~").size-1)
+        assertEquals(4,query.split("out center tags 60;").size-1)
         assertTrue(query.endsWith("out center tags 60;"))
         try{NearbyGeometry.query(MapPosition(Double.NaN,0.0));fail("Invalid origin must not reach the provider")}catch(_:IllegalArgumentException){}
+    }
+    @Test fun eachDemoCategoryHasSeveralRankedClearlySimulatedOptions() {
+        val places=DemoActivityRepository().activities()
+        for(category in listOf("카페","식당","산책","쇼핑")) {
+            val ranked=TimeOptimizer.recommend(places,SharedSchedule(waitingSeconds=2400,bufferSeconds=300),category)
+            assertTrue(category,ranked.size>=3)
+            assertTrue(ranked.all {it.activity.simulated})
+            assertEquals(ranked.map {it.activity.oneWaySeconds}.sorted(),ranked.map {it.activity.oneWaySeconds})
+        }
+        assertEquals(places.size,places.map {it.id}.distinct().size)
     }
     private var now=1_000_000L
     private fun parked():UnifiedVehicleContextEngine {

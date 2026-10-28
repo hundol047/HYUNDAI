@@ -7,6 +7,11 @@
     <uses-permission android:name="android.car.permission.CAR_ENERGY" />
     <uses-permission android:name="android.car.permission.CAR_INFO" />
     <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
+    <uses-permission android:name="pleos.car.permission.CAR_SEATS" />
+    <uses-permission android:name="pleos.car.permission.CAR_SAFETY" />
+    <uses-permission android:name="pleos.car.permission.CAR_DOORS" />
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />
+    <uses-permission android:name="pleos.car.permission.CAR_CLIMATE" />
     <uses-permission android:name="pleos.car.permission.CAR_ENERGY" />
     <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />
     <uses-permission android:name="pleos.car.permission.NAVI_CUSTOM_MAP" />
@@ -25,10 +30,11 @@
     <application android:name=".CabinApplication" android:label="CabinOS ONE"
         android:icon="@drawable/ic_cabin" android:theme="@style/Theme.CabinOS"
         android:allowBackup="false" android:fullBackupContent="false" android:dataExtractionRules="@xml/data_extraction_rules" android:supportsRtl="true" android:usesCleartextTraffic="false">
+        <meta-data android:name="io.cabinos.one.PLEOS_SDK_ENABLED" android:value="${pleosSdkEnabled}" />
         <uses-library android:name="android.car" android:required="false" />
         <receiver android:name=".platform.DepartureReminderReceiver" android:exported="false" />
         <!-- Parked activity: do not claim distractionOptimized for task editing, video or search. -->
-        <activity android:name=".MainActivity" android:exported="true" android:resizeableActivity="true">
+        <activity android:name=".MainActivity" android:exported="true" android:resizeableActivity="true" android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -1,0 +1,22 @@
+{
+  "language": "ja-JP",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 3.18,
+      "endSeconds": 5.74,
+      "text": "300メートル先右に曲がります"
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.04,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "ja-JP actual app spoken preview",
+    "startSeconds": 26.705551665,
+    "endSeconds": 49.501808208,
+    "expectSilence": false
+  }
+}

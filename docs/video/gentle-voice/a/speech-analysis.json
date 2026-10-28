@@ -1,0 +1,22 @@
+{
+  "language": "ko-KR",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 4.3,
+      "endSeconds": 7.3,
+      "text": " 약 300m 앞에서 우회전해주세요."
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.08,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "ko-KR actual app spoken preview",
+    "startSeconds": 38.638271763000006,
+    "endSeconds": 61.494685489000005,
+    "expectSilence": false
+  }
+}

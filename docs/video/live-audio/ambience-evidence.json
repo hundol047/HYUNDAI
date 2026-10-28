@@ -1,0 +1,53 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-10-26T12:06:22.162274+00:00",
+  "captureMethod": "scrcpy: continuous device frames and live Android output audio",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "locationSource": "not tested",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
+  "checks": [
+    {
+      "name": "focus session active",
+      "result": "passed",
+      "secondsSinceRecordingStart": 12.76
+    },
+    {
+      "name": "audible preset selected: 백색 소음",
+      "result": "passed",
+      "secondsSinceRecordingStart": 22.39
+    },
+    {
+      "name": "audible preset selected: 자연의 소리",
+      "result": "passed",
+      "secondsSinceRecordingStart": 40.17
+    },
+    {
+      "name": "audible preset selected: 잔잔한 톤",
+      "result": "passed",
+      "secondsSinceRecordingStart": 57.97
+    },
+    {
+      "name": "audible preset selected: 빗소리",
+      "result": "passed",
+      "secondsSinceRecordingStart": 75.8
+    },
+    {
+      "name": "audible preset selected: 계곡 소리",
+      "result": "passed",
+      "secondsSinceRecordingStart": 93.66
+    },
+    {
+      "name": "audible preset selected: 파도 소리",
+      "result": "passed",
+      "secondsSinceRecordingStart": 114.13
+    },
+    {
+      "name": "sound stopped and focus session retained",
+      "result": "passed",
+      "secondsSinceRecordingStart": 138.83
+    }
+  ],
+  "pleosValidated": false
+}

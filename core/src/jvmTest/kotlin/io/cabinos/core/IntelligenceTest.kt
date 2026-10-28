@@ -17,5 +17,5 @@ class IntelligenceTest {
     @Test fun farHazardsDoNotInterrupt() { assertFalse(HazardAlertGate().take(RankedHazard(hazard(),4000.0,.9),now)) }
     @Test fun waitingBudgetAccountsForReturnAndBuffer() { assertEquals(1920L,TimeOptimizer.calculate(now+2400000,now,300,180).availableSeconds) }
     @Test fun missingOrExpiredDepartureClampsToZero() { assertEquals(0L,TimeOptimizer.calculate(null,now,300).availableSeconds);assertEquals(0L,TimeOptimizer.calculate(now-1,now,300).availableSeconds) }
-    @Test fun recommendationsUseRoundTripAndRespectCategory() { val s=TimeOptimizer.calculate(now+1200000,now,300);val result=TimeOptimizer.recommend(DemoActivityRepository().activities(),s,"카페");assertEquals(1,result.size);assertEquals(540L,result.first().usableSeconds);assertFalse(result.first().feasible) }
+    @Test fun recommendationsUseRoundTripAndRespectCategory() { val s=TimeOptimizer.calculate(now+1200000,now,300);val result=TimeOptimizer.recommend(DemoActivityRepository().activities(),s,"카페");assertEquals(4,result.size);assertTrue(result.all {it.activity.category=="카페"});assertEquals(listOf(540L,300L,60L,0L),result.map {it.usableSeconds});assertFalse(result.first().feasible) }
 }

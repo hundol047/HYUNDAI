@@ -19,6 +19,7 @@ data class Guidance(
     val fix:NavFix?=null,val progressMeters:Double=0.0,val remainingMeters:Double=0.0,val remainingSeconds:Double=0.0,
     val nextInstruction:String="목적지를 검색해 주세요.",val turnSymbol:String="↑",val turnMeters:Double=0.0,val offRoute:Boolean=false,
     val rerouteRequired:Boolean=false,val directionUncertain:Boolean=false,val status:String="전 세계 목적지 검색 · OSM 도로 데이터",
+    val maneuverIndex:Int=0,
 )
 data class RouteProjection(val progressMeters:Double,val gapMeters:Double,val directionUncertain:Boolean=false)
 object NavigationGeometry {
@@ -88,8 +89,8 @@ object NavigationGeometry {
     /** Project onto a polyline, correctly wrapping longitude across the date line. */
     fun project(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null,headingWeight:Double=40.0,continuityWeight:Double=.2,expectedProgress:Double?=previous,maxGap:Double=Double.POSITIVE_INFINITY):Pair<Double,Double> = match(route,p,previous,heading,maxDelta,headingWeight,continuityWeight,expectedProgress,maxGap).let {it.progressMeters to it.gapMeters}
     fun match(route:DrivingRoute,p:NavPoint,previous:Double?=null,heading:Double?=null,maxDelta:Double?=null,headingWeight:Double=40.0,continuityWeight:Double=.2,expectedProgress:Double?=previous,maxGap:Double=Double.POSITIVE_INFINITY,ambiguityRadius:Double=0.0):RouteProjection {
-        var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY;var bestHeading=0.0
-        val nearbyCandidates=if(ambiguityRadius>0)mutableListOf<Pair<Double,Double>>() else null
+        var bestGap=Double.POSITIVE_INFINITY;var bestProgress=0.0;var bestScore=Double.POSITIVE_INFINITY
+        val nearbyCandidates=if(ambiguityRadius>0)mutableListOf<Double>() else null
         // Cumulative distances are ordered. Visit only the physically reachable window
         // on a GPS update, including segments that straddle either boundary.
         fun lowerBound(target:Double):Int {
@@ -113,17 +114,17 @@ object NavigationGeometry {
             val gap=hypot(ax+t*dx,ay+t*dy)
             val at=route.cumulative[i]+t*(route.cumulative[i+1]-route.cumulative[i])
             if(previous!=null&&maxDelta!=null&&abs(at-previous)>maxDelta)continue
-            val segmentHeading=if(heading!=null||nearbyCandidates!=null)((atan2(dx,dy)*180/PI)+360)%360 else 0.0
-            if(nearbyCandidates!=null&&gap<=ambiguityRadius)nearbyCandidates.add(at to segmentHeading)
+            val segmentHeading=if(heading!=null)((atan2(dx,dy)*180/PI)+360)%360 else 0.0
+            if(nearbyCandidates!=null&&gap<=ambiguityRadius)nearbyCandidates.add(at)
             val headingPenalty=if(heading!=null)headingWeight*(abs(delta(segmentHeading-heading))/180) else 0.0
             // At intersections prefer the nearby part of the route, not a later crossing.
             val score=gap+headingPenalty+(if(previous==null)0.0 else abs(at-(expectedProgress ?: previous))*continuityWeight)
             // Continuity must not select an implausibly distant segment when a
             // geographically plausible candidate exists inside the same window.
             val plausible=gap<=maxGap;val bestPlausible=bestGap<=maxGap
-            if((plausible&&!bestPlausible)||(plausible==bestPlausible&&score<bestScore)){bestScore=score;bestGap=gap;bestProgress=at;bestHeading=segmentHeading}
+            if((plausible&&!bestPlausible)||(plausible==bestPlausible&&score<bestScore)){bestScore=score;bestGap=gap;bestProgress=at}
         }
-        val ambiguous=nearbyCandidates?.any {(at,course)->abs(at-bestProgress)>max(45.0,ambiguityRadius*2)&&abs(delta(course-bestHeading))>=75}==true
+        val ambiguous=nearbyCandidates?.any {at->abs(at-bestProgress)>max(45.0,ambiguityRadius*2)}==true
         return RouteProjection(bestProgress,bestGap,ambiguous)
     }
 }
@@ -178,7 +179,7 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val matchingSpeed=fix.speedMps ?: recentProgressSpeed(fix.timestampMs)
         val uncertainCourse=heading==null&&fix.accuracy>10&&(matchingSpeed ?: 0.0) in 2.0..75.0&&previous!=null&&!state.offRoute
         val expected=state.progressMeters+if(uncertainCourse)matchingSpeed!!*elapsed.coerceAtMost(3.0) else 0.0
-        val projection=NavigationGeometry.match(r,fix.point,state.progressMeters,heading,maximumProgress,max(40.0,fix.accuracy*2),if(uncertainCourse).65 else continuityWeight,expected,max(45.0,fix.accuracy*2),if(heading==null&&fix.accuracy>20)fix.accuracy+5 else 0.0)
+        val projection=NavigationGeometry.match(r,fix.point,state.progressMeters,heading,maximumProgress,max(40.0,fix.accuracy*2),if(uncertainCourse).65 else continuityWeight,expected,max(45.0,fix.accuracy*2),if(heading==null)fix.accuracy+5 else 0.0)
         val at=projection.progressMeters;val gap=projection.gapMeters;val ambiguous=projection.directionUncertain
         val reversing=!ambiguous&&at+fix.accuracy<peakConfirmedProgress-60&&(fix.speedMps ?: 0.0)>=2
         val off=gap>max(45.0,fix.accuracy*2)||reversing
@@ -187,7 +188,9 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         val progress=if(off)state.progressMeters else at
         // Compare non-overlapping uncertainty bounds before calling motion a reversal.
         // A noisy accepted fix can otherwise set a false peak for every later fix.
-        if(!off){peakConfirmedProgress=max(peakConfirmedProgress,progress-fix.accuracy);lastOnRouteAt=fix.timestampMs
+        // Ambiguous matches are not a new confirmed anchor or speed observation.
+        // Otherwise a close hairpin can repeatedly renew the wrong search window.
+        if(!off&&!ambiguous){peakConfirmedProgress=max(peakConfirmedProgress,progress-fix.accuracy);lastOnRouteAt=fix.timestampMs
             // Bound both memory and per-fix work even for high-frequency providers.
             if(progressHistory.isEmpty()||fix.timestampMs-progressHistory.last().first>=250)progressHistory.addLast(fix.timestampMs to progress)
             while(progressHistory.isNotEmpty()&&(fix.timestampMs-progressHistory.first().first>12_000||progressHistory.size>64))progressHistory.removeFirst()
@@ -208,7 +211,7 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
                 done->NavigationLanguages.arrival(r.language,r.destinationAccessMeters)
                 next.type=="arrive"->NavigationLanguages.upcomingArrival(r.language,next.maneuver?.road.orEmpty())
                 else->next.instruction
-            },turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),
+            },turnMeters=(next.atMeters-progress).coerceAtLeast(0.0),maneuverIndex=nextStepIndex,
             offRoute=off,rerouteRequired=need,directionUncertain=ambiguous,status=when{ambiguous->"GPS 오차 안에 여러 도로가 있습니다 · 회전 안내 대기";done->"차량 경로 도착 · 안내 종료";off->"경로 이탈 확인 중 · 기존 회전 안내 중지";nearDestination&&!arrived->"목적지 부근 · 정확한 GPS를 기다리는 중";else->"GPS 주행 안내 · 정확도 약 ${fix.accuracy.toInt()}m · 교통 미반영 예상"})
     }
     private fun recentProgressSpeed(timestamp:Long):Double? {
@@ -223,9 +226,13 @@ class NavigationTracker(private val clock:()->Long=::platformNowMillis) {
         return (covariance/variance).takeIf {it.isFinite()&&it in 0.0..75.0}
     }
     fun tick(){if(state.active&&state.fix?.let {usable(it)}!=true){arrivalCount=0;state=state.copy(tracking=false,rerouteRequired=false,status="GPS 신호 대기 · 회전 안내 일시중지")}}
+    fun rerouteDelaySeconds():Long {
+        val previous=lastRerouteAt ?: return 0
+        return ((30_000-(clock()-previous)).coerceIn(0,30_000)+999)/1000
+    }
     fun takeReroute():Boolean {
         tick();if(!state.rerouteRequired||!state.tracking)return false
-        val now=clock();if(lastRerouteAt?.let {now-it<30_000}==true)return false
+        val now=clock();if(rerouteDelaySeconds()>0)return false
         lastRerouteAt=now;state=state.copy(rerouteRequired=false);return true
     }
     fun suspendTracking(){arrivalCount=0;progressHistory.clear();if(state.active)state=state.copy(tracking=false,fix=null,rerouteRequired=false,status="화면 밖에서는 GPS 안내 중지 · 복귀 후 위치 재확인")}

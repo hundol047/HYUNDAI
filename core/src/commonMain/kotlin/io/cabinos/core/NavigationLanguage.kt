@@ -23,7 +23,32 @@ object NavigationLanguages {
         val text=table.getValue("$type|$modifier|$exit")
         return text+(if(m.exit!=null&&m.exit>10&&type in listOf("roundabout","rotary"))" · #${m.exit}" else "")+if(m.road.isNotBlank())" · ${m.road.take(100)}" else ""
     }
-    fun spoken(tag:String,distance:String,instruction:String):String = navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance).replace("{instruction_one}",instruction)
+    fun spoken(tag:String,distance:String,instruction:String):String {
+        if(resolve(tag)=="ko") {
+            val parts=instruction.replace(Regex("[\\r\\n\\t]+")," ").trim().split(" · ",limit=2)
+            val action=parts.first()
+            val sentence=when(action) {
+                "좌회전 방향으로 합류"->"왼쪽 도로로 합류하세요."
+                "우회전 방향으로 합류"->"오른쪽 도로로 합류하세요."
+                "우회전 진입로 이용"->"오른쪽 진입로로 진입하세요."
+                "좌회전 진입로 이용"->"왼쪽 진입로로 진입하세요."
+                "좌회전","우회전","유턴","직진"->"${action}하세요."
+                "경로를 따라 출발"->"안내 경로를 따라 출발하세요."
+                "목적지 도착"->"목적지에 도착합니다."
+                else->when {
+                    action.endsWith("합류")->"${action}하세요."
+                    action.endsWith("이용")->"${action}하세요."
+                    action.endsWith("출구")->"${action}로 나가세요."
+                    action.endsWith("진입")->"${action}하세요."
+                    action.endsWith("완만하게")||action.endsWith("크게")->"${action} 회전하세요."
+                    else->"${action}하세요."
+                }
+            }
+            return "약 $distance 앞에서 $sentence"+parts.getOrNull(1)?.let {" ${it.replace(" · ",", ")} 방면입니다."}.orEmpty()
+        }
+        return navDistancePhrases.getValue(resolve(tag)).replace("{distance}",distance)
+            .replace("{instruction_one}",instruction.replace(" · ",", ").replace(Regex("[\\r\\n\\t]+")," ").trim())
+    }
     fun upcomingArrival(tag:String,road:String=""):String = navDestinationLabels.getValue(resolve(tag))+
         if(road.isNotBlank())" · ${road.take(100)}" else ""
     fun arrival(tag:String,accessMeters:Double):String {
@@ -39,6 +64,10 @@ enum class NavigationVoiceAction { SEARCH, REGIONAL, SELECT, START, STOP, REPEAT
 data class NavigationVoiceCommand(val action:NavigationVoiceAction,val query:String="",val index:Int=-1)
 /** Exact short commands never consume a shop name that merely contains a command word. */
 object NavigationVoice {
+    fun isNavigationRequest(raw:String):Boolean {
+        if(parse(raw).action!=NavigationVoiceAction.SEARCH)return true
+        return Regex("길\\s*(찾|안내|알려)|찾아\\s*줘|검색해|안내해|데려다|navigate to|directions to",RegexOption.IGNORE_CASE).containsMatchIn(raw)
+    }
     fun parse(raw:String):NavigationVoiceCommand {
         val t=raw.trim().take(180).lowercase().trimEnd('.','!','?','。','！','？')
         val phrases=mapOf(
@@ -52,7 +81,9 @@ object NavigationVoice {
         val numbers=listOf(listOf("1","one","first","일번","일 번","1번","첫 번째","uno","un","eins","一","一番"),listOf("2","two","second","이번","이 번","2번","두 번째","dos","deux","zwei","二","二番"),listOf("3","three","third","삼번","삼 번","3번","세 번째","tres","trois","drei","三","三番"),listOf("4","four","fourth","사번","사 번","4번","네 번째","cuatro","quatre","vier","四","四番"),listOf("5","five","fifth","오번","오 번","5번","다섯 번째","cinco","cinq","fünf","五","五番"),listOf("6","six","sixth","육번","육 번","6번","여섯 번째","seis","sechs","六","六番"))
         val number=numbers.indexOfFirst {t in it||t=="select ${it.first()}"||t=="${it.first()} 번"}
         if(number>=0)return NavigationVoiceCommand(NavigationVoiceAction.SELECT,index=number)
-        val query=raw.trim().take(180).replace(Regex("^(navigate to |directions to |find |검색 )",RegexOption.IGNORE_CASE),"").replace(Regex(" (길 찾아줘|길 찾아 줘|찾아줘|찾아 줘)[.!?]*$"),"").trim()
+        val query=raw.trim().take(180)
+            .replace(Regex("^(navigate to |directions to |find |검색 )",RegexOption.IGNORE_CASE),"")
+            .replace(Regex("(까지|으?로)?\\s*(가는\\s*길\\s*알려\\s*줘|길\\s*찾아\\s*줘|길\\s*안내해\\s*줘|안내해\\s*줘|검색해\\s*줘|찾아\\s*줘|데려다\\s*줘)[.!?]*$"),"").trim()
         return NavigationVoiceCommand(NavigationVoiceAction.SEARCH,query=if(query.length>=2)query else "")
     }
 }

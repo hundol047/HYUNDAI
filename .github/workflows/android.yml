@@ -48,7 +48,27 @@ jobs:
             app/build/screenshots/
   android-device:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - profile: stored-release
+            apk: apk/퓨처랩스_CabinOS_ONE_release.apk
+            package: io.cabinos.one
+          - profile: current-source-debug
+            apk: app/build/outputs/apk/debug/app-debug.apk
+            package: io.cabinos.one
+          - profile: current-source-release-test
+            apk: app/build/outputs/apk/release/app-release-runtime-test.apk
+            package: io.cabinos.one
+          - profile: phone-preview
+            apk: preview/퓨처랩스_CabinOS_ONE_preview.apk
+            package: io.cabinos.one.preview
+          - profile: phone-preview-api33
+            apk: preview/퓨처랩스_CabinOS_ONE_preview.apk
+            package: io.cabinos.one.preview
+            api: 33
     # The ordinary Android emulator validates APK execution, not Pleos services.
     if: github.event_name == 'push'
     steps:
@@ -57,24 +77,61 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+        if: startsWith(matrix.profile, 'current-source-')
+      - name: Build current source with official SDK for device smoke testing
+        if: startsWith(matrix.profile, 'current-source-')
+        run: |
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
+          # Release the compiler/Gradle heap before starting a memory-heavy emulator.
+          ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleDebug --console=plain
+      - name: Build optimized release and sign only for isolated runtime testing
+        if: matrix.profile == 'current-source-release-test'
+        run: |
+          ./gradlew --no-daemon -Pkotlin.compiler.execution.strategy=in-process -PpleosSdk=true :app:assembleRelease --console=plain
+          ./gradlew --no-daemon -q -PpleosSdk=true :app:signingReport > "$RUNNER_TEMP/runtime-signing-report.txt"
+          runtime_debug_store="$(awk '/^Variant: / { selected = ($2 == "debug") } selected && /^Store: / { sub(/^Store: /, ""); print; exit }' "$RUNNER_TEMP/runtime-signing-report.txt")"
+          if ! test -f "$runtime_debug_store"; then echo "::error title=Runtime signing::Gradle debug keystore was not found"; exit 1; fi
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$runtime_debug_store" --ks-key-alias androiddebugkey --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-release-runtime-test.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify app/build/outputs/apk/release/app-release-runtime-test.apk
       - name: Enable runner KVM access
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Install and record the exact signed candidate APK
+      - name: Install and record the selected APK (debug is test-only)
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ matrix.api || 35 }}
           arch: x86_64
           target: default
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/android-device-demo
+          emulator-options: -no-window -show-kernel -verbose -gpu swangle -feature -Vulkan -noaudio -no-boot-anim -camera-back none
+          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk "${{ matrix.apk }}" --package "${{ matrix.package }}" --output artifacts/android-device-demo
+      - name: Report runner resource failures
+        if: failure()
+        shell: bash
+        run: |
+          free -m
+          ps -eo pid,comm,rss --sort=-rss | head -12 || true
+          diagnostic="$(sudo dmesg | grep -Ei 'out of memory|oom-kill|killed process|segfault|general protection|trap' | tail -8 || true)"
+          if [ -n "$diagnostic" ]; then
+            diagnostic="${diagnostic//'%'/'%25'}"
+            diagnostic="${diagnostic//$'\n'/'%0A'}"
+            echo "::error title=Runner process diagnostics::$diagnostic"
+          fi
+      - name: Retain native emulator crash evidence
+        if: failure()
+        shell: bash
+        run: |
+          if test -d /tmp/android-runner; then
+            mkdir -p artifacts/android-device-demo/emulator-crash
+            cp -a /tmp/android-runner/. artifacts/android-device-demo/emulator-crash/
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: CabinOS-Android-APK-device-video
+          name: CabinOS-Android-APK-device-video-${{ matrix.profile }}
           path: artifacts/android-device-demo/
   pleos-device:
     name: Official Pleos boot diagnostics
@@ -119,7 +176,7 @@ jobs:
           adb start-server
           test -f "$HOME/.android/adbkey.pub"
           mkdir -p artifacts/pleos-device
-          "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
+          "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -show-kernel -verbose -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
           echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
           python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
       - name: Record actual SDK preview without claiming full scenario acceptance
@@ -132,7 +189,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          test "$GITHUB_REF_NAME" = feat/pleos-vehicle-state
+          test "$GITHUB_REF_NAME" = main
           python3 - <<'PY'
           import json
           from pathlib import Path

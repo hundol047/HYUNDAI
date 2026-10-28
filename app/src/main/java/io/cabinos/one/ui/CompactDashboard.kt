@@ -10,6 +10,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.cabinos.core.*
 
+internal fun compactWindow(widthDp:Float,heightDp:Float,fontScale:Float):Boolean {
+    val scale=fontScale.coerceAtLeast(1f)
+    return widthDp/scale<840f || heightDp/scale<520f
+}
+
 val LocalCompactWindow = staticCompositionLocalOf { false }
 
 /** Single-column layout for Pleos one-cell windows and phones; no minimum landscape width. */
@@ -29,15 +34,19 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
             ActionButton("시간 설정",{timeDialog=true},Modifier.fillMaxWidth())
         }
         val session=s.session?.takeIf {it.status==SessionStatus.RUNNING || it.status==SessionStatus.PAUSED}
+        if(session==null) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
+        val cabin by vm.cabin.state.collectAsStateWithLifecycle()
+        CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         if(session!=null) CompactSession(s,vm,session) else {
             listOf(SessionKind.FOCUS to s.preferences.focusMinutes,SessionKind.RELAX to s.preferences.relaxMinutes,SessionKind.AUDIO to 15).forEach { (kind,minutes) ->
                 SurfacePanel(Modifier.fillMaxWidth()) {
                     Text("${kind.label} 모드",color=White,fontSize=20.sp)
                     Text("추천 ${minOf(minutes.toLong(),s.schedule.availableSeconds/60)}분",color=Mint)
-                    ActionButton("${kind.label} 시작",{vm.start(kind,minutes)},Modifier.fillMaxWidth(),enabled=s.schedule.availableSeconds>0)
+                    ActionButton("${kind.label} 시작",{vm.start(kind,minutes)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed && s.schedule.availableSeconds>=60)
                 }
             }
         }
+        if(session!=null) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         ActionButton(if(vm.automotive) "차량 내비게이션에서 주변 찾기" else "지도에서 주변 찾기",onMap,Modifier.fillMaxWidth())
         VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=12.sp)
@@ -53,17 +62,13 @@ val LocalCompactWindow = staticCompositionLocalOf { false }
         Text("${session.kind.label} 세션",color=Mint,fontSize=22.sp)
         Text(timeText(session.remainingSeconds),color=White,fontSize=52.sp)
         Text("출발 준비 ${s.preferences.departureBufferMinutes}분 전 자동 종료",color=Muted,fontSize=13.sp)
-        Row(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-            ActionButton(if(session.status==SessionStatus.RUNNING) "일시정지" else "계속",{vm.engine.pauseOrResume()},Modifier.weight(1f))
-            ActionButton("종료",{vm.engine.endSession()},Modifier.weight(1f),color=Muted)
-        }
+        SessionActionButtons(s,{vm.engine.pauseOrResume()},{vm.engine.endSession()})
         if(session.kind==SessionKind.RELAX) Text(if((s.nowMs/4000)%2==0L) "천천히 들이쉬세요" else "편안하게 내쉬세요",color=Mint)
-        listOf("백색 소음","자연의 소리","잔잔한 톤").forEach { name ->
-            ActionButton(if(audio==name) "$name 중지" else name,{vm.toggleAudio(name)},Modifier.fillMaxWidth(),enabled=session.status==SessionStatus.RUNNING)
-        }
+        AmbientControls(vm,session.status==SessionStatus.RUNNING)
         if(session.kind==SessionKind.FOCUS) {
-            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),label={Text("이번 시간에 할 일")},singleLine=true)
-            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=task.isNotBlank())
+            FocusTaskPresets(s.parkedAllowed,vm::addTask)
+            OutlinedTextField(task,{task=it.take(100)},Modifier.fillMaxWidth(),enabled=s.parkedAllowed,label={Text("이번 시간에 할 일")},singleLine=true)
+            ActionButton("할 일 추가",{vm.addTask(task);task=""},Modifier.fillMaxWidth(),enabled=s.parkedAllowed&&task.isNotBlank())
             tasks.forEach { item ->
                 Row(Modifier.fillMaxWidth()) {
                     Checkbox(item.done,{vm.toggleTask(item)})

@@ -50,7 +50,7 @@ object TimeOptimizer {
     fun recommend(activities: List<NearbyActivity>, schedule: SharedSchedule, category: String): List<ActivityOption> = activities
         .filter { category == "전체" || it.category == category }
         .map { a ->
-            val usable = (schedule.waitingSeconds - schedule.bufferSeconds - 2 * a.oneWaySeconds).coerceAtLeast(0)
-            ActivityOption(a, usable, usable >= a.minimumActivitySeconds)
+            val usable = (schedule.waitingSeconds - schedule.bufferSeconds - a.roundTripSeconds).coerceAtLeast(0)
+            ActivityOption(a, usable, (a.simulated || a.walking != null) && usable >= a.minimumActivitySeconds)
         }.sortedWith(compareByDescending<ActivityOption> { it.feasible }.thenBy { it.activity.oneWaySeconds })
 }

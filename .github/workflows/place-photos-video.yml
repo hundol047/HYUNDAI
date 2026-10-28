@@ -1,0 +1,35 @@
+name: Place photos APK recording
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths:
+      - preview/퓨처랩스_CabinOS_ONE_preview.apk
+      - scripts/record_place_photos.py
+      - .github/workflows/place-photos-video.yml
+permissions:
+  contents: read
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Execute the published preview and record continuous device frames
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: default
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -feature -Vulkan -noaudio -no-boot-anim -camera-back none
+          script: python3 scripts/record-android-demo.py --serial emulator-5554 --apk preview/퓨처랩스_CabinOS_ONE_preview.apk --package io.cabinos.one.preview --place-photos --output artifacts/place-photos
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: place-photos-execution
+          path: artifacts/place-photos/

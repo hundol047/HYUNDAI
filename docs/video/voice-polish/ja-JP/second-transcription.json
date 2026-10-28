@@ -1,0 +1,6 @@
+{
+  "model": "faster-whisper medium CPU int8; no initial prompt; transcription is not human review",
+  "transcription": [
+    "300メートル先右に曲がります。"
+  ]
+}

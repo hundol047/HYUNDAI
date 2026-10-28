@@ -1,0 +1,53 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-10-26T09:37:26.510709+00:00",
+  "captureMethod": "adb shell screenrecord: continuous device frames",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "locationSource": "emulator geo fix: Paris, NOT actual GPS",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
+  "checks": [
+    {
+      "name": "category filter selected: 카페",
+      "result": "passed",
+      "secondsSinceRecordingStart": 22.32
+    },
+    {
+      "name": "live cafe list from simulated Paris GPS",
+      "result": "passed",
+      "secondsSinceRecordingStart": 26.66
+    },
+    {
+      "name": "Flore actual photo loaded",
+      "result": "passed",
+      "secondsSinceRecordingStart": 30.99
+    },
+    {
+      "name": "second cafe actual photo loaded",
+      "result": "passed",
+      "secondsSinceRecordingStart": 41.7
+    },
+    {
+      "name": "category filter selected: 산책",
+      "result": "passed",
+      "secondsSinceRecordingStart": 49.84
+    },
+    {
+      "name": "park actual photo loaded",
+      "result": "passed",
+      "secondsSinceRecordingStart": 59.08
+    },
+    {
+      "name": "category filter selected: 쇼핑",
+      "result": "passed",
+      "secondsSinceRecordingStart": 66.89
+    },
+    {
+      "name": "category filter selected: 카페",
+      "result": "passed",
+      "secondsSinceRecordingStart": 76.02
+    }
+  ],
+  "pleosValidated": false
+}

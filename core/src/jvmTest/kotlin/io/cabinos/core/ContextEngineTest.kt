@@ -43,6 +43,17 @@ class ContextEngineTest {
     @Test fun changingChargeEstimateShortensActiveSession() { park(true);engine.startSession(SessionKind.FOCUS,25);send(charging=true,remaining=600);assertEquals(300L,engine.state.value.session!!.remainingSeconds) }
     @Test fun relaxationKeepsBothServicesActive() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.RELAX,30);assertEquals(VehicleContext.RESTING,engine.state.value.context);assertTrue(engine.state.value.stopSenseActive && engine.state.value.cabinActive) }
     @Test fun resumingDriveSuspendsSessionAndRejectsResume() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,25);send(Gear.DRIVE,30.0);assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status);assertFalse(engine.pauseOrResume());assertTrue(engine.state.value.echoRoadActive) }
+    @Test fun voiceCabinSessionClearsPreviousOutdoorPlanLikeStartButton() {
+        park();engine.setWaitingMinutes(25)
+        for(command in listOf("20분 집중 모드 켜줘","20분 휴식 모드 켜줘")) {
+            assertTrue(engine.selectActivity("cafe"))
+            assertTrue(engine.state.value.schedule.returnSeconds>0)
+            engine.assistant(command)
+            assertNull(engine.state.value.selectedActivityId)
+            assertEquals(0L,engine.state.value.schedule.returnSeconds)
+            assertEquals(1200L,engine.state.value.session!!.durationSeconds)
+        }
+    }
     @Test fun assistantCannotOverrideDrivingRestrictions() { send(Gear.DRIVE,40.0);engine.assistant("25분 집중 모드 켜줘");engine.assistant("15분 휴식 모드 시작해 줘");assertNull(engine.state.value.session);assertFalse(engine.state.value.parkedAllowed) }
     @Test fun assistantDepartureDoesNotFabricateVehicleMotion() { park();engine.assistant("이제 출발할게");assertEquals(VehicleContext.PARKED,engine.state.value.context) }
     @Test fun departureAlertsAreSingleAndSynchronized() { park();engine.setWaitingMinutes(5);assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context);val count=engine.state.value.events.count{it.name=="DepartureApproaching"};engine.tick();assertEquals(1,count);assertEquals(count,engine.state.value.events.count{it.name=="DepartureApproaching"}) }
@@ -74,5 +85,157 @@ class ContextEngineTest {
         assertEquals(600L,engine.state.value.session!!.remainingSeconds)
         send(charging=true,remaining=300);assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
         send(Gear.DRIVE,60.0);assertTrue(engine.state.value.echoRoadActive);assertFalse(engine.state.value.cabinActive)
+    }
+    @Test fun drivingClearsPreviousParkingDeadlines() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(70);now+=1600;real(70);engine.setChargeTarget(80);engine.setWaitingMinutes(30)
+        real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+        real(80,Gear.DRIVE,30.0);assertNull(engine.state.value.schedule.departureAtMs)
+        real(60);now+=1600;real(60);engine.setWaitingMinutes(30)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        assertNotEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
+        assertEquals(80,engine.state.value.chargeTargetPercent)
+    }
+    @Test fun restoreRejectsPastDeparture() {
+        engine.restore(Preferences(),null,emptyList(),now-1)
+        assertNull(engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun trafficStopAndUnknownPreserveParkingPlan() {
+        park();engine.setWaitingMinutes(30);val deadline=engine.state.value.schedule.departureAtMs
+        send(Gear.DRIVE,0.0);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        send(connected=false);assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+    }
+    @Test fun explicitWaitingPlanReplacesExpiredSocAndRouteDeadlines() {
+        fun real() = engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real();now+=1600;real();engine.setChargeTarget(80);engine.setArrivalInMinutes(10)
+        engine.updateNavigationEstimate(900,1000,now)
+        repeat(301) { now+=1000;real() }
+        assertTrue(engine.setWaitingMinutes(30));assertTrue(engine.state.value.schedule.availableSeconds>0)
+        now+=1000;real();assertTrue(engine.state.value.schedule.availableSeconds>0)
+    }
+    @Test fun drivingDiscardsPastArrivalTarget() {
+        park();engine.setArrivalInMinutes(1);now+=61000;send(Gear.DRIVE,20.0)
+        assertNull(engine.state.value.arrivalTargetMs)
+    }
+    @Test fun chargingCountdownDoesNotRepeatDepartureAnnouncements() {
+        send(charging=true,remaining=300)
+        repeat(10) { now+=1000;send(charging=true,remaining=299L-it) }
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+        assertEquals(1,engine.state.value.events.count { it.name=="DepartureApproaching" })
+    }
+    @Test fun materialChargeEstimateJumpAnnouncesOnceMore() {
+        send(charging=true,remaining=1200);now+=1000;send(charging=true,remaining=1199)
+        send(charging=true,remaining=2100)
+        assertEquals(2,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
+    @Test fun repeatedDrivingSamplesDoNotRecreateParkingSocDeadline() {
+        park();engine.setChargeTarget(80)
+        repeat(3) {
+            now+=1000
+            engine.acceptVehicle(VehicleSample(gear=Gear.DRIVE,speedKph=30.0,parkingReliable=true,batteryPercent=80,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+            assertNull(engine.state.value.schedule.departureAtMs)
+        }
+    }
+    @Test fun reachedSocGoalDoesNotBlockNextStopUntilRearmed() {
+        fun real(soc:Int,gear:Gear=Gear.PARK,speed:Double=0.0) = engine.acceptVehicle(VehicleSample(gear=gear,speedKph=speed,parkingReliable=true,batteryPercent=soc,pleosSoc=true,timestampMs=now,source=DataSource.VEHICLE))
+        real(80);now+=1600;real(80);engine.setChargeTarget(80)
+        real(80,Gear.DRIVE,20.0);real(80);now+=1600;real(80)
+        engine.setWaitingMinutes(30);now+=1000;real(80)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        real(70);real(80);assertEquals(0L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun expiredRouteDoesNotOverrideExplicitWaitingOnNextNavigationRead() {
+        park();engine.setArrivalInMinutes(10);engine.updateNavigationEstimate(900,1000,now)
+        engine.setWaitingMinutes(30);now+=1000;send();engine.updateNavigationEstimate(900,1000,now)
+        assertTrue(engine.state.value.schedule.availableSeconds>0)
+        engine.setArrivalInMinutes(20);engine.updateNavigationEstimate(1000,1000,now)
+        assertEquals(0L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun unchangedChargeEstimateDoesNotSlideAfterOneMinute() {
+        send(charging=true,remaining=1200);val deadline=engine.state.value.schedule.departureAtMs
+        repeat(61) { now+=1000;send(charging=true,remaining=1200) }
+        assertEquals(deadline,engine.state.value.schedule.departureAtMs)
+        assertEquals(1,engine.state.value.events.count { it.name=="ChargingUpdated" })
+    }
+    @Test fun drivingClearsOldWalkingReservationBeforeNextStop() {
+        park();engine.setWaitingMinutes(40);assertTrue(engine.selectActivity("cafe"))
+        assertTrue(engine.state.value.schedule.returnSeconds>0)
+        send(Gear.DRIVE,0.0);assertNotNull(engine.state.value.selectedActivityId)
+        send(Gear.DRIVE,40.0);park();engine.setWaitingMinutes(40)
+        assertNull(engine.state.value.selectedActivityId)
+        assertEquals(0L,engine.state.value.schedule.returnSeconds)
+        assertEquals(2100L,engine.state.value.schedule.availableSeconds)
+    }
+    @Test fun absoluteArrivalTargetPreservesClockTimeAndRejectsPastOrDriving() {
+        park();val target=now+3_650_000
+        assertTrue(engine.setArrivalAt(target));assertEquals(target,engine.state.value.arrivalTargetMs)
+        assertFalse(engine.setArrivalAt(now-1));assertEquals(target,engine.state.value.arrivalTargetMs)
+        send(Gear.DRIVE,40.0);assertFalse(engine.setArrivalAt(target))
+    }
+    @Test fun spokenSessionControlsDoNotRestartFocusOrBypassParking() {
+        park();engine.setWaitingMinutes(40)
+        engine.assistant("25분 집중 시작")
+        val id=engine.state.value.session!!.id
+        engine.assistant("집중 일시정지")
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        engine.assistant("집중 계속")
+        assertEquals(id,engine.state.value.session!!.id)
+        assertEquals(SessionStatus.RUNNING,engine.state.value.session!!.status)
+        engine.assistant("집중 종료")
+        assertNull(engine.state.value.session)
+        send(Gear.DRIVE,0.0);engine.assistant("집중 시작")
+        assertNull(engine.state.value.session);assertFalse(engine.state.value.parkedAllowed)
+    }
+    @Test fun spokenDestinationSuffixKeepsOnlyThePlaceName() {
+        for(text in listOf("서울역으로 길찾아줘","서울역 길 찾아 줘","서울역 검색해줘"))
+            assertEquals("서울역",NavigationVoice.parse(text).query)
+    }
+
+    @Test fun extensionKeepsDepartureAndPreparationBuffer() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,12)
+        val departure=engine.state.value.schedule.departureAtMs
+        assertTrue(engine.extendSession())
+        assertEquals(900L,engine.state.value.session!!.remainingSeconds)
+        assertEquals(900L,engine.state.value.session!!.durationSeconds)
+        assertEquals(departure,engine.state.value.schedule.departureAtMs)
+        assertFalse(engine.extendSession())
+    }
+    @Test fun extendingPausedSessionDoesNotResumeOrCountPauseAsActivity() {
+        park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.RELAX,10)
+        now+=2000;send();engine.pauseOrResume()
+        assertTrue(engine.extendSession())
+        val s=engine.state.value.session!!
+        assertEquals(SessionStatus.PAUSED,s.status)
+        assertEquals(900L,s.durationSeconds)
+        assertEquals(898L,s.remainingSeconds)
+        now+=1000;send();assertEquals(s.remainingSeconds,engine.state.value.session!!.remainingSeconds)
+    }
+    @Test fun extensionFailsClosedOnExpiredVehicleSignal() {
+        park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,10)
+        now+=5001
+        assertFalse(engine.extendSession())
+        assertFalse(engine.state.value.parkedAllowed)
+        assertEquals(600L,engine.state.value.session!!.durationSeconds)
+    }
+    @Test fun fractionalResumeSlackCannotOfferMeaninglessExtension() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,15)
+        now+=250;send();engine.pauseOrResume()
+        now+=1000;send();engine.pauseOrResume()
+        now+=750;send()
+        assertEquals(1L,engine.state.value.schedule.availableSeconds-engine.state.value.session!!.remainingSeconds)
+        assertFalse(engine.extendSession())
+    }
+    @Test fun expiredPausedSessionDoesNotReportSuccessfulResume() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,10)
+        engine.pauseOrResume();engine.setWaitingMinutes(5)
+        assertFalse(engine.pauseOrResume())
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        assertEquals("다시 시작할 수 있는 세션이 없습니다.",engine.assistant("계속"))
+    }
+    @Test fun completedSessionCannotBePausedOrResumed() {
+        park();engine.setWaitingMinutes(20);engine.startSession(SessionKind.FOCUS,1)
+        repeat(61){now+=1000;send()}
+        assertEquals(SessionStatus.COMPLETED,engine.state.value.session!!.status)
+        assertFalse(engine.pauseOrResume())
     }
 }

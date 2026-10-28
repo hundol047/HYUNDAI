@@ -98,4 +98,11 @@ class PlatformTest {
         assertFalse(reminders.deliver(old))
         assertTrue(reminders.deliver(c.getSharedPreferences("departure-reminder",Context.MODE_PRIVATE).getString("token",null)))
     }
+    @Test fun asymmetricWalkingReminderUsesInboundLegNotHalfOfRoundTrip() {
+        val c=context();val reminders=DepartureReminders(c) {1_000_000L}
+        val departure=3_000_000L
+        val schedule=TimeOptimizer.calculate(departure,1_000_000,300,600).copy(inboundSeconds=480)
+        reminders.sync(AppState(parkedAllowed=true,selectedActivityId="cafe",schedule=schedule))
+        assertEquals(departure-780_000,shadowOf(c.getSystemService(AlarmManager::class.java)).nextScheduledAlarm!!.triggerAtTime)
+    }
 }

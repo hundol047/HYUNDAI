@@ -49,49 +49,70 @@ class PleosVehicleReader internal constructor(
                 // Separate timeout/error path: an unavailable Brake domain must not block EvBattery.
                 val energyClient = client
                 launch {
+                    var capability: Boolean? = null
+                    var checkedAt=0L
                     while(isActive && token == generation) {
                         try {
                             val percent = withTimeout(3_000) {
-                                if(awaitCallback<Boolean> { done, failed -> energyClient.canReadEnergy(done,failed) })
+                                if(capability==null || (capability==false && clock()-checkedAt !in 0..29_999)) {
+                                    capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadEnergy(done,failed) }
+                                    checkedAt=clock()
+                                }
+                                if(capability==true)
                                     awaitCallback<Int?> { done, failed -> energyClient.readEnergy(done,failed) } else null
                             }
+                            if(capability==true && (percent==null || percent !in 0..100)) capability=null
                             mutableEnergy.value = if(percent != null && percent in 0..100)
                                 mutableEnergy.value.copy(percent=percent,readAtMs=clock(),message="Pleos EvBattery 수신") else mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 미지원 또는 유효한 값 없음")
-                        } catch (_: TimeoutCancellationException) { mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 응답 시간 초과") }
+                        } catch (_: TimeoutCancellationException) { capability=null;mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 응답 시간 초과") }
                         catch(error: CancellationException) { throw error }
-                        catch (_: Exception) { mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 읽기 실패 · 권한/지원 확인") }
+                        catch (_: Exception) { capability=null;mutableEnergy.value = mutableEnergy.value.copy(percent=null,readAtMs=null,message="EvBattery 읽기 실패 · 권한/지원 확인") }
                         delay(1_000)
                     }
                 }
                 launch {
+                    var capability: Boolean? = null
+                    var checkedAt=0L
                     while (isActive && token == generation) {
                         val value = try {
                             withTimeout(3_000) {
-                                if(awaitCallback<Boolean> { done, failed -> energyClient.canReadChargeSwitch(done,failed) })
+                                if(capability==null || (capability==false && clock()-checkedAt !in 0..29_999)) {
+                                    capability=awaitCallback<Boolean> { done, failed -> energyClient.canReadChargeSwitch(done,failed) }
+                                    checkedAt=clock()
+                                }
+                                if(capability==true)
                                     awaitCallback<Boolean?> { done, failed -> energyClient.readChargeSwitch(done,failed) } else null
                             }
-                        } catch (_: TimeoutCancellationException) { null }
+                        } catch (_: TimeoutCancellationException) { capability=null;null }
                         catch (error: CancellationException) { throw error }
-                        catch (_: Exception) { null }
+                        catch (_: Exception) { capability=null;null }
+                        if(capability==true && value==null) capability=null
                         mutableEnergy.value=mutableEnergy.value.copy(chargeSwitchOn=value,chargeReadAtMs=if(value!=null)clock() else null)
                         delay(1_000)
                     }
                 }
+                var brakeCapability: Boolean? = null
+                var brakeCheckedAt=0L
                 while (isActive && token == generation) {
                     try {
                         val (supported, pressed) = withTimeout(3_000) {
-                            val supported = awaitCallback<Boolean> { done, failed -> client.canRead(done, failed) }
+                            if(brakeCapability==null || (brakeCapability==false && clock()-brakeCheckedAt !in 0..29_999)) {
+                                brakeCapability=awaitCallback<Boolean> { done, failed -> client.canRead(done, failed) }
+                                brakeCheckedAt=clock()
+                            }
+                            val supported = brakeCapability==true
                             supported to if(supported) awaitCallback<Boolean?> { done, failed -> client.read(done, failed) } else null
                         }
+                        if(supported && pressed==null) brakeCapability=null
                         if (!supported) {
                             mutable.value = PleosReadState(true,"Pleos 브레이크 읽기 미지원")
                         } else {
                             mutable.value = if (pressed == null) PleosReadState(true,"Pleos 브레이크 값 없음")
                                 else PleosReadState(true,"Pleos Vehicle SDK 브레이크 수신",pressed,clock())
                         }
-                    } catch (_: TimeoutCancellationException) { mutable.value = PleosReadState(true,"Pleos SDK 응답 시간 초과") }
+                    } catch (_: TimeoutCancellationException) { brakeCapability=null;mutable.value = PleosReadState(true,"Pleos SDK 응답 시간 초과") }
                     catch (error: CancellationException) { throw error }
-                    catch (_: Exception) { mutable.value = PleosReadState(true,"Pleos SDK 읽기 실패 · 서비스/권한 확인") }
+                    catch (_: Exception) { brakeCapability=null;mutable.value = PleosReadState(true,"Pleos SDK 읽기 실패 · 서비스/권한 확인") }
                     delay(1_000)
                 }
             } catch (error: CancellationException) { throw error }

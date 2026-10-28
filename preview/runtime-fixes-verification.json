@@ -1,0 +1,387 @@
+{
+  "sourceCommit": "d32b178274e67ec0e138f0210593abd105be382d",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
+  "tests": {
+    "core": {
+      "tests": 175,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 255,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "commands": [
+    {
+      "command": "./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest",
+      "result": "passed"
+    },
+    {
+      "command": "./gradlew -PpleosSdk=true :app:lintDebug :app:assemblePhonePreview",
+      "result": "passed"
+    }
+  ],
+  "registeredPhotoLiveCheck": "Wikimedia Commons metadata and thumbnail HTTP 200; test image, not a business catalog validation",
+  "nearbyLiveCheck": {
+    "reference": "public campus coordinate 37.279,127.908; not user GPS",
+    "PhotonCafeResults": 0,
+    "OverpassPrimary": "20s timeout",
+    "OverpassSecondary": "20s timeout",
+    "completeCoverage": false
+  },
+  "testEnvironment": "JVM / Robolectric Android framework and Compose; injected location and speech callbacks in tests",
+  "samePreviewSigningCertificate": true,
+  "physicalSamsungValidated": false,
+  "currentApkEmulatorVideoValidated": false,
+  "pleosDeviceValidated": false,
+  "submissionApkUnchanged": true,
+  "routeLiveCheck": {
+    "provider": "OSRM",
+    "httpStatus": 200,
+    "code": "Ok",
+    "distanceMeters": 90437.1,
+    "physicalDrive": false
+  },
+  "expandedMapVerification": "Robolectric touch, close and back in portrait and landscape; not a physical car display test",
+  "placePhotoLookupLiveCheck": {
+    "place": "Central Park",
+    "wikidata": "Q160409",
+    "photoFile": "Southwest corner of Central Park, looking east, NYC.jpg",
+    "coordinateDifferenceMeters": 70,
+    "renderedOnDevice": false
+  },
+  "naverImageApi": {
+    "httpStatus": 401,
+    "configured": false,
+    "completePlacePhotoCoverage": false
+  },
+  "categoryPhotos": {
+    "bundledCategories": [
+      "카페",
+      "식당",
+      "산책",
+      "쇼핑"
+    ],
+    "actualVenuePhotoPreferred": true,
+    "representativeLabel": "업종 대표 이미지 · 실제 장소 사진 아님",
+    "offlineDecodeTestPassed": true
+  },
+  "rotationAudioTest": "Two Activity recreations retain running session and selected audio; background transition still stops audio and pauses session. Robolectric, not physical Samsung rotation.",
+  "ambientPresets": [
+    "백색 소음",
+    "자연의 소리",
+    "잔잔한 톤",
+    "빗소리",
+    "계곡 소리",
+    "파도 소리"
+  ],
+  "mapPerformance": "128 memory tiles; draw health scan throttled to 500ms; cold-network latency not benchmarked on S20+",
+  "recordedNatureAudio": "Four distinct licensed field recordings; piano removed; offline PCM playback",
+  "nearbyLocation": "Requires explicit accuracy <=50m and timestamp age <=10s; rejects invalid coordinates",
+  "liveTraffic": {
+    "enabledByDefault": false,
+    "singleSegmentOverlayImplemented": true,
+    "gatewayLiveHttpStatus": 200,
+    "gatewayUnauthorizedStatus": 401,
+    "gatewayKoreaRejectedStatus": 400,
+    "pythonTestsPassed": 14,
+    "publicGatewayDeployed": false,
+    "trafficAwareRouting": false,
+    "deviceLiveValidated": false
+  },
+  "driverNavigation": {
+    "autoExpandOnGuidanceStart": true,
+    "manualCollapsePreserved": true,
+    "largeTurnDistanceAndControls": true,
+    "expandedRerouteErrorVisible": true,
+    "cameraReferenceDataConnected": true,
+    "cameraDirectionalVoiceImplemented": false,
+    "cameraReferenceVoiceImplemented": true,
+    "speedHumpReferenceDataConnected": true,
+    "speedHumpCoverage": "South Korea public dataset; incomplete and age-filtered",
+    "commercialAppParityValidated": false,
+    "physicalDeviceValidated": false
+  },
+  "roadSafety": {
+    "checkedAt": "2026-10-25",
+    "datasets": [
+      {
+        "schema": 2,
+        "source": "https://www.data.go.kr/data/15028195/standard.do",
+        "coverage": "전국 제공자료 · 수록 누락 가능",
+        "asOf": "2026-10-25",
+        "rawSha256": "13591335595d2b755b36a7543169c137e1aac58dccfa07039757574576fdc529",
+        "audit": {
+          "inputRows": 141140,
+          "accepted": 82697,
+          "invalidRows": 5555,
+          "conflictingCoordinateRows": 17648,
+          "duplicateRows": 35240
+        },
+        "columns": [
+          "id",
+          "latitude",
+          "longitude",
+          "kind",
+          "road",
+          "recordDate",
+          "reportedSpeedKmh",
+          "advisory"
+        ],
+        "directionVerified": false,
+        "recordDateRange": {
+          "oldest": "2019-01-01",
+          "newest": "2026-08-27"
+        },
+        "activeAtImport": 39384,
+        "normalizedSha256": "fdab7593b5dec94d51753ab70e9ee1c5b7394b8d47bc16335d5f14b36bcecde7",
+        "transport": "user-uploaded ZIP",
+        "advisoryCounts": {
+          "none": 82697
+        }
+      },
+      {
+        "schema": 2,
+        "source": "https://www.data.go.kr/data/15028200/standard.do",
+        "coverage": "고정식 교통단속시설 · 이동식 제외",
+        "asOf": "2026-10-25",
+        "rawSha256": "fbdbdd2d7d1469b4d7a72ac85314457ee3815c0e4933d9c49f567ee72ce4c219",
+        "audit": {
+          "inputRows": 43764,
+          "accepted": 39827,
+          "invalidRows": 0,
+          "conflictingCoordinateRows": 3612,
+          "duplicateRows": 325
+        },
+        "columns": [
+          "id",
+          "latitude",
+          "longitude",
+          "kind",
+          "road",
+          "recordDate",
+          "reportedSpeedKmh",
+          "advisory"
+        ],
+        "directionVerified": false,
+        "recordDateRange": {
+          "oldest": "2021-09-24",
+          "newest": "2026-09-13"
+        },
+        "activeAtImport": 37267,
+        "normalizedSha256": "5a6ac243e3cdbb9a7f3bdc89d1756282dc389c57145c080c74388fd980e7f90f",
+        "transport": "official public download, two pages",
+        "advisoryCounts": {
+          "fixed": 29856,
+          "section_end": 216,
+          "section_start": 214,
+          "section": 200,
+          "none": 9341
+        }
+      }
+    ],
+    "cameraDownload": {
+      "expectedRows": 43764,
+      "receivedRows": 43764,
+      "crossPartIdenticalRows": 0,
+      "parts": [
+        {
+          "part": 1,
+          "rows": 21882,
+          "sha256": "74aea207c1dd4cb1e1ac72f2d802d5f44e2076109106bc2a81bea17ffc0e714f"
+        },
+        {
+          "part": 2,
+          "rows": 21882,
+          "sha256": "50ab0bf7e16feb47d65de3a9fe65d51a772289a6bb5f58d15a694e52e0509841"
+        }
+      ]
+    },
+    "bumpInvalidDetails": {
+      "coordinates": 3077,
+      "futureReferenceDate": 2478
+    },
+    "commercialNavigationParity": "not established",
+    "physicalDrivingValidated": false,
+    "cameraDirectionalVoiceImplemented": false,
+    "cameraReferenceVoiceImplemented": true
+  },
+  "stopPlan": {
+    "sharedPhoneVehiclePanel": true,
+    "departurePreservingExtension": true,
+    "explicitPlaceCancellation": true,
+    "physicalDeviceValidated": false
+  },
+  "walkingEchoRoad": {
+    "footRoundTripAndAsymmetricReturn": true,
+    "publicFootHttpProbes": [
+      "Pangyo",
+      "Seoul",
+      "Tokyo",
+      "New York",
+      "Paris street"
+    ],
+    "noRouteObserved": "Paris initial coordinates",
+    "echoLocalHttpValidated": true,
+    "pythonServerTestsPassed": 25,
+    "pythonScriptTestsPassed": 55,
+    "publicEchoServerDeployed": true,
+    "officialAccidentFeedConnected": true,
+    "koroadAuthenticatedApiValidated": false,
+    "physicalDeviceValidated": false
+  },
+  "echoConnection": {
+    "authenticatedStatusCheck": true,
+    "locationFreeCheck": true,
+    "dialogStaysOpenUntilDismissed": true,
+    "railwayPublicHealthStatus": 200,
+    "unauthenticatedStatusCode": 401,
+    "userCredentialLiveValidated": false,
+    "officialAccidentDatasetLoaded": true,
+    "serverTestsPassed": 25
+  },
+  "officialAccidentAreas": {
+    "checkedAt": "2026-10-26T04:53:54.606881+00:00",
+    "baseUrl": "https://hyundai-production-1222.up.railway.app",
+    "dataset": {
+      "historicalOnly": true,
+      "zoneCount": 1271,
+      "loadedRows": 1271,
+      "sha256": "ef9202e871b89a561b1a01a6b9921c12a2e2c00322284af1df1a7d1dc100b976",
+      "categories": {
+        "pedestrian": {
+          "count": 418,
+          "periodStart": 2023,
+          "periodEnd": 2025
+        },
+        "child_pedestrian": {
+          "count": 88,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        },
+        "icy": {
+          "count": 82,
+          "periodStart": 2021,
+          "periodEnd": 2025
+        },
+        "municipal": {
+          "count": 683,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        }
+      },
+      "source": "한국도로교통공단 교통사고정보 개방시스템",
+      "note": "Historical statistics; not live accidents or current ice conditions"
+    },
+    "queries": [
+      {
+        "case": "Seoul",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7341493",
+        "returnedZones": 8,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Gangwon",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7326013",
+        "returnedZones": 3,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Busan",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7333880",
+        "returnedZones": 16,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "Jeju",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7313571",
+        "returnedZones": 9,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "municipal",
+        "status": 200,
+        "requestedZoneId": "koroad-municipal-7341493",
+        "returnedZones": 8,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "pedestrian",
+        "status": 200,
+        "requestedZoneId": "koroad-pedestrian-7301669",
+        "returnedZones": 9,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "child_pedestrian",
+        "status": 200,
+        "requestedZoneId": "koroad-child_pedestrian-7302485",
+        "returnedZones": 5,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      },
+      {
+        "case": "icy",
+        "status": 200,
+        "requestedZoneId": "koroad-icy-7302515",
+        "returnedZones": 5,
+        "geometryAndPeriodMatch": true,
+        "truncated": false
+      }
+    ],
+    "unauthenticatedPrivateRisksStatus": 401,
+    "authenticatedUserKeyTested": false,
+    "physicalDrivingValidated": false
+  },
+  "placePhotos": {
+    "officialThumbnailHosts": true,
+    "registeredReferencesAndCoordinateMatchedNameSearch": true,
+    "repeatedCategoryStockRemoved": true,
+    "publicSourceHttpSamples": 4,
+    "allPlacePhotoCoverage": false,
+    "physicalDeviceValidated": false,
+    "alternateSourceRecovery": true,
+    "failedLookupRetryAfterSeconds": 60
+  },
+  "releaseReview": {
+    "missingCategoryFallback": true,
+    "gardenNatureReserveFallback": true,
+    "fallbackRadiusMeters": 2000,
+    "oldTrafficClearedOnDisconnect": true,
+    "liveNavigationHttpPassed": 15,
+    "physicalDeviceValidated": false,
+    "teamSignedLatestRelease": false
+  },
+  "finalUsability": {
+    "androidTests": 255,
+    "coreTests": 175,
+    "failures": 0,
+    "browserVoiceChecks": 17,
+    "audioRecordingsDistinct": true,
+    "rotationAndShortWindowTests": true,
+    "physicalDeviceValidated": false,
+    "keyboardReducedNavigationViewport": true,
+    "preciseGpsHairpinAmbiguityHoldsTurns": true,
+    "scriptTests": 57,
+    "serverTests": 25,
+    "destinationDraftSurvivesRotation": true,
+    "ambiguousGpsExcludedFromConfirmedHistory": true,
+    "sameHeadingGpsAmbiguityHoldsTurns": true,
+    "restoredNavigationTabsWaitForGraph": true,
+    "activeGuidanceNoticeUpdated": true
+  }
+}
