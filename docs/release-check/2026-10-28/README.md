@@ -61,3 +61,5 @@ python3 -m unittest discover -s server -v
 python3 -m unittest discover -s scripts/tests -v
 python3 scripts/check-navigation-live.py --output docs/release-check/2026-10-28/live-navigation.json
 ```
+
+[수정 소스 GitHub CI](https://github.com/hundol047/HYUNDAI/actions/runs/40654183365) 최종 통과. 현재 소스 debug 및 테스트 서명 release APK의 일반 Android 에뮬레이터 실행 검사도 통과했습니다. 공개 검토용 APK 자체의 S20+ 실기기 검사와 공식 Pleos 차량 이미지 검사는 별개이며 미수행입니다.

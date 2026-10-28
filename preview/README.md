@@ -8,7 +8,7 @@
 
 공식 SDK 포함 core 189개 + Android 299개 = **488개 통과**, 서버·도구 **85개 통과**. 지도·검색·경로 서버 실제 HTTP 표본 3건도 통과했습니다. lint 오류 0개, 기존 경고 14개입니다. release(미서명)와 휴대폰 검토본(테스트 서명) 빌드를 완료했습니다.
 
-[20개 점검 영역과 수정 근거](../docs/release-check/2026-10-28/README.md) · [검증 기록](runtime-review-verification.json). 현재 소스의 debug APK CI 실행 검사는 통과했고 릴리스 CI는 진행 중입니다. 새 검토용 APK 자체의 실제 S20+/Pleos 실행 검증이나 새 녹화는 아직 수행하지 않았습니다.
+[20개 점검 영역과 수정 근거](../docs/release-check/2026-10-28/README.md) · [검증 기록](runtime-review-verification.json). 수정 소스 CI와 debug·테스트 서명 release APK의 에뮬레이터 실행 검사가 통과했습니다. 새 검토용 APK 자체의 실제 S20+/Pleos 실행 검증이나 새 녹화는 아직 수행하지 않았습니다.
 
 ## 이전 30분 집중 점검
 

@@ -21,7 +21,7 @@
   "toolTestsPassed": 60,
   "liveHttpChecksPassed": 3,
   "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40654183365",
-  "sourceCiResult": "pending",
+  "sourceCiResult": "success",
   "physicalSamsungValidated": false,
   "officialPleosEmulatorValidated": false,
   "newPreviewDeviceExecutionVerified": false,
@@ -43,5 +43,6 @@
   "sourceDebugDeviceSmokePassed": true,
   "publicDownloadHashVerified": true,
   "qrDecodedToImmutableApk": true,
-  "apkUrl": "https://raw.githubusercontent.com/hundol047/HYUNDAI/f6fb0e259068ef3e72bd98820cdf54d5850330a5/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk"
+  "apkUrl": "https://raw.githubusercontent.com/hundol047/HYUNDAI/f6fb0e259068ef3e72bd98820cdf54d5850330a5/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk",
+  "sourceReleaseDeviceSmokePassed": true
 }
