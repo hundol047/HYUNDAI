@@ -257,7 +257,10 @@ class LiveNavigation(
                         } == true
                 )
                     return
-                if (f.timestampMs < lastFixTimestamp || (f.timestampMs == lastFixTimestamp && rejectedFixTimestamp != f.timestampMs)) return
+                val reconnecting = fix == null && rejectedFixTimestamp == null &&
+                    mutable.value.gpsConnection == GpsConnection.WAITING
+                if (f.timestampMs < lastFixTimestamp ||
+                    (f.timestampMs == lastFixTimestamp && rejectedFixTimestamp != f.timestampMs && !reconnecting)) return
                 receivedAt = clock()
                 if (!tracker.usable(f)) {
                     if(clock()-f.timestampMs in 0..10_000) {
@@ -448,7 +451,17 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
     }
 
     fun search(query: String, nearby: Boolean = false, more: Boolean = false) {
-        if (!canPlan() || !engine.state.value.networkAvailable) return
+        if (!canPlan()) return
+        if (query.isBlank()) {
+            mutable.value = mutable.value.copy(notice = "검색어 또는 위도,경도 좌표를 입력해 주세요.")
+            return
+        }
+        val coordinates = query.split(',').map { it.trim().toDoubleOrNull() }
+        val coordinateSearch = !more && coordinates.size == 2 && coordinates.all { it != null }
+        if (!coordinateSearch && !engine.state.value.networkAvailable) {
+            mutable.value = mutable.value.copy(notice = "장소 검색에는 인터넷 연결이 필요합니다. 기존 결과는 유지합니다.")
+            return
+        }
         if (more && (!mutable.value.hasMore || query != lastQuery || nearby != nearbySearch)) return
         val center = fix?.takeIf { tracker.usable(it) }?.point
         if (nearby && center == null) {
@@ -467,8 +480,10 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
             mutable.value =
                 mutable.value.copy(places = emptyList(), selectedPlace = null, hasMore = false)
         }
-        val coordinates = query.split(',').map { it.trim().toDoubleOrNull() }
-        if (!more && coordinates.size == 2 && coordinates.all { it != null }) {
+        mutable.value = mutable.value.copy(searchQuery = query)
+        lastQuery = query
+        nearbySearch = nearby
+        if (coordinateSearch) {
             val p = NavPoint(coordinates[0]!!, coordinates[1]!!)
             mutable.value =
                 mutable.value.copy(
@@ -487,9 +502,6 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 )
             return
         }
-        mutable.value = mutable.value.copy(searchQuery = query)
-        lastQuery = query
-        nearbySearch = nearby
         request { current ->
             var page =
                 service.search(
@@ -551,6 +563,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         )
             return
         val center = fix?.takeIf { tracker.usable(it) }?.point
+        cancelPendingDestination()
         cancelRequest()
         tracker.stop()
         publish()
@@ -799,6 +812,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     fun configure(search: String, route: String, accessToken: String = "") {
         if (canPlan()) {
+            cancelPendingDestination()
             cancelRequest()
             service.configure(search, route, accessToken)
             tracker.stop()
@@ -814,10 +828,15 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         }
     }
 
-    fun cancelPending() {
+    private fun cancelPendingDestination() {
         pendingStart = false
         pendingDestination = null
-        if (canPlan() && mutable.value.busy) {
+    }
+
+    fun cancelPending() {
+        val waitingForGps = pendingDestination != null
+        cancelPendingDestination()
+        if (canPlan() && (mutable.value.busy || waitingForGps)) {
             cancelRequest()
             mutable.value = mutable.value.copy(notice = "요청을 취소했습니다. 검색어나 목적지를 바꿀 수 있습니다.")
         }
@@ -878,6 +897,9 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     fun setForeground(active: Boolean) {
         if (!active) {
+            val pending = pendingDestination != null || mutable.value.busy && pendingStart
+            cancelPendingDestination()
+            if (pending) mutable.value = mutable.value.copy(notice = "화면을 떠나 대기 중인 안내 시작을 취소했습니다. 목적지를 다시 선택해 주세요.")
             cancelEchoCheck()
             echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
             mutable.value=mutable.value.copy(echoRisks=emptyList(),echoAhead=null)
@@ -941,6 +963,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
 
     fun setLanguage(tag: String) {
         if (!canPlan() || !NavigationLanguages.validTag(tag)) return
+        cancelPendingDestination()
         cancelVoice()
         cancelRequest()
         language = tag

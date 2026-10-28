@@ -163,6 +163,68 @@ class NavigationDetailTest {
             assertEquals("새 검색 결과",f.nav.state.value.places.single().name)
         }
     }
+    @Test fun changingPlanningContextCancelsDestinationWaitingForGps() {
+        for(action in listOf("regional","servers","language","background")) {
+            var routes=0
+            Fixture(object:NavigationService(){
+                override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {routes++;return route()}
+                override suspend fun regionalSearch(query:String,origin:NavPoint?)=RegionalSearchResult(listOf(destination),"Paris","Cafe")
+            }).use {f->
+                f.nav.navigateTo(destination)
+                when(action) {
+                    "regional"->f.nav.searchRegional("Cafe Paris")
+                    "servers"->f.nav.configure("https://nominatim.openstreetmap.org","https://router.project-osrm.org")
+                    "language"->f.nav.setLanguage("fr-FR")
+                    "background"->{f.nav.setForeground(false);f.nav.setForeground(true)}
+                }
+                f.idle();f.gps()
+                assertEquals("$action must cancel the old automatic destination",0,routes)
+                assertFalse(f.nav.state.value.guidance.active)
+            }
+        }
+    }
+    @Test fun reconnectCanReuseTheSameStillFreshFrameworkFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            shadowOf(f.manager).setLastKnownLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=5f;time=f.now;speed=0f
+            })
+            f.nav.locate();f.idle()
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+        }
+    }
+    @Test fun offlineCoordinatesAreLocalAndUpdateTheVisibleQuery() {
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage=error("no network")}).use {f->
+            f.engine.setConnectivity(network=false)
+            f.nav.search("48.85,2.35")
+            assertEquals(origin,f.nav.state.value.places.singleOrNull()?.point)
+            assertEquals("48.85,2.35",f.nav.state.value.searchQuery)
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+    @Test fun blankAndOfflineTextSearchExplainWhyWithoutErasingResults() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+            calls++;return PlaceSearchPage(listOf(destination),emptyList(),false)
+        }}).use {f->
+            f.nav.search("Cafe");f.idle()
+            f.nav.search("   ");f.idle()
+            assertEquals(1,calls);assertEquals(listOf(destination),f.nav.state.value.places)
+            assertTrue(f.nav.state.value.notice.contains("검색어"))
+            f.engine.setConnectivity(network=false);f.nav.search("Other cafe")
+            assertEquals(1,calls);assertEquals(listOf(destination),f.nav.state.value.places)
+            assertTrue(f.nav.state.value.notice.contains("인터넷"))
+        }
+    }
+    @Test fun cancellingGpsWaitReplacesThePendingInstruction() {
+        Fixture(NavigationService()).use {f->
+            f.nav.navigateTo(destination);f.nav.cancelPending()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("취소"))
+            f.gps();assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+
     private val origin=NavPoint(48.85,2.35)
     private val destination=NavPlace("검사용 가게",NavPoint(48.86,2.35))
     private fun route()=NavigationGeometry.route(destination,listOf(origin,destination.point),1200.0,180.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))
