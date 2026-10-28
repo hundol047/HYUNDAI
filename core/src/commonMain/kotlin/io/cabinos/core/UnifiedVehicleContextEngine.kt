@@ -315,8 +315,8 @@ class UnifiedVehicleContextEngine(
             c.contains("종료") || c.contains("끝내") -> if(state.value.parkedAllowed){endSession();"세션을 종료했습니다."}else "안전한 주차 확인 후 조작해 주세요."
             c.contains("일시정지") || c.contains("잠깐멈") -> if(state.value.session?.status==SessionStatus.RUNNING && pauseOrResume()) "세션을 일시정지했습니다." else "진행 중인 세션이 없습니다."
             c.contains("계속") || c.contains("다시시작") -> if(state.value.session?.status==SessionStatus.PAUSED && pauseOrResume()) "세션을 계속합니다." else "다시 시작할 수 있는 세션이 없습니다."
-            c.contains("집중") -> if (startSession(SessionKind.FOCUS, minutes ?: state.value.preferences.focusMinutes)) "집중 세션을 시작했습니다." else state.value.message
-            c.contains("휴식") -> if (startSession(SessionKind.RELAX, minutes ?: state.value.preferences.relaxMinutes)) "휴식 세션을 시작했습니다." else state.value.message
+            c.contains("집중") -> { stayInCabin();if (startSession(SessionKind.FOCUS, minutes ?: state.value.preferences.focusMinutes)) "집중 세션을 시작했습니다." else state.value.message }
+            c.contains("휴식") -> { stayInCabin();if (startSession(SessionKind.RELAX, minutes ?: state.value.preferences.relaxMinutes)) "휴식 세션을 시작했습니다." else state.value.message }
             c.contains("충전") -> if (state.value.sample?.charging == true) {
                 state.value.sample?.chargeRemainingSeconds?.let { "충전 잔여 시간은 ${(it+59)/60}분입니다. ${if(state.value.sample?.source==DataSource.SIMULATION) "시뮬레이션" else "차량 제공 예상"}입니다." }
                     ?: "충전 상태는 확인했지만 차량이 남은 시간을 제공하지 않았습니다. 출발 계획을 직접 설정해 주세요."

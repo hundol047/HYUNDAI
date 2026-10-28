@@ -43,6 +43,17 @@ class ContextEngineTest {
     @Test fun changingChargeEstimateShortensActiveSession() { park(true);engine.startSession(SessionKind.FOCUS,25);send(charging=true,remaining=600);assertEquals(300L,engine.state.value.session!!.remainingSeconds) }
     @Test fun relaxationKeepsBothServicesActive() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.RELAX,30);assertEquals(VehicleContext.RESTING,engine.state.value.context);assertTrue(engine.state.value.stopSenseActive && engine.state.value.cabinActive) }
     @Test fun resumingDriveSuspendsSessionAndRejectsResume() { park();engine.setWaitingMinutes(40);engine.startSession(SessionKind.FOCUS,25);send(Gear.DRIVE,30.0);assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status);assertFalse(engine.pauseOrResume());assertTrue(engine.state.value.echoRoadActive) }
+    @Test fun voiceCabinSessionClearsPreviousOutdoorPlanLikeStartButton() {
+        park();engine.setWaitingMinutes(25)
+        for(command in listOf("20분 집중 모드 켜줘","20분 휴식 모드 켜줘")) {
+            assertTrue(engine.selectActivity("cafe"))
+            assertTrue(engine.state.value.schedule.returnSeconds>0)
+            engine.assistant(command)
+            assertNull(engine.state.value.selectedActivityId)
+            assertEquals(0L,engine.state.value.schedule.returnSeconds)
+            assertEquals(1200L,engine.state.value.session!!.durationSeconds)
+        }
+    }
     @Test fun assistantCannotOverrideDrivingRestrictions() { send(Gear.DRIVE,40.0);engine.assistant("25분 집중 모드 켜줘");engine.assistant("15분 휴식 모드 시작해 줘");assertNull(engine.state.value.session);assertFalse(engine.state.value.parkedAllowed) }
     @Test fun assistantDepartureDoesNotFabricateVehicleMotion() { park();engine.assistant("이제 출발할게");assertEquals(VehicleContext.PARKED,engine.state.value.context) }
     @Test fun departureAlertsAreSingleAndSynchronized() { park();engine.setWaitingMinutes(5);assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context);val count=engine.state.value.events.count{it.name=="DepartureApproaching"};engine.tick();assertEquals(1,count);assertEquals(count,engine.state.value.events.count{it.name=="DepartureApproaching"}) }
