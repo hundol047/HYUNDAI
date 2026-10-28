@@ -51,6 +51,20 @@ class ParkedUxTest {
         compose.onNodeWithText("말하기").assertDoesNotExist()
         compose.onNodeWithText("25분 집중 모드 켜줘").assertIsDisplayed()
     }
+    @Test fun sharedRelaxActionExplainsInsufficientTimeAndEnablesAtOneMinute() {
+        var starts=0
+        fun show(seconds:Long) {compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            CabinAdvicePanel(io.cabinos.core.AppState(parkedAllowed=true,
+                schedule=io.cabinos.core.SharedSchedule(availableSeconds=seconds)),
+                io.cabinos.one.platform.CabinAdvice(passengerDetected=true)) {starts++}
+        }}}}
+        show(59)
+        compose.onNodeWithText("함께 휴식").assertIsNotEnabled().assertHeightIsAtLeast(48.dp)
+        compose.onNodeWithText("휴식을 시작하려면 출발 준비 시간을 제외하고 최소 1분이 필요합니다.").assertIsDisplayed()
+        show(60)
+        compose.onNodeWithText("함께 휴식").assertIsEnabled().performClick()
+        assertEquals(1,starts)
+    }
     @Test fun cabinAdviceIsVisibleOnlyAfterParkingConfirmation() {
         val advice=io.cabinos.one.platform.CabinAdvice(true,listOf("창문이 열려 있어요"),listOf("워셔액 부족 경고를 확인하세요"))
         fun show(parked:Boolean) { compose.runOnIdle { compose.activity.setContent { CabinTheme {

@@ -13,8 +13,9 @@ import io.cabinos.one.platform.CabinAdvice
     Column(Modifier.fillMaxWidth(),verticalArrangement=Arrangement.spacedBy(12.dp)) {
         if(cabin.passengerDetected==true) SurfacePanel(Modifier.fillMaxWidth()) {
             Text("동승자 감지",color=Mint)
-            Text("함께하는 휴식·오디오 세션을 추천해요",color=White)
-            ActionButton("함께 휴식",onRelax,color=Mint,enabled=s.schedule.availableSeconds>0)
+            Text("함께하는 휴식·오디오 세션을 추천합니다.",color=White)
+            ActionButton("함께 휴식",onRelax,color=Mint,enabled=s.schedule.availableSeconds>=60)
+            if(s.schedule.availableSeconds<60)Text("휴식을 시작하려면 출발 준비 시간을 제외하고 최소 1분이 필요합니다.",color=Amber)
         }
         if(!cabin.readiness.isNullOrEmpty()) SurfacePanel(Modifier.fillMaxWidth()) {
             Text("휴식 전 실내 확인 · 차량 제공 정보",color=Mint)
