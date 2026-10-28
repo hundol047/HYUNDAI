@@ -16,6 +16,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import org.robolectric.Shadows.shadowOf
+import org.robolectric.shadows.ShadowWindowManagerImpl
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
 import java.io.File
@@ -35,17 +37,20 @@ class RoadMapLiveTest {
         val vm=ViewModelProvider(compose.activity)[CabinViewModel::class.java]
         compose.runOnIdle {compose.activity.setContent {CabinTheme {NavigationScreen(AppState(networkAvailable=true),NavigationUi(guidance=tracker.state,mapFix=fix,gpsConnection=GpsConnection.READY,gpsNotice="실제 OSM 지도·OSRM 경로 · GPS는 공개 장소 시험 좌표 · 실차 주행 아님"),vm.liveNavigation,{})}}}
         var map:RoadMapView?=null
+        var mapRoot:View?=null
         val out=File("build/live-map").apply {mkdirs()}
         val render=Bitmap.createBitmap(1280,800,Bitmap.Config.ARGB_8888)
-        try {compose.waitUntil(35_000){var ready=false;compose.runOnIdle {map=find(compose.activity.window.decorView);compose.activity.window.decorView.draw(android.graphics.Canvas(render));ready=map?.sampleHealth()?.status==RoadMapStatus.READY};ready}}
-        catch(e:Exception){
+        try {compose.waitUntil(35_000){var ready=false;compose.runOnIdle {mapRoot=(shadowOf(compose.activity.windowManager) as ShadowWindowManagerImpl).views.asReversed().firstOrNull {find(it)!=null}
+            map=mapRoot?.let(::find);mapRoot?.draw(android.graphics.Canvas(render));ready=map?.sampleHealth()?.status==RoadMapStatus.READY};ready}}
+        catch(e:Throwable){
             File(out,"failure.json").writeText(JSONObject().put("health",map?.health.toString()).put("width",map?.width).put("height",map?.height).put("center",map?.mapCenter.toString()).put("zoom",map?.zoomLevelDouble).put("indices",map?.visibleTileIndices().toString()).toString(2))
             File(out,"navigation-roads-failed.png").outputStream().use {render.compress(Bitmap.CompressFormat.PNG,100,it)}
             throw e
         }finally{render.recycle()}
         compose.runOnIdle {
             val m=map!!;val h=m.sampleHealth();assertTrue(h.loaded>=4);assertEquals(h.visible,h.loaded)
-            val root=compose.activity.window.decorView
+            val root=requireNotNull(mapRoot)
+            assertNotSame("Guidance should render the automatically expanded map window",compose.activity.window.decorView,root)
             val image=Bitmap.createBitmap(root.width,root.height,Bitmap.Config.ARGB_8888);root.draw(android.graphics.Canvas(image))
             File(out,"navigation-roads.png").outputStream().use {image.compress(Bitmap.CompressFormat.PNG,100,it)};image.recycle()
             File(out,"results.json").writeText(JSONObject().put("result","passed").put("type","actual Android Compose + osmdroid via Robolectric native graphics, live OSM/OSRM HTTP; no supplied bitmap fixtures").put("visibleTiles",h.visible).put("loadedTiles",h.loaded).put("routePoints",route.points.size).put("physicalDeviceGps",false).put("realRoadDriving",false).toString(2))
