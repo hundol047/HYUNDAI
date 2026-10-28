@@ -306,6 +306,11 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
                 }
                 if (tracker.state.active) {
                     tracker.update(f)
+                    if(tracker.state.fix!=f) {
+                        rejectedFixTimestamp=f.timestampMs
+                        invalidateGps(GpsConnection.POOR,"위치가 크게 바뀌었습니다. GPS 재확인 중 · 회전 안내 일시중지",trackerAlreadyRejected=true)
+                        return
+                    }
                     echoObservation(f,location)
                     publish()
                     guide()
@@ -335,7 +340,7 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
             }
         }
 
-    private fun invalidateGps(status: GpsConnection, message: String) {
+    private fun invalidateGps(status: GpsConnection, message: String, trackerAlreadyRejected:Boolean=false) {
         invalidateTraffic("교통 정보 중지 · 정확한 위치 대기")
         val ownVoice = tracker.state.tracking || spoken.isNotEmpty()
         echoGeneration++;echoJob?.cancel();echoClient.cancel();brakeDetector.reset()
@@ -344,7 +349,9 @@ else->"기기 위치"}} 확인 · 정확도 약 ${f.accuracy.toInt()}m",
         fix = null
         fixProvider = null
         stationary.reset()
-        tracker.suspendTracking()
+        // A rejected jump already suspends tracking. Keep its last trusted anchor so
+        // another bad fix cannot become a new starting point on the next callback.
+        if(!trackerAlreadyRejected)tracker.suspendTracking()
         if (ownVoice) speech.stopSpeaking()
         mutable.value = mutable.value.copy(gpsConnection = status, gpsNotice = message)
         publish()

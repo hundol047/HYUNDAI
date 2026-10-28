@@ -553,6 +553,27 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun rejectedGpsJumpCannotBecomeCurrentMapPositionAndSameTimeCorrectionRecovers() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            f.advance(1000)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude+1;longitude=origin.longitude;accuracy=5f;speed=0f;time=f.now
+            });f.idle()
+            assertFalse(f.nav.state.value.guidance.tracking)
+            assertEquals(origin,f.nav.state.value.guidance.fix!!.point)
+            assertEquals(GpsConnection.POOR,f.nav.state.value.gpsConnection)
+            assertNull(f.nav.state.value.mapFix)
+            assertFalse(f.nav.state.value.guidance.rerouteRequired)
+            assertFalse(f.engine.state.value.parkedAllowed)
+            f.gps()
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(origin,f.nav.state.value.mapFix!!.point)
+            assertTrue(f.nav.state.value.guidance.tracking)
+        }
+    }
     @Test fun accurateCorrectionAtTheSameTimeAsARejectedFixCanRecover() {
         Fixture(NavigationService()).use {f->
             f.nav.locate();f.gps();f.advance(1000)
