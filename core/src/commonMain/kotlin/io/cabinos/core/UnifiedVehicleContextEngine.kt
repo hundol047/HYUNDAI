@@ -99,7 +99,9 @@ class UnifiedVehicleContextEngine(
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
         val vehicleContext = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
         if (vehicleContext == VehicleContext.DRIVING && !driving) {
-            returnSeconds=0;mutable.value=state.value.copy(selectedActivityId=null)
+            returnSeconds=0
+            if (nearbyActivities != null) nearbyActivities=emptyList()
+            mutable.value=state.value.copy(selectedActivityId=null,nearbyRevision=state.value.nearbyRevision+1)
             socDeadlineMs=null; manualDepartureAtMs=null; chargeDeadlineMs=null; lastChargeEstimate=null
             routeDeadlineMs=null; routeReadAtMs=null; routePlanOverridden=false; departureAnnounced=false; scheduleLabel="시간 미설정"
             if (old.arrivalTargetMs?.let { it < now } == true) mutable.value=state.value.copy(arrivalTargetMs=null)
@@ -227,6 +229,7 @@ class UnifiedVehicleContextEngine(
         val places=nearbyActivities ?: return false
         if(places.none {it.id==id && !it.simulated})return false
         nearbyActivities=places.map {if(it.id==id)it.copy(oneWaySeconds=plan.outboundSeconds,walking=plan)else it}
+        if (state.value.selectedActivityId == id) returnSeconds=plan.roundTripSeconds
         mutable.value=state.value.copy(nearbyRevision=state.value.nearbyRevision+1)
         tick();return true
     }
