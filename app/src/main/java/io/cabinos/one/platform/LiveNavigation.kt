@@ -201,6 +201,16 @@ class LiveNavigation(
     init {
         service.language = language
         scope.launch {
+            engine.state.collect { state ->
+                if (!state.parkedAllowed && !tracker.state.active &&
+                    (mutable.value.busy || pendingDestination != null)) {
+                    cancelPendingDestination()
+                    cancelRequest()
+                    mutable.value = mutable.value.copy(notice = "차량 상태가 바뀌어 대기 중인 검색·경로 요청을 취소했습니다. 주차 확인 후 다시 선택해 주세요.")
+                }
+            }
+        }
+        scope.launch {
             speech.outputFailure.collect {message ->
                 if(message!=null)mutable.value=mutable.value.copy(voiceNotice=message)
             }
@@ -227,6 +237,9 @@ class LiveNavigation(
 
     private fun listenerFor(epoch: Int) =
         object : LocationListener {
+            // These callbacks are abstract on Android 10 (our minimum API).
+            override fun onProviderEnabled(provider: String) = Unit
+            override fun onStatusChanged(provider: String?, status: Int, extras: android.os.Bundle?) = Unit
             override fun onLocationChanged(location: Location) {
                 if (epoch != locationGeneration || !foreground || !listening) return
                 if (

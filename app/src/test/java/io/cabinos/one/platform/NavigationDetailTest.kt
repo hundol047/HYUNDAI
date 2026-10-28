@@ -225,6 +225,51 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun safetyLockCancelsGpsPendingDestinationEvenAfterParkingAgain() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {calls++;return route()}}).use {f->
+            f.nav.navigateTo(destination);f.idle()
+            f.engine.acceptVehicle(VehicleSample(speedKph=10.0,gear=Gear.DRIVE,timestampMs=f.now));f.idle()
+            f.park();f.advance(1600);f.park();f.idle();f.gps()
+            assertTrue(f.engine.state.value.parkedAllowed)
+            assertEquals(0,calls);assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+    @Test fun safetyLockRejectsLateRouteAfterParkingAgain() {
+        val response=CompletableDeferred<DrivingRoute>()
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=withContext(NonCancellable){response.await()}}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.busy)
+            f.engine.invalidateTelemetry();f.idle()
+            f.park();f.advance(1600);f.park();f.idle()
+            response.complete(route());f.idle()
+            assertFalse(f.nav.state.value.guidance.active)
+            assertNull(f.nav.state.value.guidance.route)
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+    @Test fun safetyLockRejectsLateSearchAfterParkingAgain() {
+        val response=CompletableDeferred<PlaceSearchPage>()
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>)=withContext(NonCancellable){response.await()}}).use {f->
+            f.nav.search("Cafe");f.idle()
+            f.engine.invalidateTelemetry();f.idle()
+            f.park();f.advance(1600);f.park();f.idle()
+            response.complete(PlaceSearchPage(listOf(destination),emptyList(),false));f.idle()
+            assertTrue(f.nav.state.value.places.isEmpty())
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+
+    @Test fun legacyProviderCallbacksDoNotCrashOrInventAFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate()
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderEnabled(LocationManager.GPS_PROVIDER)
+            listener.onStatusChanged(LocationManager.GPS_PROVIDER,android.location.LocationProvider.AVAILABLE,null)
+            assertNull(f.nav.state.value.mapFix)
+            assertEquals(GpsConnection.WAITING,f.nav.state.value.gpsConnection)
+        }
+    }
     private val origin=NavPoint(48.85,2.35)
     private val destination=NavPlace("검사용 가게",NavPoint(48.86,2.35))
     private fun route()=NavigationGeometry.route(destination,listOf(origin,destination.point),1200.0,180.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))
