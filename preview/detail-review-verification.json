@@ -22,7 +22,7 @@
   "serverTestsPassed": 25,
   "toolTestsPassed": 60,
   "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40451750103",
-  "sourceCiResult": "pending",
+  "sourceCiResult": "success",
   "physicalSamsungValidated": false,
   "productionApkUpdated": false,
   "sourceDebugDeviceSmokePassed": true,
