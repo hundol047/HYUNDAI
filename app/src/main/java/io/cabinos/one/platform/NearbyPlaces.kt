@@ -27,22 +27,35 @@ class NearbyPlaces(private val context:Context) {
         val manager=context.getSystemService(LocationManager::class.java)
         return try {
             val fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+            fun permitted() = context.checkSelfPermission(if(fine) Manifest.permission.ACCESS_FINE_LOCATION else Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
+            if(!manager.isLocationEnabled)return null
             val providers=manager.getProviders(true).filter { it!=LocationManager.PASSIVE_PROVIDER && (fine || it!=LocationManager.GPS_PROVIDER) }
             val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { usableLocation(it) }.minByOrNull { it.accuracy }
-            if(cached!=null)return position(cached)
+            if(cached!=null)return if(permitted())position(cached) else null
             if(providers.isEmpty())return null
             withTimeoutOrNull(25_000) {
                 suspendCancellableCoroutine { continuation ->
                     val listener=object:LocationListener {
+                        private fun finish(position:MapPosition?) {
+                            runCatching {manager.removeUpdates(this)}
+                            if(continuation.isActive)continuation.resume(position)
+                        }
+                        override fun onProviderEnabled(provider:String)=Unit
+                        override fun onStatusChanged(provider:String?,status:Int,extras:android.os.Bundle?)=Unit
+                        override fun onProviderDisabled(provider:String) {
+                            if(!continuation.isActive)return
+                            val available=runCatching {permitted() && manager.isLocationEnabled && providers.any {manager.isProviderEnabled(it)}}.getOrDefault(false)
+                            if(!available)finish(null)
+                        }
                         override fun onLocationChanged(location:Location) {
-                            if(continuation.isActive && usableLocation(location)) {
-                                runCatching {manager.removeUpdates(this)};continuation.resume(position(location))
-                            }
+                            if(!continuation.isActive)return
+                            if(!permitted() || !manager.isLocationEnabled) {finish(null);return}
+                            if(usableLocation(location))finish(position(location))
                         }
                     }
                     continuation.invokeOnCancellation { runCatching {manager.removeUpdates(listener)} }
                     try { providers.forEach { manager.requestLocationUpdates(it,1000L,0f,listener,Looper.getMainLooper()) } }
-                    catch(_:SecurityException) { manager.removeUpdates(listener);if(continuation.isActive)continuation.resume(null) }
+                    catch(_:SecurityException) { runCatching {manager.removeUpdates(listener)};if(continuation.isActive)continuation.resume(null) }
                 }
             }
         } catch(_:SecurityException) { null }

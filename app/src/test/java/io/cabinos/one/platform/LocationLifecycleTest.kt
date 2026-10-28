@@ -15,6 +15,20 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class LocationLifecycleTest {
+    @Test fun legacyProviderCallbacksDoNotCrashOrInventAvailability() {
+        val context=ApplicationProvider.getApplicationContext<Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        val provider=AndroidLocationProvider(context)
+        try {
+            provider.start()
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderEnabled(LocationManager.GPS_PROVIDER)
+            listener.onStatusChanged(LocationManager.GPS_PROVIDER,android.location.LocationProvider.AVAILABLE,null)
+            assertFalse(provider.available.value);assertNull(provider.lastLocation)
+        } finally {provider.stop()}
+    }
     @Test fun stoppedAndPreviousSubscriptionsCannotRestoreLocationAvailability() {
         val context=ApplicationProvider.getApplicationContext<Application>()
         shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)

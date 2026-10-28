@@ -64,6 +64,8 @@ class AndroidLocationProvider(private val context:Context) : LocationProvider {
         if (!permitted()) return
         val token=generation
         val current=object:LocationListener {
+            override fun onProviderEnabled(provider:String)=Unit
+            override fun onStatusChanged(provider:String?,status:Int,extras:Bundle?)=Unit
             override fun onLocationChanged(location:Location) {
                 if(token!=generation)return
                 if(!permitted()) { stop();return }
