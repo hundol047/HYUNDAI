@@ -55,34 +55,60 @@ class AndroidLocationProvider(private val context:Context) : LocationProvider {
     private val mutable=MutableStateFlow(false)
     override val available=mutable.asStateFlow()
     var lastLocation:Location?=null; private set
+    private val handler=android.os.Handler(Looper.getMainLooper())
+    private var expiry:Runnable?=null
     private var listener:LocationListener?=null
     private var generation=0L
     private fun permitted()=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED ||
         context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
+    private fun fresh(location:Location)=location.latitude.isFinite() && location.latitude in -90.0..90.0 &&
+        location.longitude.isFinite() && location.longitude in -180.0..180.0 && System.currentTimeMillis()-location.time in 0..10_000
+    private fun clearFix() {
+        expiry?.let {handler.removeCallbacks(it)};expiry=null
+        lastLocation=null;mutable.value=false
+    }
     override fun start() {
         stop()
-        if (!permitted()) return
+        if (!permitted() || !manager.isLocationEnabled) return
+        val fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+        fun stillPermitted()=permitted() && (!fine || context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED)
         val token=generation
         val current=object:LocationListener {
             override fun onProviderEnabled(provider:String)=Unit
             override fun onStatusChanged(provider:String?,status:Int,extras:Bundle?)=Unit
             override fun onLocationChanged(location:Location) {
                 if(token!=generation)return
-                if(!permitted()) { stop();return }
-                lastLocation=location;mutable.value=true
+                if(!stillPermitted() || !manager.isLocationEnabled) { stop();return }
+                if(!fresh(location)) {
+                    if(lastLocation?.let {fresh(it)}!=true)clearFix()
+                    return
+                }
+                if(lastLocation?.let {location.time<it.time && fresh(it)}==true)return
+                clearFix()
+                val accepted=Location(location)
+                lastLocation=accepted;mutable.value=true
+                expiry=Runnable {if(token==generation && lastLocation===accepted)clearFix()}.also {
+                    handler.postDelayed(it,(10_001-(System.currentTimeMillis()-accepted.time)).coerceAtLeast(1))
+                }
             }
             override fun onProviderDisabled(provider:String) {
-                if(token==generation) {lastLocation=null;mutable.value=false}
+                if(token!=generation)return
+                if(!stillPermitted()) {stop();return}
+                if(manager.isLocationEnabled && lastLocation?.let {it.provider!=provider && fresh(it)}==true)return
+                clearFix()
             }
         }
         listener=current
         try {
-            manager.getProviders(true).forEach { provider -> manager.requestLocationUpdates(provider,2000L,5f,current,Looper.getMainLooper()) }
+            manager.getProviders(true).filter {it!=LocationManager.PASSIVE_PROVIDER && (fine || it!=LocationManager.GPS_PROVIDER)}.forEach { provider ->
+                // A stationary car still needs fresh evidence; do not require five metres of movement.
+                manager.requestLocationUpdates(provider,2000L,0f,current,Looper.getMainLooper())
+            }
         } catch (_:SecurityException) { stop() }
     }
     override fun stop() {
         ++generation
-        val previous=listener;listener=null;lastLocation=null;mutable.value=false
+        val previous=listener;listener=null;clearFix()
         try { previous?.let {manager.removeUpdates(it)} } catch (_:SecurityException) { /* Revoked permission cannot retain a fix. */ }
     }
 }
