@@ -121,7 +121,7 @@ class CabinViewModel @Inject constructor(
             launch {
                 var fingerprint:Any?=null
                 state.collect { s ->
-                    if(!s.parkedAllowed || s.session?.status!=SessionStatus.RUNNING) { audio.stop();mutableAudio.value=null }
+                    if(!s.parkedAllowed || s.session?.status!=SessionStatus.RUNNING) { audioRequest++;audio.stop();mutableAudio.value=null }
                     if(!s.parkedAllowed || !s.networkAvailable || !s.locationAvailable) {
                         cancelNearby()
                     }
@@ -173,11 +173,12 @@ class CabinViewModel @Inject constructor(
     fun command(text:String) {
         val compact=text.replace(" ","")
         val sound=AmbientSamples.presets.firstOrNull {compact.contains(it.replace(" ",""))}
-        if(sound!=null || compact.contains("소리꺼") || compact.contains("소리끄")) {
+        val stopSound=compact.contains("소리꺼") || compact.contains("소리끄")
+        if(sound!=null || stopSound) {
             if(!state.value.parkedAllowed){mutableReply.value="안전한 주차 확인 후 소리를 조작할 수 있습니다.";return}
-            if(sound==null){stopAudio();mutableReply.value="배경 소리를 껐습니다."}
+            if(stopSound){stopAudio();mutableReply.value="배경 소리를 껐습니다."}
             else if(state.value.session?.status!=SessionStatus.RUNNING)mutableReply.value="먼저 집중·휴식 세션을 시작해 주세요."
-            else {if(audioPreset.value!=sound)toggleAudio(sound);mutableReply.value=audioStatus.value}
+            else if(sound!=null) {if(audioPreset.value!=sound)toggleAudio(sound);mutableReply.value=audioStatus.value}
             return
         }
         if(NavigationVoice.isNavigationRequest(text)) {
@@ -210,13 +211,14 @@ class CabinViewModel @Inject constructor(
         if(mutableAudio.value==preset) {stopAudio()} else {
             if(preset !in AmbientSamples.presets)return
             val request=++audioRequest
+            val sessionId=state.value.session?.id
             viewModelScope.launch {
                 val samples=try {withContext(Dispatchers.IO){audio.samples(preset)}} catch(error:Exception) {
                     if(error is CancellationException)throw error
                     if(request==audioRequest){audio.loadFailed();mutableReply.value=audio.status.value}
                     return@launch
                 }
-                if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING)return@launch
+                if(request!=audioRequest||!foreground||!state.value.parkedAllowed||state.value.session?.status!=SessionStatus.RUNNING||state.value.session?.id!=sessionId)return@launch
                 if(audio.play(preset,samples))mutableAudio.value=preset else mutableReply.value="다른 오디오 또는 기기 상태로 배경 소리를 재생할 수 없습니다."
             }
         }
