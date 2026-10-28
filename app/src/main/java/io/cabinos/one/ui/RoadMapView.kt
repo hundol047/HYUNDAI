@@ -3,6 +3,8 @@ package io.cabinos.one.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.view.MotionEvent
+import android.view.ViewConfiguration
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.MapTileIndex
@@ -26,6 +28,11 @@ internal fun configureRoadTiles(context:Context) {Configuration.getInstance().ap
 }}
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */
 internal class RoadMapView(context:Context,private val clock:()->Long=android.os.SystemClock::elapsedRealtime):MapView(context) {
+    private val touchSlop=ViewConfiguration.get(context).scaledTouchSlop
+    private var touchStartX=0f
+    private var touchStartY=0f
+    private var trackingTouch=false
+    private var manualGesture=false
     var gesturesEnabled=true
     var onUserGesture:(()->Unit)?=null
     var onHealth:((RoadMapHealth)->Unit)?=null
@@ -67,11 +74,19 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
         val now=clock()
         if(lastDrawCheck==Long.MIN_VALUE||now-lastDrawCheck>=500){lastDrawCheck=now;sampleHealth()}
     }
-    override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean {
-        if(!gesturesEnabled)return false
-        if(event.actionMasked==android.view.MotionEvent.ACTION_MOVE) {
-            parent?.requestDisallowInterceptTouchEvent(true)
-            onUserGesture?.invoke()
+    override fun dispatchTouchEvent(event:MotionEvent):Boolean {
+        if(!gesturesEnabled){trackingTouch=false;manualGesture=false;return false}
+        when(event.actionMasked){
+            MotionEvent.ACTION_DOWN->{touchStartX=event.x;touchStartY=event.y;trackingTouch=true;manualGesture=false}
+            MotionEvent.ACTION_MOVE,MotionEvent.ACTION_POINTER_DOWN->if(trackingTouch&&!manualGesture) {
+                val moved=hypot(event.x-touchStartX,event.y-touchStartY)>touchSlop
+                if(moved||event.pointerCount>1){
+                    manualGesture=true
+                    parent?.requestDisallowInterceptTouchEvent(true)
+                    onUserGesture?.invoke()
+                }
+            }
+            MotionEvent.ACTION_UP,MotionEvent.ACTION_CANCEL->{trackingTouch=false;manualGesture=false}
         }
         return super.dispatchTouchEvent(event)
     }
