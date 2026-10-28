@@ -12,7 +12,7 @@ class NearbyQueryCache {
     private var places:List<NearbyActivity> = emptyList()
     private fun same(a:MapPosition?,b:MapPosition)=a!=null&&NearbyGeometry.distanceMeters(a,b)<=50
     fun remainingSeconds(origin:MapPosition,now:Long):Long {
-        if(!same(attempted,origin))return 0
+        if(!same(attempted,origin) || now<attemptAt)return 0
         return ((if(failed)5000 else 30000)-(now-attemptAt)).coerceAtLeast(0).let {(it+999)/1000}
     }
     fun begin(origin:MapPosition,now:Long){attempted=origin;attemptAt=now;failed=false}

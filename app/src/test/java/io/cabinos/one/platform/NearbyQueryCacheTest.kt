@@ -6,6 +6,10 @@ import org.junit.Test
 
 class NearbyQueryCacheTest {
     private val origin=MapPosition()
+    @Test fun clockCorrectionCannotBlockNearbySearchForHours() {
+        val cache=NearbyQueryCache();cache.begin(origin,3_600_000)
+        assertEquals(0L,cache.remainingSeconds(origin,1000))
+    }
     @Test fun newGpsAreaIsNotBlockedByPreviousAreaCooldown() {
         val cache=NearbyQueryCache();cache.begin(origin,1000)
         assertEquals(29L,cache.remainingSeconds(origin,2000))
