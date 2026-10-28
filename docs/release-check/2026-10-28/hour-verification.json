@@ -48,7 +48,7 @@
   "officialSdkBuildAndLintPassed": true,
   "releaseBuild": "unsigned; team production key not available",
   "previewSigning": "Android debug test identity; same as previous preview",
-  "newPreviewDeviceExecutionVerified": false,
+  "newPreviewDeviceExecutionVerified": true,
   "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40667617550",
   "sourceCiResult": "success",
   "sourceDeviceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40667609303",
@@ -68,5 +68,11 @@
     "echoVisible": 12,
     "echoLoaded": 12
   },
-  "initialLiveMapTestFailure": "Test searched Activity decor only after navigation automatically expanded into a Dialog; corrected window lookup with unchanged readiness assertions and timeout"
+  "initialLiveMapTestFailure": "Test searched Activity decor only after navigation automatically expanded into a Dialog; corrected window lookup with unchanged readiness assertions and timeout",
+  "previewDeviceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40669130729",
+  "previewDeviceApiLevels": [
+    33,
+    35
+  ],
+  "previewDeviceProfilesResult": "success"
 }
