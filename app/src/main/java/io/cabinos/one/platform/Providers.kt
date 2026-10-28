@@ -50,7 +50,7 @@ class SimulationVehicleProvider(private val preferences: RuntimePreferences? = n
 }
 
 /** Actual framework location; it does not establish gear/P or unlock parked UI. */
-class AndroidLocationProvider(private val context:Context) : LocationProvider {
+class AndroidLocationProvider(private val context:Context,private val clock:()->Long=System::currentTimeMillis) : LocationProvider {
     private val manager=context.getSystemService(LocationManager::class.java)
     private val mutable=MutableStateFlow(false)
     override val available=mutable.asStateFlow()
@@ -62,7 +62,7 @@ class AndroidLocationProvider(private val context:Context) : LocationProvider {
     private fun permitted()=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED ||
         context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
     private fun fresh(location:Location)=location.latitude.isFinite() && location.latitude in -90.0..90.0 &&
-        location.longitude.isFinite() && location.longitude in -180.0..180.0 && System.currentTimeMillis()-location.time in 0..10_000
+        location.longitude.isFinite() && location.longitude in -180.0..180.0 && clock()-location.time in 0..10_000
     private fun clearFix() {
         expiry?.let {handler.removeCallbacks(it)};expiry=null
         lastLocation=null;mutable.value=false
@@ -88,7 +88,7 @@ class AndroidLocationProvider(private val context:Context) : LocationProvider {
                 val accepted=Location(location)
                 lastLocation=accepted;mutable.value=true
                 expiry=Runnable {if(token==generation && lastLocation===accepted)clearFix()}.also {
-                    handler.postDelayed(it,(10_001-(System.currentTimeMillis()-accepted.time)).coerceAtLeast(1))
+                    handler.postDelayed(it,(10_001-(clock()-accepted.time)).coerceAtLeast(1))
                 }
             }
             override fun onProviderDisabled(provider:String) {

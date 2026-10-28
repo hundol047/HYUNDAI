@@ -53,20 +53,21 @@ class LocationLifecycleTest {
         shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
         val manager=context.getSystemService(LocationManager::class.java)
         shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
-        val provider=AndroidLocationProvider(context)
+        var now=System.currentTimeMillis()
+        val provider=AndroidLocationProvider(context){now}
         try {
             provider.start()
             val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
-            val older=Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;time=System.currentTimeMillis()}
+            val older=Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;time=now}
             listener.onLocationChanged(older)
             val looper=shadowOf(android.os.Looper.getMainLooper())
-            looper.idleFor(java.time.Duration.ofSeconds(6))
-            val latest=Location(older).apply {latitude=37.5001;time=System.currentTimeMillis()}
+            now+=6000;looper.idleFor(java.time.Duration.ofSeconds(6))
+            val latest=Location(older).apply {latitude=37.5001;time=now}
             listener.onLocationChanged(latest);listener.onLocationChanged(older)
-            looper.idleFor(java.time.Duration.ofSeconds(5))
+            now+=5000;looper.idleFor(java.time.Duration.ofSeconds(5))
             assertTrue(provider.available.value)
             assertEquals(latest.latitude,provider.lastLocation!!.latitude,0.0)
-            looper.idleFor(java.time.Duration.ofSeconds(6))
+            now+=6000;looper.idleFor(java.time.Duration.ofSeconds(6))
             assertFalse(provider.available.value)
         } finally {provider.stop()}
     }
