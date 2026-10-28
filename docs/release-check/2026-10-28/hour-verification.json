@@ -53,5 +53,20 @@
   "sourceCiResult": "success",
   "sourceDeviceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40667609303",
   "sourceDebugDeviceSmokePassed": true,
-  "sourceReleaseDeviceSmokePassed": false
+  "sourceReleaseDeviceSmokePassed": true,
+  "apkUrl": "https://raw.githubusercontent.com/hundol047/HYUNDAI/67b0a850e89a52b96912f96034c4fa44d5dc2ba6/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk",
+  "publicDownloadHashVerified": true,
+  "qrDecodedToImmutableApk": true,
+  "sourceDeviceCiResult": "success",
+  "finishedAt": "2026-10-28T10:09:06.030047+00:00",
+  "elapsedSeconds": 3702,
+  "liveMapRender": {
+    "tests": 2,
+    "failures": 0,
+    "navigationVisible": 16,
+    "navigationLoaded": 16,
+    "echoVisible": 12,
+    "echoLoaded": 12
+  },
+  "initialLiveMapTestFailure": "Test searched Activity decor only after navigation automatically expanded into a Dialog; corrected window lookup with unchanged readiness assertions and timeout"
 }

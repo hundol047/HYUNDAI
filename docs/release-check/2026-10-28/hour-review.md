@@ -43,3 +43,11 @@ python3 scripts/check-navigation-live.py --all-regions --output /tmp/hour-live-n
 휴대폰 검토본은 기존 테스트 서명을 유지합니다. 팀 서명 키가 없어 제출용 APK는 교체하지 않습니다.
 
 최종 공식 SDK 포함 release(미서명)·휴대폰 검토본(기존 테스트 서명) 빌드가 통과했습니다. lint 오류 0개·기존 경고 14개입니다. [수정 소스 CI](https://github.com/hundol047/HYUNDAI/actions/runs/40667617550)도 통과했습니다.
+
+[수정 소스의 일반 Android 에뮬레이터 CI](https://github.com/hundol047/HYUNDAI/actions/runs/40667609303)에서 debug 및 테스트 키로 서명한 release 실행 검사가 통과했습니다. 휴대폰 검토본의 패키지/바이너리 자체와는 구분합니다.
+
+실제 타일 테스트의 첫 실행은 EchoRoad 12/12 타일 표시를 통과했으나 내비 화면은 시간 초과였습니다. 자동 확대 지도가 Dialog의 별도 창으로 이동하는데 테스트가 Activity 기본 창만 검색하던 문제를 확인하여, 모든 실제 창에서 지도 창을 찾도록 검사 코드를 수정했습니다. 준비 상태·전체 타일 수 검증과 35초 제한은 그대로 유지하고 자동 확대 창인지 확인하는 검증도 추가했습니다. 앱 동작이나 다운로드 결과를 대체하지 않습니다.
+
+수정된 실제 지도 테스트 2개 모두 통과했습니다. 내비 확대 창은 가시 타일 16/16개·실제 경로 점 102개, EchoRoad는 12/12개·zoom 17입니다. [지도 검증 JSON](hour-map-render.json), [확대 내비 화면](hour-navigation-roads.png), [EchoRoad 화면](hour-echoroad-roads.png). Android Compose/osmdroid를 Robolectric native graphics로 렌더링했으며 실기기 운전 영상이 아닙니다.
+
+공개 검토용 APK를 다시 다운로드해 SHA-256을 대조했고 QR도 해당 불변 커밋의 APK 주소로 해독됨을 확인했습니다. 최종 점검 종료 시각은 검증 JSON의 `finishedAt`에 기록했습니다.
