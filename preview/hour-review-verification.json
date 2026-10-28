@@ -1,0 +1,57 @@
+{
+  "sourceCommit": "8b27423517d9d551adbf79962d82aec268ae7fdb",
+  "startedAt": "2026-10-28T09:07:24Z",
+  "fixedIssueGroups": 8,
+  "newRegressionTests": 16,
+  "tests": {
+    "core": {
+      "tests": 190,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 326,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "serverTests": {
+    "tests": 25,
+    "failures": 0
+  },
+  "toolTests": {
+    "tests": 60,
+    "failures": 0
+  },
+  "liveNavigationHttp": {
+    "tests": 15,
+    "failures": 0
+  },
+  "nearbyPhotonCategories": {
+    "카페": 15,
+    "식당": 15,
+    "산책": 15,
+    "쇼핑": 15
+  },
+  "physicalSamsungValidated": false,
+  "officialPleosEmulatorValidated": false,
+  "productionApkChanged": false,
+  "productionSigningKeyAvailable": false,
+  "lint": {
+    "errors": 0,
+    "warnings": 14
+  },
+  "apkSha256": "4ce2d3b11d872a9cbdb3ce2c0497851ffd4a157675fc640a9505be4e7dd02230",
+  "samePreviewCertificate": true,
+  "officialSdkBuildAndLintPassed": true,
+  "releaseBuild": "unsigned; team production key not available",
+  "previewSigning": "Android debug test identity; same as previous preview",
+  "newPreviewDeviceExecutionVerified": false,
+  "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40667617550",
+  "sourceCiResult": "success",
+  "sourceDeviceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40667609303",
+  "sourceDebugDeviceSmokePassed": true,
+  "sourceReleaseDeviceSmokePassed": false
+}

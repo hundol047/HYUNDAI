@@ -1,0 +1,216 @@
+{
+  "type": "actual external provider requests; no fixtures or alternate proxy routes",
+  "timestamp": "2026-10-28T09:29:14.723238+00:00",
+  "results": [
+    {
+      "name": "OSM map tile",
+      "host": "tile.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 301.5,
+      "bytes": 6799,
+      "sha256": "72513936d924818835d1685aaae200423e20bfcbaa2bcf24341ed8e09f291479",
+      "evidence": {
+        "format": "PNG"
+      }
+    },
+    {
+      "name": "Seoul Station South Korea destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 599.6,
+      "bytes": 502,
+      "sha256": "f17520dc1f5f4605a09964fd38272d070d16f18f5b144659339bc7517f5c11ba",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Seoul Station South Korea driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1832.8,
+      "bytes": 12401,
+      "sha256": "39063b8c9e00791a1355834dff8b0739d065930d5ba4ec8b6898aff708ef01ac",
+      "evidence": {
+        "distanceMeters": 4008.7,
+        "durationSeconds": 264.7,
+        "geometryPoints": 116,
+        "maneuvers": 7,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Paris France destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 933.6,
+      "bytes": 447,
+      "sha256": "605cbc3ccbf3d20bb2df7e9e4ac1458f14da3e4cc1730073071dce2572ddfa8c",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Paris France driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1465.4,
+      "bytes": 21375,
+      "sha256": "957068bd39d2cca6c29a692570e1bf91e38764b874f51b3a03353c95feb9c167",
+      "evidence": {
+        "distanceMeters": 5179,
+        "durationSeconds": 817.8,
+        "geometryPoints": 246,
+        "maneuvers": 14,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "New York USA destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 923.0,
+      "bytes": 417,
+      "sha256": "9ee1728a8e7b409e7a36402f9d58e48f1fda5bdfad923a07434674549f12a67c",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "New York USA driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 871.5,
+      "bytes": 8416,
+      "sha256": "a1fffadbd6e5ed1e62facd41e12bd87c2df3c0b240ab59c7968e4691f78e764c",
+      "evidence": {
+        "distanceMeters": 2150.7,
+        "durationSeconds": 265.4,
+        "geometryPoints": 67,
+        "maneuvers": 6,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Tokyo Station Japan destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 476.3,
+      "bytes": 499,
+      "sha256": "5bd6d4b564c8bbba9bb6e333d2807ddea7818bd944d5ceed9acdeed7d197afee",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Tokyo Station Japan driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 670.8,
+      "bytes": 11678,
+      "sha256": "00149d85661f4d273150311420526a835c0cc59f18ef280218d8cbc4ecf32a73",
+      "evidence": {
+        "distanceMeters": 2074.8,
+        "durationSeconds": 230.1,
+        "geometryPoints": 101,
+        "maneuvers": 11,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Sao Paulo Brazil destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 441.7,
+      "bytes": 455,
+      "sha256": "672787d09f50e5f7bb7ef7d755a4f37316737445d75910f99d4110ead7fe5f8b",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Sao Paulo Brazil driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 528.0,
+      "bytes": 16329,
+      "sha256": "d00cf5711cf037bb934bbb82ab02245b6152f7bd8b118fa234a9df858bd6ee63",
+      "evidence": {
+        "distanceMeters": 3753,
+        "durationSeconds": 408.8,
+        "geometryPoints": 161,
+        "maneuvers": 15,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Cape Town South Africa destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1588.3,
+      "bytes": 486,
+      "sha256": "24ceed3a98b68dc53ad108eab05af671bc146e17309aa2997a8869c6089d0011",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Cape Town South Africa driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1020.1,
+      "bytes": 14210,
+      "sha256": "6e97b2d18195ce0b5d97fd207277217df0cc6080e552f73a4b67642448c017b0",
+      "evidence": {
+        "distanceMeters": 3208.3,
+        "durationSeconds": 315.3,
+        "geometryPoints": 119,
+        "maneuvers": 10,
+        "traffic": "not provided"
+      }
+    },
+    {
+      "name": "Sydney Australia destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 429.0,
+      "bytes": 446,
+      "sha256": "e5c88ec08936ca9d0230c635f952e17c5f189fd9c8aefae2ab421429a6c09deb",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Sydney Australia driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 296.9,
+      "bytes": 24083,
+      "sha256": "b1c28eadd39d77c338f1959122299685a2e5497447f79926f4f0bc99e560c80b",
+      "evidence": {
+        "distanceMeters": 8748.4,
+        "durationSeconds": 620.9,
+        "geometryPoints": 309,
+        "maneuvers": 15,
+        "traffic": "not provided"
+      }
+    }
+  ],
+  "physicalDeviceGps": "not tested",
+  "realRoadDriving": "not tested"
+}
