@@ -35,5 +35,8 @@
   "officialSdkBuildAndLintPassed": true,
   "samePreviewCertificate": true,
   "releaseBuild": "unsigned; team production key not available",
-  "previewSigning": "Android debug test identity; same as previous preview"
+  "previewSigning": "Android debug test identity; same as previous preview",
+  "publicDownloadHashVerified": true,
+  "qrDecodedToImmutableApk": true,
+  "apkUrl": "https://raw.githubusercontent.com/hundol047/HYUNDAI/961484689547a61506807f9e0417f717c657e35a/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk"
 }

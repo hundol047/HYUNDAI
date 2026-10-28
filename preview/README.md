@@ -2,7 +2,15 @@
 
 퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.1-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
 
-## 최신 20개 영역 점검 · 2026-10-28
+## 최신 상태 전환·Android 10 호환성 점검
+
+추가로 4가지 유형을 수정했습니다. 안전 제한 후 이전 검색·경로가 되살아나는 문제, Android 10 위치 콜백의 앱 종료, 주변 검색의 위치 권한 해제·서비스 중지 처리, 주행 상태 갱신마다 반복되는 알림 취소·저장 작업입니다.
+
+신규 테스트 12개를 포함해 **core 189개 + Android 311개 = 500개 통과**. SDK 포함 release/검토본 빌드와 lint(오류 0개, 기존 경고 14개) 통과. 수정 소스 CI와 debug·테스트 서명 release APK의 일반 Android 에뮬레이터 검사도 통과했습니다. 새 공개 검토용 APK를 실제 S20+ 또는 공식 Pleos 차량 이미지에서 실행한 결과는 아닙니다.
+
+[수정·재현 상세](../docs/release-check/2026-10-28/transitions.md) · [검증 기록](transition-review-verification.json)
+
+## 이전 20개 영역 점검 · 2026-10-28
 
 새로 재현한 문제 8개를 수정했습니다. GPS 대기 목적지 취소, 같은 GPS로 다시 연결, 오프라인 좌표 입력, 빈 검색·오프라인 검색 안내, 대기 취소 표시, 보행 왕복 시간 재계산, 이전 주차 장소 추천 초기화, 시각 보정 후 주변 검색 제한 복구입니다.
 
@@ -38,7 +46,7 @@ GPS 제공자 전환·동일 시각 보정, 음성 입력 시 남는 합성 타�
 
 ## 설치
 
-[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/f6fb0e259068ef3e72bd98820cdf54d5850330a5/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
+[APK 다운로드](https://raw.githubusercontent.com/hundol047/HYUNDAI/961484689547a61506807f9e0417f717c657e35a/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [빌드 정보](build-info.json)
 
 ![Android 검토본 다운로드 QR](install-qr.png)
 
