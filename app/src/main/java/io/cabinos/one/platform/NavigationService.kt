@@ -9,7 +9,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 /** Public OSM-based providers, explicit queries only. No country restriction or API key. */
-open class NavigationService {
+open class NavigationService(private val clock:()->Long=System::currentTimeMillis) {
     var searchEndpoint = "https://nominatim.openstreetmap.org"
         private set
 
@@ -62,7 +62,7 @@ open class NavigationService {
         connection?.disconnect()
     }
 
-    private suspend fun get(url: String, accessToken: String = ""): String =
+    protected open suspend fun get(url: String, accessToken: String = ""): String =
         withContext(Dispatchers.IO) {
             val c = URL(url).openConnection() as HttpURLConnection
             connection = c
@@ -123,14 +123,14 @@ open class NavigationService {
     ): PlaceSearchPage {
         val key = language + "|" + requests.toString()
         cache[key]?.let {
-            if (System.currentTimeMillis() - it.first in 0..59_999) return it.second
+            if (clock() - it.first in 0..59_999) return it.second
             else cache.remove(key)
         }
         val places = mutableListOf<NavPlace>()
         for (params in requests) {
-            delay((1500 - (System.currentTimeMillis() - lastSearch)).coerceAtLeast(0))
+            delay(requestWaitMillis(lastSearch,clock(),1500))
             currentCoroutineContext().ensureActive()
-            lastSearch = System.currentTimeMillis()
+            lastSearch = clock()
             val encoded =
                 params.entries.joinToString("&") {
                     URLEncoder.encode(it.key, "UTF-8") + "=" + URLEncoder.encode(it.value, "UTF-8")
@@ -140,15 +140,15 @@ open class NavigationService {
         }
         val result = PlaceSearch.page(places, origin, nearby, excluded)
         if (cache.size >= 30) cache.remove(cache.keys.first())
-        cache[key] = System.currentTimeMillis() to result
+        cache[key] = clock() to result
         return result
     }
 
     open suspend fun regionalSearch(query: String, origin: NavPoint?): RegionalSearchResult {
         for (split in RegionalPlaceSearch.splits(query)) {
-            delay((1500 - (System.currentTimeMillis() - lastSearch)).coerceAtLeast(0))
+            delay(requestWaitMillis(lastSearch,clock(),1500))
             currentCoroutineContext().ensureActive()
-            lastSearch = System.currentTimeMillis()
+            lastSearch = clock()
             val params = PlaceSearch.requests(split.region, language = language).single()
             val encoded =
                 params.entries.joinToString("&") {
@@ -199,9 +199,9 @@ open class NavigationService {
         require(NavigationGeometry.distance(origin, destination.point) >= 20) {
             "목적지가 출발 위치와 너무 가깝습니다."
         }
-        delay((1500 - (System.currentTimeMillis() - lastRoute)).coerceAtLeast(0))
+        delay(requestWaitMillis(lastRoute,clock(),1500))
         currentCoroutineContext().ensureActive()
-        lastRoute = System.currentTimeMillis()
+        lastRoute = clock()
         val p = destination.point
         val raw =
             get(

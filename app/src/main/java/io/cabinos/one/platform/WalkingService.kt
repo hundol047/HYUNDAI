@@ -29,7 +29,7 @@ class WalkingService(private val clock: () -> Long = System::currentTimeMillis) 
                 val destination =
                     MapPosition(requireNotNull(place.latitude), requireNotNull(place.longitude))
                 require(origin.valid() && destination.valid() && !place.simulated)
-                delay((1200 - (clock() - lastRequest)).coerceAtLeast(0))
+                delay(requestWaitMillis(lastRequest,clock(),1200))
                 currentCoroutineContext().ensureActive()
                 lastRequest = clock()
                 val coordinates =
