@@ -1,8 +1,20 @@
 # CabinOS ONE 휴대폰 검토본
 
-퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.1-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
+퓨처랩스 · Android 10 이상 · `CabinOS ONE 테스트` (`io.cabinos.one.preview`, `0.11.2-preview`). 정차 플랜·집중/휴식·주변 추천과 내비 화면을 휴대폰에서 확인하는 Android 검토용 APK입니다. 기존 검토본과 같은 테스트 서명으로 업데이트 설치할 수 있습니다. 차량용 가로 배치와 안전 잠금 기준은 유지했습니다.
 
-## 최신 1시간 추가 점검
+## 최신 검토본 · 2026-11-02
+
+[APK 다운로드](https://github.com/hundol047/HYUNDAI/raw/refs/heads/fix/vehicle-runtime-issues/preview/%ED%93%A8%EC%B2%98%EB%9E%A9%EC%8A%A4_CabinOS_ONE_preview.apk) · [SHA-256](SHA256SUMS) · [소스 정보](build-info.json)
+
+복귀 계획 보존, 재부팅 알림 복구, 사진 재시도, 네트워크 상태 감지, 조작·할 일 저장 오류 수정을 포함합니다. 소스 검사 **545개 통과·실패 0개**, lint 오류 0개입니다. Android 검토용 테스트 키 서명이며 팀 정식 제출 서명이 아닙니다. 기존 `apk/` 제출본은 변경하지 않았습니다.
+
+```bash
+adb install -r -g "preview/퓨처랩스_CabinOS_ONE_preview.apk"
+```
+
+이번 APK의 실행 영상은 녹화·검토 후 별도로 링크합니다. 아래 영상·검증은 각 날짜의 이전 버전 기록입니다. 실제 S20+·공식 Pleos 차량 검증을 새로 완료했다는 뜻이 아닙니다.
+
+## 이전 1시간 추가 점검
 
 8가지 유형을 수정했습니다. **core 190개 + Android 326개 = 516개 통과**, 서버·도구 85개 통과. 공식 SDK 포함 release/검토본 빌드와 lint(오류 0개, 기존 경고 14개), 수정 소스 CI가 통과했습니다. 실제 지도 렌더링 2개와 수정 소스 debug·release의 일반 Android 에뮬레이터 검사도 통과했습니다. 공개 검토용 APK 자체도 Android 13·15 일반 에뮬레이터 설치·실행 검사를 통과했습니다. 실제 S20+·공식 Pleos 차량 이미지 검증은 별도입니다.
 
