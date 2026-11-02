@@ -1,0 +1,88 @@
+{
+  "recordingRun": 41428891716,
+  "sourceCiRun": 41427444496,
+  "passedChecks": 49,
+  "failedChecks": 0,
+  "videos": [
+    {
+      "scenario": "overview",
+      "checks": 16,
+      "durationSeconds": 140.179021,
+      "videoSha256": "0d1285e7981eadaf181a12eb3976393a21d89151ae233fd40cc7754ce789cf20",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ]
+    },
+    {
+      "scenario": "stop-plan",
+      "checks": 10,
+      "durationSeconds": 160.638167,
+      "videoSha256": "77ac0e6f74ac215c479ad135659bbe5e9c90fa0effe264b96eaf2c5d003336ca",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ]
+    },
+    {
+      "scenario": "navigation-review",
+      "checks": 7,
+      "durationSeconds": 85.681812,
+      "videoSha256": "5f931ff4a87b7c9630ed1bb9be31af90a6bc0df928aa50e8181f49c1e8808593",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ]
+    },
+    {
+      "scenario": "place-photos",
+      "checks": 8,
+      "durationSeconds": 76.661709,
+      "videoSha256": "f995fda2f676caa8fe834c0d993f1593496e065cf157b52d7339c005c4a1e4da",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ]
+    },
+    {
+      "scenario": "audio-review",
+      "checks": 8,
+      "durationSeconds": 141.947979,
+      "videoSha256": "13485c5911739bee2532a2e22c9d15bcf99a2bdc88e3d494f7903e1f173a174b",
+      "streams": [
+        {
+          "codec_name": "h264",
+          "codec_type": "video"
+        },
+        {
+          "codec_name": "aac",
+          "codec_type": "audio"
+        }
+      ]
+    }
+  ]
+}

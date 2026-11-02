@@ -12,7 +12,7 @@
 adb install -r -g "preview/퓨처랩스_CabinOS_ONE_preview.apk"
 ```
 
-이번 APK의 실행 영상은 녹화·검토 후 별도로 링크합니다. 아래 영상·검증은 각 날짜의 이전 버전 기록입니다. 실제 S20+·공식 Pleos 차량 검증을 새로 완료했다는 뜻이 아닙니다.
+**[최신 APK의 소리 포함 기능 시연 영상](../docs/video/2026-11-02/README.md)** · [APK와 영상 다운로드](https://github.com/hundol047/HYUNDAI/releases/tag/v0.11.2-preview-20261102). 일반 Android 에뮬레이터에서 실제 APK를 실행해 녹화했으며, 차량 값과 GPS는 시뮬레이션입니다. 아래 영상·검증은 각 날짜의 이전 버전 기록입니다. 실제 S20+·공식 Pleos 차량 검증을 새로 완료했다는 뜻이 아닙니다.
 
 ## 이전 1시간 추가 점검
 

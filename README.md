@@ -36,7 +36,7 @@ cd HYUNDAI
 ./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug
 ```
 
-PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issues` 브랜치를 사용하세요. 마켓 개인 계정 등록은 보류하고, 계정 등록과 별개인 [퓨처랩스 서명 후보 생성·검증](docs/RELEASE_NOTES_0.11.1.md)을 먼저 진행할 수 있습니다.
+PR #2 병합 전 최신 0.11.2를 검토하려면 main 대신 `fix/vehicle-runtime-issues` 브랜치를 사용하세요. 마켓 개인 계정 등록은 보류하고, 계정 등록과 별개인 [퓨처랩스 서명 후보 생성·검증](docs/RELEASE_NOTES_0.11.1.md)을 먼저 진행할 수 있습니다.
 
 공식 Maven 접근 실패 시 중지하며 SDK 없는 빌드로 대체하지 않습니다. Gradle release 출력은 서명 전 파일입니다. 팀 키 서명·공식 이미지 설치·Virtual Console·동일 APK 녹화 명령은 [실행 가이드](docs/PLEOS_VEHICLE_STATE_KO.md)를 따릅니다.
 
@@ -45,6 +45,8 @@ PR #2 병합 전 0.11.1을 검토하려면 main 대신 `fix/vehicle-runtime-issu
 실제 장소는 보행 전용 왕복 경로를 확인한 뒤 계획에 반영하며, 돌아오는 시간에 맞춰 복귀 알림을 계산합니다. EchoRoad는 동의 기반 급감속 후보 수집·인증 서버 집계·경로 앞 위험 표시를 제공합니다. Railway 서버에는 **공식 과거 사고 다발구역 1,271개**를 적재했으며 앱에서 기기별 접근키 인증이 필요합니다. [공식 자료·검증 범위](docs/ACCIDENT_AREAS_KO.md)와 [보행·공유 기능 안내](docs/WALKING_ECHOROAD_KO.md)를 확인하세요. 현재 사고 발생이나 결빙 상태를 확정하는 서비스는 아닙니다.
 
 ## 심사용 문서·영상
+
+**[최신 0.11.2 기능 시연 — 실제 APK 화면·출력 소리](docs/video/2026-11-02/README.md)** · [최신 APK와 영상 다운로드](https://github.com/hundol047/HYUNDAI/releases/tag/v0.11.2-preview-20261102). 일반 Android 에뮬레이터 시연이며 차량 신호·GPS는 시뮬레이션입니다.
 
 - [최신 출시 전 점검: 장소·내비·실기기·제출 서명](docs/release-check/README.md). 해결한 코드 결함과 외부 데이터·기기·키가 필요한 항목을 구분합니다.
 
