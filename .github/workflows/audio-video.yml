@@ -8,7 +8,7 @@ on:
       - preview/퓨처랩스_CabinOS_ONE_preview.apk
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   record:
     runs-on: ubuntu-24.04
@@ -39,8 +39,8 @@ jobs:
           echo '9f969d30cc574816077edecda65719c1c70b0aee1df1ba5fa00779ac07b8fd6e  /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz' | sha256sum -c -
           tar -xzf /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz -C /tmp/cabinos-capture
           echo '/tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1' >> "$GITHUB_PATH"
-          curl --fail --location --retry 3 'https://huggingface.co/csukuangfj2/sherpa-onnx-apk/resolve/7655c70a179a5a574f62f1723a13db1c60a83f2f/tts-engine-new/1.13.8/sherpa-onnx-1.13.8-x86_64-kor-tts-engine-sherpa-onnx-supertonic-3-tts-int8-2026-05-11.apk' -o /tmp/cabinos-capture/neural-engine.apk
-          echo '760fff23dc75d68b9dca0dcd4dc4d0dfeaabf1f2e31ebb4e37af5037c90bc64b  /tmp/cabinos-capture/neural-engine.apk' | sha256sum -c -
+          curl --fail --location --retry 3 'https://huggingface.co/csukuangfj2/sherpa-onnx-apk/resolve/dc89924cb00d3a284c0eeb231247cd306bcad1fb/tts-engine-new/2.0.1/sherpa-onnx-2.0.1-x86_64-kor-tts-engine-sherpa-onnx-supertonic-3-tts-int8-2026-05-11.apk' -o /tmp/cabinos-capture/neural-engine.apk
+          echo 'ca931cd70d71637ac0bd1a0ab206c562fe36ca93a6ea03c20bca8b304246312e  /tmp/cabinos-capture/neural-engine.apk' | sha256sum -c -
       - name: Record actual APK video and internal output audio
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -64,3 +64,12 @@ jobs:
         with:
           name: latest-demo-${{ matrix.scenario }}
           path: artifacts/${{ matrix.scenario }}/
+      - name: Upload verified recording to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp artifacts/${{ matrix.scenario }}/CabinOS_ONE_android_apk.mp4 /tmp/CabinOS_ONE_${{ matrix.scenario }}.mp4
+          gh release upload v0.11.2-preview-20261102 /tmp/CabinOS_ONE_${{ matrix.scenario }}.mp4 --clobber
+          if [ '${{ matrix.scenario }}' = overview ]; then
+            gh release upload v0.11.2-preview-20261102 preview/퓨처랩스_CabinOS_ONE_preview.apk preview/SHA256SUMS preview/build-info.json --clobber
+          fi
