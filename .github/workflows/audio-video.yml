@@ -56,9 +56,9 @@ jobs:
             adb shell am start -W -n com.k2fsa.sherpa.onnx.tts.engine/.MainActivity
             sleep 12
             python3 scripts/record-android-demo.py --serial emulator-5554 --apk preview/퓨처랩스_CabinOS_ONE_preview.apk --package io.cabinos.one.preview --capture-audio --${{ matrix.scenario }} --review-language ko-KR --output artifacts/${{ matrix.scenario }}
-            if [ '${{ matrix.scenario }}' = audio-review ] || [ '${{ matrix.scenario }}' = navigation-review ]; then
-              python3 scripts/verify_recorded_audio.py artifacts/${{ matrix.scenario }}
-            fi
+      - name: Verify captured audio
+        if: matrix.scenario == 'audio-review' || matrix.scenario == 'navigation-review'
+        run: python3 scripts/verify_recorded_audio.py artifacts/${{ matrix.scenario }}
       - uses: actions/upload-artifact@v4
         if: always()
         with:
