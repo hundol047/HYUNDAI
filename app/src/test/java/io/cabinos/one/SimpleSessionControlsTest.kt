@@ -40,7 +40,7 @@ class SimpleSessionControlsTest {
             }
         }
         compose.onNodeWithText("계속").assertIsNotEnabled().assertHeightIsAtLeast(56.dp)
-        compose.onNodeWithText("다시 시작할 여유가 없어요. 출발 준비 또는 시간 설정을 확인하세요.").assertIsDisplayed()
+        compose.onNodeWithText("다시 시작할 여유가 없습니다. 출발 준비 또는 시간 설정을 확인하세요.").assertIsDisplayed()
         compose.onNodeWithText("종료").assertIsEnabled().assertHeightIsAtLeast(56.dp).performClick()
         compose.runOnIdle { assertTrue(ended) }
     }

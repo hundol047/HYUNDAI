@@ -22,7 +22,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class StorageRecoveryTest {
-    private class Fixture(dao:(CabinDao)->CabinDao):AutoCloseable {
+    private class Fixture(network:Boolean=false,dao:(CabinDao)->CabinDao):AutoCloseable {
         val context=ApplicationProvider.getApplicationContext<Context>()
         val db=Room.inMemoryDatabaseBuilder(context,CabinDatabase::class.java).allowMainThreadQueries().build()
         var now=System.currentTimeMillis()
@@ -40,7 +40,7 @@ class StorageRecoveryTest {
         val vm=CabinViewModel(engine,SimulationVehicleProvider(preferences),VehicleStateProvider(context),
             PleosVehicleReader(null),PleosNavigation(null),PleosCabinReader(null),dao(db.dao()),speech,location,
             AndroidNavigationProvider(context,location),AmbientAudio(context),DepartureReminders(context),
-            NearbyPlaces(context),LiveNavigation(context,engine,speech),preferences)
+            NearbyPlaces(context),LiveNavigation(context,engine,speech),preferences,if(network)NetworkMonitor(context) else null)
         init {store.put("test",vm)}
         override fun close() {store.clear();speech.close();db.close()}
     }
@@ -124,4 +124,132 @@ class StorageRecoveryTest {
             }
         } finally {Dispatchers.resetMain()}
     }
+    @Test fun changingOnlyChargeTargetStillPersistsPlan()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        var saved:CheckpointRecord?=null
+        try {
+            Fixture {delegate -> object:CabinDao by delegate {
+                override suspend fun checkpoint():CheckpointRecord?=null
+                override suspend fun preferences():PreferenceRecord?=null
+                override suspend fun history()=emptyList<SessionRecord>()
+                override suspend fun saveState(state:AppState) {saved=CheckpointRecord.from(state)}
+            }}.use {f ->
+                runCurrent();f.park();runCurrent()
+                assertTrue(f.engine.setChargeTarget(85));runCurrent()
+                assertEquals(85,saved?.chargeTargetPercent)
+                assertTrue(f.engine.setArrivalInMinutes(60));runCurrent()
+                assertEquals(f.engine.state.value.arrivalTargetMs,saved?.arrivalTargetMs)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+    @Test fun operatingSystemConnectivityChangesReachApplicationState()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        try {
+            Fixture(network=true) {delegate -> object:CabinDao by delegate {
+                override suspend fun checkpoint():CheckpointRecord?=null
+                override suspend fun preferences():PreferenceRecord?=null
+                override suspend fun history()=emptyList<SessionRecord>()
+                override suspend fun saveState(state:AppState) {}
+            }}.use {f ->
+                runCurrent()
+                val manager=f.context.getSystemService(android.net.ConnectivityManager::class.java)
+                val shadow=org.robolectric.Shadows.shadowOf(manager)
+                val network=manager.activeNetwork!!
+                val capabilities=android.net.NetworkCapabilities().apply {
+                    org.robolectric.Shadows.shadowOf(this).addCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                    org.robolectric.Shadows.shadowOf(this).addCapability(android.net.NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+                }
+                shadow.setNetworkCapabilities(network,capabilities)
+                val callback=shadow.networkCallbacks.single()
+                callback.onCapabilitiesChanged(network,capabilities);runCurrent()
+                assertTrue(f.engine.state.value.networkAvailable)
+                callback.onLost(network);runCurrent()
+                assertFalse(f.engine.state.value.networkAvailable)
+                callback.onAvailable(network);runCurrent()
+                assertTrue(f.engine.state.value.networkAvailable)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+
+    private class TaskStore(delegate:CabinDao):CabinDao by delegate {
+        val rows=mutableMapOf<String,TaskRecord>()
+        var fail=false
+        var planFails=false
+        override suspend fun checkpoint():CheckpointRecord?=null
+        override suspend fun preferences():PreferenceRecord?=null
+        override suspend fun history()=emptyList<SessionRecord>()
+        override suspend fun saveState(state:AppState) {if(planFails)throw SQLiteException("plan write failed")}
+        override suspend fun saveTask(record:TaskRecord) {if(fail)throw SQLiteException("write failed");rows[record.id]=record}
+        override suspend fun deleteTask(id:String) {rows.remove(id)}
+        override suspend fun toggleTask(id:String) {
+            if(fail)throw SQLiteException("write failed")
+            rows[id]?.let {rows[id]=it.copy(done=!it.done)}
+        }
+    }
+    @Test fun rapidCheckboxTapsUseStoredStateRatherThanStaleScreenRow()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        lateinit var tasks:TaskStore
+        try {
+            Fixture {TaskStore(it).also {tasks=it}}.use {f ->
+                runCurrent();f.park();runCurrent()
+                val row=TaskRecord("task","확인");tasks.rows[row.id]=row
+                f.vm.toggleTask(row);f.vm.toggleTask(row);runCurrent()
+                assertFalse(tasks.rows.getValue(row.id).done)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+    @Test fun queuedCheckboxTapCannotRecreateDeletedTask()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        lateinit var tasks:TaskStore
+        try {
+            Fixture {TaskStore(it).also {tasks=it}}.use {f ->
+                runCurrent();f.park();runCurrent()
+                val row=TaskRecord("task","확인");tasks.rows[row.id]=row
+                f.vm.deleteTask(row);f.vm.toggleTask(row);runCurrent()
+                assertFalse(tasks.rows.containsKey(row.id))
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+    @Test fun successfulPlanAutosaveDoesNotHideFailedTaskWrite()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        lateinit var tasks:TaskStore
+        try {
+            Fixture {TaskStore(it).also {tasks=it}}.use {f ->
+                runCurrent();f.park();runCurrent()
+                tasks.fail=true;f.vm.addTask("저장 실패");runCurrent()
+                assertTrue(f.vm.storageStatus.value?.contains("할 일 변경") == true)
+                f.vm.waiting(30);runCurrent()
+                assertTrue(f.vm.storageStatus.value?.contains("할 일 변경") == true)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+    @Test fun successfulTaskRetryClearsOnlyItsOwnWriteFailure()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        lateinit var tasks:TaskStore
+        try {
+            Fixture {TaskStore(it).also {tasks=it}}.use {f ->
+                runCurrent();f.park();runCurrent()
+                tasks.fail=true;f.vm.addTask("확인");runCurrent()
+                assertNotNull(f.vm.storageStatus.value)
+                tasks.fail=false;f.vm.addTask("확인");runCurrent()
+                assertNull(f.vm.storageStatus.value)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+
+    @Test fun successfulTaskWriteDoesNotClearSeparatePlanSaveFailure()=runTest {
+        Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+        lateinit var tasks:TaskStore
+        try {
+            Fixture {TaskStore(it).also {tasks=it}}.use {f ->
+                runCurrent();f.park();runCurrent()
+                tasks.planFails=true;f.vm.waiting(30);runCurrent()
+                assertTrue(f.vm.storageStatus.value?.contains("최근 변경") == true)
+                tasks.fail=true;f.vm.addTask("확인");runCurrent()
+                tasks.fail=false;f.vm.addTask("확인");runCurrent()
+                assertTrue(f.vm.storageStatus.value?.contains("최근 변경") == true)
+            }
+        } finally {Dispatchers.resetMain()}
+    }
+
 }

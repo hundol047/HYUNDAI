@@ -97,6 +97,22 @@ class StopPlanPanelTest {
                 session = CabinSession("test", SessionKind.FOCUS, 0, 900, 600),
             )
         )
-        compose.onNodeWithText("여유 안에서 5분 더").assertIsNotEnabled()
+        compose.onNodeWithText("연장할 시간 부족").assertIsNotEnabled()
     }
+    @Test fun restoredOutdoorReserveKeepsExplicitCabinAction() {
+        render(AppState(parkedAllowed=true,schedule=TimeOptimizer.calculate(1800000,0,300,360)))
+        compose.onNodeWithText("차 안에서 보내기로 변경").assertIsDisplayed().assertIsEnabled().assertHeightIsAtLeast(48.dp)
+        compose.onNodeWithText("19분 집중 바로 시작").assertDoesNotExist()
+    }
+    @Test fun exhaustedOutdoorPlanStillOffersSafeReleaseAction() {
+        render(AppState(schedule=TimeOptimizer.calculate(600000,0,300,360)))
+        compose.onNodeWithText("차 안에서 보내기로 변경").assertIsDisplayed().assertIsNotEnabled()
+    }
+    @Test fun extensionLabelMatchesActualPartialMinutes() {
+        render(AppState(parkedAllowed=true,schedule=SharedSchedule(departureAtMs=900000,availableSeconds=750),
+            session=CabinSession("test",SessionKind.FOCUS,0,900,600)))
+        compose.onNodeWithText("여유 안에서 2분 30초 더").assertIsDisplayed().assertIsEnabled()
+        compose.onNodeWithText("여유 안에서 5분 더").assertDoesNotExist()
+    }
+
 }

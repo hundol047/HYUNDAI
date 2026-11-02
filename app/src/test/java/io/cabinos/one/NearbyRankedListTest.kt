@@ -115,4 +115,24 @@ class NearbyRankedListTest {
         compose.onNodeWithText("등록 사진 출처").assertIsDisplayed()
     }
 
+    @Test fun photoRetryWaitAndCompletionAreDistinctFromLoading() {
+        val place=DemoActivityRepository().activities().first().copy(name="사진 확인 대상",simulated=false)
+        val finished=androidx.compose.runtime.mutableStateOf(false)
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {
+            PlacePhotoFrame(place,null,true,retryWait=if(finished.value)0 else 61000,finished=finished.value)
+        }}}
+        compose.onNodeWithText("사진 재시도 대기 중입니다.").assertIsDisplayed()
+        compose.runOnIdle {finished.value=true}
+        compose.onNodeWithText("사진 확인을 마쳤지만 이미지를 받지 못했습니다.").assertIsDisplayed()
+        compose.onNodeWithText("사진 재시도 대기 중입니다.").assertDoesNotExist()
+    }
+    @Test fun photoAttributionHasLargeExplicitButton() {
+        val place=DemoActivityRepository().activities().first()
+        val photo=io.cabinos.one.platform.PlacePhoto.Photo(
+            android.graphics.Bitmap.createBitmap(2,2,android.graphics.Bitmap.Config.ARGB_8888),
+            "테스트 출처","https://commons.wikimedia.org/")
+        compose.runOnIdle {compose.activity.setContent {CabinTheme {PlacePhotoFrame(place,photo,true)}}}
+        compose.onNodeWithText("사진 출처").assertIsDisplayed().assertHeightIsAtLeast(48.dp).assertHasClickAction()
+    }
+
 }

@@ -32,7 +32,7 @@ fun StopPlanPanel(
         Text("나의 정차 플랜", color = White, fontSize = 20.sp)
         Spacer(Modifier.height(8.dp))
         if (departure == null) {
-            Text("언제 출발할까요? 시간을 정하면 집중·휴식 시간을 맞춰드려요.", color = Muted)
+            Text("출발 시간을 설정하면 집중·휴식 시간을 자동으로 맞춥니다.", color = Muted)
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(15, 30, 60).forEach { minutes ->
                     ActionButton(
@@ -55,6 +55,10 @@ fun StopPlanPanel(
                 color = White,
             )
             Spacer(Modifier.height(8.dp))
+            if(schedule.availableSeconds<60 && (s.selectedActivityId!=null || schedule.returnSeconds>0)) {
+                Text("외출 계획의 복귀 여유 시간을 유지 중입니다.",color=Muted)
+                ActionButton("차 안에서 보내기로 변경",onStay,enabled=s.parkedAllowed)
+            }
             when {
                 schedule.availableSeconds < 60 -> Text("새 활동보다 출발 준비를 시작해 주세요.", color = Amber)
                 session != null -> {
@@ -62,18 +66,18 @@ fun StopPlanPanel(
                         "${session.kind.label} ${timeText(session.remainingSeconds)} 남음 · ${if (session.status == SessionStatus.PAUSED) "일시정지" else "진행 중"}",
                         color = White,
                     )
+                    val extra=minOf(300L,schedule.availableSeconds-session.remainingSeconds,7200L-session.durationSeconds)
+                    val extension=if(extra%60==0L) "${extra/60}분" else "${extra/60}분 ${extra%60}초"
                     ActionButton(
-                        "여유 안에서 5분 더",
+                        if(extra>=60) "여유 안에서 $extension 더" else "연장할 시간 부족",
                         onExtend,
                         enabled =
-                            s.parkedAllowed &&
-                                schedule.availableSeconds - session.remainingSeconds >= 60 &&
-                                session.durationSeconds <= 7140,
+                            s.parkedAllowed && extra>=60,
                     )
-                    Text("1분 이상 여유가 있을 때만 연장하며 출발 시각은 바꾸지 않아요.", color = Muted, fontSize = 12.sp)
+                    Text("1분 이상 여유가 있을 때만 연장하며 출발 시각은 유지합니다.", color = Muted, fontSize = 12.sp)
                 }
-                s.selectedActivityId != null -> {
-                    Text("선택한 장소의 왕복 시간을 확보했어요. 경로·출입 가능 여부는 지도에서 확인하세요.", color = Muted)
+                s.selectedActivityId != null || schedule.returnSeconds>0 -> {
+                    Text("외출 계획의 복귀 여유 시간을 유지 중입니다. 현재 경로·출입 가능 여부를 확인해 주세요.", color = Muted)
                     ActionButton("차 안에서 보내기로 변경", onStay, enabled = s.parkedAllowed)
                 }
                 else -> {

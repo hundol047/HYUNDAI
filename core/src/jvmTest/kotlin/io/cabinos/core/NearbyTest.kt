@@ -61,13 +61,15 @@ class NearbyTest {
         val p=NearbyGeometry.osmActivity("osm-node-1","실제 등록명","카페",37.395,127.111,MapPosition())!!
         assertFalse(p.simulated);assertEquals(37.395,p.latitude!!,0.000001);assertTrue(p.description.contains("추정"))
     }
-    @Test fun placeSelectionReservesReturnTimeAndNewOriginClearsOldPlan() {
+    @Test fun newSearchOriginClearsSelectionButPreservesConfirmedReturnReserve() {
         val e=parked();val initial=e.state.value.schedule.availableSeconds
         assertTrue(e.selectActivity("cafe"));assertEquals("cafe",e.state.value.selectedActivityId)
         assertEquals(initial-360,e.state.value.schedule.availableSeconds)
         val origin=MapPosition(37.5,127.1,"직접 선택한 기준점")
         assertTrue(e.updateNearbyActivities(origin,emptyList()))
-        assertNull(e.state.value.selectedActivityId);assertEquals(0L,e.state.value.schedule.returnSeconds)
+        assertNull(e.state.value.selectedActivityId);assertEquals(360L,e.state.value.schedule.returnSeconds)
+        assertEquals(initial-360,e.state.value.schedule.availableSeconds)
+        e.stayInCabin();assertEquals(0L,e.state.value.schedule.returnSeconds)
         assertTrue(e.state.value.activities.isEmpty());assertEquals(origin,e.state.value.activityOrigin)
     }
     @Test fun movingVehicleCannotChangeOriginOrApplyPlacePlan() {

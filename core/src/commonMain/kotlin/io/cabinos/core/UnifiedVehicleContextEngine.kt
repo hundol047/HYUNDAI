@@ -29,6 +29,7 @@ class UnifiedVehicleContextEngine(
     private var routeDeadlineMs: Long? = null
     private var routeReadAtMs: Long? = null
     private var returnSeconds = 0L
+    private var restoredInboundSeconds:Long? = null
     private var nearbyActivities: List<NearbyActivity>? = null
     private var scheduleLabel = "시간 미설정"
     private var lastTickMs = clock()
@@ -99,7 +100,7 @@ class UnifiedVehicleContextEngine(
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
         val vehicleContext = decision.decide(old.sample, now, parkCandidateAt?.let { now - it >= 1500 } == true)
         if (vehicleContext == VehicleContext.DRIVING && !driving) {
-            returnSeconds=0
+            returnSeconds=0;restoredInboundSeconds=null
             if (nearbyActivities != null) nearbyActivities=emptyList()
             mutable.value=state.value.copy(selectedActivityId=null,nearbyRevision=state.value.nearbyRevision+1)
             socDeadlineMs=null; manualDepartureAtMs=null; chargeDeadlineMs=null; lastChargeEstimate=null
@@ -116,7 +117,7 @@ class UnifiedVehicleContextEngine(
         )
         constraints.minByOrNull { it.first }?.let { departureAtMs=it.first; scheduleLabel=it.second }
             ?: run { departureAtMs=null }
-        val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel).copy(inboundSeconds=(nearbyActivities ?: recommendations.activities()).firstOrNull {it.id==state.value.selectedActivityId}?.let {it.walking?.inboundSeconds ?: it.oneWaySeconds} ?: 0)
+        val schedule = TimeOptimizer.calculate(departureAtMs, now, old.preferences.departureBufferMinutes * 60L, returnSeconds, scheduleLabel).copy(inboundSeconds=restoredInboundSeconds ?: (nearbyActivities ?: recommendations.activities()).firstOrNull {it.id==state.value.selectedActivityId}?.let {it.walking?.inboundSeconds ?: it.oneWaySeconds} ?: 0)
         if (old.sample == null || !old.sample.connected || now - old.sample.timestampMs !in 0..5_000) parkCandidateAt = null
         val physical = if(navigationLock)VehicleContext.DRIVING else vehicleContext
         val allowed = physical == VehicleContext.PARKED || physical == VehicleContext.CHARGING
@@ -204,6 +205,7 @@ class UnifiedVehicleContextEngine(
         if (!parkedNow()) return reject()
         val option = state.value.activities.firstOrNull { it.activity.id == id && it.feasible } ?: return false
         if(!option.activity.simulated && option.activity.walking?.usable(clock(),state.value.activityOrigin)!=true)return false
+        restoredInboundSeconds=option.activity.walking?.inboundSeconds ?: option.activity.oneWaySeconds
         returnSeconds = option.activity.roundTripSeconds
         mutable.value = state.value.copy(selectedActivityId=id)
         event("ActivitySelected", "${option.activity.name} 선택 · 왕복 ${returnSeconds / 60}분을 확보했습니다."); tick(); return true
@@ -220,7 +222,7 @@ class UnifiedVehicleContextEngine(
                 (place.id==state.value.selectedActivityId || walk.usable(clock(),origin)))place.copy(walking=walk,oneWaySeconds=walk.outboundSeconds) else place
         }
         val selected=nearbyActivities!!.firstOrNull { it.id==state.value.selectedActivityId && (it.simulated || it.walking!=null) }
-        returnSeconds=selected?.roundTripSeconds ?: 0
+        // Search results may disappear; only an explicit plan change releases the reserved time.
         mutable.value=state.value.copy(activityOrigin=origin,selectedActivityId=selected?.id,nearbyRevision=state.value.nearbyRevision+1)
         tick();return true
     }
@@ -229,11 +231,11 @@ class UnifiedVehicleContextEngine(
         val places=nearbyActivities ?: return false
         if(places.none {it.id==id && !it.simulated})return false
         nearbyActivities=places.map {if(it.id==id)it.copy(oneWaySeconds=plan.outboundSeconds,walking=plan)else it}
-        if (state.value.selectedActivityId == id) returnSeconds=plan.roundTripSeconds
+        if (state.value.selectedActivityId == id) {returnSeconds=plan.roundTripSeconds;restoredInboundSeconds=plan.inboundSeconds}
         mutable.value=state.value.copy(nearbyRevision=state.value.nearbyRevision+1)
         tick();return true
     }
-    fun stayInCabin() { if (parkedNow()) { returnSeconds = 0;mutable.value=state.value.copy(selectedActivityId=null);tick() } }
+    fun stayInCabin() { if (parkedNow()) { returnSeconds = 0;restoredInboundSeconds=null;mutable.value=state.value.copy(selectedActivityId=null);tick() } }
     fun startSession(kind: SessionKind, minutes: Int): Boolean {
         if (!parkedNow()) return reject()
         val duration = min(minutes.coerceIn(1,120) * 60L, state.value.schedule.availableSeconds)
@@ -285,12 +287,17 @@ class UnifiedVehicleContextEngine(
             relaxMinutes = preferences.relaxMinutes.coerceIn(1,90), departureBufferMinutes = preferences.departureBufferMinutes.coerceIn(1,15)))
         tick()
     }
-    fun restore(preferences: Preferences, session: CabinSession?, history: List<CabinSession>, departure: Long?) {
+    fun restore(preferences: Preferences, session: CabinSession?, history: List<CabinSession>, departure: Long?, savedReturnSeconds:Long=0, savedInboundSeconds:Long=0,
+        chargeTargetPercent:Int?=null, arrivalTargetMs:Long?=null) {
         // Never restore a physical safety state or automatically resume a session after process death.
         mutable.value = state.value.copy(preferences = preferences, session = session?.let {
             if (it.status == SessionStatus.RUNNING) it.copy(status = SessionStatus.PAUSED) else it
-        }, history = history.take(100))
+        }, history = history.take(100),chargeTargetPercent=chargeTargetPercent?.takeIf {it in 50..100},
+            arrivalTargetMs=arrivalTargetMs?.takeIf {it>clock()})
         val restored=departure?.takeIf { it >= clock() }
+        // Keep only the time reserve, never restore an old route as freshly verified.
+        returnSeconds=if(restored!=null)savedReturnSeconds.coerceAtLeast(0) else 0
+        restoredInboundSeconds=if(returnSeconds>0)savedInboundSeconds.coerceIn(0,returnSeconds) else null
         departureAtMs = restored; manualDepartureAtMs = restored
         scheduleLabel = if(restored!=null) "저장된 출발 계획" else "시간 미설정"; tick()
     }
@@ -339,7 +346,7 @@ class UnifiedVehicleContextEngine(
         if (!parkedNow()) return reject()
         departureAtMs = null; manualDepartureAtMs = null; lastChargeEstimate = null
         chargeDeadlineMs=null; socDeadlineMs=null; socGoalConsumed=false; routePlanOverridden=false; routeDeadlineMs=null; routeReadAtMs=null
-        sessionDeadlineMs = null; returnSeconds = 0; departureAnnounced = false; scheduleLabel = "시간 미설정"
+        sessionDeadlineMs = null; returnSeconds = 0; restoredInboundSeconds=null; departureAnnounced = false; scheduleLabel = "시간 미설정"
         nearbyActivities=null
         mutable.value = state.value.copy(preferences = Preferences(), chargeTargetPercent=null, arrivalTargetMs=null, session = null, history = emptyList(), events = emptyList(),activityOrigin=MapPosition(),selectedActivityId=null,nearbyRevision=state.value.nearbyRevision+1)
         tick()

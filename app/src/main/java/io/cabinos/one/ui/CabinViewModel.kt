@@ -30,6 +30,7 @@ class CabinViewModel @Inject constructor(
     private val nearbyPlaces:NearbyPlaces,
     val liveNavigation:LiveNavigation,
     private val runtimePreferences:RuntimePreferences,
+    private val network:NetworkMonitor?=null,
 ):ViewModel() {
     private val mutableAppearance=MutableStateFlow(runtimePreferences.appearance)
     val appearance=mutableAppearance.asStateFlow()
@@ -83,14 +84,21 @@ class CabinViewModel @Inject constructor(
     private val mutableStorageStatus = MutableStateFlow<String?>(null)
     private val mutableRestoreFailure=MutableStateFlow<String?>(null)
     private val mutableTaskReadFailure=MutableStateFlow<String?>(null)
-    val storageStatus=combine(mutableRestoreFailure,mutableTaskReadFailure,mutableStorageStatus) { restore,tasks,operation ->
-        restore ?: tasks ?: operation
+    private val mutableTaskWriteFailure=MutableStateFlow<String?>(null)
+    val storageStatus=combine(mutableRestoreFailure,mutableTaskReadFailure,mutableStorageStatus,mutableTaskWriteFailure) { restore,tasks,operation,write ->
+        restore ?: tasks ?: write ?: operation
     }.stateIn(viewModelScope,SharingStarted.Eagerly,null)
     init {
+        network?.let { monitor -> viewModelScope.launch {
+            monitor.available.collect { available ->
+                if(engine.state.value.networkAvailable!=available)engine.setConnectivity(network=available)
+            }
+        } }
         viewModelScope.launch {
             try {
                 val checkpoint=dao.checkpoint()
-                engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure)
+                engine.restore(dao.preferences()?.domain() ?: Preferences(),checkpoint?.activeSessionId?.let { dao.session(it)?.domain() },dao.history().map { it.domain() },checkpoint?.departure,
+                    checkpoint?.returnSeconds ?: 0,checkpoint?.inboundSeconds ?: 0,checkpoint?.chargeTargetPercent,checkpoint?.arrivalTargetMs)
                 storageRestored=true
             } catch(error:Exception) {
                 if(error is CancellationException)throw error
@@ -128,7 +136,7 @@ class CabinViewModel @Inject constructor(
                     reminders.sync(s)
                     persistenceMutex.withLock {
                         val latest = state.value
-                        val f = listOf(latest.preferences,latest.session,latest.history,latest.schedule.departureAtMs)
+                        val f = listOf(latest.preferences,latest.session,latest.history,CheckpointRecord.from(latest))
                         if(storageRestored && f != fingerprint) {
                             try { dao.saveState(latest);fingerprint=f;mutableStorageStatus.value=null }
                             catch (error: Exception) { if (error is CancellationException) throw error;mutableStorageStatus.value="저장 공간을 확인해 주세요. 최근 변경 사항을 저장하지 못했습니다." }
@@ -197,13 +205,13 @@ class CabinViewModel @Inject constructor(
         viewModelScope.launch {
             persistenceMutex.withLock {
                 if (!state.value.parkedAllowed || !storageRestored) return@withLock
-                try { action() }
-                catch(error:Exception) { if(error is CancellationException)throw error;mutableStorageStatus.value="할 일 변경 사항을 저장하지 못했습니다. 저장 공간을 확인해 주세요." }
+                try { action();mutableTaskWriteFailure.value=null }
+                catch(error:Exception) { if(error is CancellationException)throw error;mutableTaskWriteFailure.value="할 일 변경 사항을 저장하지 못했습니다. 저장 공간을 확인해 주세요." }
             }
         }
     }
     fun addTask(text:String) { if(text.isNotBlank()) writeTask { dao.saveTask(TaskRecord(UUID.randomUUID().toString(),text.trim().take(100))) } }
-    fun toggleTask(task:TaskRecord) = writeTask { dao.saveTask(task.copy(done=!task.done)) }
+    fun toggleTask(task:TaskRecord) = writeTask { dao.toggleTask(task.id) }
     fun deleteTask(task:TaskRecord) = writeTask { dao.deleteTask(task.id) }
     fun preferences(p:Preferences) { engine.updatePreferences(p) }
     fun toggleAudio(preset:String) {
@@ -332,7 +340,7 @@ class CabinViewModel @Inject constructor(
                 try {
                     demoJob?.cancel();mutableDemoRunning.value=false
                     audio.stop();mutableAudio.value=null;reminders.cancel();cancelNearby();nearbyCache.clear();PlacePhoto.clear();mutableMapSelection.value=null;liveNavigation.clear()
-                    dao.clearPersonalData();dao.saveState(state.value)
+                    dao.clearPersonalData();dao.saveState(state.value);mutableTaskWriteFailure.value=null
                     runtimePreferences.appearance=AppearanceSettings();mutableAppearance.value=AppearanceSettings()
                     speech.resetOutputPreferences()
                     storageRestored=true;mutableRestoreFailure.value=null

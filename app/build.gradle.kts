@@ -15,8 +15,8 @@ android {
         applicationId = "io.cabinos.one"
         minSdk = 29
         targetSdk = 35
-        versionCode = 20
-        versionName = "0.11.1"
+        versionCode = 21
+        versionName = "0.11.2"
         manifestPlaceholders["pleosSdkEnabled"] = pleosSdkEnabled.toString()
         buildConfigField("boolean", "SPEED_RECEIPT_FRESHNESS", "false")
         buildConfigField("boolean", "PLEOS_SDK_ENABLED", pleosSdkEnabled.toString())

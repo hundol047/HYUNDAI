@@ -22,17 +22,21 @@ import io.cabinos.one.platform.PlacePhoto
 @Composable internal fun PlaceThumbnail(place:NearbyActivity,online:Boolean) {
     var photo by remember(place,online) {mutableStateOf<PlacePhoto.Photo?>(null)}
     var loading by remember(place,online) {mutableStateOf(online&&!place.simulated)}
+    var retryWait by remember(place,online) {mutableStateOf(0L)}
+    var finished by remember(place,online) {mutableStateOf(false)}
     LaunchedEffect(place,online) {
         if(online&&!place.simulated) {
             kotlinx.coroutines.delay(300)
-            try {photo=PlacePhoto.forPlace(place)}finally{loading=false}
+            photo=io.cabinos.one.platform.retryPlacePhoto(load={PlacePhoto.forPlace(place)},loading={loading=it},waiting={retryWait=it})
+            finished=true
         } else {photo=null;loading=false}
     }
-    PlacePhotoFrame(place,photo,online,loading)
+    PlacePhotoFrame(place,photo,online,loading,retryWait,finished)
 }
 
-@Composable internal fun PlacePhotoFrame(place:NearbyActivity,photo:PlacePhoto.Photo?,online:Boolean,loading:Boolean=false) {
+@Composable internal fun PlacePhotoFrame(place:NearbyActivity,photo:PlacePhoto.Photo?,online:Boolean,loading:Boolean=false,retryWait:Long=0,finished:Boolean=false) {
     val context=LocalContext.current
+    var linkFailed by remember(place) {mutableStateOf(false)}
     val logo=brandLogo(place)
     val fallbackLabel=if(logo!=null)"브랜드 로고 · 매장 사진 아님" else if(place.simulated)"예시 장소 · 실제 사진 없음" else "실제 장소 사진 미확인"
     Column(Modifier.width(88.dp),horizontalAlignment=Alignment.CenterHorizontally) {
@@ -48,12 +52,23 @@ import io.cabinos.one.platform.PlacePhoto
         val image=photo
         if(image==null) {
             Text(fallbackLabel,color=Muted,fontSize=10.sp,lineHeight=14.sp)
-            if(loading)Text("장소 사진 확인 중…",color=Muted,fontSize=10.sp,lineHeight=14.sp)
+            val status=when {
+                loading -> "장소 사진 확인 중입니다."
+                !online && !place.simulated -> "인터넷 연결 후 사진을 확인합니다."
+                retryWait>0 -> "사진 재시도 대기 중입니다."
+                finished && !place.simulated -> "사진 확인을 마쳤지만 이미지를 받지 못했습니다."
+                else -> null
+            }
+            status?.let {Text(it,color=Muted,fontSize=12.sp,lineHeight=16.sp)}
         }
         val credit=image?.credit?:logo?.credit
         val source=image?.source?:logo?.source
-        if(credit!=null&&source!=null)Text(credit,color=Muted,fontSize=9.sp,lineHeight=12.sp,modifier=Modifier.clickable(enabled=online){
-            runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse(source)))}
-        })
+        if(credit!=null&&source!=null) {
+            Text(credit,color=Muted,fontSize=11.sp,lineHeight=14.sp)
+            TextButton(onClick={
+                linkFailed=runCatching {context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse(source)))}.isFailure
+            },enabled=online,modifier=Modifier.fillMaxWidth().heightIn(min=48.dp)) {Text("사진 출처",fontSize=12.sp)}
+            if(linkFailed)Text("출처를 열 수 없습니다. 브라우저 설정을 확인해 주세요.",color=Muted,fontSize=12.sp)
+        }
     }
 }
