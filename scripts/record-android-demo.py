@@ -27,6 +27,7 @@ def main():
     p.add_argument('--serial',required=True);p.add_argument('--apk',required=True,type=pathlib.Path)
     p.add_argument('--output',required=True,type=pathlib.Path)
     p.add_argument('--package',choices=['io.cabinos.one','io.cabinos.one.preview'],default='io.cabinos.one')
+    p.add_argument('--overview',action='store_true',help='Record dashboard, focus, safety and appearance overview')
     p.add_argument('--stop-plan',action='store_true',help='Record the parked-plan upgrade scenario')
     p.add_argument('--place-photos',action='store_true',help='Record actual nearby photos using an explicitly simulated Paris GPS position')
     p.add_argument('--navigation-review',action='store_true',help='Record live routing with simulated Seoul GPS and portrait/short-landscape controls')
@@ -153,6 +154,15 @@ def main():
                 check('APK parked dashboard','StopSense  +  CabinOS','01-parked')
                 tap('무엇을 도와드릴까요?');tap('25분 집중 모드 켜줘');tap('닫기')
                 check('focus session via assistant command','나의 할 일','02-focus')
+                if a.overview:
+                    tap('메일 확인')
+                    check('task added through preset','0 / 1','02-task-added')
+                    node=next(n for n in tree().iter('node') if n.get('checkable')=='true')
+                    x1,y1,x2,y2=map(int,re.findall(r'\d+',node.get('bounds','')))
+                    adb('shell','input','tap',str((x1+x2)//2),str((y1+y2)//2))
+                    check('task completion persisted','1 / 1','02-task-done')
+                    tap('할 일 삭제')
+                    check('task removed','0 / 0','02-task-deleted')
                 if 'versionName=0.11.0' not in package:
                     tap('배경 소리 선택')
                     for index,name in enumerate(['백색 소음','자연의 소리','잔잔한 톤']):
@@ -167,7 +177,11 @@ def main():
                 if any(n.get('text')=='나의 할 일' for n in tree().iter('node')):raise AssertionError('Task editor visible while driving')
                 scenario('신호 대기');check('D at zero does not unlock parked screen','신호 대기 중','05-traffic')
                 scenario('충전');wait('StopSense  +  CabinOS')
-                tap('설정');check('appearance settings accessible','당신에게 맞춘 CabinOS','06-settings')
+                if a.overview:
+                    tap('무엇을 도와드릴까요?');tap('15분 휴식 모드 시작해 줘');tap('닫기')
+                    check('relaxation breathing session','잠시, 쉬어가도 괜찮아요.','05-relax')
+                    tap('기록');check('session history screen','나를 위한 시간의 기록','05-history')
+                tap('설정');check('appearance settings accessible' ,'당신에게 맞춘 CabinOS','06-settings')
                 tap('웜 샌드');snapshot('07-custom-color')
                 if 'versionName=0.11.0' not in package:
                     tap('화이트');snapshot('07b-white')

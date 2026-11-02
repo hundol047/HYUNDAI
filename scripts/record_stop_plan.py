@@ -69,16 +69,16 @@ def record(adb, tree, tap, check, snapshot, scenario):
     time.sleep(4)
     scenario('충전 15분')
     top(); reveal('계속'); tap('계속')
-    reveal('여유 안에서 5분 더')
+    reveal('연장할 시간 부족')
     if remaining() > 600:
         raise AssertionError('Charge update failed to cap session')
-    if not control_disabled(tree(), '여유 안에서 5분 더'):
+    if not control_disabled(tree(), '연장할 시간 부족'):
         raise AssertionError('Extension remains enabled without spare time')
     before = remaining()
-    tap('여유 안에서 5분 더')
+    tap('연장할 시간 부족')
     if remaining() > before:
         raise AssertionError('Disabled extension changed the timer')
-    check('charge change shortens session and blocks extension', '여유 안에서 5분 더', 'plan-05-charge-limit')
+    check('charge change shortens session and blocks extension', '연장할 시간 부족', 'plan-05-charge-limit')
     time.sleep(4)
     scenario('신호 대기')
     check('zero speed in drive stays locked', '신호 대기 중', 'plan-06-traffic-lock')
