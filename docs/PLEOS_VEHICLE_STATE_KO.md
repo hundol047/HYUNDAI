@@ -97,3 +97,31 @@ python3 scripts/inspect-pleos-device.py --serial emulator-5554 \
 ```
 
 `identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Console의 **AVD Enabled** 선택기도 확인하세요. 공개 UI가 호출하는 `PUT /vehicle/hvac/mode?mode=subscribe_hvac_base` 역시 현재 runner에서는 503이었습니다. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·배포 기본 메모리 설정으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.
+
+## 정차 중 속도 만료 진단
+
+```bash
+adb logcat -s CabinVehicle
+```
+
+`speedAgeMs`는 VHAL 속도 이벤트 timestamp의 나이입니다. `lastSpeedCallbackElapsedMs`와 `lastPollSuccessElapsedMs`는 각각 마지막 속도 onChangeEvent 수신 및 필수 속성 poll 성공 시각(부팅 후 경과 ms)입니다. `gearAgeMs`는 기어 이벤트 나이, `gearReadAgeMs`는 마지막 유효 기어 재조회 나이입니다. Log.d는 최대 초당 한 번 기록하며, 미수신은 null입니다. 앱의 차량 상태 창에서도 “속도 신호 나이”를 확인할 수 있습니다.
+
+P/0 정차 중 콜백·poll 시각과 `speedAgeMs`를 함께 비교하세요. poll이 계속 성공하는데 속도 나이만 3000ms를 넘고 잠긴다면, VHAL의 정지 값 timestamp 갱신 방식과 연관됐는지 확인할 근거가 됩니다. 로그만으로 원인을 확정하지 않습니다.
+
+**대안 검토만:** 구독 상태가 확인되고 poll이 STATUS_AVAILABLE이며 유효한 P/0일 때 수신 시각을 인정하는 설계를 검토할 수 있습니다. 다만 살아 있는 구독을 어떻게 입증할지, 캐시된 poll 값·차량 버스 단절·권한 상실을 어떻게 구분할지 OEM 보장과 별도 안전 시험이 필요합니다. 이번 수정은 이를 적용하지 않았으며 기존 속도 timestamp 기준 3초 만료·P/0 1.5초 확인을 유지합니다.
+
+### 전체 시연과 신호 나이 분석
+
+KVM PC의 [전체 시연 절차](../scripts/demo/pleos-full-scenario.md)를 따라 수집한 로그를 분석합니다.
+`python3 scripts/demo/analyze-signal-log.py artifacts/full-scenario/vehicle.log`
+원시 P/0 구간만 분석하며 UNKNOWN 화면을 정차의 근거로 사용하지 않습니다.
+`maxSpeedAgeMs`, 기어 이벤트/재조회 나이, 오래된 속도 값 동안 poll·callback 수신 시각의 증가를 보고합니다.
+자료 부족은 성공 근거가 아니며 `sufficientEvidence=false`로 표시됩니다.
+`VHAL speed timestamp not refreshed while parked` 진단과 `fallbackEvidence=true`가 실제 기기에서
+확인된 경우에만 별도 검토 후 수신 시각 기반 대안을 활성화할 수 있습니다. 합성 테스트는 그 근거가 아닙니다.
+
+`BuildConfig.SPEED_RECEIPT_FRESHNESS`는 **false**로 고정되어 있습니다. 현재 배포 동작은 VHAL 3초 기준입니다.
+대안 코드는 P 재조회와 STATUS_AVAILABLE 속도 0 조회가 각각 1초 미만이고, Car 연결 및 속도/기어 구독이
+정상 등록된 경우에만 조회 수신 시각을 인정합니다. 오류 발생 후에는 새 연결 전까지 대안을 금지합니다.
+전진 기어·양수 속도·조회 실패·구독 실패·연결 끊김에는 대안을 적용하지 않습니다. 1.5초 정차 확인도 유지합니다.
+실제 로그 근거를 검토한 뒤에만 app/build.gradle.kts의 상수를 변경하고 전체 안전 테스트와 실제 시연을 재실행하세요.

@@ -15,7 +15,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Provides @Singleton fun database(@ApplicationContext context:Context)=Room.databaseBuilder(context,CabinDatabase::class.java,"cabinos.db").build()
+    @Provides @Singleton fun database(@ApplicationContext context:Context)=Room.databaseBuilder(context,CabinDatabase::class.java,"cabinos.db").addMigrations(CabinDatabase.MIGRATION_1_2).build()
+    @Provides @Singleton fun network(@ApplicationContext context:Context)=NetworkMonitor(context)
     @Provides fun dao(db:CabinDatabase)=db.dao()
     @Provides @Singleton fun engine():UnifiedVehicleContextEngine {
         val hazards=DemoRoadHazardRepository().apply { seed(System.currentTimeMillis()) }
@@ -24,6 +25,7 @@ object AppModule {
     @Provides @Singleton fun runtimePreferences(@ApplicationContext context:Context)=RuntimePreferences(context)
     @Provides @Singleton fun vehicle(@ApplicationContext context:Context)=VehicleStateProvider(context)
     @Provides @Singleton fun pleos(@ApplicationContext context:Context)=PleosSdkFactory.create(context)
+    @Provides @Singleton fun cabin(@ApplicationContext context:Context)=PleosCabinFactory.create(context)
     @Provides @Singleton fun pleosNavigation(@ApplicationContext context:Context)=PleosNavigationFactory.create(context)
     @Provides @Singleton fun simulator(preferences:RuntimePreferences,vehicle:VehicleStateProvider)=SimulationVehicleProvider(preferences).apply {
         if(vehicle.automotive) select("실차 연결")

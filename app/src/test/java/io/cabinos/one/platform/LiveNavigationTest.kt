@@ -18,6 +18,65 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class LiveNavigationTest {
+    @Test fun coarseFallbackCannotReplaceFreshFusedPositionOrExtendItsLifetime() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,clock={now})
+        try {
+            nav.locate();val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            fun emit(precision:Float){listener.onLocationChanged(Location("fused").apply {latitude=37.5;longitude=127.0;accuracy=precision;time=now})}
+            emit(5f);val original=nav.state.value.mapFix
+            now+=1000;emit(500f)
+            assertEquals(original,nav.state.value.mapFix);assertEquals(GpsConnection.READY,nav.state.value.gpsConnection)
+            now+=11000;nav.tick();assertNull(nav.state.value.mapFix)
+            assertEquals(GpsConnection.STALE,nav.state.value.gpsConnection)
+        }finally{nav.close();speech.close()}
+    }
+    @Test fun languageChangeKeepsSearchCredentialUntilPersonalDataIsCleared() {
+        val context=ApplicationProvider.getApplicationContext<Context>()
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        val service=NavigationService();val speech=AndroidSpeechProvider(context)
+        val nav=LiveNavigation(context,engine,speech,service)
+        val credential=NavigationService::class.java.getDeclaredField("searchAccessToken").apply {isAccessible=true}
+        try {
+            nav.configure("https://search.example.com","https://routes.example.com","test-only-access-token")
+            nav.setLanguage("en-US")
+            assertEquals("en-US",nav.state.value.language)
+            assertEquals("test-only-access-token",credential.get(service))
+            nav.clear();assertEquals("",credential.get(service))
+        }finally{nav.close();speech.close()}
+    }
+    @Test fun queuedGpsAfterPermissionRevocationCannotRestoreNavigationReadiness() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,clock={now})
+        fun fix()=Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;accuracy=5f;speed=0f;time=now}
+        try {
+            nav.locate()
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onLocationChanged(fix());assertEquals(GpsConnection.READY,nav.state.value.gpsConnection)
+            shadowOf(context).denyPermissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
+            now+=1000;listener.onLocationChanged(fix())
+            assertEquals(GpsConnection.DENIED,nav.state.value.gpsConnection)
+            assertNull(nav.state.value.mapFix);assertFalse(nav.state.value.originReady)
+            assertTrue(shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).isEmpty())
+            shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+            now+=1000;listener.onLocationChanged(fix())
+            assertEquals(GpsConnection.DENIED,nav.state.value.gpsConnection)
+        }finally{nav.close();speech.close()}
+    }
     @Test fun androidFrameworkGpsDrivesNavigationAndEndingWhileMovingKeepsSafetyLock() {
         val context=ApplicationProvider.getApplicationContext<Context>()
         shadowOf(context as android.app.Application).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -41,4 +100,44 @@ class LiveNavigationTest {
             nav.setForeground(false);assertNull(nav.state.value.guidance.route)
         }finally{nav.close();speech.close()}
     }
+    @Test fun destinationSelectedBeforeGpsPlansInsideAppOnceAfterFreshFix() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        var calls=0;val end=NavPlace("목적지",NavPoint(37.51,127.01))
+        val service=object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {calls++;return NavigationGeometry.route(destination,listOf(origin,destination.point),1400.0,300.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))}}
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,service,clock={now})
+        try {
+            nav.plan(end);assertEquals(0,calls);nav.locate()
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            fun gps(){listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;accuracy=5f;speed=0f;time=now});shadowOf(Looper.getMainLooper()).idle()}
+            gps();assertEquals(1,calls);assertEquals(end,nav.state.value.guidance.route?.destination)
+            now+=1000;gps();assertEquals(1,calls);assertFalse(nav.state.value.guidance.active)
+        }finally{nav.close();speech.close()}
+    }
+    @Test fun selectedDestinationStartsFromFreshGpsWithoutAnotherStartTap() {
+        val context=ApplicationProvider.getApplicationContext<android.app.Application>()
+        shadowOf(context).grantPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+        val manager=context.getSystemService(LocationManager::class.java)
+        shadowOf(manager).setProviderEnabled(LocationManager.GPS_PROVIDER,true)
+        var now=System.currentTimeMillis();val engine=UnifiedVehicleContextEngine({now})
+        engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        now+=1600;engine.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))
+        var calls=0;val end=NavPlace("목적지",NavPoint(37.51,127.01))
+        val service=object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {calls++;return NavigationGeometry.route(destination,listOf(origin,destination.point),1400.0,300.0,listOf(NavManeuver(origin,"depart"),NavManeuver(destination.point,"arrive")))}}
+        val speech=AndroidSpeechProvider(context);val nav=LiveNavigation(context,engine,speech,service,clock={now})
+        try {
+            nav.navigateTo(end);assertEquals(0,calls)
+            val listener=shadowOf(manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            fun gps(){listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {latitude=37.5;longitude=127.0;accuracy=5f;speed=0f;time=now});shadowOf(Looper.getMainLooper()).idle()}
+            gps();assertEquals(1,calls);assertEquals(end,nav.state.value.guidance.route?.destination)
+            now+=1000;gps();assertEquals(1,calls);assertTrue(nav.state.value.guidance.active)
+            assertEquals("현재 위치에서 안내 중입니다. 실제 교통·차선 정보는 제공하지 않습니다.",nav.state.value.notice)
+        }finally{nav.close();speech.close()}
+    }
+
 }

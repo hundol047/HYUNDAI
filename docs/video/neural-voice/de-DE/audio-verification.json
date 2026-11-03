@@ -1,0 +1,30 @@
+{
+  "capture": "Live Android output via scrcpy; no replacement soundtrack",
+  "durationSeconds": 55.374062,
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264"
+    },
+    {
+      "type": "audio",
+      "codec": "aac"
+    }
+  ],
+  "windows": [
+    {
+      "activeSecondsAboveMinus65Dbfs": 1.9,
+      "samples": 333569,
+      "rmsDbfs": -34.34382851477316,
+      "peak": 14326,
+      "pcmSha256": "9718f1dc107d7094d0678bd867d5962226ab41bad479b5b90be36a06fe0f490c",
+      "name": "de-DE actual app spoken preview",
+      "startSeconds": 27.57218881199998,
+      "endSeconds": 50.419915629,
+      "expectSilence": false,
+      "passed": true
+    }
+  ],
+  "allPassed": true,
+  "physicalSpeakerTest": false
+}

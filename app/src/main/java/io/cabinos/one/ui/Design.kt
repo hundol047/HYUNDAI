@@ -25,11 +25,12 @@ val Panel:Color @Composable get()=rgb(LocalCabinPalette.current.panel)
 val Line:Color @Composable get()=rgb(LocalCabinPalette.current.line)
 val Mint:Color @Composable get()=rgb(LocalCabinPalette.current.accent)
 val Blue:Color @Composable get()=rgb(LocalCabinPalette.current.accent)
-val Purple:Color @Composable get()=Color(0xFFB8AFD4)
+val Purple:Color @Composable get()=if(lightPalette())Color(0xFF65458A) else Color(0xFFB8AFD4)
 val White:Color @Composable get()=rgb(LocalCabinPalette.current.text)
 val Muted:Color @Composable get()=rgb(LocalCabinPalette.current.muted)
-val Amber=Color(0xFFFFCB7A)
-val Red=Color(0xFFFF8983)
+@Composable private fun lightPalette()=AppearanceCatalog.contrast(LocalCabinPalette.current.panel,0x000000)>7
+val Amber:Color @Composable get()=if(lightPalette())Color(0xFF805000) else Color(0xFFFFCB7A)
+val Red:Color @Composable get()=if(lightPalette())Color(0xFFB3261E) else Color(0xFFFF8983)
 
 @Composable fun CabinTheme(appearance:AppearanceSettings=AppearanceSettings(),content:@Composable ()->Unit) {
     val palette=remember(appearance){AppearanceCatalog.palette(appearance)}

@@ -24,6 +24,80 @@ import java.time.Duration
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NavigationDetailTest {
+    @Test fun automaticGuidanceDoesNotStartADestinationUtteranceThatItImmediatelyInterrupts() {
+        org.robolectric.shadows.ShadowTextToSpeech.addLanguageAvailability(java.util.Locale.KOREAN)
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            val tts=shadowOf(org.robolectric.shadows.ShadowTextToSpeech.getLastTextToSpeechInstance())
+            tts.onInitListener.onInit(android.speech.tts.TextToSpeech.SUCCESS)
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertFalse("목적지 읽기를 시작하자마자 첫 안내로 끊으면 안 됩니다",tts.spokenTextList.contains(destination.name))
+            assertTrue(tts.spokenTextList.isNotEmpty())
+        }
+    }
+
+    @Test @Config(sdk=[35]) fun fusedProviderCanSupplyFreshPreciseOriginOnModernPhones() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            shadowOf(f.manager).setProviderEnabled(LocationManager.GPS_PROVIDER,false)
+            shadowOf(f.manager).setProviderEnabled(LocationManager.NETWORK_PROVIDER,false)
+            shadowOf(f.manager).setProviderEnabled("fused",true)
+            shadowOf(f.manager).setLastKnownLocation("fused",Location("fused").apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=12f;time=f.now;speed=0f
+            })
+            f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertTrue(f.nav.state.value.gpsNotice.contains("기기 위치"))
+        }
+    }
+
+    @Test fun retryingSelectedDestinationRestartsStalledGpsSubscription() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate()
+            val old=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            repeat(16){f.advance(1000);f.park();f.nav.tick()}
+            assertTrue(f.engine.state.value.parkedAllowed)
+            assertEquals(GpsConnection.STALE,f.nav.state.value.gpsConnection)
+            f.nav.navigateTo(destination)
+            val current=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            assertNotSame(old,current)
+            f.gps();assertTrue(f.nav.state.value.guidance.active)
+        }
+    }
+    @Test fun freshFrameworkCachedFixStartsRouteWithoutWaitingForMovement() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            shadowOf(f.manager).setLastKnownLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=12f;time=f.now;speed=0f
+            })
+            f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+        }
+    }
+
+    @Test fun spokenDestinationUsesCurrentGpsAndResultNumberStartsGuidance() {
+        var searched="";var originUsed:NavPoint?=null
+        Fixture(object:NavigationService(){
+            override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+                searched=query;originUsed=origin;return PlaceSearchPage(listOf(destination),listOf("1"),false)
+            }
+            override suspend fun route(origin:NavPoint,destination:NavPlace)=route()
+        }).use {f->
+            f.nav.locate();f.gps();f.nav.handleVoice("판교역까지 데려다줘");f.idle()
+            assertEquals("판교역",searched);assertEquals(origin,originUsed)
+            assertEquals("판교역",f.nav.state.value.searchQuery)
+            assertFalse(f.nav.state.value.guidance.active)
+            f.nav.handleVoice("1번");f.idle()
+            assertTrue(f.nav.state.value.guidance.active);assertFalse(f.engine.state.value.parkedAllowed)
+        }
+    }
+    @Test fun cancelledOneTapDestinationCannotStartWhenGpsArrivesLater() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute{calls++;return route()}}).use {f->
+            f.nav.navigateTo(destination);f.nav.cancelPending();f.gps()
+            assertEquals(0,calls);assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+
     @Test fun regionalCandidatesRequireExplicitActionAndNeverAutomaticallyStartGuidance() {
         var calls=0
         val service=object:NavigationService(){override suspend fun regionalSearch(query:String,origin:NavPoint?):RegionalSearchResult {
@@ -87,6 +161,113 @@ class NavigationDetailTest {
             f.nav.cancelPending();f.nav.search("새 가게");f.idle()
             pending.complete(PlaceSearchPage(listOf(destination.copy(name="이전 결과",id="old")),listOf("old"),false));f.idle()
             assertEquals("새 검색 결과",f.nav.state.value.places.single().name)
+        }
+    }
+    @Test fun changingPlanningContextCancelsDestinationWaitingForGps() {
+        for(action in listOf("regional","servers","language","background")) {
+            var routes=0
+            Fixture(object:NavigationService(){
+                override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {routes++;return route()}
+                override suspend fun regionalSearch(query:String,origin:NavPoint?)=RegionalSearchResult(listOf(destination),"Paris","Cafe")
+            }).use {f->
+                f.nav.navigateTo(destination)
+                when(action) {
+                    "regional"->f.nav.searchRegional("Cafe Paris")
+                    "servers"->f.nav.configure("https://nominatim.openstreetmap.org","https://router.project-osrm.org")
+                    "language"->f.nav.setLanguage("fr-FR")
+                    "background"->{f.nav.setForeground(false);f.nav.setForeground(true)}
+                }
+                f.idle();f.gps()
+                assertEquals("$action must cancel the old automatic destination",0,routes)
+                assertFalse(f.nav.state.value.guidance.active)
+            }
+        }
+    }
+    @Test fun reconnectCanReuseTheSameStillFreshFrameworkFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            shadowOf(f.manager).setLastKnownLocation(LocationManager.GPS_PROVIDER,Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude;longitude=origin.longitude;accuracy=5f;time=f.now;speed=0f
+            })
+            f.nav.locate();f.idle()
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+        }
+    }
+    @Test fun offlineCoordinatesAreLocalAndUpdateTheVisibleQuery() {
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage=error("no network")}).use {f->
+            f.engine.setConnectivity(network=false)
+            f.nav.search("48.85,2.35")
+            assertEquals(origin,f.nav.state.value.places.singleOrNull()?.point)
+            assertEquals("48.85,2.35",f.nav.state.value.searchQuery)
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+    @Test fun blankAndOfflineTextSearchExplainWhyWithoutErasingResults() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>):PlaceSearchPage {
+            calls++;return PlaceSearchPage(listOf(destination),emptyList(),false)
+        }}).use {f->
+            f.nav.search("Cafe");f.idle()
+            f.nav.search("   ");f.idle()
+            assertEquals(1,calls);assertEquals(listOf(destination),f.nav.state.value.places)
+            assertTrue(f.nav.state.value.notice.contains("검색어"))
+            f.engine.setConnectivity(network=false);f.nav.search("Other cafe")
+            assertEquals(1,calls);assertEquals(listOf(destination),f.nav.state.value.places)
+            assertTrue(f.nav.state.value.notice.contains("인터넷"))
+        }
+    }
+    @Test fun cancellingGpsWaitReplacesThePendingInstruction() {
+        Fixture(NavigationService()).use {f->
+            f.nav.navigateTo(destination);f.nav.cancelPending()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("취소"))
+            f.gps();assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+
+    @Test fun safetyLockCancelsGpsPendingDestinationEvenAfterParkingAgain() {
+        var calls=0
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace):DrivingRoute {calls++;return route()}}).use {f->
+            f.nav.navigateTo(destination);f.idle()
+            f.engine.acceptVehicle(VehicleSample(speedKph=10.0,gear=Gear.DRIVE,timestampMs=f.now));f.idle()
+            f.park();f.advance(1600);f.park();f.idle();f.gps()
+            assertTrue(f.engine.state.value.parkedAllowed)
+            assertEquals(0,calls);assertFalse(f.nav.state.value.guidance.active)
+        }
+    }
+    @Test fun safetyLockRejectsLateRouteAfterParkingAgain() {
+        val response=CompletableDeferred<DrivingRoute>()
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=withContext(NonCancellable){response.await()}}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.busy)
+            f.engine.invalidateTelemetry();f.idle()
+            f.park();f.advance(1600);f.park();f.idle()
+            response.complete(route());f.idle()
+            assertFalse(f.nav.state.value.guidance.active)
+            assertNull(f.nav.state.value.guidance.route)
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+    @Test fun safetyLockRejectsLateSearchAfterParkingAgain() {
+        val response=CompletableDeferred<PlaceSearchPage>()
+        Fixture(object:NavigationService(){override suspend fun search(query:String,origin:NavPoint?,nearby:Boolean,excluded:List<String>)=withContext(NonCancellable){response.await()}}).use {f->
+            f.nav.search("Cafe");f.idle()
+            f.engine.invalidateTelemetry();f.idle()
+            f.park();f.advance(1600);f.park();f.idle()
+            response.complete(PlaceSearchPage(listOf(destination),emptyList(),false));f.idle()
+            assertTrue(f.nav.state.value.places.isEmpty())
+            assertFalse(f.nav.state.value.busy)
+        }
+    }
+
+    @Test fun legacyProviderCallbacksDoNotCrashOrInventAFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate()
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderEnabled(LocationManager.GPS_PROVIDER)
+            listener.onStatusChanged(LocationManager.GPS_PROVIDER,android.location.LocationProvider.AVAILABLE,null)
+            assertNull(f.nav.state.value.mapFix)
+            assertEquals(GpsConnection.WAITING,f.nav.state.value.gpsConnection)
         }
     }
     private val origin=NavPoint(48.85,2.35)
@@ -372,6 +553,72 @@ class NavigationDetailTest {
         }
     }
 
+    @Test fun rejectedGpsJumpCannotBecomeCurrentMapPositionAndSameTimeCorrectionRecovers() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            f.advance(1000)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onLocationChanged(Location(LocationManager.GPS_PROVIDER).apply {
+                latitude=origin.latitude+1;longitude=origin.longitude;accuracy=5f;speed=0f;time=f.now
+            });f.idle()
+            assertFalse(f.nav.state.value.guidance.tracking)
+            assertEquals(origin,f.nav.state.value.guidance.fix!!.point)
+            assertEquals(GpsConnection.POOR,f.nav.state.value.gpsConnection)
+            assertNull(f.nav.state.value.mapFix)
+            assertFalse(f.nav.state.value.guidance.rerouteRequired)
+            assertFalse(f.engine.state.value.parkedAllowed)
+            f.gps()
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(origin,f.nav.state.value.mapFix!!.point)
+            assertTrue(f.nav.state.value.guidance.tracking)
+        }
+    }
+    @Test fun accurateCorrectionAtTheSameTimeAsARejectedFixCanRecover() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps();f.advance(1000)
+            f.gps(accuracy=500f)
+            assertEquals(GpsConnection.POOR,f.nav.state.value.gpsConnection)
+            f.gps(accuracy=5f)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(f.now,f.nav.state.value.mapFix?.timestampMs)
+            f.gps(accuracy=500f,at=f.now-500)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+        }
+    }
+    @Test fun rerouteRetryExplainsOfflineAndMissingGpsInsteadOfDoingNothing() {
+        Fixture(object:NavigationService(){override suspend fun route(origin:NavPoint,destination:NavPlace)=route()}).use {f->
+            f.nav.locate();f.gps();f.nav.navigateTo(destination);f.idle()
+            assertTrue(f.nav.state.value.guidance.active)
+            f.engine.setConnectivity(network=false)
+            f.nav.retry()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("인터넷"))
+            f.engine.setConnectivity(network=true)
+            f.advance(11_000);f.nav.tick();f.nav.retry()
+            assertTrue(f.nav.state.value.notice,f.nav.state.value.notice.contains("GPS"))
+        }
+    }
+    @Test fun disablingUnusedNetworkProviderDoesNotInvalidateFreshGps() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps()
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            val fix=f.nav.state.value.mapFix
+            listener.onProviderDisabled(LocationManager.NETWORK_PROVIDER)
+            assertEquals(GpsConnection.READY,f.nav.state.value.gpsConnection)
+            assertEquals(fix,f.nav.state.value.mapFix)
+            listener.onProviderDisabled(LocationManager.GPS_PROVIDER)
+            assertEquals(GpsConnection.DISABLED,f.nav.state.value.gpsConnection)
+            assertNull(f.nav.state.value.mapFix)
+        }
+    }
+    @Test fun disablingAnotherProviderDoesNotPreserveAnExpiredFix() {
+        Fixture(NavigationService()).use {f->
+            f.nav.locate();f.gps();f.advance(10_001)
+            val listener=shadowOf(f.manager).getLocationUpdateListeners(LocationManager.GPS_PROVIDER).first()
+            listener.onProviderDisabled(LocationManager.NETWORK_PROVIDER)
+            assertNull(f.nav.state.value.mapFix)
+        }
+    }
     @Test fun freshGpsIsPublishedForTheMapBeforeAnyRouteAndRemovedOnSignalLoss(){
         Fixture(NavigationService()).use {f->
             f.nav.locate();f.gps();assertEquals(origin,f.nav.state.value.mapFix!!.point)

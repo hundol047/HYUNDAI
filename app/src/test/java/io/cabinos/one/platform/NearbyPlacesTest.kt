@@ -10,6 +10,19 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk=[29])
 class NearbyPlacesTest {
+    @Test fun fallbackIncludesGardensAndNatureReserves() {
+        val elements=listOf("garden","nature_reserve").mapIndexed {i,type->"""{"type":"way","id":${i+1},"center":{"lat":37.395,"lon":127.111},"tags":{"leisure":"$type","name":"Walk $i"}}"""}
+        val result=NearbyPlaces.parse("""{"elements":[${elements.joinToString(",")}]}""",MapPosition())
+        assertEquals(2,result.size);assertTrue(result.all {it.category=="산책"})
+    }
+
+    @Test fun registeredCommonsPhotoRemainsAttachedToItsOwnPlace() {
+        val raw="""{"elements":[{"type":"node","id":1,"lat":37.395,"lon":127.111,"tags":{"amenity":"cafe","name":"등록 장소","wikimedia_commons":"File:Cafe.jpg"}}]}"""
+        val place=NearbyPlaces.parse(raw,MapPosition()).single()
+        assertEquals("File:Cafe.jpg",place.commonsPhoto);assertFalse(place.simulated)
+        listOf("Category:Cafes", "https://example.com/photo.jpg", "File:../secret.jpg", "File:Movie.mp4", "File:Bad\n.jpg").forEach {assertNull(PlacePhoto.file(it))}
+    }
+
     @Test fun providerRuntimeErrorsNeverEraseExistingPlacesAsAnEmptySuccess() {
         for(elements in listOf("[]","[{\"type\":\"node\",\"id\":1}]")) {
             try {NearbyPlaces.parse("""{"remark":"runtime error: Query timed out","elements":$elements}""",MapPosition());fail("Partial provider response must fail")}
@@ -49,4 +62,12 @@ class NearbyPlacesTest {
         assertEquals("산책",items[1].category);assertFalse(items.any {it.simulated})
         assertTrue(items.all {it.latitude!=null && it.oneWaySeconds>=60})
     }
+    @Test fun cafeHeavyResponseCannotCrowdOutOtherCategories() {
+        val elements=(1..60).map {"""{"type":"node","id":$it,"lat":37.395,"lon":127.111,"tags":{"name":"Cafe $it","amenity":"cafe"}}"""}+
+            listOf("amenity" to "restaurant","leisure" to "park","shop" to "mall").mapIndexed {i,(key,value)->"""{"type":"node","id":${100+i},"lat":37.395,"lon":127.111,"tags":{"name":"Place $i","$key":"$value"}}"""}
+        val result=NearbyPlaces.parse("""{"elements":[${elements.joinToString(",") }]}""",MapPosition())
+        assertEquals(setOf("카페","식당","산책","쇼핑"),result.map {it.category}.toSet())
+        assertEquals(15,result.count {it.category=="카페"})
+    }
+
 }

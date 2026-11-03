@@ -1,0 +1,56 @@
+name: Publish short demo and application preparation
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths: [.github/workflows/submission-materials.yml]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  materials:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install video tools
+        run: |
+          sudo apt-get -o Acquire::http::Timeout=30 update -qq
+          sudo apt-get -o Acquire::http::Timeout=30 install -y ffmpeg fonts-noto-cjk
+      - name: Download verified original captures
+        run: |
+          mkdir -p downloads recordings
+          gh release download v0.11.2-preview-20261102 -p 'CabinOS_ONE_*.mp4' -D downloads
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib,json,shutil
+          manifest=json.loads(Path('docs/video/2026-11-02/verification.json').read_text())
+          for item in manifest['videos']:
+              name=item['scenario'];source=Path('downloads')/f'CabinOS_ONE_{name}.mp4'
+              assert hashlib.sha256(source.read_bytes()).hexdigest()==item['videoSha256']
+              dest=Path('recordings')/name;dest.mkdir()
+              shutil.copyfile(source,dest/'CabinOS_ONE_android_apk.mp4')
+              shutil.copyfile(Path('docs/video/2026-11-02')/(name+'-evidence.json'),dest/'evidence.json')
+          PY
+      - name: Edit and verify under three minutes
+        run: |
+          python3 scripts/shorten-submission-video.py recordings shortened
+          ffmpeg -v error -i shortened/CabinOS_ONE_3min_demo.mp4 -f null -
+      - name: Package unsigned application and review instructions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+          docs=Path('docs/submission/2026-11-03')
+          with zipfile.ZipFile('CabinOS_ONE_submission_preparation.zip','w',zipfile.ZIP_DEFLATED) as z:
+              z.write(docs/'CabinOS_ONE_application_draft.docx','제출첨부/퓨처랩스_CabinOS_ONE_접수양식_개인정보서명전.docx')
+              z.write('shortened/CabinOS_ONE_3min_demo.mp4','제출첨부/퓨처랩스_CabinOS_ONE_시연영상_3분이내.mp4')
+              z.write(docs/'README.md','본인확인용/먼저읽기_제출전확인.md')
+              z.write(docs/'email-draft.txt','본인확인용/메일초안.txt')
+              z.write(docs/'official-source.json','본인확인용/공식안내출처.json')
+              z.write('shortened/short-video-manifest.json','본인확인용/영상편집검증.json')
+          PY
+      - name: Publish downloadable preparation files
+        run: |
+          gh release upload v0.11.2-preview-20261102 shortened/CabinOS_ONE_3min_demo.mp4 shortened/short-video-manifest.json docs/submission/2026-11-03/CabinOS_ONE_application_draft.docx CabinOS_ONE_submission_preparation.zip --clobber

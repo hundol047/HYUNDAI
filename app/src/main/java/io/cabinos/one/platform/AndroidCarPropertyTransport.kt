@@ -8,6 +8,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
+import android.os.SystemClock
 
 /** AAOS public API recommended by Pleos for standard speed and gear properties.
  * Binder reads and subscriptions run off the UI thread. No vehicle write API is used.
@@ -32,14 +33,25 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
     private var availableEnergy = emptySet<Int>()
     @Volatile private var connection = 0L
     private var energyPoll: Runnable? = null
+    private var speedCallbackNs: Long? = null
+    private var pollSuccessNs: Long? = null
+    private var subscribed=false
+    private var serviceConnected=false
     private var callback: CarPropertyManager.CarPropertyEventCallback? = null
     private fun onWorker(action: () -> Unit) {
         if(Looper.myLooper()==handler.looper) action() else handler.post { action() }
     }
     private fun callbackFor(token: Long) = object : CarPropertyManager.CarPropertyEventCallback {
-        override fun onChangeEvent(value: CarPropertyValue<*>) { onWorker {
-            if (!stopped && token == connection) deliver(value)
-        } }
+        override fun onChangeEvent(value: CarPropertyValue<*>) {
+            val received=SystemClock.elapsedRealtimeNanos()
+            onWorker {
+                if (!stopped && token == connection) {
+                    if(value.propertyId==VehiclePropertyIds.PERF_VEHICLE_SPEED) speedCallbackNs=received
+                    listener.timing(speedCallbackNs,pollSuccessNs)
+                    deliver(value)
+                }
+            }
+        }
         override fun onErrorEvent(propertyId: Int, areaId: Int) { onWorker {
             if (!stopped && token == connection && propertyId in properties) listener.unavailable("차량 속성 오류: $propertyId")
             if (!stopped && token == connection) energyProperties[propertyId]?.let { listener.energy(it, null, 0) }
@@ -49,9 +61,19 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         override fun run() {
             if (stopped || manager == null) return
             try {
+                var available=true
+                var polledSpeed:Float?=null
+                var polledGear:Int?=null
                 properties.forEach { id ->
                     val value = manager!!.getProperty<Any>(id, 0)
+                    if (value==null || value.status!=CarPropertyValue.STATUS_AVAILABLE) available=false
+                    if(id==VehiclePropertyIds.PERF_VEHICLE_SPEED) polledSpeed=value?.value as? Float
+                    if(id==VehiclePropertyIds.GEAR_SELECTION) polledGear=value?.value as? Int
                     if (value == null) listener.unavailable("차량 속성 응답 없음: $id") else deliver(value)
+                }
+                if(available) {
+                    pollSuccessNs=SystemClock.elapsedRealtimeNanos();listener.timing(speedCallbackNs,pollSuccessNs)
+                    if(polledSpeed!=null && polledGear!=null) listener.receiptPoll(polledSpeed!!,polledGear!!,pollSuccessNs!!,subscribed,serviceConnected)
                 }
             } catch (_: SecurityException) { listener.unavailable("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
             catch (_: RuntimeException) { listener.unavailable("차량 속성 읽기 실패") }
@@ -101,6 +123,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                                 listener.disconnected("속도 또는 기어 읽기 미지원 · 권한 확인 필요")
                                 detach(); return@post
                             }
+                            serviceConnected=true
                             listener.connected()
                             availableEnergy = energyProperties.keys.filter { id ->
                                 try { service.getCarPropertyConfig(id)?.access?.let { it == 1 || it == 3 } == true }
@@ -112,6 +135,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
                                     error("Vehicle subscription rejected")
                                 }
                             }
+                            subscribed=true
                             // Optional Binder reads may block on unsupported/slow OEM properties.
                             // Keep speed/gear polling and callbacks on their own worker.
                             handler.post(poll)
@@ -144,6 +168,8 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
     }
     private fun detach() {
         ++connection
+        subscribed=false;serviceConnected=false
+        speedCallbackNs=null;pollSuccessNs=null
         handler.removeCallbacks(poll)
         energyPoll?.let { energyHandler.removeCallbacks(it) }
         energyPoll = null

@@ -1,0 +1,11 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "server/Dockerfile.echo"
+watchPatterns = ["/server/echoroad_gateway.py", "/server/accident_zones.py", "/server/data/**", "/server/Dockerfile.echo", "/railway.toml"]
+
+[deploy]
+healthcheckPath = "/healthz"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+numReplicas = 1

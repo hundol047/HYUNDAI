@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "0085ec337aa45af387660c9a5c519279a47752d5",
+  "apkSha256": "3ebaeba183cd0f002fc05d21e5b1a25eaf29745ccf7f7b88dfc04a500823b8b8",
+  "tests": {
+    "core": {
+      "tests": 187,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "android": {
+      "tests": 282,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "officialSdkBuildAndLintPassed": true,
+  "samePreviewCertificate": true,
+  "newDeviceRecording": false,
+  "physicalSamsungValidated": false,
+  "productionApkUpdated": false
+}

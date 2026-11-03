@@ -1,0 +1,48 @@
+{
+  "type": "actual external provider requests; no fixtures or alternate proxy routes",
+  "timestamp": "2026-10-28T08:07:24.430394+00:00",
+  "results": [
+    {
+      "name": "OSM map tile",
+      "host": "tile.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 337.4,
+      "bytes": 6799,
+      "sha256": "72513936d924818835d1685aaae200423e20bfcbaa2bcf24341ed8e09f291479",
+      "evidence": {
+        "format": "PNG"
+      }
+    },
+    {
+      "name": "Seoul Station South Korea destination",
+      "host": "nominatim.openstreetmap.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 652.9,
+      "bytes": 502,
+      "sha256": "f17520dc1f5f4605a09964fd38272d070d16f18f5b144659339bc7517f5c11ba",
+      "evidence": {
+        "places": 1
+      }
+    },
+    {
+      "name": "Seoul Station South Korea driving route",
+      "host": "router.project-osrm.org",
+      "result": "passed",
+      "httpStatus": 200,
+      "elapsedMs": 1873.4,
+      "bytes": 12401,
+      "sha256": "39063b8c9e00791a1355834dff8b0739d065930d5ba4ec8b6898aff708ef01ac",
+      "evidence": {
+        "distanceMeters": 4008.7,
+        "durationSeconds": 264.7,
+        "geometryPoints": 116,
+        "maneuvers": 7,
+        "traffic": "not provided"
+      }
+    }
+  ],
+  "physicalDeviceGps": "not tested",
+  "realRoadDriving": "not tested"
+}

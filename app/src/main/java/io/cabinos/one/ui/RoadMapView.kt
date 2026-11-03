@@ -3,6 +3,8 @@ package io.cabinos.one.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
+import android.view.MotionEvent
+import android.view.ViewConfiguration
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.MapTileIndex
@@ -22,19 +24,26 @@ internal data class RoadMapHealth(val status:RoadMapStatus=RoadMapStatus.LOADING
 }
 internal fun configureRoadTiles(context:Context) {Configuration.getInstance().apply {
     userAgentValue="CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)"
-    osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2
+    osmdroidBasePath=java.io.File(context.cacheDir,"osm");osmdroidTileCache=java.io.File(osmdroidBasePath,"tiles");tileDownloadThreads=2;cacheMapTileCount=128
 }}
 /** Health is based on the visible cached bitmap tiles, not GPS or a successful route request. */
 internal class RoadMapView(context:Context,private val clock:()->Long=android.os.SystemClock::elapsedRealtime):MapView(context) {
+    private val touchSlop=ViewConfiguration.get(context).scaledTouchSlop
+    private var touchStartX=0f
+    private var touchStartY=0f
+    private var trackingTouch=false
+    private var manualGesture=false
     var gesturesEnabled=true
+    var onUserGesture:(()->Unit)?=null
     var onHealth:((RoadMapHealth)->Unit)?=null
     var health=RoadMapHealth();private set
     private var online=true
     private var waitingSince:Long?=null
     private var observing=false
+    private var lastDrawCheck=Long.MIN_VALUE
     private val check=object:Runnable {override fun run(){if(!observing)return;sampleHealth();postDelayed(this,1000)}}
     init {setTileSource(TileSourceFactory.MAPNIK);minZoomLevel=1.0;maxZoomLevel=19.0;controller.setZoom(2.0);controller.setCenter(GeoPoint(20.0,0.0))}
-    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null};setUseDataConnection(available);sampleHealth()}
+    fun connection(available:Boolean){if(online!=available){online=available;waitingSince=null;setUseDataConnection(available);sampleHealth()}}
     fun beginHealth(){if(!observing){observing=true;post(check)}}
     fun endHealth(){observing=false;removeCallbacks(check);onHealth=null}
     fun retryRoads(){if(!online)return;waitingSince=null;health=RoadMapHealth();onHealth?.invoke(health);invalidate()}
@@ -60,7 +69,26 @@ internal class RoadMapView(context:Context,private val clock:()->Long=android.os
         if(health!=next){health=next;post {onHealth?.invoke(health)}}
         return next
     }
-    override fun onDraw(canvas:Canvas){super.onDraw(canvas);sampleHealth()}
-    override fun dispatchTouchEvent(event:android.view.MotionEvent):Boolean=if(gesturesEnabled)super.dispatchTouchEvent(event) else false
+    override fun onDraw(canvas:Canvas){
+        super.onDraw(canvas)
+        val now=clock()
+        if(lastDrawCheck==Long.MIN_VALUE||now-lastDrawCheck>=500){lastDrawCheck=now;sampleHealth()}
+    }
+    override fun dispatchTouchEvent(event:MotionEvent):Boolean {
+        if(!gesturesEnabled){trackingTouch=false;manualGesture=false;return false}
+        when(event.actionMasked){
+            MotionEvent.ACTION_DOWN->{touchStartX=event.x;touchStartY=event.y;trackingTouch=true;manualGesture=false}
+            MotionEvent.ACTION_MOVE,MotionEvent.ACTION_POINTER_DOWN->if(trackingTouch&&!manualGesture) {
+                val moved=hypot(event.x-touchStartX,event.y-touchStartY)>touchSlop
+                if(moved||event.pointerCount>1){
+                    manualGesture=true
+                    parent?.requestDisallowInterceptTouchEvent(true)
+                    onUserGesture?.invoke()
+                }
+            }
+            MotionEvent.ACTION_UP,MotionEvent.ACTION_CANCEL->{trackingTouch=false;manualGesture=false}
+        }
+        return super.dispatchTouchEvent(event)
+    }
     override fun performClick():Boolean=super.performClick()
 }

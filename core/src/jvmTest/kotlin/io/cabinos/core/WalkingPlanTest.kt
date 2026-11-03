@@ -1,0 +1,60 @@
+package io.cabinos.core
+
+import org.junit.Assert.*
+import org.junit.Test
+
+class WalkingPlanTest {
+    @Test fun recommendationUsesAsymmetricRoundTripAndRequiresFootRouteForRealPlaces() {
+        val origin=MapPosition();val place=NearbyActivity("p","장소","카페",60,600,"",false,37.395,127.111)
+        val schedule=TimeOptimizer.calculate(1800000,0,300)
+        assertFalse(TimeOptimizer.recommend(listOf(place),schedule,"전체").single().feasible)
+        val walk=WalkingPlan(origin,120,480,600.0,listOf(origin,origin),0)
+        val option=TimeOptimizer.recommend(listOf(place.copy(walking=walk)),schedule,"전체").single()
+        assertTrue(option.feasible);assertEquals(900L,option.usableSeconds)
+        assertFalse(walk.usable(900001,origin))
+        assertFalse(walk.usable(0,MapPosition(37.4,127.2)))
+    }
+    @Test fun engineRefusesUnverifiedOrStaleWalkAndReservesBothLegs() {
+        var now=1000000L;val e=UnifiedVehicleContextEngine({now},DemoRoadHazardRepository())
+        fun sample(){e.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))}
+        sample();now+=1600;sample();e.setWaitingMinutes(30)
+        val origin=MapPosition();val place=NearbyActivity("p","장소","카페",60,600,"",false,37.395,127.111)
+        e.updateNearbyActivities(origin,listOf(place));assertFalse(e.selectActivity("p"))
+        val plan=WalkingPlan(origin,120,480,600.0,listOf(origin,origin),now)
+        assertFalse(e.confirmWalking("p",origin,plan.copy(checkedAtMs=now-900001)))
+        assertTrue(e.confirmWalking("p",origin,plan));assertTrue(e.selectActivity("p"))
+        assertEquals(600L,e.state.value.schedule.returnSeconds)
+        assertEquals(480L,e.state.value.schedule.inboundSeconds)
+        assertEquals(900L,e.state.value.schedule.availableSeconds)
+        e.updateNearbyActivities(origin,listOf(place))
+        assertEquals("p",e.state.value.selectedActivityId)
+        assertEquals(600L,e.state.value.schedule.returnSeconds)
+        assertEquals(480L,e.state.value.schedule.inboundSeconds)
+    }
+    @Test fun recalculatingSelectedWalkUpdatesReturnReserveAndSessionDeadline() {
+        var now=1000000L;val e=UnifiedVehicleContextEngine({now})
+        fun park(){e.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))}
+        park();now+=1600;park();e.setWaitingMinutes(30)
+        val origin=MapPosition();val place=NearbyActivity("p","장소","카페",60,60,"",false,37.395,127.111)
+        e.updateNearbyActivities(origin,listOf(place))
+        val plan=WalkingPlan(origin,120,180,300.0,listOf(origin,origin),now)
+        assertTrue(e.confirmWalking("p",origin,plan));assertTrue(e.selectActivity("p"))
+        assertTrue(e.startSession(SessionKind.FOCUS,20))
+        assertTrue(e.confirmWalking("p",origin,plan.copy(inboundSeconds=600)))
+        assertEquals(720L,e.state.value.schedule.returnSeconds)
+        assertEquals(600L,e.state.value.schedule.inboundSeconds)
+        assertEquals(780L,e.state.value.session!!.remainingSeconds)
+    }
+    @Test fun drivingClearsRecommendationsFromThePreviousParkingLocation() {
+        var now=1000000L;val e=UnifiedVehicleContextEngine({now})
+        fun park(){e.acceptVehicle(VehicleSample(gear=Gear.PARK,parkingReliable=true,timestampMs=now))}
+        park();now+=1600;park();e.setWaitingMinutes(30)
+        val origin=MapPosition();val place=NearbyActivity("p","이전 주차장 카페","카페",60,60,"",false,37.395,127.111)
+        e.updateNearbyActivities(origin,listOf(place))
+        assertTrue(e.confirmWalking("p",origin,WalkingPlan(origin,120,180,300.0,listOf(origin,origin),now)))
+        e.acceptVehicle(VehicleSample(speedKph=30.0,gear=Gear.DRIVE,timestampMs=now))
+        now+=1000;park();now+=1600;park();e.setWaitingMinutes(30)
+        assertFalse(e.selectActivity("p"))
+        assertTrue(e.state.value.activities.none {it.activity.id=="p"})
+    }
+}

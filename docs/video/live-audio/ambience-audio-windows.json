@@ -1,0 +1,44 @@
+[
+  {
+    "name": "백색 소음",
+    "startSeconds": 24.39302634500001,
+    "endSeconds": 33.39311041600001,
+    "expectSilence": false
+  },
+  {
+    "name": "자연의 소리",
+    "startSeconds": 42.17108923699999,
+    "endSeconds": 51.17117427299999,
+    "expectSilence": false
+  },
+  {
+    "name": "잔잔한 톤",
+    "startSeconds": 59.97065666499998,
+    "endSeconds": 68.97073239600002,
+    "expectSilence": false
+  },
+  {
+    "name": "빗소리",
+    "startSeconds": 77.795856539,
+    "endSeconds": 86.7959495,
+    "expectSilence": false
+  },
+  {
+    "name": "계곡 소리",
+    "startSeconds": 95.65930296599998,
+    "endSeconds": 104.65938255499998,
+    "expectSilence": false
+  },
+  {
+    "name": "파도 소리",
+    "startSeconds": 116.13107582800001,
+    "endSeconds": 125.131154267,
+    "expectSilence": false
+  },
+  {
+    "name": "stopped silence",
+    "startSeconds": 129.881812223,
+    "endSeconds": 133.88189296899998,
+    "expectSilence": true
+  }
+]

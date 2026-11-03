@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "d32b178274e67ec0e138f0210593abd105be382d",
+  "version": "0.11.1",
+  "versionCode": 20,
+  "package": "io.cabinos.one",
+  "pleosSdkIncluded": true,
+  "debuggable": false,
+  "zipalignPassed": true,
+  "sha256": "507cef87bb666207dbb842f18b2767ce7a79106bd0a3abb36ededa265da2cc7f",
+  "signed": false,
+  "installableSubmission": false,
+  "physicalDeviceValidated": false,
+  "blocker": "Existing team signing key unavailable; no new or debug key substituted",
+  "candidateFile": "퓨처랩스_CabinOS_ONE_unsigned_candidate.apk"
+}

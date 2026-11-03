@@ -1,0 +1,102 @@
+{
+  "capture": "Live Android output via scrcpy; no replacement soundtrack",
+  "durationSeconds": 141.947979,
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264"
+    },
+    {
+      "type": "audio",
+      "codec": "aac"
+    }
+  ],
+  "windows": [
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112003,
+      "rmsDbfs": -26.83471339460486,
+      "peak": 4422,
+      "pcmSha256": "7d1cb0b9597c37c0c6fc5d9eeb210d4a320aa07e3a77ccc35d4b7ac09f56e335",
+      "name": "백색 소음",
+      "startSeconds": 25.661022674999998,
+      "endSeconds": 34.661102922000026,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112003,
+      "rmsDbfs": -37.22076745001648,
+      "peak": 5442,
+      "pcmSha256": "5aad81201e865c01056c4621cb846dfa1c2de2724d1b7383a668947331385384",
+      "name": "자연의 소리",
+      "startSeconds": 43.729558981,
+      "endSeconds": 52.72964316300002,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112003,
+      "rmsDbfs": -25.0978230960391,
+      "peak": 3423,
+      "pcmSha256": "4cdff9fbfcc07e4172617e5aa44712ee97b22c5c866382170e5054714c3357b1",
+      "name": "잔잔한 톤",
+      "startSeconds": 61.817347866000006,
+      "endSeconds": 70.81742561500002,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112003,
+      "rmsDbfs": -25.287142571274224,
+      "peak": 15170,
+      "pcmSha256": "311239e2646619555344924fcb4904d2cc36274f2fe94ca1d4e9c5620259b634",
+      "name": "빗소리",
+      "startSeconds": 79.92745075500002,
+      "endSeconds": 88.92753633200002,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112004,
+      "rmsDbfs": -26.941469753656296,
+      "peak": 9879,
+      "pcmSha256": "de612699ece44183da24c7690912431bf57144dfb4553627c1b5c5c3f677377d",
+      "name": "계곡 소리",
+      "startSeconds": 98.00706173,
+      "endSeconds": 107.007156385,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 7.1,
+      "samples": 112003,
+      "rmsDbfs": -25.46875293093752,
+      "peak": 7352,
+      "pcmSha256": "0bf004d71fb6e3c425c635b116d45c56cefbcbca67043881ff911304fc0cc1db",
+      "name": "파도 소리",
+      "startSeconds": 118.92514877300002,
+      "endSeconds": 127.92523894000001,
+      "expectSilence": false,
+      "passed": true
+    },
+    {
+      "activeSecondsAboveMinus65Dbfs": 0.0,
+      "samples": 32002,
+      "rmsDbfs": -200.0,
+      "peak": 0,
+      "pcmSha256": "1acdd976e2a789f247025cd5da089eeda12eca0d4aeb120945761c0404ef3831",
+      "name": "stopped silence",
+      "startSeconds": 132.764823812,
+      "endSeconds": 136.76490530500004,
+      "expectSilence": true,
+      "passed": true
+    }
+  ],
+  "allPassed": true,
+  "physicalSpeakerTest": false
+}

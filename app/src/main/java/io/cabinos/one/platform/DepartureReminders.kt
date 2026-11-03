@@ -17,6 +17,7 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
     private val preferences = context.getSharedPreferences("departure-reminder", Context.MODE_PRIVATE)
     private val alarms = context.getSystemService(AlarmManager::class.java)
     private val notifications = context.getSystemService(NotificationManager::class.java)
+    private var cancellationApplied = false
 
     init {
         notifications.createNotificationChannel(NotificationChannel(CHANNEL, "복귀·출발 준비 알림", NotificationManager.IMPORTANCE_DEFAULT).apply {
@@ -30,8 +31,8 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         // Losing foreground/telemetry does not fabricate a new parking state or erase an already saved reminder.
         if (!state.parkedAllowed) return
         val departure = state.schedule.departureAtMs ?: run { cancel(); return }
-        // Place plans reserve a full round trip. Once outside, allow the return half before preparation.
-        val returnWalk = if(state.selectedActivityId!=null)state.schedule.returnSeconds/2 else 0
+        // Place plans reserve a full round trip. Once outside, reserve the actual inbound leg before preparation.
+        val returnWalk = state.schedule.inboundSeconds.takeIf {it>0} ?: (state.schedule.returnSeconds/2)
         val alert = departure - (state.schedule.bufferSeconds + returnWalk) * 1000
         if (alert <= clock()) {
             // A shortened plan must invalidate the previous future alarm as well.
@@ -40,17 +41,30 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         }
         if (preferences.getLong("departure", 0) == departure && preferences.getLong("alert", 0) == alert) return
         val token = UUID.randomUUID().toString()
+        cancellationApplied = false
         preferences.edit().putLong("departure", departure).putLong("alert", alert).putString("token", token).commit()
         notifications.cancel(NOTIFICATION_ID)
         alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alert, pending(token))
+    }
+    /** Re-register a saved reminder after boot/update without restoring vehicle state. */
+    fun restoreSaved() {
+        val token=preferences.getString("token",null) ?: return
+        val alert=preferences.getLong("alert",0)
+        val departure=preferences.getLong("departure",0)
+        if(alert<=0 || departure<alert) {cancel();return}
+        if(alert<=clock()) {deliver(token);return}
+        alarms.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,alert,pending(token))
     }
     private fun pending(token: String? = null): PendingIntent = PendingIntent.getBroadcast(context, REQUEST_ID,
         Intent(context, DepartureReminderReceiver::class.java).putExtra("token", token), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
     fun cancel() {
+        // Vehicle ticks must not write preferences and call system services every second.
+        if (cancellationApplied && !preferences.contains("token")) return
         alarms.cancel(pending())
         preferences.edit().clear().commit()
         notifications.cancel(NOTIFICATION_ID)
+        cancellationApplied = true
     }
     /** Consume exactly one current reminder. Stale/replayed alarms cannot notify or run parked commands. */
     fun deliver(token: String?): Boolean {
@@ -59,6 +73,7 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
         val departure = preferences.getLong("departure", 0)
         val now = clock()
         if (now < alert) return false
+        cancellationApplied = false
         preferences.edit().clear().commit()
         if (now - alert > 15 * 60_000 || now - departure > 5 * 60_000 || !permitted()) return false
         val open = PendingIntent.getActivity(context, 0, Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP), PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
@@ -77,5 +92,12 @@ class DepartureReminders(private val context: Context, private val clock: () -> 
 class DepartureReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         DepartureReminders(context).deliver(intent.getStringExtra("token"))
+    }
+}
+
+class DepartureRestoreReceiver : BroadcastReceiver() {
+    override fun onReceive(context:Context,intent:Intent) {
+        if(intent.action==Intent.ACTION_BOOT_COMPLETED || intent.action==Intent.ACTION_MY_PACKAGE_REPLACED)
+            DepartureReminders(context).restoreSaved()
     }
 }

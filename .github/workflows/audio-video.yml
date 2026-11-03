@@ -1,0 +1,75 @@
+name: APK live audio recording
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths:
+      - .github/workflows/audio-video.yml
+      - scripts/record_speech_review.py
+      - preview/퓨처랩스_CabinOS_ONE_preview.apk
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [overview, stop-plan, audio-review, navigation-review, place-photos]
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Enable KVM and install recording tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          # Use Ubuntu's official archive when the runner's Azure mirror stalls.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt
+          fi
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y ffmpeg
+          python3 -m pip install uiautomator2==3.2.10
+          mkdir -p /tmp/cabinos-capture
+          gh release download v5.0.1 -R Genymobile/scrcpy -p scrcpy-linux-x86_64-v5.0.1.tar.gz -D /tmp/cabinos-capture
+          echo '9f969d30cc574816077edecda65719c1c70b0aee1df1ba5fa00779ac07b8fd6e  /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz -C /tmp/cabinos-capture
+          echo '/tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1' >> "$GITHUB_PATH"
+          curl --fail --location --retry 3 'https://huggingface.co/csukuangfj2/sherpa-onnx-apk/resolve/dc89924cb00d3a284c0eeb231247cd306bcad1fb/tts-engine-new/2.0.1/sherpa-onnx-2.0.1-x86_64-kor-tts-engine-sherpa-onnx-supertonic-3-tts-int8-2026-05-11.apk' -o /tmp/cabinos-capture/neural-engine.apk
+          echo 'ca931cd70d71637ac0bd1a0ab206c562fe36ca93a6ea03c20bca8b304246312e  /tmp/cabinos-capture/neural-engine.apk' | sha256sum -c -
+      - name: Record actual APK video and internal output audio
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: default
+          ram-size: 4096M
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -feature -Vulkan -no-boot-anim -camera-back none
+          script: |
+            adb install /tmp/cabinos-capture/neural-engine.apk
+            adb shell settings put secure tts_default_synth com.k2fsa.sherpa.onnx.tts.engine
+            adb shell am start -W -n com.k2fsa.sherpa.onnx.tts.engine/.MainActivity
+            sleep 12
+            python3 scripts/record-android-demo.py --serial emulator-5554 --apk preview/퓨처랩스_CabinOS_ONE_preview.apk --package io.cabinos.one.preview --capture-audio --${{ matrix.scenario }} --review-language ko-KR --output artifacts/${{ matrix.scenario }}
+      - name: Verify captured audio
+        if: matrix.scenario == 'audio-review' || matrix.scenario == 'navigation-review'
+        run: python3 scripts/verify_recorded_audio.py artifacts/${{ matrix.scenario }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: latest-demo-${{ matrix.scenario }}
+          path: artifacts/${{ matrix.scenario }}/
+      - name: Upload verified recording to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp artifacts/${{ matrix.scenario }}/CabinOS_ONE_android_apk.mp4 /tmp/CabinOS_ONE_${{ matrix.scenario }}.mp4
+          gh release upload v0.11.2-preview-20261102 /tmp/CabinOS_ONE_${{ matrix.scenario }}.mp4 --clobber
+          if [ '${{ matrix.scenario }}' = overview ]; then
+            gh release upload v0.11.2-preview-20261102 preview/퓨처랩스_CabinOS_ONE_preview.apk preview/SHA256SUMS preview/build-info.json --clobber
+          fi

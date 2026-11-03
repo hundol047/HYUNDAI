@@ -1,0 +1,79 @@
+name: Gentle Korean APK voice comparison
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths:
+      - .github/workflows/gentle-voice-video.yml
+      - scripts/configure-recording-voice.py
+      - scripts/record_speech_review.py
+      - preview/퓨처랩스_CabinOS_ONE_preview.apk
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: ko-KR
+            variant: gentle-a
+            speaker: 0
+            iso: kor
+            sha256: 760fff23dc75d68b9dca0dcd4dc4d0dfeaabf1f2e31ebb4e37af5037c90bc64b
+            scenario: speech-review
+          - language: ko-KR
+            variant: gentle-b
+            speaker: 2
+            iso: kor
+            sha256: 760fff23dc75d68b9dca0dcd4dc4d0dfeaabf1f2e31ebb4e37af5037c90bc64b
+            scenario: speech-review
+
+    steps:
+      - uses: actions/checkout@v5
+      - name: Enable KVM and install recording tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          # Use Ubuntu's official archive when the runner's Azure mirror stalls.
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt
+          fi
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+          sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install -y ffmpeg
+          python3 -m pip install uiautomator2==3.2.10
+          mkdir -p /tmp/cabinos-capture
+          gh release download v5.0.1 -R Genymobile/scrcpy -p scrcpy-linux-x86_64-v5.0.1.tar.gz -D /tmp/cabinos-capture
+          echo '9f969d30cc574816077edecda65719c1c70b0aee1df1ba5fa00779ac07b8fd6e  /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz' | sha256sum -c -
+          tar -xzf /tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1.tar.gz -C /tmp/cabinos-capture
+          echo '/tmp/cabinos-capture/scrcpy-linux-x86_64-v5.0.1' >> "$GITHUB_PATH"
+          curl --fail --location --retry 3 'https://huggingface.co/csukuangfj2/sherpa-onnx-apk/resolve/7655c70a179a5a574f62f1723a13db1c60a83f2f/tts-engine-new/1.13.8/sherpa-onnx-1.13.8-x86_64-${{ matrix.iso }}-tts-engine-sherpa-onnx-supertonic-3-tts-int8-2026-05-11.apk' -o /tmp/cabinos-capture/neural-engine.apk
+          echo '${{ matrix.sha256 }}  /tmp/cabinos-capture/neural-engine.apk' | sha256sum -c -
+      - name: Record actual APK video and internal output audio
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          arch: x86_64
+          target: default
+          ram-size: 4096M
+          disable-animations: true
+          emulator-options: -no-window -gpu swangle -feature -Vulkan -no-boot-anim -camera-back none
+          script: |
+            adb install /tmp/cabinos-capture/neural-engine.apk
+            adb shell settings put secure tts_default_synth com.k2fsa.sherpa.onnx.tts.engine
+            adb shell am start -W -n com.k2fsa.sherpa.onnx.tts.engine/.MainActivity
+            sleep 12
+            python3 scripts/configure-recording-voice.py --speaker ${{ matrix.speaker }} --output /tmp/voice-selection.json
+            python3 scripts/record-android-demo.py --serial emulator-5554 --apk preview/퓨처랩스_CabinOS_ONE_preview.apk --package io.cabinos.one.preview --capture-audio --${{ matrix.scenario }} --review-language ${{ matrix.language }} --output artifacts/${{ matrix.variant }}
+            cp /tmp/voice-selection.json artifacts/${{ matrix.variant }}/voice-selection.json
+            python3 scripts/verify_recorded_audio.py artifacts/${{ matrix.variant }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.variant }}
+          path: artifacts/${{ matrix.variant }}/

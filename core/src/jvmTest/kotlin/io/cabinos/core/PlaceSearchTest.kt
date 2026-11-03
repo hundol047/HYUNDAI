@@ -4,6 +4,16 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class PlaceSearchTest {
+    @Test fun globalNamesakesPreferFreshOriginWithoutExcludingOtherCountries() {
+        val center=NavPoint(37.3948,127.1112)
+        val near=NavPlace("판교역",center)
+        val far=NavPlace("판교",NavPoint(38.5,126.0))
+        assertEquals(listOf(near,far),PlaceSearch.results(listOf(far,near),center,false))
+        val request=PlaceSearch.requests("판교역",center).single()
+        assertEquals("0",request["bounded"]);assertTrue(request.containsKey("viewbox"))
+        assertFalse(request.containsKey("countrycodes"))
+    }
+
     @Test fun userPickedMapPointsWrapWorldCopiesAndNeverInventBusinessMetadata() {
         val point=PlaceSearch.mapPoint(-16.5,180.2)!!
         assertEquals(-179.8,point.point.longitude,0.00001)

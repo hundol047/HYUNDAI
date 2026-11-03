@@ -1,0 +1,22 @@
+{
+  "language": "ja-JP",
+  "asrModel": "faster-whisper small, CPU int8; automated transcription can be wrong",
+  "audioSource": "Actual recorded APK audio, no substituted speech",
+  "transcription": [
+    {
+      "startSeconds": 3.86,
+      "endSeconds": 5.86,
+      "text": "300メートル先輸接です"
+    }
+  ],
+  "longestQuietGapBetweenAudibleFramesSeconds": 0.04,
+  "frameMs": 20,
+  "thresholdDbfs": -48,
+  "naturalnessHumanRated": false,
+  "window": {
+    "name": "ja-JP actual app spoken preview",
+    "startSeconds": 27.635006973999992,
+    "endSeconds": 50.47371047600001,
+    "expectSilence": false
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "engine": "com.k2fsa.sherpa.onnx.tts.engine",
+  "speakerId": 0,
+  "selectionMethod": "Real engine settings UI before APK recording",
+  "bundledInCabinOs": false,
+  "subjectiveWarmthCertified": false
+}

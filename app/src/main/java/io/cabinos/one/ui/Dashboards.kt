@@ -66,12 +66,16 @@ import kotlin.math.min
             }
             ActivityPanel(s,vm,Modifier.weight(.66f).fillMaxHeight(),onMap)
         }
+        if(!active) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
+        val cabin by vm.cabin.state.collectAsState()
+        CabinAdvicePanel(s,cabin) {vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
         SectionLabel("CabinOS","지금, 당신에게 필요한 모드",Blue)
         if(active) ActiveSessionPanel(s,vm) else Row(Modifier.fillMaxWidth(),horizontalArrangement=Arrangement.spacedBy(14.dp)) {
             ModeCard("집중 모드","작은 몰입이 만드는 큰 차이",min(s.preferences.focusMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.CenterFocusStrong,Blue,Modifier.weight(1f)){vm.start(SessionKind.FOCUS,s.preferences.focusMinutes)}
             ModeCard("휴식 모드","다음 여정을 위한 재충전",min(s.preferences.relaxMinutes.toLong(),s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Spa,Mint,Modifier.weight(1f)){vm.start(SessionKind.RELAX,s.preferences.relaxMinutes)}
             ModeCard("오디오 모드","좋아하는 소리와 함께하는 시간",min(15L,s.schedule.availableSeconds/60).toInt(),Icons.Outlined.Headphones,Purple,Modifier.weight(1f)){vm.start(SessionKind.AUDIO,15)}
         }
+        if(active) StopPlanPanel(s,vm::waiting,vm::start,{vm.engine.extendSession()},{vm.engine.stayInCabin()})
         if(s.context==VehicleContext.PREPARING_DEPARTURE) SurfacePanel(accent=Amber) {Text("출발 준비 시간입니다",color=Amber,fontSize=18.sp);Text("활동을 정리하고 주변을 확인해 주세요. 출발 후에는 차량 기본 내비게이션의 안내를 따라 주세요.",color=White,fontSize=13.sp)}
         VehiclePlanControls(s,vm)
         Text(s.message,color=Muted,fontSize=11.sp,modifier=Modifier.padding(bottom=5.dp))
@@ -125,7 +129,7 @@ import kotlin.math.min
                     }
                     Spacer(Modifier.height(10.dp));Text(a.name,fontSize=13.sp,fontWeight=FontWeight.SemiBold,color=White,maxLines=1,overflow=TextOverflow.Ellipsis)
                     Spacer(Modifier.height(5.dp));Text("도보 약 ${a.oneWaySeconds/60}분 · ${if(a.simulated)"예시" else "OSM"}",fontSize=10.sp,color=Muted,maxLines=1)
-                    Spacer(Modifier.height(5.dp));Text(if(option.feasible)"${option.usableSeconds/60}분 이용 가능  ↗" else "시간 부족",fontSize=10.sp,color=if(option.feasible)Mint else Amber)
+                    Spacer(Modifier.height(5.dp));Text(if(!a.simulated && a.walking==null)"지도에서 보행 경로 확인" else if(option.feasible)"${option.usableSeconds/60}분 이용 가능  ↗" else "시간 부족",fontSize=10.sp,color=if(option.feasible)Mint else Amber)
                 }
             }
         }
@@ -143,9 +147,10 @@ import kotlin.math.min
     }
 }
 
-@Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit) {
+@Composable fun DrivingDashboard(s:AppState,onVoice:()->Unit,onNavigation:()->Unit,mapFix:NavFix?=null) {
     if(LocalCompactWindow.current) {
         Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()),verticalArrangement=Arrangement.spacedBy(16.dp)) {
+            Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
             Text(if(s.context==VehicleContext.UNKNOWN) "차량 상태를 확인할 수 없습니다." else "안전한 여정, 함께할게요.",color=White,fontSize=25.sp)
             Pill(UnifiedVehicleContextEngine.contextLabel(s.context),Amber)
             SurfacePanel(Modifier.fillMaxWidth()) {
@@ -153,6 +158,7 @@ import kotlin.math.min
                 Text(if(s.sample?.source==DataSource.SIMULATION) "데모 차량 신호" else "차량 신호",color=Muted)
                 Text("P 기어와 정지를 확인한 뒤 집중·휴식 기능을 열 수 있습니다.",color=Muted)
             }
+            EchoRoadRoads(s,mapFix,Modifier.fillMaxWidth().height(320.dp))
             ActionButton("내비게이션",onNavigation,Modifier.fillMaxWidth())
             ActionButton("위험 정보 듣기",onVoice,Modifier.fillMaxWidth())
             Text(s.message,color=Muted)
@@ -160,6 +166,7 @@ import kotlin.math.min
         return
     }
     Column(verticalArrangement=Arrangement.spacedBy(16.dp)) {
+        Text("데모 · 차량에서는 기본 내비 사용",color=Amber)
         Row(verticalAlignment=Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(if(s.context==VehicleContext.UNKNOWN)"안전한 연결을 기다립니다." else "안전한 여정, 함께할게요.",fontSize=27.sp,fontWeight=FontWeight.SemiBold,color=White)
@@ -183,21 +190,21 @@ import kotlin.math.min
         }
         Row(Modifier.weight(1f),horizontalArrangement=Arrangement.spacedBy(16.dp)) {
             Box(Modifier.weight(.66f).fillMaxHeight().clip(RoundedCornerShape(20.dp)).border(1.dp,Line,RoundedCornerShape(20.dp))) {
-                RouteScene(Modifier.fillMaxSize())
-                Column(Modifier.padding(20.dp)) {
-                    Pill("EchoRoad · ${if(s.echoRoadActive)"활성" else "안전 제한"}",Blue)
-                    Spacer(Modifier.height(12.dp));Text("${s.sample?.speedKph?.toInt() ?: 0}",fontSize=48.sp,fontWeight=FontWeight.Light,color=White);Text(if(s.sample?.source==DataSource.VEHICLE)"km/h · 차량 신호" else "km/h · 시뮬레이션",fontSize=11.sp,color=Muted)
-                }
-                SurfacePanel(Modifier.align(Alignment.TopEnd).padding(18.dp).width(155.dp),accent=Blue) {
-                    Icon(Icons.Outlined.TurnRight,null,tint=Blue,modifier=Modifier.size(28.dp));Text("3.2 km",fontSize=23.sp,color=White);Text("판교IC · 데모 경로",fontSize=11.sp,color=Muted)
-                }
-                Column(Modifier.align(Alignment.BottomStart).fillMaxWidth().background(Brush.verticalGradient(listOf(androidx.compose.ui.graphics.Color.Transparent,Night))).padding(20.dp)) {
-                    Text(if(s.locationAvailable)"시뮬레이션 경로 · 실제 길 안내 아님" else "위치 사용 불가 · 경로 위험 안내 중단",color=if(s.locationAvailable)Muted else Amber,fontSize=11.sp)
-                    Spacer(Modifier.height(10.dp));Row {Pill("12 km   ·   18분",Blue);Spacer(Modifier.weight(1f));ActionButton("내비게이션",onNavigation,color=Blue,enabled=true,icon=Icons.Outlined.Navigation)}
+                Column(Modifier.fillMaxSize()) {
+                    Row(Modifier.fillMaxWidth().background(Panel).padding(12.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Pill("EchoRoad · 도로 지도",Blue)
+                        Spacer(Modifier.weight(1f))
+                        Text("${s.sample?.speedKph?.toInt() ?: 0} km/h · 데모 신호",color=White,fontSize=16.sp)
+                    }
+                    EchoRoadRoads(s,mapFix,Modifier.fillMaxWidth().weight(1f))
+                    Row(Modifier.fillMaxWidth().background(Panel).padding(horizontal=12.dp,vertical=4.dp),verticalAlignment=Alignment.CenterVertically) {
+                        Text("길 안내는 목적지 설정 후 시작",color=Muted,fontSize=11.sp,modifier=Modifier.weight(1f))
+                        ActionButton("내비게이션",onNavigation,color=Blue,icon=Icons.Outlined.Navigation)
+                    }
                 }
             }
             Column(Modifier.weight(.34f).fillMaxHeight(),verticalArrangement=Arrangement.spacedBy(12.dp)) {
-                SectionLabel("경로 위험 정보",color=Blue)
+                SectionLabel("위험 정보 · 시뮬레이션",color=Blue)
                 s.hazards.take(3).forEachIndexed { index,h ->
                     SurfacePanel(Modifier.fillMaxWidth(),accent=if(index==0) Red.copy(alpha=.6f) else Line) {
                         Row(verticalAlignment=Alignment.CenterVertically) {

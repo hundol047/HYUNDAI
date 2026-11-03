@@ -1,0 +1,46 @@
+{
+  "method": "Bundled mono 22050 Hz signed PCM16 signal analysis, not speaker listening or therapeutic validation",
+  "recordings": [
+    {
+      "file": "nature_birds.pcm",
+      "sha256": "312fb42b7ab0ed57e9cade6616e056731a1d713428d9e7505ad8663c45686f79",
+      "durationSeconds": 20.0,
+      "rmsDbfs": -30.02,
+      "peakDbfs": -10.47,
+      "clippedSamples": 0,
+      "loopBoundaryDifferencePcm16": 1,
+      "leadingSilenceSeconds": 0.0072562358276643995
+    },
+    {
+      "file": "nature_ocean.pcm",
+      "sha256": "3decfaf1712cc496ec0c9065364a3796d9dd1f804d5fab6177a7814c1a38128b",
+      "durationSeconds": 20.0,
+      "rmsDbfs": -25.7,
+      "peakDbfs": -12.7,
+      "clippedSamples": 0,
+      "loopBoundaryDifferencePcm16": 0,
+      "leadingSilenceSeconds": 4.5351473922902495e-05
+    },
+    {
+      "file": "nature_rain.pcm",
+      "sha256": "8715338261cd1764e636547826913dc4bea36e9f3e38b9c300f10c2b7a164a6d",
+      "durationSeconds": 19.429614512471655,
+      "rmsDbfs": -24.89,
+      "peakDbfs": -5.85,
+      "clippedSamples": 0,
+      "loopBoundaryDifferencePcm16": 0,
+      "leadingSilenceSeconds": 0.004852607709750567
+    },
+    {
+      "file": "nature_stream.pcm",
+      "sha256": "1279a2575a27710127ada7d5496b680a8b8bc475bd85801d749e901e58693289",
+      "durationSeconds": 20.0,
+      "rmsDbfs": -25.68,
+      "peakDbfs": -7.34,
+      "clippedSamples": 0,
+      "loopBoundaryDifferencePcm16": 1,
+      "leadingSilenceSeconds": 0.0
+    }
+  ],
+  "syntheticPresetPlaybackGain": 0.4
+}

@@ -23,7 +23,7 @@ const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/navigat
   await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);
   await page.evaluate(()=>{const original=L.map;L.map=function(...a){const m=original.apply(this,a);window.liveTestMap=m;return m}});
   await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();
-  await page.locator('aside [data-page="navigation"]').click();await page.locator('[data-nav="locate"]').click();
+  await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await page.locator('[data-nav="locate"]').click();
   await page.locator('#nav-query').fill('Seoul City Hall South Korea');await page.locator('#nav-search').click();
   await page.waitForSelector('[data-nav-place="0"]',{timeout:40000});await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]',{timeout:40000});
   await page.waitForFunction(()=>[...document.querySelectorAll('#navigation-map .leaflet-tile-loaded')].some(i=>i.naturalWidth>0),null,{timeout:30000});

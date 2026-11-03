@@ -28,11 +28,7 @@ import io.cabinos.one.platform.VehicleNavigationScreen
                 Text("도착 목표에 맞춘 출발",color=White)
                 val fresh=navigation.readAtMs?.let { s.nowMs-it in 0..10_000 } == true
                 Text(if(fresh) "${navigation.destination} · ${(navigation.remainingSeconds!!+59)/60}분 · ${navigation.remainingMeters}m" else "차량 내비게이션에서 경로를 설정하면 남은 시간과 거리를 받습니다.",color=Muted)
-                Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),horizontalArrangement=Arrangement.spacedBy(8.dp)) {
-                    listOf(30,60,120).forEach { minutes ->
-                        OutlinedButton(onClick={vm.arrival(minutes)},enabled=fresh) { Text("${minutes}분 뒤 도착") }
-                    }
-                }
+                ArrivalClockControls(s.nowMs,fresh,vm::arrivalAt)
                 if(s.arrivalTargetMs!=null) {
                     Text("도착 목표 ${java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT).format(java.util.Date(requireNotNull(s.arrivalTargetMs)))}",color=Mint)
                     Text("경로 변경·수신 중단 시 이전 마감을 유지합니다. 새 계획은 도착 목표를 다시 설정하세요.",color=Muted)

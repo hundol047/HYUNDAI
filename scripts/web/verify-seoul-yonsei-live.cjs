@@ -33,7 +33,7 @@ function heading(a,b){return(Math.atan2(Math.sin(rad(b[1]-a[1]))*Math.cos(rad(b[
  try{
   await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);
   await page.evaluate(()=>{const f=L.map;L.map=function(...a){return window.yonseiMap=f.apply(this,a)}});
-  await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();await page.locator('aside [data-page="navigation"]').click();
+  await page.locator('aside [data-page="settings"]').click();await page.locator('[data-palette="sand"]').click();await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();
   await page.evaluate(()=>{const p=document.createElement('p');p.id='yonsei-proof';p.style.cssText='color:#ffcb7a;font-size:14px';p.textContent='실제 가게·도로 검색 / GPS는 검사용 합성 좌표';document.querySelector('#navigation-panel h2').after(p);window.scrollTo(0,document.querySelector('.device').offsetTop-12)});
   await page.locator('[data-nav="locate"]').click();
   await search('스타벅스 원주무실');report.spacingSearch={count:await page.locator('[data-nav-place]').count(),notice:await page.locator('#nav-notice').textContent()};assert.ok(report.spacingSearch.count>0);assert.match(report.spacingSearch.notice,/띄어쓰기/);await page.screenshot({path:path.join(out,'spacing-search.png'),fullPage:true});

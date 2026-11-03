@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "798240b0a28486f4447ac751d359c8f653475f25",
+  "apkSha256": "24ba7f79d56f103e3a11d91a7d8955d265edd00a9bf2549b7c7c4fbe3d077c13",
+  "coreTests": 187,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "officialSdkPreviewBuild": true,
+  "newDeviceRecording": false,
+  "note": "Previous voice-quality-verification.json and A/B recordings refer to the previous APK."
+}

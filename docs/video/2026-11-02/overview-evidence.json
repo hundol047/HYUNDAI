@@ -1,0 +1,93 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-11-02T10:29:17.369908+00:00",
+  "captureMethod": "scrcpy: continuous device frames and live Android output audio",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "locationSource": "not tested",
+  "apkSha256": "f685dbce8ff531e921029c1fb961eafe04fee1fe2e70d8451d3fa184af049ba4",
+  "checks": [
+    {
+      "name": "APK parked dashboard",
+      "result": "passed",
+      "secondsSinceRecordingStart": 4.24
+    },
+    {
+      "name": "focus session via assistant command",
+      "result": "passed",
+      "secondsSinceRecordingStart": 14.88
+    },
+    {
+      "name": "task added through preset",
+      "result": "passed",
+      "secondsSinceRecordingStart": 19.9
+    },
+    {
+      "name": "task completion persisted",
+      "result": "passed",
+      "secondsSinceRecordingStart": 24.28
+    },
+    {
+      "name": "task removed",
+      "result": "passed",
+      "secondsSinceRecordingStart": 29.24
+    },
+    {
+      "name": "ambient preset playback state: 백색 소음",
+      "result": "passed",
+      "secondsSinceRecordingStart": 36.87
+    },
+    {
+      "name": "ambient preset playback state: 자연의 소리",
+      "result": "passed",
+      "secondsSinceRecordingStart": 41.69
+    },
+    {
+      "name": "ambient preset playback state: 잔잔한 톤",
+      "result": "passed",
+      "secondsSinceRecordingStart": 46.53
+    },
+    {
+      "name": "charging estimate changes shared session",
+      "result": "passed",
+      "secondsSinceRecordingStart": 62.76
+    },
+    {
+      "name": "motion locks parked controls",
+      "result": "passed",
+      "secondsSinceRecordingStart": 73.45
+    },
+    {
+      "name": "EchoRoad visible road tiles loaded",
+      "result": "passed",
+      "secondsSinceRecordingStart": 77.53
+    },
+    {
+      "name": "D at zero does not unlock parked screen",
+      "result": "passed",
+      "secondsSinceRecordingStart": 89.96
+    },
+    {
+      "name": "relaxation breathing session",
+      "result": "passed",
+      "secondsSinceRecordingStart": 110.87
+    },
+    {
+      "name": "session history screen",
+      "result": "passed",
+      "secondsSinceRecordingStart": 115.79
+    },
+    {
+      "name": "appearance settings accessible",
+      "result": "passed",
+      "secondsSinceRecordingStart": 120.8
+    },
+    {
+      "name": "phone portrait dashboard",
+      "result": "passed",
+      "secondsSinceRecordingStart": 140.16
+    }
+  ],
+  "pleosValidated": false
+}

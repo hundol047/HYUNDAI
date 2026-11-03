@@ -15,6 +15,8 @@ import java.net.URL
 import java.net.URLEncoder
 import kotlin.coroutines.resume
 
+data class NearbySearchResult(val places:List<NearbyActivity>,val notice:String,val complete:Boolean=true)
+
 /** Only called by explicit parked UI actions. Coordinates are not persisted. */
 class NearbyPlaces(private val context:Context) {
     @Volatile private var activeConnection:HttpURLConnection?=null
@@ -25,36 +27,82 @@ class NearbyPlaces(private val context:Context) {
         val manager=context.getSystemService(LocationManager::class.java)
         return try {
             val fine=context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)==PackageManager.PERMISSION_GRANTED
+            fun permitted() = context.checkSelfPermission(if(fine) Manifest.permission.ACCESS_FINE_LOCATION else Manifest.permission.ACCESS_COARSE_LOCATION)==PackageManager.PERMISSION_GRANTED
+            if(!manager.isLocationEnabled)return null
             val providers=manager.getProviders(true).filter { it!=LocationManager.PASSIVE_PROVIDER && (fine || it!=LocationManager.GPS_PROVIDER) }
-            val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { System.currentTimeMillis()-it.time in 0..60_000 && it.accuracy<=1000 }.maxByOrNull { it.time }
-            if(cached!=null)return position(cached)
+            val cached=providers.mapNotNull { manager.getLastKnownLocation(it) }.filter { usableLocation(it) }.minByOrNull { it.accuracy }
+            if(cached!=null)return if(permitted())position(cached) else null
             if(providers.isEmpty())return null
-            withTimeoutOrNull(12_000) {
+            withTimeoutOrNull(25_000) {
                 suspendCancellableCoroutine { continuation ->
                     val listener=object:LocationListener {
+                        private fun finish(position:MapPosition?) {
+                            runCatching {manager.removeUpdates(this)}
+                            if(continuation.isActive)continuation.resume(position)
+                        }
+                        override fun onProviderEnabled(provider:String)=Unit
+                        override fun onStatusChanged(provider:String?,status:Int,extras:android.os.Bundle?)=Unit
+                        override fun onProviderDisabled(provider:String) {
+                            if(!continuation.isActive)return
+                            val available=runCatching {permitted() && manager.isLocationEnabled && providers.any {manager.isProviderEnabled(it)}}.getOrDefault(false)
+                            if(!available)finish(null)
+                        }
                         override fun onLocationChanged(location:Location) {
-                            if(continuation.isActive && System.currentTimeMillis()-location.time in 0..60_000 && location.accuracy<=1000) {
-                                runCatching {manager.removeUpdates(this)};continuation.resume(position(location))
-                            }
+                            if(!continuation.isActive)return
+                            if(!permitted() || !manager.isLocationEnabled) {finish(null);return}
+                            if(usableLocation(location))finish(position(location))
                         }
                     }
                     continuation.invokeOnCancellation { runCatching {manager.removeUpdates(listener)} }
-                    try { providers.forEach { manager.requestSingleUpdate(it,listener,Looper.getMainLooper()) } }
-                    catch(_:SecurityException) { manager.removeUpdates(listener);if(continuation.isActive)continuation.resume(null) }
+                    try { providers.forEach { manager.requestLocationUpdates(it,1000L,0f,listener,Looper.getMainLooper()) } }
+                    catch(_:SecurityException) { runCatching {manager.removeUpdates(listener)};if(continuation.isActive)continuation.resume(null) }
                 }
             }
         } catch(_:SecurityException) { null }
     }
+    internal fun usableLocation(location:Location,now:Long=System.currentTimeMillis())=
+        location.hasAccuracy()&&location.accuracy.isFinite()&&location.accuracy in 0f..50f&&
+        now-location.time in 0..10_000&&location.latitude.isFinite()&&location.latitude in -90.0..90.0&&
+        location.longitude.isFinite()&&location.longitude in -180.0..180.0
     private fun position(location:Location)=MapPosition(location.latitude,location.longitude,"기기 위치 · 정확도 약 ${location.accuracy.toInt()}m")
-    suspend fun search(origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
+    suspend fun search(origin:MapPosition):NearbySearchResult {
+        val urls=PhotonNearby.urls(origin)
+        return NearbySearchCoordinator.search(primary={index->
+            if(index>0)delay(1100)
+            requestPhoton(urls[index],origin)
+        },fallback={categories->
+            var result:List<NearbyActivity>?=null
+            var last:java.io.IOException?=null
+            for(endpoint in listOf("https://overpass-api.de/api/interpreter","https://overpass.kumi.systems/api/interpreter")) {
+                currentCoroutineContext().ensureActive()
+                try {result=request(origin,endpoint,categories);break}catch(error:java.io.IOException){last=error}
+            }
+            result ?: throw (last ?: java.io.IOException("주변 검색 서버에 연결할 수 없습니다."))
+        })
+    }
+    private suspend fun requestPhoton(url:String,origin:MapPosition):List<NearbyActivity> = withContext(Dispatchers.IO) {
+        val connection=URL(url).openConnection() as HttpURLConnection;activeConnection=connection
+        val deadline=launch(Dispatchers.Default) {try{delay(12000)}finally{connection.disconnect()}}
+        try {
+            connection.connectTimeout=5000;connection.readTimeout=8000
+            connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
+            connection.setRequestProperty("Accept","application/json")
+            if(connection.responseCode==429)throw java.io.IOException("장소 검색 서비스의 요청 한도입니다. 잠시 후 다시 시도하세요.")
+            if(connection.responseCode!=200)throw java.io.IOException("Photon 장소 검색 오류 (${connection.responseCode})")
+            val bytes=connection.inputStream.use {it.readBytesLimited(2_000_000)}
+            currentCoroutineContext().ensureActive()
+            try {PhotonNearby.parse(String(bytes,Charsets.UTF_8),origin)}catch(error:org.json.JSONException){throw java.io.IOException("장소 검색 응답 오류",error)}
+        }finally{deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null}
+    }
+    private suspend fun request(origin:MapPosition,endpoint:String,categories:Set<String>):List<NearbyActivity> = withContext(Dispatchers.IO) {
         require(origin.valid())
-        val query=NearbyGeometry.query(origin)
-        val connection=URL("https://overpass-api.de/api/interpreter").openConnection() as HttpURLConnection
+        val query=NearbyGeometry.query(origin,categories)
+        val connection=URL(endpoint).openConnection() as HttpURLConnection
         activeConnection=connection
-        val deadline=launch(Dispatchers.Default) {try{delay(35_000)}finally{connection.disconnect()}}
+        val deadline=launch(Dispatchers.Default) {try{delay(20_000)}finally{connection.disconnect()}}
         try {
             // The provider may queue a 12-second query before executing it.
-            connection.connectTimeout=8_000;connection.readTimeout=35_000
+            connection.connectTimeout=6_000;connection.readTimeout=18_000
             connection.requestMethod="POST";connection.doOutput=true
             connection.setRequestProperty("Content-Type","application/x-www-form-urlencoded;charset=UTF-8")
             connection.setRequestProperty("User-Agent","CabinOS_ONE/${io.cabinos.one.BuildConfig.VERSION_NAME} (FutureLabs; Android)")
@@ -62,9 +110,12 @@ class NearbyPlaces(private val context:Context) {
             currentCoroutineContext().ensureActive()
             val form=("data="+URLEncoder.encode(query,"UTF-8")).toByteArray(Charsets.UTF_8)
             connection.setFixedLengthStreamingMode(form.size);connection.outputStream.use {it.write(form)}
-            check(connection.responseCode==200) {"장소 검색 서버가 응답하지 않습니다 (${connection.responseCode})."}
+            if(connection.responseCode>=500)throw java.io.IOException("주변 검색 서버 일시 오류")
+            if(connection.responseCode!=200)throw java.io.IOException("장소 검색 서버가 응답하지 않습니다 (${connection.responseCode}).")
             val bytes=connection.inputStream.use { it.readBytesLimited(2_000_000) }
-            parse(String(bytes,Charsets.UTF_8),origin)
+            try {parse(String(bytes,Charsets.UTF_8),origin)}
+            catch(error:org.json.JSONException){throw java.io.IOException("주변 검색 응답 오류",error)}
+            catch(error:IllegalStateException){throw java.io.IOException("주변 검색 미완료",error)}
         } finally { deadline.cancel();connection.disconnect();if(activeConnection===connection)activeConnection=null }
     }
     companion object {
@@ -79,14 +130,16 @@ class NearbyPlaces(private val context:Context) {
                 val category=when {
                     tags.optString("amenity")=="cafe"->"카페"
                     tags.optString("amenity") in listOf("restaurant","fast_food")->"식당"
-                    tags.optString("leisure")=="park"->"산책"
+                    tags.optString("leisure") in listOf("park","garden","nature_reserve")->"산책"
                     tags.optString("shop") in listOf("convenience","supermarket","mall")->"쇼핑"
                     else->return@mapNotNull null
                 }
                 val center=item.optJSONObject("center") ?: item
                 NearbyGeometry.osmActivity("osm-${item.optString("type")}-${item.optLong("id")}",name,category,
-                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)
-            }.distinctBy { it.id }.take(60)
+                    center.optDouble("lat",Double.NaN),center.optDouble("lon",Double.NaN),origin)?.copy(commonsPhoto=PlacePhotoReference.commons(tags))
+            }.distinctBy { it.id }.groupBy {it.category}.values.flatMap {places->
+                places.sortedBy {NearbyGeometry.distanceMeters(origin,MapPosition(it.latitude!!,it.longitude!!))}.take(15)
+            }.sortedBy {it.oneWaySeconds}
         }
     }
 }

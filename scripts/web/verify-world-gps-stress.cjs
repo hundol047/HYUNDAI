@@ -30,6 +30,8 @@ function bearing(a,b){return(Math.atan2(Math.sin(rad(b[1]-a[1]))*Math.cos(rad(b[
    try{
     await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);
     const result=await page.evaluate(({raw,row,points,fixes,finalFixes,accuracy,total,routeDistance,phase,headingJitter,noHeading,noSpeed,stationarySamples})=>{
+     const inputTrace=[],originalFix=CabinOS.navFix;
+     CabinOS.navFix=(...args)=>{inputTrace.push(args);return originalFix(...args)};
      CabinOS.navSetLanguage(row.language);CabinOS.navFix(...points[0],5,Date.now(),0,-1);
      const error=CabinOS.navPreview(raw,row.label,...row.end);if(error)throw Error(error);if(!CabinOS.navStart(true))throw Error('Start failed');
      const issues=[],positions=[];let staleVerified=false,recovered=false,maximumProgressErrorMeters=0,maximumConfidentProgressErrorMeters=0,uncertainInputs=0;
@@ -62,9 +64,9 @@ function bearing(a,b){return(Math.atan2(Math.sin(rad(b[1]-a[1]))*Math.cos(rad(b[
      // A fresh, precise final approach; no arrival claim from noisy coordinates.
      for(const f of finalFixes){stressOffset+=1000;CabinOS.navFix(...f.p,5,Date.now(),5,f.bearing)}
      stressOffset+=1000;CabinOS.navFix(...points.at(-1),5,Date.now(),0,-1);
-     return {inputs:fixes.length+finalFixes.length+1+stationarySamples,maximumProgressErrorMeters,maximumConfidentProgressErrorMeters,uncertainInputs,positions,issues:issues.slice(0,20),issueCount:issues.length,staleVerified,recovered,arrived:JSON.parse(CabinOS.navState()).arrived};
+     return {inputTrace,inputs:fixes.length+finalFixes.length+1+stationarySamples,maximumProgressErrorMeters,maximumConfidentProgressErrorMeters,uncertainInputs,positions,issues:issues.slice(0,20),issueCount:issues.length,staleVerified,recovered,arrived:JSON.parse(CabinOS.navState()).arrived};
     },{raw,row:{language:row.language,label:row.label,end:row.end},points,fixes,finalFixes,accuracy,total:cum.at(-1),routeDistance:r.distance,phase,headingJitter,noHeading,noSpeed,stationarySamples});
-    if(!process.env.CABIN_GPS_DEBUG)delete result.positions;result.id=row.id;result.accuracyMeters=accuracy;result.progressToleranceMeters=Math.max(75,accuracy*3);result.result=!result.issueCount&&result.staleVerified&&result.recovered&&result.arrived&&result.maximumConfidentProgressErrorMeters<=result.progressToleranceMeters?'passed':'failed';
+    if(!process.env.CABIN_GPS_DEBUG){delete result.positions;delete result.inputTrace;}result.id=row.id;result.accuracyMeters=accuracy;result.progressToleranceMeters=Math.max(75,accuracy*3);result.result=!result.issueCount&&result.staleVerified&&result.recovered&&result.arrived&&result.maximumConfidentProgressErrorMeters<=result.progressToleranceMeters?'passed':'failed';
     report.cases.push(result);console.log(result.result.toUpperCase(),row.id,accuracy,result.inputs,result.issueCount);
     if(result.result==='failed')process.exitCode=1;
    }finally{await context.close();fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,JSON.stringify(report,null,2))}

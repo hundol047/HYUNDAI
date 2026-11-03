@@ -25,7 +25,7 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
  });
  async function road(r){routeRequests++;assert.equal(r.request().headers().authorization,undefined);const [a,b]=new URL(r.request().url()).pathname.split('/').at(-1).split(';').map(p=>p.split(',').map(Number));return r.fulfill({status:200,contentType:'application/json',body:JSON.stringify({code:'Ok',routes:[{distance:1000,duration:180,geometry:{coordinates:[a,[a[0],(a[1]+b[1])/2],b]},legs:[{steps:[{maneuver:{type:'depart',location:a}},{maneuver:{type:'arrive',location:b}}]}]}]})})}
  await page.route('https://router.project-osrm.org/route/v1/driving/**',road);
- async function fresh(){await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);await page.evaluate(()=>{const factory=L.map;L.map=function(...a){return window.shopMap=factory.apply(this,a)};Object.defineProperty(navigator,'geolocation',{configurable:true,value:{watchPosition(success){window.shopGPS=success;success({coords:{latitude:37.3948,longitude:127.1112,accuracy:5,speed:0},timestamp:Date.now()});return 1},clearWatch(){}}})});await page.locator('aside [data-page="navigation"]').click()}
+ async function fresh(){await page.goto(process.env.CABIN_DEMO_URL||'http://127.0.0.1:4173/');await page.waitForFunction(()=>window.cabinDemo?.state.parked);await page.evaluate(()=>{const factory=L.map;L.map=function(...a){return window.shopMap=factory.apply(this,a)};Object.defineProperty(navigator,'geolocation',{configurable:true,value:{watchPosition(success){window.shopGPS=success;success({coords:{latitude:37.3948,longitude:127.1112,accuracy:5,speed:0},timestamp:Date.now()});return 1},clearWatch(){}}})});await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click()}
  async function search(q='검사용 카페'){await page.locator('#nav-query').fill(q);await page.locator('#nav-search').click();await page.waitForFunction(()=>!document.querySelector('#nav-search').disabled)}
  async function test(name,fn){try{await fn();results.push({name,result:'passed'});console.log('PASS',name)}catch(e){results.push({name,result:'failed',error:e.message});throw e}}
  try{
@@ -45,7 +45,7 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
    await page.locator('#nav-planning summary').click();await page.locator('#nav-service-form [name="search"]').fill('https://gateway.example.test');await page.locator('#nav-service-form [name="token"]').fill('fixture-access-token-not-real');await page.locator('#nav-service-form button').click();assert.equal(await page.locator('#nav-service-form [name="token"]').inputValue(),'');
    await page.locator('[data-nav="locate"]').click();await search();assert.match(await page.locator('#nav-results').textContent(),/Kakao Local/);await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]');
    assert.equal(await page.evaluate(()=>JSON.stringify([Object.entries(localStorage),Object.entries(sessionStorage)]).includes('fixture-access-token-not-real')),false);
-   await page.reload();await page.waitForFunction(()=>window.cabinDemo?.state.parked);await page.locator('aside [data-page="navigation"]').click();await search();assert.equal(await page.locator('#nav-results').textContent().then(s=>s.includes('Kakao Local')),false);
+   await page.reload();await page.waitForFunction(()=>window.cabinDemo?.state.parked);await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await search();assert.equal(await page.locator('#nav-results').textContent().then(s=>s.includes('Kakao Local')),false);
   });
   await test('a full provider page outside the nearby circle still permits the next explicit page',async()=>{await fresh();await page.locator('[data-nav="locate"]').click();await page.locator('#nav-nearby-only').check();await search('corner shops');assert.equal(await page.locator('[data-nav-place]').count(),0);assert.equal(await page.locator('[data-nav="more"]').count(),1);await page.locator('[data-nav="more"]').click();await page.waitForFunction(()=>document.querySelectorAll('[data-nav-place]').length===1);assert.match(requests.at(-1).searchParams.get('exclude_place_ids'),/100/)});
   await test('offline shop selection keeps the returned pin and does not invent an online route',async()=>{await fresh();await search();const before=routeRequests;await page.context().setOffline(true);await page.waitForFunction(()=>!window.cabinDemo.state.network);await page.locator('[data-nav-place="0"]').click();assert.match(await page.locator('#nav-notice').textContent(),/온라인 연결/);assert.equal(routeRequests,before);assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);await page.context().setOffline(false)});
@@ -75,7 +75,7 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
    await fresh();await page.evaluate(()=>shopMap.setView([48.86,2.35],16,{animate:false}));const before=routeRequests;
    await page.locator('#nav-map-pick').click();assert.equal(routeRequests,before);assert.match(await page.locator('#nav-notice').textContent(),/GPS/);assert.match(await page.locator('#nav-guidance').textContent(),/직접 고른 지도 지점/);
    assert.equal((await page.evaluate(()=>JSON.parse(CabinOS.navState()))).hasRoute,false);
-   await page.locator('#scenarios [data-vehicle="주행"]').click();assert.equal(await page.locator('#nav-map-pick').isVisible(),false);
+   await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('#scenarios [data-vehicle="주행"]').click();assert.equal(await page.locator('#nav-map-pick').isVisible(),false);
    const chosen=await page.evaluate(()=>JSON.parse(CabinOS.placeMapPoint(-16.5,180.2)));assert.ok(Math.abs(chosen.longitude+179.8)<.0001);assert.match(chosen.source,/미확인/);
   });
   await test('same-named city and station resolve locally and a bakery query excludes unrelated businesses',async()=>{
@@ -88,7 +88,7 @@ const shops=Array.from({length:18},(_,i)=>({place_id:100+i,name:`검사용 카�
   });
   await test('regional voice recovery works while parked and is blocked during driving',async()=>{
    await fresh();await search('Balzacs Toronto');await page.evaluate(()=>EchoNavigation.voiceCommand('지역 나눠 찾기'));assert.equal(await page.locator('[data-nav-place]').count(),1);
-   await page.locator('#scenarios [data-vehicle="주행"]').click();const start=requests.length;await page.evaluate(()=>EchoNavigation.voiceCommand('지역 나눠 찾기'));assert.equal(requests.length,start);
+   await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('#scenarios [data-vehicle="주행"]').click();const start=requests.length;await page.evaluate(()=>EchoNavigation.voiceCommand('지역 나눠 찾기'));assert.equal(requests.length,start);
   });
   await test('cancelled regional lookup cannot replace the newer business results',async()=>{
    await fresh();await search('Cafe Pending');let release;const pending=new Promise(r=>release=r);const matcher=u=>u.hostname==='nominatim.openstreetmap.org'&&u.searchParams.get('q')==='Pending';

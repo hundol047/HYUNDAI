@@ -1,0 +1,45 @@
+[
+  {
+    "path": "/healthz",
+    "status": 200,
+    "elapsedMs": 321,
+    "body": {
+      "status": "ok"
+    }
+  },
+  {
+    "path": "/v1/dataset",
+    "status": 200,
+    "elapsedMs": 306,
+    "body": {
+      "historicalOnly": true,
+      "zoneCount": 1271,
+      "loadedRows": 1271,
+      "sha256": "ef9202e871b89a561b1a01a6b9921c12a2e2c00322284af1df1a7d1dc100b976",
+      "categories": {
+        "pedestrian": {
+          "count": 418,
+          "periodStart": 2023,
+          "periodEnd": 2025
+        },
+        "child_pedestrian": {
+          "count": 88,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        },
+        "icy": {
+          "count": 82,
+          "periodStart": 2021,
+          "periodEnd": 2025
+        },
+        "municipal": {
+          "count": 683,
+          "periodStart": 2025,
+          "periodEnd": 2025
+        }
+      },
+      "source": "한국도로교통공단 교통사고정보 개방시스템",
+      "note": "Historical statistics; not live accidents or current ice conditions"
+    }
+  }
+]

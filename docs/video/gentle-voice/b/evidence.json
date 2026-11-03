@@ -1,0 +1,38 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-10-26T15:27:00.123342+00:00",
+  "captureMethod": "scrcpy: continuous device frames and live Android output audio",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "locationSource": "not tested",
+  "apkSha256": "c00c78d350651b9273d82c19107268c82c411dde70faa313148ce5ae8493739b",
+  "checks": [
+    {
+      "name": "requested navigation language selected",
+      "result": "passed",
+      "secondsSinceRecordingStart": 16.85
+    },
+    {
+      "name": "voice preview and settings reachable",
+      "result": "passed",
+      "secondsSinceRecordingStart": 27.47
+    },
+    {
+      "name": "voice chooser reachable",
+      "result": "passed",
+      "secondsSinceRecordingStart": 29.68
+    },
+    {
+      "name": "offline voice choices opened",
+      "result": "passed",
+      "secondsSinceRecordingStart": 34.59
+    },
+    {
+      "name": "preview completed without leaving settings",
+      "result": "passed",
+      "secondsSinceRecordingStart": 64.66
+    }
+  ],
+  "pleosValidated": false
+}

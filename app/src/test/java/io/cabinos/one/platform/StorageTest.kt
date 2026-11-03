@@ -36,4 +36,24 @@ class StorageTest {
             assertNull(dao.preferences());assertNull(dao.checkpoint());assertNull(dao.session("done"));assertTrue(dao.history().isEmpty())
         } finally { db.close() }
     }
+    @Test fun databaseToggleIsAtomicAndNeverInsertsMissingRows() = runBlocking {
+        val db=Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),CabinDatabase::class.java).allowMainThreadQueries().build()
+        try {
+            val dao=db.dao()
+            dao.saveTask(TaskRecord("task","확인"))
+            dao.toggleTask("task")
+            db.openHelper.readableDatabase.query("SELECT done FROM tasks WHERE id='task'").use {r ->
+                assertTrue(r.moveToFirst());assertEquals(1,r.getInt(0))
+            }
+            dao.toggleTask("task")
+            db.openHelper.readableDatabase.query("SELECT done FROM tasks WHERE id='task'").use {r ->
+                assertTrue(r.moveToFirst());assertEquals(0,r.getInt(0))
+            }
+            dao.deleteTask("task");dao.toggleTask("task")
+            db.openHelper.readableDatabase.query("SELECT COUNT(*) FROM tasks").use {r ->
+                assertTrue(r.moveToFirst());assertEquals(0,r.getInt(0))
+            }
+        } finally {db.close()}
+    }
+
 }

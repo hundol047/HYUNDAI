@@ -33,7 +33,7 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
    const after=await page.evaluate(()=>({center:qaMaps['nearby-map'].getCenter(),zoom:qaMaps['nearby-map'].getZoom()}));assert.equal(after.zoom,before.zoom);assert.ok(await page.evaluate(({a,b,z})=>{const m=qaMaps['nearby-map'];return m.project(a,z).distanceTo(m.project(b,z))<=1},{a:before.center,b:after.center,z:before.zoom}),'resize must preserve center within one display pixel');
   });
   await test('navigation zoom and pan survive updates without changing route coordinates',async()=>{
-   await page.locator('aside [data-page="navigation"]').click();await page.waitForTimeout(350);const m='#navigation-map';await page.locator(m).scrollIntoViewIfNeeded();
+   await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await page.waitForTimeout(350);const m='#navigation-map';await page.locator(m).scrollIntoViewIfNeeded();
    await page.locator(m+' .leaflet-control-zoom-in').click();await page.waitForTimeout(350);assert.equal(await page.evaluate(()=>qaMaps['navigation-map'].getZoom()),3);
    await page.locator(m+' .leaflet-control-zoom-out').click();await page.waitForTimeout(350);assert.equal(await page.evaluate(()=>qaMaps['navigation-map'].getZoom()),2);
    const b=await page.locator(m).boundingBox();await page.mouse.move(b.x+b.width/2,b.y+b.height/2);await page.mouse.wheel(0,-500);await page.waitForTimeout(500);assert.ok(await page.evaluate(()=>qaMaps['navigation-map'].getZoom()>2));
@@ -70,7 +70,7 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
   await test('screen changes release map ResizeObservers',async()=>{
    // Release the navigation safety latch only through explicit demo P reconfirmation.
    await page.evaluate(()=>{CabinOS.navStop();CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1)});for(let i=0;i<6;i++){await page.waitForTimeout(1000);await page.evaluate(()=>CabinOS.navFix(37.5547,126.9723,5,Date.now(),0,-1))}await page.evaluate(()=>{CabinOS.vehicle('주차');cabinDemo.render()});await page.waitForFunction(()=>cabinDemo.state.parked);
-   for(let i=0;i<8;i++){await page.locator('aside [data-page="navigation"]').click();await page.locator('aside [data-page="home"]').click()}
+   for(let i=0;i<8;i++){await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();await page.locator('aside [data-page="home"]').click()}
    assert.equal(await page.evaluate(()=>qaActiveObservers),0);
   });
   await test('two finger pinch zooms in and out on nearby and navigation touch maps',async()=>{
@@ -80,6 +80,7 @@ const cpu=Number(process.env.CABIN_CPU_RATE||4);
     await touch.evaluate(()=>{const original=L.map;L.map=function(...a){return window.touchMap=original.apply(this,a)}});
     const session=await touch.context().newCDPSession(touch);
     for(const name of ['nearby','navigation']) {
+     if(name==='navigation')await touch.locator('#supplementary').evaluate(e=>e.open=true);
      await touch.locator(`aside [data-page="${name}"]`).click();const target=touch.locator(`#${name}-map`);await target.scrollIntoViewIfNeeded();await touch.waitForTimeout(350);
      const box=await target.boundingBox(),x=box.x+box.width/2,y=box.y+box.height/2;
      async function pinch(from,to){await session.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x-from,y,id:1},{x:x+from,y,id:2}]});for(let i=1;i<=8;i++){const gap=from+(to-from)*i/8;await session.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x-gap,y,id:1},{x:x+gap,y,id:2}]});await touch.waitForTimeout(20)}await session.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});await touch.waitForTimeout(500)}

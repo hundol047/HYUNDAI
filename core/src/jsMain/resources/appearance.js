@@ -1,7 +1,7 @@
 'use strict';
 (() => {
  const key='cabinos.appearance.v1';
- const presets=[['graphite','그래파이트','#82c5b7'],['sand','웜 샌드','#dbc29b'],['wood','모카 우드','#cfad9b'],['sage','세이지','#b3c6ad'],['midnight','미드나이트','#a9bbda']];
+ const presets=[['white','화이트','#175e66'],['black','블랙','#a3d5cb'],['ocean','오션 블루','#8bcde8'],['rose','로즈','#e0aec4'],['lavender','라벤더','#624a8a'],['graphite','그래파이트','#82c5b7'],['sand','웜 샌드','#dbc29b'],['wood','모카 우드','#cfad9b'],['sage','세이지','#b3c6ad'],['midnight','미드나이트','#a9bbda']];
  let bridge,state,notify,current,saveNotice='',validationNotice='';
  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function apply(){current=JSON.parse(bridge.appearance());const c=current.colors;const root=document.documentElement;for(const [name,value]of Object.entries({bg:c.background,panel:c.panel,line:c.line,mint:c.accent,blue:c.accent,text:c.text,muted:c.muted}))root.style.setProperty('--'+name,value);root.dataset.nightMap=String(current.nightMap);root.dataset.appearance=current.preset;root.dataset.brightness=current.brightness;window.dispatchEvent(new CustomEvent('cabinos-appearance',{detail:current}));}

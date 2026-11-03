@@ -29,6 +29,7 @@ data class SharedSchedule(
     val departureAtMs: Long? = null, val waitingSeconds: Long = 0,
     val bufferSeconds: Long = 300, val returnSeconds: Long = 0,
     val availableSeconds: Long = 0, val estimateLabel: String = "시간 미설정",
+    val inboundSeconds: Long = 0,
 )
 data class Route(val id: String = "demo-pangyo", val progressMeters: Double = 0.0, val heading: Double = 0.0)
 data class RoadHazard(
@@ -43,7 +44,9 @@ data class NearbyActivity(
     val minimumActivitySeconds: Long, val description: String,
     val simulated: Boolean = true,
     val latitude: Double? = null, val longitude: Double? = null,
-)
+    val commonsPhoto: String? = null,
+    val walking: WalkingPlan? = null,
+) { val roundTripSeconds: Long get() = walking?.roundTripSeconds ?: (2 * oneWaySeconds) }
 data class ActivityOption(val activity: NearbyActivity, val usableSeconds: Long, val feasible: Boolean)
 data class ContextEvent(val id: Long, val name: String, val message: String, val timestampMs: Long)
 data class AppState(

@@ -1,0 +1,36 @@
+name: Assemble verified APK demonstration
+on:
+  push:
+    branches: [fix/vehicle-runtime-issues]
+    paths: [.github/workflows/assemble-demo-video.yml]
+  workflow_dispatch:
+    inputs:
+      recording_run:
+        description: Successful APK live audio recording run ID
+        required: true
+        type: string
+permissions:
+  contents: write
+  actions: read
+jobs:
+  assemble:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Download successful recording evidence
+        env:
+          RECORDING_RUN: ${{ inputs.recording_run || '41428891716' }}
+        run: |
+          test "$(gh run view "$RECORDING_RUN" --json conclusion --jq .conclusion)" = success
+          gh run download "$RECORDING_RUN" -D recordings
+      - name: Join actual footage and Android audio
+        run: |
+          sudo apt-get -o Acquire::http::Timeout=30 update -qq
+          sudo apt-get -o Acquire::http::Timeout=30 install -y ffmpeg
+          python3 scripts/assemble-demo-video.py recordings assembled preview/퓨처랩스_CabinOS_ONE_preview.apk
+      - name: Upload complete demonstration
+        run: |
+          gh release upload v0.11.2-preview-20261102 assembled/CabinOS_ONE_all_features.mp4 assembled/video-manifest.json --clobber

@@ -1,0 +1,30 @@
+{
+  "capture": "Live Android output via scrcpy; no replacement soundtrack",
+  "durationSeconds": 83.402312,
+  "streams": [
+    {
+      "type": "video",
+      "codec": "h264"
+    },
+    {
+      "type": "audio",
+      "codec": "aac"
+    }
+  ],
+  "windows": [
+    {
+      "activeSecondsAboveMinus65Dbfs": 4.5,
+      "samples": 332247,
+      "rmsDbfs": -31.438538913939666,
+      "peak": 11872,
+      "pcmSha256": "c0961ace7032121ba7f7e84f0a7a8fa54f5e9715aca30eb1ec8ff985d20eb683",
+      "name": "Korean navigation repeat from app TTS",
+      "startSeconds": 45.985653240999966,
+      "endSeconds": 68.75076548899995,
+      "expectSilence": false,
+      "passed": true
+    }
+  ],
+  "allPassed": true,
+  "physicalSpeakerTest": false
+}

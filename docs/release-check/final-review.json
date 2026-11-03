@@ -1,0 +1,59 @@
+{
+  "reviewStartedAtUtc": "2026-10-26T07:11:17Z",
+  "recordedAtUtc": "2026-10-26T09:54:52.071972+00:00",
+  "validatedAppSourceCommit": "d32b178274e67ec0e138f0210593abd105be382d",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
+  "apkCommit": "775bfeb416e23e6ae6908422fe201d7935781031",
+  "unitTests": {
+    "core": 175,
+    "android": 255,
+    "server": 25,
+    "scripts": 57,
+    "total": 512,
+    "failures": 0,
+    "skipped": 0
+  },
+  "browserVoiceChecks": {
+    "passed": 17,
+    "physicalMicrophone": false
+  },
+  "worldReplay": {
+    "cases": 78,
+    "passed": 78,
+    "inputs": 39705,
+    "recordedRealRouteGeometry": true,
+    "syntheticGps": true,
+    "physicalDriving": false
+  },
+  "sdkBuildAndLintPassed": true,
+  "sourceCi": "https://github.com/hundol047/HYUNDAI/actions/runs/40300756066",
+  "videos": [
+    {
+      "file": "CabinOS_ONE_runtime.mp4",
+      "durationSeconds": 160.555,
+      "checksPassed": 10,
+      "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437"
+    },
+    {
+      "file": "CabinOS_ONE_places.mp4",
+      "durationSeconds": 77.507,
+      "checksPassed": 8,
+      "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437"
+    },
+    {
+      "file": "CabinOS_ONE_navigation.mp4",
+      "durationSeconds": 72.216,
+      "checksPassed": 9,
+      "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437"
+    }
+  ],
+  "publicDownloadHashMatched": true,
+  "physicalDeviceValidated": false,
+  "teamSignedSubmissionUpdated": false,
+  "remaining": [
+    "Existing production signing key unavailable",
+    "Physical S20+/Pleos GPS, microphone, keyboard, speaker and frame-time verification",
+    "Public map/place coverage and service availability; Korea traffic gateway is not deployed"
+  ],
+  "audioSignalAnalysis": "ambience-analysis.json"
+}

@@ -1,0 +1,53 @@
+{
+  "type": "Actual Photon requests at public Pangyo coordinates; no fabricated places; limited provider sample",
+  "results": [
+    {
+      "category": "카페",
+      "httpStatus": 200,
+      "count": 15,
+      "named": 15,
+      "samples": [
+        "메가MGC커피 3810th 판교역로점",
+        "스타벅스",
+        "SLOW MONDAY"
+      ],
+      "elapsedMs": 936
+    },
+    {
+      "category": "식당",
+      "httpStatus": 200,
+      "count": 15,
+      "named": 15,
+      "samples": [
+        "글릭슈바인",
+        "Mad for Galic (2층)",
+        "현복집(2층 복요리집)"
+      ],
+      "elapsedMs": 721
+    },
+    {
+      "category": "산책",
+      "httpStatus": 200,
+      "count": 15,
+      "named": 15,
+      "samples": [
+        "모자이크파크",
+        "봇들저류지공원",
+        "나들이공원"
+      ],
+      "elapsedMs": 405
+    },
+    {
+      "category": "쇼핑",
+      "httpStatus": 200,
+      "count": 15,
+      "named": 15,
+      "samples": [
+        "CU",
+        "CU",
+        "No Brand"
+      ],
+      "elapsedMs": 226
+    }
+  ]
+}

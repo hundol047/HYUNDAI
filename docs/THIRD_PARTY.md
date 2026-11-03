@@ -28,3 +28,29 @@ Deterministic UI fixtures use synthetic protocol/GPS data; live-recorded route/s
 Apache-2.0 원문과 APK 구성요소 목록은 `app/src/main/assets/licenses/`에 포함합니다. 웹 Leaflet 및 번역 라이선스는 각 배포 자산의 원문을 유지합니다. 데이터 출처 표시는 앱 지도에서도 유지합니다.
 
 - **Gson** — Apache-2.0. https://github.com/google/gson . 공식 Vehicle SDK의 전이 런타임 의존성입니다.
+
+- **Photon 장소 검색 API** — https://photon.komoot.io/ ; API 명세: https://github.com/komoot/photon/blob/master/docs/api-v1.md . Android 주변 장소 검색은 `/reverse`의 `osm_tag`, `radius=2`, `limit=15`를 사용합니다. OSM 데이터 출처를 화면에 표시하며 기준점 좌표를 전송합니다. 분류별 요청 사이 1.1초 간격과 같은 지역의 2분 메모리 캐시를 적용합니다. 공개 데모의 합리적 사용 범위·가용성에는 제한이 있으므로 대규모 운영 시 자체/계약 서비스를 준비해야 합니다. Photon 서버 소스/바이너리를 APK에 포함하지 않습니다.
+
+- **장소 사진 연결** — 검색 결과의 공개 OSM 장소 ID로 OpenStreetMap 편집 API의 해당 객체 태그를 읽고, 그 객체에 등록된 Commons 파일 또는 Wikidata `P18` 사진을 조회합니다. 브랜드용 Wikidata ID는 사용하지 않으며 장소 Wikidata 좌표가 기준점 300m 이내인지 확인합니다. 사진은 Wikimedia Commons의 저작자·라이선스 정보와 원문 링크를 함께 표시합니다. 원본 장소 사진이 없는 경우 임의로 다른 매장 사진을 붙이지 않습니다. 보이는 항목만 조회하며 동시 조회 2개·메모리 캐시를 적용합니다. 서버에 공개 장소/파일 식별자가 전달됩니다. https://wiki.openstreetmap.org/wiki/API_v0.6 · https://www.wikidata.org/wiki/Wikidata:Data_access · https://commons.wikimedia.org/
+
+## 업종 대표 사진
+
+앱에 포함된 카페·식당·산책·쇼핑 사진의 저작자, 원본 및 라이선스는 [업종 대표 이미지 출처](CATEGORY_IMAGE_CREDITS.md)에 명시합니다. 실제 장소 사진과 구분하여 표시합니다.
+
+편의점 로고: [원본 및 상표 안내](BRAND_LOGO_CREDITS.md). 백색 소음·잔잔한 톤만 자체 합성하며 자연음 출처는 아래에 기재합니다.
+
+실제 자연음 녹음: [저작자·원본·라이선스 및 가공 내역](NATURE_AUDIO_CREDITS.md). 피아노 항목은 제거했습니다.
+
+교통 구간 데이터: TomTom Traffic Flow API. 공급자 키는 중계 서버에서만 사용하며 현재 공개 배포 및 한국 데이터 연결은 미완료입니다. [범위 및 출처](../server/TRAFFIC.md).
+
+## 도로 안전시설 참고자료
+
+- **전국 과속방지턱 정보** — 행정안전부·지방자치단체, [공식 목록](https://www.data.go.kr/data/15028195/standard.do). 데이터별 표기: 무료·이용허락범위 제한 없음(2026-10-25 원문 확인). 사용자가 제공한 ZIP 141,140행을 가공해 82,697개 위치를 수록했습니다. 기존 충남 단독 자료는 교체했습니다.
+- **전국무인교통단속카메라표준데이터** — 경찰청·지방자치단체, [공식 목록](https://www.data.go.kr/data/15028200/standard.do), 데이터셋에 연결된 [공공데이터포털 이용정책](https://data.go.kr/ugs/selectPortalPolicyView.do). 공개 다운로드 43,764행에서 충돌·중복을 처리한 39,827개 참고 위치를 수록했습니다. 이동식은 제외되며 방향별 단속 속도 안내로 사용하지 않습니다. 별도의 상용 내비 데이터 라이선스를 취득했다는 의미가 아닙니다.
+- 가공 방법, 기준일, 제외 건수, 원본·변환본 해시: [자료 검증](ROAD_SAFETY_DATA_KO.md), [검사 기록](ROAD_SAFETY_DATA_AUDIT.json). 원본의 연락처는 수록하지 않았습니다.
+- ktfmt 0.54 — Apache-2.0, https://github.com/facebook/ktfmt . 개발 중 Kotlin 서식 정리에만 사용하며 앱에 포함하지 않습니다.
+
+### 보행 라우팅 및 사고 다발 통계 연결
+
+- OSM/FOSSGIS 보행 라우팅: https://routing.openstreetmap.de/about.html (OSM/ODbL 데이터, 제공자 사용 정책·개인정보 안내 적용). 지도에는 OpenStreetMap 기여자 출처와 지도 오류 제보 링크를 제공합니다. `foot-route-pangyo.json`은 공개 장소 좌표의 실제 라우팅 응답 테스트 fixture입니다.
+- 한국도로교통공단 사고 다발 지역 공개 API: https://opendata.koroad.or.kr/api/selectLgDataSet.do . 공식 CSV 파일에서 최신 통계 기간의 1,271개 구역을 가공해 포함합니다. [기간·원본 해시·출처](../server/data/README.md). API 키는 포함하지 않으며 현재 사고 발생 정보가 아닙니다.

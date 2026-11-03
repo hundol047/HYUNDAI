@@ -25,7 +25,7 @@ fs.mkdirSync(out,{recursive:true});
  await cdp.send('Page.startScreencast',{format:'jpeg',quality:92,maxWidth:1600,maxHeight:1100,everyNthFrame:1});
  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  async function caption(text,delay=2000){console.log(text);await page.evaluate(t=>document.querySelector('#record-caption').textContent=t,text);await sleep(delay)}
- async function vehicle(name){await page.locator(`#scenarios [data-vehicle="${name}"]`).click();await sleep(800)}
+ async function vehicle(name){await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator(`#scenarios [data-vehicle="${name}"]`).click();await sleep(800)}
  await caption('CabinOS ONE · 퓨처랩스 — 브라우저 시뮬레이션과 Android 앱');
  await page.evaluate(()=>window.scrollTo(0,document.querySelector('.demo-toolbar').offsetTop-12));
  await vehicle('주행');await caption('01 주행 시작 — EchoRoad가 자동으로 활성화됩니다.',3000);
@@ -49,7 +49,7 @@ fs.mkdirSync(out,{recursive:true});
  await page.locator('[data-start="RELAX"]').click();await caption('06 휴식 모드 — 호흡 안내와 공유 출발 타이머로 쉬어갑니다.',3000);
  await vehicle('출발 준비');await caption('07 출발 준비 시간 — 활동을 정리하고 출발을 안내합니다.',2400);
  await vehicle('주행');await caption('08 재출발 — 정차 조작을 제한하고 EchoRoad로 자동 복귀합니다.',2600);
- await page.locator('.fault-strip [data-vehicle="SDK 끊김"]').click();await caption('연결 손실 시에는 상태 미확인으로 전환하고 안전 제한을 적용합니다.',2200);
+ await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('.fault-strip [data-vehicle="SDK 끊김"]').click();await caption('연결 손실 시에는 상태 미확인으로 전환하고 안전 제한을 적용합니다.',2200);
  // Live map/search/routing. Only GPS is a clearly labeled predefined public landmark.
  await vehicle('주차');await page.waitForFunction(()=>window.cabinDemo.state.parked);
  await page.locator('aside [data-page="settings"]').click();
@@ -60,7 +60,7 @@ fs.mkdirSync(out,{recursive:true});
   const coords={latitude:37.5547,longitude:126.9723,accuracy:5,speed:0,heading:null};window.recordCoords=coords;let timer;
   Object.defineProperty(navigator,'geolocation',{configurable:true,value:{watchPosition(success,error){window.recordGPS=success;window.recordGPSError=error;success({coords:{...coords},timestamp:Date.now()});timer=setInterval(()=>success({coords:{...coords},timestamp:Date.now()}),1000);return 1},clearWatch(){clearInterval(timer)}}});
  });
- await page.locator('aside [data-page="navigation"]').click();
+ await page.locator('#supplementary').evaluate(e=>e.open=true);await page.locator('aside [data-page="navigation"]').click();
  await caption('10 실제 지도·검색·경로 서버 연결 — 위치 입력만 서울역의 검사용 GPS 좌표입니다. 실차 주행이 아닙니다.',1800);
  await page.locator('[data-nav="locate"]').click();await page.locator('#nav-query').fill('Seoul City Hall South Korea');await page.locator('#nav-search').click();
  await page.waitForSelector('[data-nav-place="0"]',{timeout:40000});await page.locator('[data-nav-place="0"]').click();await page.waitForSelector('[data-nav="start"]',{timeout:40000});

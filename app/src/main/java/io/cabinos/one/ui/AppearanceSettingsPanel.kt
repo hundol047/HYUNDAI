@@ -20,7 +20,7 @@ import io.cabinos.core.*
     val palette=AppearanceCatalog.palette(settings)
     SurfacePanel(Modifier.fillMaxWidth()) {
         SectionLabel("실내에 맞춘 화면 색상")
-        Text("차분한 어두운 배경과 읽기 쉬운 대비를 사용합니다. 변경은 주차 중에만 가능합니다.",fontSize=12.sp,color=Muted)
+        Text("밝은 화면·어두운 화면과 읽기 쉬운 대비를 선택하세요. 변경은 주차 중에만 가능합니다.",fontSize=12.sp,color=Muted)
         Spacer(Modifier.height(12.dp))
         FlowRow(maxItemsInEachRow=if(LocalCompactWindow.current)2 else 5,horizontalArrangement=Arrangement.spacedBy(8.dp),verticalArrangement=Arrangement.spacedBy(8.dp)) {
             AppearanceCatalog.presets.forEach {p->
@@ -36,12 +36,12 @@ import io.cabinos.core.*
             ActionButton("강조색 적용",{vm.appearance(settings.copy(accent=custom))},color=Mint,enabled=AppearanceCatalog.hex(custom)!=null)
             ActionButton("기본 강조색",{vm.appearance(settings.copy(accent=""))},color=Muted)
         }
-        Text("실제 표시 색 ${AppearanceCatalog.format(palette.accent)} · 너무 어두운 색은 글자·버튼 대비를 위해 밝게 보정합니다. 경고·오류 색은 유지합니다.",color=Muted,fontSize=11.sp)
+        Text("실제 표시 색 ${AppearanceCatalog.format(palette.accent)} · 강조색은 글자·버튼 대비에 맞게 보정합니다. 경고·오류 색은 유지합니다.",color=Muted,fontSize=11.sp)
         Spacer(Modifier.height(12.dp))
         FlowRow(horizontalArrangement=Arrangement.spacedBy(8.dp)) {
             listOf("system" to "시스템 밝기","comfort" to "편안한 밝기","night" to "야간 밝기").forEach {(key,label)->FilterChip(selected=settings.brightness==key,onClick={vm.appearance(settings.copy(brightness=key))},label={Text(label)})}
         }
-        Row {Text("야간 지도 · 지도 배경만 어둡게",Modifier.weight(1f),color=White,fontSize=13.sp);Switch(settings.nightMap,{vm.appearance(settings.copy(nightMap=it))})}
+        Row {Text("지도 밝기 낮추기 · 지형 색상 유지",Modifier.weight(1f),color=White,fontSize=13.sp);Switch(settings.nightMap,{vm.appearance(settings.copy(nightMap=it))})}
         Text("밝기는 앱 창에만 적용합니다.",color=Muted,fontSize=11.sp)
     }
 }

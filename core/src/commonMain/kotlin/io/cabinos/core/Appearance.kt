@@ -6,6 +6,11 @@ data class AppearanceSettings(val preset:String="graphite",val accent:String="",
 data class CabinPalette(val id:String,val label:String,val background:Int,val panel:Int,val line:Int,val accent:Int,val text:Int,val muted:Int)
 object AppearanceCatalog {
     val presets=listOf(
+        CabinPalette("white","화이트",0xF3F5F7,0xFFFFFF,0xA4ADB7,0x175E66,0x15202B,0x465565),
+        CabinPalette("black","블랙",0x000000,0x101010,0x454545,0xA3D5CB,0xF5F5F5,0xB8BEC5),
+        CabinPalette("ocean","오션 블루",0x071725,0x102A3B,0x355973,0x8BCDE8,0xEDF8FC,0xADC6D2),
+        CabinPalette("rose","로즈",0x21151C,0x32232C,0x674959,0xE0AEC4,0xF7ECF1,0xCDB7C2),
+        CabinPalette("lavender","라벤더",0xECEAF4,0xF9F7FF,0xAAA0C4,0x624A8A,0x292335,0x61556D),
         CabinPalette("graphite","그래파이트",0x080F15,0x101C25,0x344650,0x82C5B7,0xEEF3F5,0xA9BCC5),
         CabinPalette("sand","웜 샌드",0x171411,0x24201B,0x544A3E,0xDBC29B,0xF1EBE3,0xBFB5A8),
         CabinPalette("wood","모카 우드",0x151211,0x231D1B,0x51423C,0xCFAD9B,0xF0E9E5,0xBFB1AA),
@@ -26,11 +31,12 @@ object AppearanceCatalog {
     fun contrast(a:Int,b:Int):Double {val x=luminance(a);val y=luminance(b);return (max(x,y)+.05)/(min(x,y)+.05)}
     private fun legible(value:Int,bg:Int,button:Boolean=false):Int {
         var color=value
+        val target=if(contrast(0x000000,bg)>contrast(0xFFFFFF,bg))0x000000 else 0xFFFFFF
         repeat(40) {
             if(contrast(color,bg)>=4.5&&(!button||contrast(color,blend(bg,color,.14))>=4.5))return color
-            color=blend(color,0xFFFFFF,.07)
+            color=blend(color,target,.07)
         }
-        return 0xFFFFFF
+        return target
     }
     fun palette(settings:AppearanceSettings):CabinPalette {
         val s=normalize(settings);val p=presets.first {it.id==s.preset}

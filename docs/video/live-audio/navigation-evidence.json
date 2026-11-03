@@ -1,0 +1,48 @@
+{
+  "applicationId": "io.cabinos.one.preview",
+  "startedAtUtc": "2026-10-26T12:07:07.227256+00:00",
+  "captureMethod": "scrcpy: continuous device frames and live Android output audio",
+  "deviceType": "regular Android emulator, NOT Pleos",
+  "fingerprint": "Android/sdk_phone64_x86_64/emulator64_x86_64:13/TE1A.220922.034/10940250:userdebug/test-keys",
+  "vehicleSignals": "app simulation, NOT actual vehicle telemetry",
+  "locationSource": "emulator geo fix: Seoul, NOT actual GPS",
+  "apkSha256": "105dc0fde1627307b1c2d44423abc0bd5cbe6d5869f68723caeda40e310b1437",
+  "checks": [
+    {
+      "name": "accessibility destination entry remains visible with landscape keyboard",
+      "result": "passed",
+      "secondsSinceRecordingStart": 25.79
+    },
+    {
+      "name": "live OSRM route automatically expands installed APK map",
+      "result": "passed",
+      "secondsSinceRecordingStart": 34.42
+    },
+    {
+      "name": "stop control available during guidance",
+      "result": "passed",
+      "secondsSinceRecordingStart": 36.61
+    },
+    {
+      "name": "manual pan suspends map follow and exposes recenter",
+      "result": "passed",
+      "secondsSinceRecordingStart": 39.74
+    },
+    {
+      "name": "recenter preserves active route",
+      "result": "passed",
+      "secondsSinceRecordingStart": 46.71
+    },
+    {
+      "name": "navigation repeat recorded with device audio",
+      "result": "passed",
+      "secondsSinceRecordingStart": 61.75
+    },
+    {
+      "name": "audio navigation returns home",
+      "result": "passed",
+      "secondsSinceRecordingStart": 74.6
+    }
+  ],
+  "pleosValidated": false
+}

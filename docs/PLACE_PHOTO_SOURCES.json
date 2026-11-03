@@ -1,0 +1,53 @@
+{
+  "scope": "Four public place-photo source probes, not worldwide photo coverage",
+  "places": [
+    {
+      "name": "Café de Flore",
+      "osmId": "osm-node-251699776",
+      "wikidata": "Q1025686",
+      "coordinateDistanceMeters": 30.0,
+      "file": "File:Café de Flore, 172 boulevard Saint-Germain, Paris 6e.jpg",
+      "thumbnailHost": "thumb.wikimedia.org",
+      "httpStatus": 200,
+      "imageSha256": "29c8affe1b539d5589c347b8496eb2a41e4945789baa811f3714aced2fabf0dd",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File%3ACaf%C3%A9%20de%20Flore%2C%20172%20boulevard%20Saint-Germain%2C%20Paris%206e.jpg"
+    },
+    {
+      "name": "Les Deux Magots",
+      "osmId": "osm-node-251699775",
+      "wikidata": "Q1147912",
+      "coordinateDistanceMeters": 20.0,
+      "file": "File:Les Deux Magots, 25 September 2019.jpg",
+      "thumbnailHost": "thumb.wikimedia.org",
+      "httpStatus": 200,
+      "imageSha256": "10ef416761ba413e3bc0200debe0d634fc8dfa6b8de102dbc7f28a69c762a9e0",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File%3ALes%20Deux%20Magots%2C%2025%20September%202019.jpg"
+    },
+    {
+      "name": "Square Laurent Prache",
+      "osmId": "osm-way-26583593",
+      "wikidata": "Q3494676",
+      "coordinateDistanceMeters": 1.9,
+      "file": "File:P1240329 Paris VI square Laurent-Prache rwk.jpg",
+      "thumbnailHost": "thumb.wikimedia.org",
+      "httpStatus": 200,
+      "imageSha256": "4a3d0ed5737d51bce70c9ebfaffeb06748854bd581ad51a0740f06efba17e2e4",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File%3AP1240329%20Paris%20VI%20square%20Laurent-Prache%20rwk.jpg"
+    },
+    {
+      "name": "Square Félix Desruelles",
+      "osmId": "osm-way-62287123",
+      "wikidata": "Q3494584",
+      "coordinateDistanceMeters": 22.9,
+      "file": "File:Statue de Bernard Palissy Paris 6e 001.JPG",
+      "thumbnailHost": "thumb.wikimedia.org",
+      "httpStatus": 200,
+      "imageSha256": "4e773486b09dcc9ee25512f70bd7ae0b8f8b31197db0223137aa99c0bdaf03a9",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File%3AStatue%20de%20Bernard%20Palissy%20Paris%206e%20001.JPG"
+    }
+  ]
+}

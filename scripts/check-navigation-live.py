@@ -4,7 +4,7 @@ import argparse,datetime,hashlib,json,time,urllib.request,urllib.parse
 from pathlib import Path
 parser=argparse.ArgumentParser();parser.add_argument('--all-regions',action='store_true');parser.add_argument('--output',default='test-fixtures/validation/live-navigation-results.json');args=parser.parse_args()
 artifact_dir=Path('artifacts/navigation-live');artifact_dir.mkdir(parents=True,exist_ok=True)
-headers={'User-Agent':'CabinOS_ONE/0.10.0 (+https://github.com/hundol047/HYUNDAI)','Accept':'application/json','Accept-Language':'ko,en'}
+headers={'User-Agent':'CabinOS_ONE/0.11.1 (FutureLabs; validation)','Accept':'application/json','Accept-Language':'ko,en'}
 rows=[];blocked=False
 regions=[('Seoul Station South Korea',(126.9723,37.5547),(126.9779,37.5665)),('Paris France',(2.3522,48.8566),(2.2945,48.8584)),('New York USA',(-73.9857,40.7484),(-73.9851,40.7580)),('Tokyo Station Japan',(139.7671,35.6812),(139.7700,35.6900)),('Sao Paulo Brazil',(-46.6333,-23.5505),(-46.6559,-23.5614)),('Cape Town South Africa',(18.4241,-33.9249),(18.4174,-33.9065)),('Sydney Australia',(151.2060,-33.8730),(151.2153,-33.8568))]
 def check(name,url,validate):
