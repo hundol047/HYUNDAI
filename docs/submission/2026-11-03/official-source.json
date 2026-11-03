@@ -1,0 +1,9 @@
+{
+  "checkedDateKST": "2026-11-03",
+  "submissionGuide": "https://appdevchallenge.auto-hmg.io/guide/submission#files",
+  "templateUrl": "https://appdevchallenge.auto-hmg.io/downloads/contest-application-consent.docx",
+  "originalTemplateSha256": "07be893d58b0e96ab7788f0d189d6829f0e59a2cee4bc18cb90ec37eeda2f5fd",
+  "userRequestedMaxVideoSeconds": 180,
+  "guideStatesVideoDurationLimit": false,
+  "applicationStatus": "Draft: participant information and individual consents/signatures required"
+}
