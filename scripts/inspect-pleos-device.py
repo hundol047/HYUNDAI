@@ -13,6 +13,7 @@ import time
 import urllib.request
 import urllib.error
 from pathlib import Path
+from pleos_console_session import ConsoleSession
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--serial', default='emulator-5554')
@@ -103,6 +104,8 @@ if 'Pleos/' not in identity or 'release_connect_v2.1.0' not in identity:
     raise RuntimeError('Unexpected image fingerprint: '+identity)
 print('Official image fingerprint:', identity, flush=True)
 run('forward','tcp:8088','tcp:8088')
+console_session = ConsoleSession().start()
+time.sleep(5)
 def console_request(endpoint, method='GET'):
     for attempt in range(12):
         try:

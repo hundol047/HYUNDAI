@@ -128,6 +128,10 @@ jobs:
           BOOT_LOG_PID=$!
           trap 'kill "$BOOT_LOG_PID" 2>/dev/null || true' EXIT
           python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+      - name: Verify actual vehicle transitions through official Console
+        run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device/scenarios
       - name: Record actual SDK preview without claiming full scenario acceptance
         if: inputs.record_pleos_preview
         run: |

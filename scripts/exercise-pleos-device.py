@@ -4,6 +4,7 @@
 No screenshots are assembled into video; no app simulator or app-private API is used.
 The recorder validates the installed APK hash and actual SDK/vehicle event evidence.
 """
+from pleos_console_session import ConsoleSession
 import argparse
 import json
 import pathlib
@@ -30,6 +31,8 @@ def main():
     if not identity.startswith('Pleos/') or 'release_connect_v2.1.0' not in identity:
         raise RuntimeError('Refusing to exercise an unverified emulator image')
     adb('forward','tcp:8088','tcp:8088')
+    console_session = ConsoleSession().start()
+    time.sleep(5)
     steps=[]
     started=time.monotonic()
     def note(action):
