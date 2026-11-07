@@ -47,7 +47,9 @@ def main():
             r.read()
         note('Official Console: '+endpoint)
     def tree():
-        return ET.fromstring(device.dump_hierarchy(compressed=True))
+        xml=device.dump_hierarchy(compressed=False, max_depth=100)
+        (a.output/'last-ui.xml').write_text(xml)
+        return ET.fromstring(xml)
     def bounds(node):
         return list(map(int,re.findall(r'\d+',node.get('bounds',''))))
     def wait(label,seconds=20):
@@ -115,6 +117,17 @@ def main():
         mark=checkpoint();console('/vehicle/controls?speed=0&accelerator=0&brake=0')
         console('/vehicle/gear?gear=Park')
         wait_event('P/0 unlocked again',lambda e:e.get('parkedAllowed') is True,mark)
+        # Verify data transitions independently of the subsequent planning UI.
+        mark=checkpoint();console('/vehicle/ev-battery?field=soc&value=75')
+        wait_event('SOC 75 read',lambda e:e.get('sdkBatteryPercent')==75,mark)
+        mark=checkpoint();console('/vehicle/ev-battery?field=soc&value=80')
+        wait_event('SOC 80 read',lambda e:e.get('sdkBatteryPercent')==80,mark)
+        mark=checkpoint();console('/vehicle/ev-battery?field=charge_switch&value=false')
+        wait_event('charge switch OFF read',lambda e:e.get('sdkChargeSwitch') is False,mark)
+        console('/vehicle/ev-battery?field=soc&value=68')
+        console('/vehicle/ev-battery?field=charge_switch&value=true')
+        mark=checkpoint()
+        wait_event('planning baseline restored',lambda e:e.get('parkedAllowed') is True and e.get('sdkBatteryPercent')==68 and e.get('sdkChargeSwitch') is True,mark)
         adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity')
         wait('이 시간을, 나답게.')
         tap('시간 설정')

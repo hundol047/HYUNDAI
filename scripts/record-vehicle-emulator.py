@@ -34,8 +34,15 @@ def evaluate(events):
             candidate = None
         elif candidate is None:
             candidate = e.get("atMs", 0)
-        if e.get("parkedAllowed") is True and (candidate is None or e.get("atMs", 0)-candidate < 1500):
-            debounce_ok = False
+        if e.get("parkedAllowed") is True:
+            # New builds report the engine's actual timer. A sampled asynchronous
+            # log can first observe P a few milliseconds after that timer starts.
+            duration = e.get("parkingConfirmedForMs")
+            if duration is not None:
+                if type(duration) is not int or duration < 1500:
+                    debounce_ok = False
+            elif candidate is None or e.get("atMs", 0)-candidate < 1500:
+                debounce_ok = False
     unsafe = [e for e in real if e.get("parkedAllowed") is True and
               (e.get("connected") is not True or e.get("gear") != "PARK" or e.get("speedKph") != 0)]
     return {

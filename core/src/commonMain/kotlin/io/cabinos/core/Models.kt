@@ -48,6 +48,7 @@ data class ActivityOption(val activity: NearbyActivity, val usableSeconds: Long,
 data class ContextEvent(val id: Long, val name: String, val message: String, val timestampMs: Long)
 data class AppState(
     val context: VehicleContext = VehicleContext.UNKNOWN,
+    val parkingConfirmedForMs: Long = 0,
     val parkedAllowed: Boolean = false, val echoRoadActive: Boolean = false,
     val stopSenseActive: Boolean = false, val cabinActive: Boolean = false,
     val chargeTargetPercent: Int? = null, val arrivalTargetMs: Long? = null,

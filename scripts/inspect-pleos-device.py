@@ -103,6 +103,11 @@ identity = run('shell','getprop','ro.build.fingerprint').stdout.strip()
 if 'Pleos/' not in identity or 'release_connect_v2.1.0' not in identity:
     raise RuntimeError('Unexpected image fingerprint: '+identity)
 print('Official image fingerprint:', identity, flush=True)
+# Standard test-device settings: keep navigation transitions from hiding UI nodes.
+# These affect only the disposable AVD's UI animations, never vehicle timing.
+for setting in ['window_animation_scale','transition_animation_scale','animator_duration_scale']:
+    run('shell','settings','put','global',setting,'0')
+
 run('forward','tcp:8088','tcp:8088')
 console_session = ConsoleSession().start()
 time.sleep(5)

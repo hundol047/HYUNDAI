@@ -33,6 +33,15 @@ class RecordingEvidenceTest(unittest.TestCase):
         self.assertFalse(result["parkingDebounceObserved"])
         self.assertFalse(result["sdkSocUsedInPlan"])
 
+    def test_exact_engine_timer_is_required_when_available(self):
+        # The first sampled P log need not coincide with the internal timer start.
+        good=[self.event(),self.event(11498,parkedAllowed=True,parkingConfirmedForMs=1500)]
+        self.assertTrue(recording.evaluate(good)['parkingDebounceObserved'])
+        bad=[self.event(),self.event(12000,parkedAllowed=True,parkingConfirmedForMs=1499)]
+        self.assertFalse(recording.evaluate(bad)['parkingDebounceObserved'])
+        bad[-1]['parkingConfirmedForMs']=True
+        self.assertFalse(recording.evaluate(bad)['parkingDebounceObserved'])
+
     def test_complete_fixture_passes_log_checks_only_not_emulator_identity(self):
         events = [self.event(), self.event(11600,parkedAllowed=True),
                   self.event(13000,gear="DRIVE"), self.event(14000,gear="DRIVE",speedKph=35),

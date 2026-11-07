@@ -128,6 +128,7 @@ class UnifiedVehicleContextEngine(
             (listOf(session) + old.history).take(100) else old.history
         mutable.value = mutable.value.copy(
             context = context, parkedAllowed = allowed,
+            parkingConfirmedForMs = parkCandidateAt?.let { (now - it).coerceAtLeast(0) } ?: 0,
             echoRoadActive = physical == VehicleContext.DRIVING || physical == VehicleContext.STOPPED_IN_TRAFFIC,
             stopSenseActive = allowed, cabinActive = allowed, schedule = schedule, session = session, history = history,
             hazards = ranked, nowMs = now,

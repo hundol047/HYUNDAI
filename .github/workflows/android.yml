@@ -113,8 +113,12 @@ jobs:
           path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
           key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build current source with the official SDK
-        run: ./gradlew :app:assembleDebug --console=plain
+      - name: Build and sign current release source for isolated validation
+        run: |
+          ./gradlew :app:assembleRelease --console=plain
+          keytool -genkeypair -keystore "$RUNNER_TEMP/pleos-validation.jks" -storepass android -keypass android -alias validation -dname 'CN=CabinOS CI validation' -keyalg RSA -keysize 2048 -validity 3650
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$RUNNER_TEMP/pleos-validation.jks" --ks-key-alias validation --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-validation.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify app/build/outputs/apk/release/app-validation.apk
       - name: Prepare responsive Android UI automation
         run: |
           python3 -m venv "$RUNNER_TEMP/pleos-ui-env"
@@ -135,16 +139,16 @@ jobs:
           timeout 600 adb -s emulator-5554 logcat -b all -v threadtime > artifacts/pleos-device/full-boot-logcat.txt 2>&1 &
           BOOT_LOG_PID=$!
           trap 'kill "$BOOT_LOG_PID" 2>/dev/null || true' EXIT
-          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-device
+          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-device
       - name: Verify actual vehicle transitions through official Console
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
-          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-device/scenarios
+          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-device/scenarios
       - name: Record actual SDK preview without claiming full scenario acceptance
         if: inputs.record_pleos_preview
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
-          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-preview
+          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-preview
       - name: Upload a draft recording for visual review
         if: inputs.record_pleos_preview
         env:
@@ -182,7 +186,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CabinOS-Pleos-validation-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          path: app/build/outputs/apk/release/app-validation.apk
           retention-days: 7
       - name: Stop emulator
         if: always()
