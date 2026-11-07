@@ -3,9 +3,11 @@ from pathlib import Path
 import threading
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import urllib.request
+import urllib.error
+import http.client
 
 spec = importlib.util.spec_from_file_location('session', Path(__file__).parents[1] / 'pleos_console_session.py')
 module = importlib.util.module_from_spec(spec)
@@ -42,5 +44,22 @@ class ConsoleSessionTest(unittest.TestCase):
         with patch.object(module.urllib.request,'urlopen',side_effect=OSError('HTTP unavailable')):
             with self.assertRaisesRegex(OSError,'HTTP unavailable'):
                 module.ConsoleSession().start()
+
+    def test_transient_disconnect_retries_same_absolute_state(self):
+        response=MagicMock();response.__enter__.return_value=response
+        response.status=200;response.read.return_value=b'{"accepted":true}'
+        notes=[]
+        with patch.object(module.urllib.request,'urlopen',side_effect=[http.client.RemoteDisconnected(),response]) as call, patch.object(module.time,'sleep'):
+            self.assertEqual(module.set_vehicle_state('/vehicle/gear?gear=Park',notes.append),b'{"accepted":true}')
+        self.assertEqual(call.call_count,2)
+        self.assertEqual(len(notes),1)
+        self.assertTrue(all(c.args[0].method=='PUT' and c.args[0].full_url.endswith('/vehicle/gear?gear=Park') for c in call.call_args_list))
+
+    def test_persistent_failure_and_invalid_request_are_not_accepted(self):
+        for code,attempts in [(503,5),(400,1)]:
+            with self.subTest(code=code), patch.object(module.urllib.request,'urlopen',side_effect=urllib.error.HTTPError('localhost',code,'failure',{},None)) as call, patch.object(module.time,'sleep'):
+                with self.assertRaises(urllib.error.HTTPError):
+                    module.set_vehicle_state('/vehicle/gear?gear=Park')
+                self.assertEqual(call.call_count,attempts)
 
 if __name__=='__main__':unittest.main()
