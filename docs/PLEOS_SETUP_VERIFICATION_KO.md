@@ -31,7 +31,7 @@ gh run download RUN_ID --name Pleos-actual-device-diagnostics \
   --dir artifacts/pleos-setup-RUN_ID
 ```
 
-워크플로는 공식 배포 SHA-1 `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`를 검증하고, 4GB AVD를 만든 뒤 `-no-snapshot`으로 실행합니다. ADB 서버를 먼저 시작하여 호스트 인증키를 준비하고 `adb forward tcp:8088 tcp:8088`으로 공식 Console에 접속합니다. 현재 소스로 공식 SDK를 포함한 디버그 APK를 빌드하고, 설치된 APK를 다시 pull해 빌드 산출물과 SHA-256을 비교합니다. 초기 진단 기록의 서명 0.11.0 APK와 후속 수정본의 APK는 구분합니다.
+워크플로는 공식 배포 SHA-1 `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`를 검증하고, 4GB AVD를 만든 뒤 `-no-snapshot`으로 실행합니다. ADB 서버를 먼저 시작하여 호스트 인증키를 준비하고 `adb forward tcp:8088 tcp:8088`으로 공식 Console에 접속합니다. 현재 소스로 공식 SDK를 포함한 릴리스 APK를 빌드하고 검증용 임시 키로 서명한 뒤, 설치된 APK를 다시 pull해 빌드 산출물과 SHA-256을 비교합니다. 초기 진단 기록의 배포 서명 0.11.0 APK와 후속 수정본의 검증용 APK는 구분합니다. 검증용 키는 정식 배포 키가 아니므로 별도 새 AVD에서 설치합니다. 화면 자동화에서는 AVD의 UI 애니메이션만 끄고, 정차 1.5초와 신호 만료 타이머는 변경하지 않습니다.
 
 이 경로의 그래픽은 `swiftshader_indirect` 소프트웨어 렌더링입니다. CPU 가속은 KVM으로 확보하지만 공식 외장 GPU 조건을 충족한 테스트는 아닙니다. CI 성공도 전체 시나리오 통과를 의미하지 않습니다.
 

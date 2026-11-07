@@ -173,6 +173,14 @@ jobs:
             gh release create "$PREVIEW_TAG" --draft --prerelease --target "$GITHUB_SHA" --title 'CabinOS ONE — Pleos SDK 실제 실행 (제한된 검증)' --notes-file artifacts/pleos-preview/RELEASE.md
           fi
           gh release upload "$PREVIEW_TAG" artifacts/pleos-preview/take/device-screen.mp4 artifacts/pleos-preview/preview.json --clobber
+      - name: Capture final Pleos service health
+        if: always()
+        run: |
+          mkdir -p artifacts/pleos-device
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 shell getprop > artifacts/pleos-device/final-properties.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 shell ps -A > artifacts/pleos-device/final-processes.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 logcat -d -b crash > artifacts/pleos-device/final-crashes.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 logcat -d -v threadtime -t 6000 > artifacts/pleos-device/final-runtime-logcat.txt 2>&1 || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
