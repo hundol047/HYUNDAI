@@ -60,7 +60,12 @@ def main():
         visible=[n.get('text') for n in root.iter('node') if n.get('text')]
         raise RuntimeError('Actual UI missing '+label+': '+json.dumps(visible,ensure_ascii=False)[:1500])
     def tap(label):
-        box=bounds(wait(label));device.click((box[0]+box[2])//2,(box[1]+box[3])//2);note('APK UI: '+label)
+        node=wait(label);box=bounds(node)
+        x,y=(box[0]+box[2])//2,(box[1]+box[3])//2
+        # Use the shell input channel on AAOS: the app runs under driver user 10,
+        # while the UIAutomator instrumentation belongs to user 0.
+        adb('shell','input','-d',node.get('display-id','0'),'tap',str(x),str(y))
+        note(f'APK UI: {label} at ({x},{y}), display '+node.get('display-id','0'))
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
     def scroll_to(label):
@@ -129,6 +134,7 @@ def main():
         adb('shell','am','start','-W','-n','io.cabinos.one/.MainActivity')
         wait('이 시간을, 나답게.')
         tap('시간 설정')
+        snapshot('time-dialog')
         tap('45분')
         tap('적용')
         scroll_to('80%');tap('80%')

@@ -143,6 +143,9 @@ jobs:
       - name: Verify actual vehicle transitions through official Console
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          adb -s emulator-5554 logcat -b all -v threadtime > artifacts/pleos-device/scenario-runtime-logcat.txt 2>&1 &
+          SCENARIO_LOG_PID=$!
+          trap 'kill "$SCENARIO_LOG_PID" 2>/dev/null || true' EXIT
           python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-device/scenarios
       - name: Record actual SDK preview without claiming full scenario acceptance
         if: inputs.record_pleos_preview
