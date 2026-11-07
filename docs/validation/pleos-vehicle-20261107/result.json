@@ -1,0 +1,139 @@
+{
+  "checkedAt": "2026-11-07",
+  "runId": 42361658349,
+  "sourceCommit": "982098272aa74f9a43893e495ede37a2fe723bcd",
+  "testCiRunId": 42361784127,
+  "testSourceCommit": "58781f9",
+  "diagnosticArtifactId": 13569897469,
+  "apkArtifactId": 13569882425,
+  "fingerprint": "Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys",
+  "diagnosticSeconds": 84,
+  "apkSha256": "87120099be979e98ebfe91bc7ce5ce2afdbf3f74e06a644d850f521c24730a33",
+  "installedApkHashMatched": true,
+  "consoleScenarioReady": true,
+  "submissionReady": false,
+  "checks": {
+    "sessionCompletedAtSocTarget": true,
+    "realSourceObserved": true,
+    "noSimulationObserved": true,
+    "parkUnlockObserved": true,
+    "driveAtZeroLocked": true,
+    "movingLocked": true,
+    "unknownLocked": true,
+    "officialSdkReadObserved": true,
+    "sdkSocChanged": true,
+    "sdkChargeStateChanged": true,
+    "sdkSocUsedInPlan": true,
+    "parkingDebounceObserved": true,
+    "noUnsafeParkingObserved": true
+  },
+  "sdkSocValues": [
+    68,
+    75,
+    80
+  ],
+  "sdkChargeValues": [
+    false,
+    true
+  ],
+  "sessionTransitions": [
+    {
+      "atMs": 1794045691708,
+      "sessionStatus": "RUNNING",
+      "sdkBatteryPercent": 68,
+      "parkedAllowed": true,
+      "planSource": "사용자 설정",
+      "availableSeconds": 2388
+    },
+    {
+      "atMs": 1794045697922,
+      "sessionStatus": "PAUSED",
+      "sdkBatteryPercent": 68,
+      "parkedAllowed": false,
+      "planSource": "사용자 설정",
+      "availableSeconds": 2382
+    },
+    {
+      "atMs": 1794045700239,
+      "sessionStatus": "COMPLETED",
+      "sdkBatteryPercent": 75,
+      "parkedAllowed": true,
+      "planSource": "Pleos SOC 목표 도달",
+      "availableSeconds": 0
+    }
+  ],
+  "eventCount": 446,
+  "officialArchiveSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+  "ramMb": 4096,
+  "coldBoot": true,
+  "cpuAcceleration": "KVM",
+  "graphics": "swiftshader_indirect (software)",
+  "consoleDdsAllReady": true,
+  "finalServiceProcesses": [
+    "vehicle_network 516    1   10869408  10672 0                   0 S ai.pleos.hardware.vehicle_api_dds_emulator",
+    "vehicle_network 2450   1   10889748   4744 0                   0 S ai.pleos.hardware.profile.exe",
+    "vehicle_network 2527   1   10892368   3780 0                   0 S ai.pleos.hardware.diagnostic_report-V1-sdv-service",
+    "vehicle_network 2540   1   10946052   6276 0                   0 S ai.pleos.hardware.vehicle_ext-V1-sdv-service",
+    "vehicle_network 2587   1   10934880   5972 0                   0 S ai.pleos.hardware.vehicle_diagnostic-V1-sdv-service"
+  ],
+  "video": {
+    "file": "device-screen.mp4",
+    "sha256": "81b894de08ebda314c86469d0aa97b53fb835577eb576b58bb185d1d3ede0b9a",
+    "durationSeconds": 173.851578,
+    "width": 2560,
+    "height": 1440,
+    "frames": 227,
+    "decodeErrors": 0,
+    "capture": "original continuous ADB screenrecord; no edits"
+  },
+  "review": {
+    "screenshotsReviewed": [
+      "D/0 locked",
+      "moving locked",
+      "SOC 80 / zero activity budget",
+      "foreground resume"
+    ],
+    "sessionStatusEvidence": "SDK/application state log: RUNNING -> PAUSED -> COMPLETED; smooth focus UI rendering not certified"
+  },
+  "tests": {
+    "core": 134,
+    "android": 102,
+    "pythonVerification": 13,
+    "lintErrors": 0,
+    "releaseBuild": "pass"
+  },
+  "limitations": [
+    "Software rendering caused UI delay and safety pause; no hardware GPU performance certification",
+    "Startup vendor native crashes and Pleos input method crashes remain in original logs; listed core services were running at final capture",
+    "Actual navigation ETA, microphone recognition and formal split-window compatibility not verified",
+    "APK uses temporary CI validation signing key; not the production signing key"
+  ],
+  "targetCompletionEvent": {
+    "event": "vehicle_read_state",
+    "atMs": 1794045700239,
+    "source": "VEHICLE",
+    "connected": true,
+    "speedKph": 0,
+    "gear": "PARK",
+    "parkedAllowed": true,
+    "context": "PREPARING_DEPARTURE",
+    "parkingConfirmedForMs": 2317,
+    "pleosSdkIncluded": true,
+    "brakePressed": false,
+    "sdkReadAtMs": 1794045699559,
+    "batteryPercent": 80,
+    "charging": false,
+    "chargeRemainingSeconds": null,
+    "sdkBatteryPercent": 80,
+    "sdkBatteryReadAtMs": 1794045700239,
+    "sdkChargeSwitch": true,
+    "sdkChargeReadAtMs": 1794045699353,
+    "sdkSocUsed": true,
+    "departureAtMs": 1794046000239,
+    "availableSeconds": 0,
+    "chargeTargetPercent": 80,
+    "planSource": "Pleos SOC 목표 도달",
+    "sessionStatus": "COMPLETED"
+  },
+  "signerCertificateSha256": "bbe63d3298b8df2f0daa469198a2c96f741c5c6bae87b332566000d5395ef2e2"
+}

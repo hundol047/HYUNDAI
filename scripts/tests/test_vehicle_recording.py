@@ -33,11 +33,30 @@ class RecordingEvidenceTest(unittest.TestCase):
         self.assertFalse(result["parkingDebounceObserved"])
         self.assertFalse(result["sdkSocUsedInPlan"])
 
+    def test_exact_engine_timer_is_required_when_available(self):
+        # The first sampled P log need not coincide with the internal timer start.
+        good=[self.event(),self.event(11498,parkedAllowed=True,parkingConfirmedForMs=1500)]
+        self.assertTrue(recording.evaluate(good)['parkingDebounceObserved'])
+        bad=[self.event(),self.event(12000,parkedAllowed=True,parkingConfirmedForMs=1499)]
+        self.assertFalse(recording.evaluate(bad)['parkingDebounceObserved'])
+        bad[-1]['parkingConfirmedForMs']=True
+        self.assertFalse(recording.evaluate(bad)['parkingDebounceObserved'])
+
+    def test_zero_budget_without_a_running_session_is_not_completion(self):
+        target=self.event(12000,planSource="Pleos SOC 목표 도달",availableSeconds=0)
+        self.assertFalse(recording.evaluate([target])["sessionCompletedAtSocTarget"])
+        target['sessionStatus']='COMPLETED'
+        self.assertFalse(recording.evaluate([target])["sessionCompletedAtSocTarget"])
+        started=self.event(11000,parkedAllowed=True,sessionStatus='RUNNING')
+        self.assertTrue(recording.evaluate([started,target])["sessionCompletedAtSocTarget"])
+        started['atMs']=13000
+        self.assertFalse(recording.evaluate([target,started])["sessionCompletedAtSocTarget"])
+
     def test_complete_fixture_passes_log_checks_only_not_emulator_identity(self):
-        events = [self.event(), self.event(11600,parkedAllowed=True),
+        events = [self.event(), self.event(11600,parkedAllowed=True,sessionStatus="RUNNING"),
                   self.event(13000,gear="DRIVE"), self.event(14000,gear="DRIVE",speedKph=35),
                   self.event(15000), self.event(16600,parkedAllowed=True,sdkBatteryPercent=80,
-                      planSource="Pleos SOC 목표 도달",availableSeconds=0,sdkChargeSwitch=False),
+                      planSource="Pleos SOC 목표 도달",availableSeconds=0,sdkChargeSwitch=False,sessionStatus="COMPLETED"),
                   self.event(17000,connected=False,gear="UNKNOWN")]
         self.assertTrue(all(recording.evaluate(events).values()))
 

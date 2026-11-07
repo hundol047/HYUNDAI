@@ -13,6 +13,7 @@ import time
 import urllib.request
 import urllib.error
 from pathlib import Path
+from pleos_console_session import ConsoleSession
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--serial', default='emulator-5554')
@@ -102,7 +103,14 @@ identity = run('shell','getprop','ro.build.fingerprint').stdout.strip()
 if 'Pleos/' not in identity or 'release_connect_v2.1.0' not in identity:
     raise RuntimeError('Unexpected image fingerprint: '+identity)
 print('Official image fingerprint:', identity, flush=True)
+# Standard test-device settings: keep navigation transitions from hiding UI nodes.
+# These affect only the disposable AVD's UI animations, never vehicle timing.
+for setting in ['window_animation_scale','transition_animation_scale','animator_duration_scale']:
+    run('shell','settings','put','global',setting,'0')
+
 run('forward','tcp:8088','tcp:8088')
+console_session = ConsoleSession().start()
+time.sleep(5)
 def console_request(endpoint, method='GET'):
     for attempt in range(12):
         try:
@@ -178,8 +186,18 @@ run('shell','am','start','-W','-n','io.cabinos.one/.MainActivity',timeout=90)
 time.sleep(8)
 app_pid=run('shell','pidof','io.cabinos.one').stdout.strip()
 if not app_pid:raise RuntimeError('APK process is not running after launch')
-run('shell','uiautomator','dump','/sdcard/cabinos-inspect.xml',timeout=45)
-run('pull','/sdcard/cabinos-inspect.xml',str(a.output/'screen.xml'))
+# Capture signal logs even if UIAutomator cannot find an idle accessibility tree.
+(a.output/'vehicle-logcat.txt').write_text(run('logcat','-d','-v','threadtime','CabinVehicle:I','*:S').stdout)
+for attempt in range(3):
+    run('shell','rm','-f','/sdcard/cabinos-inspect.xml')
+    dump=run('shell','uiautomator','dump','--compressed','/sdcard/cabinos-inspect.xml',timeout=45,check=False)
+    copied=run('pull','/sdcard/cabinos-inspect.xml',str(a.output/'screen.xml'),check=False)
+    if copied.returncode==0:
+        break
+    (a.output/'ui-dump-error.txt').write_text(dump.stdout+dump.stderr+copied.stderr)
+    time.sleep(2)
+else:
+    raise RuntimeError('UI tree unavailable after three attempts; see vehicle-logcat and ui-dump-error')
 with (a.output/'screen.png').open('wb') as f:
     subprocess.run(adb+['exec-out','screencap','-p'],stdout=f,check=True,timeout=30)
 (a.output/'vehicle-logcat.txt').write_text(run('logcat','-d','-v','threadtime','CabinVehicle:I','*:S').stdout)

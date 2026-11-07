@@ -8,6 +8,9 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+/** Vehicle validation and its watchdog must continue while the UI renders a dialog. */
+internal fun newVehicleSignalScope() = CoroutineScope(SupervisorJob() + Dispatchers.Default.limitedParallelism(1))
+
 internal interface VehiclePropertyTransport {
     interface Listener {
         fun connected()
@@ -28,11 +31,13 @@ class VehicleStateProvider internal constructor(
     private val scope: CoroutineScope,
     wallMs: () -> Long = System::currentTimeMillis,
     elapsedNs: () -> Long = SystemClock::elapsedRealtimeNanos,
+    private val reportStatus: (String) -> Unit = {},
 ) : VehicleDataProvider {
     constructor(context: Context) : this(
         context.packageManager.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE),
         { AndroidCarPropertyTransport(context.applicationContext) },
-        CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+        newVehicleSignalScope(),
+        reportStatus = { reason -> traceVehicle { "signal_status=" + reason } },
     )
     private val gate = VehicleSignalGate(wallMs, elapsedNs)
     private val mutable = MutableStateFlow(gate.sample())
@@ -44,7 +49,7 @@ class VehicleStateProvider internal constructor(
     private var monitor: Job? = null
     private var active = false
 
-    fun start() {
+    @Synchronized fun start() {
         if (active) return
         active = true
         val current = ++epoch
@@ -52,7 +57,9 @@ class VehicleStateProvider internal constructor(
         publish()
         if (!automotive) return // Do not load android.car classes on phones.
         fun accept(action: () -> Unit) { scope.launch {
-            if (active && current == epoch) { action(); publish() }
+            synchronized(this@VehicleStateProvider) {
+                if (active && current == epoch) { action(); publish() }
+            }
         } }
         val listener = object : VehiclePropertyTransport.Listener {
             override fun connected() = accept { gate.connected() }
@@ -69,14 +76,15 @@ class VehicleStateProvider internal constructor(
         catch (_: RuntimeException) { gate.reset("차량 서비스 연결 실패"); publish() }
         monitor = scope.launch { while (isActive) { delay(250); publish() } }
     }
-    private fun publish() {
+    @Synchronized private fun publish() {
         val next=gate.sample()
         val previous=mutable.value
         // Keep the 250 ms watchdog without repainting an unchanged dashboard four times/sec.
         if(next.copy(timestampMs=previous.timestampMs)!=previous || next.timestampMs-previous.timestampMs !in 0..999) mutable.value=next
+        if (mutableStatus.value != gate.problem) reportStatus(gate.problem)
         mutableStatus.value=gate.problem
     }
-    fun stop() {
+    @Synchronized fun stop() {
         active = false; ++epoch; monitor?.cancel(); monitor = null
         transport?.stop(); transport = null
         gate.reset("차량 신호 구독 중지 · 복귀 후 다시 확인"); publish()

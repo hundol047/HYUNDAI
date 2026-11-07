@@ -49,10 +49,12 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
         override fun run() {
             if (stopped || manager == null) return
             try {
-                properties.forEach { id ->
-                    val value = manager!!.getProperty<Any>(id, 0)
-                    if (value == null) listener.unavailable("차량 속성 응답 없음: $id") else deliver(value)
-                }
+                // Speed is CONTINUOUS: use its ordered subscription stream only.
+                // A synchronous speed read can overtake queued subscription events,
+                // falsely turning the next older callback into a signal regression.
+                // Gear is ON_CHANGE, so re-read it to confirm an unchanged selection.
+                val value = manager!!.getProperty<Int>(VehiclePropertyIds.GEAR_SELECTION, 0)
+                if (value == null) listener.unavailable("기어 속성 응답 없음") else deliver(value)
             } catch (_: SecurityException) { listener.unavailable("CAR_SPEED / CAR_POWERTRAIN 읽기 권한 없음") }
             catch (_: RuntimeException) { listener.unavailable("차량 속성 읽기 실패") }
             handler.postDelayed(this, 500)
@@ -132,6 +134,7 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
             return
         }
         if (value.propertyId !in properties) return
+        traceVehicle { "raw_signal id=${value.propertyId} value=${value.value} status=${value.status} timestampNs=${value.timestamp} receivedNs=${android.os.SystemClock.elapsedRealtimeNanos()}" }
         if (value.status != CarPropertyValue.STATUS_AVAILABLE) {
             listener.unavailable("차량 속성 사용 불가: ${value.propertyId}"); return
         }

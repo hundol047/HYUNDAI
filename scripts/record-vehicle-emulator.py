@@ -34,11 +34,23 @@ def evaluate(events):
             candidate = None
         elif candidate is None:
             candidate = e.get("atMs", 0)
-        if e.get("parkedAllowed") is True and (candidate is None or e.get("atMs", 0)-candidate < 1500):
-            debounce_ok = False
+        if e.get("parkedAllowed") is True:
+            # New builds report the engine's actual timer. A sampled asynchronous
+            # log can first observe P a few milliseconds after that timer starts.
+            duration = e.get("parkingConfirmedForMs")
+            if duration is not None:
+                if type(duration) is not int or duration < 1500:
+                    debounce_ok = False
+            elif candidate is None or e.get("atMs", 0)-candidate < 1500:
+                debounce_ok = False
     unsafe = [e for e in real if e.get("parkedAllowed") is True and
               (e.get("connected") is not True or e.get("gear") != "PARK" or e.get("speedKph") != 0)]
+    running_at = [e.get("atMs", 0) for e in real if e.get("sessionStatus") == "RUNNING" and e.get("parkedAllowed") is True]
+    completed_after_target = any(e.get("sessionStatus") == "COMPLETED" and e.get("sdkSocUsed") is True
+        and e.get("planSource") == "Pleos SOC 목표 도달" and e.get("availableSeconds") == 0
+        and any(start < e.get("atMs", 0) for start in running_at) for e in energy)
     return {
+        "sessionCompletedAtSocTarget": completed_after_target,
         "realSourceObserved": bool(real),
         "noSimulationObserved": bool(events) and not any(e.get("source") == "SIMULATION" for e in events),
         "parkUnlockObserved": any(e.get("gear") == "PARK" and e.get("speedKph") == 0 and e.get("parkedAllowed") is True for e in connected),
@@ -115,6 +127,9 @@ def main():
                     run("shell", "am", "force-stop", "io.cabinos.one")
                     run("shell", "am", "start", "-W", "-n", "io.cabinos.one/.MainActivity")
                     app_pid = run("shell", "pidof", "io.cabinos.one").stdout.strip()
+                    ready_file = args.output / "app-ready.tmp"
+                    ready_file.write_text(json.dumps({"appPid": app_pid}))
+                    ready_file.replace(args.output / "app-ready.json")
                     recorder.wait(timeout=args.seconds + 30)
                     if recorder.returncode:
                         raise RuntimeError("Device screenrecord failed; inspect screenrecord.txt")

@@ -23,6 +23,7 @@ internal class VehicleDiagnostics {
             put("source",sample.source.name);put("connected",sample.connected)
             put("speedKph",sample.speedKph);put("gear",sample.gear.name)
             put("parkedAllowed",state.parkedAllowed);put("context",state.context.name)
+            put("parkingConfirmedForMs",state.parkingConfirmedForMs)
             put("pleosSdkIncluded",pleos.included)
             put("brakePressed",pleos.brakePressed ?: JSONObject.NULL)
             put("sdkReadAtMs",pleos.successfulReadAtMs ?: JSONObject.NULL)
@@ -40,4 +41,10 @@ internal class VehicleDiagnostics {
             put("sessionStatus",state.session?.status?.name ?: JSONObject.NULL)
         }.toString())
     }
+}
+
+/** Optional detailed transport trace; build the message only when explicitly enabled. */
+internal fun traceVehicle(message: () -> String) {
+    if (!Log.isLoggable("CabinVehicle", Log.INFO)) return
+    Log.i("CabinVehicle", message())
 }

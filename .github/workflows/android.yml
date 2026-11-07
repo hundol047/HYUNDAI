@@ -33,9 +33,9 @@ jobs:
           test -x "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-35' 'build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew -PpleosSdk=true :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug --console=plain
-      - run: ./gradlew -PpleosSdk=true :app:assembleRelease --console=plain
-      - run: ./gradlew -PpleosSdk=true :app:lintDebug --console=plain
+      - run: ./gradlew :core:test :core:jsBrowserDistribution :app:testDebugUnitTest :app:assembleDebug --console=plain
+      - run: ./gradlew :app:assembleRelease --console=plain
+      - run: ./gradlew :app:lintDebug --console=plain
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -112,6 +112,18 @@ jobs:
         with:
           path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
           key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build and sign current release source for isolated validation
+        run: |
+          ./gradlew :app:assembleRelease --console=plain
+          keytool -genkeypair -keystore "$RUNNER_TEMP/pleos-validation.jks" -storepass android -keypass android -alias validation -dname 'CN=CabinOS CI validation' -keyalg RSA -keysize 2048 -validity 3650
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" sign --ks "$RUNNER_TEMP/pleos-validation.jks" --ks-key-alias validation --ks-pass pass:android --key-pass pass:android --out app/build/outputs/apk/release/app-validation.apk app/build/outputs/apk/release/app-release-unsigned.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify app/build/outputs/apk/release/app-validation.apk
+      - name: Prepare responsive Android UI automation
+        run: |
+          python3 -m venv "$RUNNER_TEMP/pleos-ui-env"
+          "$RUNNER_TEMP/pleos-ui-env/bin/pip" install -r scripts/requirements-pleos-ui.txt
+          echo "$RUNNER_TEMP/pleos-ui-env/bin" >> "$GITHUB_PATH"
       - name: Boot official image with hardware acceleration
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
@@ -121,12 +133,25 @@ jobs:
           mkdir -p artifacts/pleos-device
           "$ANDROID_HOME/emulator/emulator" -avd CabinOS_Pleos_21 -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-metrics -ports 5554,5555 > artifacts/pleos-device/emulator.log 2>&1 &
           echo "$!" > "$RUNNER_TEMP/pleos-emulator.pid"
-          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+          cp "$ANDROID_AVD_HOME/CabinOS_Pleos_21.avd/config.ini" artifacts/pleos-device/avd-config.ini
+          "$ANDROID_HOME/emulator/emulator" -accel-check > artifacts/pleos-device/acceleration.txt 2>&1
+          # Preserve startup errors before the Android log ring buffer rolls over.
+          timeout 600 adb -s emulator-5554 logcat -b all -v threadtime > artifacts/pleos-device/full-boot-logcat.txt 2>&1 &
+          BOOT_LOG_PID=$!
+          trap 'kill "$BOOT_LOG_PID" 2>/dev/null || true' EXIT
+          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-device
+      - name: Verify actual vehicle transitions through official Console
+        run: |
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
+          adb -s emulator-5554 logcat -b all -v threadtime > artifacts/pleos-device/scenario-runtime-logcat.txt 2>&1 &
+          SCENARIO_LOG_PID=$!
+          trap 'kill "$SCENARIO_LOG_PID" 2>/dev/null || true' EXIT
+          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-device/scenarios
       - name: Record actual SDK preview without claiming full scenario acceptance
         if: inputs.record_pleos_preview
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
-          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-preview
+          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-preview
       - name: Upload a draft recording for visual review
         if: inputs.record_pleos_preview
         env:
@@ -151,6 +176,14 @@ jobs:
             gh release create "$PREVIEW_TAG" --draft --prerelease --target "$GITHUB_SHA" --title 'CabinOS ONE — Pleos SDK 실제 실행 (제한된 검증)' --notes-file artifacts/pleos-preview/RELEASE.md
           fi
           gh release upload "$PREVIEW_TAG" artifacts/pleos-preview/take/device-screen.mp4 artifacts/pleos-preview/preview.json --clobber
+      - name: Capture final Pleos service health
+        if: always()
+        run: |
+          mkdir -p artifacts/pleos-device
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 shell getprop > artifacts/pleos-device/final-properties.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 shell ps -A > artifacts/pleos-device/final-processes.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 logcat -d -b crash > artifacts/pleos-device/final-crashes.txt 2>&1 || true
+          "$ANDROID_HOME/platform-tools/adb" -s emulator-5554 logcat -d -v threadtime -t 6000 > artifacts/pleos-device/final-runtime-logcat.txt 2>&1 || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -158,6 +191,13 @@ jobs:
           path: |
             artifacts/pleos-device/
             artifacts/pleos-preview/
+          retention-days: 7
+      - name: Upload the exact current-source validation APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CabinOS-Pleos-validation-APK
+          path: app/build/outputs/apk/release/app-validation.apk
           retention-days: 7
       - name: Stop emulator
         if: always()

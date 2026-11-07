@@ -16,6 +16,15 @@ class ContextEngineTest {
     @Test fun drivingActivatesOnlyEchoRoad() { send(Gear.DRIVE,80.0); assertTrue(engine.state.value.echoRoadActive); assertFalse(engine.state.value.parkedAllowed) }
     @Test fun trafficStopNeverUnlocksParkedFeatures() { send(Gear.DRIVE,0.0); assertEquals(VehicleContext.STOPPED_IN_TRAFFIC,engine.state.value.context); assertFalse(engine.startSession(SessionKind.FOCUS,25)) }
     @Test fun parkingRequiresDebouncedVerifiedPark() { send(); assertFalse(engine.state.value.parkedAllowed); now+=1600;send();assertTrue(engine.state.value.stopSenseActive);assertTrue(engine.state.value.cabinActive) }
+    @Test fun diagnosticTimerUsesTheExactSafetyDebounceBoundary() {
+        send(); assertEquals(0L,engine.state.value.parkingConfirmedForMs)
+        now+=1499;send();assertFalse(engine.state.value.parkedAllowed)
+        assertEquals(1499L,engine.state.value.parkingConfirmedForMs)
+        now+=1;send();assertTrue(engine.state.value.parkedAllowed)
+        assertEquals(1500L,engine.state.value.parkingConfirmedForMs)
+        send(Gear.DRIVE);assertFalse(engine.state.value.parkedAllowed)
+        assertEquals(0L,engine.state.value.parkingConfirmedForMs)
+    }
     @Test fun noReliableParkingMeansUnknown() { send(reliable=false);now+=3000;send(reliable=false);assertEquals(VehicleContext.UNKNOWN,engine.state.value.context) }
     @Test fun movingOverridesConflictingParkAndCharge() { park(true);send(speed=1.0,charging=true);assertEquals(VehicleContext.DRIVING,engine.state.value.context);assertFalse(engine.state.value.parkedAllowed) }
     @Test fun staleTelemetryFailsClosed() { park();now+=5001;engine.tick();assertEquals(VehicleContext.UNKNOWN,engine.state.value.context) }

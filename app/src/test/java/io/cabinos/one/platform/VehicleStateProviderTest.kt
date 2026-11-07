@@ -37,6 +37,29 @@ class VehicleStateProviderTest {
             provider.stop()
         } finally {scope.cancel()}
     }
+    @Test fun signalValidationAndExpiryContinueWhileTheCallerIsBlocked() {
+        val scope=newVehicleSignalScope()
+        val time=java.util.concurrent.atomic.AtomicLong(10_000)
+        val connected=java.util.concurrent.CountDownLatch(1)
+        val expired=java.util.concurrent.CountDownLatch(1)
+        val transport=FakeTransport()
+        val provider=VehicleStateProvider(true,{transport},scope,{time.get()},{time.get()*1_000_000},
+            reportStatus={reason ->
+                if(reason.contains("AAOS")) connected.countDown()
+                if(reason.contains("만료")) expired.countDown()
+            })
+        try {
+            provider.start();transport.park()
+            // The caller cannot dispatch UI work while blocked on these latches.
+            assertTrue(connected.await(2,java.util.concurrent.TimeUnit.SECONDS))
+            assertTrue(provider.samples.value.connected)
+            time.addAndGet(3001)
+            assertTrue(expired.await(2,java.util.concurrent.TimeUnit.SECONDS))
+            assertFalse(provider.samples.value.connected)
+            assertEquals(Gear.UNKNOWN,provider.samples.value.gear)
+        } finally { provider.stop();scope.cancel() }
+    }
+
     @Test fun permissionOrLibraryFailureStaysUnknown() {
         for(error in listOf(SecurityException("denied"),NoClassDefFoundError("android.car.Car"))) {
             val scope=CoroutineScope(SupervisorJob()+Dispatchers.Unconfined)

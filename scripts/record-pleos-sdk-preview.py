@@ -4,6 +4,7 @@
 Uses the strict recorder unchanged. Its missing D/SOC-change checks remain failures.
 This is a limited preview, never a substitute for the required full vehicle recording.
 """
+from pleos_console_session import ConsoleSession
 import argparse
 import json
 import pathlib
@@ -20,6 +21,12 @@ p.add_argument('--apk',required=True,type=pathlib.Path)
 p.add_argument('--output',required=True,type=pathlib.Path)
 a=p.parse_args()
 if not re.fullmatch(r'emulator-\d+',a.serial):p.error('Explicit emulator serial required')
+fingerprint=subprocess.check_output(['adb','-s',a.serial,'shell','getprop','ro.build.fingerprint'],text=True,timeout=15).strip()
+if not fingerprint.startswith('Pleos/') or 'release_connect_v2.1.0' not in fingerprint:
+    raise SystemExit('Official Pleos 2.1.0 image required')
+subprocess.run(['adb','-s',a.serial,'forward','tcp:8088','tcp:8088'],check=True,timeout=15)
+console_session = ConsoleSession().start()
+time.sleep(5)
 # When the official Console is active, attempt the complete required sequence.
 # Preserve its strict result even when UI timing or a real device check fails.
 try:
@@ -32,7 +39,7 @@ if console_active:
         '--serial',a.serial,'--apk',str(a.apk),'--output',str(a.output)])
     evidence=json.loads((a.output/'take/evidence.json').read_text())
     summary={'captureMethod':evidence['captureMethod'],'apkSha256':evidence['apkSha256'],
-        'mode':'console_scenarios','recordingSecondsRequested':120,'fullRecorderExitCode':code,
+        'mode':'console_scenarios','recordingSecondsRequested':180,'fullRecorderExitCode':code,
         'fullScenarioChecks':evidence['checks'],'submissionReady':False,'visualReview':'pending',
         'limitations':['Check every fullScenarioChecks value and review the continuous video before claiming scenario acceptance',
                        'Command buttons are touch actions, not microphone/STT demonstration']}
