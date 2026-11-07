@@ -28,11 +28,17 @@ class VehicleStateProvider internal constructor(
     private val scope: CoroutineScope,
     wallMs: () -> Long = System::currentTimeMillis,
     elapsedNs: () -> Long = SystemClock::elapsedRealtimeNanos,
+    private val reportStatus: (String) -> Unit = {},
 ) : VehicleDataProvider {
     constructor(context: Context) : this(
         context.packageManager.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE),
         { AndroidCarPropertyTransport(context.applicationContext) },
         CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+        reportStatus = { reason ->
+            if (android.util.Log.isLoggable("CabinVehicle", android.util.Log.INFO)) {
+                android.util.Log.i("CabinVehicle", "signal_status=" + reason)
+            }
+        },
     )
     private val gate = VehicleSignalGate(wallMs, elapsedNs)
     private val mutable = MutableStateFlow(gate.sample())
@@ -74,9 +80,7 @@ class VehicleStateProvider internal constructor(
         val previous=mutable.value
         // Keep the 250 ms watchdog without repainting an unchanged dashboard four times/sec.
         if(next.copy(timestampMs=previous.timestampMs)!=previous || next.timestampMs-previous.timestampMs !in 0..999) mutable.value=next
-        if (mutableStatus.value != gate.problem && android.util.Log.isLoggable("CabinVehicle", android.util.Log.INFO)) {
-            android.util.Log.i("CabinVehicle", "signal_status=" + gate.problem)
-        }
+        if (mutableStatus.value != gate.problem) reportStatus(gate.problem)
         mutableStatus.value=gate.problem
     }
     fun stop() {
