@@ -117,6 +117,13 @@ class UnifiedVehicleContextEngine(
                 event("SessionCompleted", "${session.kind.label} 세션이 끝났습니다. 출발 시간을 확인하세요.")
             }
         }
+        // Safety/manual pause freezes activity time, never the shared departure deadline.
+        // Reaching that deadline ends the activity without resuming it or unlocking the car.
+        if (session?.status == SessionStatus.PAUSED && schedule.departureAtMs != null && schedule.availableSeconds == 0L) {
+            session = session.copy(status = SessionStatus.COMPLETED, remainingSeconds = 0)
+            sessionDeadlineMs = null
+            event("SessionCompleted", "${session.kind.label} 세션이 끝났습니다. 출발 시간을 확인하세요.")
+        }
         val context = when {
             !allowed -> physical
             schedule.departureAtMs != null && schedule.waitingSeconds <= schedule.bufferSeconds -> VehicleContext.PREPARING_DEPARTURE

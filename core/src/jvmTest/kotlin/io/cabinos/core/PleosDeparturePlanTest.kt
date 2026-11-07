@@ -21,6 +21,33 @@ class PleosDeparturePlanTest {
         assertEquals(VehicleContext.PREPARING_DEPARTURE,engine.state.value.context)
         sample(79,pleos=false);assertEquals(0L,engine.state.value.schedule.availableSeconds)
     }
+    @Test fun socTargetCompletesSafelyPausedSessionWithoutUnlockingDrive() {
+        park();engine.setChargeTarget(80);assertTrue(engine.startSession(SessionKind.FOCUS,25))
+        sample(75,gear=Gear.DRIVE)
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        sample(80,pleos=false,gear=Gear.DRIVE)
+        assertEquals(SessionStatus.PAUSED,engine.state.value.session!!.status)
+        sample(80,gear=Gear.DRIVE)
+        assertEquals(SessionStatus.COMPLETED,engine.state.value.session!!.status)
+        assertEquals(0L,engine.state.value.session!!.remainingSeconds)
+        assertFalse(engine.state.value.parkedAllowed)
+        assertFalse(engine.pauseOrResume())
+        engine.tick();assertEquals(1,engine.state.value.history.size)
+    }
+
+    @Test fun manualPauseCannotExtendTheDepartureDeadline() {
+        park();sample(charging=false,seconds=null);engine.setWaitingMinutes(10)
+        assertTrue(engine.startSession(SessionKind.FOCUS,4));engine.pauseOrResume()
+        val remaining=engine.state.value.session!!.remainingSeconds
+        now+=1000;sample(charging=false,seconds=null)
+        assertEquals(remaining,engine.state.value.session!!.remainingSeconds)
+        now+=299_000;engine.tick()
+        assertEquals(SessionStatus.COMPLETED,engine.state.value.session!!.status)
+        assertEquals(0L,engine.state.value.session!!.remainingSeconds)
+        assertFalse(engine.state.value.parkedAllowed) // Telemetry expired; completion must not unlock it.
+        assertEquals(1,engine.state.value.history.size)
+    }
+
     @Test fun aaosSocAloneCannotClaimPleosTargetReached() {
         park();engine.setChargeTarget(80);sample(90,pleos=false)
         assertEquals("차량 충전 예상",engine.state.value.schedule.estimateLabel)
