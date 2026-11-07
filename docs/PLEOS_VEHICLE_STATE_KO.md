@@ -19,7 +19,10 @@ export ANDROID_AVD_HOME="$HOME/.android/avd"
 
 Android Studio SDK Manager → SDK Update Sites에 아래 공식 인덱스를 추가하고 **Pleos Connect v2.1.0 / API 34**를 설치합니다. Device Manager에서 공식 Pleos 기기를 선택합니다.
 
-`https://nexus-playground.pleos.ai/repository/raw-releases/connect-avd/2.x/crp-sys-img.xml`
+- Windows/Linux: `https://nexus-playground.pleos.ai/repository/raw-releases/connect-avd/2.x/crp-sys-img.xml`
+- Mac: `https://nexus-playground.pleos.ai/repository/raw-releases/connect-avd/2.x/crp-arm64-sys-img.xml`
+
+기존 Pleos 이미지는 공식 가이드에 따라 제거하고 새 이미지를 설치한 뒤 Android Studio를 재시작합니다. Device Manager에서 Automotive → Pleos Connect v2.1.0 → Cold boot → RAM 4GB → API 34를 선택합니다.
 
 Linux x86_64의 재현용 CLI 설치도 제공합니다. 저장 공간은 압축 파일 약 4.1GB와 시스템 이미지 논리 크기 약 18.3GB, 데이터·작업 공간이 필요합니다. 스크립트는 원본 바이트를 유지하는 sparse 추출을 사용합니다.
 
@@ -31,7 +34,7 @@ adb start-server # 에뮬레이터 실행 전에 호스트 인증키 준비
 emulator -avd CabinOS_Pleos_21 -no-snapshot -gpu swiftshader_indirect
 ```
 
-CLI AVD는 배포 파일 `source.properties`의 기본값에 맞춰 RAM 8192MB를 사용합니다. 호스트에 충분한 메모리와 하드웨어 가속이 필요합니다.
+CLI AVD도 [공식 설치 가이드](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator)에 맞춰 RAM 4096MB와 Cold boot를 기본으로 사용합니다. 배포 이미지의 `source.properties`에는 8192MB가 지정돼 있어 가이드와 차이가 있습니다. 과거 8GB 실행과 비교하려면 설치 명령에 `--ram-mb 8192`를 명시하세요. 과거 검증 기록은 8GB 구성의 결과이며 새 4GB 구성의 통과 증거가 아닙니다. 호스트에 충분한 메모리와 하드웨어 가속이 필요합니다.
 
 공식 인덱스의 archive SHA-1: `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`, 크기 4,087,751,964 bytes. 일반 AAOS 이미지를 이름만 바꾼 AVD는 인정하지 않습니다.
 

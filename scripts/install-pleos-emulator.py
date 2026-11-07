@@ -17,7 +17,7 @@ SHA1 = "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa"
 SIZE = 4087751964
 
 
-def install(archive, sdk, avd_home):
+def install(archive, sdk, avd_home, ram_mb=4096):
     digest = hashlib.sha1()
     with archive.open("rb") as f:
         for block in iter(lambda: f.read(8*1024*1024), b""):
@@ -47,14 +47,13 @@ def install(archive, sdk, avd_home):
     avd.mkdir(parents=True, exist_ok=True)
     (avd_home / "CabinOS_Pleos_21.ini").write_text(
         f"avd.ini.encoding=UTF-8\npath={avd}\ntarget=android-34\n")
-    # Official source.properties specifies avd_config_ini.hw.ramSize=8192.
-    # 4 GiB runs observed UIAutomator exit 137; retain the image default here.
+    # Follow the setup guide (4 GiB); allow an explicit 8 GiB comparison run.
     (avd / "config.ini").write_text(f"""AvdId=CabinOS_Pleos_21
 avd.ini.encoding=UTF-8
 abi.type=x86_64
 hw.cpu.arch=x86_64
 hw.cpu.ncore=4
-hw.ramSize=8192
+hw.ramSize={ram_mb}
 hw.device.name=Pleos_Connect_v2_0
 hw.device.manufacturer=42dot
 hw.lcd.width=2560
@@ -83,6 +82,8 @@ def main():
     parser.add_argument("--archive", required=True, type=Path)
     parser.add_argument("--sdk", default=os.environ.get("ANDROID_HOME"), type=Path)
     parser.add_argument("--avd-home", required=True, type=Path)
+    parser.add_argument("--ram-mb", type=int, choices=(4096, 8192), default=4096,
+                        help="AVD RAM: official setup guide defaults to 4096; 8192 is an explicit diagnostic override")
     args = parser.parse_args()
     if not args.sdk:
         parser.error("Set ANDROID_HOME or --sdk")
@@ -94,7 +95,7 @@ def main():
             for block in iter(lambda: response.read(8*1024*1024), b""):
                 out.write(block)
         partial.rename(args.archive)
-    install(args.archive.resolve(), args.sdk.resolve(), args.avd_home.resolve())
+    install(args.archive.resolve(), args.sdk.resolve(), args.avd_home.resolve(), args.ram_mb)
 
 
 if __name__ == "__main__":

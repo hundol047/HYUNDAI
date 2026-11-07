@@ -32,7 +32,7 @@ cd HYUNDAI
 ./gradlew -PpleosSdk=true :core:test :app:testDebugUnitTest :app:assembleDebug :app:assembleRelease :app:lintDebug
 ```
 
-공식 Maven 접근 실패 시 중지하며 SDK 없는 빌드로 대체하지 않습니다. Gradle release 출력은 서명 전 파일입니다. 팀 키 서명·공식 이미지 설치·Virtual Console·동일 APK 녹화 명령은 [실행 가이드](docs/PLEOS_VEHICLE_STATE_KO.md)를 따릅니다.
+기본 빌드와 Android Studio 동기화는 공식 SDK를 포함합니다 (`gradle.properties`의 `pleosSdk=true`). `-PpleosSdk=false`는 SDK 없는 데모 개발에만 사용하며 차량 검증·제출에는 사용할 수 없습니다. 공식 Maven 접근 실패 시 중지하며 SDK 없는 빌드로 대체하지 않습니다. Gradle release 출력은 서명 전 파일입니다. 팀 키 서명·공식 이미지 설치·Virtual Console·동일 APK 녹화 명령은 [실행 가이드](docs/PLEOS_VEHICLE_STATE_KO.md)를 따릅니다.
 
 ## 심사용 문서·영상
 
@@ -54,7 +54,7 @@ cd HYUNDAI
 ## 제한 사항
 
 - 공식 SDK 포함 0.11.0 / versionCode 19의 빌드·서명·232개 JVM 테스트와 실제 Pleos SDK 응답을 확인했습니다. release의 Gson/R8 오류를 수정했습니다. Console `503 / emulator_inactive`와 간헐적 정차 신호 만료가 남아 P→D·SOC 변화·집중 자동 종료의 전체 시연은 미완료입니다. 실제 목적지 ETA 계획·Pleos 분할 창도 추가 검증이 필요합니다. [검토표](docs/SUBMISSION_REVIEW_KO.md).
-- main 병합은 승인 대기입니다. 병합 전 변경 소스·APK는 `feat/pleos-vehicle-state` 브랜치에 있고 main은 이전 버전입니다.
+- Pleos SDK 통합과 0.11.0 APK는 PR #1을 통해 main에 병합됐습니다. 병합 여부와 실제 차량 시나리오 검증 완료 여부는 별개입니다.
 - DO를 선언하지 않은 정차 전용 앱입니다. 기본 내비의 지도·언어·지역 지원 범위를 따릅니다. 모든 도로·가게의 완전성을 보장하지 않습니다.
 - 일반 Android/웹의 공용 Nominatim·OSRM·Overpass 기능은 데모이며 상용 SLA가 없습니다. 기존 웹 데모는 0.10.5입니다.
 - 저장소 소유 계정은 GitHub 주소에 표시됩니다. 블라인드 심사용 계정·링크 처리 방식은 주최 측 확인이 필요하며 기존 이력을 재작성하지 않았습니다.
