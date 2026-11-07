@@ -90,15 +90,20 @@ sha256sum -c apk/SHA256SUMS
 
 ## 6. Console 503 / SDK 값 누락 재현 시
 
-공식 이미지가 부팅되고 APK가 실행돼도 차량 데이터 서비스가 정상이라는 뜻은 아닙니다. 이 작업의 KVM 실행에서는 권한 부여와 AAOS P/0 수신은 확인했지만 Console 503(`emulator_inactive`)·EvBattery 읽기 실패가 있었습니다. 앱의 Gson/R8 오류는 보존 규칙을 추가한 새 APK에서 해결됐고 실제 SDK 응답을 확인했습니다. Console의 `emulator_inactive`는 별도 문제로 남았습니다. 다음 명령으로 로컬 PC의 동일 이미지와 비교하세요.
+공식 Console은 페이지를 열어 둔 브라우저의 접속 신호로 차량 데이터 통신을 활성화합니다. HTML을 한 번 GET하거나 차량 API만 호출하면 `503 / emulator_inactive`가 나올 수 있습니다. 다음과 같이 포트를 연결한 뒤 **http://localhost:8088 탭을 열어 둔 상태**에서 상태 변경을 실행하세요. 자동 진단 스크립트는 같은 공개 페이지의 `/browser/session` 접속 신호를 유지합니다.
 
 ```bash
 adb start-server
 adb -s emulator-5554 forward tcp:8088 tcp:8088
+# 브라우저에서 http://localhost:8088 탭을 열어 둡니다.
 curl --fail-with-body http://localhost:8088/vehicle/state
 curl --fail-with-body -X PUT 'http://localhost:8088/vehicle/gear?gear=Park'
 python3 scripts/inspect-pleos-device.py --serial emulator-5554 \
-  --apk "apk/퓨처랩스_CabinOS_ONE_release.apk" --output artifacts/pleos-local-diagnostics
+  --apk app/build/outputs/apk/release/app-validation.apk --output artifacts/pleos-local-diagnostics
 ```
 
-`identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교합니다. SOC/스위치가 null이거나 Console 입력이 실패하면 녹화 완료로 표시하지 마세요. Console의 **AVD Enabled** 선택기도 확인하세요. 공개 UI가 호출하는 `PUT /vehicle/hvac/mode?mode=subscribe_hvac_base` 역시 현재 runner에서는 503이었습니다. Android Studio에서 공식 Pleos 하드웨어 프로필·Cold boot·배포 기본 메모리 설정으로 만든 AVD에서도 재현되면, 실제 오류와 이미지/SDK 버전을 주최 측 기술 지원에 전달할 자료로 사용하세요. 진단 원문에는 기기 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다. 앱 소스의 신호 검증을 완화하거나 SDK 권한 검사를 우회하지 않습니다.
+APK 경로는 실제 검사할 파일로 바꿉니다. `identity.json`, `vehicle-logcat.txt`, `vehicle-status.xml`, Console 응답을 비교하세요. SOC/스위치가 null이거나 Console 입력이 실패하면 전체 시나리오 완료로 표시하지 않습니다. Console의 **AVD Enabled** 선택기는 HVAC 모드 설정이며 브라우저 접속 신호를 대신하지 않습니다.
+
+초기 부팅에서 DDS participant 생성 실패와 vendor 서비스 panic이 관측됐지만, 브라우저 세션을 유지한 후 원본 이미지에서 `emulator_active=true`, `dds_ready.all=true`, 실제 SDK SOC·충전 상태 변경이 확인됐습니다. 앱에서는 속도 콜백과 폴링의 역순 수신, UI 렌더링이 신호 검증을 지연시키는 문제를 수정했습니다. 상세 결과와 검증 범위는 [공식 구성 검증 기록](PLEOS_SETUP_VERIFICATION_KO.md)을 확인하세요.
+
+공식 프로필·Cold boot·RAM 4GB와 브라우저 세션 유지 상태에서도 실패하면 기기·SDK 버전과 진단 로그를 기술 지원에 전달합니다. 앱의 신호 만료·정차 판정을 완화하거나 이미지 보안 설정을 변경하지 않습니다. 진단 원문에는 환경 정보가 있을 수 있으므로 블라인드 제출 자료에 그대로 첨부하지 않습니다.

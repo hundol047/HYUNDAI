@@ -6,6 +6,8 @@ No private activation endpoint, root access, or image modification is used.
 """
 import atexit
 import threading
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import uuid
@@ -49,3 +51,23 @@ class ConsoleSession:
             self.heartbeat(closing=True)
         except OSError:
             pass
+
+
+def set_vehicle_state(endpoint, on_retry=lambda message: None):
+    """Retry bounded transport/503 failures for idempotent emulator state assignments."""
+    for attempt in range(5):
+        try:
+            request = urllib.request.Request('http://127.0.0.1:8088' + endpoint, method='PUT')
+            with urllib.request.urlopen(request, timeout=10) as response:
+                if response.status != 200:
+                    raise RuntimeError('Official Console rejected ' + endpoint)
+                return response.read()
+        except urllib.error.HTTPError as error:
+            if error.code != 503 or attempt == 4:
+                raise
+            on_retry(f'Console retry {attempt + 1}/4: HTTP {error.code} for {endpoint}')
+        except (OSError, urllib.error.URLError) as error:
+            if attempt == 4:
+                raise
+            on_retry(f'Console retry {attempt + 1}/4: {type(error).__name__} for {endpoint}')
+        time.sleep(1)

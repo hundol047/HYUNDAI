@@ -4,7 +4,7 @@
 No screenshots are assembled into video; no app simulator or app-private API is used.
 The recorder validates the installed APK hash and actual SDK/vehicle event evidence.
 """
-from pleos_console_session import ConsoleSession
+from pleos_console_session import ConsoleSession, set_vehicle_state
 import uiautomator2 as u2
 import argparse
 import json
@@ -42,9 +42,7 @@ def main():
         steps.append({'elapsedSeconds':round(time.monotonic()-started,2),'action':action})
         print(action,flush=True)
     def console(endpoint):
-        with urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:8088'+endpoint,method='PUT'),timeout=10) as r:
-            if r.status!=200:raise RuntimeError('Official Console rejected '+endpoint)
-            r.read()
+        set_vehicle_state(endpoint, on_retry=note)
         note('Official Console: '+endpoint)
     def tree():
         xml=device.dump_hierarchy(compressed=False, max_depth=100)
