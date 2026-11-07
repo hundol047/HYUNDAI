@@ -159,10 +159,10 @@ class ApplicationTest {
             val p=Preferences(focusMinutes=45,departureBufferMinutes=10,voiceEnabled=false)
             val session=CabinSession("checkpoint-session",SessionKind.FOCUS,1000,1500,900,SessionStatus.RUNNING)
             val completed=CabinSession("finished",SessionKind.RELAX,100,600,0,SessionStatus.COMPLETED)
-            dao.saveState(AppState(preferences=p,session=session,history=listOf(completed),schedule=SharedSchedule(departureAtMs=500_000)))
+            dao.saveState(AppState(preferences=p,session=session,history=listOf(completed),schedule=SharedSchedule(departureAtMs=1_500_000)))
             val checkpoint=dao.checkpoint()!!
             assertEquals("checkpoint-session",checkpoint.activeSessionId)
-            assertEquals(500_000L,checkpoint.departure)
+            assertEquals(1_500_000L,checkpoint.departure)
             val restored=UnifiedVehicleContextEngine({2000L})
             restored.restore(dao.preferences()!!.domain(),dao.session(checkpoint.activeSessionId!!)!!.domain(),dao.history().map{it.domain()},checkpoint.departure)
             assertEquals(45,restored.state.value.preferences.focusMinutes)
@@ -170,6 +170,13 @@ class ApplicationTest {
             assertEquals(900L,restored.state.value.session!!.remainingSeconds)
             assertEquals(1,restored.state.value.history.size)
             assertFalse(restored.state.value.parkedAllowed)
+
+            val expired=UnifiedVehicleContextEngine({1_000_000L})
+            expired.restore(dao.preferences()!!.domain(),dao.session(checkpoint.activeSessionId!!)!!.domain(),dao.history().map{it.domain()},checkpoint.departure)
+            assertEquals(SessionStatus.COMPLETED,expired.state.value.session!!.status)
+            assertEquals(0L,expired.state.value.session!!.remainingSeconds)
+            assertEquals(2,expired.state.value.history.size)
+            assertFalse(expired.state.value.parkedAllowed)
         } finally { db.close() }
     }
 }
