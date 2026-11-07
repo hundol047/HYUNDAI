@@ -34,11 +34,7 @@ class VehicleStateProvider internal constructor(
         context.packageManager.hasSystemFeature(PackageManager.FEATURE_AUTOMOTIVE),
         { AndroidCarPropertyTransport(context.applicationContext) },
         CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
-        reportStatus = { reason ->
-            if (android.util.Log.isLoggable("CabinVehicle", android.util.Log.INFO)) {
-                android.util.Log.i("CabinVehicle", "signal_status=" + reason)
-            }
-        },
+        reportStatus = { reason -> traceVehicle { "signal_status=" + reason } },
     )
     private val gate = VehicleSignalGate(wallMs, elapsedNs)
     private val mutable = MutableStateFlow(gate.sample())

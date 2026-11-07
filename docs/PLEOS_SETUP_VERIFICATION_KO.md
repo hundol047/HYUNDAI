@@ -31,7 +31,7 @@ gh run download RUN_ID --name Pleos-actual-device-diagnostics \
   --dir artifacts/pleos-setup-RUN_ID
 ```
 
-워크플로는 공식 배포 SHA-1 `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`를 검증하고, 4GB AVD를 만든 뒤 `-no-snapshot`으로 실행합니다. ADB 서버를 먼저 시작하여 호스트 인증키를 준비하고 `adb forward tcp:8088 tcp:8088`으로 공식 Console에 접속합니다. 설치된 APK를 다시 pull해 저장소 APK와 SHA-256을 비교합니다.
+워크플로는 공식 배포 SHA-1 `b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa`를 검증하고, 4GB AVD를 만든 뒤 `-no-snapshot`으로 실행합니다. ADB 서버를 먼저 시작하여 호스트 인증키를 준비하고 `adb forward tcp:8088 tcp:8088`으로 공식 Console에 접속합니다. 현재 소스로 공식 SDK를 포함한 디버그 APK를 빌드하고, 설치된 APK를 다시 pull해 빌드 산출물과 SHA-256을 비교합니다. 초기 진단 기록의 서명 0.11.0 APK와 후속 수정본의 APK는 구분합니다.
 
 이 경로의 그래픽은 `swiftshader_indirect` 소프트웨어 렌더링입니다. CPU 가속은 KVM으로 확보하지만 공식 외장 GPU 조건을 충족한 테스트는 아닙니다. CI 성공도 전체 시나리오 통과를 의미하지 않습니다.
 
@@ -54,9 +54,9 @@ POST /browser/session?client=<같은 ID>&closing=1  # 종료할 때
 2. `sys.boot_completed=1`, APK 설치·실행과 설치 APK 해시가 확인돼야 합니다.
 3. Console 웹 페이지 접속과 차량 상태 변경 성공은 별도입니다. `consoleScenarioReady=false` 또는 HTTP 503이면 상태 변경은 실패입니다.
 4. SDK SOC 읽기 성공만으로 기어 전환·충전 목표 자동 종료·내비 ETA까지 통과 처리하지 않습니다.
-5. `submissionReady=false`는 제출 완료 판정이 아니라는 의미입니다. 이 진단은 설치·실행 확인용입니다.
+5. `submissionReady=false`는 제출 완료 판정이 아니라는 의미입니다. 설치·실행 진단 뒤 별도 연속 녹화 시나리오를 수행하며, 그 검사는 모두 통과해야 합니다.
 
-## 이번 실행 결과
+## 초기 진단 기록 (접속 유지 수정 전)
 
 2026-11-07 [실행 42351141190](https://github.com/hundol047/HYUNDAI/actions/runs/42351141190), 소스 `c5e78de`, 기존 서명 0.11.0 APK를 검사했습니다. CI의 진단 수집 job은 성공했습니다.
 
@@ -91,4 +91,10 @@ Console의 공개 UI가 사용하는 AVD Enabled 요청도 503이었습니다. �
 
 [추가 진단 산출물](https://github.com/hundol047/HYUNDAI/actions/runs/42351829707/artifacts/13565534736)에 원문 로그가 있습니다. 네트워크 준비 후 기존 Console 서비스를 재시작하는 [격리 진단 실행 42352454763](https://github.com/hundol047/HYUNDAI/actions/runs/42352454763)도 수행했습니다. Android Emulator의 loopback 디버그 콘솔은 연결됐지만 명령 응답이 20초 내 완료되지 않아, 서비스 재시작 단계에 도달하지 못했습니다. 이 시도를 성공한 우회 방법으로 권장하지 않습니다. 이미지·SELinux·앱 권한을 변경하지 않았으며 해당 실험은 별도 브랜치에만 있습니다.
 
-현재 검증된 대안은 **GitHub KVM runner에서 공식 이미지의 설치·부팅·APK 실행·SDK 기본 읽기를 확인하는 방법**입니다. Console을 이용한 상태 변경까지 완료하려면 공식 GPU 조건을 갖춘 PC에서 동일 이미지로 비교하고, 같은 오류가 나면 두 실행의 DDS 오류·이미지 해시·버전·설정을 Pleos 기술 지원에 전달해야 합니다. 공급자에게 자동으로 자료를 전송하지 않았습니다.
+### 후속 조사: Console 활성화와 속도 수신 순서
+
+[실행 42353422365](https://github.com/hundol047/HYUNDAI/actions/runs/42353422365)에서 공식 페이지와 같은 브라우저 접속 신호를 추가하자 원본 이미지에서 `emulator_active=true`, `controls.dds_ready.all=true`, 차량 변경 HTTP 200이 확인됐습니다. 실제 서명 APK의 SDK도 SOC 68%와 충전 스위치 ON을 수신했습니다. 따라서 초기 부팅 DDS 오류만으로 Console 503의 원인을 확정하면 안 됩니다. 이 실행은 root나 서비스 재시작을 사용하지 않았습니다.
+
+이후 [현재 소스 진단 실행 42353934081](https://github.com/hundol047/HYUNDAI/actions/runs/42353934081)의 로그에서 다른 앱 문제가 확인됐습니다. 속도 폴링이 `timestampNs=56609418943`을 먼저 전달한 뒤 대기 중이던 콜백 `56239128972`가 도착했습니다. 안전 판정기는 이를 역순 수신으로 보고 UNKNOWN으로 잠갔습니다. 수정은 CONTINUOUS 속도를 구독 콜백에서만 받고, ON_CHANGE 기어는 주기적으로 다시 읽도록 합니다. 오래된 속도 만료, 주행 중 잠금, 1.5초 정차 확인 조건은 그대로 적용됩니다.
+
+공식 외장 GPU 조건에서의 그래픽 검증은 별도로 남습니다. 소프트웨어 그래픽 실행 성공을 공식 GPU 검증 완료로 표시하지 않습니다.

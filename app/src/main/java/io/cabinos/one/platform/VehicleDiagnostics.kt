@@ -41,3 +41,9 @@ internal class VehicleDiagnostics {
         }.toString())
     }
 }
+
+/** Optional detailed transport trace; build the message only when explicitly enabled. */
+internal fun traceVehicle(message: () -> String) {
+    if (!Log.isLoggable("CabinVehicle", Log.INFO)) return
+    Log.i("CabinVehicle", message())
+}
