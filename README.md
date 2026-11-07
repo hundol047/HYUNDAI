@@ -36,6 +36,7 @@ cd HYUNDAI
 
 ## 심사용 문서·영상
 
+- [공식 설치 구성·원격 실행 검증](docs/PLEOS_SETUP_VERIFICATION_KO.md): 4GB·Cold boot·KVM의 실제 실행 결과와 재현 명령.
 - [제출 검토표](docs/SUBMISSION_REVIEW_KO.md): 테스트 결과, APK 식별자, 장치 실행·공개 영상 상태.
 - [핵심 기능 ↔ SDK API 매핑](docs/SDK_CAPABILITIES.md): 기획서에 사용할 기능 설명과 지원 범위.
 - [오픈소스·데이터 출처](docs/THIRD_PARTY.md).

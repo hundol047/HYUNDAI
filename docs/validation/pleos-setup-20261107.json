@@ -1,0 +1,53 @@
+{
+  "fingerprint": "Pleos/crp_avd/crp_avd_x86_64:14/RELEASE.release_connect_v2.1.0/release_connect_v2.1.0:user/test-keys",
+  "diagnosticSeconds": 230,
+  "apkSha256": "7279b860a012c08d5f929573b3c1bdfd245d1ac8b8f6af74e5e6b4d4451d0543",
+  "installedApkHashMatched": true,
+  "consoleScenarioReady": false,
+  "submissionReady": false,
+  "checkedAt": "2026-11-07",
+  "runId": 42351141190,
+  "sourceCommit": "c5e78dee57c3e91679e2d918e6768d8a4b9bd32d",
+  "artifactId": 13564979664,
+  "artifactSha256": "017be75b2d5ee6bd63e1aa01fad4ff8e612cf6828d0c8599b58f93395641e8f7",
+  "ramMb": 4096,
+  "coldBoot": true,
+  "cpuAcceleration": "KVM",
+  "graphics": "swiftshader_indirect (software; not official GPU validation)",
+  "officialArchiveSha1": "b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa",
+  "androidBootCompleted": true,
+  "observedSdkSoc": 100,
+  "observedGear": "PARK",
+  "observedSpeedKph": 0,
+  "consoleHttpError": 503,
+  "consoleError": "emulator_inactive",
+  "consoleEmulatorActive": false,
+  "consoleDdsAllReady": false,
+  "parkingSignalTransitions": [
+    "UNKNOWN",
+    "PARKED",
+    "UNKNOWN",
+    "PARKED"
+  ],
+  "vehicleSampleWindowMs": 17273,
+  "repeatRun": {
+    "runId": 42351829707,
+    "sourceCommit": "649bfa7",
+    "artifactId": 13565534736,
+    "artifactSha256": "1e12b8c3c6f3188c1ff4f2797e9300251e2f82d8e727f20b045c22ac96304a84",
+    "configuredRamMb": 4096,
+    "forceColdBoot": true,
+    "accelerationCheck": "KVM (version 12) is installed and usable.",
+    "consoleScenarioReady": false,
+    "ddsParticipantCreationFailed": true,
+    "vendorPanic": "Option::unwrap() on a None value at app-framework/src/app.rs:220",
+    "initialEth0NotReady": true
+  },
+  "restartExperiment": {
+    "runId": 42352454763,
+    "artifactId": 13565949249,
+    "sourceCommit": "fabb1b8",
+    "result": "debug console command timed out; service restart was not reached",
+    "imageOrSecurityPolicyModified": false
+  }
+}

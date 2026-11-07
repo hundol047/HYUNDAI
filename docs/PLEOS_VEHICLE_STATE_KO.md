@@ -2,6 +2,8 @@
 
 공식 Vehicle 2.3.2 / NaviHelper 3.0.5 포함 빌드를 사용합니다. API 매핑은 [SDK 지원 범위](SDK_CAPABILITIES.md), 검증 완료/미완료와 APK 해시는 [제출 검토표](SUBMISSION_REVIEW_KO.md)에 있습니다.
 
+최근 4GB·Cold boot 원격 실행 결과와 KVM 우회 실행 명령은 [공식 설치 구성 검증](PLEOS_SETUP_VERIFICATION_KO.md)에 있습니다.
+
 ## 1. 개발 PC 준비
 
 Android Studio, JDK 21, Python 3, Android SDK Platform 35 / Build Tools 35.0.0 / Emulator / Platform Tools를 설치합니다. Pleos 실행 이미지는 API 34입니다. 아래 명령은 Linux/macOS 셸 기준이며 Windows에서는 Android Studio Device Manager와 PowerShell의 해당 SDK 경로를 사용합니다.
