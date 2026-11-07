@@ -50,17 +50,17 @@ def main():
         return ET.fromstring(xml)
     def bounds(node):
         return list(map(int,re.findall(r'\d+',node.get('bounds',''))))
-    def wait(label,seconds=20):
+    def wait(label,seconds=20,occurrence=-1):
         deadline=time.monotonic()+seconds
         while time.monotonic()<deadline:
             root=tree()
             nodes=[n for n in root.iter('node') if n.get('package')=='io.cabinos.one' and (n.get('text')==label or n.get('content-desc')==label)]
-            if nodes:return nodes[-1]
+            if nodes:return nodes[occurrence]
             time.sleep(.5)
         visible=[n.get('text') for n in root.iter('node') if n.get('text')]
         raise RuntimeError('Actual UI missing '+label+': '+json.dumps(visible,ensure_ascii=False)[:1500])
-    def tap(label):
-        node=wait(label);box=bounds(node)
+    def tap(label,occurrence=-1):
+        node=wait(label,occurrence=occurrence);box=bounds(node)
         x,y=(box[0]+box[2])//2,(box[1]+box[3])//2
         # Use the shell input channel on AAOS: the app runs under driver user 10,
         # while the UIAutomator instrumentation belongs to user 0.
@@ -138,12 +138,13 @@ def main():
         tap('45분')
         tap('적용')
         scroll_to('80%');tap('80%')
-        tap('음성');tap('25분 집중 모드 켜줘');tap('닫기')
+        mark=checkpoint();tap('시작하기',occurrence=0)
+        wait_event('focus session RUNNING',lambda e:e.get('sessionStatus')=='RUNNING' and e.get('parkedAllowed') is True,mark)
         time.sleep(4);snapshot('04-focus')
         mark=checkpoint();console('/vehicle/ev-battery?field=soc&value=75')
         wait_event('SOC 75',lambda e:e.get('sdkBatteryPercent')==75,mark)
         mark=checkpoint();console('/vehicle/ev-battery?field=soc&value=80')
-        wait_event('SOC target ends activity budget',lambda e:e.get('sdkBatteryPercent')==80 and e.get('sdkSocUsed') is True and e.get('availableSeconds')==0 and e.get('planSource')=='Pleos SOC 목표 도달',mark)
+        wait_event('SOC target ends activity budget',lambda e:e.get('sdkBatteryPercent')==80 and e.get('sdkSocUsed') is True and e.get('availableSeconds')==0 and e.get('planSource')=='Pleos SOC 목표 도달' and e.get('sessionStatus')=='COMPLETED',mark)
         snapshot('05-soc-target')
         mark=checkpoint();console('/vehicle/ev-battery?field=charge_switch&value=false')
         wait_event('charge switch OFF',lambda e:e.get('sdkChargeSwitch') is False,mark)
