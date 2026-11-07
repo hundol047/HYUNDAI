@@ -68,17 +68,6 @@ def main():
         note(f'APK UI: {label} at ({x},{y}), display '+node.get('display-id','0'))
     def snapshot(name):
         (a.output/(name+'.png')).write_bytes(adb('exec-out','screencap','-p'))
-    def scroll_to(label):
-        for _ in range(5):
-            root=tree()
-            if any(n.get('text')==label for n in root.iter('node')):return
-            app_nodes=[n for n in root.iter('node') if n.get('package')=='io.cabinos.one' and len(bounds(n))==4]
-            if not app_nodes:raise RuntimeError('Actual app window unavailable')
-            box=max((bounds(n) for n in app_nodes),key=lambda b:(b[2]-b[0])*(b[3]-b[1]))
-            x=(box[0]+box[2])//2
-            adb('shell','input','swipe',str(x),str(int(box[3]*.8)),str(x),str(int(box[3]*.35)),'400')
-        raise RuntimeError('Planning control is not reachable: '+label)
-
     console('/vehicle/controls?speed=0&accelerator=0&brake=0')
     console('/vehicle/gear?gear=Park')
     console('/vehicle/ev-battery?field=soc&value=68')
@@ -137,7 +126,7 @@ def main():
         snapshot('time-dialog')
         tap('45분')
         tap('적용')
-        scroll_to('80%');tap('80%')
+        tap('80%')
         mark=checkpoint();tap('시작하기',occurrence=0)
         wait_event('focus session RUNNING',lambda e:e.get('sessionStatus')=='RUNNING' and e.get('parkedAllowed') is True,mark)
         time.sleep(4);snapshot('04-focus')
