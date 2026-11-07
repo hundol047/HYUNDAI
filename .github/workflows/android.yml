@@ -115,6 +115,11 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - name: Build current source with the official SDK
         run: ./gradlew :app:assembleDebug --console=plain
+      - name: Prepare responsive Android UI automation
+        run: |
+          python3 -m venv "$RUNNER_TEMP/pleos-ui-env"
+          "$RUNNER_TEMP/pleos-ui-env/bin/pip" install -r scripts/requirements-pleos-ui.txt
+          echo "$RUNNER_TEMP/pleos-ui-env/bin" >> "$GITHUB_PATH"
       - name: Boot official image with hardware acceleration
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
@@ -171,6 +176,13 @@ jobs:
           path: |
             artifacts/pleos-device/
             artifacts/pleos-preview/
+          retention-days: 7
+      - name: Upload the exact current-source validation APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CabinOS-Pleos-validation-APK
+          path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 7
       - name: Stop emulator
         if: always()

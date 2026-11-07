@@ -115,6 +115,9 @@ def main():
                     run("shell", "am", "force-stop", "io.cabinos.one")
                     run("shell", "am", "start", "-W", "-n", "io.cabinos.one/.MainActivity")
                     app_pid = run("shell", "pidof", "io.cabinos.one").stdout.strip()
+                    ready_file = args.output / "app-ready.tmp"
+                    ready_file.write_text(json.dumps({"appPid": app_pid}))
+                    ready_file.replace(args.output / "app-ready.json")
                     recorder.wait(timeout=args.seconds + 30)
                     if recorder.returncode:
                         raise RuntimeError("Device screenrecord failed; inspect screenrecord.txt")
