@@ -112,6 +112,9 @@ jobs:
         with:
           path: ${{ runner.temp }}/pleos-connect-2.1.0.zip
           key: pleos-image-b4f858d5bcc6c71506d7edfc872bcb9e5a11acaa
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Build current source with the official SDK
+        run: ./gradlew :app:assembleDebug --console=plain
       - name: Boot official image with hardware acceleration
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
@@ -127,16 +130,16 @@ jobs:
           timeout 600 adb -s emulator-5554 logcat -b all -v threadtime > artifacts/pleos-device/full-boot-logcat.txt 2>&1 &
           BOOT_LOG_PID=$!
           trap 'kill "$BOOT_LOG_PID" 2>/dev/null || true' EXIT
-          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device
+          python3 scripts/inspect-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-device
       - name: Verify actual vehicle transitions through official Console
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
-          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-device/scenarios
+          python3 scripts/exercise-pleos-device.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-device/scenarios
       - name: Record actual SDK preview without claiming full scenario acceptance
         if: inputs.record_pleos_preview
         run: |
           export PATH="$ANDROID_HOME/platform-tools:$PATH"
-          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk apk/퓨처랩스_CabinOS_ONE_release.apk --output artifacts/pleos-preview
+          python3 scripts/record-pleos-sdk-preview.py --serial emulator-5554 --apk app/build/outputs/apk/debug/app-debug.apk --output artifacts/pleos-preview
       - name: Upload a draft recording for visual review
         if: inputs.record_pleos_preview
         env:

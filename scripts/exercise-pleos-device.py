@@ -84,10 +84,10 @@ def main():
     console('/vehicle/ev-battery?field=charge_switch&value=true')
     take=a.output/'take'
     record=subprocess.Popen([sys.executable,str(pathlib.Path(__file__).with_name('record-vehicle-emulator.py')),
-        '--serial',a.serial,'--apk',str(a.apk),'--seconds','120','--output',str(take)])
+        '--serial',a.serial,'--apk',str(a.apk),'--seconds','180','--output',str(take)])
     try:
         time.sleep(6)
-        wait('이 시간을, 나답게.');snapshot('01-parked')
+        snapshot('01-parked')
         console('/vehicle/gear?gear=Drive');time.sleep(6);snapshot('02-drive-zero')
         console('/vehicle/controls?speed=35&accelerator=0&brake=0');time.sleep(6);snapshot('03-moving')
         console('/vehicle/controls?speed=0&accelerator=0&brake=0')

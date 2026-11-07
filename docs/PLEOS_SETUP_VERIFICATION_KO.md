@@ -35,6 +35,19 @@ gh run download RUN_ID --name Pleos-actual-device-diagnostics \
 
 이 경로의 그래픽은 `swiftshader_indirect` 소프트웨어 렌더링입니다. CPU 가속은 KVM으로 확보하지만 공식 외장 GPU 조건을 충족한 테스트는 아닙니다. CI 성공도 전체 시나리오 통과를 의미하지 않습니다.
 
+## Console 자동화에서 필요한 브라우저 세션
+
+Pleos 2.1.0 Console이 제공하는 HTML의 `sendBrowserHeartbeat()`는 다음 요청을 1초마다 보냅니다.
+
+```text
+POST /browser/session?client=<고유한 클라이언트 ID>
+POST /browser/session?client=<같은 ID>&closing=1  # 종료할 때
+```
+
+페이지 HTML을 GET하거나 차량 API만 PUT하는 것은 브라우저를 열어 둔 것과 다릅니다. 자동화는 `scripts/pleos_console_session.py`로 이 공개 화면의 세션 유지 동작을 재현합니다. 수동 사용 시에는 Console 탭을 열어 둡니다. 화면 하단의 AVD 선택은 `/vehicle/hvac/mode`를 호출하는 HVAC 모드 설정이며, 브라우저 접속 신호를 대신하지 않습니다.
+
+이 경로는 원본 이미지와 SDK를 그대로 사용합니다. root, 서비스 강제 재시작, SELinux 변경 또는 앱 시뮬레이션을 사용하지 않습니다. 자동 검증은 HTTP 성공뿐 아니라 실제 앱의 SDK 이벤트와 연속 화면 녹화를 함께 검사합니다.
+
 ## 판정 기준
 
 1. 공식 이미지 다운로드 체크섬과 실행 fingerprint가 모두 맞아야 합니다.

@@ -6,7 +6,6 @@ No private activation endpoint, root access, or image modification is used.
 """
 import atexit
 import threading
-import time
 import urllib.parse
 import urllib.request
 import uuid

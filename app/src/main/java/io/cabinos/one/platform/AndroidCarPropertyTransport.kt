@@ -132,6 +132,9 @@ internal class AndroidCarPropertyTransport(private val context: Context) : Vehic
             return
         }
         if (value.propertyId !in properties) return
+        if (android.util.Log.isLoggable("CabinVehicle", android.util.Log.INFO)) {
+            android.util.Log.i("CabinVehicle", "raw_signal id=${value.propertyId} value=${value.value} status=${value.status} timestampNs=${value.timestamp} receivedNs=${android.os.SystemClock.elapsedRealtimeNanos()}")
+        }
         if (value.status != CarPropertyValue.STATUS_AVAILABLE) {
             listener.unavailable("차량 속성 사용 불가: ${value.propertyId}"); return
         }
