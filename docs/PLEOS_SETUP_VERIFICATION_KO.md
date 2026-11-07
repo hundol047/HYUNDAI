@@ -1,5 +1,40 @@
 # Pleos 공식 설치 구성과 원격 검증
 
+## 최신 결과 — 실제 차량 시나리오 13/13 통과
+
+2026-11-07 [공식 이미지 실행 42361658349](https://github.com/hundol047/HYUNDAI/actions/runs/42361658349), 앱 소스 `9820982`, 검증용 릴리스 APK에서 통과했습니다. [회귀 검사 CI 42361784127](https://github.com/hundol047/HYUNDAI/actions/runs/42361784127)는 테스트 보완 커밋 `58781f9`에서 성공했습니다. 이후 증거·문서 추가는 앱 코드를 변경하지 않습니다.
+
+| 항목 | 실제 관측 |
+|---|---|
+| 공식 구성 | Pleos 2.1.0 / API 34, 배포 체크섬 일치, RAM 4096MB, Cold boot, KVM |
+| 설치 파일 | 빌드 APK와 설치 후 pull한 APK의 SHA-256 일치 |
+| 차량 상태 | P/0 확인 후 해제, D/0·35km/h·UNKNOWN 잠금, P/0 복귀 후 1.5초 재확인 |
+| SDK 입력 | SOC 68→75→80, 충전 ON/OFF, Console DDS ready |
+| 활동 마감 | 45분 계획·80% 목표·집중 시작. 실제 로그 RUNNING → 안전 PAUSED → SOC 목표에 따른 COMPLETED, 활동 예산 0 |
+| 회귀 검사 | 공통 134개, Android 102개, 검증 도구 13개 통과. release 빌드·lint 오류 0 |
+| 증거 | SDK 이벤트 446개, 2560×1440 ADB 연속 원본 녹화 173.85초, 전체 디코딩 오류 0 |
+
+**[검증 APK](../apk/CabinOS_ONE_Pleos_validation.apk) · [원본 영상](validation/pleos-vehicle-20261107/device-screen.mp4) · [결과 JSON](validation/pleos-vehicle-20261107/result.json) · [원본 이벤트](validation/pleos-vehicle-20261107/raw-evidence.json)**
+
+APK SHA-256: `87120099be979e98ebfe91bc7ce5ce2afdbf3f74e06a644d850f521c24730a33`. 서명자는 `CN=CabinOS CI validation`이며 정식 배포 키와 다릅니다. 기존 배포 서명 APK를 대체하지 않으며 **별도 새 AVD**에 설치하세요. 저장소의 수정 브랜치를 사용합니다.
+
+```bash
+git clone --branch fix/pleos-guide-alignment https://github.com/hundol047/HYUNDAI.git
+cd HYUNDAI
+sha256sum -c apk/VALIDATION_SHA256SUMS
+# 아래 공식 설치 절차로 만든 새 Pleos AVD가 emulator-5554인 경우:
+adb -s emulator-5554 install apk/CabinOS_ONE_Pleos_validation.apk
+adb -s emulator-5554 forward tcp:8088 tcp:8088
+adb -s emulator-5554 shell am start -n io.cabinos.one/.MainActivity
+# 브라우저에서 http://localhost:8088을 열어 두고 차량 상태를 변경합니다.
+```
+
+이는 **차량 데이터·안전 잠금·활동 마감 검증 통과**입니다. 소프트웨어 그래픽에서 UI 지연과 안전 일시정지가 실제로 발생했고, 부드러운 집중 화면 표시나 공식 외장 GPU 성능을 인증한 결과는 아닙니다. 초기 vendor 서비스 panic과 Pleos 입력기(`ai.umos.inputmethod`) 오류도 원문에 남아 있습니다. 최종 수집 시 DDS emulator·profile·vehicle_ext·diagnostic_report·vehicle_diagnostic 프로세스는 실행 중이었고 실제 SDK 변경이 완료됐습니다. 이미지 내부 오류를 모두 제거했다고 주장하지 않습니다.
+
+실제 목적지 ETA, 마이크 음성 인식, 정식 분할 창 호환성·제출 완료는 별도이며 `submissionReady=false`를 유지합니다. 원본 `raw-evidence.json`의 자동 생성 `visualReview=pending`도 보존했습니다. 별도 결과 JSON에는 직접 확인한 잠금·목표 도달·복귀 화면의 검토 범위를 기록했습니다.
+
+![실제 SOC 80% 도달 후 활동 예산 0](validation/pleos-vehicle-20261107/05-soc-target.png)
+
 ## 실행 방법
 
 기준은 [Emulator 설치 및 실행](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator)과 [Emulator 설정](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/configure-pleos-connect-emulator)입니다.

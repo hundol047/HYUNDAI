@@ -1,0 +1,134 @@
+[
+  {
+    "elapsedSeconds": 0.05,
+    "action": "Official Console: /vehicle/controls?speed=0&accelerator=0&brake=0"
+  },
+  {
+    "elapsedSeconds": 0.1,
+    "action": "Official Console: /vehicle/gear?gear=Park"
+  },
+  {
+    "elapsedSeconds": 0.12,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=68"
+  },
+  {
+    "elapsedSeconds": 0.14,
+    "action": "Official Console: /vehicle/ev-battery?field=charge_switch&value=true"
+  },
+  {
+    "elapsedSeconds": 18.46,
+    "action": "Actual SDK confirmed: P/0 unlocked with SOC 68"
+  },
+  {
+    "elapsedSeconds": 22.47,
+    "action": "Official Console: /vehicle/gear?gear=Drive"
+  },
+  {
+    "elapsedSeconds": 22.72,
+    "action": "Actual SDK confirmed: D/0 locked"
+  },
+  {
+    "elapsedSeconds": 25.11,
+    "action": "Official Console: /vehicle/controls?speed=35&accelerator=0&brake=0"
+  },
+  {
+    "elapsedSeconds": 25.36,
+    "action": "Actual SDK confirmed: moving locked"
+  },
+  {
+    "elapsedSeconds": 27.17,
+    "action": "Official Console: /vehicle/controls?speed=0&accelerator=0&brake=0"
+  },
+  {
+    "elapsedSeconds": 27.18,
+    "action": "Official Console: /vehicle/gear?gear=Park"
+  },
+  {
+    "elapsedSeconds": 29.7,
+    "action": "Actual SDK confirmed: P/0 unlocked again"
+  },
+  {
+    "elapsedSeconds": 29.72,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=75"
+  },
+  {
+    "elapsedSeconds": 30.73,
+    "action": "Actual SDK confirmed: SOC 75 read"
+  },
+  {
+    "elapsedSeconds": 30.76,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=80"
+  },
+  {
+    "elapsedSeconds": 33.02,
+    "action": "Actual SDK confirmed: SOC 80 read"
+  },
+  {
+    "elapsedSeconds": 33.07,
+    "action": "Official Console: /vehicle/ev-battery?field=charge_switch&value=false"
+  },
+  {
+    "elapsedSeconds": 33.57,
+    "action": "Actual SDK confirmed: charge switch OFF read"
+  },
+  {
+    "elapsedSeconds": 33.85,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=68"
+  },
+  {
+    "elapsedSeconds": 33.89,
+    "action": "Official Console: /vehicle/ev-battery?field=charge_switch&value=true"
+  },
+  {
+    "elapsedSeconds": 36.4,
+    "action": "Actual SDK confirmed: planning baseline restored"
+  },
+  {
+    "elapsedSeconds": 54.0,
+    "action": "APK UI: 시간 설정 at (1428,302), display 0"
+  },
+  {
+    "elapsedSeconds": 63.35,
+    "action": "APK UI: 45분 at (1727,691), display 0"
+  },
+  {
+    "elapsedSeconds": 69.37,
+    "action": "APK UI: 적용 at (1921,831), display 0"
+  },
+  {
+    "elapsedSeconds": 73.64,
+    "action": "APK UI: 80% at (1097,910), display 0"
+  },
+  {
+    "elapsedSeconds": 80.69,
+    "action": "APK UI: 시작하기 at (1221,757), display 0"
+  },
+  {
+    "elapsedSeconds": 80.69,
+    "action": "Actual SDK confirmed: focus session RUNNING"
+  },
+  {
+    "elapsedSeconds": 87.78,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=75"
+  },
+  {
+    "elapsedSeconds": 88.04,
+    "action": "Actual SDK confirmed: SOC 75"
+  },
+  {
+    "elapsedSeconds": 88.13,
+    "action": "Official Console: /vehicle/ev-battery?field=soc&value=80"
+  },
+  {
+    "elapsedSeconds": 89.39,
+    "action": "Actual SDK confirmed: SOC target ends activity budget"
+  },
+  {
+    "elapsedSeconds": 93.26,
+    "action": "Official Console: /vehicle/ev-battery?field=charge_switch&value=false"
+  },
+  {
+    "elapsedSeconds": 93.51,
+    "action": "Actual SDK confirmed: charge switch OFF"
+  }
+]

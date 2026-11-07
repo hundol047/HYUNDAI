@@ -2,6 +2,9 @@
 
 **공식 SDK 포함 APK의 빌드·서명·실제 Pleos SDK 응답과 공개 진단 영상까지 확보했습니다. 전체 차량 상태 변경 시연은 미완료이므로 제출 준비 완료로 표시하지 않습니다.** PR #1은 main에 병합됐습니다. 아래 실행 결과는 기존 배포 서명 0.11.0 APK의 기록입니다. 후속 수정본의 검증은 [공식 구성·차량 시나리오 검증 기록](PLEOS_SETUP_VERIFICATION_KO.md)을 확인하세요. 검증용 서명 APK와 기존 배포 서명 APK는 별개입니다.
 
+
+2026-11-07 후속 수정본은 [실제 차량 시나리오 13개를 통과](PLEOS_SETUP_VERIFICATION_KO.md)했습니다. 세션 시작·안전 일시정지·SOC 목표 종료까지 로그로 확인한 별도의 임시 서명 APK입니다. 아래 기존 APK의 미통과 기록을 새 결과로 덮어쓰지 않습니다.
+
 ## 파일과 실행 증거
 
 - APK: [`../apk/퓨처랩스_CabinOS_ONE_release.apk`](../apk/퓨처랩스_CabinOS_ONE_release.apk), versionName **0.11.0**, versionCode **19**.
